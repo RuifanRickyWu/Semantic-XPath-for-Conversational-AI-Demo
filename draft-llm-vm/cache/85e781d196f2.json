@@ -1,0 +1,78 @@
+{
+  "matched_ids": [
+    "rest_001",
+    "rest_003",
+    "rest_006"
+  ],
+  "reasoning": "These items are directly labeled as lunch options in the itinerary. 'Picnic Lunch from Sud Forno at Trinity Bellwoods Park' on Day 1, 'Lunch at Museum Tavern' on Day 2, and 'Lunch at Toronto Island BBQ & Beer Co.' on Day 3 are the identified lunch places.",
+  "confidence": "high",
+  "related_entities": {
+    "rest_006": {
+      "id": "rest_006",
+      "poi_name": "Lunch at Toronto Island BBQ & Beer Co.",
+      "day": "day3",
+      "time_block": "12:30 PM - 2:00 PM",
+      "description": "Enjoy a relaxed lakeside lunch right on Toronto Island with fresh BBQ plates and unbeatable skyline views.",
+      "travel_method": "Walking",
+      "expected_cost": "CAD 20-30",
+      "notable_highlights": "Outdoor waterfront dining, Toronto skyline views, casual island atmosphere"
+    },
+    "rest_003": {
+      "id": "rest_003",
+      "poi_name": "Lunch at Museum Tavern",
+      "day": "day2",
+      "time_block": "1:20 PM - 2:30 PM",
+      "description": "Grab a stylish brasserie-style lunch directly across from the Royal Ontario Museum, offering elevated comfort dishes and a great view of Bloor Street.",
+      "travel_method": "Walking",
+      "expected_cost": "CAD 25-40",
+      "notable_highlights": "Classic burgers and brasserie plates, patio seating with ROM views, excellent cocktails"
+    },
+    "rest_001": {
+      "id": "rest_001",
+      "poi_name": "Picnic Lunch from Sud Forno at Trinity Bellwoods Park",
+      "day": "day1",
+      "time_block": "2:30 PM - 3:00 PM",
+      "description": "Pick up fresh Italian sandwiches and pastries from Sud Forno on Queen Street, then enjoy a relaxing picnic under the trees in Trinity Bellwoods Park.",
+      "travel_method": "Walking",
+      "expected_cost": "CAD 18-25",
+      "notable_highlights": "Fresh bakery items, open green space, lively park atmosphere"
+    }
+  },
+  "raw_response": "```json\n{\n    \"matched_ids\": [\"rest_001\", \"rest_003\", \"rest_006\"],\n    \"reasoning\": \"These items are directly labeled as lunch options in the itinerary. 'Picnic Lunch from Sud Forno at Trinity Bellwoods Park' on Day 1, 'Lunch at Museum Tavern' on Day 2, and 'Lunch at Toronto Island BBQ & Beer Co.' on Day 3 are the identified lunch places.\",\n    \"confidence\": \"high\"\n}\n```",
+  "user_request": "what are all the lunch places",
+  "entity_details": {
+    "rest_001": {
+      "id": "rest_001",
+      "poi_name": "Picnic Lunch from Sud Forno at Trinity Bellwoods Park",
+      "day": "day1",
+      "time_block": "2:30 PM - 3:00 PM",
+      "description": "Pick up fresh Italian sandwiches and pastries from Sud Forno on Queen Street, then enjoy a relaxing picnic under the trees in Trinity Bellwoods Park.",
+      "travel_method": "Walking",
+      "expected_cost": "CAD 18-25",
+      "notable_highlights": "Fresh bakery items, open green space, lively park atmosphere"
+    },
+    "rest_003": {
+      "id": "rest_003",
+      "poi_name": "Lunch at Museum Tavern",
+      "day": "day2",
+      "time_block": "1:20 PM - 2:30 PM",
+      "description": "Grab a stylish brasserie-style lunch directly across from the Royal Ontario Museum, offering elevated comfort dishes and a great view of Bloor Street.",
+      "travel_method": "Walking",
+      "expected_cost": "CAD 25-40",
+      "notable_highlights": "Classic burgers and brasserie plates, patio seating with ROM views, excellent cocktails"
+    },
+    "rest_006": {
+      "id": "rest_006",
+      "poi_name": "Lunch at Toronto Island BBQ & Beer Co.",
+      "day": "day3",
+      "time_block": "12:30 PM - 2:00 PM",
+      "description": "Enjoy a relaxed lakeside lunch right on Toronto Island with fresh BBQ plates and unbeatable skyline views.",
+      "travel_method": "Walking",
+      "expected_cost": "CAD 20-30",
+      "notable_highlights": "Outdoor waterfront dining, Toronto skyline views, casual island atmosphere"
+    }
+  },
+  "from_cache": false,
+  "cached_at": "2025-12-11T14:17:17.415520",
+  "cache_key": "85e781d196f2"
+}

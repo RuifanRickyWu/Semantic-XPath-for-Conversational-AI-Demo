@@ -1,0 +1,9 @@
+User Request: {user_request}
+
+=== ITINERARY MANIFEST ===
+{manifest}
+
+=== ENTITY DETAILS ===
+{entities}
+
+Which items from the itinerary are relevant to this request?

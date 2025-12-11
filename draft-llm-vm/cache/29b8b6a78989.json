@@ -1,0 +1,36 @@
+{
+  "matched_ids": [
+    "rest_007"
+  ],
+  "reasoning": "The request asks for the last place to eat, and 'Dinner at Lula Lounge' on Day 3 from 7:00 PM to 10:00 PM is the final scheduled dining event in the itinerary.",
+  "confidence": "high",
+  "related_entities": {
+    "rest_007": {
+      "id": "rest_007",
+      "poi_name": "Dinner at Lula Lounge",
+      "day": "day3",
+      "time_block": "7:00 PM - 10:00 PM",
+      "description": "Wrap up your trip with dinner and a live Latin music performance at this vibrant venue.",
+      "travel_method": "Public transit",
+      "expected_cost": "CAD 40-60",
+      "notable_highlights": "Live Latin music, lively dance floor"
+    }
+  },
+  "raw_response": "```json\n{\n    \"matched_ids\": [\"rest_007\"],\n    \"reasoning\": \"The request asks for the last place to eat, and 'Dinner at Lula Lounge' on Day 3 from 7:00 PM to 10:00 PM is the final scheduled dining event in the itinerary.\",\n    \"confidence\": \"high\"\n}\n```",
+  "user_request": "whats the last place to eat",
+  "entity_details": {
+    "rest_007": {
+      "id": "rest_007",
+      "poi_name": "Dinner at Lula Lounge",
+      "day": "day3",
+      "time_block": "7:00 PM - 10:00 PM",
+      "description": "Wrap up your trip with dinner and a live Latin music performance at this vibrant venue.",
+      "travel_method": "Public transit",
+      "expected_cost": "CAD 40-60",
+      "notable_highlights": "Live Latin music, lively dance floor"
+    }
+  },
+  "from_cache": false,
+  "cached_at": "2025-12-11T14:14:51.146146",
+  "cache_key": "29b8b6a78989"
+}

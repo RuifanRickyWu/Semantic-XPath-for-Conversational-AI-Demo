@@ -1,5 +1,6 @@
 """
 LLM Classifier - Uses LLM to determine if a node matches a semantic query.
+Uses full subtree information for parent node evaluation.
 """
 
 from pathlib import Path
@@ -13,6 +14,7 @@ from client import OpenAIClient, get_client
 class LLMClassifier:
     """
     Classifies whether a node matches a semantic description query using LLM.
+    Uses full subtree for parent node evaluation.
     """
     
     PROMPT_PATH = Path(__file__).parent.parent.parent / "store" / "prompts" / "llm_classifier.txt"
@@ -42,13 +44,14 @@ class LLMClassifier:
                 self._prompt_template = f.read()
         return self._prompt_template
     
-    def _build_prompt(self, node_info: str, query: str) -> str:
+    def _build_prompt(self, node_info: str, query: str, subtree_info: str = "") -> str:
         """
         Build the prompt by replacing placeholders.
         
         Args:
             node_info: String representation of the node information
             query: The semantic query to match against
+            subtree_info: String describing all children in subtree
             
         Returns:
             Formatted prompt string
@@ -56,20 +59,33 @@ class LLMClassifier:
         prompt = self.prompt_template
         prompt = prompt.replace("<NODE_INFO>", node_info)
         prompt = prompt.replace("<QUERY>", query)
+        
+        if subtree_info:
+            evidence_text = f"Subtree (all children):\n{subtree_info}"
+        else:
+            evidence_text = "Subtree: (none - this is a leaf node)"
+        prompt = prompt.replace("<SUBTREE_EVIDENCE>", evidence_text)
+        
         return prompt
     
-    def classify(self, node_info: str, query: str) -> bool:
+    def classify(
+        self, 
+        node_info: str, 
+        query: str, 
+        subtree_info: str = ""
+    ) -> bool:
         """
         Determine if a node matches the semantic query.
         
         Args:
             node_info: String representation of the node (should include description)
             query: The semantic query to match against
+            subtree_info: Full subtree information (all children)
             
         Returns:
             True if the node matches the query, False otherwise
         """
-        prompt = self._build_prompt(node_info, query)
+        prompt = self._build_prompt(node_info, query, subtree_info)
         
         response = self.client.complete(
             prompt,
@@ -77,37 +93,43 @@ class LLMClassifier:
             max_tokens=10
         )
         
-        result = response.strip().lower()
-        return result == "true"
+        result = response.strip().lower() == "true"
+        return result
     
-    def classify_node(self, node: dict, query: str) -> bool:
+    def classify_node(
+        self, 
+        node: dict, 
+        query: str,
+        full_subtree: list[dict] = None
+    ) -> bool:
         """
         Determine if a node dict matches the semantic query.
         
         Args:
             node: Node dictionary with 'description' and other fields
             query: The semantic query to match against
+            full_subtree: List of ALL children nodes (for parent evaluation)
             
         Returns:
             True if the node matches the query, False otherwise
         """
         node_info = self._node_to_string(node)
-        return self.classify(node_info, query)
+        subtree_info = ""
+        
+        if full_subtree:
+            subtree_info = self._subtree_to_string(full_subtree)
+        
+        return self.classify(node_info, query, subtree_info)
     
     def _node_to_string(self, node: dict) -> str:
-        """
-        Convert a node dict to a string representation.
-        
-        Args:
-            node: Node dictionary
-            
-        Returns:
-            String representation of the node
-        """
+        """Convert a node dict to a string representation."""
         parts = []
         
         if "type" in node:
             parts.append(f"Type: {node['type']}")
+        
+        if "name" in node:
+            parts.append(f"Name: {node['name']}")
         
         if "id" in node:
             parts.append(f"ID: {node['id']}")
@@ -123,48 +145,42 @@ class LLMClassifier:
             parts.append("Description: (none)")
         
         return "\n".join(parts)
+    
+    def _subtree_to_string(self, children: list[dict]) -> str:
+        """Convert all children nodes to a subtree string."""
+        if not children:
+            return ""
+        
+        parts = []
+        for i, node in enumerate(children, 1):
+            node_type = node.get("type", "unknown")
+            name = node.get("name", "unnamed")
+            desc = node.get("description", "")[:150]
+            parts.append(f"  [{i}] {node_type}: {name}")
+            if desc:
+                parts.append(f"      Description: {desc}")
+        
+        return "\n".join(parts)
 
 
 # Convenience function
-def is_node_related(node: dict, query: str, client: OpenAIClient = None) -> bool:
+def is_node_related(
+    node: dict, 
+    query: str, 
+    full_subtree: list[dict] = None,
+    client: OpenAIClient = None
+) -> bool:
     """
     Check if a node matches a semantic query.
     
     Args:
         node: Node dictionary
         query: Semantic query to match
+        full_subtree: List of all children nodes
         client: Optional OpenAI client
         
     Returns:
         True if the node matches the query
     """
     classifier = LLMClassifier(client)
-    return classifier.classify_node(node, query)
-
-
-if __name__ == "__main__":
-    # Quick test
-    classifier = LLMClassifier()
-    
-    test_node = {
-        "type": "POI",
-        "id": "poi_1",
-        "description": "A cozy Italian trattoria serving authentic pasta and wood-fired pizza"
-    }
-    
-    test_queries = [
-        "italian",
-        "japanese",
-        "pasta",
-        "cheap",
-    ]
-    
-    print("Testing LLM Classifier")
-    print("=" * 60)
-    print(f"Node: {test_node}")
-    print("=" * 60)
-    
-    for query in test_queries:
-        result = classifier.classify_node(test_node, query)
-        print(f"Query: '{query}' -> {result}")
-
+    return classifier.classify_node(node, query, full_subtree)

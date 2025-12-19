@@ -18,12 +18,12 @@ Path rules:
 - Do NOT put any free-text or semantic content in the path.
 
 Semantic predicate rules:
-- Semantic matching MUST use square brackets: [ ... ].
-- Semantic matching MUST use the operator =~ .
-- Semantic predicates MUST use the field name: description .
-- Semantic predicates may appear at ANY point in the path.
-- Semantic predicates apply to the node immediately before them.
-- Do NOT use predicates for symbolic filtering.
+- Semantic predicates are attached DIRECTLY to the node type (no / before the bracket).
+- Semantic matching uses square brackets: [ ... ].
+- Semantic matching uses the operator =~ .
+- Semantic predicates use the field name: description .
+- Semantic predicates apply to the node they are attached to.
+- Format: NodeType[description =~ "query"]
 
 Output format:
 - The output MUST be a single XPath-like query string.
@@ -32,23 +32,34 @@ Examples:
 
 User: italian related places in all days
 Output:
-/Itinerary/Day/POI/[description =~ "italian"]
+/Itinerary/Day/POI[description =~ "italian"]
 
 User: italian places in first day
 Output:
-/Itinerary/Day[1]/POI/[description =~ "italian"]
+/Itinerary/Day[1]/POI[description =~ "italian"]
 
 User: cheap restaurants in day 2
 Output:
-/Itinerary/Day[2]/Restaurant/[description =~ "cheap"]
+/Itinerary/Day[2]/Restaurant[description =~ "cheap"]
 
 User: cheap restaurants in days that have italian places
 Output:
-/Itinerary/Day/POI/[description =~ "italian"]/Restaurant/[description =~ "cheap"]
+/Itinerary/Day/POI[description =~ "italian"]/Restaurant[description =~ "cheap"]
 
 User: italian POIs and then find cheap restaurants under them
 Output:
-/Itinerary/Day/POI/[description =~ "italian"]/Restaurant/[description =~ "cheap"]
+/Itinerary/Day/POI[description =~ "italian"]/Restaurant[description =~ "cheap"]
+
+User: relaxing day with italian restaurant
+Output:
+/Itinerary/Day[description =~ "relaxing"]/Restaurant[description =~ "italian"]
+
+User: find jazz venues on day 1
+Output:
+/Itinerary/Day[1]/POI[description =~ "jazz"]
+
+User: upscale dining in days with art museums
+Output:
+/Itinerary/Day/POI[description =~ "art museum"]/Restaurant[description =~ "upscale"]
 
 Now convert the following user request into a query.
-

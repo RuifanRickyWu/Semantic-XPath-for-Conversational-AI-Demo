@@ -5,6 +5,10 @@ Parses queries like: /Itinerary/Day[2]/Restaurant/[description =~ "cheap"]
 - Type matching: /Itinerary, /Day, /Restaurant, /POI
 - Index matching: Day[2]
 - Semantic predicates: [description =~ "query"]
+
+Supports nested predicates with subtree evidence:
+/Itinerary/Day/POI/[description =~ "italian"]/Restaurant/[description =~ "cheap"]
+- Earlier predicates can be informed by matches from later predicates in the path
 """
 
 import json
@@ -19,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from client import OpenAIClient, get_client
 from dense_xpath.llm_based.llm_classifier import LLMClassifier
+from dense_xpath.llm_based.ram import SubtreeRAM
 
 
 @dataclass
@@ -63,6 +68,7 @@ class MatchResult:
 class DenseXPathLLM:
     """
     Executes XPath-like queries against a tree with LLM-based semantic matching.
+    Supports nested predicates with subtree evidence propagation.
     """
     
     TREE_PATH = Path(__file__).parent.parent.parent / "store" / "memory" / "tree_memory.json"
@@ -80,6 +86,7 @@ class DenseXPathLLM:
         self._tree = None  # Lazy load
         self.traces: list[TraceEntry] = []
         self.step_counter = 0
+        self.ram: SubtreeRAM = None  # Initialized per query execution
     
     @property
     def client(self) -> OpenAIClient:
@@ -119,11 +126,8 @@ class DenseXPathLLM:
     
     def _query_to_filename(self, query: str) -> str:
         """Convert a query to a safe filename."""
-        # Replace special characters with underscores
         safe = re.sub(r'[/\[\]=~"\s]+', '_', query)
-        # Remove leading/trailing underscores
         safe = safe.strip('_')
-        # Limit length
         if len(safe) > 100:
             safe = safe[:100]
         return safe
@@ -164,72 +168,101 @@ class DenseXPathLLM:
         """
         Parse an XPath-like query into segments.
         
-        Example: /Itinerary/Day[2]/Restaurant/[description =~ "cheap"]
+        Example: /Itinerary/Day[2]/Restaurant[description =~ "cheap"]
         
         Returns list of PathSegment objects.
         """
         segments = []
         
-        # Split by / but keep the structure
-        # Pattern to match: TypeName, TypeName[index], or [description =~ "query"]
-        pattern = r'/([A-Za-z]+)(?:\[(\d+)\])?|/(\[description\s*=~\s*"([^"]+)"\])'
+        # Pattern matches:
+        # - /Type
+        # - /Type[index]
+        # - /Type[description =~ "query"]
+        # - /Type[index][description =~ "query"]  (index handled separately)
+        pattern = r'/([A-Za-z]+)(?:\[(\d+)\])?(?:\[description\s*=~\s*"([^"]+)"\])?'
         
         for match in re.finditer(pattern, query):
-            if match.group(1):  # Type match (with optional index)
-                node_type = match.group(1)
-                index = int(match.group(2)) if match.group(2) else None
-                segments.append(PathSegment(node_type=node_type, index=index))
-            elif match.group(3):  # Predicate match
-                predicate_query = match.group(4)
-                segments.append(PathSegment(predicate=predicate_query))
+            node_type = match.group(1)
+            index = int(match.group(2)) if match.group(2) else None
+            predicate = match.group(3)  # May be None
+            
+            # Create type segment (possibly with index)
+            segments.append(PathSegment(node_type=node_type, index=index))
+            
+            # If there's a predicate, add it as a separate segment
+            if predicate:
+                segments.append(PathSegment(predicate=predicate))
         
         return segments
     
-    def _matches_segment(self, node: dict, segment: PathSegment, sibling_index: int = None) -> bool:
+    def _has_more_path_after(self, segments: list[PathSegment], predicate_idx: int) -> bool:
+        """Check if there are more path segments after a predicate (making it a deferred predicate)."""
+        # Look for any type segment after the predicate
+        for i in range(predicate_idx + 1, len(segments)):
+            if segments[i].node_type:
+                return True
+        return False
+    
+    def _matches_type_segment(self, node: dict, segment: PathSegment, sibling_index: int = None) -> bool:
+        """Check if a node matches a type/index segment."""
+        if node.get("type") != segment.node_type:
+            return False
+        
+        if segment.index is not None:
+            node_index = node.get("index")
+            if node_index is not None:
+                return node_index == segment.index
+            if sibling_index is not None:
+                return sibling_index == segment.index
+            return False
+        
+        return True
+    
+    def _get_all_children(self, node: dict) -> list[dict]:
+        """Get all children of a node (flattened, not recursive)."""
+        return node.get("children", [])
+    
+    def _matches_predicate(
+        self, 
+        node: dict, 
+        predicate: str, 
+        has_subtree_evidence: bool = False
+    ) -> bool:
         """
-        Check if a node matches a path segment.
+        Check if a node matches a semantic predicate.
         
         Args:
             node: The node to check
-            segment: The path segment to match against
-            sibling_index: The 1-based index of this node among siblings of same type
-            
-        Returns:
-            True if the node matches the segment
+            predicate: The semantic query
+            has_subtree_evidence: Whether this node passed pruning (has matching descendants)
         """
-        # Type matching
-        if segment.node_type:
-            if node.get("type") != segment.node_type:
-                return False
-            
-            # Index matching (if specified)
-            if segment.index is not None:
-                # First check if node has explicit index
-                node_index = node.get("index")
-                if node_index is not None:
-                    return node_index == segment.index
-                # Otherwise use sibling index
-                if sibling_index is not None:
-                    return sibling_index == segment.index
-                return False
-            
-            return True
+        # Always pass full subtree for evaluation (all children, not just matched ones)
+        full_subtree = self._get_all_children(node)
         
-        # Predicate matching (semantic)
-        if segment.predicate:
-            result = self.classifier.classify_node(node, segment.predicate)
-            return result
-        
-        return False
+        if full_subtree:
+            # Parent node: evaluate with full subtree context
+            return self.classifier.classify_node(node, predicate, full_subtree)
+        else:
+            # Leaf node: only node's own description
+            return self.classifier.classify_node(node, predicate)
     
     def _build_tree_path(self, node: dict, sibling_index: int = None, parent_path: str = "") -> str:
         """Build the actual tree path with indices for the node."""
         node_type = node.get("type", "unknown")
-        # Use explicit index if available, otherwise use sibling index
         index = node.get("index", sibling_index)
         if index is not None:
             return f"{parent_path}/{node_type}[{index}]"
         return f"{parent_path}/{node_type}"
+    
+    def _segment_to_string(self, segment: PathSegment) -> str:
+        """Convert a segment to string representation."""
+        if segment.node_type:
+            if segment.index:
+                return f"{segment.node_type}[{segment.index}]"
+            return segment.node_type
+        if segment.predicate:
+            return f'[description =~ "{segment.predicate}"]'
+        return "?"
     
     def _execute_dfs(
         self,
@@ -242,6 +275,7 @@ class DenseXPathLLM:
     ) -> list[MatchResult]:
         """
         DFS traversal to find matching nodes.
+        Supports deferred predicate evaluation with subtree evidence.
         
         Args:
             node: Current node
@@ -262,122 +296,197 @@ class DenseXPathLLM:
         current_path = f"{path}/{segment_str}"
         current_tree_path = self._build_tree_path(node, sibling_index, tree_path)
         
-        # Check if current node matches current segment
-        matches = self._matches_segment(node, current_segment, sibling_index)
-        
-        # Determine action type for trace
-        if current_segment.predicate:
-            action = "semantic_match"
-        elif current_segment.index:
-            action = "index_match"
-        else:
-            action = "type_match"
-        
-        self._add_trace(
-            action=action,
-            node=node,
-            segment_str=segment_str,
-            result="MATCH" if matches else "NO_MATCH",
-            current_path=current_path,
-            tree_path=current_tree_path,
-            segment_index=segment_idx,
-            sibling_index=sibling_index
-        )
-        
-        if not matches:
-            return []
-        
-        # Check if next segment is a predicate (applies to current node, not children)
-        next_idx = segment_idx + 1
-        if next_idx < len(segments) and segments[next_idx].predicate:
-            predicate_segment = segments[next_idx]
-            predicate_str = self._segment_to_string(predicate_segment)
+        # === CASE 1: Type/Index segment ===
+        if current_segment.node_type:
+            matches = self._matches_type_segment(node, current_segment, sibling_index)
             
-            predicate_matches = self._matches_segment(node, predicate_segment)
-            
+            action = "index_match" if current_segment.index else "type_match"
             self._add_trace(
-                action="semantic_match",
-                node=node,
-                segment_str=predicate_str,
-                result="MATCH" if predicate_matches else "NO_MATCH",
-                current_path=f"{current_path}/{predicate_str}",
-                tree_path=current_tree_path,
-                segment_index=next_idx
-            )
-            
-            if not predicate_matches:
-                return []
-            
-            # Move past the predicate
-            next_idx += 1
-        
-        # If we've processed all segments, return this node with its tree path
-        if next_idx >= len(segments):
-            self._add_trace(
-                action="result_found",
+                action=action,
                 node=node,
                 segment_str=segment_str,
-                result="COLLECTED",
+                result="MATCH" if matches else "NO_MATCH",
+                current_path=current_path,
                 tree_path=current_tree_path,
-                node_details={
-                    "type": node.get("type"),
-                    "name": node.get("name"),
-                    "description": node.get("description", "")[:100]
-                }
+                segment_index=segment_idx,
+                sibling_index=sibling_index
             )
-            return [MatchResult(node=node, tree_path=current_tree_path)]
-        
-        # Continue to children with the next segment
-        results = []
-        children = node.get("children", [])
-        
-        # Group children by type for index tracking
-        type_counts = {}
-        
-        for child in children:
-            child_type = child.get("type")
-            if child_type not in type_counts:
-                type_counts[child_type] = 0
-            type_counts[child_type] += 1
-            child_sibling_idx = type_counts[child_type]
             
-            # Recurse
-            child_results = self._execute_dfs(
-                child,
-                segments,
-                next_idx,
-                child_sibling_idx,
-                current_path,
-                current_tree_path
-            )
-            results.extend(child_results)
+            if not matches:
+                return []
+            
+            next_idx = segment_idx + 1
+            
+            # Check if next segment is a predicate
+            if next_idx < len(segments) and segments[next_idx].predicate:
+                predicate_segment = segments[next_idx]
+                predicate_str = self._segment_to_string(predicate_segment)
+                
+                # Check if this is a DEFERRED predicate (more path after it)
+                is_deferred = self._has_more_path_after(segments, next_idx)
+                
+                if is_deferred:
+                    # === DEFERRED PREDICATE: First collect subtree matches ===
+                    self._add_trace(
+                        action="deferred_predicate_start",
+                        node=node,
+                        segment_str=predicate_str,
+                        result="DEFERRED",
+                        current_path=f"{current_path}/{predicate_str}",
+                        tree_path=current_tree_path,
+                        segment_index=next_idx,
+                        reason="More path segments after predicate - collecting subtree evidence first"
+                    )
+                    
+                    # Continue traversal to get subtree matches (skip the predicate for now)
+                    subtree_results = []
+                    children = node.get("children", [])
+                    type_counts = {}
+                    
+                    for child in children:
+                        child_type = child.get("type")
+                        if child_type not in type_counts:
+                            type_counts[child_type] = 0
+                        type_counts[child_type] += 1
+                        child_sibling_idx = type_counts[child_type]
+                        
+                        child_results = self._execute_dfs(
+                            child,
+                            segments,
+                            next_idx + 1,  # Skip the predicate, continue with path
+                            child_sibling_idx,
+                            f"{current_path}/{predicate_str}",
+                            current_tree_path
+                        )
+                        subtree_results.extend(child_results)
+                    
+                    # Store subtree in RAM for this parent node
+                    if subtree_results:
+                        self.ram.store(
+                            tree_path=current_tree_path,
+                            node=node,
+                            predicate=predicate_segment.predicate,
+                            matched_children=[r.node for r in subtree_results]
+                        )
+                    
+                    # Now evaluate the deferred predicate with FULL subtree
+                    # (pruning already done by checking subtree_results exists)
+                    if subtree_results:
+                        predicate_matches = self._matches_predicate(
+                            node, 
+                            predicate_segment.predicate,
+                            has_subtree_evidence=True  # Pass full subtree internally
+                        )
+                        
+                        self._add_trace(
+                            action="deferred_predicate_eval",
+                            node=node,
+                            segment_str=predicate_str,
+                            result="MATCH" if predicate_matches else "NO_MATCH",
+                            current_path=f"{current_path}/{predicate_str}",
+                            tree_path=current_tree_path,
+                            segment_index=next_idx,
+                            pruning_evidence_count=len(subtree_results),
+                            pruning_evidence=[r.tree_path for r in subtree_results[:5]],  # First 5
+                            full_subtree_count=len(node.get("children", [])),
+                            ram_stored=True
+                        )
+                        
+                        if predicate_matches:
+                            # Return the subtree results (they are the final matches)
+                            return subtree_results
+                    else:
+                        self._add_trace(
+                            action="deferred_predicate_eval",
+                            node=node,
+                            segment_str=predicate_str,
+                            result="NO_MATCH",
+                            current_path=f"{current_path}/{predicate_str}",
+                            tree_path=current_tree_path,
+                            segment_index=next_idx,
+                            reason="No subtree matches found"
+                        )
+                    
+                    return []
+                
+                else:
+                    # === TERMINAL PREDICATE: Evaluate locally ===
+                    predicate_matches = self._matches_predicate(node, predicate_segment.predicate)
+                    
+                    self._add_trace(
+                        action="semantic_match",
+                        node=node,
+                        segment_str=predicate_str,
+                        result="MATCH" if predicate_matches else "NO_MATCH",
+                        current_path=f"{current_path}/{predicate_str}",
+                        tree_path=current_tree_path,
+                        segment_index=next_idx
+                    )
+                    
+                    if not predicate_matches:
+                        return []
+                    
+                    next_idx += 1
+            
+            # If we've processed all segments, return this node
+            if next_idx >= len(segments):
+                self._add_trace(
+                    action="result_found",
+                    node=node,
+                    segment_str=segment_str,
+                    result="COLLECTED",
+                    tree_path=current_tree_path,
+                    node_details={
+                        "type": node.get("type"),
+                        "name": node.get("name"),
+                        "description": node.get("description", "")[:100]
+                    }
+                )
+                return [MatchResult(node=node, tree_path=current_tree_path)]
+            
+            # Continue to children
+            results = []
+            children = node.get("children", [])
+            type_counts = {}
+            
+            for child in children:
+                child_type = child.get("type")
+                if child_type not in type_counts:
+                    type_counts[child_type] = 0
+                type_counts[child_type] += 1
+                child_sibling_idx = type_counts[child_type]
+                
+                child_results = self._execute_dfs(
+                    child,
+                    segments,
+                    next_idx,
+                    child_sibling_idx,
+                    current_path,
+                    current_tree_path
+                )
+                results.extend(child_results)
+            
+            return results
         
-        return results
+        # === CASE 2: Standalone predicate (shouldn't happen in well-formed queries) ===
+        return []
     
-    def _segment_to_string(self, segment: PathSegment) -> str:
-        """Convert a segment to string representation."""
-        if segment.node_type:
-            if segment.index:
-                return f"{segment.node_type}[{segment.index}]"
-            return segment.node_type
-        if segment.predicate:
-            return f'[description =~ "{segment.predicate}"]'
-        return "?"
-    
-    def execute(self, query: str, save_trace: bool = True) -> list[MatchResult]:
+    def execute(self, query: str, save_trace: bool = True, save_ram: bool = True) -> list[MatchResult]:
         """
         Execute an XPath-like query against the tree.
         
         Args:
             query: XPath-like query string
             save_trace: Whether to save reasoning traces
+            save_ram: Whether to save RAM state to disk
             
         Returns:
             List of MatchResult objects with node and tree path
         """
-        # Reset traces
+        # Reset state
         self.traces = []
         self.step_counter = 0
+        self.ram = SubtreeRAM(query_id=self._query_to_filename(query))
         
         # Parse query
         segments = self.parse_query(query)
@@ -400,6 +509,11 @@ class DenseXPathLLM:
         if save_trace:
             trace_file = self._save_traces(query)
             print(f"Trace saved to: {trace_file}")
+        
+        # Save RAM state
+        if save_ram and len(self.ram) > 0:
+            ram_file = self.ram.save_to_disk()
+            print(f"RAM saved to: {ram_file}")
         
         return results
 
@@ -424,9 +538,10 @@ if __name__ == "__main__":
     executor = DenseXPathLLM()
     
     test_queries = [
-        "/Itinerary/Day/Restaurant/[description =~ \"budget-friendly\"]",
-        "/Itinerary/Day[2]/Restaurant/[description =~ \"asian\"]",
-        "/Itinerary/Day[1]/POI/[description =~ \"art\"]",
+        # Simple query (terminal predicate)
+        "/Itinerary/Day[1]/Restaurant/[description =~ \"jazz\"]",
+        # Nested query (deferred predicate with subtree evidence)
+        "/Itinerary/Day/POI/[description =~ \"italian\"]/Restaurant/[description =~ \"upscale\"]",
     ]
     
     print("Testing Dense XPath LLM")
@@ -441,4 +556,3 @@ if __name__ == "__main__":
             print(f"  - [{result.tree_path}]")
             print(f"    {result.type}: {result.name}")
         print()
-

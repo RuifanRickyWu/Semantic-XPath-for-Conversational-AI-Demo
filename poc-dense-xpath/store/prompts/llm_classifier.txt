@@ -4,17 +4,18 @@ Task:
 Decide whether the given node matches the semantic predicate:
 [description =~ "<QUERY>"]
 
-Important rules:
-- ONLY use the node's `description` field for matching.
-- Treat "~=" as "semantic match": synonyms, paraphrases, implied meaning are allowed.
-- Do NOT use the node name, tags, other metadata, or assumptions.
-- If description is empty, missing, or not enough evidence, return false.
-- Be conservative: return true only if the description clearly supports the query.
-- The output MUST be a single token: `true` or `false` (lowercase). No extra text.
+Evaluation rules:
+- Consider the node's own `description` field.
+- If subtree information is provided, consider ALL children to understand the context.
+- The node matches if its description OR the overall subtree context supports the query.
+- Treat "=~" as "semantic match": synonyms, paraphrases, implied meaning are allowed.
+- If no evidence supports the query, return false.
+- Be conservative: return true only if there's clear evidence.
+- Output MUST be a single token: `true` or `false` (lowercase). No extra text.
 
 Input:
 Node Information: <NODE_INFO>
 Query: <QUERY>
+<SUBTREE_EVIDENCE>
 
 Output:
-

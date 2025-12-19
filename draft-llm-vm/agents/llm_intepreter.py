@@ -27,8 +27,7 @@ def load_prompt(name: str) -> str:
 def _generate_trace_id(user_request: str) -> str:
     """Generate a unique folder name based on request and timestamp."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    request_hash = hashlib.md5(user_request.encode()).hexdigest()[:8]
-    return f"{timestamp}_{request_hash}"
+    return f"{timestamp}_{user_request}"
 
 
 def _save_trace(trace_folder: Path, filename: str, data: dict) -> None:

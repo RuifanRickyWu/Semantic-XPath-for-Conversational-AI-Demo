@@ -1,3 +1,8 @@
+Stage 1
+
+User Request: Find all Dinner places that relates to Latin music
+
+=== ITINERARY MANIFEST ===
 [Day 1] [8:30 AM - 10:00 AM] St. Lawrence Market ⟨poi_001⟩ (poi)
 [Day 1] [10:30 AM - 12:00 PM] CN Tower ⟨poi_002⟩ (poi)
 [Day 1] [12:30 PM - 2:00 PM] Queen Street West ⟨poi_003⟩ (poi)
@@ -16,3 +21,9 @@
 [Day 3] [3:00 PM - 5:00 PM] Ripley's Aquarium of Canada ⟨poi_010⟩ (poi)
 [Day 3] [5:30 PM - 6:30 PM] Vinyl Underground ⟨poi_011⟩ (poi)
 [Day 3] [7:00 PM - 10:00 PM] Dinner at Lula Lounge ⟨rest_007⟩ (restaurant)
+
+Return :
+
+"candidate_ids": ["rest_002", "rest_004", "rest_007"]
+
+

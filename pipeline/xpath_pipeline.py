@@ -13,30 +13,39 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from client import get_client
 from xpath_query_generation import XPathQueryGenerator
 from dense_xpath import DenseXPathExecutor, ExecutionTrace
-from predicate_classifiers import NodeInfo
+from predicate_classifiers import NodeInfo, LLMPredicateClassifier, EntailmentPredicateClassifier
 
 
 class XPathPipeline:
     """
     Pipeline for converting user requests into XPath-like queries and executing them.
     Logs all interactions to reasoning traces.
+    
+    Supports two classifier types:
+    - "llm": LLM-based classification (default)
+    - "entailment": BART-NLI entailment scoring
     """
     
     LOG_DIR = Path(__file__).parent.parent / "reasoning_traces" / "logs"
     
-    def __init__(self, client=None):
+    def __init__(self, client=None, classifier_type: str = "llm"):
         """
         Initialize the pipeline.
         
         Args:
             client: Optional OpenAI client. If not provided, one will be created.
+            classifier_type: "llm" or "entailment". Defaults to "llm".
         """
         self.client = client or get_client()
+        self.classifier_type = classifier_type
         
         # Components with shared client
         self.query_generator = XPathQueryGenerator(client=self.client)
-        self.executor = DenseXPathExecutor()
         
+        # Create classifier based on type
+        classifier = self._create_classifier(classifier_type)
+        self.executor = DenseXPathExecutor(classifier=classifier)
+    
         # Session tracking
         self.session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.query_history = []
@@ -44,6 +53,16 @@ class XPathPipeline:
         # Setup logging
         self.logger = self._setup_logger()
         self.logger.info(f"Pipeline initialized. Session ID: {self.session_id}")
+        self.logger.info(f"Classifier type: {self.classifier_type}")
+    
+    def _create_classifier(self, classifier_type: str):
+        """Create the appropriate classifier based on type."""
+        if classifier_type == "llm":
+            return LLMPredicateClassifier(client=self.client)
+        elif classifier_type == "entailment":
+            return EntailmentPredicateClassifier()
+        else:
+            raise ValueError(f"Unknown classifier type: {classifier_type}. Use 'llm' or 'entailment'.")
     
     def _setup_logger(self) -> logging.Logger:
         """Setup file and console logging."""
@@ -174,6 +193,7 @@ class XPathPipeline:
         print("  XPath Pipeline - Interactive Mode")
         print("=" * 60)
         print(f"  Session ID: {self.session_id}")
+        print(f"  Classifier: {self.classifier_type}")
         print(f"  Log file: {self.log_file}")
         print("  Commands:")
         print("    quit/exit - Exit and save session")
@@ -262,6 +282,18 @@ class XPathPipeline:
 
 
 if __name__ == "__main__":
-    pipeline = XPathPipeline()
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="XPath Pipeline - Semantic Query Engine")
+    parser.add_argument(
+        "--classifier", "-c",
+        type=str,
+        choices=["llm", "entailment"],
+        default="llm",
+        help="Classifier type: 'llm' (default) or 'entailment'"
+    )
+    args = parser.parse_args()
+    
+    pipeline = XPathPipeline(classifier_type=args.classifier)
     pipeline.run_cli()
 

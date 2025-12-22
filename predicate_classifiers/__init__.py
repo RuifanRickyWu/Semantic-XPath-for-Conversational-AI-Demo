@@ -5,6 +5,7 @@ from .base import (
     BatchClassificationResult
 )
 from .llm_classifier import LLMPredicateClassifier
+from .entailment_classifier import EntailmentPredicateClassifier
 
 __all__ = [
     "PredicateClassifier",
@@ -12,4 +13,5 @@ __all__ = [
     "ClassificationResult",
     "BatchClassificationResult",
     "LLMPredicateClassifier",
+    "EntailmentPredicateClassifier",
 ]

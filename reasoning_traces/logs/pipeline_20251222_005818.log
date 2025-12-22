@@ -1,0 +1,39 @@
+2025-12-22 00:58:18 | INFO | Pipeline initialized. Session ID: 20251222_005818
+2025-12-22 00:58:18 | INFO | Classifier type: entailment
+2025-12-22 00:58:18 | INFO | CLI session started
+2025-12-22 00:59:13 | INFO | ==================================================
+2025-12-22 00:59:13 | INFO | Pipeline run started
+2025-12-22 00:59:13 | INFO | User request: find me an artistic day with museums
+2025-12-22 00:59:13 | INFO | Generated XPath: /Itinerary/Day[description =~ "artistic"]/POI[description =~ "museum"]
+2025-12-22 00:59:13 | INFO | Executing query: /Itinerary/Day[description =~ "artistic"]/POI[description =~ "museum"]
+2025-12-22 00:59:17 | ERROR | Error: transformers.models.bart.tokenization_bart_fast.BartTokenizerFast._encode_plus() got multiple values for keyword argument 'truncation_strategy'
+Traceback (most recent call last):
+  File "/Users/rwu/dev/LLM-VM/pipeline/xpath_pipeline.py", line 239, in run_cli
+    results, xpath_query, trace = self.run(user_input)
+  File "/Users/rwu/dev/LLM-VM/pipeline/xpath_pipeline.py", line 144, in run
+    results, trace = self.execute_query(xpath_query)
+  File "/Users/rwu/dev/LLM-VM/pipeline/xpath_pipeline.py", line 119, in execute_query
+    results, trace = self.executor.execute(xpath_query, save_trace=True)
+  File "/Users/rwu/dev/LLM-VM/dense_xpath/dense_xpath_executor.py", line 232, in execute
+    results = self._execute_multi_predicate(segments, predicates, trace)
+  File "/Users/rwu/dev/LLM-VM/dense_xpath/dense_xpath_executor.py", line 450, in _execute_multi_predicate
+    matching, batch_result = self.classifier.get_matching_nodes(node_infos, predicate)
+  File "/Users/rwu/dev/LLM-VM/predicate_classifiers/base.py", line 178, in get_matching_nodes
+    batch_result = self.classify_batch(nodes, predicate)
+  File "/Users/rwu/dev/LLM-VM/predicate_classifiers/entailment_classifier.py", line 97, in classify_batch
+    score, detail = self._score_node(node, predicate)
+  File "/Users/rwu/dev/LLM-VM/predicate_classifiers/entailment_classifier.py", line 141, in _score_node
+    return self._score_leaf(node, predicate, detail)
+  File "/Users/rwu/dev/LLM-VM/predicate_classifiers/entailment_classifier.py", line 160, in _score_leaf
+    score = self.client.get_entailment_score(
+  File "/Users/rwu/dev/LLM-VM/client/bart_client.py", line 60, in get_entailment_score
+    inputs = self.tokenizer(
+  File "/Users/rwu/dev/convrec/draft-llm-vm/venv/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 3073, in __call__
+    encodings = self._call_one(text=text, text_pair=text_pair, **all_kwargs)
+  File "/Users/rwu/dev/convrec/draft-llm-vm/venv/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 3183, in _call_one
+    return self.encode_plus(
+  File "/Users/rwu/dev/convrec/draft-llm-vm/venv/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 3258, in encode_plus
+    return self._encode_plus(
+TypeError: transformers.models.bart.tokenization_bart_fast.BartTokenizerFast._encode_plus() got multiple values for keyword argument 'truncation_strategy'
+2025-12-22 01:00:02 | INFO | Session saved to: /Users/rwu/dev/LLM-VM/reasoning_traces/logs/session_20251222_005818.json
+2025-12-22 01:00:02 | INFO | CLI session ended

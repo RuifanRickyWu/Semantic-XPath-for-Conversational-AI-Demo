@@ -92,21 +92,29 @@ class BatchClassificationResult:
     predicate: str
     input_nodes: list[NodeInfo]
     results: list[ClassificationResult]
-    prompt_sent: str  # The actual prompt sent to classifier
-    raw_response: str  # Raw response from classifier
+    classifier_type: str = "llm"  # "llm" or "entailment"
+    prompt_sent: Optional[str] = None  # For LLM classifier
+    raw_response: Optional[str] = None  # For LLM classifier
+    scores_detail: Optional[dict] = None  # For entailment classifier
     
     def to_dict(self) -> dict:
         """Convert to dictionary for JSON serialization."""
-        return {
+        result = {
+            "classifier_type": self.classifier_type,
             "predicate": self.predicate,
             "input_count": len(self.input_nodes),
             "input_nodes": [n.to_dict() for n in self.input_nodes],
             "results": [r.to_dict() for r in self.results],
             "matched_count": sum(1 for r in self.results if r.is_match),
             "matched_paths": [r.node_info.tree_path for r in self.results if r.is_match],
-            "prompt_sent": self.prompt_sent,
-            "raw_response": self.raw_response
         }
+        if self.prompt_sent:
+            result["prompt_sent"] = self.prompt_sent
+        if self.raw_response:
+            result["raw_response"] = self.raw_response
+        if self.scores_detail:
+            result["scores_detail"] = self.scores_detail
+        return result
 
 
 class PredicateClassifier(ABC):

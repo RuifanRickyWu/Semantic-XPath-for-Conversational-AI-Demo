@@ -62,7 +62,6 @@ class BartNLIClient:
             hypothesis, 
             return_tensors="pt",
             truncation=True,
-            truncation_strategy="only_first",
             max_length=1024
         )
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
@@ -106,7 +105,6 @@ class BartNLIClient:
             hypothesis, 
             return_tensors="pt",
             truncation=True,
-            truncation_strategy="only_first",
             max_length=1024
         )
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
@@ -150,7 +148,6 @@ class BartNLIClient:
             hypotheses,
             return_tensors="pt",
             truncation=True,
-            truncation_strategy="only_first",
             padding=True,
             max_length=1024
         )

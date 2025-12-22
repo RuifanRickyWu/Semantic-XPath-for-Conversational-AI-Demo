@@ -70,6 +70,7 @@ class LLMPredicateClassifier(PredicateClassifier):
                 predicate=predicate,
                 input_nodes=[],
                 results=[],
+                classifier_type="llm",
                 prompt_sent="",
                 raw_response=""
             )
@@ -106,6 +107,7 @@ class LLMPredicateClassifier(PredicateClassifier):
             predicate=predicate,
             input_nodes=nodes,
             results=results,
+            classifier_type="llm",
             prompt_sent=prompt,
             raw_response=response
         )

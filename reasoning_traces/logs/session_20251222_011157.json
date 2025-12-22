@@ -1,0 +1,56 @@
+{
+  "session_id": "20251222_011157",
+  "start_time": "2025-12-22T01:12:13.288615",
+  "end_time": "2025-12-22T01:12:40.496153",
+  "total_queries": 1,
+  "queries": [
+    {
+      "timestamp": "2025-12-22T01:12:13.288615",
+      "user_request": "find me an artistic day with museums",
+      "xpath_query": "/Itinerary/Day[description =~ \"artistic\"]/POI[description =~ \"museum\"]",
+      "result_count": 8,
+      "results": [
+        {
+          "path": "/Itinerary/Day[1]/POI[1]",
+          "name": "St. Lawrence Market",
+          "type": "POI"
+        },
+        {
+          "path": "/Itinerary/Day[1]/POI[2]",
+          "name": "CN Tower",
+          "type": "POI"
+        },
+        {
+          "path": "/Itinerary/Day[1]/POI[3]",
+          "name": "Art Gallery of Ontario",
+          "type": "POI"
+        },
+        {
+          "path": "/Itinerary/Day[2]/POI[1]",
+          "name": "Royal Ontario Museum",
+          "type": "POI"
+        },
+        {
+          "path": "/Itinerary/Day[2]/POI[2]",
+          "name": "Casa Loma",
+          "type": "POI"
+        },
+        {
+          "path": "/Itinerary/Day[2]/POI[3]",
+          "name": "Rivoli",
+          "type": "POI"
+        },
+        {
+          "path": "/Itinerary/Day[3]/POI[1]",
+          "name": "Toronto Islands",
+          "type": "POI"
+        },
+        {
+          "path": "/Itinerary/Day[3]/POI[2]",
+          "name": "Distillery District",
+          "type": "POI"
+        }
+      ]
+    }
+  ]
+}

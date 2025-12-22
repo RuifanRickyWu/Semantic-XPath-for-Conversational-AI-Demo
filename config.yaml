@@ -7,3 +7,6 @@ openai:
 entailment:
   threshold: 0.5
   hypothesis_template: "This is related to {predicate}."
+
+cosine_similarity:
+  threshold: 0.6

@@ -8,7 +8,7 @@ This project enables semantic querying of hierarchical data structures (like tra
 
 1. **XPath-like Query Generation**: Converts natural language to structured queries
 2. **Dense XPath Execution**: Traverses XML trees with semantic predicate matching
-3. **LLM-based Classification**: Uses LLMs to determine semantic relevance
+3. **Multi-Strategy Classification**: Choose from LLM, entailment, or cosine similarity
 
 ## Architecture
 
@@ -21,12 +21,14 @@ This project enables semantic querying of hierarchical data structures (like tra
 │  └──────────────────────┘    └───────────┬──────────────┘   │
 └──────────────────────────────────────────┼──────────────────┘
                                            │
-                                           ▼
-              ┌────────────────────────────────────────────────┐
-              │         LLMPredicateClassifier                 │
-              │  - Batch classification of nodes               │
-              │  - Semantic matching with reasoning            │
-              └────────────────────────────────────────────────┘
+                      ┌────────────────────┼────────────────────┐
+                      │                    │                    │
+                      ▼                    ▼                    ▼
+              ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+              │     LLM      │   │  Entailment  │   │    Cosine    │
+              │  Classifier  │   │  Classifier  │   │  Classifier  │
+              │   (GPT-4o)   │   │  (BART-NLI)  │   │   (TAS-B)    │
+              └──────────────┘   └──────────────┘   └──────────────┘
 ```
 
 ## Project Structure
@@ -46,7 +48,9 @@ LLM-VM/
 │
 ├── predicate_classifiers/       # Semantic classification
 │   ├── base.py                  # Abstract base class
-│   └── llm_classifier.py        # LLM-based classifier
+│   ├── llm_classifier.py        # LLM-based classifier (GPT-4o)
+│   ├── entailment_classifier.py # Entailment-based (BART-NLI)
+│   └── cosine_classifier.py     # Cosine similarity (TAS-B)
 │
 ├── pipeline/                    # Main orchestration
 │   └── xpath_pipeline.py
@@ -112,16 +116,28 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 3. Install dependencies:
 ```bash
-pip install openai pyyaml
+pip install -r requirements.txt
 ```
 
-4. Configure API key in `config.yaml`:
+Or manually:
+```bash
+pip install openai pyyaml torch transformers
+```
+
+4. Configure in `config.yaml`:
 ```yaml
 openai:
   api_key: "your-api-key-here"
-  model: "gpt-4"
+  model: "gpt-4o"
   temperature: 0.7
   max_tokens: 4096
+
+entailment:
+  threshold: 0.5
+  hypothesis_template: "This is related to {predicate}."
+
+cosine_similarity:
+  threshold: 0.6
 ```
 
 ## Usage
@@ -129,7 +145,14 @@ openai:
 ### Interactive CLI
 
 ```bash
+# Default (LLM classifier)
 python -m pipeline.xpath_pipeline
+
+# With entailment classifier (BART-NLI)
+python -m pipeline.xpath_pipeline -c entailment
+
+# With cosine similarity classifier (TAS-B)
+python -m pipeline.xpath_pipeline -c cosine
 ```
 
 ```
@@ -137,6 +160,7 @@ python -m pipeline.xpath_pipeline
   XPath Pipeline - Interactive Mode
 ============================================================
   Session ID: 20251222_120000
+  Classifier: llm
   Log file: reasoning_traces/logs/pipeline_20251222_120000.log
   Commands:
     quit/exit - Exit and save session
@@ -162,8 +186,12 @@ XPath: /Itinerary/Day[1]/Restaurant[description =~ "italian"]
 ```python
 from pipeline import XPathPipeline
 
-# Create pipeline
+# Create pipeline with LLM (default)
 pipeline = XPathPipeline()
+
+# Or with specific classifier
+pipeline = XPathPipeline(classifier_type="entailment")  # BART-NLI
+pipeline = XPathPipeline(classifier_type="cosine")      # TAS-B
 
 # Run query
 results, xpath_query, trace = pipeline.run("jazz venues in all days")
@@ -243,6 +271,32 @@ Each execution produces detailed traces in `reasoning_traces/traces/`:
 }
 ```
 
+## Classifier Comparison
+
+| Classifier | Model | Pros | Cons |
+|------------|-------|------|------|
+| **LLM** | GPT-4o | Most accurate, provides reasoning | Slow, API cost |
+| **Entailment** | BART-NLI | Good for logical inference, local | Less flexible |
+| **Cosine** | TAS-B | Fast, good for similarity, local | No reasoning |
+
+### LLM Classifier
+Uses GPT-4o for semantic classification with detailed reasoning:
+```json
+{"index": 0, "match": true, "reasoning": "Name contains 'Jazz' and description mentions live performances."}
+```
+
+### Entailment Classifier
+Uses BART-NLI to score entailment between node text and predicate:
+- For leaf nodes: scores node description directly
+- For parent nodes: averages scores of children in subtree
+- Configurable threshold (default: 0.5)
+
+### Cosine Classifier
+Uses TAS-B embeddings for semantic similarity:
+- Fast batch processing with normalized embeddings
+- For parent nodes: averages similarity scores of children
+- Configurable threshold (default: 0.6)
+
 ## Extending the System
 
 ### Adding New Classifiers
@@ -258,10 +312,7 @@ class MyClassifier(PredicateClassifier):
         pass
 ```
 
-### Planned Classifiers
-
-- **CosineClassifier**: TAS-B embedding similarity
-- **EntailmentClassifier**: BART-NLI entailment scoring
+Then register in `predicate_classifiers/__init__.py` and `pipeline/xpath_pipeline.py`.
 
 ## License
 

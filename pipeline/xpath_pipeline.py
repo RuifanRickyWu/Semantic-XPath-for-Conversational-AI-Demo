@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from client import get_client
 from xpath_query_generation import XPathQueryGenerator
 from dense_xpath import DenseXPathExecutor, ExecutionTrace
-from predicate_classifiers import NodeInfo, LLMPredicateClassifier, EntailmentPredicateClassifier
+from predicate_classifiers import NodeInfo, LLMPredicateClassifier, EntailmentPredicateClassifier, CosinePredicateClassifier
 
 
 class XPathPipeline:
@@ -21,9 +21,10 @@ class XPathPipeline:
     Pipeline for converting user requests into XPath-like queries and executing them.
     Logs all interactions to reasoning traces.
     
-    Supports two classifier types:
+    Supports three classifier types:
     - "llm": LLM-based classification (default)
     - "entailment": BART-NLI entailment scoring
+    - "cosine": TAS-B cosine similarity
     """
     
     LOG_DIR = Path(__file__).parent.parent / "reasoning_traces" / "logs"
@@ -61,8 +62,10 @@ class XPathPipeline:
             return LLMPredicateClassifier(client=self.client)
         elif classifier_type == "entailment":
             return EntailmentPredicateClassifier()
+        elif classifier_type == "cosine":
+            return CosinePredicateClassifier()
         else:
-            raise ValueError(f"Unknown classifier type: {classifier_type}. Use 'llm' or 'entailment'.")
+            raise ValueError(f"Unknown classifier type: {classifier_type}. Use 'llm', 'entailment', or 'cosine'.")
     
     def _setup_logger(self) -> logging.Logger:
         """Setup file and console logging."""
@@ -288,9 +291,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--classifier", "-c",
         type=str,
-        choices=["llm", "entailment"],
+        choices=["llm", "entailment", "cosine"],
         default="llm",
-        help="Classifier type: 'llm' (default) or 'entailment'"
+        help="Classifier type: 'llm' (default), 'entailment', or 'cosine'"
     )
     args = parser.parse_args()
     

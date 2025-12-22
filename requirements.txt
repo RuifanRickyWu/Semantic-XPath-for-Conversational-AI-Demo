@@ -1,0 +1,11 @@
+# Core dependencies
+openai>=1.0.0
+pyyaml>=6.0
+
+# Optional: For embedding-based classifiers
+torch>=2.0.0
+transformers>=4.30.0
+
+# Optional: For development
+pytest>=7.0.0
+

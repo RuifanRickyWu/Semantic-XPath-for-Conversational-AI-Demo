@@ -1,0 +1,13 @@
+{
+  "session_id": "20251221_210335",
+  "start_time": "2025-12-21T21:03:52.430447",
+  "end_time": "2025-12-21T21:06:34.994466",
+  "total_queries": 1,
+  "queries": [
+    {
+      "timestamp": "2025-12-21T21:03:52.430447",
+      "user_request": "Find all place in day 1",
+      "xpath_query": "/Itinerary/Day[1]/POI"
+    }
+  ]
+}

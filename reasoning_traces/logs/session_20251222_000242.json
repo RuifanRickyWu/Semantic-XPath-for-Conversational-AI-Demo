@@ -1,0 +1,21 @@
+{
+  "session_id": "20251222_000242",
+  "start_time": "2025-12-22T00:02:55.307266",
+  "end_time": "2025-12-22T00:03:23.843915",
+  "total_queries": 1,
+  "queries": [
+    {
+      "timestamp": "2025-12-22T00:02:55.307266",
+      "user_request": "find me all places relate to jazz",
+      "xpath_query": "/Itinerary/Day/POI[description =~ \"jazz\"]",
+      "result_count": 1,
+      "results": [
+        {
+          "path": "/Itinerary/Day[2]/POI[3]",
+          "name": "Rivoli",
+          "type": "POI"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+2025-12-21 23:23:00 | INFO | Pipeline initialized. Session ID: 20251221_232300
+2025-12-21 23:23:00 | INFO | CLI session started
+2025-12-21 23:24:26 | INFO | User request: Find me all italian place in day 1
+2025-12-21 23:24:28 | INFO | Generated XPath: /Itinerary/Day[1]/POI[description =~ "italian"]
+2025-12-21 23:24:28 | DEBUG | TRACE: {"timestamp": "2025-12-21T23:24:28.035053", "user_request": "Find me all italian place in day 1", "xpath_query": "/Itinerary/Day[1]/POI[description =~ \"italian\"]"}
+2025-12-21 23:24:36 | INFO | Session saved to: /Users/rwu/dev/LLM-VM/reasoning_traces/logs/session_20251221_232300.json
+2025-12-21 23:24:36 | INFO | CLI session ended by user

@@ -3,6 +3,7 @@ Cosine similarity-based predicate classifier.
 Uses TAS-B embeddings to compute semantic similarity between node content and predicates.
 """
 
+import time
 import yaml
 from pathlib import Path
 import sys
@@ -73,12 +74,15 @@ class CosinePredicateClassifier(PredicateClassifier):
         Returns:
             BatchClassificationResult with full details for tracing
         """
+        start_time = time.time()
+        
         if not nodes:
             return BatchClassificationResult(
                 predicate=predicate,
                 input_nodes=[],
                 results=[],
-                classifier_type="cosine"
+                classifier_type="cosine",
+                duration_ms=0.0
             )
         
         results = []
@@ -110,12 +114,15 @@ class CosinePredicateClassifier(PredicateClassifier):
                 **detail
             })
         
+        duration_ms = (time.time() - start_time) * 1000
+        
         return BatchClassificationResult(
             predicate=predicate,
             input_nodes=nodes,
             results=results,
             classifier_type="cosine",
-            scores_detail=scores_detail
+            scores_detail=scores_detail,
+            duration_ms=duration_ms
         )
     
     def _score_node(self, node: NodeInfo, predicate: str) -> tuple[float, dict]:

@@ -14,6 +14,7 @@ Algorithm:
 
 import json
 import re
+import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -48,6 +49,7 @@ class ExecutionStep:
     nodes_before: int
     nodes_after: int
     details: dict = field(default_factory=dict)
+    duration_ms: Optional[float] = None  # Duration of this step (for predicate_batch steps)
 
 
 @dataclass
@@ -59,9 +61,11 @@ class ExecutionTrace:
     steps: list[ExecutionStep] = field(default_factory=list)
     batch_classifications: list[dict] = field(default_factory=list)  # Detailed batch info
     results: list[dict] = field(default_factory=list)
+    total_duration_ms: Optional[float] = None  # Total execution time
+    classification_duration_ms: Optional[float] = None  # Total time spent in classification
     
     def to_dict(self) -> dict:
-        return {
+        result = {
             "query": self.query,
             "timestamp": self.timestamp,
             "segments": self.segments,
@@ -72,13 +76,19 @@ class ExecutionTrace:
                     "segment": s.segment,
                     "nodes_before": s.nodes_before,
                     "nodes_after": s.nodes_after,
-                    "details": s.details
+                    "details": s.details,
+                    **({"duration_ms": round(s.duration_ms, 2)} if s.duration_ms is not None else {})
                 }
                 for s in self.steps
             ],
             "batch_classifications": self.batch_classifications,
             "results": self.results
         }
+        if self.total_duration_ms is not None:
+            result["total_duration_ms"] = round(self.total_duration_ms, 2)
+        if self.classification_duration_ms is not None:
+            result["classification_duration_ms"] = round(self.classification_duration_ms, 2)
+        return result
 
 
 class DenseXPathExecutor:
@@ -201,6 +211,7 @@ class DenseXPathExecutor:
         Returns:
             Tuple of (matching nodes, execution trace)
         """
+        start_time = time.time()
         self.step_counter = 0
         
         # Initialize trace
@@ -215,6 +226,7 @@ class DenseXPathExecutor:
         trace.segments = [self._segment_to_string(s) for s in segments]
         
         if not segments:
+            trace.total_duration_ms = (time.time() - start_time) * 1000
             return [], trace
         
         # Collect predicates for bottom-up processing
@@ -241,6 +253,15 @@ class DenseXPathExecutor:
             }
             for n in results
         ]
+        
+        # Calculate total and classification durations
+        trace.total_duration_ms = (time.time() - start_time) * 1000
+        
+        # Sum up classification durations from batch_classifications
+        classification_time = sum(
+            bc.get("duration_ms", 0) for bc in trace.batch_classifications
+        )
+        trace.classification_duration_ms = classification_time
         
         # Save trace
         if save_trace:
@@ -352,7 +373,8 @@ class DenseXPathExecutor:
                         "predicate": predicate,
                         "batch_classification_index": len(trace.batch_classifications) - 1,
                         "matched_paths": [n.tree_path for n in matching]
-                    }
+                    },
+                    duration_ms=batch_result.duration_ms
                 ))
                 
                 # Update current_nodes to only matching ones
@@ -435,7 +457,8 @@ class DenseXPathExecutor:
                         "level": pred_idx,
                         "batch_classification_index": len(trace.batch_classifications) - 1,
                         "matched_paths": [n.tree_path for n in matching]
-                    }
+                    },
+                    duration_ms=batch_result.duration_ms
                 ))
                 
                 passing_nodes[pred_idx] = {n.tree_path for n in matching}
@@ -464,7 +487,8 @@ class DenseXPathExecutor:
                         "level": pred_idx,
                         "batch_classification_index": len(trace.batch_classifications) - 1,
                         "matched_paths": [n.tree_path for n in matching]
-                    }
+                    },
+                    duration_ms=batch_result.duration_ms
                 ))
                 
                 passing_nodes[pred_idx] = {n.tree_path for n in matching}

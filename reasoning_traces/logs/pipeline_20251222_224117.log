@@ -1,0 +1,24 @@
+2025-12-22 22:41:17 | INFO | Pipeline initialized. Session ID: 20251222_224117
+2025-12-22 22:41:17 | INFO | Classifier type: llm
+2025-12-22 22:41:17 | INFO | ==================================================
+2025-12-22 22:41:17 | INFO | Pipeline run started
+2025-12-22 22:41:17 | INFO | User request: find me an artistic day
+2025-12-22 22:41:18 | INFO | Generated XPath: /Itinerary/Day[description =~ "artistic"]
+2025-12-22 22:41:18 | INFO | Executing query: /Itinerary/Day[description =~ "artistic"]
+2025-12-22 22:41:21 | INFO | Found 3 matching nodes
+2025-12-22 22:41:21 | INFO |   - /Itinerary/Day[1]: None
+2025-12-22 22:41:21 | INFO |   - /Itinerary/Day[2]: None
+2025-12-22 22:41:21 | INFO |   - /Itinerary/Day[3]: None
+2025-12-22 22:41:21 | DEBUG | TRACE: {"timestamp": "2025-12-22T22:41:21.857410", "user_request": "find me an artistic day", "xpath_query": "/Itinerary/Day[description =~ \"artistic\"]", "result_count": 3, "results": [{"path": "/Itinerary/Day[1]", "name": null, "type": "Day"}, {"path": "/Itinerary/Day[2]", "name": null, "type": "Day"}, {"path": "/Itinerary/Day[3]", "name": null, "type": "Day"}]}
+2025-12-22 22:41:21 | INFO | Pipeline run completed
+2025-12-22 22:41:21 | INFO | ==================================================
+2025-12-22 22:41:21 | INFO | ==================================================
+2025-12-22 22:41:21 | INFO | Pipeline run started
+2025-12-22 22:41:21 | INFO | User request: find jazz restaurant in a relaxing day
+2025-12-22 22:41:22 | INFO | Generated XPath: /Itinerary/Day[description =~ "relaxing"]/Restaurant[description =~ "jazz"]
+2025-12-22 22:41:22 | INFO | Executing query: /Itinerary/Day[description =~ "relaxing"]/Restaurant[description =~ "jazz"]
+2025-12-22 22:41:27 | INFO | Found 1 matching nodes
+2025-12-22 22:41:27 | INFO |   - /Itinerary/Day[3]/Restaurant[4]: Jazz Bistro
+2025-12-22 22:41:27 | DEBUG | TRACE: {"timestamp": "2025-12-22T22:41:27.818966", "user_request": "find jazz restaurant in a relaxing day", "xpath_query": "/Itinerary/Day[description =~ \"relaxing\"]/Restaurant[description =~ \"jazz\"]", "result_count": 1, "results": [{"path": "/Itinerary/Day[3]/Restaurant[4]", "name": "Jazz Bistro", "type": "Restaurant"}]}
+2025-12-22 22:41:27 | INFO | Pipeline run completed
+2025-12-22 22:41:27 | INFO | ==================================================

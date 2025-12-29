@@ -4,6 +4,7 @@ Uses LLM to batch classify nodes against semantic predicates.
 """
 
 import json
+import time
 from pathlib import Path
 import sys
 
@@ -65,6 +66,8 @@ class LLMPredicateClassifier(PredicateClassifier):
         Returns:
             BatchClassificationResult with full details for tracing
         """
+        start_time = time.time()
+        
         if not nodes:
             return BatchClassificationResult(
                 predicate=predicate,
@@ -72,7 +75,8 @@ class LLMPredicateClassifier(PredicateClassifier):
                 results=[],
                 classifier_type="llm",
                 prompt_sent="",
-                raw_response=""
+                raw_response="",
+                duration_ms=0.0
             )
         
         # Build prompt with all nodes
@@ -103,13 +107,16 @@ class LLMPredicateClassifier(PredicateClassifier):
                 reasoning=reasoning
             ))
         
+        duration_ms = (time.time() - start_time) * 1000
+        
         return BatchClassificationResult(
             predicate=predicate,
             input_nodes=nodes,
             results=results,
             classifier_type="llm",
             prompt_sent=prompt,
-            raw_response=response
+            raw_response=response,
+            duration_ms=duration_ms
         )
     
     def _build_batch_prompt(self, nodes: list[NodeInfo], predicate: str) -> str:

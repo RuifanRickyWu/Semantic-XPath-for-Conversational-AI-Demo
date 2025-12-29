@@ -1,0 +1,12 @@
+2025-12-22 21:57:06 | INFO | Pipeline initialized. Session ID: 20251222_215706
+2025-12-22 21:57:06 | INFO | Classifier type: llm
+2025-12-22 21:57:06 | INFO | ==================================================
+2025-12-22 21:57:06 | INFO | Pipeline run started
+2025-12-22 21:57:06 | INFO | User request: find me italian restaurants
+2025-12-22 21:57:08 | INFO | Generated XPath: /Itinerary/Day/Restaurant[description =~ "italian"]
+2025-12-22 21:57:08 | INFO | Executing query: /Itinerary/Day/Restaurant[description =~ "italian"]
+2025-12-22 21:57:13 | INFO | Found 1 matching nodes
+2025-12-22 21:57:13 | INFO |   - /Itinerary/Day[1]/Restaurant[2]: Buca Yorkville
+2025-12-22 21:57:13 | DEBUG | TRACE: {"timestamp": "2025-12-22T21:57:13.321965", "user_request": "find me italian restaurants", "xpath_query": "/Itinerary/Day/Restaurant[description =~ \"italian\"]", "result_count": 1, "results": [{"path": "/Itinerary/Day[1]/Restaurant[2]", "name": "Buca Yorkville", "type": "Restaurant"}]}
+2025-12-22 21:57:13 | INFO | Pipeline run completed
+2025-12-22 21:57:13 | INFO | ==================================================

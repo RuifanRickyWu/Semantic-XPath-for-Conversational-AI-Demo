@@ -92,10 +92,11 @@ class BatchClassificationResult:
     predicate: str
     input_nodes: list[NodeInfo]
     results: list[ClassificationResult]
-    classifier_type: str = "llm"  # "llm" or "entailment"
+    classifier_type: str = "llm"  # "llm", "entailment", or "cosine"
     prompt_sent: Optional[str] = None  # For LLM classifier
     raw_response: Optional[str] = None  # For LLM classifier
-    scores_detail: Optional[dict] = None  # For entailment classifier
+    scores_detail: Optional[dict] = None  # For entailment/cosine classifier
+    duration_ms: Optional[float] = None  # Time taken for this batch classification
     
     def to_dict(self) -> dict:
         """Convert to dictionary for JSON serialization."""
@@ -108,6 +109,8 @@ class BatchClassificationResult:
             "matched_count": sum(1 for r in self.results if r.is_match),
             "matched_paths": [r.node_info.tree_path for r in self.results if r.is_match],
         }
+        if self.duration_ms is not None:
+            result["duration_ms"] = round(self.duration_ms, 2)
         if self.prompt_sent:
             result["prompt_sent"] = self.prompt_sent
         if self.raw_response:

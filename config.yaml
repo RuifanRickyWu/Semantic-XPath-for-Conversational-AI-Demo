@@ -4,9 +4,6 @@ openai:
   temperature: 0.7
   max_tokens: 4096
 
-entailment:
-  threshold: 0.5
-  hypothesis_template: "This is related to {predicate}."
-
-cosine_similarity:
-  threshold: 0.6
+xpath_executor:
+  top_k: 5
+  score_threshold: 0.01

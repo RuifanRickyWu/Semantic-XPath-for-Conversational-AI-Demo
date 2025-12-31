@@ -51,7 +51,7 @@ Output:
 /Itinerary/Day[description =~ "relaxing"]/Restaurant[description =~ "italian"]
 
 User: find jazz venues on day 1
-Output:
+wo jiu xu 
 /Itinerary/Day[1]/POI[description =~ "jazz"]
 
 User: seafood restaurants

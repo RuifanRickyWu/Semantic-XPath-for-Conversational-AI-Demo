@@ -19,8 +19,17 @@ Path rules:
 - Paths are symbolic and deterministic.
 - You may ONLY use the allowed path node types: Itinerary, Day, POI, Restaurant.
 - You may use positional indexing on Day nodes, e.g., Day[1], Day[2].
-- You may use positional indexing on leaf nodes, e.g., POI[2], Restaurant[1], and you may use -1 to mean the last element (e.g., POI[-1]).
-- You may use parentheses for global indexing, e.g., (/Itinerary/Day/POI)[5].
+- You may use positional indexing on leaf nodes, e.g., POI[2], Restaurant[1].
+- You may use -1 to mean the last element, e.g., POI[-1].
+- You may use RANGE indexing with colon syntax: [start:end] (inclusive on both ends).
+  - POI[1:3] means POI 1, 2, and 3
+  - POI[2:4] means POI 2, 3, and 4
+  - Restaurant[1:2] means Restaurant 1 and 2
+- You may use "to end" RANGE indexing: [-N:] means "last N elements".
+  - POI[-2:] means the last 2 POIs
+  - Restaurant[-3:] means the last 3 Restaurants
+  - Day[-1:] means the last Day (same as Day[-1])
+- You may use parentheses for global indexing, e.g., (/Itinerary/Day/POI)[5] or (/Itinerary/Day/POI)[1:3] or (/Itinerary/Day/POI)[-2:].
 - Do NOT put any free-text or semantic content in the path.
 
 Semantic predicate rules:
@@ -31,10 +40,12 @@ Semantic predicate rules:
 - Semantic predicates apply to the node they are attached to.
 - Format: NodeType[description =~ "query"]
 - You CAN combine semantic predicate with positional index: NodeType[description =~ "query"][index]
+- You CAN combine semantic predicate with range index: NodeType[description =~ "query"][1:3]
 
 IMPORTANT: When user asks for "Nth [semantic type]", you MUST include BOTH the semantic predicate AND the index.
 - "second museum" = POI[description =~ "museum"][2] (NOT just POI[2])
 - "first Italian restaurant" = Restaurant[description =~ "italian"][1]
+- "first 3 museums" = POI[description =~ "museum"][1:3]
 
 Output format:
 - The output MUST be a single XPath-like query string.
@@ -88,5 +99,45 @@ Output:
 User: second museum
 Output:
 (/Itinerary/Day/POI[description =~ "museum"])[2]
+
+User: first 2 museums
+Output:
+(/Itinerary/Day/POI[description =~ "museum"])[1:2]
+
+User: top 3 POIs in day 1
+Output:
+/Itinerary/Day[1]/POI[1:3]
+
+User: first 2 Italian restaurants
+Output:
+(/Itinerary/Day/Restaurant[description =~ "italian"])[1:2]
+
+User: POI 2 to 4 globally
+Output:
+(/Itinerary/Day/POI)[2:4]
+
+User: restaurants 1 and 2 in every day
+Output:
+/Itinerary/Day/Restaurant[1:2]
+
+User: last 2 POIs
+Output:
+(/Itinerary/Day/POI)[-2:]
+
+User: last 3 restaurants globally
+Output:
+(/Itinerary/Day/Restaurant)[-3:]
+
+User: the last 2 museums
+Output:
+(/Itinerary/Day/POI[description =~ "museum"])[-2:]
+
+User: last 2 POIs in every day
+Output:
+/Itinerary/Day/POI[-2:]
+
+User: last restaurant in day 1
+Output:
+/Itinerary/Day[1]/Restaurant[-1]
 
 Now convert the following user request into a query.

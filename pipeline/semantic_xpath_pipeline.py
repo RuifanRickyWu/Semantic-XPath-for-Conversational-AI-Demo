@@ -29,7 +29,12 @@ class SemanticXPathPipeline:
     against the tree memory with semantic scoring.
     """
     
-    def __init__(self, top_k: int = None, score_threshold: float = None):
+    def __init__(
+        self, 
+        top_k: int = None, 
+        score_threshold: float = None,
+        scoring_method: str = None
+    ):
         """
         Initialize the pipeline.
         
@@ -38,10 +43,16 @@ class SemanticXPathPipeline:
                    If None, uses value from config.yaml.
             score_threshold: Minimum score for a node to be considered relevant.
                    If None, uses value from config.yaml.
+            scoring_method: Scoring method ("llm" or "entailment").
+                   If None, uses value from config.yaml.
         """
         self.query_generator = XPathQueryGenerator()
         # Let executor load from config if values not provided
-        self.executor = DenseXPathExecutor(top_k=top_k, score_threshold=score_threshold)
+        self.executor = DenseXPathExecutor(
+            top_k=top_k, 
+            score_threshold=score_threshold,
+            scoring_method=scoring_method
+        )
     
     def process_request(self, user_request: str) -> dict:
         """
@@ -130,7 +141,7 @@ class SemanticXPathPipeline:
         print("=" * 60)
         print("Semantic XPath Pipeline - Interactive Mode")
         print("=" * 60)
-        print(f"Config: top_k={self.executor.top_k}, score_threshold={self.executor.score_threshold}")
+        print(f"Config: scoring_method={self.executor.scoring_method}, top_k={self.executor.top_k}, score_threshold={self.executor.score_threshold}")
         print("Enter your request to generate and execute an XPath query.")
         print("Type 'exit' to quit.\n")
         
@@ -166,16 +177,24 @@ def main():
     executor_config = config.get("xpath_executor", {})
     default_top_k = executor_config.get("top_k", 5)
     default_threshold = executor_config.get("score_threshold", 0.5)
+    default_method = executor_config.get("scoring_method", "llm")
     
     parser = argparse.ArgumentParser(description="Semantic XPath Pipeline")
     parser.add_argument("--top-k", type=int, default=None, 
                         help=f"Top K nodes for semantic matching (default from config: {default_top_k})")
     parser.add_argument("--threshold", type=float, default=None, 
                         help=f"Score threshold for relevance (default from config: {default_threshold})")
+    parser.add_argument("--scoring", "-s", type=str, default=None,
+                        choices=["llm", "entailment"],
+                        help=f"Scoring method: llm or entailment (default from config: {default_method})")
     
     args = parser.parse_args()
     
-    pipeline = SemanticXPathPipeline(top_k=args.top_k, score_threshold=args.threshold)
+    pipeline = SemanticXPathPipeline(
+        top_k=args.top_k, 
+        score_threshold=args.threshold,
+        scoring_method=args.scoring
+    )
     pipeline.run_interactive()
 
 

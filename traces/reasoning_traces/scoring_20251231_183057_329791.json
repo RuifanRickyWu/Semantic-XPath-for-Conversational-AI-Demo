@@ -1,0 +1,121 @@
+{
+  "timestamp": "20251231_183057_329791",
+  "predicate": "museum",
+  "nodes": [
+    {
+      "id": "node_0_main",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+      "parent_idx": 0,
+      "is_main": true
+    },
+    {
+      "id": "node_1_main",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+      "parent_idx": 1,
+      "is_main": true
+    },
+    {
+      "id": "node_2_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+      "parent_idx": 2,
+      "is_main": true
+    },
+    {
+      "id": "node_3_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history.",
+      "parent_idx": 3,
+      "is_main": true
+    },
+    {
+      "id": "node_4_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+      "parent_idx": 4,
+      "is_main": true
+    },
+    {
+      "id": "node_5_main",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+      "parent_idx": 5,
+      "is_main": true
+    },
+    {
+      "id": "node_6_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+      "parent_idx": 6,
+      "is_main": true
+    },
+    {
+      "id": "node_7_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+      "parent_idx": 7,
+      "is_main": true
+    }
+  ],
+  "raw_response": "[\n  {\"id\": \"node_0_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a market.\"},\n  {\"id\": \"node_1_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a tower for city views.\"},\n  {\"id\": \"node_2_main\", \"score\": 0.6, \"reasoning\": \"Moderate match; while it's an art gallery, it shares some characteristics with museums.\"},\n  {\"id\": \"node_3_main\", \"score\": 1.0, \"reasoning\": \"Perfect match; explicitly described as a world-renowned museum.\"},\n  {\"id\": \"node_4_main\", \"score\": 0.3, \"reasoning\": \"Weak match; it's a historic site, not a museum, but has some educational elements.\"},\n  {\"id\": \"node_5_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a music venue.\"},\n  {\"id\": \"node_6_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a recreational area.\"},\n  {\"id\": \"node_7_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a historic district with shops.\"}\n]",
+  "results": [
+    {
+      "node_id": "node_0_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a market."
+    },
+    {
+      "node_id": "node_1_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a tower for city views."
+    },
+    {
+      "node_id": "node_2_main",
+      "node_type": "POI",
+      "score": 0.6,
+      "reasoning": "Moderate match; while it's an art gallery, it shares some characteristics with museums."
+    },
+    {
+      "node_id": "node_3_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Perfect match; explicitly described as a world-renowned museum."
+    },
+    {
+      "node_id": "node_4_main",
+      "node_type": "POI",
+      "score": 0.3,
+      "reasoning": "Weak match; it's a historic site, not a museum, but has some educational elements."
+    },
+    {
+      "node_id": "node_5_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a music venue."
+    },
+    {
+      "node_id": "node_6_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a recreational area."
+    },
+    {
+      "node_id": "node_7_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a historic district with shops."
+    }
+  ]
+}

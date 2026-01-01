@@ -7,3 +7,15 @@ openai:
 xpath_executor:
   top_k: 5
   score_threshold: 0.01
+  # Scoring method: "llm", "entailment", or "cosine"
+  scoring_method: "entailment"
+
+entailment:
+  model: "facebook/bart-large-mnli"
+  hypothesis_template: "This is related to {predicate}."
+  # device: auto-detected if not set (cuda > mps > cpu)
+
+cosine:
+  model: "sentence-transformers/msmarco-distilbert-base-tas-b"
+  predicate_template: "{predicate}"
+  # device: auto-detected if not set (cuda > mps > cpu)

@@ -90,3 +90,4 @@ class TraceWriter:
         
         logger.debug(f"Saved reasoning trace to {trace_file}")
 
+

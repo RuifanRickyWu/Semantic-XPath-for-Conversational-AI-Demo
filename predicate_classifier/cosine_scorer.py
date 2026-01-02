@@ -212,3 +212,4 @@ class CosinePredicateScorer(PredicateScorer):
         
         logger.debug(f"Saved cosine scoring trace to {trace_file}")
 
+

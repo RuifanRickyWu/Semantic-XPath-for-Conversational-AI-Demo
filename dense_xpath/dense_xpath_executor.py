@@ -388,3 +388,4 @@ class DenseXPathExecutor:
         
         return next_items, traversal_step
 
+

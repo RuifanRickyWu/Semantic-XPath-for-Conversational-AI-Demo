@@ -185,8 +185,8 @@ def main():
     parser.add_argument("--threshold", type=float, default=None, 
                         help=f"Score threshold for relevance (default from config: {default_threshold})")
     parser.add_argument("--scoring", "-s", type=str, default=None,
-                        choices=["llm", "entailment"],
-                        help=f"Scoring method: llm or entailment (default from config: {default_method})")
+                        choices=["llm", "entailment", "cosine"],
+                        help=f"Scoring method: llm, entailment, or cosine (default from config: {default_method})")
     
     args = parser.parse_args()
     

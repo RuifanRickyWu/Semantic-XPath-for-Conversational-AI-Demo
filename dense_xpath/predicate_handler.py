@@ -212,3 +212,4 @@ class PredicateHandler:
         
         return [nodes[i] for i in top_indices], scores_map, trace
 
+

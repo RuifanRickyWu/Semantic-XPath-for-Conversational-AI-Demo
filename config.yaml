@@ -1,3 +1,8 @@
+# Schema configuration
+# Choose which schema and data file to use
+active_schema: "itinerary"
+active_data: "travel_memory_5day"  # Options: travel_memory_3day, travel_memory_5day
+
 openai:
   api_key: "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"
   model: "gpt-4o"
@@ -5,10 +10,10 @@ openai:
   max_tokens: 4096
 
 xpath_executor:
-  top_k: 5
+  top_k: 3
   score_threshold: 0.01
   # Scoring method: "llm", "entailment", or "cosine"
-  scoring_method: "cosine"
+  scoring_method: "entailment"
 
 entailment:
   model: "facebook/bart-large-mnli"

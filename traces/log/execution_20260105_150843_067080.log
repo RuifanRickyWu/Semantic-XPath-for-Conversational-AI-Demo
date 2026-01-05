@@ -1,0 +1,153 @@
+Query: /Itinerary/Day/Restaurant[description =~ "jazz"]
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260105_150843_067080] Executing query: /Itinerary/Day/Restaurant[description =~ "jazz"]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Day, Restaurant[description =~ "jazz"]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 3: Restaurant[description =~ "jazz"] ---
+Found 10 Restaurant nodes across 3 parent(s)
+Applying semantic predicate: jazz
+Scoring 20 descriptions for predicate 'jazz'
+  Node 0 (Queen Street Warehouse): mean score = 0.687 (from 2 items)
+  Node 1 (Buca Yorkville): mean score = 0.682 (from 2 items)
+  Node 2 (The Rex Hotel Jazz & Blues Bar): mean score = 0.725 (from 2 items)
+  Node 3 (Pow Wow Cafe): mean score = 0.659 (from 2 items)
+  Node 4 (Annona Restaurant): mean score = 0.687 (from 2 items)
+  Node 5 (DaiLo): mean score = 0.695 (from 2 items)
+  Node 6 (Beauty Barbecue & Smokehouse): mean score = 0.673 (from 2 items)
+  Node 7 (Amsterdam BrewHouse): mean score = 0.686 (from 2 items)
+  Node 8 (Cluny Bistro): mean score = 0.690 (from 2 items)
+  Node 9 (Jazz Bistro): mean score = 0.736 (from 2 items)
+Top 5 nodes selected (threshold=0.01, top_k=5)
+After step: 5 nodes remaining
+
+Final result: 5 nodes (sorted by score)
+
+============================================================
+Matched Nodes: 5
+----------------------------------------
+{
+  "tree_path": "Itinerary > Day 3 > Jazz Bistro",
+  "score": 0.7356679141521454,
+  "node": {
+    "type": "Restaurant",
+    "attributes": {},
+    "name": "Jazz Bistro",
+    "time_block": "8:00 PM - 10:30 PM",
+    "description": "Renowned jazz club with intimate setting and excellent acoustics.",
+    "travel_method": "Public Transit",
+    "expected_cost": "CAD 15 + drinks",
+    "highlights": [
+      "Live jazz",
+      "Classic red piano"
+    ]
+  },
+  "children": [
+    {
+      "type": "highlights",
+      "highlight": "Classic red piano"
+    }
+  ]
+}
+{
+  "tree_path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+  "score": 0.7253739237785339,
+  "node": {
+    "type": "Restaurant",
+    "attributes": {},
+    "name": "The Rex Hotel Jazz & Blues Bar",
+    "time_block": "8:00 PM - 10:30 PM",
+    "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+    "travel_method": "Walk",
+    "expected_cost": "CAD 15 + drinks",
+    "highlights": [
+      "Live jazz",
+      "Intimate atmosphere"
+    ]
+  },
+  "children": [
+    {
+      "type": "highlights",
+      "highlight": "Intimate atmosphere"
+    }
+  ]
+}
+{
+  "tree_path": "Itinerary > Day 2 > DaiLo",
+  "score": 0.6947512328624725,
+  "node": {
+    "type": "Restaurant",
+    "attributes": {},
+    "name": "DaiLo",
+    "time_block": "6:00 PM - 7:30 PM",
+    "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+    "travel_method": "Public Transit",
+    "expected_cost": "CAD 50-60",
+    "highlights": [
+      "Fusion menu",
+      "Trendy vibe"
+    ]
+  },
+  "children": [
+    {
+      "type": "highlights",
+      "highlight": "Trendy vibe"
+    }
+  ]
+}
+{
+  "tree_path": "Itinerary > Day 3 > Cluny Bistro",
+  "score": 0.6902109384536743,
+  "node": {
+    "type": "Restaurant",
+    "attributes": {},
+    "name": "Cluny Bistro",
+    "time_block": "6:00 PM - 7:30 PM",
+    "description": "French-inspired bistro serving classic and modern dishes.",
+    "travel_method": "Walk",
+    "expected_cost": "CAD 50-70",
+    "highlights": [
+      "Elegant decor",
+      "French pastries"
+    ]
+  },
+  "children": [
+    {
+      "type": "highlights",
+      "highlight": "French pastries"
+    }
+  ]
+}
+{
+  "tree_path": "Itinerary > Day 2 > Annona Restaurant",
+  "score": 0.6871047616004944,
+  "node": {
+    "type": "Restaurant",
+    "attributes": {},
+    "name": "Annona Restaurant",
+    "time_block": "1:30 PM - 2:30 PM",
+    "description": "Sophisticated international cuisine in a bright, modern setting.",
+    "travel_method": "Walk",
+    "expected_cost": "CAD 30-40",
+    "highlights": [
+      "Patio seating",
+      "Refined dishes"
+    ]
+  },
+  "children": [
+    {
+      "type": "highlights",
+      "highlight": "Refined dishes"
+    }
+  ]
+}

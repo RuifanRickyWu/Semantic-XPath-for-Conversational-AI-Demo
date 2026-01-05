@@ -1,9 +1,12 @@
 """
 Node Utilities - Helper functions for working with XML Element nodes.
+
+Fully dynamic implementation that works with any tree structure.
+No hardcoded node type names - uses structural analysis instead.
 """
 
 import xml.etree.ElementTree as ET
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 
 from .models import MatchedNode
 
@@ -16,29 +19,91 @@ class NodeUtils:
     - Getting node descriptions and names
     - Extracting subtree information
     - Converting nodes to dictionaries
+    
+    All methods are dynamic and work with any tree structure by analyzing
+    node structure rather than checking specific node type names.
     """
+    
+    # Common field names to check (in priority order)
+    NAME_FIELDS = ("name", "title", "label")
+    DESC_FIELDS = ("description", "desc", "summary", "content")
+    
+    @staticmethod
+    def _get_field_value(node: ET.Element, field_names: Tuple[str, ...]) -> str:
+        """Try multiple field names and return the first found value."""
+        for field in field_names:
+            elem = node.find(field)
+            if elem is not None and elem.text:
+                return elem.text
+        return ""
+    
+    @staticmethod
+    def _is_simple_list(node: ET.Element) -> bool:
+        """
+        Check if a node is a simple list (like <highlights>).
+        
+        A simple list has children, but all children are text-only leaf elements.
+        Examples: <highlights><highlight>A</highlight><highlight>B</highlight></highlights>
+        """
+        if len(node) == 0:
+            return False
+        # All children must be text-only leaves (no grandchildren)
+        return all(len(child) == 0 for child in node)
+    
+    @staticmethod
+    def _is_structured_node(node: ET.Element) -> bool:
+        """
+        Check if a node is a structured node (entity like POI, Restaurant, Task).
+        
+        Structured nodes are containers or leaf entities that have meaningful children.
+        Simple text elements and simple lists (like highlights) are NOT structured.
+        """
+        # Must have children or index attribute
+        if node.get("index") is not None:
+            return True
+        
+        if len(node) == 0:
+            return False
+        
+        # Exclude simple lists (all children are text-only)
+        if NodeUtils._is_simple_list(node):
+            return False
+        
+        return True
+    
+    @staticmethod
+    def _is_container_node(node: ET.Element) -> bool:
+        """
+        Check if a node is a container (has index attribute).
+        
+        Container nodes group other nodes (like Day, Project, Category).
+        They typically have an index attribute for ordering.
+        """
+        return node.get("index") is not None
     
     @staticmethod
     def get_node_description(node: ET.Element) -> str:
         """
         Get the description of a node.
         
-        For Day nodes without explicit description, creates summary from children.
+        For container nodes without explicit description, creates summary from children.
+        Works with any tree structure by detecting node types dynamically.
         """
-        desc_elem = node.find("description")
-        if desc_elem is not None and desc_elem.text:
-            return desc_elem.text
+        # First, try to find an explicit description field
+        desc = NodeUtils._get_field_value(node, NodeUtils.DESC_FIELDS)
+        if desc:
+            return desc
         
-        # For Day nodes, create a summary from children
-        if node.tag == "Day":
-            children_descs = []
+        # For container nodes (nodes with index attr), generate summary from children
+        if NodeUtils._is_container_node(node):
+            children_names = []
             for child in node:
-                if child.tag in ("POI", "Restaurant"):
-                    child_name = child.find("name")
-                    if child_name is not None and child_name.text:
-                        children_descs.append(child_name.text)
-            if children_descs:
-                return f"Day with: {', '.join(children_descs[:3])}"
+                if NodeUtils._is_structured_node(child):
+                    child_name = NodeUtils._get_field_value(child, NodeUtils.NAME_FIELDS)
+                    if child_name:
+                        children_names.append(child_name)
+            if children_names:
+                return f"{node.tag} with: {', '.join(children_names[:3])}"
         
         return ""
     
@@ -47,23 +112,27 @@ class NodeUtils:
         """
         Get the display name of a node.
         
-        For Day nodes, uses "Day X" format based on index attribute.
+        For container nodes with index attribute, uses "{NodeType} {index}" format.
+        For leaf nodes, tries common name fields.
+        Works with any tree structure.
         """
-        name_elem = node.find("name")
-        if name_elem is not None and name_elem.text:
-            return name_elem.text
+        # First try common name fields
+        name = NodeUtils._get_field_value(node, NodeUtils.NAME_FIELDS)
+        if name:
+            return name
         
-        # For Day nodes, use index
-        if node.tag == "Day":
-            index = node.get("index", "?")
-            return f"Day {index}"
+        # For container nodes with index, use "{Tag} {index}" format
+        index = node.get("index")
+        if index is not None:
+            return f"{node.tag} {index}"
         
+        # Fallback to tag name
         return node.tag
     
     @staticmethod
     def get_subtree_descriptions(node: ET.Element) -> List[Tuple[str, str, str]]:
         """
-        Get descriptions from all direct children (POI/Restaurant).
+        Get descriptions from all structured child nodes.
         
         Returns:
             List of (type, name, description) tuples
@@ -71,15 +140,10 @@ class NodeUtils:
         results = []
         
         for child in node:
-            if child.tag in ("POI", "Restaurant"):
-                name = ""
-                desc = ""
-                name_elem = child.find("name")
-                desc_elem = child.find("description")
-                if name_elem is not None:
-                    name = name_elem.text or ""
-                if desc_elem is not None:
-                    desc = desc_elem.text or ""
+            # Only include structured nodes (not simple text elements)
+            if NodeUtils._is_structured_node(child):
+                name = NodeUtils._get_field_value(child, NodeUtils.NAME_FIELDS)
+                desc = NodeUtils._get_field_value(child, NodeUtils.DESC_FIELDS)
                 results.append((child.tag, name, desc))
         
         return results
@@ -90,43 +154,46 @@ class NodeUtils:
         Convert an XML node to a dictionary (node's own data only).
         
         Includes type, attributes, and leaf child elements as fields.
+        Handles nested lists (like highlights) automatically.
         """
         result = {
             "type": node.tag,
             "attributes": dict(node.attrib)
         }
         
-        # Add simple child elements as fields
         for child in node:
-            if len(child) == 0:  # Leaf element
+            if len(child) == 0:  # Leaf element (simple text)
                 result[child.tag] = child.text
-            elif child.tag == "highlights":
-                result["highlights"] = [h.text for h in child.findall("highlight")]
+            elif all(len(grandchild) == 0 for grandchild in child):
+                # Simple list (all grandchildren are text leaves)
+                result[child.tag] = [gc.text for gc in child if gc.text]
         
         return result
     
     @staticmethod
     def get_all_children(node: ET.Element) -> List[Dict[str, Any]]:
         """
-        Get all POI/Restaurant children of a node as dictionaries.
+        Get all structured children of a node as dictionaries.
+        
+        Works with any tree structure by detecting structured nodes dynamically.
         """
         children = []
+        
         for child in node:
-            if child.tag in ("POI", "Restaurant"):
-                child_dict = {
-                    "type": child.tag,
-                    "name": "",
-                    "description": "",
-                    "time_block": "",
-                    "expected_cost": "",
-                    "highlights": []
-                }
+            # Only include structured nodes
+            if NodeUtils._is_structured_node(child):
+                child_dict = {"type": child.tag}
+                
                 for elem in child:
-                    if elem.tag == "highlights":
-                        child_dict["highlights"] = [h.text for h in elem.findall("highlight")]
-                    elif elem.text:
+                    if len(elem) == 0 and elem.text:
+                        # Simple text element
                         child_dict[elem.tag] = elem.text
+                    elif len(elem) > 0:
+                        # Nested list (like highlights)
+                        child_dict[elem.tag] = [gc.text for gc in elem if gc.text]
+                
                 children.append(child_dict)
+        
         return children
     
     @classmethod
@@ -174,8 +241,3 @@ get_subtree_descriptions = NodeUtils.get_subtree_descriptions
 node_to_dict = NodeUtils.node_to_dict
 get_all_children = NodeUtils.get_all_children
 node_to_matched = NodeUtils.node_to_matched
-
-
-
-
-

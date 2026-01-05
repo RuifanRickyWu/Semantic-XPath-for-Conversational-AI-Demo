@@ -127,4 +127,6 @@ class ExecutionResult:
     execution_log: List[str] = field(default_factory=list)
     scoring_traces: List[Dict[str, Any]] = field(default_factory=list)
     traversal_steps: List[TraversalStep] = field(default_factory=list)
+    execution_time_ms: float = 0.0  # Total query execution time in milliseconds
+    data_file: str = ""  # Name of the data file used
 

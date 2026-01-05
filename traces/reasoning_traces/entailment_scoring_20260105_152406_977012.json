@@ -1,0 +1,68 @@
+{
+  "timestamp": "20260105_152406_977012",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "artistic",
+  "hypothesis": "This is related to artistic.",
+  "nodes": [
+    {
+      "id": "node_0_main",
+      "type": "POI",
+      "name": "High Park",
+      "description": "Toronto's largest public park featuring hiking trails, a zoo, and cherry blossoms in spring.",
+      "premise": "POI: High Park - Toronto's largest public park featuring hiking trails, a zoo, and cherry blossoms in spring.",
+      "score": 0.5953015685081482
+    },
+    {
+      "id": "node_1_main",
+      "type": "POI",
+      "name": "Graffiti Alley",
+      "description": "Vibrant street art corridor in the Fashion District showcasing local and international artists.",
+      "premise": "POI: Graffiti Alley - Vibrant street art corridor in the Fashion District showcasing local and international artists.",
+      "score": 0.9977692365646362
+    },
+    {
+      "id": "node_2_main",
+      "type": "POI",
+      "name": "Spadina Museum",
+      "description": "Historic house museum showcasing early 20th-century Toronto life with period furnishings.",
+      "premise": "POI: Spadina Museum - Historic house museum showcasing early 20th-century Toronto life with period furnishings.",
+      "score": 0.17250700294971466
+    },
+    {
+      "id": "node_3_main",
+      "type": "POI",
+      "name": "Nathan Phillips Square",
+      "description": "Iconic city square featuring the Toronto sign, reflecting pool, and evening atmosphere.",
+      "premise": "POI: Nathan Phillips Square - Iconic city square featuring the Toronto sign, reflecting pool, and evening atmosphere.",
+      "score": 0.8956056833267212
+    }
+  ],
+  "results": [
+    {
+      "node_id": "node_0_main",
+      "node_type": "POI",
+      "score": 0.5953015685081482,
+      "reasoning": "Entailment score: 0.5953"
+    },
+    {
+      "node_id": "node_1_main",
+      "node_type": "POI",
+      "score": 0.9977692365646362,
+      "reasoning": "Entailment score: 0.9978"
+    },
+    {
+      "node_id": "node_2_main",
+      "node_type": "POI",
+      "score": 0.17250700294971466,
+      "reasoning": "Entailment score: 0.1725"
+    },
+    {
+      "node_id": "node_3_main",
+      "node_type": "POI",
+      "score": 0.8956056833267212,
+      "reasoning": "Entailment score: 0.8956"
+    }
+  ]
+}

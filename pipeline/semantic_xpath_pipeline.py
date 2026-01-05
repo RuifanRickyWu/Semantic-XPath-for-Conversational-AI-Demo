@@ -4,6 +4,7 @@ Semantic XPath Pipeline - Interactive pipeline for generating and executing XPat
 
 import json
 import yaml
+import time
 from pathlib import Path
 import sys
 
@@ -62,26 +63,45 @@ class SemanticXPathPipeline:
             user_request: Natural language request from the user
             
         Returns:
-            dict with 'request', 'query', 'matched_nodes', 'execution_log'
+            dict with 'request', 'query', 'matched_nodes', 'execution_log', timing info
         """
+        total_start = time.perf_counter()
+        
         # Generate query
+        query_gen_start = time.perf_counter()
         query = self.query_generator.generate(user_request)
+        query_gen_time_ms = (time.perf_counter() - query_gen_start) * 1000
         
         # Execute query
         execution_result = self.executor.execute(query)
+        
+        total_time_ms = (time.perf_counter() - total_start) * 1000
         
         return {
             "request": user_request,
             "query": query,
             "matched_nodes": execution_result.matched_nodes,
             "execution_log": execution_result.execution_log,
-            "scoring_traces": execution_result.scoring_traces
+            "scoring_traces": execution_result.scoring_traces,
+            "timing": {
+                "query_generation_ms": query_gen_time_ms,
+                "query_execution_ms": execution_result.execution_time_ms,
+                "total_ms": total_time_ms
+            }
         }
     
     def format_result(self, result: dict) -> str:
         """Format the result for display (sorted by score, highest first)."""
         lines = []
         lines.append(f"\nQuery: {result['query']}")
+        
+        # Display timing information if available
+        if "timing" in result:
+            timing = result["timing"]
+            lines.append(f"⏱️  Timing: query_gen={timing['query_generation_ms']:.1f}ms, "
+                        f"execution={timing['query_execution_ms']:.1f}ms, "
+                        f"total={timing['total_ms']:.1f}ms")
+        
         lines.append(f"\nMatched {len(result['matched_nodes'])} node(s) (sorted by score):")
         lines.append("=" * 60)
         
@@ -137,13 +157,19 @@ class SemanticXPathPipeline:
         Each request generates a query and executes it.
         
         Type 'exit' or 'quit' to stop.
+        Type 'stats' to see session statistics.
         """
         print("=" * 60)
         print("Semantic XPath Pipeline - Interactive Mode")
         print("=" * 60)
         print(f"Config: scoring_method={self.executor.scoring_method}, top_k={self.executor.top_k}, score_threshold={self.executor.score_threshold}")
         print("Enter your request to generate and execute an XPath query.")
-        print("Type 'exit' to quit.\n")
+        print("Type 'exit' to quit, 'stats' for session timing.\n")
+        
+        # Session statistics
+        session_start = time.perf_counter()
+        query_count = 0
+        total_query_time_ms = 0.0
         
         while True:
             try:
@@ -153,15 +179,43 @@ class SemanticXPathPipeline:
                     continue
                 
                 if user_input.lower() in ("exit", "quit", "q"):
+                    session_time = (time.perf_counter() - session_start) * 1000
+                    print(f"\n📊 Session Summary:")
+                    print(f"   Queries: {query_count}")
+                    print(f"   Total query time: {total_query_time_ms:.1f}ms")
+                    print(f"   Session duration: {session_time:.1f}ms")
+                    if query_count > 0:
+                        print(f"   Average per query: {total_query_time_ms / query_count:.1f}ms")
                     print("Goodbye!")
                     break
+                
+                if user_input.lower() == "stats":
+                    session_time = (time.perf_counter() - session_start) * 1000
+                    print(f"\n📊 Session Statistics:")
+                    print(f"   Queries executed: {query_count}")
+                    print(f"   Total query time: {total_query_time_ms:.1f}ms")
+                    print(f"   Session duration: {session_time:.1f}ms")
+                    if query_count > 0:
+                        print(f"   Average per query: {total_query_time_ms / query_count:.1f}ms")
+                    print()
+                    continue
                 
                 result = self.process_request(user_input)
                 print(self.format_result(result))
                 print()
                 
+                # Update session stats
+                query_count += 1
+                if "timing" in result:
+                    total_query_time_ms += result["timing"]["total_ms"]
+                
             except KeyboardInterrupt:
-                print("\nGoodbye!")
+                session_time = (time.perf_counter() - session_start) * 1000
+                print(f"\n\n📊 Session Summary:")
+                print(f"   Queries: {query_count}")
+                print(f"   Total query time: {total_query_time_ms:.1f}ms")
+                print(f"   Session duration: {session_time:.1f}ms")
+                print("Goodbye!")
                 break
             except Exception as e:
                 print(f"Error: {e}\n")

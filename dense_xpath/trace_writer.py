@@ -55,6 +55,8 @@ class TraceWriter:
         
         with open(log_file, "w") as f:
             f.write(f"Query: {result.query}\n")
+            f.write(f"Data File: {result.data_file}\n")
+            f.write(f"Execution Time: {result.execution_time_ms:.2f}ms\n")
             f.write("=" * 60 + "\n\n")
             f.write("Execution Log:\n")
             f.write("-" * 40 + "\n")
@@ -75,13 +77,16 @@ class TraceWriter:
         trace_data = {
             "timestamp": timestamp,
             "query": result.query,
+            "data_file": result.data_file,
+            "execution_time_ms": result.execution_time_ms,
             "traversal_steps": [step.to_dict() for step in result.traversal_steps],
             "scoring_traces": result.scoring_traces,
             "matched_nodes": [m.to_dict() for m in result.matched_nodes],
             "summary": {
                 "total_steps": len(result.traversal_steps),
                 "total_scoring_calls": len(result.scoring_traces),
-                "matched_count": len(result.matched_nodes)
+                "matched_count": len(result.matched_nodes),
+                "execution_time_ms": result.execution_time_ms
             }
         }
         

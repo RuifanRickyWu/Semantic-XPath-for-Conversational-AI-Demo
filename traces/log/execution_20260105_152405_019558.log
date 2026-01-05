@@ -1,0 +1,63 @@
+Query: (/Itinerary/Day[description =~ "relaxing"])[2]/POI[description =~ "artistic"][2]
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260105_152405_019558] Executing query: (/Itinerary/Day[description =~ "relaxing"])[2]/POI[description =~ "artistic"][2]
+Data file: travel_memory_5day.xml
+Parsed steps: [Itinerary, Day[description =~ "relaxing"][2], POI[description =~ "artistic"][2]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day[description =~ "relaxing"][2] ---
+Found 5 Day nodes across 1 parent(s)
+Applying semantic predicate: relaxing
+Scoring 37 descriptions for predicate 'relaxing'
+  Node 0 (Day 1): mean score = 0.595 (from 7 items)
+  Node 1 (Day 2): mean score = 0.454 (from 7 items)
+  Node 2 (Day 3): mean score = 0.639 (from 7 items)
+  Node 3 (Day 4): mean score = 0.748 (from 8 items)
+  Node 4 (Day 5): mean score = 0.633 (from 8 items)
+Top 3 nodes selected (threshold=0.01, top_k=3)
+Applying positional index: [2]
+Selected node at index 2 (0-based: 1)
+After step: 1 nodes remaining
+
+--- Step 3: POI[description =~ "artistic"][2] ---
+Found 4 POI nodes across 1 parent(s)
+Applying semantic predicate: artistic
+Scoring 4 descriptions for predicate 'artistic'
+  Node 0 (High Park): mean score = 0.595 (from 1 items)
+  Node 1 (Graffiti Alley): mean score = 0.998 (from 1 items)
+  Node 2 (Spadina Museum): mean score = 0.173 (from 1 items)
+  Node 3 (Nathan Phillips Square): mean score = 0.896 (from 1 items)
+Top 3 nodes selected (threshold=0.01, top_k=3)
+Applying positional index: [2]
+Selected node at index 2 (0-based: 1)
+After step: 1 nodes remaining
+
+Final result: 1 nodes (sorted by score)
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+{
+  "tree_path": "Itinerary > Day 4 > Graffiti Alley",
+  "score": 0.9977692365646362,
+  "node": {
+    "type": "POI",
+    "attributes": {},
+    "name": "Graffiti Alley",
+    "time_block": "3:00 PM - 4:00 PM",
+    "description": "Vibrant street art corridor in the Fashion District showcasing local and international artists.",
+    "travel_method": "Walk",
+    "expected_cost": "Free",
+    "highlights": [
+      "Street art",
+      "Photography spot",
+      "Urban culture"
+    ]
+  },
+  "children": []
+}

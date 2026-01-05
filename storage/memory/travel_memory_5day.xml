@@ -207,6 +207,172 @@
       </highlights>
     </Restaurant>
   </Day>
+  <Day index="4">
+    <Restaurant>
+      <name>Lady Marmalade</name>
+      <time_block>9:00 AM - 10:30 AM</time_block>
+      <description>Popular brunch spot in Leslieville with creative dishes and excellent coffee.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 20-30</expected_cost>
+      <highlights>
+        <highlight>Famous benedicts</highlight>
+        <highlight>Trendy neighborhood</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>High Park</name>
+      <time_block>11:00 AM - 1:00 PM</time_block>
+      <description>Toronto's largest public park featuring hiking trails, a zoo, and cherry blossoms in spring.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Grenadier Pond</highlight>
+        <highlight>Free zoo</highlight>
+        <highlight>Nature trails</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Mildred's Temple Kitchen</name>
+      <time_block>1:30 PM - 2:30 PM</time_block>
+      <description>Beloved Liberty Village restaurant known for comfort food and stunning space.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 25-40</expected_cost>
+      <highlights>
+        <highlight>Blueberry buttermilk pancakes</highlight>
+        <highlight>Industrial chic</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Graffiti Alley</name>
+      <time_block>3:00 PM - 4:00 PM</time_block>
+      <description>Vibrant street art corridor in the Fashion District showcasing local and international artists.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Street art</highlight>
+        <highlight>Photography spot</highlight>
+        <highlight>Urban culture</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Spadina Museum</name>
+      <time_block>4:30 PM - 6:00 PM</time_block>
+      <description>Historic house museum showcasing early 20th-century Toronto life with period furnishings.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 10</expected_cost>
+      <highlights>
+        <highlight>Victorian gardens</highlight>
+        <highlight>Period architecture</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Canoe Restaurant</name>
+      <time_block>7:00 PM - 9:00 PM</time_block>
+      <description>Fine dining with stunning 54th-floor views and refined Canadian cuisine.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 80-120</expected_cost>
+      <highlights>
+        <highlight>Panoramic views</highlight>
+        <highlight>Award-winning cuisine</highlight>
+        <highlight>Special occasion</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Nathan Phillips Square</name>
+      <time_block>9:30 PM - 10:30 PM</time_block>
+      <description>Iconic city square featuring the Toronto sign, reflecting pool, and evening atmosphere.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Toronto sign</highlight>
+        <highlight>City Hall architecture</highlight>
+        <highlight>Evening lights</highlight>
+      </highlights>
+    </POI>
+  </Day>
+  <Day index="5">
+    <Restaurant>
+      <name>Carousel Bakery</name>
+      <time_block>9:00 AM - 10:00 AM</time_block>
+      <description>Famous St. Lawrence Market stall serving Toronto's signature peameal bacon sandwich.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 10-15</expected_cost>
+      <highlights>
+        <highlight>Peameal bacon</highlight>
+        <highlight>Market atmosphere</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Harbourfront Centre</name>
+      <time_block>10:30 AM - 12:30 PM</time_block>
+      <description>Waterfront cultural hub with galleries, performances, and lake views.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Art exhibitions</highlight>
+        <highlight>Lake Ontario views</highlight>
+        <highlight>Cultural events</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Pai Northern Thai Kitchen</name>
+      <time_block>1:00 PM - 2:00 PM</time_block>
+      <description>Acclaimed Thai restaurant serving authentic Northern Thai dishes.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 20-35</expected_cost>
+      <highlights>
+        <highlight>Khao soi</highlight>
+        <highlight>Authentic flavors</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Hockey Hall of Fame</name>
+      <time_block>2:30 PM - 4:30 PM</time_block>
+      <description>Shrine to Canada's national sport with Stanley Cup, memorabilia, and interactive exhibits.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 25</expected_cost>
+      <highlights>
+        <highlight>Stanley Cup</highlight>
+        <highlight>Interactive games</highlight>
+        <highlight>Historic jerseys</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Eaton Centre</name>
+      <time_block>5:00 PM - 6:30 PM</time_block>
+      <description>Iconic downtown shopping mall with flagship stores and stunning architecture.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Varies</expected_cost>
+      <highlights>
+        <highlight>Shopping</highlight>
+        <highlight>Flight Stop sculpture</highlight>
+        <highlight>Food court</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Richmond Station</name>
+      <time_block>7:00 PM - 8:30 PM</time_block>
+      <description>Farm-to-table restaurant in a historic building, Top Chef Canada winner.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 50-80</expected_cost>
+      <highlights>
+        <highlight>Local ingredients</highlight>
+        <highlight>Historic space</highlight>
+        <highlight>Award-winning chef</highlight>
+      </highlights>
+    </Restaurant>
+    <Restaurant>
+      <name>C'est What</name>
+      <time_block>9:00 PM - 11:00 PM</time_block>
+      <description>Cozy basement pub featuring Ontario craft beers and live music.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15-25</expected_cost>
+      <highlights>
+        <highlight>Craft beer selection</highlight>
+        <highlight>Live music</highlight>
+        <highlight>Farewell drinks</highlight>
+      </highlights>
+    </Restaurant>
+  </Day>
 </Itinerary>
-
 

@@ -2,6 +2,7 @@
 Dense XPath Executor - Main executor class that orchestrates query execution.
 
 Uses modular components for parsing, node operations, indexing, and scoring.
+Supports multiple data files through schema configuration.
 """
 
 import logging
@@ -10,6 +11,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import List, Tuple, Optional
 from datetime import datetime
+import time
 import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -24,13 +26,7 @@ from .node_utils import NodeUtils
 from .index_handler import IndexHandler
 from .predicate_handler import PredicateHandler
 from .trace_writer import TraceWriter
-
-
-def load_config() -> dict:
-    """Load configuration from config.yaml"""
-    config_path = Path(__file__).parent.parent / "config.yaml"
-    with open(config_path, "r") as f:
-        return yaml.safe_load(f)
+from .schema_loader import load_config, get_data_path, load_schema
 
 
 logger = logging.getLogger(__name__)
@@ -46,9 +42,8 @@ class DenseXPathExecutor:
     - Semantic predicates: Day[description =~ "artistic"]
     - Global indexing: (/Itinerary/Day/POI)[5], (/Itinerary/Day/POI)[1:3]
     - Combined: Day[description =~ "artistic"][2]
+    - Multiple data files via schema configuration
     """
-    
-    MEMORY_PATH = Path(__file__).parent.parent / "storage" / "memory" / "tree_memory.xml"
     
     def __init__(
         self, 
@@ -56,7 +51,9 @@ class DenseXPathExecutor:
         scoring_method: str = None,
         top_k: int = None,
         score_threshold: float = None,
-        config: dict = None
+        config: dict = None,
+        data_name: str = None,
+        schema_name: str = None
     ):
         """
         Initialize the executor.
@@ -68,6 +65,9 @@ class DenseXPathExecutor:
             top_k: Number of top-scoring nodes to consider. Defaults to config value.
             score_threshold: Minimum score threshold. Defaults to config value.
             config: Optional config dict. If not provided, loads from config.yaml.
+            data_name: Name of the data file to use (e.g., "travel_memory_5day").
+                      If None, uses active_data from config.yaml or schema's default.
+            schema_name: Name of the schema to use. If None, uses active_schema from config.
         """
         if config is None:
             config = load_config()
@@ -78,6 +78,16 @@ class DenseXPathExecutor:
         self.scoring_method = scoring_method or executor_config.get("scoring_method", "llm")
         self.top_k = top_k if top_k is not None else executor_config.get("top_k", 5)
         self.score_threshold = score_threshold if score_threshold is not None else executor_config.get("score_threshold", 0.5)
+        
+        # Store schema and data configuration
+        self.schema_name = schema_name
+        self.data_name = data_name
+        
+        # Resolve data file path using schema loader
+        self._memory_path = get_data_path(data_name=data_name, schema_name=schema_name)
+        
+        # Load schema for reference
+        self._schema = load_schema(schema_name)
         
         # Initialize scorer
         if scorer is not None:
@@ -99,10 +109,15 @@ class DenseXPathExecutor:
         self._root = None
     
     @property
+    def memory_path(self) -> Path:
+        """Get the path to the data file."""
+        return self._memory_path
+    
+    @property
     def tree(self) -> ET.ElementTree:
         """Lazy load the XML tree."""
         if self._tree is None:
-            self._tree = ET.parse(self.MEMORY_PATH)
+            self._tree = ET.parse(self._memory_path)
             self._root = self._tree.getroot()
         return self._tree
     
@@ -112,6 +127,11 @@ class DenseXPathExecutor:
         if self._root is None:
             _ = self.tree  # Trigger lazy load
         return self._root
+    
+    @property
+    def root_type(self) -> str:
+        """Get the root element's tag name."""
+        return self.root.tag
     
     def execute(self, query: str) -> ExecutionResult:
         """
@@ -123,12 +143,14 @@ class DenseXPathExecutor:
         Returns:
             ExecutionResult with matched nodes and execution log
         """
+        start_time = time.perf_counter()
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         execution_log = []
         scoring_traces = []
         traversal_steps = []
         
         execution_log.append(f"[{timestamp}] Executing query: {query}")
+        execution_log.append(f"Data file: {self._memory_path.name}")
         
         # Parse the query
         steps, global_index = self.parser.parse(query)
@@ -143,13 +165,15 @@ class DenseXPathExecutor:
         
         # Execute BFS-like traversal with path and score tracking
         # Each item is a NodeItem with (node, path, score, parent_group_id)
-        current_items: List[NodeItem] = [NodeItem(self.root, "Itinerary", 1.0, 0)]
+        # Use dynamic root type instead of hardcoded "Itinerary"
+        root_type = self.root_type
+        current_items: List[NodeItem] = [NodeItem(self.root, root_type, 1.0, 0)]
         
         for step_idx, step in enumerate(steps):
             execution_log.append(f"\n--- Step {step_idx + 1}: {step} ---")
             
-            if step.node_type == "Itinerary":
-                # Root node, just verify
+            # Dynamic root check - works with any root type
+            if step.node_type == root_type:
                 current_items, traversal_step = self._handle_root_step(
                     current_items, step, step_idx, execution_log
                 )
@@ -211,14 +235,22 @@ class DenseXPathExecutor:
             NodeUtils.node_to_matched(item.node, item.path, item.score) 
             for item in current_items
         ]
+        
+        # Calculate execution time
+        end_time = time.perf_counter()
+        execution_time_ms = (end_time - start_time) * 1000
+        
         execution_log.append(f"\nFinal result: {len(matched_nodes)} nodes (sorted by score)")
+        execution_log.append(f"⏱️  Query execution time: {execution_time_ms:.2f}ms")
         
         result = ExecutionResult(
             query=query,
             matched_nodes=matched_nodes,
             execution_log=execution_log,
             scoring_traces=scoring_traces,
-            traversal_steps=traversal_steps
+            traversal_steps=traversal_steps,
+            execution_time_ms=execution_time_ms,
+            data_file=self._memory_path.name
         )
         
         # Save traces
@@ -243,20 +275,21 @@ class DenseXPathExecutor:
         step_idx: int,
         execution_log: List[str]
     ) -> Tuple[List[NodeItem], Optional[TraversalStep]]:
-        """Handle the root Itinerary step."""
-        if current_items and current_items[0].node.tag == "Itinerary":
-            execution_log.append("Matched Itinerary root")
+        """Handle the root step (works with any root type)."""
+        root_type = self.root_type
+        if current_items and current_items[0].node.tag == root_type:
+            execution_log.append(f"Matched {root_type} root")
             traversal_step = TraversalStep(
                 step_index=step_idx,
                 step_query=str(step),
                 nodes_before=[{"type": "root"}],
-                nodes_after=[{"type": "Itinerary", "path": "Itinerary"}],
+                nodes_after=[{"type": root_type, "path": root_type}],
                 action="root_match",
                 details={"matched": True}
             )
             return current_items, traversal_step
         else:
-            execution_log.append("ERROR: Root is not Itinerary")
+            execution_log.append(f"ERROR: Root is not {root_type}")
             return [], None
     
     def _apply_type_match(
@@ -424,7 +457,3 @@ class DenseXPathExecutor:
         )
         
         return next_items, traversal_step
-
-
-
-

@@ -1,0 +1,47 @@
+Query: (/Itinerary/Day/POI)[7]
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260105_152228_953379] Executing query: (/Itinerary/Day/POI)[7]
+Data file: travel_memory_5day.xml
+Global index detected: 7
+Parsed steps: [Itinerary, Day, POI]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 5 Day nodes across 1 parent(s)
+After step: 5 nodes remaining
+
+--- Step 3: POI ---
+Found 15 POI nodes across 5 parent(s)
+After step: 15 nodes remaining
+
+Applying global index: [7]
+Selected node at index 7 (0-based: 6)
+
+Final result: 1 nodes (sorted by score)
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+{
+  "tree_path": "Itinerary > Day 3 > Toronto Islands",
+  "score": 1.0,
+  "node": {
+    "type": "POI",
+    "attributes": {},
+    "name": "Toronto Islands",
+    "time_block": "11:00 AM - 2:00 PM",
+    "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+    "travel_method": "Walk & Ferry",
+    "expected_cost": "CAD 8.50",
+    "highlights": [
+      "Waterfront views",
+      "Centre Island"
+    ]
+  },
+  "children": []
+}

@@ -1,0 +1,66 @@
+Query: (/Itinerary/Day/POI[description =~ "artistic"])[2]
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260105_152339_203245] Executing query: (/Itinerary/Day/POI[description =~ "artistic"])[2]
+Data file: travel_memory_5day.xml
+Global index detected: 2
+Parsed steps: [Itinerary, Day, POI[description =~ "artistic"]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 5 Day nodes across 1 parent(s)
+After step: 5 nodes remaining
+
+--- Step 3: POI[description =~ "artistic"] ---
+Found 15 POI nodes across 5 parent(s)
+Applying semantic predicate: artistic
+Scoring 15 descriptions for predicate 'artistic'
+  Node 0 (St. Lawrence Market): mean score = 0.233 (from 1 items)
+  Node 1 (CN Tower): mean score = 0.581 (from 1 items)
+  Node 2 (Art Gallery of Ontario): mean score = 0.998 (from 1 items)
+  Node 3 (Royal Ontario Museum): mean score = 0.995 (from 1 items)
+  Node 4 (Casa Loma): mean score = 0.946 (from 1 items)
+  Node 5 (Rivoli): mean score = 0.997 (from 1 items)
+  Node 6 (Toronto Islands): mean score = 0.170 (from 1 items)
+  Node 7 (Distillery District): mean score = 0.988 (from 1 items)
+  Node 8 (High Park): mean score = 0.595 (from 1 items)
+  Node 9 (Graffiti Alley): mean score = 0.998 (from 1 items)
+  Node 10 (Spadina Museum): mean score = 0.173 (from 1 items)
+  Node 11 (Nathan Phillips Square): mean score = 0.896 (from 1 items)
+  Node 12 (Harbourfront Centre): mean score = 0.999 (from 1 items)
+  Node 13 (Hockey Hall of Fame): mean score = 0.004 (from 1 items)
+  Node 14 (Eaton Centre): mean score = 0.040 (from 1 items)
+Top 3 nodes selected (threshold=0.01, top_k=3)
+After step: 3 nodes remaining
+
+Applying global index: [2]
+Selected node at index 2 (0-based: 1)
+
+Final result: 1 nodes (sorted by score)
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+{
+  "tree_path": "Itinerary > Day 4 > Graffiti Alley",
+  "score": 0.9977692365646362,
+  "node": {
+    "type": "POI",
+    "attributes": {},
+    "name": "Graffiti Alley",
+    "time_block": "3:00 PM - 4:00 PM",
+    "description": "Vibrant street art corridor in the Fashion District showcasing local and international artists.",
+    "travel_method": "Walk",
+    "expected_cost": "Free",
+    "highlights": [
+      "Street art",
+      "Photography spot",
+      "Urban culture"
+    ]
+  },
+  "children": []
+}

@@ -1,0 +1,45 @@
+# Itinerary Tree Schema
+# Defines the structure for travel itinerary trees
+
+name: "itinerary"
+description: "Travel itinerary with days, POIs and restaurants"
+
+# Tree hierarchy (for documentation and LLM prompt generation)
+hierarchy: |
+  Itinerary (root)
+  ├── Day
+  │   ├── POI
+  │   └── Restaurant
+
+# Node type definitions
+nodes:
+  Itinerary:
+    type: root
+    
+  Day:
+    type: container
+    index_attr: "index"  # Uses <Day index="1"> for identification
+    name_field: null     # No name field, uses "Day {index}" format
+    description_field: "description"
+    
+  POI:
+    type: leaf
+    name_field: "name"
+    description_field: "description"
+    
+  Restaurant:
+    type: leaf
+    name_field: "name"
+    description_field: "description"
+
+# Available data files for this schema
+data_files:
+  travel_memory_3day: "memory/travel_memory_3day.xml"
+  travel_memory_5day: "memory/travel_memory_5day.xml"
+
+# Default data file to use
+default_data: "travel_memory_3day"
+
+# Associated prompt file for XPath query generation
+prompt_file: "prompts/xpath_query_generator.txt"
+

@@ -2,7 +2,7 @@
 
 A natural language to XPath-like query system for structured itinerary data. Convert plain English requests into executable queries against an XML tree with semantic matching capabilities.
 
-## 🎯 Overview
+## Overview
 
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌──────────────────┐     ┌─────────────┐
@@ -14,7 +14,7 @@ A natural language to XPath-like query system for structured itinerary data. Con
                       [description =~ "jazz"]
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 LLM-VM/
@@ -28,7 +28,8 @@ LLM-VM/
 │   ├── parser.py                    # XPath query string parser
 │   ├── index_handler.py             # Positional indexing logic
 │   ├── predicate_handler.py         # Semantic predicate scoring
-│   ├── node_utils.py                # XML node utilities
+│   ├── node_utils.py                # XML node utilities (dynamic, schema-agnostic)
+│   ├── schema_loader.py             # Schema and data file loading
 │   └── trace_writer.py              # Execution trace logging
 ├── predicate_classifier/
 │   ├── base.py                      # PredicateScorer abstract interface
@@ -40,15 +41,96 @@ LLM-VM/
 │   ├── bart_client.py               # BART NLI model client
 │   └── tas_b_client.py              # TAS-B embedding client
 ├── storage/
-│   ├── memory/tree_memory.xml       # Itinerary data (XML tree)
-│   └── prompts/xpath_query_generator.txt
+│   ├── schemas/                     # Tree schema definitions
+│   │   └── itinerary.yaml           # Itinerary schema (Day/POI/Restaurant)
+│   ├── memory/                      # XML data files
+│   │   ├── travel_memory_3day.xml   # 3-day Toronto itinerary
+│   │   └── travel_memory_5day.xml   # 5-day Toronto itinerary
+│   └── prompts/
+│       └── xpath_query_generator.txt
 ├── traces/                          # Execution & scoring traces
 │   ├── log/
 │   └── reasoning_traces/
-└── config.yaml                      # Configuration
+└── config.yaml                      # Configuration (schema, data, scoring)
 ```
 
-## 🌳 Data Model: Itinerary Tree
+---
+
+## Schema System
+
+The system uses a **schema-based architecture** that supports multiple tree structures and data files.
+
+### Schema Configuration
+
+Each schema defines:
+- Tree hierarchy (node types and relationships)
+- Available data files
+- Field mappings (name, description fields)
+
+**Example schema (`storage/schemas/itinerary.yaml`):**
+```yaml
+name: "itinerary"
+description: "Travel itinerary with days, POIs and restaurants"
+
+hierarchy: |
+  Itinerary (root)
+  ├── Day
+  │   ├── POI
+  │   └── Restaurant
+
+nodes:
+  Day:
+    type: container
+    index_attr: "index"
+  POI:
+    type: leaf
+    name_field: "name"
+    description_field: "description"
+  Restaurant:
+    type: leaf
+    name_field: "name"
+    description_field: "description"
+
+data_files:
+  travel_memory_3day: "memory/travel_memory_3day.xml"
+  travel_memory_5day: "memory/travel_memory_5day.xml"
+
+default_data: "travel_memory_3day"
+```
+
+### Switching Data Files
+
+**Method 1: Via config.yaml**
+```yaml
+active_schema: "itinerary"
+active_data: "travel_memory_5day"  # Switch to 5-day itinerary
+```
+
+**Method 2: Via code**
+```python
+from dense_xpath import DenseXPathExecutor
+
+# Use 3-day itinerary
+executor_3day = DenseXPathExecutor(data_name="travel_memory_3day")
+
+# Use 5-day itinerary
+executor_5day = DenseXPathExecutor(data_name="travel_memory_5day")
+```
+
+**Method 3: Query available options**
+```python
+from dense_xpath import list_available_data_files, get_schema_info
+
+print(list_available_data_files())
+# ['travel_memory_3day', 'travel_memory_5day']
+
+print(get_schema_info())
+# {'schema_name': 'itinerary', 'active_data': 'travel_memory_3day', ...}
+```
+
+---
+
+## Data Model: Itinerary Tree
 
 ```
 Itinerary (root)
@@ -63,13 +145,17 @@ Itinerary (root)
 │   ├── Restaurant: Pow Wow Cafe
 │   ├── POI: Royal Ontario Museum
 │   └── ...
-└── Day[3]
+├── Day[3]
+│   └── ...
+├── Day[4] (5-day version only)
+│   └── ...
+└── Day[5] (5-day version only)
     └── ...
 ```
 
 **Node Types:**
 - `Itinerary` - Root node
-- `Day` - Contains POIs and Restaurants
+- `Day` - Contains POIs and Restaurants (has `index` attribute)
 - `POI` - Points of Interest (museums, towers, markets, etc.)
 - `Restaurant` - Dining locations
 
@@ -77,7 +163,7 @@ Itinerary (root)
 
 ---
 
-## 🔄 End-to-End Flow
+## End-to-End Flow
 
 ### Step 1: Natural Language → XPath Query
 
@@ -159,7 +245,7 @@ Matched 2 node(s) (sorted by score):
 
 ---
 
-## 📝 The 6 Query Types
+## The 6 Query Types
 
 The system supports **6 fundamental query types**. Understanding these categories helps you craft effective queries:
 
@@ -382,7 +468,7 @@ Query: /Itinerary/Day/POI
 
 ---
 
-## 📊 Query Type Decision Tree
+## Query Type Decision Tree
 
 ```
                         ┌─────────────────────────────┐
@@ -420,7 +506,7 @@ Query: /Itinerary/Day/POI
 
 ---
 
-## 🔧 Advanced: Combined Queries
+## Advanced: Combined Queries
 
 Combine multiple query types for precise results:
 
@@ -444,11 +530,15 @@ Query: /Itinerary/Day/POI[description =~ "jazz"][-1]
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Edit `config.yaml`:
 
 ```yaml
+# Schema and data file selection
+active_schema: "itinerary"
+active_data: "travel_memory_3day"  # Options: travel_memory_3day, travel_memory_5day
+
 openai:
   api_key: "your-api-key"
   model: "gpt-4o"
@@ -456,7 +546,7 @@ openai:
 xpath_executor:
   top_k: 5                    # Max nodes to return
   score_threshold: 0.01       # Min score for semantic matches
-  scoring_method: "entailment"  # "llm", "entailment", or "cosine"
+  scoring_method: "cosine"    # "llm", "entailment", or "cosine"
 
 entailment:
   model: "facebook/bart-large-mnli"
@@ -469,7 +559,7 @@ cosine:
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### Interactive Mode
 
@@ -509,7 +599,23 @@ python -m pipeline.semantic_xpath_pipeline --top-k 10 --threshold 0.5
 
 ```python
 from pipeline import SemanticXPathPipeline
+from dense_xpath import DenseXPathExecutor, list_available_data_files
 
+# Check available data files
+print(list_available_data_files())
+# ['travel_memory_3day', 'travel_memory_5day']
+
+# Use specific data file
+executor = DenseXPathExecutor(
+    data_name="travel_memory_5day",
+    scoring_method="cosine"
+)
+
+result = executor.execute("/Itinerary/Day/POI[description =~ \"museum\"]")
+for node in result.matched_nodes:
+    print(f"- {node.tree_path}: {node.score:.3f}")
+
+# Or use the full pipeline
 pipeline = SemanticXPathPipeline(
     scoring_method="entailment",
     top_k=5,
@@ -518,13 +624,11 @@ pipeline = SemanticXPathPipeline(
 
 result = pipeline.process_request("find all jazz venues")
 print(f"Query: {result['query']}")
-for node in result['matched_nodes']:
-    print(f"- {node.tree_path}: {node.score:.3f}")
 ```
 
 ---
 
-## 🔬 Scoring Methods Deep Dive
+## Scoring Methods Deep Dive
 
 ### 1. LLM Scoring (`llm`)
 
@@ -567,7 +671,7 @@ Query embedding: embed("artistic")
 
 ---
 
-## 📊 Execution Traces
+## Execution Traces
 
 All executions are logged to `traces/`:
 
@@ -584,6 +688,7 @@ traces/
 ```json
 {
   "query": "/Itinerary/Day/POI[description =~ \"jazz\"]",
+  "data_file": "travel_memory_3day.xml",
   "traversal_steps": [
     {
       "step_index": 0,
@@ -611,7 +716,7 @@ traces/
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Clone the repository
@@ -636,7 +741,7 @@ numpy
 
 ---
 
-## 📈 Architecture Diagram
+## Architecture Diagram
 
 ```
                          ┌─────────────────────────────────────────────────┐
@@ -654,8 +759,9 @@ numpy
 │  NL → XPath Query       │    │  Execute against tree   │    │                         │
 │  (LLM-based)            │    │  BFS traversal          │    │  - LLMPredicateScorer   │
 └─────────────────────────┘    │  Semantic filtering     │    │  - EntailmentScorer     │
-                               └───────────┬─────────────┘    │  - CosineScorer         │
-                                           │                  └─────────────────────────┘
+                               │  Multi-data support     │    │  - CosineScorer         │
+                               └───────────┬─────────────┘    └─────────────────────────┘
+                                           │
                     ┌──────────────────────┼────────────────────────┐
                     │                      │                        │
                     ▼                      ▼                        ▼
@@ -666,11 +772,65 @@ numpy
           │ into steps      │    │ [1:3], [-2:]    │      │ predicate       │
           └─────────────────┘    │ Global/Local    │      │ scoring         │
                                  └─────────────────┘      └─────────────────┘
+                                           │
+                                           ▼
+                                 ┌─────────────────┐
+                                 │  SchemaLoader   │
+                                 │                 │
+                                 │ Load schema &   │
+                                 │ resolve data    │
+                                 │ file paths      │
+                                 └─────────────────┘
 ```
 
 ---
 
-## 📚 Key Concepts
+## Extending to New Tree Structures
+
+The system is **fully dynamic** and can support any tree structure (not just itineraries).
+
+### Adding a New Schema
+
+1. Create a new schema file (`storage/schemas/todo.yaml`):
+```yaml
+name: "todo"
+description: "Todo list with projects and tasks"
+
+hierarchy: |
+  TodoList (root)
+  ├── Project
+  │   └── Task
+
+nodes:
+  TodoList:
+    type: root
+  Project:
+    type: container
+    index_attr: "index"
+  Task:
+    type: leaf
+    name_field: "title"
+    description_field: "description"
+
+data_files:
+  my_todos: "memory/todo_list.xml"
+
+default_data: "my_todos"
+```
+
+2. Create the data file (`storage/memory/todo_list.xml`)
+
+3. Update `config.yaml`:
+```yaml
+active_schema: "todo"
+active_data: "my_todos"
+```
+
+4. The system will automatically adapt to your new structure!
+
+---
+
+## Key Concepts
 
 ### The 6 Query Types Summary
 
@@ -712,6 +872,6 @@ NodeType[description =~ "query"]
 | `[-2:]` | Last 2 elements | `POI[-2:]` | `(/Day/POI)[-2:]` |
 ---
 
-## 📄 License
+## License
 
 MIT License

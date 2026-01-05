@@ -6,6 +6,7 @@ Contains all dataclasses used throughout the xpath execution pipeline.
 
 from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional
+import xml.etree.ElementTree as ET
 
 
 @dataclass
@@ -39,6 +40,25 @@ class IndexRange:
         else:
             result["type"] = "single"
         return result
+
+
+@dataclass
+class NodeItem:
+    """
+    A node with its traversal context for tracking parent relationships.
+    
+    Used to preserve parent grouping information during traversal,
+    enabling local indexing like Day/POI[2] to return the 2nd POI
+    in EACH Day rather than the global 2nd POI.
+    """
+    node: ET.Element  # The XML element
+    path: str  # Tree path, e.g., "Itinerary > Day 1 > POI 2"
+    score: float  # Semantic matching score (1.0 if no semantic predicate)
+    parent_group_id: int  # ID for grouping by parent node (for local indexing)
+    
+    def to_tuple(self):
+        """Convert to legacy tuple format (node, path, score) for compatibility."""
+        return (self.node, self.path, self.score)
 
 
 @dataclass

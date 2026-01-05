@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from predicate_classifier import PredicateScorer, get_scorer
 
 from .models import (
-    IndexRange, QueryStep, MatchedNode, TraversalStep, ExecutionResult
+    IndexRange, QueryStep, MatchedNode, TraversalStep, ExecutionResult, NodeItem
 )
 from .parser import QueryParser
 from .node_utils import NodeUtils
@@ -142,8 +142,8 @@ class DenseXPathExecutor:
         execution_log.append(f"Parsed steps: {steps}")
         
         # Execute BFS-like traversal with path and score tracking
-        # Each item is (node, path_string, score)
-        current_items: List[Tuple[ET.Element, str, float]] = [(self.root, "Itinerary", 1.0)]
+        # Each item is a NodeItem with (node, path, score, parent_group_id)
+        current_items: List[NodeItem] = [NodeItem(self.root, "Itinerary", 1.0, 0)]
         
         for step_idx, step in enumerate(steps):
             execution_log.append(f"\n--- Step {step_idx + 1}: {step} ---")
@@ -205,11 +205,11 @@ class DenseXPathExecutor:
             traversal_steps.append(global_step)
         
         # Convert to result format, sorted by score descending
-        current_items.sort(key=lambda x: x[2], reverse=True)
+        current_items.sort(key=lambda item: item.score, reverse=True)
         
         matched_nodes = [
-            NodeUtils.node_to_matched(node, path, score) 
-            for node, path, score in current_items
+            NodeUtils.node_to_matched(item.node, item.path, item.score) 
+            for item in current_items
         ]
         execution_log.append(f"\nFinal result: {len(matched_nodes)} nodes (sorted by score)")
         
@@ -228,23 +228,23 @@ class DenseXPathExecutor:
     
     def _items_to_info(
         self, 
-        items: List[Tuple[ET.Element, str, float]]
+        items: List[NodeItem]
     ) -> List[dict]:
         """Convert items to info dictionaries for tracing."""
         return [
-            NodeUtils.node_to_info_dict(n, p, s)
-            for n, p, s in items
+            NodeUtils.node_to_info_dict(item.node, item.path, item.score)
+            for item in items
         ]
     
     def _handle_root_step(
         self,
-        current_items: List[Tuple[ET.Element, str, float]],
+        current_items: List[NodeItem],
         step: QueryStep,
         step_idx: int,
         execution_log: List[str]
-    ) -> Tuple[List[Tuple[ET.Element, str, float]], Optional[TraversalStep]]:
+    ) -> Tuple[List[NodeItem], Optional[TraversalStep]]:
         """Handle the root Itinerary step."""
-        if current_items and current_items[0][0].tag == "Itinerary":
+        if current_items and current_items[0].node.tag == "Itinerary":
             execution_log.append("Matched Itinerary root")
             traversal_step = TraversalStep(
                 step_index=step_idx,
@@ -261,44 +261,51 @@ class DenseXPathExecutor:
     
     def _apply_type_match(
         self,
-        current_items: List[Tuple[ET.Element, str, float]],
+        current_items: List[NodeItem],
         step: QueryStep,
         execution_log: List[str]
-    ) -> List[Tuple[ET.Element, str, float]]:
-        """Apply type matching to get children of specified type."""
+    ) -> List[NodeItem]:
+        """
+        Apply type matching to get children of specified type.
+        
+        Each parent node's children are assigned a unique parent_group_id,
+        enabling local indexing like Day/POI[2] to select the 2nd POI
+        within EACH Day rather than the global 2nd POI.
+        """
         next_items = []
-        for node, path, parent_score in current_items:
-            children = list(node.findall(step.node_type))
+        for group_id, item in enumerate(current_items):
+            children = list(item.node.findall(step.node_type))
             for child in children:
                 child_name = NodeUtils.get_node_name(child)
-                child_path = f"{path} > {child_name}"
-                next_items.append((child, child_path, parent_score))
+                child_path = f"{item.path} > {child_name}"
+                # Children inherit group_id from their parent's position
+                next_items.append(NodeItem(child, child_path, item.score, group_id))
         
-        execution_log.append(f"Found {len(next_items)} {step.node_type} nodes")
+        execution_log.append(f"Found {len(next_items)} {step.node_type} nodes across {len(current_items)} parent(s)")
         return next_items
     
     def _apply_predicate_step(
         self,
-        items: List[Tuple[ET.Element, str, float]],
+        items: List[NodeItem],
         step: QueryStep,
         step_idx: int,
         execution_log: List[str]
-    ) -> Tuple[List[Tuple[ET.Element, str, float]], dict, TraversalStep]:
+    ) -> Tuple[List[NodeItem], dict, TraversalStep]:
         """Apply semantic predicate filtering."""
         execution_log.append(f"Applying semantic predicate: {step.predicate}")
         
         nodes_before_pred = self._items_to_info(items)
-        nodes_only = [item[0] for item in items]
+        nodes_only = [item.node for item in items]
         
         filtered_nodes, scores_map, trace = self.predicate_handler.apply_semantic_predicate(
             nodes_only, step.predicate, execution_log
         )
         
-        # Filter items and update scores
+        # Filter items and update scores, preserving parent_group_id
         filtered_set = set(id(n) for n in filtered_nodes)
         next_items = [
-            (n, p, scores_map.get(id(n), s))
-            for n, p, s in items if id(n) in filtered_set
+            NodeItem(item.node, item.path, scores_map.get(id(item.node), item.score), item.parent_group_id)
+            for item in items if id(item.node) in filtered_set
         ]
         
         nodes_after_pred = self._items_to_info(next_items)
@@ -319,24 +326,47 @@ class DenseXPathExecutor:
     
     def _apply_index_step(
         self,
-        items: List[Tuple[ET.Element, str, float]],
+        items: List[NodeItem],
         step: QueryStep,
         step_idx: int,
         execution_log: List[str]
-    ) -> Tuple[List[Tuple[ET.Element, str, float]], TraversalStep]:
-        """Apply positional index filtering."""
+    ) -> Tuple[List[NodeItem], TraversalStep]:
+        """
+        Apply positional index filtering with LOCAL semantics.
+        
+        Groups items by parent_group_id and applies the index to each group
+        separately. This enables Day/POI[2] to return the 2nd POI in EACH Day.
+        """
         execution_log.append(f"Applying positional index: {step.index}")
         
         nodes_before_idx = self._items_to_info(items)
-        nodes_only = [item[0] for item in items]
         
-        indexed_nodes = IndexHandler.apply_index(nodes_only, step.index, execution_log)
+        # Group items by parent_group_id for local indexing
+        from collections import defaultdict
+        groups = defaultdict(list)
+        for item in items:
+            groups[item.parent_group_id].append(item)
         
-        if indexed_nodes:
-            indexed_set = set(id(n) for n in indexed_nodes)
-            next_items = [(n, p, s) for n, p, s in items if id(n) in indexed_set]
-        else:
-            next_items = []
+        # Apply index to each group separately
+        next_items = []
+        group_details = []
+        
+        for group_id in sorted(groups.keys()):
+            group_items = groups[group_id]
+            group_nodes = [item.node for item in group_items]
+            
+            # Apply index to this group's nodes
+            indexed_nodes = IndexHandler.apply_index(group_nodes, step.index, execution_log)
+            
+            if indexed_nodes:
+                indexed_set = set(id(n) for n in indexed_nodes)
+                selected = [item for item in group_items if id(item.node) in indexed_set]
+                next_items.extend(selected)
+                group_details.append({
+                    "group_id": group_id,
+                    "group_size": len(group_items),
+                    "selected_count": len(selected)
+                })
         
         nodes_after_idx = self._items_to_info(next_items)
         
@@ -348,7 +378,9 @@ class DenseXPathExecutor:
             action="positional_index",
             details={
                 "index": step.index.to_dict(),
-                "selected_count": len(next_items)
+                "selected_count": len(next_items),
+                "groups_processed": len(groups),
+                "group_details": group_details
             }
         )
         
@@ -356,22 +388,27 @@ class DenseXPathExecutor:
     
     def _apply_global_index(
         self,
-        items: List[Tuple[ET.Element, str, float]],
+        items: List[NodeItem],
         global_index: IndexRange,
         total_steps: int,
         execution_log: List[str]
-    ) -> Tuple[List[Tuple[ET.Element, str, float]], TraversalStep]:
-        """Apply global index to final result set."""
+    ) -> Tuple[List[NodeItem], TraversalStep]:
+        """
+        Apply global index to final result set.
+        
+        Unlike local indexing, global indexing treats ALL nodes as a single
+        flat list, regardless of parent_group_id.
+        """
         execution_log.append(f"\nApplying global index: {global_index}")
         
         nodes_before_global = self._items_to_info(items)
-        nodes_only = [item[0] for item in items]
+        nodes_only = [item.node for item in items]
         
         indexed_nodes = IndexHandler.apply_index(nodes_only, global_index, execution_log)
         
         if indexed_nodes:
             indexed_set = set(id(n) for n in indexed_nodes)
-            next_items = [(n, p, s) for n, p, s in items if id(n) in indexed_set]
+            next_items = [item for item in items if id(item.node) in indexed_set]
         else:
             next_items = []
         
@@ -387,6 +424,7 @@ class DenseXPathExecutor:
         )
         
         return next_items, traversal_step
+
 
 
 

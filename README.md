@@ -159,113 +159,287 @@ Matched 2 node(s) (sorted by score):
 
 ---
 
-## 📝 Query Types & Examples
+## 📝 The 6 Query Types
 
-### 1. Simple Path Queries
+The system supports **6 fundamental query types**. Understanding these categories helps you craft effective queries:
 
-```
-User: "all POIs"
-Query: /Itinerary/Day/POI
+| # | Type | Description | Example Query |
+|---|------|-------------|---------------|
+| 1 | **Global** | Nth item across ALL results | `(/Itinerary/Day/POI)[5]` |
+| 2 | **Local** | Nth item within EACH parent | `/Itinerary/Day/POI[2]` |
+| 3 | **Syntactic** | Structural path navigation | `/Itinerary/Day[1]/POI[2]` |
+| 4 | **Semantic** | Content-based filtering | `Day[description =~ "artistic"]` |
+| 5 | **Single** | Find one matching item | `(/Itinerary/Day/POI[description =~ "museum"])[1]` |
+| 6 | **Multiple** | Find all matching items | `/Itinerary/Day/POI[description =~ "museum"]` |
 
-User: "all restaurants"
-Query: /Itinerary/Day/Restaurant
-```
+---
 
-### 2. Positional Indexing (Local)
+### Type 1: Global Index
 
-Select by position **within each parent node**:
-
-```
-User: "second POI in every day"
-Query: /Itinerary/Day/POI[2]
-→ Returns: POI #2 from Day 1, POI #2 from Day 2, POI #2 from Day 3
-
-User: "last restaurant in each day"
-Query: /Itinerary/Day/Restaurant[-1]
-→ Returns: Last restaurant from each day
-```
-
-### 3. Global Indexing
-
-Select by position **across all matched nodes**:
+Select by position **across ALL matched nodes** (flattened list).
 
 ```
-User: "the third POI globally"
-Query: (/Itinerary/Day/POI)[3]
-→ Returns: The 3rd POI overall (not per-day)
-
-User: "globally 5th POI"
+User: "find me the 5th POI"
 Query: (/Itinerary/Day/POI)[5]
 ```
 
-**Local vs Global:**
+**How it works:**
 ```
-/Itinerary/Day/POI[2]      → 2nd POI in EACH day (multiple results)
-(/Itinerary/Day/POI)[2]    → 2nd POI OVERALL (single result)
+All POIs flattened: [POI1, POI2, POI3, POI4, POI5, POI6, POI7, POI8]
+                                             ↑
+                                        Select 5th
+Result: 1 node (Royal Ontario Museum)
 ```
 
-### 4. Range Indexing
+**More examples:**
+```
+User: "the third POI globally"
+Query: (/Itinerary/Day/POI)[3]
 
-Select multiple elements by range:
+User: "POIs 2 to 4 globally"  
+Query: (/Itinerary/Day/POI)[2:4]
+
+User: "last 2 POIs globally"
+Query: (/Itinerary/Day/POI)[-2:]
+```
+
+---
+
+### Type 2: Local Index (Per Parent)
+
+Select by position **within EACH parent node** separately.
 
 ```
+User: "find me the second POI in each day"
+Query: /Itinerary/Day/POI[2]
+```
+
+**How it works:**
+```
+Day 1 POIs: [St. Lawrence, CN Tower, Art Gallery] → Select 2nd → CN Tower
+Day 2 POIs: [ROM, Casa Loma, Rivoli]              → Select 2nd → Casa Loma  
+Day 3 POIs: [Toronto Islands, Distillery]         → Select 2nd → Distillery
+
+Result: 3 nodes (one from each Day)
+```
+
+**More examples:**
+```
+User: "second POI in every day"
+Query: /Itinerary/Day/POI[2]
+→ Returns: CN Tower, Casa Loma, Distillery District
+
+User: "last restaurant in each day"  
+Query: /Itinerary/Day/Restaurant[-1]
+
+User: "first 2 POIs in every day"
+Query: /Itinerary/Day/POI[1:2]
+```
+
+**Key Difference - Local vs Global:**
+```
+/Itinerary/Day/POI[2]      → 2nd POI in EACH day (3 results)
+(/Itinerary/Day/POI)[2]    → 2nd POI OVERALL (1 result)
+```
+
+---
+
+### Type 3: Syntactic (Structural Path)
+
+Navigate using **explicit structural constraints** (specific Day, specific position).
+
+```
+User: "find me the second POI in first day"
+Query: /Itinerary/Day[1]/POI[2]
+```
+
+**How it works:**
+```
+Step 1: Day[1]  → Select only Day 1
+Step 2: POI[2]  → Select 2nd POI within Day 1
+
+Result: 1 node (CN Tower)
+```
+
+**More examples:**
+```
+User: "POI in second day"
+Query: /Itinerary/Day[2]/POI
+
 User: "first 3 POIs in day 1"
 Query: /Itinerary/Day[1]/POI[1:3]
 
-User: "POIs 2 to 4 globally"
-Query: (/Itinerary/Day/POI)[2:4]
+User: "last restaurant in day 1"
+Query: /Itinerary/Day[1]/Restaurant[-1]
 
-User: "restaurants 1 and 2 in every day"
-Query: /Itinerary/Day/Restaurant[1:2]
+User: "all restaurants in the last day"
+Query: /Itinerary/Day[-1]/Restaurant
 ```
 
-### 5. Last N Elements
+---
+
+### Type 4: Semantic (Content-Based)
+
+Filter nodes by **semantic meaning** using `[description =~ "query"]`.
 
 ```
-User: "last 2 POIs"
-Query: (/Itinerary/Day/POI)[-2:]
-
-User: "last 3 restaurants globally"
-Query: (/Itinerary/Day/Restaurant)[-3:]
-
-User: "last 2 POIs in every day"
-Query: /Itinerary/Day/POI[-2:]
+User: "find me an artistic day"
+Query: /Itinerary/Day[description =~ "artistic"]
 ```
 
-### 6. Semantic Predicates
-
-Filter by content/meaning:
-
+**How it works:**
 ```
+Score each Day against "artistic":
+  Day 1: 0.85 (has Art Gallery) ✓
+  Day 2: 0.45 (below threshold) ✗
+  Day 3: 0.32 (below threshold) ✗
+
+Result: Day 1 (and all its children)
+```
+
+**More examples:**
+```
+User: "jazz venues"
+Query: /Itinerary/Day/POI[description =~ "jazz"]
+
+User: "Italian restaurants"  
+Query: /Itinerary/Day/Restaurant[description =~ "italian"]
+
 User: "all restaurants in a cultural day"
 Query: /Itinerary/Day[description =~ "cultural"]/Restaurant
 
-User: "find Italian restaurants"
-Query: /Itinerary/Day/Restaurant[description =~ "italian"]
-
-User: "jazz venues"
-Query: /Itinerary/Day/POI[description =~ "jazz"]
+User: "museums"
+Query: /Itinerary/Day/POI[description =~ "museum"]
 ```
 
-### 7. Combined Queries
+---
 
-Semantic predicates + positional indexing:
+### Type 5: Single Result
+
+Find **one specific item** matching criteria (semantic + global index).
 
 ```
-User: "second museum"
-Query: (/Itinerary/Day/POI[description =~ "museum"])[2]
+User: "find me a museum"
+Query: (/Itinerary/Day/POI[description =~ "museum"])[1]
+```
 
-User: "first Italian restaurant"
+**How it works:**
+```
+Step 1: Find all POIs matching "museum"
+        → [ROM, Art Gallery, ...]
+Step 2: Global index [1] → Select first one
+
+Result: 1 node (Royal Ontario Museum)
+```
+
+**More examples:**
+```
+User: "a jazz venue"
+Query: (/Itinerary/Day/POI[description =~ "jazz"])[1]
+
+User: "an Italian restaurant"
 Query: (/Itinerary/Day/Restaurant[description =~ "italian"])[1]
 
+User: "second museum"
+Query: (/Itinerary/Day/POI[description =~ "museum"])[2]
+```
+
+---
+
+### Type 6: Multiple Results
+
+Find **all items** matching criteria (no index constraint).
+
+```
+User: "find me all the museums"
+Query: /Itinerary/Day/POI[description =~ "museum"]
+```
+
+**How it works:**
+```
+Score each POI against "museum":
+  St. Lawrence Market: 0.12 ✗
+  CN Tower: 0.08 ✗
+  Art Gallery: 0.92 ✓
+  Royal Ontario Museum: 0.95 ✓
+  Casa Loma: 0.35 ✗
+  ...
+
+Result: All POIs above threshold (Art Gallery, ROM, etc.)
+```
+
+**More examples:**
+```
+User: "all jazz venues"
+Query: /Itinerary/Day/POI[description =~ "jazz"]
+
+User: "all Italian restaurants"
+Query: /Itinerary/Day/Restaurant[description =~ "italian"]
+
+User: "all POIs"
+Query: /Itinerary/Day/POI
+```
+
+---
+
+## 📊 Query Type Decision Tree
+
+```
+                        ┌─────────────────────────────┐
+                        │     What do you want?       │
+                        └──────────────┬──────────────┘
+                                       │
+                 ┌─────────────────────┼─────────────────────┐
+                 │                     │                     │
+                 ▼                     ▼                     ▼
+         ┌───────────┐         ┌───────────┐         ┌───────────┐
+         │ By Content│         │By Position│         │    All    │
+         │(Semantic) │         │           │         │           │
+         └─────┬─────┘         └─────┬─────┘         └─────┬─────┘
+               │                     │                     │
+               │              ┌──────┴──────┐              │
+               │              │             │              │
+               ▼              ▼             ▼              ▼
+         ┌──────────┐   ┌──────────┐ ┌──────────┐   ┌──────────┐
+         │ Single?  │   │  Global  │ │  Local   │   │ Type 6:  │
+         │ Multiple?│   │ (across  │ │(per-Day) │   │ Multiple │
+         └────┬─────┘   │  all)    │ │          │   │          │
+              │         └────┬─────┘ └────┬─────┘   └──────────┘
+        ┌─────┴─────┐        │            │
+        │           │        │            │
+        ▼           ▼        ▼            ▼
+   ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+   │ Type 5: │ │ Type 6: │ │ Type 1: │ │ Type 2: │
+   │ Single  │ │Multiple │ │ Global  │ │  Local  │
+   └─────────┘ └─────────┘ └─────────┘ └─────────┘
+
+
+   Type 3 (Syntactic): Use when you know exact Day number
+   Type 4 (Semantic):  Use for content-based filtering at any level
+```
+
+---
+
+## 🔧 Advanced: Combined Queries
+
+Combine multiple query types for precise results:
+
+```
 User: "second museum in an artistic day"
 Query: /Itinerary/Day[description =~ "artistic"]/POI[description =~ "museum"][2]
+       ├── Type 4: Semantic filter on Day
+       ├── Type 4: Semantic filter on POI  
+       └── Type 2: Local index [2]
 
-User: "first 2 Italian restaurants"
+User: "first 2 Italian restaurants globally"
 Query: (/Itinerary/Day/Restaurant[description =~ "italian"])[1:2]
+       ├── Type 4: Semantic filter
+       └── Type 1: Global range index
 
-User: "last 2 museums"
-Query: (/Itinerary/Day/POI[description =~ "museum"])[-2:]
+User: "last jazz venue in each day"
+Query: /Itinerary/Day/POI[description =~ "jazz"][-1]
+       ├── Type 4: Semantic filter
+       └── Type 2: Local last index
 ```
 
 ---
@@ -498,12 +672,23 @@ numpy
 
 ## 📚 Key Concepts
 
+### The 6 Query Types Summary
+
+| Type | Syntax Pattern | Scope | Use Case |
+|------|----------------|-------|----------|
+| **Global** | `(/path)[n]` | Across all results | "5th POI overall" |
+| **Local** | `/path[n]` | Per parent | "2nd POI in each Day" |
+| **Syntactic** | `/Day[1]/POI[2]` | Explicit structure | "2nd POI in Day 1" |
+| **Semantic** | `[description =~ "x"]` | Content filtering | "artistic days" |
+| **Single** | Semantic + `[1]` | One result | "find a museum" |
+| **Multiple** | Semantic only | All matches | "find all museums" |
+
 ### Local vs Global Indexing
 
-| Syntax | Scope | Example |
-|--------|-------|---------|
-| `Day/POI[2]` | Local (per parent) | 2nd POI in EACH Day |
-| `(Day/POI)[2]` | Global (all results) | 2nd POI overall |
+| Syntax | Scope | Result |
+|--------|-------|--------|
+| `/Itinerary/Day/POI[2]` | Local (per parent) | 2nd POI in EACH Day (3 results) |
+| `(/Itinerary/Day/POI)[2]` | Global (flattened) | 2nd POI overall (1 result) |
 
 ### Semantic Predicate Syntax
 
@@ -514,31 +699,19 @@ NodeType[description =~ "query"]
 - Uses `description` field for matching
 - Operator `=~` indicates semantic (fuzzy) matching
 - Quotes around the search term
+- Scored using LLM, entailment, or cosine similarity
 
-### Index Syntax
+### Index Syntax Reference
 
-| Syntax | Meaning |
-|--------|---------|
-| `[1]` | First element |
-| `[2]` | Second element |
-| `[-1]` | Last element |
-| `[1:3]` | Elements 1, 2, 3 |
-| `[-2:]` | Last 2 elements |
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests
-5. Submit a pull request
-
+| Syntax | Meaning | Local Example | Global Example |
+|--------|---------|---------------|----------------|
+| `[1]` | First element | `POI[1]` | `(/Day/POI)[1]` |
+| `[2]` | Second element | `POI[2]` | `(/Day/POI)[2]` |
+| `[-1]` | Last element | `POI[-1]` | `(/Day/POI)[-1]` |
+| `[1:3]` | Elements 1, 2, 3 | `POI[1:3]` | `(/Day/POI)[1:3]` |
+| `[-2:]` | Last 2 elements | `POI[-2:]` | `(/Day/POI)[-2:]` |
 ---
 
 ## 📄 License
 
 MIT License
-
-

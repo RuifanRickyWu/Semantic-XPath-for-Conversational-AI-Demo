@@ -1,0 +1,281 @@
+Query: /Itinerary/Day[description =~ "artistic"]
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260103_172329_690340] Executing query: /Itinerary/Day[description =~ "artistic"]
+Parsed steps: [Itinerary, Day[description =~ "artistic"]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day[description =~ "artistic"] ---
+Found 3 Day nodes
+Applying semantic predicate: artistic
+Scoring 21 descriptions for predicate 'artistic'
+  Node 0 (Day 1): mean score = 0.654 (from 7 items)
+  Node 1 (Day 2): mean score = 0.680 (from 7 items)
+  Node 2 (Day 3): mean score = 0.653 (from 7 items)
+Top 3 nodes selected (threshold=0.01, top_k=5)
+After step: 3 nodes remaining
+
+Final result: 3 nodes (sorted by score)
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+{
+  "tree_path": "Itinerary > Day 2",
+  "score": 0.6797673276492527,
+  "node": {
+    "type": "Day",
+    "attributes": {
+      "index": "2"
+    }
+  },
+  "children": [
+    {
+      "type": "Restaurant",
+      "name": "Pow Wow Cafe",
+      "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+      "time_block": "9:00 AM - 10:30 AM",
+      "expected_cost": "CAD 15-20",
+      "highlights": [
+        "Indigenous cuisine",
+        "Bohemian neighborhood"
+      ],
+      "travel_method": "Public Transit"
+    },
+    {
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history.",
+      "time_block": "11:00 AM - 1:00 PM",
+      "expected_cost": "CAD 23",
+      "highlights": [
+        "Dinosaurs",
+        "Chinese architecture",
+        "Bloor Street design"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "Restaurant",
+      "name": "Annona Restaurant",
+      "description": "Sophisticated international cuisine in a bright, modern setting.",
+      "time_block": "1:30 PM - 2:30 PM",
+      "expected_cost": "CAD 30-40",
+      "highlights": [
+        "Patio seating",
+        "Refined dishes"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+      "time_block": "3:00 PM - 5:00 PM",
+      "expected_cost": "CAD 30",
+      "highlights": [
+        "Castle architecture",
+        "City viewpoints"
+      ],
+      "travel_method": "Public Transit"
+    },
+    {
+      "type": "Restaurant",
+      "name": "DaiLo",
+      "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+      "time_block": "6:00 PM - 7:30 PM",
+      "expected_cost": "CAD 50-60",
+      "highlights": [
+        "Fusion menu",
+        "Trendy vibe"
+      ],
+      "travel_method": "Public Transit"
+    },
+    {
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+      "time_block": "8:00 PM - 10:00 PM",
+      "expected_cost": "CAD 10-20",
+      "highlights": [
+        "Historic venue",
+        "Diverse genres"
+      ],
+      "travel_method": "Walk"
+    }
+  ]
+}
+{
+  "tree_path": "Itinerary > Day 1",
+  "score": 0.653528596673693,
+  "node": {
+    "type": "Day",
+    "attributes": {
+      "index": "1"
+    }
+  },
+  "children": [
+    {
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+      "time_block": "9:00 AM - 10:30 AM",
+      "expected_cost": "CAD 10-15",
+      "highlights": [
+        "Fresh produce",
+        "Specialty foods",
+        "Local artisans"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+      "time_block": "11:00 AM - 12:30 PM",
+      "expected_cost": "CAD 43",
+      "highlights": [
+        "Glass floor",
+        "360 Restaurant",
+        "EdgeWalk"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "Restaurant",
+      "name": "Queen Street Warehouse",
+      "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+      "time_block": "1:00 PM - 2:00 PM",
+      "expected_cost": "CAD 10-15",
+      "highlights": [
+        "Funky decor",
+        "Vibrant atmosphere"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+      "time_block": "2:30 PM - 4:00 PM",
+      "expected_cost": "CAD 25",
+      "highlights": [
+        "Group of Seven",
+        "Modern architecture"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "Restaurant",
+      "name": "Buca Yorkville",
+      "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+      "time_block": "5:30 PM - 7:00 PM",
+      "expected_cost": "CAD 50-70",
+      "highlights": [
+        "Handmade pasta",
+        "Elegant ambiance"
+      ],
+      "travel_method": "Public Transit"
+    },
+    {
+      "type": "Restaurant",
+      "name": "The Rex Hotel Jazz & Blues Bar",
+      "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+      "time_block": "8:00 PM - 10:30 PM",
+      "expected_cost": "CAD 15 + drinks",
+      "highlights": [
+        "Live jazz",
+        "Intimate atmosphere"
+      ],
+      "travel_method": "Walk"
+    }
+  ]
+}
+{
+  "tree_path": "Itinerary > Day 3",
+  "score": 0.652687166418348,
+  "node": {
+    "type": "Day",
+    "attributes": {
+      "index": "3"
+    }
+  },
+  "children": [
+    {
+      "type": "Restaurant",
+      "name": "Beauty Barbecue & Smokehouse",
+      "description": "Hearty breakfast featuring smoked meats and classic comfort food.",
+      "time_block": "9:00 AM - 10:30 AM",
+      "expected_cost": "CAD 15-25",
+      "highlights": [
+        "Smoked meats",
+        "Casual atmosphere"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+      "time_block": "11:00 AM - 2:00 PM",
+      "expected_cost": "CAD 8.50",
+      "highlights": [
+        "Waterfront views",
+        "Centre Island"
+      ],
+      "travel_method": "Walk & Ferry"
+    },
+    {
+      "type": "Restaurant",
+      "name": "Amsterdam BrewHouse",
+      "description": "Lakeside pub offering local craft beers and hearty meals.",
+      "time_block": "2:30 PM - 3:30 PM",
+      "expected_cost": "CAD 25-35",
+      "highlights": [
+        "Craft beer",
+        "Lake views"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+      "time_block": "4:00 PM - 5:30 PM",
+      "expected_cost": "Free",
+      "highlights": [
+        "Historic architecture",
+        "Artisan boutiques"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "Restaurant",
+      "name": "Cluny Bistro",
+      "description": "French-inspired bistro serving classic and modern dishes.",
+      "time_block": "6:00 PM - 7:30 PM",
+      "expected_cost": "CAD 50-70",
+      "highlights": [
+        "Elegant decor",
+        "French pastries"
+      ],
+      "travel_method": "Walk"
+    },
+    {
+      "type": "Restaurant",
+      "name": "Jazz Bistro",
+      "description": "Renowned jazz club with intimate setting and excellent acoustics.",
+      "time_block": "8:00 PM - 10:30 PM",
+      "expected_cost": "CAD 15 + drinks",
+      "highlights": [
+        "Live jazz",
+        "Classic red piano"
+      ],
+      "travel_method": "Public Transit"
+    }
+  ]
+}

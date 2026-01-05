@@ -8,7 +8,7 @@ xpath_executor:
   top_k: 5
   score_threshold: 0.01
   # Scoring method: "llm", "entailment", or "cosine"
-  scoring_method: "entailment"
+  scoring_method: "cosine"
 
 entailment:
   model: "facebook/bart-large-mnli"

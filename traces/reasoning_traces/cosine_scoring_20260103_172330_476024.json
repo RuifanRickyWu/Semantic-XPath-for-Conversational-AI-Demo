@@ -1,0 +1,307 @@
+{
+  "timestamp": "20260103_172330_476024",
+  "method": "cosine",
+  "model": "sentence-transformers/msmarco-distilbert-base-tas-b",
+  "embedding_dim": 768,
+  "predicate_template": "{predicate}",
+  "predicate": "artistic",
+  "query_text": "artistic",
+  "nodes": [
+    {
+      "id": "node_0_main",
+      "type": "Day",
+      "name": "Day 1",
+      "description": "Day with: St. Lawrence Market, CN Tower, Queen Street Warehouse",
+      "text_for_embedding": "Day: Day 1 - Day with: St. Lawrence Market, CN Tower, Queen Street Warehouse",
+      "score": 0.6580818295478821
+    },
+    {
+      "id": "node_0_sub_0",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+      "text_for_embedding": "POI: St. Lawrence Market - Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+      "score": 0.6243487000465393
+    },
+    {
+      "id": "node_0_sub_1",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+      "text_for_embedding": "POI: CN Tower - Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+      "score": 0.6434108018875122
+    },
+    {
+      "id": "node_0_sub_2",
+      "type": "Restaurant",
+      "name": "Queen Street Warehouse",
+      "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+      "text_for_embedding": "Restaurant: Queen Street Warehouse - Budget-friendly comfort food in a lively setting with a diverse menu.",
+      "score": 0.6462947726249695
+    },
+    {
+      "id": "node_0_sub_3",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+      "text_for_embedding": "POI: Art Gallery of Ontario - Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+      "score": 0.7310826182365417
+    },
+    {
+      "id": "node_0_sub_4",
+      "type": "Restaurant",
+      "name": "Buca Yorkville",
+      "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+      "text_for_embedding": "Restaurant: Buca Yorkville - Upscale Italian dining featuring traditional dishes with a modern twist.",
+      "score": 0.652838945388794
+    },
+    {
+      "id": "node_0_sub_5",
+      "type": "Restaurant",
+      "name": "The Rex Hotel Jazz & Blues Bar",
+      "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+      "text_for_embedding": "Restaurant: The Rex Hotel Jazz & Blues Bar - Live jazz performances in a cozy, iconic Toronto venue.",
+      "score": 0.6186425089836121
+    },
+    {
+      "id": "node_1_main",
+      "type": "Day",
+      "name": "Day 2",
+      "description": "Day with: Pow Wow Cafe, Royal Ontario Museum, Annona Restaurant",
+      "text_for_embedding": "Day: Day 2 - Day with: Pow Wow Cafe, Royal Ontario Museum, Annona Restaurant",
+      "score": 0.6698188185691833
+    },
+    {
+      "id": "node_1_sub_0",
+      "type": "Restaurant",
+      "name": "Pow Wow Cafe",
+      "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+      "text_for_embedding": "Restaurant: Pow Wow Cafe - Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+      "score": 0.614226222038269
+    },
+    {
+      "id": "node_1_sub_1",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history.",
+      "text_for_embedding": "POI: Royal Ontario Museum - World-renowned museum showcasing art, culture, and natural history.",
+      "score": 0.724506676197052
+    },
+    {
+      "id": "node_1_sub_2",
+      "type": "Restaurant",
+      "name": "Annona Restaurant",
+      "description": "Sophisticated international cuisine in a bright, modern setting.",
+      "text_for_embedding": "Restaurant: Annona Restaurant - Sophisticated international cuisine in a bright, modern setting.",
+      "score": 0.6620911955833435
+    },
+    {
+      "id": "node_1_sub_3",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+      "text_for_embedding": "POI: Casa Loma - Historic castle featuring secret passages, gardens, and panoramic views.",
+      "score": 0.6827881336212158
+    },
+    {
+      "id": "node_1_sub_4",
+      "type": "Restaurant",
+      "name": "DaiLo",
+      "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+      "text_for_embedding": "Restaurant: DaiLo - Modern Asian-Canadian fusion cuisine with creative flavors.",
+      "score": 0.6735877990722656
+    },
+    {
+      "id": "node_1_sub_5",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+      "text_for_embedding": "POI: Rivoli - Live music venue showcasing jazz, indie, and emerging artists.",
+      "score": 0.7313524484634399
+    },
+    {
+      "id": "node_2_main",
+      "type": "Day",
+      "name": "Day 3",
+      "description": "Day with: Beauty Barbecue & Smokehouse, Toronto Islands, Amsterdam BrewHouse",
+      "text_for_embedding": "Day: Day 3 - Day with: Beauty Barbecue & Smokehouse, Toronto Islands, Amsterdam BrewHouse",
+      "score": 0.6731868982315063
+    },
+    {
+      "id": "node_2_sub_0",
+      "type": "Restaurant",
+      "name": "Beauty Barbecue & Smokehouse",
+      "description": "Hearty breakfast featuring smoked meats and classic comfort food.",
+      "text_for_embedding": "Restaurant: Beauty Barbecue & Smokehouse - Hearty breakfast featuring smoked meats and classic comfort food.",
+      "score": 0.6355656385421753
+    },
+    {
+      "id": "node_2_sub_1",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+      "text_for_embedding": "POI: Toronto Islands - Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+      "score": 0.6618330478668213
+    },
+    {
+      "id": "node_2_sub_2",
+      "type": "Restaurant",
+      "name": "Amsterdam BrewHouse",
+      "description": "Lakeside pub offering local craft beers and hearty meals.",
+      "text_for_embedding": "Restaurant: Amsterdam BrewHouse - Lakeside pub offering local craft beers and hearty meals.",
+      "score": 0.632039487361908
+    },
+    {
+      "id": "node_2_sub_3",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+      "text_for_embedding": "POI: Distillery District - Historic pedestrian village with cobblestone streets and artisan shops.",
+      "score": 0.6711339354515076
+    },
+    {
+      "id": "node_2_sub_4",
+      "type": "Restaurant",
+      "name": "Cluny Bistro",
+      "description": "French-inspired bistro serving classic and modern dishes.",
+      "text_for_embedding": "Restaurant: Cluny Bistro - French-inspired bistro serving classic and modern dishes.",
+      "score": 0.627167284488678
+    },
+    {
+      "id": "node_2_sub_5",
+      "type": "Restaurant",
+      "name": "Jazz Bistro",
+      "description": "Renowned jazz club with intimate setting and excellent acoustics.",
+      "text_for_embedding": "Restaurant: Jazz Bistro - Renowned jazz club with intimate setting and excellent acoustics.",
+      "score": 0.6678838729858398
+    }
+  ],
+  "results": [
+    {
+      "node_id": "node_0_main",
+      "node_type": "Day",
+      "score": 0.6580818295478821,
+      "reasoning": "Cosine similarity: 0.6581"
+    },
+    {
+      "node_id": "node_0_sub_0",
+      "node_type": "POI",
+      "score": 0.6243487000465393,
+      "reasoning": "Cosine similarity: 0.6243"
+    },
+    {
+      "node_id": "node_0_sub_1",
+      "node_type": "POI",
+      "score": 0.6434108018875122,
+      "reasoning": "Cosine similarity: 0.6434"
+    },
+    {
+      "node_id": "node_0_sub_2",
+      "node_type": "Restaurant",
+      "score": 0.6462947726249695,
+      "reasoning": "Cosine similarity: 0.6463"
+    },
+    {
+      "node_id": "node_0_sub_3",
+      "node_type": "POI",
+      "score": 0.7310826182365417,
+      "reasoning": "Cosine similarity: 0.7311"
+    },
+    {
+      "node_id": "node_0_sub_4",
+      "node_type": "Restaurant",
+      "score": 0.652838945388794,
+      "reasoning": "Cosine similarity: 0.6528"
+    },
+    {
+      "node_id": "node_0_sub_5",
+      "node_type": "Restaurant",
+      "score": 0.6186425089836121,
+      "reasoning": "Cosine similarity: 0.6186"
+    },
+    {
+      "node_id": "node_1_main",
+      "node_type": "Day",
+      "score": 0.6698188185691833,
+      "reasoning": "Cosine similarity: 0.6698"
+    },
+    {
+      "node_id": "node_1_sub_0",
+      "node_type": "Restaurant",
+      "score": 0.614226222038269,
+      "reasoning": "Cosine similarity: 0.6142"
+    },
+    {
+      "node_id": "node_1_sub_1",
+      "node_type": "POI",
+      "score": 0.724506676197052,
+      "reasoning": "Cosine similarity: 0.7245"
+    },
+    {
+      "node_id": "node_1_sub_2",
+      "node_type": "Restaurant",
+      "score": 0.6620911955833435,
+      "reasoning": "Cosine similarity: 0.6621"
+    },
+    {
+      "node_id": "node_1_sub_3",
+      "node_type": "POI",
+      "score": 0.6827881336212158,
+      "reasoning": "Cosine similarity: 0.6828"
+    },
+    {
+      "node_id": "node_1_sub_4",
+      "node_type": "Restaurant",
+      "score": 0.6735877990722656,
+      "reasoning": "Cosine similarity: 0.6736"
+    },
+    {
+      "node_id": "node_1_sub_5",
+      "node_type": "POI",
+      "score": 0.7313524484634399,
+      "reasoning": "Cosine similarity: 0.7314"
+    },
+    {
+      "node_id": "node_2_main",
+      "node_type": "Day",
+      "score": 0.6731868982315063,
+      "reasoning": "Cosine similarity: 0.6732"
+    },
+    {
+      "node_id": "node_2_sub_0",
+      "node_type": "Restaurant",
+      "score": 0.6355656385421753,
+      "reasoning": "Cosine similarity: 0.6356"
+    },
+    {
+      "node_id": "node_2_sub_1",
+      "node_type": "POI",
+      "score": 0.6618330478668213,
+      "reasoning": "Cosine similarity: 0.6618"
+    },
+    {
+      "node_id": "node_2_sub_2",
+      "node_type": "Restaurant",
+      "score": 0.632039487361908,
+      "reasoning": "Cosine similarity: 0.6320"
+    },
+    {
+      "node_id": "node_2_sub_3",
+      "node_type": "POI",
+      "score": 0.6711339354515076,
+      "reasoning": "Cosine similarity: 0.6711"
+    },
+    {
+      "node_id": "node_2_sub_4",
+      "node_type": "Restaurant",
+      "score": 0.627167284488678,
+      "reasoning": "Cosine similarity: 0.6272"
+    },
+    {
+      "node_id": "node_2_sub_5",
+      "node_type": "Restaurant",
+      "score": 0.6678838729858398,
+      "reasoning": "Cosine similarity: 0.6679"
+    }
+  ]
+}

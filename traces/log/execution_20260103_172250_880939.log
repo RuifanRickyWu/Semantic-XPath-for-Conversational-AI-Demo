@@ -1,0 +1,57 @@
+Query: (/Itinerary/Day/POI[description =~ "museum"])[1]
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260103_172250_880939] Executing query: (/Itinerary/Day/POI[description =~ "museum"])[1]
+Global index detected: 1
+Parsed steps: [Itinerary, Day, POI[description =~ "museum"]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 3 Day nodes
+After step: 3 nodes remaining
+
+--- Step 3: POI[description =~ "museum"] ---
+Found 8 POI nodes
+Applying semantic predicate: museum
+Scoring 8 descriptions for predicate 'museum'
+  Node 0 (St. Lawrence Market): mean score = 0.611 (from 1 items)
+  Node 1 (CN Tower): mean score = 0.641 (from 1 items)
+  Node 2 (Art Gallery of Ontario): mean score = 0.721 (from 1 items)
+  Node 3 (Royal Ontario Museum): mean score = 0.791 (from 1 items)
+  Node 4 (Casa Loma): mean score = 0.722 (from 1 items)
+  Node 5 (Rivoli): mean score = 0.666 (from 1 items)
+  Node 6 (Toronto Islands): mean score = 0.640 (from 1 items)
+  Node 7 (Distillery District): mean score = 0.654 (from 1 items)
+Top 5 nodes selected (threshold=0.01, top_k=5)
+After step: 5 nodes remaining
+
+Applying global index: [1]
+Selected node at index 1 (0-based: 0)
+
+Final result: 1 nodes (sorted by score)
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+{
+  "tree_path": "Itinerary > Day 1 > Art Gallery of Ontario",
+  "score": 0.7214413285255432,
+  "node": {
+    "type": "POI",
+    "attributes": {},
+    "name": "Art Gallery of Ontario",
+    "time_block": "2:30 PM - 4:00 PM",
+    "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+    "travel_method": "Walk",
+    "expected_cost": "CAD 25",
+    "highlights": [
+      "Group of Seven",
+      "Modern architecture"
+    ]
+  },
+  "children": []
+}

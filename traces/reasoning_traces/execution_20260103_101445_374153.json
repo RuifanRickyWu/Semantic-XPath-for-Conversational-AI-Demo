@@ -1,0 +1,1107 @@
+{
+  "timestamp": "20260103_101445_374153",
+  "query": "(/Itinerary/Day[description =~ \"artistic\"])[2]/POI[description =~ \"museum\"]",
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day[description =~ \"artistic\"][2]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day[description =~ \"artistic\"][2]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 3,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 0.653528596673693
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 0.6797673276492527
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 0.652687166418348
+        }
+      ],
+      "details": {
+        "predicate": "artistic",
+        "scoring_result": {
+          "predicate": "artistic",
+          "config": {
+            "top_k": 5,
+            "score_threshold": 0.01
+          },
+          "batch_scoring": {
+            "total_items_scored": 21,
+            "individual_scores": [
+              {
+                "id": "node_0_main",
+                "type": "Day",
+                "name": "Day 1",
+                "description": "Day with: St. Lawrence Market, CN Tower, Queen Street Warehouse",
+                "score": 0.6580818295478821,
+                "reasoning": "Cosine similarity: 0.6581",
+                "is_main_node": true
+              },
+              {
+                "id": "node_0_sub_0",
+                "type": "POI",
+                "name": "St. Lawrence Market",
+                "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwich",
+                "score": 0.6243487000465393,
+                "reasoning": "Cosine similarity: 0.6243",
+                "is_main_node": false
+              },
+              {
+                "id": "node_0_sub_1",
+                "type": "POI",
+                "name": "CN Tower",
+                "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+                "score": 0.6434108018875122,
+                "reasoning": "Cosine similarity: 0.6434",
+                "is_main_node": false
+              },
+              {
+                "id": "node_0_sub_2",
+                "type": "Restaurant",
+                "name": "Queen Street Warehouse",
+                "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+                "score": 0.6462947726249695,
+                "reasoning": "Cosine similarity: 0.6463",
+                "is_main_node": false
+              },
+              {
+                "id": "node_0_sub_3",
+                "type": "POI",
+                "name": "Art Gallery of Ontario",
+                "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+                "score": 0.7310826182365417,
+                "reasoning": "Cosine similarity: 0.7311",
+                "is_main_node": false
+              },
+              {
+                "id": "node_0_sub_4",
+                "type": "Restaurant",
+                "name": "Buca Yorkville",
+                "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+                "score": 0.652838945388794,
+                "reasoning": "Cosine similarity: 0.6528",
+                "is_main_node": false
+              },
+              {
+                "id": "node_0_sub_5",
+                "type": "Restaurant",
+                "name": "The Rex Hotel Jazz & Blues Bar",
+                "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+                "score": 0.6186425089836121,
+                "reasoning": "Cosine similarity: 0.6186",
+                "is_main_node": false
+              },
+              {
+                "id": "node_1_main",
+                "type": "Day",
+                "name": "Day 2",
+                "description": "Day with: Pow Wow Cafe, Royal Ontario Museum, Annona Restaurant",
+                "score": 0.6698188185691833,
+                "reasoning": "Cosine similarity: 0.6698",
+                "is_main_node": true
+              },
+              {
+                "id": "node_1_sub_0",
+                "type": "Restaurant",
+                "name": "Pow Wow Cafe",
+                "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+                "score": 0.614226222038269,
+                "reasoning": "Cosine similarity: 0.6142",
+                "is_main_node": false
+              },
+              {
+                "id": "node_1_sub_1",
+                "type": "POI",
+                "name": "Royal Ontario Museum",
+                "description": "World-renowned museum showcasing art, culture, and natural history.",
+                "score": 0.724506676197052,
+                "reasoning": "Cosine similarity: 0.7245",
+                "is_main_node": false
+              },
+              {
+                "id": "node_1_sub_2",
+                "type": "Restaurant",
+                "name": "Annona Restaurant",
+                "description": "Sophisticated international cuisine in a bright, modern setting.",
+                "score": 0.6620911955833435,
+                "reasoning": "Cosine similarity: 0.6621",
+                "is_main_node": false
+              },
+              {
+                "id": "node_1_sub_3",
+                "type": "POI",
+                "name": "Casa Loma",
+                "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+                "score": 0.6827881336212158,
+                "reasoning": "Cosine similarity: 0.6828",
+                "is_main_node": false
+              },
+              {
+                "id": "node_1_sub_4",
+                "type": "Restaurant",
+                "name": "DaiLo",
+                "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+                "score": 0.6735877990722656,
+                "reasoning": "Cosine similarity: 0.6736",
+                "is_main_node": false
+              },
+              {
+                "id": "node_1_sub_5",
+                "type": "POI",
+                "name": "Rivoli",
+                "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+                "score": 0.7313524484634399,
+                "reasoning": "Cosine similarity: 0.7314",
+                "is_main_node": false
+              },
+              {
+                "id": "node_2_main",
+                "type": "Day",
+                "name": "Day 3",
+                "description": "Day with: Beauty Barbecue & Smokehouse, Toronto Islands, Amsterdam BrewHouse",
+                "score": 0.6731868982315063,
+                "reasoning": "Cosine similarity: 0.6732",
+                "is_main_node": true
+              },
+              {
+                "id": "node_2_sub_0",
+                "type": "Restaurant",
+                "name": "Beauty Barbecue & Smokehouse",
+                "description": "Hearty breakfast featuring smoked meats and classic comfort food.",
+                "score": 0.6355656385421753,
+                "reasoning": "Cosine similarity: 0.6356",
+                "is_main_node": false
+              },
+              {
+                "id": "node_2_sub_1",
+                "type": "POI",
+                "name": "Toronto Islands",
+                "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+                "score": 0.6618330478668213,
+                "reasoning": "Cosine similarity: 0.6618",
+                "is_main_node": false
+              },
+              {
+                "id": "node_2_sub_2",
+                "type": "Restaurant",
+                "name": "Amsterdam BrewHouse",
+                "description": "Lakeside pub offering local craft beers and hearty meals.",
+                "score": 0.632039487361908,
+                "reasoning": "Cosine similarity: 0.6320",
+                "is_main_node": false
+              },
+              {
+                "id": "node_2_sub_3",
+                "type": "POI",
+                "name": "Distillery District",
+                "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+                "score": 0.6711339354515076,
+                "reasoning": "Cosine similarity: 0.6711",
+                "is_main_node": false
+              },
+              {
+                "id": "node_2_sub_4",
+                "type": "Restaurant",
+                "name": "Cluny Bistro",
+                "description": "French-inspired bistro serving classic and modern dishes.",
+                "score": 0.627167284488678,
+                "reasoning": "Cosine similarity: 0.6272",
+                "is_main_node": false
+              },
+              {
+                "id": "node_2_sub_5",
+                "type": "Restaurant",
+                "name": "Jazz Bistro",
+                "description": "Renowned jazz club with intimate setting and excellent acoustics.",
+                "score": 0.6678838729858398,
+                "reasoning": "Cosine similarity: 0.6679",
+                "is_main_node": false
+              }
+            ]
+          },
+          "node_aggregations": [
+            {
+              "node_idx": 0,
+              "node_name": "Day 1",
+              "node_type": "Day",
+              "individual_scores": [
+                0.6580818295478821,
+                0.6243487000465393,
+                0.6434108018875122,
+                0.6462947726249695,
+                0.7310826182365417,
+                0.652838945388794,
+                0.6186425089836121
+              ],
+              "mean_score": 0.653528596673693,
+              "num_items_scored": 7
+            },
+            {
+              "node_idx": 1,
+              "node_name": "Day 2",
+              "node_type": "Day",
+              "individual_scores": [
+                0.6698188185691833,
+                0.614226222038269,
+                0.724506676197052,
+                0.6620911955833435,
+                0.6827881336212158,
+                0.6735877990722656,
+                0.7313524484634399
+              ],
+              "mean_score": 0.6797673276492527,
+              "num_items_scored": 7
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Day 3",
+              "node_type": "Day",
+              "individual_scores": [
+                0.6731868982315063,
+                0.6355656385421753,
+                0.6618330478668213,
+                0.632039487361908,
+                0.6711339354515076,
+                0.627167284488678,
+                0.6678838729858398
+              ],
+              "mean_score": 0.652687166418348,
+              "num_items_scored": 7
+            }
+          ],
+          "ranking": [
+            {
+              "idx": 1,
+              "score": 0.6797673276492527,
+              "name": "Day 2"
+            },
+            {
+              "idx": 0,
+              "score": 0.653528596673693,
+              "name": "Day 1"
+            },
+            {
+              "idx": 2,
+              "score": 0.652687166418348,
+              "name": "Day 3"
+            }
+          ],
+          "selected": {
+            "indices": [
+              0,
+              1,
+              2
+            ],
+            "nodes": [
+              {
+                "idx": 0,
+                "name": "Day 1"
+              },
+              {
+                "idx": 1,
+                "name": "Day 2"
+              },
+              {
+                "idx": 2,
+                "name": "Day 3"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day[description =~ \"artistic\"][2]",
+      "action": "positional_index",
+      "nodes_before_count": 3,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 0.653528596673693
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 0.6797673276492527
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 0.652687166418348
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 0.6797673276492527
+        }
+      ],
+      "details": {
+        "index": {
+          "start": 2,
+          "type": "single"
+        },
+        "selected_count": 1
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[description =~ \"museum\"]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 0.6797673276492527
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.6797673276492527
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 0.6797673276492527
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 0.6797673276492527
+        }
+      ],
+      "details": {
+        "target_type": "POI",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[description =~ \"museum\"]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 3,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.6797673276492527
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 0.6797673276492527
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 0.6797673276492527
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.7913948893547058
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 0.7224825620651245
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 0.6657124757766724
+        }
+      ],
+      "details": {
+        "predicate": "museum",
+        "scoring_result": {
+          "predicate": "museum",
+          "config": {
+            "top_k": 5,
+            "score_threshold": 0.01
+          },
+          "batch_scoring": {
+            "total_items_scored": 3,
+            "individual_scores": [
+              {
+                "id": "node_0_main",
+                "type": "POI",
+                "name": "Royal Ontario Museum",
+                "description": "World-renowned museum showcasing art, culture, and natural history.",
+                "score": 0.7913948893547058,
+                "reasoning": "Cosine similarity: 0.7914",
+                "is_main_node": true
+              },
+              {
+                "id": "node_1_main",
+                "type": "POI",
+                "name": "Casa Loma",
+                "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+                "score": 0.7224825620651245,
+                "reasoning": "Cosine similarity: 0.7225",
+                "is_main_node": true
+              },
+              {
+                "id": "node_2_main",
+                "type": "POI",
+                "name": "Rivoli",
+                "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+                "score": 0.6657124757766724,
+                "reasoning": "Cosine similarity: 0.6657",
+                "is_main_node": true
+              }
+            ]
+          },
+          "node_aggregations": [
+            {
+              "node_idx": 0,
+              "node_name": "Royal Ontario Museum",
+              "node_type": "POI",
+              "individual_scores": [
+                0.7913948893547058
+              ],
+              "mean_score": 0.7913948893547058,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 1,
+              "node_name": "Casa Loma",
+              "node_type": "POI",
+              "individual_scores": [
+                0.7224825620651245
+              ],
+              "mean_score": 0.7224825620651245,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Rivoli",
+              "node_type": "POI",
+              "individual_scores": [
+                0.6657124757766724
+              ],
+              "mean_score": 0.6657124757766724,
+              "num_items_scored": 1
+            }
+          ],
+          "ranking": [
+            {
+              "idx": 0,
+              "score": 0.7913948893547058,
+              "name": "Royal Ontario Museum"
+            },
+            {
+              "idx": 1,
+              "score": 0.7224825620651245,
+              "name": "Casa Loma"
+            },
+            {
+              "idx": 2,
+              "score": 0.6657124757766724,
+              "name": "Rivoli"
+            }
+          ],
+          "selected": {
+            "indices": [
+              0,
+              1,
+              2
+            ],
+            "nodes": [
+              {
+                "idx": 0,
+                "name": "Royal Ontario Museum"
+              },
+              {
+                "idx": 1,
+                "name": "Casa Loma"
+              },
+              {
+                "idx": 2,
+                "name": "Rivoli"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "artistic",
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.01
+      },
+      "batch_scoring": {
+        "total_items_scored": 21,
+        "individual_scores": [
+          {
+            "id": "node_0_main",
+            "type": "Day",
+            "name": "Day 1",
+            "description": "Day with: St. Lawrence Market, CN Tower, Queen Street Warehouse",
+            "score": 0.6580818295478821,
+            "reasoning": "Cosine similarity: 0.6581",
+            "is_main_node": true
+          },
+          {
+            "id": "node_0_sub_0",
+            "type": "POI",
+            "name": "St. Lawrence Market",
+            "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwich",
+            "score": 0.6243487000465393,
+            "reasoning": "Cosine similarity: 0.6243",
+            "is_main_node": false
+          },
+          {
+            "id": "node_0_sub_1",
+            "type": "POI",
+            "name": "CN Tower",
+            "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+            "score": 0.6434108018875122,
+            "reasoning": "Cosine similarity: 0.6434",
+            "is_main_node": false
+          },
+          {
+            "id": "node_0_sub_2",
+            "type": "Restaurant",
+            "name": "Queen Street Warehouse",
+            "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+            "score": 0.6462947726249695,
+            "reasoning": "Cosine similarity: 0.6463",
+            "is_main_node": false
+          },
+          {
+            "id": "node_0_sub_3",
+            "type": "POI",
+            "name": "Art Gallery of Ontario",
+            "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+            "score": 0.7310826182365417,
+            "reasoning": "Cosine similarity: 0.7311",
+            "is_main_node": false
+          },
+          {
+            "id": "node_0_sub_4",
+            "type": "Restaurant",
+            "name": "Buca Yorkville",
+            "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+            "score": 0.652838945388794,
+            "reasoning": "Cosine similarity: 0.6528",
+            "is_main_node": false
+          },
+          {
+            "id": "node_0_sub_5",
+            "type": "Restaurant",
+            "name": "The Rex Hotel Jazz & Blues Bar",
+            "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+            "score": 0.6186425089836121,
+            "reasoning": "Cosine similarity: 0.6186",
+            "is_main_node": false
+          },
+          {
+            "id": "node_1_main",
+            "type": "Day",
+            "name": "Day 2",
+            "description": "Day with: Pow Wow Cafe, Royal Ontario Museum, Annona Restaurant",
+            "score": 0.6698188185691833,
+            "reasoning": "Cosine similarity: 0.6698",
+            "is_main_node": true
+          },
+          {
+            "id": "node_1_sub_0",
+            "type": "Restaurant",
+            "name": "Pow Wow Cafe",
+            "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+            "score": 0.614226222038269,
+            "reasoning": "Cosine similarity: 0.6142",
+            "is_main_node": false
+          },
+          {
+            "id": "node_1_sub_1",
+            "type": "POI",
+            "name": "Royal Ontario Museum",
+            "description": "World-renowned museum showcasing art, culture, and natural history.",
+            "score": 0.724506676197052,
+            "reasoning": "Cosine similarity: 0.7245",
+            "is_main_node": false
+          },
+          {
+            "id": "node_1_sub_2",
+            "type": "Restaurant",
+            "name": "Annona Restaurant",
+            "description": "Sophisticated international cuisine in a bright, modern setting.",
+            "score": 0.6620911955833435,
+            "reasoning": "Cosine similarity: 0.6621",
+            "is_main_node": false
+          },
+          {
+            "id": "node_1_sub_3",
+            "type": "POI",
+            "name": "Casa Loma",
+            "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+            "score": 0.6827881336212158,
+            "reasoning": "Cosine similarity: 0.6828",
+            "is_main_node": false
+          },
+          {
+            "id": "node_1_sub_4",
+            "type": "Restaurant",
+            "name": "DaiLo",
+            "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+            "score": 0.6735877990722656,
+            "reasoning": "Cosine similarity: 0.6736",
+            "is_main_node": false
+          },
+          {
+            "id": "node_1_sub_5",
+            "type": "POI",
+            "name": "Rivoli",
+            "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+            "score": 0.7313524484634399,
+            "reasoning": "Cosine similarity: 0.7314",
+            "is_main_node": false
+          },
+          {
+            "id": "node_2_main",
+            "type": "Day",
+            "name": "Day 3",
+            "description": "Day with: Beauty Barbecue & Smokehouse, Toronto Islands, Amsterdam BrewHouse",
+            "score": 0.6731868982315063,
+            "reasoning": "Cosine similarity: 0.6732",
+            "is_main_node": true
+          },
+          {
+            "id": "node_2_sub_0",
+            "type": "Restaurant",
+            "name": "Beauty Barbecue & Smokehouse",
+            "description": "Hearty breakfast featuring smoked meats and classic comfort food.",
+            "score": 0.6355656385421753,
+            "reasoning": "Cosine similarity: 0.6356",
+            "is_main_node": false
+          },
+          {
+            "id": "node_2_sub_1",
+            "type": "POI",
+            "name": "Toronto Islands",
+            "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+            "score": 0.6618330478668213,
+            "reasoning": "Cosine similarity: 0.6618",
+            "is_main_node": false
+          },
+          {
+            "id": "node_2_sub_2",
+            "type": "Restaurant",
+            "name": "Amsterdam BrewHouse",
+            "description": "Lakeside pub offering local craft beers and hearty meals.",
+            "score": 0.632039487361908,
+            "reasoning": "Cosine similarity: 0.6320",
+            "is_main_node": false
+          },
+          {
+            "id": "node_2_sub_3",
+            "type": "POI",
+            "name": "Distillery District",
+            "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+            "score": 0.6711339354515076,
+            "reasoning": "Cosine similarity: 0.6711",
+            "is_main_node": false
+          },
+          {
+            "id": "node_2_sub_4",
+            "type": "Restaurant",
+            "name": "Cluny Bistro",
+            "description": "French-inspired bistro serving classic and modern dishes.",
+            "score": 0.627167284488678,
+            "reasoning": "Cosine similarity: 0.6272",
+            "is_main_node": false
+          },
+          {
+            "id": "node_2_sub_5",
+            "type": "Restaurant",
+            "name": "Jazz Bistro",
+            "description": "Renowned jazz club with intimate setting and excellent acoustics.",
+            "score": 0.6678838729858398,
+            "reasoning": "Cosine similarity: 0.6679",
+            "is_main_node": false
+          }
+        ]
+      },
+      "node_aggregations": [
+        {
+          "node_idx": 0,
+          "node_name": "Day 1",
+          "node_type": "Day",
+          "individual_scores": [
+            0.6580818295478821,
+            0.6243487000465393,
+            0.6434108018875122,
+            0.6462947726249695,
+            0.7310826182365417,
+            0.652838945388794,
+            0.6186425089836121
+          ],
+          "mean_score": 0.653528596673693,
+          "num_items_scored": 7
+        },
+        {
+          "node_idx": 1,
+          "node_name": "Day 2",
+          "node_type": "Day",
+          "individual_scores": [
+            0.6698188185691833,
+            0.614226222038269,
+            0.724506676197052,
+            0.6620911955833435,
+            0.6827881336212158,
+            0.6735877990722656,
+            0.7313524484634399
+          ],
+          "mean_score": 0.6797673276492527,
+          "num_items_scored": 7
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Day 3",
+          "node_type": "Day",
+          "individual_scores": [
+            0.6731868982315063,
+            0.6355656385421753,
+            0.6618330478668213,
+            0.632039487361908,
+            0.6711339354515076,
+            0.627167284488678,
+            0.6678838729858398
+          ],
+          "mean_score": 0.652687166418348,
+          "num_items_scored": 7
+        }
+      ],
+      "ranking": [
+        {
+          "idx": 1,
+          "score": 0.6797673276492527,
+          "name": "Day 2"
+        },
+        {
+          "idx": 0,
+          "score": 0.653528596673693,
+          "name": "Day 1"
+        },
+        {
+          "idx": 2,
+          "score": 0.652687166418348,
+          "name": "Day 3"
+        }
+      ],
+      "selected": {
+        "indices": [
+          0,
+          1,
+          2
+        ],
+        "nodes": [
+          {
+            "idx": 0,
+            "name": "Day 1"
+          },
+          {
+            "idx": 1,
+            "name": "Day 2"
+          },
+          {
+            "idx": 2,
+            "name": "Day 3"
+          }
+        ]
+      }
+    },
+    {
+      "predicate": "museum",
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.01
+      },
+      "batch_scoring": {
+        "total_items_scored": 3,
+        "individual_scores": [
+          {
+            "id": "node_0_main",
+            "type": "POI",
+            "name": "Royal Ontario Museum",
+            "description": "World-renowned museum showcasing art, culture, and natural history.",
+            "score": 0.7913948893547058,
+            "reasoning": "Cosine similarity: 0.7914",
+            "is_main_node": true
+          },
+          {
+            "id": "node_1_main",
+            "type": "POI",
+            "name": "Casa Loma",
+            "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+            "score": 0.7224825620651245,
+            "reasoning": "Cosine similarity: 0.7225",
+            "is_main_node": true
+          },
+          {
+            "id": "node_2_main",
+            "type": "POI",
+            "name": "Rivoli",
+            "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+            "score": 0.6657124757766724,
+            "reasoning": "Cosine similarity: 0.6657",
+            "is_main_node": true
+          }
+        ]
+      },
+      "node_aggregations": [
+        {
+          "node_idx": 0,
+          "node_name": "Royal Ontario Museum",
+          "node_type": "POI",
+          "individual_scores": [
+            0.7913948893547058
+          ],
+          "mean_score": 0.7913948893547058,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 1,
+          "node_name": "Casa Loma",
+          "node_type": "POI",
+          "individual_scores": [
+            0.7224825620651245
+          ],
+          "mean_score": 0.7224825620651245,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Rivoli",
+          "node_type": "POI",
+          "individual_scores": [
+            0.6657124757766724
+          ],
+          "mean_score": 0.6657124757766724,
+          "num_items_scored": 1
+        }
+      ],
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.7913948893547058,
+          "name": "Royal Ontario Museum"
+        },
+        {
+          "idx": 1,
+          "score": 0.7224825620651245,
+          "name": "Casa Loma"
+        },
+        {
+          "idx": 2,
+          "score": 0.6657124757766724,
+          "name": "Rivoli"
+        }
+      ],
+      "selected": {
+        "indices": [
+          0,
+          1,
+          2
+        ],
+        "nodes": [
+          {
+            "idx": 0,
+            "name": "Royal Ontario Museum"
+          },
+          {
+            "idx": 1,
+            "name": "Casa Loma"
+          },
+          {
+            "idx": 2,
+            "name": "Rivoli"
+          }
+        ]
+      }
+    }
+  ],
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Day 2 > Royal Ontario Museum",
+      "score": 0.7913948893547058,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Royal Ontario Museum",
+        "time_block": "11:00 AM - 1:00 PM",
+        "description": "World-renowned museum showcasing art, culture, and natural history.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 23",
+        "highlights": [
+          "Dinosaurs",
+          "Chinese architecture",
+          "Bloor Street design"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Casa Loma",
+      "score": 0.7224825620651245,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Casa Loma",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 30",
+        "highlights": [
+          "Castle architecture",
+          "City viewpoints"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Rivoli",
+      "score": 0.6657124757766724,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Rivoli",
+        "time_block": "8:00 PM - 10:00 PM",
+        "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-20",
+        "highlights": [
+          "Historic venue",
+          "Diverse genres"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 6,
+    "total_scoring_calls": 2,
+    "matched_count": 3
+  }
+}

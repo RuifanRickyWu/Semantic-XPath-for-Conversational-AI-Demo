@@ -197,3 +197,4 @@ class EntailmentPredicateScorer(PredicateScorer):
         logger.debug(f"Saved entailment scoring trace to {trace_file}")
 
 
+

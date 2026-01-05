@@ -1,0 +1,45 @@
+Query: /Itinerary/Day/POI[2]
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260103_101600_299498] Executing query: /Itinerary/Day/POI[2]
+Parsed steps: [Itinerary, Day, POI[2]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 3 Day nodes
+After step: 3 nodes remaining
+
+--- Step 3: POI[2] ---
+Found 8 POI nodes
+Applying positional index: [2]
+Selected node at index 2 (0-based: 1)
+After step: 1 nodes remaining
+
+Final result: 1 nodes (sorted by score)
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+{
+  "tree_path": "Itinerary > Day 1 > CN Tower",
+  "score": 1.0,
+  "node": {
+    "type": "POI",
+    "attributes": {},
+    "name": "CN Tower",
+    "time_block": "11:00 AM - 12:30 PM",
+    "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+    "travel_method": "Walk",
+    "expected_cost": "CAD 43",
+    "highlights": [
+      "Glass floor",
+      "360 Restaurant",
+      "EdgeWalk"
+    ]
+  },
+  "children": []
+}

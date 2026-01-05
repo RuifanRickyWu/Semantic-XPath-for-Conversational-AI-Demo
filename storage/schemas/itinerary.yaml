@@ -34,12 +34,12 @@ nodes:
 
 # Available data files for this schema
 data_files:
-  travel_memory_3day: "memory/travel_memory_3day.xml"
-  travel_memory_5day: "memory/travel_memory_5day.xml"
+  travel_memory_3day: "memory/travel/travel_memory_3day.xml"
+  travel_memory_5day: "memory/travel/travel_memory_5day.xml"
 
 # Default data file to use
 default_data: "travel_memory_3day"
 
 # Associated prompt file for XPath query generation
-prompt_file: "prompts/xpath_query_generator.txt"
+prompt_file: "prompts/xpath_query_generator_itinerary.txt"
 

@@ -1,0 +1,43 @@
+# Curriculum Tree Schema
+# Defines the structure for educational curriculum trees
+
+name: "curriculum"
+description: "Educational curriculum with courses, concepts and exercises"
+
+# Tree hierarchy (for documentation and LLM prompt generation)
+hierarchy: |
+  Curriculum (root)
+  ├── Course
+  │   ├── Concept
+  │   └── Exercise
+
+# Node type definitions
+nodes:
+  Curriculum:
+    type: root
+    
+  Course:
+    type: container
+    name_field: "name"
+    description_field: "description"
+    
+  Concept:
+    type: leaf
+    name_field: "name"
+    description_field: "description"
+    
+  Exercise:
+    type: leaf
+    name_field: "name"
+    description_field: "description"
+
+# Available data files for this schema
+data_files:
+  curriculum_sample: "memory/curriculum/curriculum_sample.xml"
+
+# Default data file to use
+default_data: "curriculum_sample"
+
+# Associated prompt file for XPath query generation
+prompt_file: "prompts/xpath_query_generator_curriculum.txt"
+

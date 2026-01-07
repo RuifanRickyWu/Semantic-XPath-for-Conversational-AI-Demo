@@ -1,0 +1,4348 @@
+{
+  "timestamp": "20260107_152528_019197",
+  "query": "/RecommendationHub/Session/Step/Objective/Item[description =~ \"dinner\"]",
+  "data_file": "home_office_session.xml",
+  "execution_time_ms": 5064.053499999998,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "RecommendationHub",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "RecommendationHub",
+          "path": "RecommendationHub"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Session",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "RecommendationHub",
+          "name": "RecommendationHub",
+          "type": "RecommendationHub",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "RecommendationHub > Session",
+          "name": "Session",
+          "type": "Session",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session",
+          "name": "Session",
+          "type": "Session",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session",
+          "name": "Session",
+          "type": "Session",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Session",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Step",
+      "action": "type_match",
+      "nodes_before_count": 3,
+      "nodes_after_count": 10,
+      "nodes_before": [
+        {
+          "path": "RecommendationHub > Session",
+          "name": "Session",
+          "type": "Session",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session",
+          "name": "Session",
+          "type": "Session",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session",
+          "name": "Session",
+          "type": "Session",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "RecommendationHub > Session > Workspace Planning",
+          "name": "Workspace Planning",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection",
+          "name": "Core Furniture Selection",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup",
+          "name": "Tech Equipment Setup",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization",
+          "name": "Environment Optimization",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning",
+          "name": "Menu Planning",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation",
+          "name": "Shopping and Preparation",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere",
+          "name": "Table and Atmosphere",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building",
+          "name": "Foundation Building",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery",
+          "name": "Framework Mastery",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep",
+          "name": "Portfolio and Job Prep",
+          "type": "Step",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Step",
+        "found_count": 10
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "Objective",
+      "action": "type_match",
+      "nodes_before_count": 10,
+      "nodes_after_count": 24,
+      "nodes_before": [
+        {
+          "path": "RecommendationHub > Session > Workspace Planning",
+          "name": "Workspace Planning",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection",
+          "name": "Core Furniture Selection",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup",
+          "name": "Tech Equipment Setup",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization",
+          "name": "Environment Optimization",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning",
+          "name": "Menu Planning",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation",
+          "name": "Shopping and Preparation",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere",
+          "name": "Table and Atmosphere",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building",
+          "name": "Foundation Building",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery",
+          "name": "Framework Mastery",
+          "type": "Step",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep",
+          "name": "Portfolio and Job Prep",
+          "type": "Step",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Objective",
+        "found_count": 24
+      }
+    },
+    {
+      "step_index": 4,
+      "step_query": "Item[description =~ \"dinner\"]",
+      "action": "type_match",
+      "nodes_before_count": 24,
+      "nodes_after_count": 61,
+      "nodes_before": [
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective",
+          "name": "Objective",
+          "type": "Objective",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective > Room measurement guide",
+          "name": "Room measurement guide",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective > Lighting assessment checklist",
+          "name": "Lighting assessment checklist",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective > L-shaped desk configuration",
+          "name": "L-shaped desk configuration",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective > Standing desk converter option",
+          "name": "Standing desk converter option",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Flexispot E7 Standing Desk",
+          "name": "Flexispot E7 Standing Desk",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > IKEA BEKANT",
+          "name": "IKEA BEKANT",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Autonomous SmartDesk Pro",
+          "name": "Autonomous SmartDesk Pro",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Herman Miller Aeron (Refurbished)",
+          "name": "Herman Miller Aeron (Refurbished)",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Secretlab Titan Evo",
+          "name": "Secretlab Titan Evo",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Branch Ergonomic Chair",
+          "name": "Branch Ergonomic Chair",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > LG 27UK850-W 4K Monitor",
+          "name": "LG 27UK850-W 4K Monitor",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Dell UltraSharp U2720Q",
+          "name": "Dell UltraSharp U2720Q",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > VIVO Dual Monitor Arm",
+          "name": "VIVO Dual Monitor Arm",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Logitech MX Keys",
+          "name": "Logitech MX Keys",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Logitech MX Master 3",
+          "name": "Logitech MX Master 3",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Keychron K3 Mechanical",
+          "name": "Keychron K3 Mechanical",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > TP-Link AX3000 WiFi 6 Router",
+          "name": "TP-Link AX3000 WiFi 6 Router",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Anker USB-C Hub 7-in-1",
+          "name": "Anker USB-C Hub 7-in-1",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Cable management kit",
+          "name": "Cable management kit",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > BenQ ScreenBar Plus",
+          "name": "BenQ ScreenBar Plus",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Philips Hue Desk Lamp",
+          "name": "Philips Hue Desk Lamp",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Sony WH-1000XM4",
+          "name": "Sony WH-1000XM4",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Acoustic foam panels set",
+          "name": "Acoustic foam panels set",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Ergonomic footrest",
+          "name": "Ergonomic footrest",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Anti-fatigue standing mat",
+          "name": "Anti-fatigue standing mat",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Monitor riser with storage",
+          "name": "Monitor riser with storage",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Mezze platter recipe",
+          "name": "Mezze platter recipe",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Caprese skewers",
+          "name": "Caprese skewers",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Herb-crusted lamb rack",
+          "name": "Herb-crusted lamb rack",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Stuffed bell peppers",
+          "name": "Stuffed bell peppers",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Greek lemon potatoes",
+          "name": "Greek lemon potatoes",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Baklava",
+          "name": "Baklava",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Orange olive oil cake",
+          "name": "Orange olive oil cake",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > Produce list",
+          "name": "Produce list",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > Protein and dairy list",
+          "name": "Protein and dairy list",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > Pantry items list",
+          "name": "Pantry items list",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > 3-day prep schedule",
+          "name": "3-day prep schedule",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > Day-of cooking timeline",
+          "name": "Day-of cooking timeline",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Rectangular table layout",
+          "name": "Rectangular table layout",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Buffet style option",
+          "name": "Buffet style option",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Table setting guide",
+          "name": "Table setting guide",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Music playlist",
+          "name": "Music playlist",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Candle arrangement",
+          "name": "Candle arrangement",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > MDN HTML Guide",
+          "name": "MDN HTML Guide",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > freeCodeCamp HTML Course",
+          "name": "freeCodeCamp HTML Course",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > CSS-Tricks Flexbox Guide",
+          "name": "CSS-Tricks Flexbox Guide",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > Kevin Powell YouTube",
+          "name": "Kevin Powell YouTube",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > Tailwind CSS Documentation",
+          "name": "Tailwind CSS Documentation",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > JavaScript.info",
+          "name": "JavaScript.info",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > Eloquent JavaScript",
+          "name": "Eloquent JavaScript",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > Official React Tutorial",
+          "name": "Official React Tutorial",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > Scrimba React Course",
+          "name": "Scrimba React Course",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > React Portfolio Project",
+          "name": "React Portfolio Project",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > Node.js Crash Course",
+          "name": "Node.js Crash Course",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > MongoDB University",
+          "name": "MongoDB University",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > Full-stack CRUD app",
+          "name": "Full-stack CRUD app",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > API integration project",
+          "name": "API integration project",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > Clone project",
+          "name": "Clone project",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > LeetCode Easy problems",
+          "name": "LeetCode Easy problems",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > Frontend interview handbook",
+          "name": "Frontend interview handbook",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > Mock interview practice",
+          "name": "Mock interview practice",
+          "type": "Item",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Item",
+        "found_count": 61
+      }
+    },
+    {
+      "step_index": 4,
+      "step_query": "Item[description =~ \"dinner\"]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 61,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective > Room measurement guide",
+          "name": "Room measurement guide",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective > Lighting assessment checklist",
+          "name": "Lighting assessment checklist",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective > L-shaped desk configuration",
+          "name": "L-shaped desk configuration",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Workspace Planning > Objective > Standing desk converter option",
+          "name": "Standing desk converter option",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Flexispot E7 Standing Desk",
+          "name": "Flexispot E7 Standing Desk",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > IKEA BEKANT",
+          "name": "IKEA BEKANT",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Autonomous SmartDesk Pro",
+          "name": "Autonomous SmartDesk Pro",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Herman Miller Aeron (Refurbished)",
+          "name": "Herman Miller Aeron (Refurbished)",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Secretlab Titan Evo",
+          "name": "Secretlab Titan Evo",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Core Furniture Selection > Objective > Branch Ergonomic Chair",
+          "name": "Branch Ergonomic Chair",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > LG 27UK850-W 4K Monitor",
+          "name": "LG 27UK850-W 4K Monitor",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Dell UltraSharp U2720Q",
+          "name": "Dell UltraSharp U2720Q",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > VIVO Dual Monitor Arm",
+          "name": "VIVO Dual Monitor Arm",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Logitech MX Keys",
+          "name": "Logitech MX Keys",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Logitech MX Master 3",
+          "name": "Logitech MX Master 3",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Keychron K3 Mechanical",
+          "name": "Keychron K3 Mechanical",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > TP-Link AX3000 WiFi 6 Router",
+          "name": "TP-Link AX3000 WiFi 6 Router",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Anker USB-C Hub 7-in-1",
+          "name": "Anker USB-C Hub 7-in-1",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Tech Equipment Setup > Objective > Cable management kit",
+          "name": "Cable management kit",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > BenQ ScreenBar Plus",
+          "name": "BenQ ScreenBar Plus",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Philips Hue Desk Lamp",
+          "name": "Philips Hue Desk Lamp",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Sony WH-1000XM4",
+          "name": "Sony WH-1000XM4",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Acoustic foam panels set",
+          "name": "Acoustic foam panels set",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Ergonomic footrest",
+          "name": "Ergonomic footrest",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Anti-fatigue standing mat",
+          "name": "Anti-fatigue standing mat",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Environment Optimization > Objective > Monitor riser with storage",
+          "name": "Monitor riser with storage",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Mezze platter recipe",
+          "name": "Mezze platter recipe",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Caprese skewers",
+          "name": "Caprese skewers",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Herb-crusted lamb rack",
+          "name": "Herb-crusted lamb rack",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Stuffed bell peppers",
+          "name": "Stuffed bell peppers",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Greek lemon potatoes",
+          "name": "Greek lemon potatoes",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Baklava",
+          "name": "Baklava",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Orange olive oil cake",
+          "name": "Orange olive oil cake",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > Produce list",
+          "name": "Produce list",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > Protein and dairy list",
+          "name": "Protein and dairy list",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > Pantry items list",
+          "name": "Pantry items list",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > 3-day prep schedule",
+          "name": "3-day prep schedule",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Shopping and Preparation > Objective > Day-of cooking timeline",
+          "name": "Day-of cooking timeline",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Rectangular table layout",
+          "name": "Rectangular table layout",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Buffet style option",
+          "name": "Buffet style option",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Table setting guide",
+          "name": "Table setting guide",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Music playlist",
+          "name": "Music playlist",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Candle arrangement",
+          "name": "Candle arrangement",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > MDN HTML Guide",
+          "name": "MDN HTML Guide",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > freeCodeCamp HTML Course",
+          "name": "freeCodeCamp HTML Course",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > CSS-Tricks Flexbox Guide",
+          "name": "CSS-Tricks Flexbox Guide",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > Kevin Powell YouTube",
+          "name": "Kevin Powell YouTube",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > Tailwind CSS Documentation",
+          "name": "Tailwind CSS Documentation",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > JavaScript.info",
+          "name": "JavaScript.info",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Foundation Building > Objective > Eloquent JavaScript",
+          "name": "Eloquent JavaScript",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > Official React Tutorial",
+          "name": "Official React Tutorial",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > Scrimba React Course",
+          "name": "Scrimba React Course",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > React Portfolio Project",
+          "name": "React Portfolio Project",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > Node.js Crash Course",
+          "name": "Node.js Crash Course",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Framework Mastery > Objective > MongoDB University",
+          "name": "MongoDB University",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > Full-stack CRUD app",
+          "name": "Full-stack CRUD app",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > API integration project",
+          "name": "API integration project",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > Clone project",
+          "name": "Clone project",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > LeetCode Easy problems",
+          "name": "LeetCode Easy problems",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > Frontend interview handbook",
+          "name": "Frontend interview handbook",
+          "type": "Item",
+          "score": 1.0
+        },
+        {
+          "path": "RecommendationHub > Session > Portfolio and Job Prep > Objective > Mock interview practice",
+          "name": "Mock interview practice",
+          "type": "Item",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Caprese skewers",
+          "name": "Caprese skewers",
+          "type": "Item",
+          "score": 0.9866004586219788
+        },
+        {
+          "path": "RecommendationHub > Session > Menu Planning > Objective > Greek lemon potatoes",
+          "name": "Greek lemon potatoes",
+          "type": "Item",
+          "score": 0.997974693775177
+        },
+        {
+          "path": "RecommendationHub > Session > Table and Atmosphere > Objective > Table setting guide",
+          "name": "Table setting guide",
+          "type": "Item",
+          "score": 0.9921618103981018
+        }
+      ],
+      "details": {
+        "predicate": "dinner",
+        "scoring_result": {
+          "predicate": "dinner",
+          "config": {
+            "top_k": 3,
+            "score_threshold": 0.01
+          },
+          "batch_scoring": {
+            "total_items_scored": 61,
+            "individual_scores": [
+              {
+                "id": "node_0_main",
+                "type": "Item",
+                "name": "Room measurement guide",
+                "description": "Interactive tool to measure and visualize your workspace dimensions and layout options",
+                "score": 0.00042891353950835764,
+                "reasoning": "Entailment score: 0.0004",
+                "is_main_node": true
+              },
+              {
+                "id": "node_1_main",
+                "type": "Item",
+                "name": "Lighting assessment checklist",
+                "description": "Guide to evaluate natural light, identify glare issues, and plan artificial lighting",
+                "score": 0.08214442431926727,
+                "reasoning": "Entailment score: 0.0821",
+                "is_main_node": true
+              },
+              {
+                "id": "node_2_main",
+                "type": "Item",
+                "name": "L-shaped desk configuration",
+                "description": "Corner desk layout maximizing space efficiency, recommended for small rooms",
+                "score": 0.00769580714404583,
+                "reasoning": "Entailment score: 0.0077",
+                "is_main_node": true
+              },
+              {
+                "id": "node_3_main",
+                "type": "Item",
+                "name": "Standing desk converter option",
+                "description": "Space-saving solution that converts existing surface to sit-stand workspace",
+                "score": 0.0019387512002140284,
+                "reasoning": "Entailment score: 0.0019",
+                "is_main_node": true
+              },
+              {
+                "id": "node_4_main",
+                "type": "Item",
+                "name": "Flexispot E7 Standing Desk",
+                "description": "Electric height adjustable desk, 120x60cm, programmable presets, excellent stability, $549",
+                "score": 0.06287740170955658,
+                "reasoning": "Entailment score: 0.0629",
+                "is_main_node": true
+              },
+              {
+                "id": "node_5_main",
+                "type": "Item",
+                "name": "IKEA BEKANT",
+                "description": "Manual crank height adjustable, 160x80cm, simple design, good value, $449",
+                "score": 0.14337822794914246,
+                "reasoning": "Entailment score: 0.1434",
+                "is_main_node": true
+              },
+              {
+                "id": "node_6_main",
+                "type": "Item",
+                "name": "Autonomous SmartDesk Pro",
+                "description": "Dual motor standing desk, 150x75cm, anti-collision, 4 memory settings, $699",
+                "score": 0.01673075184226036,
+                "reasoning": "Entailment score: 0.0167",
+                "is_main_node": true
+              },
+              {
+                "id": "node_7_main",
+                "type": "Item",
+                "name": "Herman Miller Aeron (Refurbished)",
+                "description": "Premium ergonomic mesh chair, fully adjustable, 12-year warranty, $599 refurbished",
+                "score": 0.10750104486942291,
+                "reasoning": "Entailment score: 0.1075",
+                "is_main_node": true
+              },
+              {
+                "id": "node_8_main",
+                "type": "Item",
+                "name": "Secretlab Titan Evo",
+                "description": "Gaming-style ergonomic chair, magnetic headrest, 4D armrests, good lumbar, $449",
+                "score": 0.015240918844938278,
+                "reasoning": "Entailment score: 0.0152",
+                "is_main_node": true
+              },
+              {
+                "id": "node_9_main",
+                "type": "Item",
+                "name": "Branch Ergonomic Chair",
+                "description": "Modern design, 7 adjustment points, breathable mesh, 7-year warranty, $349",
+                "score": 0.081702321767807,
+                "reasoning": "Entailment score: 0.0817",
+                "is_main_node": true
+              },
+              {
+                "id": "node_10_main",
+                "type": "Item",
+                "name": "LG 27UK850-W 4K Monitor",
+                "description": "27-inch 4K IPS, USB-C connectivity, HDR10, height adjustable stand, $449",
+                "score": 0.08050353080034256,
+                "reasoning": "Entailment score: 0.0805",
+                "is_main_node": true
+              },
+              {
+                "id": "node_11_main",
+                "type": "Item",
+                "name": "Dell UltraSharp U2720Q",
+                "description": "27-inch 4K USB-C hub monitor, factory calibrated, daisy chain support, $529",
+                "score": 0.016521869227290154,
+                "reasoning": "Entailment score: 0.0165",
+                "is_main_node": true
+              },
+              {
+                "id": "node_12_main",
+                "type": "Item",
+                "name": "VIVO Dual Monitor Arm",
+                "description": "Heavy-duty desk mount for 2 monitors up to 32-inch, full motion, cable management, $39",
+                "score": 0.006727228872478008,
+                "reasoning": "Entailment score: 0.0067",
+                "is_main_node": true
+              },
+              {
+                "id": "node_13_main",
+                "type": "Item",
+                "name": "Logitech MX Keys",
+                "description": "Low-profile wireless keyboard, backlit, multi-device switching, USB-C charging, $99",
+                "score": 0.02262762375175953,
+                "reasoning": "Entailment score: 0.0226",
+                "is_main_node": true
+              },
+              {
+                "id": "node_14_main",
+                "type": "Item",
+                "name": "Logitech MX Master 3",
+                "description": "Ergonomic wireless mouse, customizable buttons, fast scrolling, USB-C, $99",
+                "score": 0.06391654163599014,
+                "reasoning": "Entailment score: 0.0639",
+                "is_main_node": true
+              },
+              {
+                "id": "node_15_main",
+                "type": "Item",
+                "name": "Keychron K3 Mechanical",
+                "description": "Ultra-slim mechanical keyboard, hot-swappable, wireless, Mac/Windows compatible, $84",
+                "score": 0.020593248307704926,
+                "reasoning": "Entailment score: 0.0206",
+                "is_main_node": true
+              },
+              {
+                "id": "node_16_main",
+                "type": "Item",
+                "name": "TP-Link AX3000 WiFi 6 Router",
+                "description": "Dual-band WiFi 6, covers up to 185sqm, easy mesh, $129",
+                "score": 0.03637166693806648,
+                "reasoning": "Entailment score: 0.0364",
+                "is_main_node": true
+              },
+              {
+                "id": "node_17_main",
+                "type": "Item",
+                "name": "Anker USB-C Hub 7-in-1",
+                "description": "HDMI, USB-A, SD card, ethernet port, compact design, $45",
+                "score": 0.01639762707054615,
+                "reasoning": "Entailment score: 0.0164",
+                "is_main_node": true
+              },
+              {
+                "id": "node_18_main",
+                "type": "Item",
+                "name": "Cable management kit",
+                "description": "Under-desk cable tray, velcro ties, cable sleeves, complete organization solution, $35",
+                "score": 0.004963309969753027,
+                "reasoning": "Entailment score: 0.0050",
+                "is_main_node": true
+              },
+              {
+                "id": "node_19_main",
+                "type": "Item",
+                "name": "BenQ ScreenBar Plus",
+                "description": "Monitor-mounted LED light bar, auto-dimming, asymmetric optics prevents screen glare, $129",
+                "score": 0.018802491948008537,
+                "reasoning": "Entailment score: 0.0188",
+                "is_main_node": true
+              },
+              {
+                "id": "node_20_main",
+                "type": "Item",
+                "name": "Philips Hue Desk Lamp",
+                "description": "Smart LED desk lamp, adjustable color temperature, app control, $79",
+                "score": 0.021512432023882866,
+                "reasoning": "Entailment score: 0.0215",
+                "is_main_node": true
+              },
+              {
+                "id": "node_21_main",
+                "type": "Item",
+                "name": "Sony WH-1000XM4",
+                "description": "Premium ANC headphones, 30-hour battery, excellent call quality, comfortable, $278",
+                "score": 0.06143200770020485,
+                "reasoning": "Entailment score: 0.0614",
+                "is_main_node": true
+              },
+              {
+                "id": "node_22_main",
+                "type": "Item",
+                "name": "Acoustic foam panels set",
+                "description": "12-pack sound absorbing panels, easy install, reduces echo and ambient noise, $45",
+                "score": 0.03344740718603134,
+                "reasoning": "Entailment score: 0.0334",
+                "is_main_node": true
+              },
+              {
+                "id": "node_23_main",
+                "type": "Item",
+                "name": "Ergonomic footrest",
+                "description": "Adjustable angle footrest, improves posture, reduces leg fatigue, $39",
+                "score": 0.03633296489715576,
+                "reasoning": "Entailment score: 0.0363",
+                "is_main_node": true
+              },
+              {
+                "id": "node_24_main",
+                "type": "Item",
+                "name": "Anti-fatigue standing mat",
+                "description": "Cushioned mat for standing desk use, beveled edges, easy to clean, $59",
+                "score": 0.0010733288945630193,
+                "reasoning": "Entailment score: 0.0011",
+                "is_main_node": true
+              },
+              {
+                "id": "node_25_main",
+                "type": "Item",
+                "name": "Monitor riser with storage",
+                "description": "Bamboo desk organizer, raises monitor to eye level, built-in storage, $35",
+                "score": 0.0029295664280653,
+                "reasoning": "Entailment score: 0.0029",
+                "is_main_node": true
+              },
+              {
+                "id": "node_26_main",
+                "type": "Item",
+                "name": "Mezze platter recipe",
+                "description": "Hummus, baba ganoush, tzatziki with pita bread and vegetables - serves 8, prep 45min",
+                "score": 0.9706421494483948,
+                "reasoning": "Entailment score: 0.9706",
+                "is_main_node": true
+              },
+              {
+                "id": "node_27_main",
+                "type": "Item",
+                "name": "Caprese skewers",
+                "description": "Cherry tomatoes, mozzarella, basil with balsamic glaze - vegetarian, serves 8, prep 20min",
+                "score": 0.9866004586219788,
+                "reasoning": "Entailment score: 0.9866",
+                "is_main_node": true
+              },
+              {
+                "id": "node_28_main",
+                "type": "Item",
+                "name": "Herb-crusted lamb rack",
+                "description": "Mediterranean spiced lamb with roasted vegetables - serves 4-5, 90min total",
+                "score": 0.9863824844360352,
+                "reasoning": "Entailment score: 0.9864",
+                "is_main_node": true
+              },
+              {
+                "id": "node_29_main",
+                "type": "Item",
+                "name": "Stuffed bell peppers",
+                "description": "Quinoa, feta, sun-dried tomato filling - vegetarian, serves 4, can prep day before",
+                "score": 0.9612042307853699,
+                "reasoning": "Entailment score: 0.9612",
+                "is_main_node": true
+              },
+              {
+                "id": "node_30_main",
+                "type": "Item",
+                "name": "Greek lemon potatoes",
+                "description": "Crispy roasted potatoes with oregano - side dish for both mains, serves 8",
+                "score": 0.997974693775177,
+                "reasoning": "Entailment score: 0.9980",
+                "is_main_node": true
+              },
+              {
+                "id": "node_31_main",
+                "type": "Item",
+                "name": "Baklava",
+                "description": "Classic layered phyllo pastry with nuts and honey - can buy from bakery, serves 12",
+                "score": 0.3301571309566498,
+                "reasoning": "Entailment score: 0.3302",
+                "is_main_node": true
+              },
+              {
+                "id": "node_32_main",
+                "type": "Item",
+                "name": "Orange olive oil cake",
+                "description": "Moist citrus cake, naturally dairy-free - bake day before, serves 10",
+                "score": 0.4916321933269501,
+                "reasoning": "Entailment score: 0.4916",
+                "is_main_node": true
+              },
+              {
+                "id": "node_33_main",
+                "type": "Item",
+                "name": "Produce list",
+                "description": "Vegetables, herbs, citrus - shop 1-2 days before for freshness",
+                "score": 0.8442170023918152,
+                "reasoning": "Entailment score: 0.8442",
+                "is_main_node": true
+              },
+              {
+                "id": "node_34_main",
+                "type": "Item",
+                "name": "Protein and dairy list",
+                "description": "Lamb rack (2), feta cheese, yogurt - order lamb from butcher 3 days ahead",
+                "score": 0.9287566542625427,
+                "reasoning": "Entailment score: 0.9288",
+                "is_main_node": true
+              },
+              {
+                "id": "node_35_main",
+                "type": "Item",
+                "name": "Pantry items list",
+                "description": "Olive oil, spices, nuts, phyllo dough - check inventory first",
+                "score": 0.7062522172927856,
+                "reasoning": "Entailment score: 0.7063",
+                "is_main_node": true
+              },
+              {
+                "id": "node_36_main",
+                "type": "Item",
+                "name": "3-day prep schedule",
+                "description": "Day-by-day breakdown of what to prepare when, including shopping trips",
+                "score": 0.01989048160612583,
+                "reasoning": "Entailment score: 0.0199",
+                "is_main_node": true
+              },
+              {
+                "id": "node_37_main",
+                "type": "Item",
+                "name": "Day-of cooking timeline",
+                "description": "Hour-by-hour schedule for party day, including oven coordination",
+                "score": 0.025348741561174393,
+                "reasoning": "Entailment score: 0.0253",
+                "is_main_node": true
+              },
+              {
+                "id": "node_38_main",
+                "type": "Item",
+                "name": "Rectangular table layout",
+                "description": "Host positions at ends, guests along sides - best for passed dishes",
+                "score": 0.9150803089141846,
+                "reasoning": "Entailment score: 0.9151",
+                "is_main_node": true
+              },
+              {
+                "id": "node_39_main",
+                "type": "Item",
+                "name": "Buffet style option",
+                "description": "Food on sideboard, guests serve themselves - more casual, easier hosting",
+                "score": 0.8178399205207825,
+                "reasoning": "Entailment score: 0.8178",
+                "is_main_node": true
+              },
+              {
+                "id": "node_40_main",
+                "type": "Item",
+                "name": "Table setting guide",
+                "description": "Linen napkins, simple white plates, olive branch centerpiece ideas",
+                "score": 0.9921618103981018,
+                "reasoning": "Entailment score: 0.9922",
+                "is_main_node": true
+              },
+              {
+                "id": "node_41_main",
+                "type": "Item",
+                "name": "Music playlist",
+                "description": "Mediterranean-inspired background music, 3-hour curated playlist",
+                "score": 0.1386263072490692,
+                "reasoning": "Entailment score: 0.1386",
+                "is_main_node": true
+              },
+              {
+                "id": "node_42_main",
+                "type": "Item",
+                "name": "Candle arrangement",
+                "description": "Mixed height pillar candles, warm white, safe placement tips",
+                "score": 0.3474498689174652,
+                "reasoning": "Entailment score: 0.3474",
+                "is_main_node": true
+              },
+              {
+                "id": "node_43_main",
+                "type": "Item",
+                "name": "MDN HTML Guide",
+                "description": "Mozilla's comprehensive HTML tutorial, free, covers all fundamentals, ~10 hours",
+                "score": 0.004122480750083923,
+                "reasoning": "Entailment score: 0.0041",
+                "is_main_node": true
+              },
+              {
+                "id": "node_44_main",
+                "type": "Item",
+                "name": "freeCodeCamp HTML Course",
+                "description": "Interactive HTML challenges with certification, completely free, ~15 hours",
+                "score": 0.013510764576494694,
+                "reasoning": "Entailment score: 0.0135",
+                "is_main_node": true
+              },
+              {
+                "id": "node_45_main",
+                "type": "Item",
+                "name": "CSS-Tricks Flexbox Guide",
+                "description": "Visual guide to flexbox layout, free reference, essential for modern layouts",
+                "score": 0.0029535384383052588,
+                "reasoning": "Entailment score: 0.0030",
+                "is_main_node": true
+              },
+              {
+                "id": "node_46_main",
+                "type": "Item",
+                "name": "Kevin Powell YouTube",
+                "description": "Excellent CSS tutorials, beginner to advanced, free, practical projects",
+                "score": 0.009396126493811607,
+                "reasoning": "Entailment score: 0.0094",
+                "is_main_node": true
+              },
+              {
+                "id": "node_47_main",
+                "type": "Item",
+                "name": "Tailwind CSS Documentation",
+                "description": "Utility-first CSS framework, widely used in industry, speeds up development",
+                "score": 0.0012435303069651127,
+                "reasoning": "Entailment score: 0.0012",
+                "is_main_node": true
+              },
+              {
+                "id": "node_48_main",
+                "type": "Item",
+                "name": "JavaScript.info",
+                "description": "Modern JavaScript tutorial, free, comprehensive, well-structured, ~40 hours",
+                "score": 0.004939913749694824,
+                "reasoning": "Entailment score: 0.0049",
+                "is_main_node": true
+              },
+              {
+                "id": "node_49_main",
+                "type": "Item",
+                "name": "Eloquent JavaScript",
+                "description": "Free online book, deeper understanding, includes exercises, intermediate",
+                "score": 0.004717836156487465,
+                "reasoning": "Entailment score: 0.0047",
+                "is_main_node": true
+              },
+              {
+                "id": "node_50_main",
+                "type": "Item",
+                "name": "Official React Tutorial",
+                "description": "Updated React documentation with interactive examples, free, ~20 hours",
+                "score": 0.0067376913502812386,
+                "reasoning": "Entailment score: 0.0067",
+                "is_main_node": true
+              },
+              {
+                "id": "node_51_main",
+                "type": "Item",
+                "name": "Scrimba React Course",
+                "description": "Interactive coding screencasts, project-based, free tier available",
+                "score": 0.0065496135503053665,
+                "reasoning": "Entailment score: 0.0065",
+                "is_main_node": true
+              },
+              {
+                "id": "node_52_main",
+                "type": "Item",
+                "name": "React Portfolio Project",
+                "description": "Build personal portfolio site - practice routing, forms, API calls",
+                "score": 0.0005174411344341934,
+                "reasoning": "Entailment score: 0.0005",
+                "is_main_node": true
+              },
+              {
+                "id": "node_53_main",
+                "type": "Item",
+                "name": "Node.js Crash Course",
+                "description": "Traversy Media YouTube series, practical backend fundamentals, free",
+                "score": 0.006192679051309824,
+                "reasoning": "Entailment score: 0.0062",
+                "is_main_node": true
+              },
+              {
+                "id": "node_54_main",
+                "type": "Item",
+                "name": "MongoDB University",
+                "description": "Free official MongoDB courses, NoSQL database skills, certification",
+                "score": 0.004737670999020338,
+                "reasoning": "Entailment score: 0.0047",
+                "is_main_node": true
+              },
+              {
+                "id": "node_55_main",
+                "type": "Item",
+                "name": "Full-stack CRUD app",
+                "description": "Task manager or blog with user auth - demonstrates complete skills",
+                "score": 0.0020562615245580673,
+                "reasoning": "Entailment score: 0.0021",
+                "is_main_node": true
+              },
+              {
+                "id": "node_56_main",
+                "type": "Item",
+                "name": "API integration project",
+                "description": "Weather app or movie database - shows third-party API skills",
+                "score": 0.0005143287125974894,
+                "reasoning": "Entailment score: 0.0005",
+                "is_main_node": true
+              },
+              {
+                "id": "node_57_main",
+                "type": "Item",
+                "name": "Clone project",
+                "description": "Simplified clone of popular site - shows ability to match specifications",
+                "score": 0.001310286927036941,
+                "reasoning": "Entailment score: 0.0013",
+                "is_main_node": true
+              },
+              {
+                "id": "node_58_main",
+                "type": "Item",
+                "name": "LeetCode Easy problems",
+                "description": "Practice basic algorithms, start with array and string problems",
+                "score": 0.01069004088640213,
+                "reasoning": "Entailment score: 0.0107",
+                "is_main_node": true
+              },
+              {
+                "id": "node_59_main",
+                "type": "Item",
+                "name": "Frontend interview handbook",
+                "description": "Free GitHub resource covering common frontend interview topics",
+                "score": 0.0007077715126797557,
+                "reasoning": "Entailment score: 0.0007",
+                "is_main_node": true
+              },
+              {
+                "id": "node_60_main",
+                "type": "Item",
+                "name": "Mock interview practice",
+                "description": "Pramp.com offers free peer mock interviews, practice explaining code",
+                "score": 0.004409801214933395,
+                "reasoning": "Entailment score: 0.0044",
+                "is_main_node": true
+              }
+            ]
+          },
+          "node_aggregations": [
+            {
+              "node_idx": 0,
+              "node_name": "Room measurement guide",
+              "node_type": "Item",
+              "individual_scores": [
+                0.00042891353950835764
+              ],
+              "mean_score": 0.00042891353950835764,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 1,
+              "node_name": "Lighting assessment checklist",
+              "node_type": "Item",
+              "individual_scores": [
+                0.08214442431926727
+              ],
+              "mean_score": 0.08214442431926727,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 2,
+              "node_name": "L-shaped desk configuration",
+              "node_type": "Item",
+              "individual_scores": [
+                0.00769580714404583
+              ],
+              "mean_score": 0.00769580714404583,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Standing desk converter option",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0019387512002140284
+              ],
+              "mean_score": 0.0019387512002140284,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Flexispot E7 Standing Desk",
+              "node_type": "Item",
+              "individual_scores": [
+                0.06287740170955658
+              ],
+              "mean_score": 0.06287740170955658,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 5,
+              "node_name": "IKEA BEKANT",
+              "node_type": "Item",
+              "individual_scores": [
+                0.14337822794914246
+              ],
+              "mean_score": 0.14337822794914246,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Autonomous SmartDesk Pro",
+              "node_type": "Item",
+              "individual_scores": [
+                0.01673075184226036
+              ],
+              "mean_score": 0.01673075184226036,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Herman Miller Aeron (Refurbished)",
+              "node_type": "Item",
+              "individual_scores": [
+                0.10750104486942291
+              ],
+              "mean_score": 0.10750104486942291,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 8,
+              "node_name": "Secretlab Titan Evo",
+              "node_type": "Item",
+              "individual_scores": [
+                0.015240918844938278
+              ],
+              "mean_score": 0.015240918844938278,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 9,
+              "node_name": "Branch Ergonomic Chair",
+              "node_type": "Item",
+              "individual_scores": [
+                0.081702321767807
+              ],
+              "mean_score": 0.081702321767807,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 10,
+              "node_name": "LG 27UK850-W 4K Monitor",
+              "node_type": "Item",
+              "individual_scores": [
+                0.08050353080034256
+              ],
+              "mean_score": 0.08050353080034256,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 11,
+              "node_name": "Dell UltraSharp U2720Q",
+              "node_type": "Item",
+              "individual_scores": [
+                0.016521869227290154
+              ],
+              "mean_score": 0.016521869227290154,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 12,
+              "node_name": "VIVO Dual Monitor Arm",
+              "node_type": "Item",
+              "individual_scores": [
+                0.006727228872478008
+              ],
+              "mean_score": 0.006727228872478008,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 13,
+              "node_name": "Logitech MX Keys",
+              "node_type": "Item",
+              "individual_scores": [
+                0.02262762375175953
+              ],
+              "mean_score": 0.02262762375175953,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 14,
+              "node_name": "Logitech MX Master 3",
+              "node_type": "Item",
+              "individual_scores": [
+                0.06391654163599014
+              ],
+              "mean_score": 0.06391654163599014,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 15,
+              "node_name": "Keychron K3 Mechanical",
+              "node_type": "Item",
+              "individual_scores": [
+                0.020593248307704926
+              ],
+              "mean_score": 0.020593248307704926,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 16,
+              "node_name": "TP-Link AX3000 WiFi 6 Router",
+              "node_type": "Item",
+              "individual_scores": [
+                0.03637166693806648
+              ],
+              "mean_score": 0.03637166693806648,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 17,
+              "node_name": "Anker USB-C Hub 7-in-1",
+              "node_type": "Item",
+              "individual_scores": [
+                0.01639762707054615
+              ],
+              "mean_score": 0.01639762707054615,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 18,
+              "node_name": "Cable management kit",
+              "node_type": "Item",
+              "individual_scores": [
+                0.004963309969753027
+              ],
+              "mean_score": 0.004963309969753027,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 19,
+              "node_name": "BenQ ScreenBar Plus",
+              "node_type": "Item",
+              "individual_scores": [
+                0.018802491948008537
+              ],
+              "mean_score": 0.018802491948008537,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 20,
+              "node_name": "Philips Hue Desk Lamp",
+              "node_type": "Item",
+              "individual_scores": [
+                0.021512432023882866
+              ],
+              "mean_score": 0.021512432023882866,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 21,
+              "node_name": "Sony WH-1000XM4",
+              "node_type": "Item",
+              "individual_scores": [
+                0.06143200770020485
+              ],
+              "mean_score": 0.06143200770020485,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 22,
+              "node_name": "Acoustic foam panels set",
+              "node_type": "Item",
+              "individual_scores": [
+                0.03344740718603134
+              ],
+              "mean_score": 0.03344740718603134,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 23,
+              "node_name": "Ergonomic footrest",
+              "node_type": "Item",
+              "individual_scores": [
+                0.03633296489715576
+              ],
+              "mean_score": 0.03633296489715576,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 24,
+              "node_name": "Anti-fatigue standing mat",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0010733288945630193
+              ],
+              "mean_score": 0.0010733288945630193,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 25,
+              "node_name": "Monitor riser with storage",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0029295664280653
+              ],
+              "mean_score": 0.0029295664280653,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 26,
+              "node_name": "Mezze platter recipe",
+              "node_type": "Item",
+              "individual_scores": [
+                0.9706421494483948
+              ],
+              "mean_score": 0.9706421494483948,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 27,
+              "node_name": "Caprese skewers",
+              "node_type": "Item",
+              "individual_scores": [
+                0.9866004586219788
+              ],
+              "mean_score": 0.9866004586219788,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 28,
+              "node_name": "Herb-crusted lamb rack",
+              "node_type": "Item",
+              "individual_scores": [
+                0.9863824844360352
+              ],
+              "mean_score": 0.9863824844360352,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 29,
+              "node_name": "Stuffed bell peppers",
+              "node_type": "Item",
+              "individual_scores": [
+                0.9612042307853699
+              ],
+              "mean_score": 0.9612042307853699,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 30,
+              "node_name": "Greek lemon potatoes",
+              "node_type": "Item",
+              "individual_scores": [
+                0.997974693775177
+              ],
+              "mean_score": 0.997974693775177,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 31,
+              "node_name": "Baklava",
+              "node_type": "Item",
+              "individual_scores": [
+                0.3301571309566498
+              ],
+              "mean_score": 0.3301571309566498,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 32,
+              "node_name": "Orange olive oil cake",
+              "node_type": "Item",
+              "individual_scores": [
+                0.4916321933269501
+              ],
+              "mean_score": 0.4916321933269501,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 33,
+              "node_name": "Produce list",
+              "node_type": "Item",
+              "individual_scores": [
+                0.8442170023918152
+              ],
+              "mean_score": 0.8442170023918152,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 34,
+              "node_name": "Protein and dairy list",
+              "node_type": "Item",
+              "individual_scores": [
+                0.9287566542625427
+              ],
+              "mean_score": 0.9287566542625427,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 35,
+              "node_name": "Pantry items list",
+              "node_type": "Item",
+              "individual_scores": [
+                0.7062522172927856
+              ],
+              "mean_score": 0.7062522172927856,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 36,
+              "node_name": "3-day prep schedule",
+              "node_type": "Item",
+              "individual_scores": [
+                0.01989048160612583
+              ],
+              "mean_score": 0.01989048160612583,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 37,
+              "node_name": "Day-of cooking timeline",
+              "node_type": "Item",
+              "individual_scores": [
+                0.025348741561174393
+              ],
+              "mean_score": 0.025348741561174393,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 38,
+              "node_name": "Rectangular table layout",
+              "node_type": "Item",
+              "individual_scores": [
+                0.9150803089141846
+              ],
+              "mean_score": 0.9150803089141846,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 39,
+              "node_name": "Buffet style option",
+              "node_type": "Item",
+              "individual_scores": [
+                0.8178399205207825
+              ],
+              "mean_score": 0.8178399205207825,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 40,
+              "node_name": "Table setting guide",
+              "node_type": "Item",
+              "individual_scores": [
+                0.9921618103981018
+              ],
+              "mean_score": 0.9921618103981018,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 41,
+              "node_name": "Music playlist",
+              "node_type": "Item",
+              "individual_scores": [
+                0.1386263072490692
+              ],
+              "mean_score": 0.1386263072490692,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 42,
+              "node_name": "Candle arrangement",
+              "node_type": "Item",
+              "individual_scores": [
+                0.3474498689174652
+              ],
+              "mean_score": 0.3474498689174652,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 43,
+              "node_name": "MDN HTML Guide",
+              "node_type": "Item",
+              "individual_scores": [
+                0.004122480750083923
+              ],
+              "mean_score": 0.004122480750083923,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 44,
+              "node_name": "freeCodeCamp HTML Course",
+              "node_type": "Item",
+              "individual_scores": [
+                0.013510764576494694
+              ],
+              "mean_score": 0.013510764576494694,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 45,
+              "node_name": "CSS-Tricks Flexbox Guide",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0029535384383052588
+              ],
+              "mean_score": 0.0029535384383052588,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 46,
+              "node_name": "Kevin Powell YouTube",
+              "node_type": "Item",
+              "individual_scores": [
+                0.009396126493811607
+              ],
+              "mean_score": 0.009396126493811607,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 47,
+              "node_name": "Tailwind CSS Documentation",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0012435303069651127
+              ],
+              "mean_score": 0.0012435303069651127,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 48,
+              "node_name": "JavaScript.info",
+              "node_type": "Item",
+              "individual_scores": [
+                0.004939913749694824
+              ],
+              "mean_score": 0.004939913749694824,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 49,
+              "node_name": "Eloquent JavaScript",
+              "node_type": "Item",
+              "individual_scores": [
+                0.004717836156487465
+              ],
+              "mean_score": 0.004717836156487465,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 50,
+              "node_name": "Official React Tutorial",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0067376913502812386
+              ],
+              "mean_score": 0.0067376913502812386,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 51,
+              "node_name": "Scrimba React Course",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0065496135503053665
+              ],
+              "mean_score": 0.0065496135503053665,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 52,
+              "node_name": "React Portfolio Project",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0005174411344341934
+              ],
+              "mean_score": 0.0005174411344341934,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 53,
+              "node_name": "Node.js Crash Course",
+              "node_type": "Item",
+              "individual_scores": [
+                0.006192679051309824
+              ],
+              "mean_score": 0.006192679051309824,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 54,
+              "node_name": "MongoDB University",
+              "node_type": "Item",
+              "individual_scores": [
+                0.004737670999020338
+              ],
+              "mean_score": 0.004737670999020338,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 55,
+              "node_name": "Full-stack CRUD app",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0020562615245580673
+              ],
+              "mean_score": 0.0020562615245580673,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 56,
+              "node_name": "API integration project",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0005143287125974894
+              ],
+              "mean_score": 0.0005143287125974894,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 57,
+              "node_name": "Clone project",
+              "node_type": "Item",
+              "individual_scores": [
+                0.001310286927036941
+              ],
+              "mean_score": 0.001310286927036941,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 58,
+              "node_name": "LeetCode Easy problems",
+              "node_type": "Item",
+              "individual_scores": [
+                0.01069004088640213
+              ],
+              "mean_score": 0.01069004088640213,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 59,
+              "node_name": "Frontend interview handbook",
+              "node_type": "Item",
+              "individual_scores": [
+                0.0007077715126797557
+              ],
+              "mean_score": 0.0007077715126797557,
+              "num_items_scored": 1
+            },
+            {
+              "node_idx": 60,
+              "node_name": "Mock interview practice",
+              "node_type": "Item",
+              "individual_scores": [
+                0.004409801214933395
+              ],
+              "mean_score": 0.004409801214933395,
+              "num_items_scored": 1
+            }
+          ],
+          "ranking": [
+            {
+              "idx": 30,
+              "score": 0.997974693775177,
+              "name": "Greek lemon potatoes"
+            },
+            {
+              "idx": 40,
+              "score": 0.9921618103981018,
+              "name": "Table setting guide"
+            },
+            {
+              "idx": 27,
+              "score": 0.9866004586219788,
+              "name": "Caprese skewers"
+            },
+            {
+              "idx": 28,
+              "score": 0.9863824844360352,
+              "name": "Herb-crusted lamb rack"
+            },
+            {
+              "idx": 26,
+              "score": 0.9706421494483948,
+              "name": "Mezze platter recipe"
+            },
+            {
+              "idx": 29,
+              "score": 0.9612042307853699,
+              "name": "Stuffed bell peppers"
+            },
+            {
+              "idx": 34,
+              "score": 0.9287566542625427,
+              "name": "Protein and dairy list"
+            },
+            {
+              "idx": 38,
+              "score": 0.9150803089141846,
+              "name": "Rectangular table layout"
+            },
+            {
+              "idx": 33,
+              "score": 0.8442170023918152,
+              "name": "Produce list"
+            },
+            {
+              "idx": 39,
+              "score": 0.8178399205207825,
+              "name": "Buffet style option"
+            },
+            {
+              "idx": 35,
+              "score": 0.7062522172927856,
+              "name": "Pantry items list"
+            },
+            {
+              "idx": 32,
+              "score": 0.4916321933269501,
+              "name": "Orange olive oil cake"
+            },
+            {
+              "idx": 42,
+              "score": 0.3474498689174652,
+              "name": "Candle arrangement"
+            },
+            {
+              "idx": 31,
+              "score": 0.3301571309566498,
+              "name": "Baklava"
+            },
+            {
+              "idx": 5,
+              "score": 0.14337822794914246,
+              "name": "IKEA BEKANT"
+            },
+            {
+              "idx": 41,
+              "score": 0.1386263072490692,
+              "name": "Music playlist"
+            },
+            {
+              "idx": 7,
+              "score": 0.10750104486942291,
+              "name": "Herman Miller Aeron (Refurbished)"
+            },
+            {
+              "idx": 1,
+              "score": 0.08214442431926727,
+              "name": "Lighting assessment checklist"
+            },
+            {
+              "idx": 9,
+              "score": 0.081702321767807,
+              "name": "Branch Ergonomic Chair"
+            },
+            {
+              "idx": 10,
+              "score": 0.08050353080034256,
+              "name": "LG 27UK850-W 4K Monitor"
+            },
+            {
+              "idx": 14,
+              "score": 0.06391654163599014,
+              "name": "Logitech MX Master 3"
+            },
+            {
+              "idx": 4,
+              "score": 0.06287740170955658,
+              "name": "Flexispot E7 Standing Desk"
+            },
+            {
+              "idx": 21,
+              "score": 0.06143200770020485,
+              "name": "Sony WH-1000XM4"
+            },
+            {
+              "idx": 16,
+              "score": 0.03637166693806648,
+              "name": "TP-Link AX3000 WiFi 6 Router"
+            },
+            {
+              "idx": 23,
+              "score": 0.03633296489715576,
+              "name": "Ergonomic footrest"
+            },
+            {
+              "idx": 22,
+              "score": 0.03344740718603134,
+              "name": "Acoustic foam panels set"
+            },
+            {
+              "idx": 37,
+              "score": 0.025348741561174393,
+              "name": "Day-of cooking timeline"
+            },
+            {
+              "idx": 13,
+              "score": 0.02262762375175953,
+              "name": "Logitech MX Keys"
+            },
+            {
+              "idx": 20,
+              "score": 0.021512432023882866,
+              "name": "Philips Hue Desk Lamp"
+            },
+            {
+              "idx": 15,
+              "score": 0.020593248307704926,
+              "name": "Keychron K3 Mechanical"
+            },
+            {
+              "idx": 36,
+              "score": 0.01989048160612583,
+              "name": "3-day prep schedule"
+            },
+            {
+              "idx": 19,
+              "score": 0.018802491948008537,
+              "name": "BenQ ScreenBar Plus"
+            },
+            {
+              "idx": 6,
+              "score": 0.01673075184226036,
+              "name": "Autonomous SmartDesk Pro"
+            },
+            {
+              "idx": 11,
+              "score": 0.016521869227290154,
+              "name": "Dell UltraSharp U2720Q"
+            },
+            {
+              "idx": 17,
+              "score": 0.01639762707054615,
+              "name": "Anker USB-C Hub 7-in-1"
+            },
+            {
+              "idx": 8,
+              "score": 0.015240918844938278,
+              "name": "Secretlab Titan Evo"
+            },
+            {
+              "idx": 44,
+              "score": 0.013510764576494694,
+              "name": "freeCodeCamp HTML Course"
+            },
+            {
+              "idx": 58,
+              "score": 0.01069004088640213,
+              "name": "LeetCode Easy problems"
+            },
+            {
+              "idx": 46,
+              "score": 0.009396126493811607,
+              "name": "Kevin Powell YouTube"
+            },
+            {
+              "idx": 2,
+              "score": 0.00769580714404583,
+              "name": "L-shaped desk configuration"
+            },
+            {
+              "idx": 50,
+              "score": 0.0067376913502812386,
+              "name": "Official React Tutorial"
+            },
+            {
+              "idx": 12,
+              "score": 0.006727228872478008,
+              "name": "VIVO Dual Monitor Arm"
+            },
+            {
+              "idx": 51,
+              "score": 0.0065496135503053665,
+              "name": "Scrimba React Course"
+            },
+            {
+              "idx": 53,
+              "score": 0.006192679051309824,
+              "name": "Node.js Crash Course"
+            },
+            {
+              "idx": 18,
+              "score": 0.004963309969753027,
+              "name": "Cable management kit"
+            },
+            {
+              "idx": 48,
+              "score": 0.004939913749694824,
+              "name": "JavaScript.info"
+            },
+            {
+              "idx": 54,
+              "score": 0.004737670999020338,
+              "name": "MongoDB University"
+            },
+            {
+              "idx": 49,
+              "score": 0.004717836156487465,
+              "name": "Eloquent JavaScript"
+            },
+            {
+              "idx": 60,
+              "score": 0.004409801214933395,
+              "name": "Mock interview practice"
+            },
+            {
+              "idx": 43,
+              "score": 0.004122480750083923,
+              "name": "MDN HTML Guide"
+            },
+            {
+              "idx": 45,
+              "score": 0.0029535384383052588,
+              "name": "CSS-Tricks Flexbox Guide"
+            },
+            {
+              "idx": 25,
+              "score": 0.0029295664280653,
+              "name": "Monitor riser with storage"
+            },
+            {
+              "idx": 55,
+              "score": 0.0020562615245580673,
+              "name": "Full-stack CRUD app"
+            },
+            {
+              "idx": 3,
+              "score": 0.0019387512002140284,
+              "name": "Standing desk converter option"
+            },
+            {
+              "idx": 57,
+              "score": 0.001310286927036941,
+              "name": "Clone project"
+            },
+            {
+              "idx": 47,
+              "score": 0.0012435303069651127,
+              "name": "Tailwind CSS Documentation"
+            },
+            {
+              "idx": 24,
+              "score": 0.0010733288945630193,
+              "name": "Anti-fatigue standing mat"
+            },
+            {
+              "idx": 59,
+              "score": 0.0007077715126797557,
+              "name": "Frontend interview handbook"
+            },
+            {
+              "idx": 52,
+              "score": 0.0005174411344341934,
+              "name": "React Portfolio Project"
+            },
+            {
+              "idx": 56,
+              "score": 0.0005143287125974894,
+              "name": "API integration project"
+            },
+            {
+              "idx": 0,
+              "score": 0.00042891353950835764,
+              "name": "Room measurement guide"
+            }
+          ],
+          "selected": {
+            "indices": [
+              27,
+              30,
+              40
+            ],
+            "nodes": [
+              {
+                "idx": 27,
+                "name": "Caprese skewers"
+              },
+              {
+                "idx": 30,
+                "name": "Greek lemon potatoes"
+              },
+              {
+                "idx": 40,
+                "name": "Table setting guide"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "dinner",
+      "config": {
+        "top_k": 3,
+        "score_threshold": 0.01
+      },
+      "batch_scoring": {
+        "total_items_scored": 61,
+        "individual_scores": [
+          {
+            "id": "node_0_main",
+            "type": "Item",
+            "name": "Room measurement guide",
+            "description": "Interactive tool to measure and visualize your workspace dimensions and layout options",
+            "score": 0.00042891353950835764,
+            "reasoning": "Entailment score: 0.0004",
+            "is_main_node": true
+          },
+          {
+            "id": "node_1_main",
+            "type": "Item",
+            "name": "Lighting assessment checklist",
+            "description": "Guide to evaluate natural light, identify glare issues, and plan artificial lighting",
+            "score": 0.08214442431926727,
+            "reasoning": "Entailment score: 0.0821",
+            "is_main_node": true
+          },
+          {
+            "id": "node_2_main",
+            "type": "Item",
+            "name": "L-shaped desk configuration",
+            "description": "Corner desk layout maximizing space efficiency, recommended for small rooms",
+            "score": 0.00769580714404583,
+            "reasoning": "Entailment score: 0.0077",
+            "is_main_node": true
+          },
+          {
+            "id": "node_3_main",
+            "type": "Item",
+            "name": "Standing desk converter option",
+            "description": "Space-saving solution that converts existing surface to sit-stand workspace",
+            "score": 0.0019387512002140284,
+            "reasoning": "Entailment score: 0.0019",
+            "is_main_node": true
+          },
+          {
+            "id": "node_4_main",
+            "type": "Item",
+            "name": "Flexispot E7 Standing Desk",
+            "description": "Electric height adjustable desk, 120x60cm, programmable presets, excellent stability, $549",
+            "score": 0.06287740170955658,
+            "reasoning": "Entailment score: 0.0629",
+            "is_main_node": true
+          },
+          {
+            "id": "node_5_main",
+            "type": "Item",
+            "name": "IKEA BEKANT",
+            "description": "Manual crank height adjustable, 160x80cm, simple design, good value, $449",
+            "score": 0.14337822794914246,
+            "reasoning": "Entailment score: 0.1434",
+            "is_main_node": true
+          },
+          {
+            "id": "node_6_main",
+            "type": "Item",
+            "name": "Autonomous SmartDesk Pro",
+            "description": "Dual motor standing desk, 150x75cm, anti-collision, 4 memory settings, $699",
+            "score": 0.01673075184226036,
+            "reasoning": "Entailment score: 0.0167",
+            "is_main_node": true
+          },
+          {
+            "id": "node_7_main",
+            "type": "Item",
+            "name": "Herman Miller Aeron (Refurbished)",
+            "description": "Premium ergonomic mesh chair, fully adjustable, 12-year warranty, $599 refurbished",
+            "score": 0.10750104486942291,
+            "reasoning": "Entailment score: 0.1075",
+            "is_main_node": true
+          },
+          {
+            "id": "node_8_main",
+            "type": "Item",
+            "name": "Secretlab Titan Evo",
+            "description": "Gaming-style ergonomic chair, magnetic headrest, 4D armrests, good lumbar, $449",
+            "score": 0.015240918844938278,
+            "reasoning": "Entailment score: 0.0152",
+            "is_main_node": true
+          },
+          {
+            "id": "node_9_main",
+            "type": "Item",
+            "name": "Branch Ergonomic Chair",
+            "description": "Modern design, 7 adjustment points, breathable mesh, 7-year warranty, $349",
+            "score": 0.081702321767807,
+            "reasoning": "Entailment score: 0.0817",
+            "is_main_node": true
+          },
+          {
+            "id": "node_10_main",
+            "type": "Item",
+            "name": "LG 27UK850-W 4K Monitor",
+            "description": "27-inch 4K IPS, USB-C connectivity, HDR10, height adjustable stand, $449",
+            "score": 0.08050353080034256,
+            "reasoning": "Entailment score: 0.0805",
+            "is_main_node": true
+          },
+          {
+            "id": "node_11_main",
+            "type": "Item",
+            "name": "Dell UltraSharp U2720Q",
+            "description": "27-inch 4K USB-C hub monitor, factory calibrated, daisy chain support, $529",
+            "score": 0.016521869227290154,
+            "reasoning": "Entailment score: 0.0165",
+            "is_main_node": true
+          },
+          {
+            "id": "node_12_main",
+            "type": "Item",
+            "name": "VIVO Dual Monitor Arm",
+            "description": "Heavy-duty desk mount for 2 monitors up to 32-inch, full motion, cable management, $39",
+            "score": 0.006727228872478008,
+            "reasoning": "Entailment score: 0.0067",
+            "is_main_node": true
+          },
+          {
+            "id": "node_13_main",
+            "type": "Item",
+            "name": "Logitech MX Keys",
+            "description": "Low-profile wireless keyboard, backlit, multi-device switching, USB-C charging, $99",
+            "score": 0.02262762375175953,
+            "reasoning": "Entailment score: 0.0226",
+            "is_main_node": true
+          },
+          {
+            "id": "node_14_main",
+            "type": "Item",
+            "name": "Logitech MX Master 3",
+            "description": "Ergonomic wireless mouse, customizable buttons, fast scrolling, USB-C, $99",
+            "score": 0.06391654163599014,
+            "reasoning": "Entailment score: 0.0639",
+            "is_main_node": true
+          },
+          {
+            "id": "node_15_main",
+            "type": "Item",
+            "name": "Keychron K3 Mechanical",
+            "description": "Ultra-slim mechanical keyboard, hot-swappable, wireless, Mac/Windows compatible, $84",
+            "score": 0.020593248307704926,
+            "reasoning": "Entailment score: 0.0206",
+            "is_main_node": true
+          },
+          {
+            "id": "node_16_main",
+            "type": "Item",
+            "name": "TP-Link AX3000 WiFi 6 Router",
+            "description": "Dual-band WiFi 6, covers up to 185sqm, easy mesh, $129",
+            "score": 0.03637166693806648,
+            "reasoning": "Entailment score: 0.0364",
+            "is_main_node": true
+          },
+          {
+            "id": "node_17_main",
+            "type": "Item",
+            "name": "Anker USB-C Hub 7-in-1",
+            "description": "HDMI, USB-A, SD card, ethernet port, compact design, $45",
+            "score": 0.01639762707054615,
+            "reasoning": "Entailment score: 0.0164",
+            "is_main_node": true
+          },
+          {
+            "id": "node_18_main",
+            "type": "Item",
+            "name": "Cable management kit",
+            "description": "Under-desk cable tray, velcro ties, cable sleeves, complete organization solution, $35",
+            "score": 0.004963309969753027,
+            "reasoning": "Entailment score: 0.0050",
+            "is_main_node": true
+          },
+          {
+            "id": "node_19_main",
+            "type": "Item",
+            "name": "BenQ ScreenBar Plus",
+            "description": "Monitor-mounted LED light bar, auto-dimming, asymmetric optics prevents screen glare, $129",
+            "score": 0.018802491948008537,
+            "reasoning": "Entailment score: 0.0188",
+            "is_main_node": true
+          },
+          {
+            "id": "node_20_main",
+            "type": "Item",
+            "name": "Philips Hue Desk Lamp",
+            "description": "Smart LED desk lamp, adjustable color temperature, app control, $79",
+            "score": 0.021512432023882866,
+            "reasoning": "Entailment score: 0.0215",
+            "is_main_node": true
+          },
+          {
+            "id": "node_21_main",
+            "type": "Item",
+            "name": "Sony WH-1000XM4",
+            "description": "Premium ANC headphones, 30-hour battery, excellent call quality, comfortable, $278",
+            "score": 0.06143200770020485,
+            "reasoning": "Entailment score: 0.0614",
+            "is_main_node": true
+          },
+          {
+            "id": "node_22_main",
+            "type": "Item",
+            "name": "Acoustic foam panels set",
+            "description": "12-pack sound absorbing panels, easy install, reduces echo and ambient noise, $45",
+            "score": 0.03344740718603134,
+            "reasoning": "Entailment score: 0.0334",
+            "is_main_node": true
+          },
+          {
+            "id": "node_23_main",
+            "type": "Item",
+            "name": "Ergonomic footrest",
+            "description": "Adjustable angle footrest, improves posture, reduces leg fatigue, $39",
+            "score": 0.03633296489715576,
+            "reasoning": "Entailment score: 0.0363",
+            "is_main_node": true
+          },
+          {
+            "id": "node_24_main",
+            "type": "Item",
+            "name": "Anti-fatigue standing mat",
+            "description": "Cushioned mat for standing desk use, beveled edges, easy to clean, $59",
+            "score": 0.0010733288945630193,
+            "reasoning": "Entailment score: 0.0011",
+            "is_main_node": true
+          },
+          {
+            "id": "node_25_main",
+            "type": "Item",
+            "name": "Monitor riser with storage",
+            "description": "Bamboo desk organizer, raises monitor to eye level, built-in storage, $35",
+            "score": 0.0029295664280653,
+            "reasoning": "Entailment score: 0.0029",
+            "is_main_node": true
+          },
+          {
+            "id": "node_26_main",
+            "type": "Item",
+            "name": "Mezze platter recipe",
+            "description": "Hummus, baba ganoush, tzatziki with pita bread and vegetables - serves 8, prep 45min",
+            "score": 0.9706421494483948,
+            "reasoning": "Entailment score: 0.9706",
+            "is_main_node": true
+          },
+          {
+            "id": "node_27_main",
+            "type": "Item",
+            "name": "Caprese skewers",
+            "description": "Cherry tomatoes, mozzarella, basil with balsamic glaze - vegetarian, serves 8, prep 20min",
+            "score": 0.9866004586219788,
+            "reasoning": "Entailment score: 0.9866",
+            "is_main_node": true
+          },
+          {
+            "id": "node_28_main",
+            "type": "Item",
+            "name": "Herb-crusted lamb rack",
+            "description": "Mediterranean spiced lamb with roasted vegetables - serves 4-5, 90min total",
+            "score": 0.9863824844360352,
+            "reasoning": "Entailment score: 0.9864",
+            "is_main_node": true
+          },
+          {
+            "id": "node_29_main",
+            "type": "Item",
+            "name": "Stuffed bell peppers",
+            "description": "Quinoa, feta, sun-dried tomato filling - vegetarian, serves 4, can prep day before",
+            "score": 0.9612042307853699,
+            "reasoning": "Entailment score: 0.9612",
+            "is_main_node": true
+          },
+          {
+            "id": "node_30_main",
+            "type": "Item",
+            "name": "Greek lemon potatoes",
+            "description": "Crispy roasted potatoes with oregano - side dish for both mains, serves 8",
+            "score": 0.997974693775177,
+            "reasoning": "Entailment score: 0.9980",
+            "is_main_node": true
+          },
+          {
+            "id": "node_31_main",
+            "type": "Item",
+            "name": "Baklava",
+            "description": "Classic layered phyllo pastry with nuts and honey - can buy from bakery, serves 12",
+            "score": 0.3301571309566498,
+            "reasoning": "Entailment score: 0.3302",
+            "is_main_node": true
+          },
+          {
+            "id": "node_32_main",
+            "type": "Item",
+            "name": "Orange olive oil cake",
+            "description": "Moist citrus cake, naturally dairy-free - bake day before, serves 10",
+            "score": 0.4916321933269501,
+            "reasoning": "Entailment score: 0.4916",
+            "is_main_node": true
+          },
+          {
+            "id": "node_33_main",
+            "type": "Item",
+            "name": "Produce list",
+            "description": "Vegetables, herbs, citrus - shop 1-2 days before for freshness",
+            "score": 0.8442170023918152,
+            "reasoning": "Entailment score: 0.8442",
+            "is_main_node": true
+          },
+          {
+            "id": "node_34_main",
+            "type": "Item",
+            "name": "Protein and dairy list",
+            "description": "Lamb rack (2), feta cheese, yogurt - order lamb from butcher 3 days ahead",
+            "score": 0.9287566542625427,
+            "reasoning": "Entailment score: 0.9288",
+            "is_main_node": true
+          },
+          {
+            "id": "node_35_main",
+            "type": "Item",
+            "name": "Pantry items list",
+            "description": "Olive oil, spices, nuts, phyllo dough - check inventory first",
+            "score": 0.7062522172927856,
+            "reasoning": "Entailment score: 0.7063",
+            "is_main_node": true
+          },
+          {
+            "id": "node_36_main",
+            "type": "Item",
+            "name": "3-day prep schedule",
+            "description": "Day-by-day breakdown of what to prepare when, including shopping trips",
+            "score": 0.01989048160612583,
+            "reasoning": "Entailment score: 0.0199",
+            "is_main_node": true
+          },
+          {
+            "id": "node_37_main",
+            "type": "Item",
+            "name": "Day-of cooking timeline",
+            "description": "Hour-by-hour schedule for party day, including oven coordination",
+            "score": 0.025348741561174393,
+            "reasoning": "Entailment score: 0.0253",
+            "is_main_node": true
+          },
+          {
+            "id": "node_38_main",
+            "type": "Item",
+            "name": "Rectangular table layout",
+            "description": "Host positions at ends, guests along sides - best for passed dishes",
+            "score": 0.9150803089141846,
+            "reasoning": "Entailment score: 0.9151",
+            "is_main_node": true
+          },
+          {
+            "id": "node_39_main",
+            "type": "Item",
+            "name": "Buffet style option",
+            "description": "Food on sideboard, guests serve themselves - more casual, easier hosting",
+            "score": 0.8178399205207825,
+            "reasoning": "Entailment score: 0.8178",
+            "is_main_node": true
+          },
+          {
+            "id": "node_40_main",
+            "type": "Item",
+            "name": "Table setting guide",
+            "description": "Linen napkins, simple white plates, olive branch centerpiece ideas",
+            "score": 0.9921618103981018,
+            "reasoning": "Entailment score: 0.9922",
+            "is_main_node": true
+          },
+          {
+            "id": "node_41_main",
+            "type": "Item",
+            "name": "Music playlist",
+            "description": "Mediterranean-inspired background music, 3-hour curated playlist",
+            "score": 0.1386263072490692,
+            "reasoning": "Entailment score: 0.1386",
+            "is_main_node": true
+          },
+          {
+            "id": "node_42_main",
+            "type": "Item",
+            "name": "Candle arrangement",
+            "description": "Mixed height pillar candles, warm white, safe placement tips",
+            "score": 0.3474498689174652,
+            "reasoning": "Entailment score: 0.3474",
+            "is_main_node": true
+          },
+          {
+            "id": "node_43_main",
+            "type": "Item",
+            "name": "MDN HTML Guide",
+            "description": "Mozilla's comprehensive HTML tutorial, free, covers all fundamentals, ~10 hours",
+            "score": 0.004122480750083923,
+            "reasoning": "Entailment score: 0.0041",
+            "is_main_node": true
+          },
+          {
+            "id": "node_44_main",
+            "type": "Item",
+            "name": "freeCodeCamp HTML Course",
+            "description": "Interactive HTML challenges with certification, completely free, ~15 hours",
+            "score": 0.013510764576494694,
+            "reasoning": "Entailment score: 0.0135",
+            "is_main_node": true
+          },
+          {
+            "id": "node_45_main",
+            "type": "Item",
+            "name": "CSS-Tricks Flexbox Guide",
+            "description": "Visual guide to flexbox layout, free reference, essential for modern layouts",
+            "score": 0.0029535384383052588,
+            "reasoning": "Entailment score: 0.0030",
+            "is_main_node": true
+          },
+          {
+            "id": "node_46_main",
+            "type": "Item",
+            "name": "Kevin Powell YouTube",
+            "description": "Excellent CSS tutorials, beginner to advanced, free, practical projects",
+            "score": 0.009396126493811607,
+            "reasoning": "Entailment score: 0.0094",
+            "is_main_node": true
+          },
+          {
+            "id": "node_47_main",
+            "type": "Item",
+            "name": "Tailwind CSS Documentation",
+            "description": "Utility-first CSS framework, widely used in industry, speeds up development",
+            "score": 0.0012435303069651127,
+            "reasoning": "Entailment score: 0.0012",
+            "is_main_node": true
+          },
+          {
+            "id": "node_48_main",
+            "type": "Item",
+            "name": "JavaScript.info",
+            "description": "Modern JavaScript tutorial, free, comprehensive, well-structured, ~40 hours",
+            "score": 0.004939913749694824,
+            "reasoning": "Entailment score: 0.0049",
+            "is_main_node": true
+          },
+          {
+            "id": "node_49_main",
+            "type": "Item",
+            "name": "Eloquent JavaScript",
+            "description": "Free online book, deeper understanding, includes exercises, intermediate",
+            "score": 0.004717836156487465,
+            "reasoning": "Entailment score: 0.0047",
+            "is_main_node": true
+          },
+          {
+            "id": "node_50_main",
+            "type": "Item",
+            "name": "Official React Tutorial",
+            "description": "Updated React documentation with interactive examples, free, ~20 hours",
+            "score": 0.0067376913502812386,
+            "reasoning": "Entailment score: 0.0067",
+            "is_main_node": true
+          },
+          {
+            "id": "node_51_main",
+            "type": "Item",
+            "name": "Scrimba React Course",
+            "description": "Interactive coding screencasts, project-based, free tier available",
+            "score": 0.0065496135503053665,
+            "reasoning": "Entailment score: 0.0065",
+            "is_main_node": true
+          },
+          {
+            "id": "node_52_main",
+            "type": "Item",
+            "name": "React Portfolio Project",
+            "description": "Build personal portfolio site - practice routing, forms, API calls",
+            "score": 0.0005174411344341934,
+            "reasoning": "Entailment score: 0.0005",
+            "is_main_node": true
+          },
+          {
+            "id": "node_53_main",
+            "type": "Item",
+            "name": "Node.js Crash Course",
+            "description": "Traversy Media YouTube series, practical backend fundamentals, free",
+            "score": 0.006192679051309824,
+            "reasoning": "Entailment score: 0.0062",
+            "is_main_node": true
+          },
+          {
+            "id": "node_54_main",
+            "type": "Item",
+            "name": "MongoDB University",
+            "description": "Free official MongoDB courses, NoSQL database skills, certification",
+            "score": 0.004737670999020338,
+            "reasoning": "Entailment score: 0.0047",
+            "is_main_node": true
+          },
+          {
+            "id": "node_55_main",
+            "type": "Item",
+            "name": "Full-stack CRUD app",
+            "description": "Task manager or blog with user auth - demonstrates complete skills",
+            "score": 0.0020562615245580673,
+            "reasoning": "Entailment score: 0.0021",
+            "is_main_node": true
+          },
+          {
+            "id": "node_56_main",
+            "type": "Item",
+            "name": "API integration project",
+            "description": "Weather app or movie database - shows third-party API skills",
+            "score": 0.0005143287125974894,
+            "reasoning": "Entailment score: 0.0005",
+            "is_main_node": true
+          },
+          {
+            "id": "node_57_main",
+            "type": "Item",
+            "name": "Clone project",
+            "description": "Simplified clone of popular site - shows ability to match specifications",
+            "score": 0.001310286927036941,
+            "reasoning": "Entailment score: 0.0013",
+            "is_main_node": true
+          },
+          {
+            "id": "node_58_main",
+            "type": "Item",
+            "name": "LeetCode Easy problems",
+            "description": "Practice basic algorithms, start with array and string problems",
+            "score": 0.01069004088640213,
+            "reasoning": "Entailment score: 0.0107",
+            "is_main_node": true
+          },
+          {
+            "id": "node_59_main",
+            "type": "Item",
+            "name": "Frontend interview handbook",
+            "description": "Free GitHub resource covering common frontend interview topics",
+            "score": 0.0007077715126797557,
+            "reasoning": "Entailment score: 0.0007",
+            "is_main_node": true
+          },
+          {
+            "id": "node_60_main",
+            "type": "Item",
+            "name": "Mock interview practice",
+            "description": "Pramp.com offers free peer mock interviews, practice explaining code",
+            "score": 0.004409801214933395,
+            "reasoning": "Entailment score: 0.0044",
+            "is_main_node": true
+          }
+        ]
+      },
+      "node_aggregations": [
+        {
+          "node_idx": 0,
+          "node_name": "Room measurement guide",
+          "node_type": "Item",
+          "individual_scores": [
+            0.00042891353950835764
+          ],
+          "mean_score": 0.00042891353950835764,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 1,
+          "node_name": "Lighting assessment checklist",
+          "node_type": "Item",
+          "individual_scores": [
+            0.08214442431926727
+          ],
+          "mean_score": 0.08214442431926727,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 2,
+          "node_name": "L-shaped desk configuration",
+          "node_type": "Item",
+          "individual_scores": [
+            0.00769580714404583
+          ],
+          "mean_score": 0.00769580714404583,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Standing desk converter option",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0019387512002140284
+          ],
+          "mean_score": 0.0019387512002140284,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Flexispot E7 Standing Desk",
+          "node_type": "Item",
+          "individual_scores": [
+            0.06287740170955658
+          ],
+          "mean_score": 0.06287740170955658,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 5,
+          "node_name": "IKEA BEKANT",
+          "node_type": "Item",
+          "individual_scores": [
+            0.14337822794914246
+          ],
+          "mean_score": 0.14337822794914246,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Autonomous SmartDesk Pro",
+          "node_type": "Item",
+          "individual_scores": [
+            0.01673075184226036
+          ],
+          "mean_score": 0.01673075184226036,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Herman Miller Aeron (Refurbished)",
+          "node_type": "Item",
+          "individual_scores": [
+            0.10750104486942291
+          ],
+          "mean_score": 0.10750104486942291,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 8,
+          "node_name": "Secretlab Titan Evo",
+          "node_type": "Item",
+          "individual_scores": [
+            0.015240918844938278
+          ],
+          "mean_score": 0.015240918844938278,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 9,
+          "node_name": "Branch Ergonomic Chair",
+          "node_type": "Item",
+          "individual_scores": [
+            0.081702321767807
+          ],
+          "mean_score": 0.081702321767807,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 10,
+          "node_name": "LG 27UK850-W 4K Monitor",
+          "node_type": "Item",
+          "individual_scores": [
+            0.08050353080034256
+          ],
+          "mean_score": 0.08050353080034256,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 11,
+          "node_name": "Dell UltraSharp U2720Q",
+          "node_type": "Item",
+          "individual_scores": [
+            0.016521869227290154
+          ],
+          "mean_score": 0.016521869227290154,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 12,
+          "node_name": "VIVO Dual Monitor Arm",
+          "node_type": "Item",
+          "individual_scores": [
+            0.006727228872478008
+          ],
+          "mean_score": 0.006727228872478008,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 13,
+          "node_name": "Logitech MX Keys",
+          "node_type": "Item",
+          "individual_scores": [
+            0.02262762375175953
+          ],
+          "mean_score": 0.02262762375175953,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 14,
+          "node_name": "Logitech MX Master 3",
+          "node_type": "Item",
+          "individual_scores": [
+            0.06391654163599014
+          ],
+          "mean_score": 0.06391654163599014,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 15,
+          "node_name": "Keychron K3 Mechanical",
+          "node_type": "Item",
+          "individual_scores": [
+            0.020593248307704926
+          ],
+          "mean_score": 0.020593248307704926,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 16,
+          "node_name": "TP-Link AX3000 WiFi 6 Router",
+          "node_type": "Item",
+          "individual_scores": [
+            0.03637166693806648
+          ],
+          "mean_score": 0.03637166693806648,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 17,
+          "node_name": "Anker USB-C Hub 7-in-1",
+          "node_type": "Item",
+          "individual_scores": [
+            0.01639762707054615
+          ],
+          "mean_score": 0.01639762707054615,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 18,
+          "node_name": "Cable management kit",
+          "node_type": "Item",
+          "individual_scores": [
+            0.004963309969753027
+          ],
+          "mean_score": 0.004963309969753027,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 19,
+          "node_name": "BenQ ScreenBar Plus",
+          "node_type": "Item",
+          "individual_scores": [
+            0.018802491948008537
+          ],
+          "mean_score": 0.018802491948008537,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 20,
+          "node_name": "Philips Hue Desk Lamp",
+          "node_type": "Item",
+          "individual_scores": [
+            0.021512432023882866
+          ],
+          "mean_score": 0.021512432023882866,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 21,
+          "node_name": "Sony WH-1000XM4",
+          "node_type": "Item",
+          "individual_scores": [
+            0.06143200770020485
+          ],
+          "mean_score": 0.06143200770020485,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 22,
+          "node_name": "Acoustic foam panels set",
+          "node_type": "Item",
+          "individual_scores": [
+            0.03344740718603134
+          ],
+          "mean_score": 0.03344740718603134,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 23,
+          "node_name": "Ergonomic footrest",
+          "node_type": "Item",
+          "individual_scores": [
+            0.03633296489715576
+          ],
+          "mean_score": 0.03633296489715576,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 24,
+          "node_name": "Anti-fatigue standing mat",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0010733288945630193
+          ],
+          "mean_score": 0.0010733288945630193,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 25,
+          "node_name": "Monitor riser with storage",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0029295664280653
+          ],
+          "mean_score": 0.0029295664280653,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 26,
+          "node_name": "Mezze platter recipe",
+          "node_type": "Item",
+          "individual_scores": [
+            0.9706421494483948
+          ],
+          "mean_score": 0.9706421494483948,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 27,
+          "node_name": "Caprese skewers",
+          "node_type": "Item",
+          "individual_scores": [
+            0.9866004586219788
+          ],
+          "mean_score": 0.9866004586219788,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 28,
+          "node_name": "Herb-crusted lamb rack",
+          "node_type": "Item",
+          "individual_scores": [
+            0.9863824844360352
+          ],
+          "mean_score": 0.9863824844360352,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 29,
+          "node_name": "Stuffed bell peppers",
+          "node_type": "Item",
+          "individual_scores": [
+            0.9612042307853699
+          ],
+          "mean_score": 0.9612042307853699,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 30,
+          "node_name": "Greek lemon potatoes",
+          "node_type": "Item",
+          "individual_scores": [
+            0.997974693775177
+          ],
+          "mean_score": 0.997974693775177,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 31,
+          "node_name": "Baklava",
+          "node_type": "Item",
+          "individual_scores": [
+            0.3301571309566498
+          ],
+          "mean_score": 0.3301571309566498,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 32,
+          "node_name": "Orange olive oil cake",
+          "node_type": "Item",
+          "individual_scores": [
+            0.4916321933269501
+          ],
+          "mean_score": 0.4916321933269501,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 33,
+          "node_name": "Produce list",
+          "node_type": "Item",
+          "individual_scores": [
+            0.8442170023918152
+          ],
+          "mean_score": 0.8442170023918152,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 34,
+          "node_name": "Protein and dairy list",
+          "node_type": "Item",
+          "individual_scores": [
+            0.9287566542625427
+          ],
+          "mean_score": 0.9287566542625427,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 35,
+          "node_name": "Pantry items list",
+          "node_type": "Item",
+          "individual_scores": [
+            0.7062522172927856
+          ],
+          "mean_score": 0.7062522172927856,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 36,
+          "node_name": "3-day prep schedule",
+          "node_type": "Item",
+          "individual_scores": [
+            0.01989048160612583
+          ],
+          "mean_score": 0.01989048160612583,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 37,
+          "node_name": "Day-of cooking timeline",
+          "node_type": "Item",
+          "individual_scores": [
+            0.025348741561174393
+          ],
+          "mean_score": 0.025348741561174393,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 38,
+          "node_name": "Rectangular table layout",
+          "node_type": "Item",
+          "individual_scores": [
+            0.9150803089141846
+          ],
+          "mean_score": 0.9150803089141846,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 39,
+          "node_name": "Buffet style option",
+          "node_type": "Item",
+          "individual_scores": [
+            0.8178399205207825
+          ],
+          "mean_score": 0.8178399205207825,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 40,
+          "node_name": "Table setting guide",
+          "node_type": "Item",
+          "individual_scores": [
+            0.9921618103981018
+          ],
+          "mean_score": 0.9921618103981018,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 41,
+          "node_name": "Music playlist",
+          "node_type": "Item",
+          "individual_scores": [
+            0.1386263072490692
+          ],
+          "mean_score": 0.1386263072490692,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 42,
+          "node_name": "Candle arrangement",
+          "node_type": "Item",
+          "individual_scores": [
+            0.3474498689174652
+          ],
+          "mean_score": 0.3474498689174652,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 43,
+          "node_name": "MDN HTML Guide",
+          "node_type": "Item",
+          "individual_scores": [
+            0.004122480750083923
+          ],
+          "mean_score": 0.004122480750083923,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 44,
+          "node_name": "freeCodeCamp HTML Course",
+          "node_type": "Item",
+          "individual_scores": [
+            0.013510764576494694
+          ],
+          "mean_score": 0.013510764576494694,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 45,
+          "node_name": "CSS-Tricks Flexbox Guide",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0029535384383052588
+          ],
+          "mean_score": 0.0029535384383052588,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 46,
+          "node_name": "Kevin Powell YouTube",
+          "node_type": "Item",
+          "individual_scores": [
+            0.009396126493811607
+          ],
+          "mean_score": 0.009396126493811607,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 47,
+          "node_name": "Tailwind CSS Documentation",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0012435303069651127
+          ],
+          "mean_score": 0.0012435303069651127,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 48,
+          "node_name": "JavaScript.info",
+          "node_type": "Item",
+          "individual_scores": [
+            0.004939913749694824
+          ],
+          "mean_score": 0.004939913749694824,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 49,
+          "node_name": "Eloquent JavaScript",
+          "node_type": "Item",
+          "individual_scores": [
+            0.004717836156487465
+          ],
+          "mean_score": 0.004717836156487465,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 50,
+          "node_name": "Official React Tutorial",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0067376913502812386
+          ],
+          "mean_score": 0.0067376913502812386,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 51,
+          "node_name": "Scrimba React Course",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0065496135503053665
+          ],
+          "mean_score": 0.0065496135503053665,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 52,
+          "node_name": "React Portfolio Project",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0005174411344341934
+          ],
+          "mean_score": 0.0005174411344341934,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 53,
+          "node_name": "Node.js Crash Course",
+          "node_type": "Item",
+          "individual_scores": [
+            0.006192679051309824
+          ],
+          "mean_score": 0.006192679051309824,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 54,
+          "node_name": "MongoDB University",
+          "node_type": "Item",
+          "individual_scores": [
+            0.004737670999020338
+          ],
+          "mean_score": 0.004737670999020338,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 55,
+          "node_name": "Full-stack CRUD app",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0020562615245580673
+          ],
+          "mean_score": 0.0020562615245580673,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 56,
+          "node_name": "API integration project",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0005143287125974894
+          ],
+          "mean_score": 0.0005143287125974894,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 57,
+          "node_name": "Clone project",
+          "node_type": "Item",
+          "individual_scores": [
+            0.001310286927036941
+          ],
+          "mean_score": 0.001310286927036941,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 58,
+          "node_name": "LeetCode Easy problems",
+          "node_type": "Item",
+          "individual_scores": [
+            0.01069004088640213
+          ],
+          "mean_score": 0.01069004088640213,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 59,
+          "node_name": "Frontend interview handbook",
+          "node_type": "Item",
+          "individual_scores": [
+            0.0007077715126797557
+          ],
+          "mean_score": 0.0007077715126797557,
+          "num_items_scored": 1
+        },
+        {
+          "node_idx": 60,
+          "node_name": "Mock interview practice",
+          "node_type": "Item",
+          "individual_scores": [
+            0.004409801214933395
+          ],
+          "mean_score": 0.004409801214933395,
+          "num_items_scored": 1
+        }
+      ],
+      "ranking": [
+        {
+          "idx": 30,
+          "score": 0.997974693775177,
+          "name": "Greek lemon potatoes"
+        },
+        {
+          "idx": 40,
+          "score": 0.9921618103981018,
+          "name": "Table setting guide"
+        },
+        {
+          "idx": 27,
+          "score": 0.9866004586219788,
+          "name": "Caprese skewers"
+        },
+        {
+          "idx": 28,
+          "score": 0.9863824844360352,
+          "name": "Herb-crusted lamb rack"
+        },
+        {
+          "idx": 26,
+          "score": 0.9706421494483948,
+          "name": "Mezze platter recipe"
+        },
+        {
+          "idx": 29,
+          "score": 0.9612042307853699,
+          "name": "Stuffed bell peppers"
+        },
+        {
+          "idx": 34,
+          "score": 0.9287566542625427,
+          "name": "Protein and dairy list"
+        },
+        {
+          "idx": 38,
+          "score": 0.9150803089141846,
+          "name": "Rectangular table layout"
+        },
+        {
+          "idx": 33,
+          "score": 0.8442170023918152,
+          "name": "Produce list"
+        },
+        {
+          "idx": 39,
+          "score": 0.8178399205207825,
+          "name": "Buffet style option"
+        },
+        {
+          "idx": 35,
+          "score": 0.7062522172927856,
+          "name": "Pantry items list"
+        },
+        {
+          "idx": 32,
+          "score": 0.4916321933269501,
+          "name": "Orange olive oil cake"
+        },
+        {
+          "idx": 42,
+          "score": 0.3474498689174652,
+          "name": "Candle arrangement"
+        },
+        {
+          "idx": 31,
+          "score": 0.3301571309566498,
+          "name": "Baklava"
+        },
+        {
+          "idx": 5,
+          "score": 0.14337822794914246,
+          "name": "IKEA BEKANT"
+        },
+        {
+          "idx": 41,
+          "score": 0.1386263072490692,
+          "name": "Music playlist"
+        },
+        {
+          "idx": 7,
+          "score": 0.10750104486942291,
+          "name": "Herman Miller Aeron (Refurbished)"
+        },
+        {
+          "idx": 1,
+          "score": 0.08214442431926727,
+          "name": "Lighting assessment checklist"
+        },
+        {
+          "idx": 9,
+          "score": 0.081702321767807,
+          "name": "Branch Ergonomic Chair"
+        },
+        {
+          "idx": 10,
+          "score": 0.08050353080034256,
+          "name": "LG 27UK850-W 4K Monitor"
+        },
+        {
+          "idx": 14,
+          "score": 0.06391654163599014,
+          "name": "Logitech MX Master 3"
+        },
+        {
+          "idx": 4,
+          "score": 0.06287740170955658,
+          "name": "Flexispot E7 Standing Desk"
+        },
+        {
+          "idx": 21,
+          "score": 0.06143200770020485,
+          "name": "Sony WH-1000XM4"
+        },
+        {
+          "idx": 16,
+          "score": 0.03637166693806648,
+          "name": "TP-Link AX3000 WiFi 6 Router"
+        },
+        {
+          "idx": 23,
+          "score": 0.03633296489715576,
+          "name": "Ergonomic footrest"
+        },
+        {
+          "idx": 22,
+          "score": 0.03344740718603134,
+          "name": "Acoustic foam panels set"
+        },
+        {
+          "idx": 37,
+          "score": 0.025348741561174393,
+          "name": "Day-of cooking timeline"
+        },
+        {
+          "idx": 13,
+          "score": 0.02262762375175953,
+          "name": "Logitech MX Keys"
+        },
+        {
+          "idx": 20,
+          "score": 0.021512432023882866,
+          "name": "Philips Hue Desk Lamp"
+        },
+        {
+          "idx": 15,
+          "score": 0.020593248307704926,
+          "name": "Keychron K3 Mechanical"
+        },
+        {
+          "idx": 36,
+          "score": 0.01989048160612583,
+          "name": "3-day prep schedule"
+        },
+        {
+          "idx": 19,
+          "score": 0.018802491948008537,
+          "name": "BenQ ScreenBar Plus"
+        },
+        {
+          "idx": 6,
+          "score": 0.01673075184226036,
+          "name": "Autonomous SmartDesk Pro"
+        },
+        {
+          "idx": 11,
+          "score": 0.016521869227290154,
+          "name": "Dell UltraSharp U2720Q"
+        },
+        {
+          "idx": 17,
+          "score": 0.01639762707054615,
+          "name": "Anker USB-C Hub 7-in-1"
+        },
+        {
+          "idx": 8,
+          "score": 0.015240918844938278,
+          "name": "Secretlab Titan Evo"
+        },
+        {
+          "idx": 44,
+          "score": 0.013510764576494694,
+          "name": "freeCodeCamp HTML Course"
+        },
+        {
+          "idx": 58,
+          "score": 0.01069004088640213,
+          "name": "LeetCode Easy problems"
+        },
+        {
+          "idx": 46,
+          "score": 0.009396126493811607,
+          "name": "Kevin Powell YouTube"
+        },
+        {
+          "idx": 2,
+          "score": 0.00769580714404583,
+          "name": "L-shaped desk configuration"
+        },
+        {
+          "idx": 50,
+          "score": 0.0067376913502812386,
+          "name": "Official React Tutorial"
+        },
+        {
+          "idx": 12,
+          "score": 0.006727228872478008,
+          "name": "VIVO Dual Monitor Arm"
+        },
+        {
+          "idx": 51,
+          "score": 0.0065496135503053665,
+          "name": "Scrimba React Course"
+        },
+        {
+          "idx": 53,
+          "score": 0.006192679051309824,
+          "name": "Node.js Crash Course"
+        },
+        {
+          "idx": 18,
+          "score": 0.004963309969753027,
+          "name": "Cable management kit"
+        },
+        {
+          "idx": 48,
+          "score": 0.004939913749694824,
+          "name": "JavaScript.info"
+        },
+        {
+          "idx": 54,
+          "score": 0.004737670999020338,
+          "name": "MongoDB University"
+        },
+        {
+          "idx": 49,
+          "score": 0.004717836156487465,
+          "name": "Eloquent JavaScript"
+        },
+        {
+          "idx": 60,
+          "score": 0.004409801214933395,
+          "name": "Mock interview practice"
+        },
+        {
+          "idx": 43,
+          "score": 0.004122480750083923,
+          "name": "MDN HTML Guide"
+        },
+        {
+          "idx": 45,
+          "score": 0.0029535384383052588,
+          "name": "CSS-Tricks Flexbox Guide"
+        },
+        {
+          "idx": 25,
+          "score": 0.0029295664280653,
+          "name": "Monitor riser with storage"
+        },
+        {
+          "idx": 55,
+          "score": 0.0020562615245580673,
+          "name": "Full-stack CRUD app"
+        },
+        {
+          "idx": 3,
+          "score": 0.0019387512002140284,
+          "name": "Standing desk converter option"
+        },
+        {
+          "idx": 57,
+          "score": 0.001310286927036941,
+          "name": "Clone project"
+        },
+        {
+          "idx": 47,
+          "score": 0.0012435303069651127,
+          "name": "Tailwind CSS Documentation"
+        },
+        {
+          "idx": 24,
+          "score": 0.0010733288945630193,
+          "name": "Anti-fatigue standing mat"
+        },
+        {
+          "idx": 59,
+          "score": 0.0007077715126797557,
+          "name": "Frontend interview handbook"
+        },
+        {
+          "idx": 52,
+          "score": 0.0005174411344341934,
+          "name": "React Portfolio Project"
+        },
+        {
+          "idx": 56,
+          "score": 0.0005143287125974894,
+          "name": "API integration project"
+        },
+        {
+          "idx": 0,
+          "score": 0.00042891353950835764,
+          "name": "Room measurement guide"
+        }
+      ],
+      "selected": {
+        "indices": [
+          27,
+          30,
+          40
+        ],
+        "nodes": [
+          {
+            "idx": 27,
+            "name": "Caprese skewers"
+          },
+          {
+            "idx": 30,
+            "name": "Greek lemon potatoes"
+          },
+          {
+            "idx": 40,
+            "name": "Table setting guide"
+          }
+        ]
+      }
+    }
+  ],
+  "matched_nodes": [
+    {
+      "tree_path": "RecommendationHub > Session > Menu Planning > Objective > Greek lemon potatoes",
+      "score": 0.997974693775177,
+      "node": {
+        "type": "Item",
+        "attributes": {},
+        "name": "Greek lemon potatoes",
+        "description": "Crispy roasted potatoes with oregano - side dish for both mains, serves 8"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "RecommendationHub > Session > Table and Atmosphere > Objective > Table setting guide",
+      "score": 0.9921618103981018,
+      "node": {
+        "type": "Item",
+        "attributes": {},
+        "name": "Table setting guide",
+        "description": "Linen napkins, simple white plates, olive branch centerpiece ideas"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "RecommendationHub > Session > Menu Planning > Objective > Caprese skewers",
+      "score": 0.9866004586219788,
+      "node": {
+        "type": "Item",
+        "attributes": {},
+        "name": "Caprese skewers",
+        "description": "Cherry tomatoes, mozzarella, basil with balsamic glaze - vegetarian, serves 8, prep 20min"
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 6,
+    "total_scoring_calls": 1,
+    "matched_count": 3,
+    "execution_time_ms": 5064.053499999998
+  }
+}

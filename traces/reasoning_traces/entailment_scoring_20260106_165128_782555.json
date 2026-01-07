@@ -1,0 +1,54 @@
+{
+  "timestamp": "20260106_165128_782555",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "museum",
+  "hypothesis": "This is related to museum.",
+  "nodes": [
+    {
+      "id": "node_0_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history.",
+      "premise": "POI: Royal Ontario Museum - World-renowned museum showcasing art, culture, and natural history.",
+      "score": 0.9988152980804443
+    },
+    {
+      "id": "node_1_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+      "premise": "POI: Casa Loma - Historic castle featuring secret passages, gardens, and panoramic views.",
+      "score": 0.23532824218273163
+    },
+    {
+      "id": "node_2_main",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+      "premise": "POI: Rivoli - Live music venue showcasing jazz, indie, and emerging artists.",
+      "score": 0.006034188903868198
+    }
+  ],
+  "results": [
+    {
+      "node_id": "node_0_main",
+      "node_type": "POI",
+      "score": 0.9988152980804443,
+      "reasoning": "Entailment score: 0.9988"
+    },
+    {
+      "node_id": "node_1_main",
+      "node_type": "POI",
+      "score": 0.23532824218273163,
+      "reasoning": "Entailment score: 0.2353"
+    },
+    {
+      "node_id": "node_2_main",
+      "node_type": "POI",
+      "score": 0.006034188903868198,
+      "reasoning": "Entailment score: 0.0060"
+    }
+  ]
+}

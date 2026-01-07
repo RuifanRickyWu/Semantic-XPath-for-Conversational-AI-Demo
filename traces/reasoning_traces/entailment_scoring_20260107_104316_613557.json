@@ -1,0 +1,110 @@
+{
+  "timestamp": "20260107_104316_613557",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "most difficult",
+  "hypothesis": "This is related to most difficult.",
+  "nodes": [
+    {
+      "id": "node_0_main",
+      "type": "Task",
+      "name": "Implement Semantic XPath Executor",
+      "description": "Build the dense xpath executor with semantic matching capabilities for tree-structured data",
+      "premise": "Task: Implement Semantic XPath Executor - Build the dense xpath executor with semantic matching capabilities for tree-structured data",
+      "score": 0.8699628710746765
+    },
+    {
+      "id": "node_1_main",
+      "type": "Task",
+      "name": "Multi-Domain Support",
+      "description": "Extend the system to support multiple domains beyond itinerary like todolist",
+      "premise": "Task: Multi-Domain Support - Extend the system to support multiple domains beyond itinerary like todolist",
+      "score": 0.7752125859260559
+    },
+    {
+      "id": "node_2_main",
+      "type": "Task",
+      "name": "Documentation",
+      "description": "Write comprehensive documentation for the LLM-VM system",
+      "premise": "Task: Documentation - Write comprehensive documentation for the LLM-VM system",
+      "score": 0.809089720249176
+    },
+    {
+      "id": "node_3_main",
+      "type": "Task",
+      "name": "Design UI Components",
+      "description": "Create reusable React components for the dashboard interface",
+      "premise": "Task: Design UI Components - Create reusable React components for the dashboard interface",
+      "score": 0.6587998867034912
+    },
+    {
+      "id": "node_4_main",
+      "type": "Task",
+      "name": "Backend Integration",
+      "description": "Connect frontend to the Python backend via REST API",
+      "premise": "Task: Backend Integration - Connect frontend to the Python backend via REST API",
+      "score": 0.7635489702224731
+    },
+    {
+      "id": "node_5_main",
+      "type": "Task",
+      "name": "Benchmark Scoring Methods",
+      "description": "Compare entailment, cosine, and LLM-based scoring on various datasets",
+      "premise": "Task: Benchmark Scoring Methods - Compare entailment, cosine, and LLM-based scoring on various datasets",
+      "score": 0.7262623906135559
+    },
+    {
+      "id": "node_6_main",
+      "type": "Task",
+      "name": "Explore New Embeddings",
+      "description": "Evaluate newer embedding models for improved semantic matching",
+      "premise": "Task: Explore New Embeddings - Evaluate newer embedding models for improved semantic matching",
+      "score": 0.6747953295707703
+    }
+  ],
+  "results": [
+    {
+      "node_id": "node_0_main",
+      "node_type": "Task",
+      "score": 0.8699628710746765,
+      "reasoning": "Entailment score: 0.8700"
+    },
+    {
+      "node_id": "node_1_main",
+      "node_type": "Task",
+      "score": 0.7752125859260559,
+      "reasoning": "Entailment score: 0.7752"
+    },
+    {
+      "node_id": "node_2_main",
+      "node_type": "Task",
+      "score": 0.809089720249176,
+      "reasoning": "Entailment score: 0.8091"
+    },
+    {
+      "node_id": "node_3_main",
+      "node_type": "Task",
+      "score": 0.6587998867034912,
+      "reasoning": "Entailment score: 0.6588"
+    },
+    {
+      "node_id": "node_4_main",
+      "node_type": "Task",
+      "score": 0.7635489702224731,
+      "reasoning": "Entailment score: 0.7635"
+    },
+    {
+      "node_id": "node_5_main",
+      "node_type": "Task",
+      "score": 0.7262623906135559,
+      "reasoning": "Entailment score: 0.7263"
+    },
+    {
+      "node_id": "node_6_main",
+      "node_type": "Task",
+      "score": 0.6747953295707703,
+      "reasoning": "Entailment score: 0.6748"
+    }
+  ]
+}

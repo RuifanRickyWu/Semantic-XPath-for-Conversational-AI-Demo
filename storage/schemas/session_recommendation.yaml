@@ -1,0 +1,55 @@
+# Session-based Recommendation Schema
+# Defines the structure for goal-oriented task recommendation systems
+# Use cases: Shopping assistant, DIY project helper, Learning path recommendation
+
+name: "session_recommendation"
+description: "Goal-oriented session-based recommendation with tasks, objectives and recommended items"
+
+# Tree hierarchy (for documentation and LLM prompt generation)
+hierarchy: |
+  RecommendationHub (root)
+  ├── Session
+  │   └── Step
+  │       └── Objective
+  │           └── Item
+
+# Node type definitions
+nodes:
+  RecommendationHub:
+    type: root
+    
+  Session:
+    type: container
+    name_field: "goal"              # What the user wants to achieve
+    description_field: "context"    # User's situation, preferences, constraints
+    # Example: goal="Setup a home office", context="Budget $2000, small apartment, remote work"
+    
+  Step:
+    type: container
+    index_attr: "sequence"          # Order of steps (1, 2, 3...)
+    name_field: "name"              # Step name
+    description_field: "description"
+    # Example: sequence="1", name="Workspace Planning", description="Define your workspace needs and layout"
+    
+  Objective:
+    type: container
+    name_field: "target"            # What needs to be accomplished
+    description_field: "criteria"   # Success criteria or requirements
+    # Example: target="Choose ergonomic seating", criteria="Back support, adjustable height, under $500"
+    
+  Item:
+    type: leaf
+    name_field: "name"              # Product/content name
+    description_field: "description"
+    # Example: name="Herman Miller Aeron Chair", description="Ergonomic mesh chair with lumbar support, highly adjustable"
+
+# Available data files for this schema
+data_files:
+  session_home_office: "memory/session_recommendation/home_office_session.xml"
+
+# Default data file to use
+default_data: "session_home_office"
+
+# Associated prompt file for XPath query generation
+prompt_file: "prompts/xpath_query_generator_session_recommendation.txt"
+

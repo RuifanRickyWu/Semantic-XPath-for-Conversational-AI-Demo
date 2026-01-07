@@ -1,7 +1,7 @@
 # Schema configuration
 # Choose which schema and data file to use
-active_schema: "todolist" #Can choose between itinerary and todolist
-active_data: "todolist_sample"  # Options: travel_memory_3day, travel_memory_5day, todolist_sample
+active_schema: "session_recommendation" #Can choose between itinerary and todolist， session_recommendation
+active_data: "session_home_office"  # Options: travel_memory_3day, travel_memory_5day, todolist_sample
 
 openai:
   api_key: "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"

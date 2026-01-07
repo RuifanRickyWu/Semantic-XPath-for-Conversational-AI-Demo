@@ -1,0 +1,68 @@
+Query: (/TodoList/Project[description =~ "highest priority"]/Task[description =~ "most difficult"])[1]
+Data File: todolist_sample.xml
+Execution Time: 4389.93ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260107_104625_190665] Executing query: (/TodoList/Project[description =~ "highest priority"]/Task[description =~ "most difficult"])[1]
+Data file: todolist_sample.xml
+Global index detected: 1
+Parsed steps: [TodoList, Project[description =~ "highest priority"], Task[description =~ "most difficult"]]
+
+--- Step 1: TodoList ---
+Matched TodoList root
+
+--- Step 2: Project[description =~ "highest priority"] ---
+Found 4 Project nodes across 1 parent(s)
+Applying semantic predicate: highest priority
+Scoring 13 descriptions for predicate 'highest priority'
+  Node 0 (Project): mean score = 0.830 (from 4 items)
+  Node 1 (Project): mean score = 0.785 (from 3 items)
+  Node 2 (Project): mean score = 0.621 (from 3 items)
+  Node 3 (Project): mean score = 0.603 (from 3 items)
+Top 3 nodes selected (threshold=0.01, top_k=3)
+After step: 3 nodes remaining
+
+--- Step 3: Task[description =~ "most difficult"] ---
+Found 7 Task nodes across 3 parent(s)
+Applying semantic predicate: most difficult
+Scoring 7 descriptions for predicate 'most difficult'
+  Node 0 (Implement Semantic XPath Executor): mean score = 0.870 (from 1 items)
+  Node 1 (Multi-Domain Support): mean score = 0.775 (from 1 items)
+  Node 2 (Documentation): mean score = 0.809 (from 1 items)
+  Node 3 (Design UI Components): mean score = 0.659 (from 1 items)
+  Node 4 (Backend Integration): mean score = 0.764 (from 1 items)
+  Node 5 (Benchmark Scoring Methods): mean score = 0.726 (from 1 items)
+  Node 6 (Explore New Embeddings): mean score = 0.675 (from 1 items)
+Top 3 nodes selected (threshold=0.01, top_k=3)
+After step: 3 nodes remaining
+
+Applying global index: [1]
+Selected node at index 1 (0-based: 0)
+
+Final result: 1 nodes (sorted by score)
+⏱️  Query execution time: 4389.93ms
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+{
+  "tree_path": "TodoList > Project > Implement Semantic XPath Executor",
+  "score": 0.8699628710746765,
+  "node": {
+    "type": "Task",
+    "attributes": {},
+    "title": "Implement Semantic XPath Executor",
+    "description": "Build the dense xpath executor with semantic matching capabilities for tree-structured data",
+    "status": "in_progress",
+    "priority": "high",
+    "due_date": "2026-01-15",
+    "SubTask": [
+      "Implement Range Indexing",
+      "Support range syntax like [1:3] and [-2:] for batch node selection",
+      "in_progress"
+    ]
+  },
+  "children": []
+}

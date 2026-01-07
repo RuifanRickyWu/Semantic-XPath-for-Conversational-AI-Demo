@@ -1,0 +1,40 @@
+{
+  "timestamp": "20260107_110711_715206",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "priority",
+  "hypothesis": "This is related to priority.",
+  "nodes": [
+    {
+      "id": "node_0_main",
+      "type": "Task",
+      "name": "Benchmark Scoring Methods",
+      "description": "Compare entailment, cosine, and LLM-based scoring on various datasets",
+      "premise": "Task: Benchmark Scoring Methods - Compare entailment, cosine, and LLM-based scoring on various datasets",
+      "score": 0.34786731004714966
+    },
+    {
+      "id": "node_1_main",
+      "type": "Task",
+      "name": "Explore New Embeddings",
+      "description": "Evaluate newer embedding models for improved semantic matching",
+      "premise": "Task: Explore New Embeddings - Evaluate newer embedding models for improved semantic matching",
+      "score": 0.666165828704834
+    }
+  ],
+  "results": [
+    {
+      "node_id": "node_0_main",
+      "node_type": "Task",
+      "score": 0.34786731004714966,
+      "reasoning": "Entailment score: 0.3479"
+    },
+    {
+      "node_id": "node_1_main",
+      "node_type": "Task",
+      "score": 0.666165828704834,
+      "reasoning": "Entailment score: 0.6662"
+    }
+  ]
+}

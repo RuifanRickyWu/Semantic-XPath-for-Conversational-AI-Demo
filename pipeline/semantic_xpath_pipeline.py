@@ -119,7 +119,8 @@ class SemanticXPathPipeline:
                 day_idx = attrs.get("index", "?")
                 lines.append(f"📅 Day {day_idx}")
             else:
-                name = node.get("name", "Unknown")
+                # Try multiple common name fields (generic across schemas)
+                name = node.get("name") or node.get("title") or node.get("label") or "Unknown"
                 lines.append(f"🏷️  {node_type}: {name}")
                 if node.get("description"):
                     lines.append(f"📝 {node['description']}")
@@ -135,7 +136,7 @@ class SemanticXPathPipeline:
                 lines.append(f"\n📂 Children ({len(matched.children)}):")
                 for j, child in enumerate(matched.children):
                     child_type = child.get("type", "?")
-                    child_name = child.get("name", "Unknown")
+                    child_name = child.get("name") or child.get("title") or child.get("label") or "Unknown"
                     child_time = child.get("time_block", "")
                     
                     prefix = "├──" if j < len(matched.children) - 1 else "└──"

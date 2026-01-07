@@ -1,0 +1,194 @@
+{
+  "timestamp": "20260107_104629_433475",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "highest priority",
+  "hypothesis": "This is related to highest priority.",
+  "nodes": [
+    {
+      "id": "node_0_main",
+      "type": "Project",
+      "name": "Project",
+      "description": "Core LLM-VM project for semantic XPath execution and dense retrieval",
+      "premise": "Project: Project - Core LLM-VM project for semantic XPath execution and dense retrieval",
+      "score": 0.8332628011703491
+    },
+    {
+      "id": "node_0_sub_0",
+      "type": "Task",
+      "name": "Implement Semantic XPath Executor",
+      "description": "Build the dense xpath executor with semantic matching capabilities for tree-structured data",
+      "premise": "Task: Implement Semantic XPath Executor - Build the dense xpath executor with semantic matching capabilities for tree-structured data",
+      "score": 0.8644099831581116
+    },
+    {
+      "id": "node_0_sub_1",
+      "type": "Task",
+      "name": "Multi-Domain Support",
+      "description": "Extend the system to support multiple domains beyond itinerary like todolist",
+      "premise": "Task: Multi-Domain Support - Extend the system to support multiple domains beyond itinerary like todolist",
+      "score": 0.7162340879440308
+    },
+    {
+      "id": "node_0_sub_2",
+      "type": "Task",
+      "name": "Documentation",
+      "description": "Write comprehensive documentation for the LLM-VM system",
+      "premise": "Task: Documentation - Write comprehensive documentation for the LLM-VM system",
+      "score": 0.906743049621582
+    },
+    {
+      "id": "node_1_main",
+      "type": "Project",
+      "name": "Project",
+      "description": "Web-based dashboard for visualizing and interacting with the LLM-VM system",
+      "premise": "Project: Project - Web-based dashboard for visualizing and interacting with the LLM-VM system",
+      "score": 0.7157134413719177
+    },
+    {
+      "id": "node_1_sub_0",
+      "type": "Task",
+      "name": "Design UI Components",
+      "description": "Create reusable React components for the dashboard interface",
+      "premise": "Task: Design UI Components - Create reusable React components for the dashboard interface",
+      "score": 0.7934471964836121
+    },
+    {
+      "id": "node_1_sub_1",
+      "type": "Task",
+      "name": "Backend Integration",
+      "description": "Connect frontend to the Python backend via REST API",
+      "premise": "Task: Backend Integration - Connect frontend to the Python backend via REST API",
+      "score": 0.8454993367195129
+    },
+    {
+      "id": "node_2_main",
+      "type": "Project",
+      "name": "Project",
+      "description": "Research tasks for improving semantic matching accuracy and performance",
+      "premise": "Project: Project - Research tasks for improving semantic matching accuracy and performance",
+      "score": 0.7279871702194214
+    },
+    {
+      "id": "node_2_sub_0",
+      "type": "Task",
+      "name": "Benchmark Scoring Methods",
+      "description": "Compare entailment, cosine, and LLM-based scoring on various datasets",
+      "premise": "Task: Benchmark Scoring Methods - Compare entailment, cosine, and LLM-based scoring on various datasets",
+      "score": 0.3845609724521637
+    },
+    {
+      "id": "node_2_sub_1",
+      "type": "Task",
+      "name": "Explore New Embeddings",
+      "description": "Evaluate newer embedding models for improved semantic matching",
+      "premise": "Task: Explore New Embeddings - Evaluate newer embedding models for improved semantic matching",
+      "score": 0.7496842741966248
+    },
+    {
+      "id": "node_3_main",
+      "type": "Project",
+      "name": "Project",
+      "description": "Personal tasks and reminders not related to work projects",
+      "premise": "Project: Project - Personal tasks and reminders not related to work projects",
+      "score": 0.0007398468442261219
+    },
+    {
+      "id": "node_3_sub_0",
+      "type": "Task",
+      "name": "Weekly Review",
+      "description": "Review weekly progress and plan next week's priorities",
+      "premise": "Task: Weekly Review - Review weekly progress and plan next week's priorities",
+      "score": 0.9017573595046997
+    },
+    {
+      "id": "node_3_sub_1",
+      "type": "Task",
+      "name": "Learn Rust",
+      "description": "Study Rust programming language for systems development",
+      "premise": "Task: Learn Rust - Study Rust programming language for systems development",
+      "score": 0.9065228700637817
+    }
+  ],
+  "results": [
+    {
+      "node_id": "node_0_main",
+      "node_type": "Project",
+      "score": 0.8332628011703491,
+      "reasoning": "Entailment score: 0.8333"
+    },
+    {
+      "node_id": "node_0_sub_0",
+      "node_type": "Task",
+      "score": 0.8644099831581116,
+      "reasoning": "Entailment score: 0.8644"
+    },
+    {
+      "node_id": "node_0_sub_1",
+      "node_type": "Task",
+      "score": 0.7162340879440308,
+      "reasoning": "Entailment score: 0.7162"
+    },
+    {
+      "node_id": "node_0_sub_2",
+      "node_type": "Task",
+      "score": 0.906743049621582,
+      "reasoning": "Entailment score: 0.9067"
+    },
+    {
+      "node_id": "node_1_main",
+      "node_type": "Project",
+      "score": 0.7157134413719177,
+      "reasoning": "Entailment score: 0.7157"
+    },
+    {
+      "node_id": "node_1_sub_0",
+      "node_type": "Task",
+      "score": 0.7934471964836121,
+      "reasoning": "Entailment score: 0.7934"
+    },
+    {
+      "node_id": "node_1_sub_1",
+      "node_type": "Task",
+      "score": 0.8454993367195129,
+      "reasoning": "Entailment score: 0.8455"
+    },
+    {
+      "node_id": "node_2_main",
+      "node_type": "Project",
+      "score": 0.7279871702194214,
+      "reasoning": "Entailment score: 0.7280"
+    },
+    {
+      "node_id": "node_2_sub_0",
+      "node_type": "Task",
+      "score": 0.3845609724521637,
+      "reasoning": "Entailment score: 0.3846"
+    },
+    {
+      "node_id": "node_2_sub_1",
+      "node_type": "Task",
+      "score": 0.7496842741966248,
+      "reasoning": "Entailment score: 0.7497"
+    },
+    {
+      "node_id": "node_3_main",
+      "node_type": "Project",
+      "score": 0.0007398468442261219,
+      "reasoning": "Entailment score: 0.0007"
+    },
+    {
+      "node_id": "node_3_sub_0",
+      "node_type": "Task",
+      "score": 0.9017573595046997,
+      "reasoning": "Entailment score: 0.9018"
+    },
+    {
+      "node_id": "node_3_sub_1",
+      "node_type": "Task",
+      "score": 0.9065228700637817,
+      "reasoning": "Entailment score: 0.9065"
+    }
+  ]
+}

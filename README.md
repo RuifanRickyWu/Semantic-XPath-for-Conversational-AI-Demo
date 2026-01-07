@@ -42,12 +42,18 @@ LLM-VM/
 │   └── tas_b_client.py              # TAS-B embedding client
 ├── storage/
 │   ├── schemas/                     # Tree schema definitions
-│   │   └── itinerary.yaml           # Itinerary schema (Day/POI/Restaurant)
+│   │   ├── itinerary.yaml           # Travel itinerary (Day/POI/Restaurant)
+│   │   ├── todolist.yaml            # Task management (Project/Task/SubTask)
+│   │   ├── curriculum.yaml          # Education (Course/Concept/Exercise)
+│   │   ├── support.yaml             # Support tickets (Customer/Ticket/...)
+│   │   └── session_recommendation.yaml  # Goal-oriented recommendations
 │   ├── memory/                      # XML data files
-│   │   ├── travel_memory_3day.xml   # 3-day Toronto itinerary
-│   │   └── travel_memory_5day.xml   # 5-day Toronto itinerary
-│   └── prompts/
-│       └── xpath_query_generator.txt
+│   │   ├── travel/                  # Itinerary data
+│   │   ├── todo_list/               # TodoList data
+│   │   ├── curriculum/              # Curriculum data
+│   │   ├── support/                 # Support data
+│   │   └── session_recommendation/  # Recommendation sessions
+│   └── prompts/                     # XPath generation prompts (per schema)
 ├── traces/                          # Execution & scoring traces
 │   ├── log/
 │   └── reasoning_traces/
@@ -98,12 +104,60 @@ data_files:
 default_data: "travel_memory_3day"
 ```
 
-### Switching Data Files
+### Available Schemas
+
+The system includes **5 pre-built schemas** for different use cases:
+
+| Schema | Description | Hierarchy | Use Case |
+|--------|-------------|-----------|----------|
+| `itinerary` | Travel planning | Itinerary → Day → POI/Restaurant | Trip planning, travel recommendations |
+| `todolist` | Task management | TodoList → Project → Task → SubTask | Project tracking, productivity |
+| `curriculum` | Education | Curriculum → Course → Concept/Exercise | Learning paths, course content |
+| `support` | Customer support | SupportSystem → Customer → Ticket → Symptom/Cause/Resolution | Help desk, issue tracking |
+| `session_recommendation` | Goal-oriented recommendations | RecommendationHub → Session → Step → Objective → Item | Shopping assistant, DIY projects, learning paths |
+
+#### Session-based Recommendation Schema
+
+The `session_recommendation` schema is designed for **goal-oriented task recommendation systems**:
+
+```
+RecommendationHub (root)
+├── Session           # User's goal (e.g., "Setup home office", "Plan dinner party")
+│   └── Step          # Major phases (e.g., "Furniture Selection", "Menu Planning")
+│       └── Objective # Specific sub-goals (e.g., "Choose ergonomic chair")
+│           └── Item  # Actual recommendations (products, content, actions)
+```
+
+**Example queries:**
+```
+User: "items related to dinner"
+Query: /RecommendationHub/Session[context =~ "dinner"]/Step/Objective/Item
+
+User: "ergonomic chair recommendations"
+Query: /RecommendationHub/Session/Step/Objective/Item[description =~ "ergonomic chair"]
+
+User: "first 3 budget-friendly items"
+Query: (/RecommendationHub/Session/Step/Objective/Item[description =~ "budget"])[1:3]
+
+User: "objectives in the furniture step"
+Query: /RecommendationHub/Session/Step[name =~ "furniture"]/Objective
+```
+
+### Switching Schemas and Data Files
 
 **Method 1: Via config.yaml**
 ```yaml
+# Travel itinerary
 active_schema: "itinerary"
-active_data: "travel_memory_5day"  # Switch to 5-day itinerary
+active_data: "travel_memory_5day"
+
+# Task management
+active_schema: "todolist"
+active_data: "todolist_sample"
+
+# Session-based recommendations
+active_schema: "session_recommendation"
+active_data: "session_home_office"
 ```
 
 **Method 2: Via code**
@@ -130,7 +184,9 @@ print(get_schema_info())
 
 ---
 
-## Data Model: Itinerary Tree
+## Data Models
+
+### Itinerary Tree (Travel Planning)
 
 ```
 Itinerary (root)
@@ -138,28 +194,57 @@ Itinerary (root)
 │   ├── POI: St. Lawrence Market
 │   ├── POI: CN Tower
 │   ├── Restaurant: Queen Street Warehouse
-│   ├── POI: Art Gallery of Ontario
-│   ├── Restaurant: Buca Yorkville
-│   └── Restaurant: The Rex Hotel Jazz Bar
+│   └── ...
 ├── Day[2]
-│   ├── Restaurant: Pow Wow Cafe
 │   ├── POI: Royal Ontario Museum
 │   └── ...
-├── Day[3]
-│   └── ...
-├── Day[4] (5-day version only)
-│   └── ...
-└── Day[5] (5-day version only)
+└── Day[3]
     └── ...
 ```
 
-**Node Types:**
-- `Itinerary` - Root node
-- `Day` - Contains POIs and Restaurants (has `index` attribute)
-- `POI` - Points of Interest (museums, towers, markets, etc.)
-- `Restaurant` - Dining locations
+### TodoList Tree (Task Management)
 
-**Important:** POI and Restaurant are **siblings** (same level under Day), NOT parent-child.
+```
+TodoList (root)
+├── Project: LLM-VM Development
+│   ├── Task: Implement Semantic XPath Executor
+│   │   ├── SubTask: Add Entailment Scoring
+│   │   └── SubTask: Implement Range Indexing
+│   └── Task: Multi-Domain Support
+│       └── SubTask: Create Schema Loader
+└── Project: Frontend Dashboard
+    └── Task: Design UI Components
+        └── SubTask: Tree Visualization
+```
+
+### Session Recommendation Tree (Goal-Oriented Recommendations)
+
+```
+RecommendationHub (root)
+├── Session: Setup a productive home office
+│   ├── Step[1]: Workspace Planning
+│   │   ├── Objective: Assess space constraints
+│   │   │   ├── Item: Room measurement guide
+│   │   │   └── Item: Lighting assessment checklist
+│   │   └── Objective: Plan desk layout
+│   │       └── Item: L-shaped desk configuration
+│   ├── Step[2]: Core Furniture Selection
+│   │   ├── Objective: Choose ergonomic desk
+│   │   │   ├── Item: Flexispot E7 Standing Desk ($549)
+│   │   │   └── Item: IKEA BEKANT ($449)
+│   │   └── Objective: Select ergonomic chair
+│   │       ├── Item: Herman Miller Aeron ($599)
+│   │       └── Item: Branch Ergonomic Chair ($349)
+│   └── Step[3]: Tech Equipment Setup
+│       └── ...
+└── Session: Plan a dinner party for 8 guests
+    └── ...
+```
+
+**Key differences between schemas:**
+- **Itinerary**: POI and Restaurant are **siblings** under Day
+- **TodoList**: Linear hierarchy (Project → Task → SubTask)
+- **Session Recommendation**: 4-level deep hierarchy for granular recommendations
 
 ---
 
@@ -536,8 +621,9 @@ Edit `config.yaml`:
 
 ```yaml
 # Schema and data file selection
-active_schema: "itinerary"
-active_data: "travel_memory_3day"  # Options: travel_memory_3day, travel_memory_5day
+# Available schemas: itinerary, todolist, curriculum, support, session_recommendation
+active_schema: "session_recommendation"
+active_data: "session_home_office"  # Data file key from the schema's data_files
 
 openai:
   api_key: "your-api-key"
@@ -787,46 +873,76 @@ numpy
 
 ## Extending to New Tree Structures
 
-The system is **fully dynamic** and can support any tree structure (not just itineraries).
+The system is **fully dynamic** and can support any tree structure.
 
 ### Adding a New Schema
 
-1. Create a new schema file (`storage/schemas/todo.yaml`):
+1. **Create a schema file** (`storage/schemas/myschema.yaml`):
 ```yaml
-name: "todo"
-description: "Todo list with projects and tasks"
+name: "myschema"
+description: "Description of your schema"
 
 hierarchy: |
-  TodoList (root)
-  ├── Project
-  │   └── Task
+  Root (root)
+  ├── Container
+  │   └── Leaf
 
 nodes:
-  TodoList:
+  Root:
     type: root
-  Project:
+  Container:
     type: container
-    index_attr: "index"
-  Task:
+    name_field: "name"
+    description_field: "description"
+  Leaf:
     type: leaf
-    name_field: "title"
+    name_field: "name"
     description_field: "description"
 
 data_files:
-  my_todos: "memory/todo_list.xml"
+  sample_data: "memory/myschema/sample.xml"
 
-default_data: "my_todos"
+default_data: "sample_data"
+prompt_file: "prompts/xpath_query_generator_myschema.txt"
 ```
 
-2. Create the data file (`storage/memory/todo_list.xml`)
+2. **Create the XML data file** (`storage/memory/myschema/sample.xml`)
+   - Use **child elements** (not attributes) for name/description fields
+   - Example: `<Item><name>My Item</name><description>...</description></Item>`
 
-3. Update `config.yaml`:
+3. **Create a prompt file** (`storage/prompts/xpath_query_generator_myschema.txt`)
+   - Define the hierarchy and provide example queries
+
+4. **Update `config.yaml`**:
 ```yaml
-active_schema: "todo"
-active_data: "my_todos"
+active_schema: "myschema"
+active_data: "sample_data"
 ```
 
-4. The system will automatically adapt to your new structure!
+5. The system will automatically adapt to your new structure!
+
+### Example Queries by Schema
+
+**Itinerary:**
+```
+/Itinerary/Day/POI[description =~ "museum"]
+/Itinerary/Day[1]/Restaurant[-1]
+(/Itinerary/Day/POI)[5]
+```
+
+**TodoList:**
+```
+/TodoList/Project/Task[description =~ "urgent"]
+/TodoList/Project[description =~ "frontend"]/Task/SubTask
+(/TodoList/Project/Task)[-2:]
+```
+
+**Session Recommendation:**
+```
+/RecommendationHub/Session[context =~ "home office"]/Step/Objective/Item
+/RecommendationHub/Session/Step[name =~ "furniture"]/Objective[target =~ "chair"]/Item
+(/RecommendationHub/Session/Step/Objective/Item[description =~ "ergonomic"])[1:3]
+```
 
 ---
 

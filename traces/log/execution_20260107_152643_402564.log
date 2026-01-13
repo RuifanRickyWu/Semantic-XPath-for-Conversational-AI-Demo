@@ -1,4 +1,4 @@
-Query: /RecommendationHub/Session[context =~ "dinner planning"]/Step/Objective/Item[description =~ "foods"]
+Query: /RecommendationHub/Session[context =~ "dinner planning" ｜ ]/Step/Objective/Item[description =~ "foods"]
 Data File: home_office_session.xml
 Execution Time: 1510.46ms
 ============================================================

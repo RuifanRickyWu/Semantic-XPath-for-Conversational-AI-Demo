@@ -41,3 +41,5 @@ default_data: "curriculum_sample"
 # Associated prompt file for XPath query generation
 prompt_file: "prompts/xpath_query_generator_curriculum.txt"
 
+
+

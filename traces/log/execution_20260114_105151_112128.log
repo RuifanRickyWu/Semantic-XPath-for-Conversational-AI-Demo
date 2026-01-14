@@ -1,0 +1,93 @@
+Query: /Itinerary/Day[exists(POI[description =~ "museum"])]
+Data File: travel_memory_3day.xml
+Execution Time: 250.34ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260114_105151_112128] Executing query: /Itinerary/Day[exists(POI[description =~ "museum"])]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Day[exists(POI[description =~ "museum"])]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day[exists(POI[description =~ "museum"])] ---
+Found 3 Day nodes across 1 parent(s)
+Applying semantic predicate: exists(POI[description =~ "museum"])
+Scoring predicate: exists(POI[description =~ "museum"]) (atomic conditions: ['museum'])
+  Collected 8 descriptions for 1 unique predicate value(s)
+  Made 1 scorer call(s) for 8 total descriptions
+  Node 0 (Day 1): score = 0.9928
+  Node 1 (Day 2): score = 0.9991
+  Node 2 (Day 3): score = 0.0311
+After step: 3 nodes remaining
+
+=== Bayesian Fusion ===
+  Itinerary > Day 1: log_odds=4.927 → score=0.9928
+  Itinerary > Day 2: log_odds=7.012 → score=0.9991
+  Itinerary > Day 3: log_odds=-3.440 → score=0.0311
+
+=== Final Filtering (threshold=0.01, top_k=3) ===
+  Filtered: 3 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 250.34ms
+
+============================================================
+Bayesian Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 1 (Day):
+  Step 1: exists(POI[description =~ "museum"])
+    score=0.9928, log_odds=4.9267
+  Accumulated log-odds: 4.9267
+  Final score: 0.9928
+
+Itinerary > Day 2 (Day):
+  Step 1: exists(POI[description =~ "museum"])
+    score=0.9991, log_odds=7.0117
+  Accumulated log-odds: 7.0117
+  Final score: 0.9991
+
+Itinerary > Day 3 (Day):
+  Step 1: exists(POI[description =~ "museum"])
+    score=0.0311, log_odds=-3.4402
+  Accumulated log-odds: -3.4402
+  Final score: 0.0311
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 3 nodes
+Threshold: 0.01
+Top-K: 3
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Itinerary > Day 2 (score: 0.9991)
+{
+  "type": "Day",
+  "attributes": {
+    "index": "2"
+  }
+}
+
+2. Itinerary > Day 1 (score: 0.9928)
+{
+  "type": "Day",
+  "attributes": {
+    "index": "1"
+  }
+}
+
+3. Itinerary > Day 3 (score: 0.0311)
+{
+  "type": "Day",
+  "attributes": {
+    "index": "3"
+  }
+}

@@ -46,6 +46,27 @@ Semantic predicate rules:
 - You CAN combine semantic predicate with positional index: NodeType[description =~ "query"][index]
 - You CAN combine semantic predicate with range index: NodeType[description =~ "query"][1:3]
 
+Logical operators within predicates (same node):
+- Use AND for conjunction: [description =~ "A" AND description =~ "B"]
+  - The node must satisfy BOTH conditions
+  - Example: Item[description =~ "ergonomic" AND description =~ "affordable"]
+- Use OR for disjunction: [description =~ "A" OR description =~ "B"]
+  - The node must satisfy AT LEAST ONE condition
+  - Example: Item[description =~ "wireless" OR description =~ "bluetooth"]
+- You can combine multiple conditions: [description =~ "A" AND description =~ "B" OR description =~ "C"]
+- Parentheses can group conditions: [(description =~ "A" OR description =~ "B") AND description =~ "C"]
+
+Hierarchical quantifiers (for internal nodes):
+- Use exists() to check if ANY child satisfies a predicate:
+  - Step[exists(description =~ "budget")] - Steps with at least one budget-related child
+  - Objective[exists(description =~ "premium")] - Objectives with at least one premium item
+- Use all() to check prevalence/overall characteristic across ALL children:
+  - Step[all(description =~ "ergonomic")] - Steps focused on ergonomic items
+  - Objective[all(description =~ "sustainable")] - Objectives with generally sustainable items
+- exists() returns high score if ANY child matches (existential quantifier ∃)
+- all() returns score based on proportion of children matching (universal quantifier ∀)
+- These operators apply to ALL children regardless of type
+
 IMPORTANT: When user asks for "Nth [semantic type]", you MUST include BOTH the semantic predicate AND the index.
 - "second furniture-related step" = Step[description =~ "furniture"][2] (NOT just Step[2])
 - "first budget-friendly item" = Item[description =~ "budget-friendly"][1]
@@ -160,10 +181,6 @@ User: all premium recommendations
 Output:
 /RecommendationHub/Session/Step/Objective/Item[description =~ "premium"]
 
-User: objectives with keyboard items
-Output:
-/RecommendationHub/Session/Step/Objective/Item[description =~ "keyboard"]/..
-
 User: all sessions about cooking or dinner
 Output:
 /RecommendationHub/Session[context =~ "dinner"]
@@ -180,8 +197,64 @@ User: first free resource recommendation
 Output:
 (/RecommendationHub/Session/Step/Objective/Item[description =~ "free"])[1]
 
+User: ergonomic and affordable item
+Output:
+/RecommendationHub/Session/Step/Objective/Item[description =~ "ergonomic" AND description =~ "affordable"]
+
+User: wireless or bluetooth item
+Output:
+/RecommendationHub/Session/Step/Objective/Item[description =~ "wireless" OR description =~ "bluetooth"]
+
+User: compact and adjustable chair
+Output:
+/RecommendationHub/Session/Step/Objective/Item[description =~ "compact" AND description =~ "adjustable"]
+
+User: monitor or display recommendation
+Output:
+/RecommendationHub/Session/Step/Objective/Item[description =~ "monitor" OR description =~ "display"]
+
+User: premium and sustainable product
+Output:
+/RecommendationHub/Session/Step/Objective/Item[description =~ "premium" AND description =~ "sustainable"]
+
+User: steps that have budget items
+Output:
+/RecommendationHub/Session/Step[exists(description =~ "budget")]
+
+User: objectives with at least one premium item
+Output:
+/RecommendationHub/Session/Step/Objective[exists(description =~ "premium")]
+
+User: steps with any ergonomic content
+Output:
+/RecommendationHub/Session/Step[exists(description =~ "ergonomic")]
+
+User: objectives focused on sustainable items
+Output:
+/RecommendationHub/Session/Step/Objective[all(description =~ "sustainable")]
+
+User: steps that are generally budget-focused
+Output:
+/RecommendationHub/Session/Step[all(description =~ "budget")]
+
+User: items in steps with furniture content
+Output:
+/RecommendationHub/Session/Step[exists(description =~ "furniture")]/Objective/Item
+
+User: objectives in sessions with workspace context
+Output:
+/RecommendationHub/Session[context =~ "workspace"]/Step/Objective
+
+User: first step with tech content
+Output:
+(/RecommendationHub/Session/Step[exists(description =~ "tech")])[1]
+
+User: portable and lightweight items in travel sessions
+Output:
+/RecommendationHub/Session[context =~ "travel"]/Step/Objective/Item[description =~ "portable" AND description =~ "lightweight"]
+
+User: desk or chair items in furniture objectives
+Output:
+/RecommendationHub/Session/Step/Objective[target =~ "furniture"]/Item[description =~ "desk" OR description =~ "chair"]
+
 Now convert the following user request into a query.
-
-
-
-

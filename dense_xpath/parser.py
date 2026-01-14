@@ -1,11 +1,13 @@
 """
 Query Parser - Parses XPath-like query strings into structured QueryStep objects.
+
+Supports compound predicates with AND/OR operators and hierarchical quantifiers (exists/all).
 """
 
 import re
 from typing import List, Optional, Tuple
 
-from .models import IndexRange, QueryStep
+from .models import IndexRange, QueryStep, AtomicCondition, CompoundPredicate
 
 
 class QueryParser:
@@ -16,6 +18,8 @@ class QueryParser:
     - Type matching: /Itinerary/Day/POI
     - Positional indexing: Day[1], POI[2], POI[-1], POI[1:3]
     - Semantic predicates: Day[description =~ "artistic"]
+    - Compound predicates with AND/OR: POI[description =~ "outdoor" AND description =~ "historic"]
+    - Hierarchical quantifiers: Day[exists(POI[description =~ "museum"])]
     - Global indexing: (/Itinerary/Day/POI)[5] or (/Itinerary/Day/POI)[1:3]
     - Combined: Day[description =~ "artistic"][2]
     """
@@ -134,7 +138,16 @@ class QueryParser:
         return None
     
     def _parse_step(self, step_str: str) -> Optional[QueryStep]:
-        """Parse a single step like 'Day[description =~ "artistic"][2]' or 'POI[1:3]'."""
+        """
+        Parse a single step like 'Day[description =~ "artistic"][2]' or 'POI[1:3]'.
+        
+        Supports:
+        - Simple predicates: description =~ "value"
+        - AND predicates: description =~ "A" AND description =~ "B"
+        - OR predicates: description =~ "A" OR description =~ "B"
+        - exists(): exists(description =~ "museum") - at least one child matches
+        - all(): all(description =~ "local") - children generally match
+        """
         # Extract node type (everything before first [)
         match = re.match(r'^([A-Za-z]+)', step_str)
         if not match:
@@ -144,24 +157,199 @@ class QueryParser:
         remaining = step_str[len(node_type):]
         
         predicate = None
+        predicate_str = None
         index = None
         
-        # Extract predicates and indexes from brackets
-        bracket_pattern = r'\[([^\]]+)\]'
-        brackets = re.findall(bracket_pattern, remaining)
+        # Extract all bracket contents, handling nested brackets
+        brackets = self._extract_brackets(remaining)
         
         for bracket_content in brackets:
-            # Check if it's a semantic predicate
-            pred_match = re.match(r'description\s*=~\s*["\']([^"\']+)["\']', bracket_content)
-            if pred_match:
-                predicate = pred_match.group(1)
+            # Check if it's a hierarchical quantifier (exists/all)
+            # New syntax: exists(description =~ "museum") - applies to all children
+            exists_match = re.match(r'^exists\s*\(\s*(.+)\s*\)$', bracket_content)
+            all_match = re.match(r'^all\s*\(\s*(.+)\s*\)$', bracket_content)
+            
+            if exists_match:
+                inner_pred_str = exists_match.group(1).strip()
+                inner_pred = self._parse_predicate(inner_pred_str)
+                predicate = CompoundPredicate(
+                    operator="EXISTS",
+                    conditions=[],
+                    child_predicate=inner_pred,
+                    child_type=None  # No specific child type - applies to all children
+                )
+                predicate_str = bracket_content
+            elif all_match:
+                inner_pred_str = all_match.group(1).strip()
+                inner_pred = self._parse_predicate(inner_pred_str)
+                predicate = CompoundPredicate(
+                    operator="ALL",
+                    conditions=[],
+                    child_predicate=inner_pred,
+                    child_type=None  # No specific child type - applies to all children
+                )
+                predicate_str = bracket_content
+            # Check if it's a compound predicate (AND/OR)
+            elif ' AND ' in bracket_content or ' OR ' in bracket_content:
+                predicate = self._parse_predicate(bracket_content)
+                predicate_str = bracket_content
+            # Check if it's a simple semantic predicate
+            elif '=~' in bracket_content:
+                predicate = self._parse_predicate(bracket_content)
+                predicate_str = bracket_content
             else:
                 # Try to parse as index or range
                 parsed_index = self._parse_index(bracket_content)
                 if parsed_index:
                     index = parsed_index
         
-        return QueryStep(node_type=node_type, predicate=predicate, index=index)
+        return QueryStep(
+            node_type=node_type, 
+            predicate=predicate, 
+            index=index,
+            predicate_str=predicate_str
+        )
+    
+    def _extract_brackets(self, s: str) -> List[str]:
+        """
+        Extract bracket contents, handling nested brackets for exists()/all().
+        
+        Returns a list of bracket contents in order.
+        """
+        brackets = []
+        i = 0
+        while i < len(s):
+            if s[i] == '[':
+                # Find matching closing bracket
+                depth = 1
+                start = i + 1
+                i += 1
+                while i < len(s) and depth > 0:
+                    if s[i] == '[':
+                        depth += 1
+                    elif s[i] == ']':
+                        depth -= 1
+                    i += 1
+                brackets.append(s[start:i-1])
+            else:
+                i += 1
+        return brackets
+    
+    def _parse_predicate(self, predicate_str: str) -> CompoundPredicate:
+        """
+        Parse a predicate string into a CompoundPredicate AST.
+        
+        Handles:
+        - Simple: description =~ "value"
+        - AND: description =~ "A" AND description =~ "B"
+        - OR: description =~ "A" OR description =~ "B"
+        - exists: exists(description =~ "value") - at least one child matches
+        - all: all(description =~ "value") - children generally match
+        """
+        predicate_str = predicate_str.strip()
+        
+        # Check for exists()/all() quantifiers
+        # New syntax: exists(inner_predicate) - no child type needed
+        exists_match = re.match(r'^exists\s*\(\s*(.+)\s*\)$', predicate_str)
+        all_match = re.match(r'^all\s*\(\s*(.+)\s*\)$', predicate_str)
+        
+        if exists_match:
+            inner_pred_str = exists_match.group(1).strip()
+            return CompoundPredicate(
+                operator="EXISTS",
+                conditions=[],
+                child_predicate=self._parse_predicate(inner_pred_str),
+                child_type=None  # Applies to all children
+            )
+        
+        if all_match:
+            inner_pred_str = all_match.group(1).strip()
+            return CompoundPredicate(
+                operator="ALL",
+                conditions=[],
+                child_predicate=self._parse_predicate(inner_pred_str),
+                child_type=None  # Applies to all children
+            )
+        
+        # Check for AND (split carefully to avoid breaking on AND inside quotes)
+        and_parts = self._split_logical_operator(predicate_str, ' AND ')
+        if len(and_parts) > 1:
+            return CompoundPredicate(
+                operator="AND",
+                conditions=[self._parse_predicate(p) for p in and_parts]
+            )
+        
+        # Check for OR
+        or_parts = self._split_logical_operator(predicate_str, ' OR ')
+        if len(or_parts) > 1:
+            return CompoundPredicate(
+                operator="OR",
+                conditions=[self._parse_predicate(p) for p in or_parts]
+            )
+        
+        # Atomic condition
+        atomic = self._parse_atomic(predicate_str)
+        if atomic:
+            return CompoundPredicate(operator="ATOMIC", conditions=[atomic])
+        
+        # Fallback: treat as simple value
+        return CompoundPredicate(
+            operator="ATOMIC",
+            conditions=[AtomicCondition(field="description", value=predicate_str)]
+        )
+    
+    def _split_logical_operator(self, s: str, operator: str) -> List[str]:
+        """
+        Split string by logical operator, respecting quotes and parentheses.
+        """
+        parts = []
+        current = ""
+        i = 0
+        quote_char = None
+        paren_depth = 0
+        
+        while i < len(s):
+            # Handle quotes
+            if s[i] in ('"', "'") and paren_depth == 0:
+                if quote_char is None:
+                    quote_char = s[i]
+                elif s[i] == quote_char:
+                    quote_char = None
+                current += s[i]
+                i += 1
+            # Handle parentheses
+            elif s[i] == '(' and quote_char is None:
+                paren_depth += 1
+                current += s[i]
+                i += 1
+            elif s[i] == ')' and quote_char is None:
+                paren_depth -= 1
+                current += s[i]
+                i += 1
+            # Check for operator
+            elif quote_char is None and paren_depth == 0 and s[i:i+len(operator)] == operator:
+                parts.append(current.strip())
+                current = ""
+                i += len(operator)
+            else:
+                current += s[i]
+                i += 1
+        
+        if current.strip():
+            parts.append(current.strip())
+        
+        return parts
+    
+    def _parse_atomic(self, predicate_str: str) -> Optional[AtomicCondition]:
+        """
+        Parse an atomic condition like 'description =~ "museum"' or 'context =~ "home office"'.
+        """
+        # Match patterns like: field =~ "value" or field =~ 'value'
+        match = re.match(r'(\w+)\s*=~\s*["\']([^"\']+)["\']', predicate_str.strip())
+        if match:
+            field, value = match.groups()
+            return AtomicCondition(field=field, value=value)
+        return None
 
 
 # Singleton instance for convenience

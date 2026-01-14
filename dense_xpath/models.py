@@ -5,9 +5,97 @@ Contains all dataclasses used throughout the xpath execution pipeline.
 """
 
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 import xml.etree.ElementTree as ET
 
+
+# =============================================================================
+# Predicate AST Models
+# =============================================================================
+
+@dataclass
+class AtomicCondition:
+    """
+    Single atomic condition: field =~ "value"
+    
+    Represents a leaf-level semantic match condition.
+    """
+    field: str  # e.g., "description", "name", "context"
+    value: str  # e.g., "museum", "italian"
+    
+    def __repr__(self):
+        return f'{self.field} =~ "{self.value}"'
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {"field": self.field, "value": self.value}
+
+
+@dataclass
+class CompoundPredicate:
+    """
+    Compound predicate with logical operators.
+    
+    Supports:
+    - ATOMIC: Single atomic condition
+    - AND: Conjunction of predicates (log-odds aggregation)
+    - OR: Disjunction of predicates (Noisy-OR)
+    - EXISTS: Existential quantifier over children (at least one child matches)
+    - ALL: Universal quantifier over children (Beta-Bernoulli prevalence)
+    """
+    operator: str  # "AND", "OR", "ATOMIC", "EXISTS", "ALL"
+    conditions: List[Union[AtomicCondition, 'CompoundPredicate']] = field(default_factory=list)
+    child_predicate: Optional['CompoundPredicate'] = None  # For EXISTS/ALL
+    child_type: Optional[str] = None  # Target child node type for EXISTS/ALL
+    
+    def __repr__(self):
+        if self.operator == "ATOMIC":
+            return str(self.conditions[0]) if self.conditions else "ATOMIC()"
+        elif self.operator == "AND":
+            return " AND ".join(str(c) for c in self.conditions)
+        elif self.operator == "OR":
+            return " OR ".join(str(c) for c in self.conditions)
+        elif self.operator == "EXISTS":
+            # New syntax: exists(predicate) - no child type required
+            return f"exists({self.child_predicate})"
+        elif self.operator == "ALL":
+            # New syntax: all(predicate) - no child type required
+            return f"all({self.child_predicate})"
+        return f"{self.operator}({self.conditions})"
+    
+    def to_dict(self) -> Dict[str, Any]:
+        result = {"operator": self.operator}
+        if self.conditions:
+            result["conditions"] = [
+                c.to_dict() if hasattr(c, 'to_dict') else str(c) 
+                for c in self.conditions
+            ]
+        if self.child_predicate:
+            result["child_predicate"] = self.child_predicate.to_dict()
+        if self.child_type:
+            result["child_type"] = self.child_type
+        return result
+    
+    def get_all_atomic_values(self) -> List[str]:
+        """Extract all atomic condition values for batch scoring."""
+        values = []
+        if self.operator == "ATOMIC":
+            if self.conditions:
+                values.append(self.conditions[0].value)
+        elif self.operator in ("AND", "OR"):
+            for cond in self.conditions:
+                if isinstance(cond, CompoundPredicate):
+                    values.extend(cond.get_all_atomic_values())
+                elif isinstance(cond, AtomicCondition):
+                    values.append(cond.value)
+        elif self.operator in ("EXISTS", "ALL"):
+            if self.child_predicate:
+                values.extend(self.child_predicate.get_all_atomic_values())
+        return values
+
+
+# =============================================================================
+# Index and Position Models
+# =============================================================================
 
 @dataclass
 class IndexRange:
@@ -63,18 +151,34 @@ class NodeItem:
 
 @dataclass
 class QueryStep:
-    """Represents a single step in an XPath query."""
+    """
+    Represents a single step in an XPath query.
+    
+    Each step consists of:
+    - node_type: The target node type to match
+    - predicate: Optional compound predicate for semantic filtering
+    - index: Optional positional index or range
+    """
     node_type: str  # e.g., "Itinerary", "Day", "POI", "Restaurant"
-    predicate: Optional[str] = None  # semantic predicate, e.g., "artistic"
+    predicate: Optional[CompoundPredicate] = None  # Compound predicate AST
     index: Optional[IndexRange] = None  # positional index or range
+    
+    # Legacy support: simple string predicate (converted to CompoundPredicate)
+    predicate_str: Optional[str] = None  # Original predicate string for display
     
     def __repr__(self):
         parts = [self.node_type]
         if self.predicate:
-            parts.append(f'[description =~ "{self.predicate}"]')
+            parts.append(f'[{self.predicate}]')
+        elif self.predicate_str:
+            parts.append(f'[description =~ "{self.predicate_str}"]')
         if self.index is not None:
             parts.append(str(self.index))
         return "".join(parts)
+    
+    def has_semantic_predicate(self) -> bool:
+        """Check if this step has a semantic predicate."""
+        return self.predicate is not None
 
 
 @dataclass
@@ -120,6 +224,72 @@ class TraversalStep:
 
 
 @dataclass
+class StepContribution:
+    """A single step's contribution to the final score."""
+    step_index: int
+    predicate_str: str
+    score: float
+    log_odds: float
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "step_index": self.step_index,
+            "predicate": self.predicate_str,
+            "score": self.score,
+            "log_odds": self.log_odds
+        }
+
+
+@dataclass
+class NodeFusionTrace:
+    """Bayesian fusion trace for a single node."""
+    node_path: str
+    node_type: str
+    step_contributions: List[StepContribution] = field(default_factory=list)
+    accumulated_log_odds: float = 0.0
+    final_score: float = 0.5
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "node_path": self.node_path,
+            "node_type": self.node_type,
+            "step_contributions": [s.to_dict() for s in self.step_contributions],
+            "accumulated_log_odds": self.accumulated_log_odds,
+            "final_score": self.final_score
+        }
+
+
+@dataclass
+class BayesianFusionTrace:
+    """Complete Bayesian fusion trace across all nodes and steps."""
+    per_node_traces: List[NodeFusionTrace] = field(default_factory=list)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "per_node": [n.to_dict() for n in self.per_node_traces]
+        }
+
+
+@dataclass
+class FinalFilteringTrace:
+    """Trace of the final TopK and threshold filtering."""
+    before_filter_count: int = 0
+    threshold: float = 0.0
+    top_k: int = 0
+    after_filter_count: int = 0
+    filtered_nodes: List[Dict[str, Any]] = field(default_factory=list)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "before_filter_count": self.before_filter_count,
+            "threshold": self.threshold,
+            "top_k": self.top_k,
+            "after_filter_count": self.after_filter_count,
+            "filtered_nodes": self.filtered_nodes
+        }
+
+
+@dataclass
 class ExecutionResult:
     """Result of executing an XPath query."""
     query: str
@@ -129,4 +299,8 @@ class ExecutionResult:
     traversal_steps: List[TraversalStep] = field(default_factory=list)
     execution_time_ms: float = 0.0  # Total query execution time in milliseconds
     data_file: str = ""  # Name of the data file used
+    
+    # New: Detailed scoring and fusion traces
+    bayesian_fusion_trace: Optional[BayesianFusionTrace] = None
+    final_filtering_trace: Optional[FinalFilteringTrace] = None
 

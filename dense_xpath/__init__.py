@@ -4,6 +4,12 @@ Dense XPath - A semantic XPath-like query execution system.
 This module provides tools for executing XPath-like queries against XML trees
 with support for semantic predicate matching.
 
+Implements the Semantic XPath framework with:
+- Compound predicates (AND/OR)
+- Hierarchical quantifiers (exists/all)
+- Bayesian fusion across query steps
+- Detailed reasoning traces
+
 Modules:
 - models: Data classes for query representation and results
 - parser: Query string parsing
@@ -17,11 +23,22 @@ Modules:
 
 # Models
 from .models import (
+    # Predicate AST
+    AtomicCondition,
+    CompoundPredicate,
+    # Query and Index
     IndexRange,
+    NodeItem,
     QueryStep,
+    # Results
     MatchedNode,
     TraversalStep,
-    ExecutionResult
+    ExecutionResult,
+    # Fusion traces
+    StepContribution,
+    NodeFusionTrace,
+    BayesianFusionTrace,
+    FinalFilteringTrace,
 )
 
 # Components
@@ -44,12 +61,22 @@ from .schema_loader import (
 from .dense_xpath_executor import DenseXPathExecutor
 
 __all__ = [
-    # Models
+    # Predicate AST
+    "AtomicCondition",
+    "CompoundPredicate",
+    # Query and Index Models
     "IndexRange",
+    "NodeItem",
     "QueryStep", 
+    # Result Models
     "MatchedNode",
     "TraversalStep",
     "ExecutionResult",
+    # Fusion Trace Models
+    "StepContribution",
+    "NodeFusionTrace",
+    "BayesianFusionTrace",
+    "FinalFilteringTrace",
     # Components
     "QueryParser",
     "get_parser",

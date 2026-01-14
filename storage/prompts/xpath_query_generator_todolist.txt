@@ -42,6 +42,27 @@ Semantic predicate rules:
 - You CAN combine semantic predicate with positional index: NodeType[description =~ "query"][index]
 - You CAN combine semantic predicate with range index: NodeType[description =~ "query"][1:3]
 
+Logical operators within predicates (same node):
+- Use AND for conjunction: [description =~ "A" AND description =~ "B"]
+  - The node must satisfy BOTH conditions
+  - Example: Task[description =~ "urgent" AND description =~ "backend"]
+- Use OR for disjunction: [description =~ "A" OR description =~ "B"]
+  - The node must satisfy AT LEAST ONE condition
+  - Example: Task[description =~ "bug" OR description =~ "hotfix"]
+- You can combine multiple conditions: [description =~ "A" AND description =~ "B" OR description =~ "C"]
+- Parentheses can group conditions: [(description =~ "A" OR description =~ "B") AND description =~ "C"]
+
+Hierarchical quantifiers (for internal nodes):
+- Use exists() to check if ANY child satisfies a predicate:
+  - Project[exists(description =~ "urgent")] - Projects with at least one urgent item
+  - Task[exists(description =~ "blocked")] - Tasks with at least one blocked subtask
+- Use all() to check prevalence/overall characteristic across ALL children:
+  - Project[all(description =~ "completed")] - Projects where children are generally completed
+  - Task[all(description =~ "tested")] - Tasks where subtasks are generally tested
+- exists() returns high score if ANY child matches (existential quantifier ∃)
+- all() returns score based on proportion of children matching (universal quantifier ∀)
+- These operators apply to ALL children regardless of type
+
 IMPORTANT: When user asks for "Nth [semantic type]", you MUST include BOTH the semantic predicate AND the index.
 - "second urgent task" = Task[description =~ "urgent"][2] (NOT just Task[2])
 - "first bug fix" = Task[description =~ "bug fix"][1]
@@ -156,9 +177,64 @@ User: all blocked subtasks
 Output:
 /TodoList/Project/Task/SubTask[description =~ "blocked"]
 
-User: tasks with deployment subtasks
+User: urgent and backend task
 Output:
-/TodoList/Project/Task/SubTask[description =~ "deployment"]/..
+/TodoList/Project/Task[description =~ "urgent" AND description =~ "backend"]
+
+User: bug or hotfix task
+Output:
+/TodoList/Project/Task[description =~ "bug" OR description =~ "hotfix"]
+
+User: high priority and blocked subtask
+Output:
+/TodoList/Project/Task/SubTask[description =~ "high priority" AND description =~ "blocked"]
+
+User: testing or QA subtask
+Output:
+/TodoList/Project/Task/SubTask[description =~ "testing" OR description =~ "QA"]
+
+User: critical and unassigned task
+Output:
+/TodoList/Project/Task[description =~ "critical" AND description =~ "unassigned"]
+
+User: projects that have urgent items
+Output:
+/TodoList/Project[exists(description =~ "urgent")]
+
+User: projects with at least one blocked item
+Output:
+/TodoList/Project[exists(description =~ "blocked")]
+
+User: tasks that have any pending subtask
+Output:
+/TodoList/Project/Task[exists(description =~ "pending")]
+
+User: projects that are mostly completed
+Output:
+/TodoList/Project[all(description =~ "completed")]
+
+User: tasks where subtasks are generally tested
+Output:
+/TodoList/Project/Task[all(description =~ "tested")]
+
+User: tasks in projects with blocking issues
+Output:
+/TodoList/Project[exists(description =~ "blocking")]/Task
+
+User: subtasks in tasks with any failed tests
+Output:
+/TodoList/Project/Task[exists(description =~ "failed")]/SubTask
+
+User: first project with urgent items
+Output:
+(/TodoList/Project[exists(description =~ "urgent")])[1]
+
+User: frontend and urgent tasks in active projects
+Output:
+/TodoList/Project[description =~ "active"]/Task[description =~ "frontend" AND description =~ "urgent"]
+
+User: bug or security related subtasks
+Output:
+/TodoList/Project/Task/SubTask[description =~ "bug" OR description =~ "security"]
 
 Now convert the following user request into a query.
-

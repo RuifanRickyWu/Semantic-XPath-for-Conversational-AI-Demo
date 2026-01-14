@@ -45,6 +45,27 @@ Semantic predicate rules:
 - You CAN combine semantic predicate with positional index: NodeType[description =~ "query"][index]
 - You CAN combine semantic predicate with range index: NodeType[description =~ "query"][1:3]
 
+Logical operators within predicates (same node):
+- Use AND for conjunction: [description =~ "A" AND description =~ "B"]
+  - The node must satisfy BOTH conditions
+  - Example: Ticket[description =~ "urgent" AND description =~ "billing"]
+- Use OR for disjunction: [description =~ "A" OR description =~ "B"]
+  - The node must satisfy AT LEAST ONE condition
+  - Example: Cause[description =~ "timeout" OR description =~ "connection"]
+- You can combine multiple conditions: [description =~ "A" AND description =~ "B" OR description =~ "C"]
+- Parentheses can group conditions: [(description =~ "A" OR description =~ "B") AND description =~ "C"]
+
+Hierarchical quantifiers (for internal nodes):
+- Use exists() to check if ANY child satisfies a predicate:
+  - Customer[exists(description =~ "urgent")] - Customers with at least one urgent item
+  - Ticket[exists(description =~ "crash")] - Tickets with at least one crash-related content
+- Use all() to check prevalence/overall characteristic across ALL children:
+  - Customer[all(description =~ "resolved")] - Customers whose content is generally resolved
+  - Ticket[all(description =~ "permanent")] - Tickets with generally permanent solutions
+- exists() returns high score if ANY child matches (existential quantifier ∃)
+- all() returns score based on proportion of children matching (universal quantifier ∀)
+- These operators apply to ALL children regardless of type
+
 IMPORTANT: When user asks for "Nth [semantic type]", you MUST include BOTH the semantic predicate AND the index.
 - "second login issue ticket" = Ticket[description =~ "login issue"][2] (NOT just Ticket[2])
 - "first network symptom" = Symptom[description =~ "network"][1]
@@ -171,7 +192,64 @@ User: resolutions involving refund
 Output:
 /SupportSystem/Customer/Ticket/Resolution[description =~ "refund"]
 
+User: urgent and billing ticket
+Output:
+/SupportSystem/Customer/Ticket[description =~ "urgent" AND description =~ "billing"]
+
+User: timeout or connection cause
+Output:
+/SupportSystem/Customer/Ticket/Cause[description =~ "timeout" OR description =~ "connection"]
+
+User: critical and escalated ticket
+Output:
+/SupportSystem/Customer/Ticket[description =~ "critical" AND description =~ "escalated"]
+
+User: permanent or definitive resolution
+Output:
+/SupportSystem/Customer/Ticket/Resolution[description =~ "permanent" OR description =~ "definitive"]
+
+User: slow and intermittent symptom
+Output:
+/SupportSystem/Customer/Ticket/Symptom[description =~ "slow" AND description =~ "intermittent"]
+
+User: customers that have urgent issues
+Output:
+/SupportSystem/Customer[exists(description =~ "urgent")]
+
+User: customers with at least one unresolved issue
+Output:
+/SupportSystem/Customer[exists(description =~ "unresolved")]
+
+User: tickets that have crash content
+Output:
+/SupportSystem/Customer/Ticket[exists(description =~ "crash")]
+
+User: customers whose issues are generally resolved
+Output:
+/SupportSystem/Customer[all(description =~ "resolved")]
+
+User: tickets with generally permanent solutions
+Output:
+/SupportSystem/Customer/Ticket[all(description =~ "permanent")]
+
+User: symptoms in tickets with database issues
+Output:
+/SupportSystem/Customer/Ticket[exists(description =~ "database")]/Symptom
+
+User: resolutions in tickets from VIP customers
+Output:
+/SupportSystem/Customer[description =~ "VIP"]/Ticket/Resolution
+
+User: first customer with critical issues
+Output:
+(/SupportSystem/Customer[exists(description =~ "critical")])[1]
+
+User: network and timeout symptoms in server tickets
+Output:
+/SupportSystem/Customer/Ticket[description =~ "server"]/Symptom[description =~ "network" AND description =~ "timeout"]
+
+User: hardware or software causes in enterprise customers
+Output:
+/SupportSystem/Customer[description =~ "enterprise"]/Ticket/Cause[description =~ "hardware" OR description =~ "software"]
+
 Now convert the following user request into a query.
-
-
-

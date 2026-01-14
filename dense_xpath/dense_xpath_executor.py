@@ -1,15 +1,23 @@
 """
 Dense XPath Executor - Main executor class that orchestrates query execution.
 
+Implements the Semantic XPath framework with:
+- Stepwise structural traversal
+- Compound predicate scoring (AND/OR/exists/all)
+- Bayesian fusion across query steps
+- Deferred TopK and threshold filtering
+
 Uses modular components for parsing, node operations, indexing, and scoring.
 Supports multiple data files through schema configuration.
 """
 
 import logging
+import math
 import yaml
 import xml.etree.ElementTree as ET
+from collections import defaultdict
 from pathlib import Path
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Dict
 from datetime import datetime
 import time
 import sys
@@ -19,7 +27,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from predicate_classifier import PredicateScorer, get_scorer
 
 from .models import (
-    IndexRange, QueryStep, MatchedNode, TraversalStep, ExecutionResult, NodeItem
+    IndexRange, QueryStep, MatchedNode, TraversalStep, ExecutionResult, NodeItem,
+    CompoundPredicate, AtomicCondition,
+    StepContribution, NodeFusionTrace, BayesianFusionTrace, FinalFilteringTrace
 )
 from .parser import QueryParser
 from .node_utils import NodeUtils
@@ -31,15 +41,25 @@ from .schema_loader import load_config, get_data_path, load_schema
 
 logger = logging.getLogger(__name__)
 
+# Small epsilon to avoid log(0)
+EPSILON = 1e-9
+
 
 class DenseXPathExecutor:
     """
     Executes XPath-like queries against an XML tree with semantic matching.
     
+    Implements the Semantic XPath framework:
+    - Stepwise execution: C_i = Select(Filter(Expand(C_{i-1})))
+    - Bayesian fusion: Score = σ(Σ log(π_i / (1-π_i)))
+    - Deferred filtering: TopK and threshold applied after all scoring
+    
     Supports:
     - Type matching: /Itinerary/Day/POI
     - Positional indexing: Day[1], POI[2], POI[-1], POI[1:3]
     - Semantic predicates: Day[description =~ "artistic"]
+    - Compound predicates: POI[description =~ "outdoor" AND description =~ "historic"]
+    - Hierarchical quantifiers: Day[exists(POI[description =~ "museum"])]
     - Global indexing: (/Itinerary/Day/POI)[5], (/Itinerary/Day/POI)[1:3]
     - Combined: Day[description =~ "artistic"][2]
     - Multiple data files via schema configuration
@@ -62,7 +82,7 @@ class DenseXPathExecutor:
             scorer: Predicate scorer implementation. If not provided, uses get_scorer().
             scoring_method: Scoring method ("llm" or "entailment"). 
                            If None, uses value from config.yaml.
-            top_k: Number of top-scoring nodes to consider. Defaults to config value.
+            top_k: Number of top-scoring nodes to return. Defaults to config value.
             score_threshold: Minimum score threshold. Defaults to config value.
             config: Optional config dict. If not provided, loads from config.yaml.
             data_name: Name of the data file to use (e.g., "travel_memory_5day").
@@ -137,6 +157,13 @@ class DenseXPathExecutor:
         """
         Execute an XPath-like query against the tree.
         
+        Implements the Semantic XPath execution semantics:
+        1. Parse query into steps
+        2. For each step: Expand → Filter → Select
+        3. Accumulate log-odds across steps with semantic predicates
+        4. Compute final scores with sigmoid
+        5. Apply TopK and threshold filtering
+        
         Args:
             query: XPath-like query string
             
@@ -163,16 +190,22 @@ class DenseXPathExecutor:
         
         execution_log.append(f"Parsed steps: {steps}")
         
+        # =====================================================================
+        # Bayesian Fusion: Track accumulated log-odds per node
+        # =====================================================================
+        # Key: (node_id, path) to handle nodes that appear in multiple steps
+        node_log_odds: Dict[int, float] = defaultdict(float)
+        node_step_contributions: Dict[int, List[StepContribution]] = defaultdict(list)
+        node_paths: Dict[int, str] = {}  # Track paths for trace
+        
         # Execute BFS-like traversal with path and score tracking
-        # Each item is a NodeItem with (node, path, score, parent_group_id)
-        # Use dynamic root type instead of hardcoded "Itinerary"
         root_type = self.root_type
         current_items: List[NodeItem] = [NodeItem(self.root, root_type, 1.0, 0)]
         
         for step_idx, step in enumerate(steps):
             execution_log.append(f"\n--- Step {step_idx + 1}: {step} ---")
             
-            # Dynamic root check - works with any root type
+            # Dynamic root check
             if step.node_type == root_type:
                 current_items, traversal_step = self._handle_root_step(
                     current_items, step, step_idx, execution_log
@@ -204,12 +237,32 @@ class DenseXPathExecutor:
                 break
             
             # Step 2: Apply semantic predicate if present
-            if step.predicate:
-                next_items, pred_trace, pred_step = self._apply_predicate_step(
+            if step.has_semantic_predicate():
+                next_items, pred_trace, pred_step, step_scores = self._apply_predicate_step(
                     next_items, step, step_idx, execution_log
                 )
                 scoring_traces.append(pred_trace)
                 traversal_steps.append(pred_step)
+                
+                # Accumulate log-odds for Bayesian fusion
+                predicate_str = str(step.predicate) if step.predicate else step.predicate_str
+                for item in next_items:
+                    node_id = id(item.node)
+                    step_score = step_scores.get(node_id, 0.5)
+                    
+                    # Clamp to avoid log(0) or log(inf)
+                    step_score = max(EPSILON, min(1 - EPSILON, step_score))
+                    log_odds = math.log(step_score / (1 - step_score))
+                    
+                    node_log_odds[node_id] += log_odds
+                    node_paths[node_id] = item.path
+                    
+                    node_step_contributions[node_id].append(StepContribution(
+                        step_index=step_idx,
+                        predicate_str=predicate_str,
+                        score=step_score,
+                        log_odds=log_odds
+                    ))
             
             # Step 3: Apply positional index if present
             if step.index is not None:
@@ -221,16 +274,81 @@ class DenseXPathExecutor:
             current_items = next_items
             execution_log.append(f"After step: {len(current_items)} nodes remaining")
         
-        # Apply global index if present
+        # Apply global index if present (before final scoring)
         if global_index is not None and current_items:
             current_items, global_step = self._apply_global_index(
                 current_items, global_index, len(steps), execution_log
             )
             traversal_steps.append(global_step)
         
-        # Convert to result format, sorted by score descending
-        current_items.sort(key=lambda item: item.score, reverse=True)
+        # =====================================================================
+        # Final Score Computation: Bayesian Fusion
+        # =====================================================================
+        execution_log.append(f"\n=== Bayesian Fusion ===")
         
+        fusion_traces = []
+        for item in current_items:
+            node_id = id(item.node)
+            accumulated = node_log_odds.get(node_id, 0.0)
+            
+            # Sigmoid to convert log-odds to probability
+            if accumulated == 0.0:
+                # No semantic predicates applied - keep default score
+                final_score = item.score
+            else:
+                final_score = 1 / (1 + math.exp(-accumulated))
+            
+            item.score = final_score
+            
+            # Build fusion trace
+            fusion_traces.append(NodeFusionTrace(
+                node_path=item.path,
+                node_type=item.node.tag,
+                step_contributions=node_step_contributions.get(node_id, []),
+                accumulated_log_odds=accumulated,
+                final_score=final_score
+            ))
+            
+            execution_log.append(
+                f"  {item.path}: log_odds={accumulated:.3f} → score={final_score:.4f}"
+            )
+        
+        bayesian_fusion_trace = BayesianFusionTrace(per_node_traces=fusion_traces)
+        
+        # =====================================================================
+        # Deferred Filtering: TopK and Threshold
+        # =====================================================================
+        execution_log.append(f"\n=== Final Filtering (threshold={self.score_threshold}, top_k={self.top_k}) ===")
+        
+        before_count = len(current_items)
+        
+        # Apply threshold filter
+        current_items = [item for item in current_items if item.score >= self.score_threshold]
+        
+        # Sort by score descending
+        current_items.sort(key=lambda x: x.score, reverse=True)
+        
+        # Apply top_k limit
+        current_items = current_items[:self.top_k]
+        
+        after_count = len(current_items)
+        
+        execution_log.append(
+            f"  Filtered: {before_count} → {after_count} nodes"
+        )
+        
+        final_filtering_trace = FinalFilteringTrace(
+            before_filter_count=before_count,
+            threshold=self.score_threshold,
+            top_k=self.top_k,
+            after_filter_count=after_count,
+            filtered_nodes=[
+                {"path": item.path, "score": item.score, "type": item.node.tag}
+                for item in current_items
+            ]
+        )
+        
+        # Convert to result format
         matched_nodes = [
             NodeUtils.node_to_matched(item.node, item.path, item.score) 
             for item in current_items
@@ -250,7 +368,9 @@ class DenseXPathExecutor:
             scoring_traces=scoring_traces,
             traversal_steps=traversal_steps,
             execution_time_ms=execution_time_ms,
-            data_file=self._memory_path.name
+            data_file=self._memory_path.name,
+            bayesian_fusion_trace=bayesian_fusion_trace,
+            final_filtering_trace=final_filtering_trace
         )
         
         # Save traces
@@ -323,22 +443,46 @@ class DenseXPathExecutor:
         step: QueryStep,
         step_idx: int,
         execution_log: List[str]
-    ) -> Tuple[List[NodeItem], dict, TraversalStep]:
-        """Apply semantic predicate filtering."""
-        execution_log.append(f"Applying semantic predicate: {step.predicate}")
+    ) -> Tuple[List[NodeItem], dict, TraversalStep, Dict[int, float]]:
+        """
+        Apply semantic predicate filtering.
+        
+        Returns:
+            - filtered items (but no TopK/threshold - just the predicate)
+            - scoring trace
+            - traversal step
+            - scores_map for Bayesian fusion
+        """
+        predicate_str = str(step.predicate) if step.predicate else step.predicate_str
+        execution_log.append(f"Applying semantic predicate: {predicate_str}")
         
         nodes_before_pred = self._items_to_info(items)
         nodes_only = [item.node for item in items]
         
-        filtered_nodes, scores_map, trace = self.predicate_handler.apply_semantic_predicate(
-            nodes_only, step.predicate, execution_log
+        # Use compound predicate if available, otherwise create from string
+        if step.predicate:
+            predicate = step.predicate
+        else:
+            # Legacy: convert string to atomic predicate
+            predicate = CompoundPredicate(
+                operator="ATOMIC",
+                conditions=[AtomicCondition(field="description", value=step.predicate_str)]
+            )
+        
+        # Apply predicate (no filtering - returns all nodes with scores)
+        _, scores_map, trace = self.predicate_handler.apply_semantic_predicate(
+            nodes_only, predicate, execution_log
         )
         
-        # Filter items and update scores, preserving parent_group_id
-        filtered_set = set(id(n) for n in filtered_nodes)
+        # Update item scores from scores_map, preserving parent_group_id
         next_items = [
-            NodeItem(item.node, item.path, scores_map.get(id(item.node), item.score), item.parent_group_id)
-            for item in items if id(item.node) in filtered_set
+            NodeItem(
+                item.node, 
+                item.path, 
+                scores_map.get(id(item.node), item.score), 
+                item.parent_group_id
+            )
+            for item in items
         ]
         
         nodes_after_pred = self._items_to_info(next_items)
@@ -350,12 +494,13 @@ class DenseXPathExecutor:
             nodes_after=nodes_after_pred,
             action="semantic_predicate",
             details={
-                "predicate": step.predicate,
+                "predicate": predicate_str,
+                "predicate_type": predicate.operator,
                 "scoring_result": trace
             }
         )
         
-        return next_items, trace, traversal_step
+        return next_items, trace, traversal_step, scores_map
     
     def _apply_index_step(
         self,
@@ -375,7 +520,6 @@ class DenseXPathExecutor:
         nodes_before_idx = self._items_to_info(items)
         
         # Group items by parent_group_id for local indexing
-        from collections import defaultdict
         groups = defaultdict(list)
         for item in items:
             groups[item.parent_group_id].append(item)

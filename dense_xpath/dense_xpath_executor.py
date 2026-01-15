@@ -117,10 +117,15 @@ class DenseXPathExecutor:
         
         # Initialize components
         self.parser = QueryParser()
+        
+        # Extract recognized node types from schema for hierarchical child filtering
+        schema_node_types = set(self._schema.get("nodes", {}).keys())
+        
         self.predicate_handler = PredicateHandler(
             scorer=self.scorer,
             top_k=self.top_k,
-            score_threshold=self.score_threshold
+            score_threshold=self.score_threshold,
+            schema_node_types=schema_node_types
         )
         self.trace_writer = TraceWriter()
         
@@ -147,6 +152,33 @@ class DenseXPathExecutor:
         if self._root is None:
             _ = self.tree  # Trigger lazy load
         return self._root
+    
+    def _validate_predicate(
+        self,
+        predicate: CompoundPredicate,
+        node_type: str,
+        execution_log: List[str]
+    ) -> None:
+        """
+        Validate that predicate uses required quantifier syntax.
+        
+        All predicates MUST use all() or exists() wrapper. Naive predicates
+        like [description =~ "X"] are NOT allowed.
+        
+        Args:
+            predicate: The predicate to validate
+            node_type: The node type being filtered
+            execution_log: Log for recording validation
+            
+        Raises:
+            ValueError: If predicate is not wrapped in all() or exists()
+        """
+        if predicate.operator not in ("EXISTS", "ALL"):
+            raise ValueError(
+                f"Invalid predicate on '{node_type}': {predicate}. "
+                f"Predicates must use all() or exists() wrapper. "
+                f"Example: {node_type}[all({predicate})]"
+            )
     
     @property
     def root_type(self) -> str:
@@ -446,7 +478,7 @@ class DenseXPathExecutor:
     ) -> Tuple[List[NodeItem], dict, TraversalStep, Dict[int, float]]:
         """
         Apply semantic predicate filtering.
-        
+
         Returns:
             - filtered items (but no TopK/threshold - just the predicate)
             - scoring trace
@@ -455,10 +487,10 @@ class DenseXPathExecutor:
         """
         predicate_str = str(step.predicate) if step.predicate else step.predicate_str
         execution_log.append(f"Applying semantic predicate: {predicate_str}")
-        
+
         nodes_before_pred = self._items_to_info(items)
         nodes_only = [item.node for item in items]
-        
+
         # Use compound predicate if available, otherwise create from string
         if step.predicate:
             predicate = step.predicate
@@ -469,6 +501,9 @@ class DenseXPathExecutor:
                 conditions=[AtomicCondition(field="description", value=step.predicate_str)]
             )
         
+        # Validate predicate uses required quantifier syntax
+        self._validate_predicate(predicate, step.node_type, execution_log)
+
         # Apply predicate (no filtering - returns all nodes with scores)
         _, scores_map, trace = self.predicate_handler.apply_semantic_predicate(
             nodes_only, predicate, execution_log

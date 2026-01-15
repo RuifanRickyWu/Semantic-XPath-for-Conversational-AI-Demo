@@ -7,11 +7,12 @@ Your task:
 
 Tree hierarchy:
 Itinerary (root)
-├── Day
-│   ├── POI
-│   └── Restaurant
+├── Day (container)
+│   ├── POI (leaf)
+│   └── Restaurant (leaf)
 
-IMPORTANT: POI and Restaurant are SIBLINGS (same level under Day).
+IMPORTANT STRUCTURAL RULES:
+- POI and Restaurant are SIBLINGS (same level under Day).
 - You CANNOT have a path like /Day/POI/Restaurant - this is INVALID.
 - Each query can only target ONE leaf node type (either POI or Restaurant, not both).
 
@@ -22,51 +23,40 @@ Path rules:
 - You may use positional indexing on leaf nodes, e.g., POI[2], Restaurant[1].
 - You may use -1 to mean the last element, e.g., POI[-1].
 - You may use RANGE indexing with colon syntax: [start:end] (inclusive on both ends).
-  - POI[1:3] means POI 1, 2, and 3
-  - POI[2:4] means POI 2, 3, and 4
-  - Restaurant[1:2] means Restaurant 1 and 2
 - You may use "to end" RANGE indexing: [-N:] means "last N elements".
-  - POI[-2:] means the last 2 POIs
-  - Restaurant[-3:] means the last 3 Restaurants
-  - Day[-1:] means the last Day (same as Day[-1])
-- You may use parentheses for global indexing, e.g., (/Itinerary/Day/POI)[5] or (/Itinerary/Day/POI)[1:3] or (/Itinerary/Day/POI)[-2:].
+- You may use parentheses for global indexing, e.g., (/Itinerary/Day/POI)[5].
 - Do NOT put any free-text or semantic content in the path.
 
-Semantic predicate rules:
-- Semantic predicates are attached DIRECTLY to the node type (no / before the bracket).
-- Semantic matching uses square brackets: [ ... ].
-- Semantic matching uses the operator =~ .
-- Semantic predicates use the field name: description .
-- Semantic predicates apply to the node they are attached to.
-- Format: NodeType[description =~ "query"]
-- You CAN combine semantic predicate with positional index: NodeType[description =~ "query"][index]
-- You CAN combine semantic predicate with range index: NodeType[description =~ "query"][1:3]
+PREDICATE RULES (CRITICAL):
 
-Logical operators within predicates (same node):
-- Use AND for conjunction: [description =~ "A" AND description =~ "B"]
-  - The node must satisfy BOTH conditions
-  - Example: POI[description =~ "outdoor" AND description =~ "historic"]
-- Use OR for disjunction: [description =~ "A" OR description =~ "B"]
-  - The node must satisfy AT LEAST ONE condition
-  - Example: Restaurant[description =~ "italian" OR description =~ "french"]
-- You can combine multiple conditions: [description =~ "A" AND description =~ "B" OR description =~ "C"]
-- Parentheses can group conditions: [(description =~ "A" OR description =~ "B") AND description =~ "C"]
+ALL semantic predicates MUST use all() or exists() wrapper. NO direct predicates allowed.
 
-Hierarchical quantifiers (for internal nodes like Day):
-- Use exists() to check if ANY child (POI or Restaurant) satisfies a predicate:
-  - Day[exists(description =~ "museum")] - Days that have at least one child about museums
-  - Day[exists(description =~ "italian")] - Days with at least one Italian-related child
-- Use all() to check prevalence/overall characteristic across ALL children:
-  - Day[all(description =~ "outdoor")] - Days where children are generally outdoor-focused
-  - Day[all(description =~ "local")] - Days characterized by local experiences
-- exists() returns high score if ANY child matches (existential quantifier ∃)
-- all() returns score based on proportion of children matching (universal quantifier ∀)
-- These operators apply to ALL children regardless of type (POI and Restaurant together)
+1. ALL NODES - MUST use all() or exists():
+   - all(): POI[all(description =~ "museum")] - general matching
+   - exists(): POI[exists(description =~ "museum")] - same for leaf nodes
+   
+   For LEAF nodes (POI, Restaurant): all() and exists() are semantically equivalent.
+   For CONTAINER nodes (Day): 
+   - exists() = "at least one child matches"
+   - all() = "children generally match"
 
-IMPORTANT: When user asks for "Nth [semantic type]", you MUST include BOTH the semantic predicate AND the index.
-- "second museum" = POI[description =~ "museum"][2] (NOT just POI[2])
-- "first Italian restaurant" = Restaurant[description =~ "italian"][1]
-- "first 3 museums" = POI[description =~ "museum"][1:3]
+2. INSIDE all()/exists(), you can use AND/OR:
+   - POI[all(description =~ "outdoor" AND description =~ "free")]
+   - Day[exists(description =~ "museum" OR description =~ "gallery")]
+
+NEVER USE DIRECT PREDICATES:
+❌ POI[description =~ "museum"]           - INVALID
+✓ POI[all(description =~ "museum")]       - VALID
+✓ POI[exists(description =~ "museum")]    - VALID
+
+CHOOSING BETWEEN exists() AND all():
+- For LEAF nodes: both are equivalent, prefer all()
+- For CONTAINER nodes:
+  - exists() = "Does any child match?" → "days with a museum"
+  - all() = "Are children generally like this?" → "cultural days"
+
+IMPORTANT: When user asks for "Nth [semantic type]", include BOTH predicate AND index.
+- "second museum" = POI[all(description =~ "museum")][2]
 
 Output format:
 - The output MUST be a single XPath-like query string.
@@ -77,9 +67,17 @@ User: second POI in every day
 Output:
 /Itinerary/Day/POI[2]
 
-User: second artistic day
+User: artistic days
 Output:
-(/Itinerary/Day[description =~ "artistic"])[2]
+/Itinerary/Day[all(description =~ "artistic")]
+
+User: cultural days
+Output:
+/Itinerary/Day[all(description =~ "cultural")]
+
+User: relaxing days
+Output:
+/Itinerary/Day[all(description =~ "relaxing")]
 
 User: the third POI
 Output:
@@ -87,7 +85,7 @@ Output:
 
 User: first Italian restaurant
 Output:
-(/Itinerary/Day/Restaurant[description =~ "italian"])[1]
+(/Itinerary/Day/Restaurant[all(description =~ "italian")])[1]
 
 User: POI in second day
 Output:
@@ -95,7 +93,7 @@ Output:
 
 User: last POI in relaxing day
 Output:
-/Itinerary/Day[description =~ "relaxing"]/POI[-1]
+/Itinerary/Day[all(description =~ "relaxing")]/POI[-1]
 
 User: globally 5th POI
 Output:
@@ -103,27 +101,27 @@ Output:
 
 User: all restaurants in a cultural day
 Output:
-/Itinerary/Day[description =~ "cultural"]/Restaurant
+/Itinerary/Day[all(description =~ "cultural")]/Restaurant
 
 User: second museum in an artistic day
 Output:
-/Itinerary/Day[description =~ "artistic"]/POI[description =~ "museum"][2]
+/Itinerary/Day[all(description =~ "artistic")]/POI[all(description =~ "museum")][2]
 
 User: first jazz venue on day 1
 Output:
-/Itinerary/Day[1]/POI[description =~ "jazz"][1]
+/Itinerary/Day[1]/POI[all(description =~ "jazz")][1]
 
 User: the third cheap restaurant
 Output:
-(/Itinerary/Day/Restaurant[description =~ "cheap"])[3]
+(/Itinerary/Day/Restaurant[all(description =~ "cheap")])[3]
 
 User: second museum
 Output:
-(/Itinerary/Day/POI[description =~ "museum"])[2]
+(/Itinerary/Day/POI[all(description =~ "museum")])[2]
 
 User: first 2 museums
 Output:
-(/Itinerary/Day/POI[description =~ "museum"])[1:2]
+(/Itinerary/Day/POI[all(description =~ "museum")])[1:2]
 
 User: top 3 POIs in day 1
 Output:
@@ -131,7 +129,7 @@ Output:
 
 User: first 2 Italian restaurants
 Output:
-(/Itinerary/Day/Restaurant[description =~ "italian"])[1:2]
+(/Itinerary/Day/Restaurant[all(description =~ "italian")])[1:2]
 
 User: POI 2 to 4 globally
 Output:
@@ -151,7 +149,7 @@ Output:
 
 User: the last 2 museums
 Output:
-(/Itinerary/Day/POI[description =~ "museum"])[-2:]
+(/Itinerary/Day/POI[all(description =~ "museum")])[-2:]
 
 User: last 2 POIs in every day
 Output:
@@ -163,23 +161,23 @@ Output:
 
 User: outdoor and historic POI
 Output:
-/Itinerary/Day/POI[description =~ "outdoor" AND description =~ "historic"]
+/Itinerary/Day/POI[all(description =~ "outdoor" AND description =~ "historic")]
 
 User: Italian or French restaurant
 Output:
-/Itinerary/Day/Restaurant[description =~ "italian" OR description =~ "french"]
+/Itinerary/Day/Restaurant[all(description =~ "italian" OR description =~ "french")]
 
 User: family-friendly and educational POI
 Output:
-/Itinerary/Day/POI[description =~ "family-friendly" AND description =~ "educational"]
+/Itinerary/Day/POI[all(description =~ "family-friendly" AND description =~ "educational")]
 
 User: cheap and quick restaurant
 Output:
-/Itinerary/Day/Restaurant[description =~ "cheap" AND description =~ "quick"]
+/Itinerary/Day/Restaurant[all(description =~ "cheap" AND description =~ "quick")]
 
 User: romantic or scenic POI
 Output:
-/Itinerary/Day/POI[description =~ "romantic" OR description =~ "scenic"]
+/Itinerary/Day/POI[all(description =~ "romantic" OR description =~ "scenic")]
 
 User: days that have a museum
 Output:
@@ -188,6 +186,10 @@ Output:
 User: days with at least one Italian place
 Output:
 /Itinerary/Day[exists(description =~ "italian")]
+
+User: days with any beach activity
+Output:
+/Itinerary/Day[exists(description =~ "beach")]
 
 User: days focused on outdoor activities
 Output:
@@ -211,14 +213,30 @@ Output:
 
 User: budget-friendly and vegetarian restaurant
 Output:
-/Itinerary/Day/Restaurant[description =~ "budget-friendly" AND description =~ "vegetarian"]
+/Itinerary/Day/Restaurant[all(description =~ "budget-friendly" AND description =~ "vegetarian")]
 
 User: historic or artistic POI in cultural days
 Output:
-/Itinerary/Day[description =~ "cultural"]/POI[description =~ "historic" OR description =~ "artistic"]
+/Itinerary/Day[all(description =~ "cultural")]/POI[all(description =~ "historic" OR description =~ "artistic")]
 
 User: days with any waterfront activity
 Output:
 /Itinerary/Day[exists(description =~ "waterfront")]
+
+User: days with outdoor and free activities
+Output:
+/Itinerary/Day[exists(description =~ "outdoor" AND description =~ "free")]
+
+User: busy days with lots of activities
+Output:
+/Itinerary/Day[all(description =~ "busy")]
+
+User: museums
+Output:
+/Itinerary/Day/POI[all(description =~ "museum")]
+
+User: Italian restaurants
+Output:
+/Itinerary/Day/Restaurant[all(description =~ "italian")]
 
 Now convert the following user request into a query.

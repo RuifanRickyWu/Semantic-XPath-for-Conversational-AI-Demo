@@ -154,27 +154,60 @@ LLM-VM/
 
 ### Semantic Predicates
 
+**ALL semantic predicates MUST use `all()` or `exists()` wrapper.**
+
 ```xpath
-/Itinerary/Day/POI[description =~ "museum"]
-/Itinerary/Day[description =~ "artistic"]/Restaurant
+/Itinerary/Day/POI[all(description =~ "museum")]
+/Itinerary/Day[all(description =~ "artistic")]/Restaurant
 ```
 
 ---
 
 ## Predicate Operators
 
-### Simple Predicate
+### Unified Predicate Syntax
 
-```xpath
-POI[description =~ "museum"]
+**ALL nodes (leaf and container) MUST use `all()` or `exists()` wrapper.**
+
+```
+Query Predicate Structure:
+├── ALL Nodes
+│   └── MUST use all() or exists()
+│       ├── all(inner_predicate)     ← Required wrapper
+│       └── exists(inner_predicate)  ← Required wrapper
+│           └── Inner predicate can use AND/OR
+
+VALID:
+✓ POI[all(description =~ "museum")]
+✓ POI[exists(description =~ "museum")]
+✓ Day[all(description =~ "cultural")]
+✓ Day[exists(description =~ "museum")]
+
+INVALID (will be rejected):
+✗ POI[description =~ "museum"]           ← No wrapper
+✗ Day[description =~ "cultural"]         ← No wrapper
 ```
 
-Scores the node's description against "museum" using the configured scorer.
+### Semantic Behavior by Node Type
+
+| Node Type | `all(pred)` | `exists(pred)` |
+|-----------|-------------|----------------|
+| **Leaf** | Score node itself: π(pred) | Score node itself: π(pred) |
+| **Container** | Beta-Bernoulli over children | Noisy-OR over children |
+
+For **leaf nodes**, `all()` and `exists()` are semantically equivalent.
+For **container nodes**, choose based on the question:
+- `exists()` = "Does any child match?" → "days with a museum"
+- `all()` = "Are children generally like this?" → "cultural days"
 
 ### AND (Conjunction)
 
 ```xpath
-POI[description =~ "outdoor" AND description =~ "historic"]
+# Inside all() wrapper
+POI[all(description =~ "outdoor" AND description =~ "historic")]
+
+# Inside exists() wrapper for containers
+Day[exists(description =~ "outdoor" AND description =~ "free")]
 ```
 
 **Scoring Formula** (Log-odds aggregation):
@@ -202,7 +235,11 @@ Final: sigmoid(3.0) = 0.953
 ### OR (Disjunction)
 
 ```xpath
-Restaurant[description =~ "italian" OR description =~ "french"]
+# Leaf node with OR inside wrapper
+Restaurant[all(description =~ "italian" OR description =~ "french")]
+
+# Container node with OR inside quantifier
+Day[all(description =~ "cultural" OR description =~ "historic")]
 ```
 
 **Scoring Formula** (Noisy-OR):
@@ -221,10 +258,10 @@ Node: "Authentic Italian trattoria"
 Noisy-OR: 1 - (1-0.92)(1-0.15) = 1 - 0.068 = 0.932
 ```
 
-### Combined Operators
+### Combined Operators (Inside Quantifiers)
 
 ```xpath
-POI[(description =~ "outdoor" OR description =~ "nature") AND description =~ "family"]
+Day[exists((description =~ "outdoor" OR description =~ "nature") AND description =~ "free")]
 ```
 
 Operators follow standard precedence: parentheses > AND > OR.
@@ -233,7 +270,7 @@ Operators follow standard precedence: parentheses > AND > OR.
 
 ## Hierarchical Quantifiers
 
-For **internal nodes** (non-leaf nodes like `Day`), predicates are evaluated over their children using explicit quantifiers.
+For **container nodes** (non-leaf nodes like `Day`, `Project`, `Course`), predicates **MUST** use explicit quantifiers. Direct predicates like `Day[description =~ "X"]` are not allowed.
 
 ### exists() - Existential Quantifier
 
@@ -323,7 +360,7 @@ When a query has **multiple predicate steps**, scores are combined using **Bayes
 
 Consider this query:
 ```xpath
-/Itinerary/Day[description =~ "cultural"]/POI[description =~ "museum"]
+/Itinerary/Day[all(description =~ "cultural")]/POI[all(description =~ "museum")]
 ```
 
 A POI's final relevance depends on:
@@ -347,7 +384,7 @@ Score(u, Q) = sigmoid(ℓ(u))
 ### Example
 
 ```xpath
-/Itinerary/Day[description =~ "cultural"]/POI[description =~ "historic"]
+/Itinerary/Day[all(description =~ "cultural")]/POI[all(description =~ "historic")]
 ```
 
 For "Art Gallery of Ontario" in Day 1:
@@ -572,24 +609,24 @@ executor = DenseXPathExecutor(
     score_threshold=0.3
 )
 
-# Simple semantic query
-result = executor.execute('/Itinerary/Day/POI[description =~ "museum"]')
+# Simple semantic query (note: all predicates MUST use all() or exists() wrapper)
+result = executor.execute('/Itinerary/Day/POI[all(description =~ "museum")]')
 for node in result.matched_nodes:
     print(f"- {node.tree_path}: {node.score:.3f}")
 
 # Compound predicate with AND
 result = executor.execute(
-    '/Itinerary/Day/POI[description =~ "outdoor" AND description =~ "historic"]'
+    '/Itinerary/Day/POI[all(description =~ "outdoor" AND description =~ "historic")]'
 )
 
-# Hierarchical quantifier
+# Hierarchical quantifier - find days that have museums
 result = executor.execute(
     '/Itinerary/Day[exists(description =~ "museum")]/POI'
 )
 
 # Multi-step with Bayesian fusion
 result = executor.execute(
-    '/Itinerary/Day[description =~ "cultural"]/POI[description =~ "art"]'
+    '/Itinerary/Day[all(description =~ "cultural")]/POI[all(description =~ "art")]'
 )
 ```
 
@@ -599,22 +636,22 @@ result = executor.execute(
 ```xpath
 /Itinerary/Day[exists(description =~ "museum")]
 /Itinerary/Day[all(description =~ "outdoor")]/POI
-/Itinerary/Day/POI[description =~ "historic" AND description =~ "free"]
-/Itinerary/Day/Restaurant[description =~ "italian" OR description =~ "french"]
+/Itinerary/Day/POI[all(description =~ "historic" AND description =~ "free")]
+/Itinerary/Day/Restaurant[all(description =~ "italian" OR description =~ "french")]
 ```
 
 **TodoList**:
 ```xpath
 /TodoList/Project[exists(description =~ "urgent")]/Task
 /TodoList/Project[all(description =~ "completed")]
-/TodoList/Project/Task[description =~ "backend" AND description =~ "critical"]
+/TodoList/Project/Task[all(description =~ "backend" AND description =~ "critical")]
 ```
 
 **Curriculum**:
 ```xpath
 /Curriculum/Course[exists(description =~ "machine learning")]/Concept
 /Curriculum/Course[all(description =~ "practical")]/Exercise
-/Curriculum/Course/Concept[description =~ "neural" AND description =~ "advanced"]
+/Curriculum/Course/Concept[all(description =~ "neural" AND description =~ "advanced")]
 ```
 
 ---
@@ -694,13 +731,15 @@ Edit `config.yaml`:
 
 ```yaml
 # Schema and data file selection
-active_schema: "itinerary"
-active_data: "travel_memory_3day"
+active_schema: "itinerary"  # Options: itinerary, todolist, curriculum, support, session_recommendation
+active_data: "travel_memory_3day"  # Data file defined in schema
 
 # OpenAI settings (for LLM scoring and query generation)
 openai:
-  api_key: "your-api-key"
+  api_key: "${OPENAI_API_KEY}"  # Set via environment variable or replace with your key
   model: "gpt-4o"
+  temperature: 0.7
+  max_tokens: 4096
 
 # XPath executor settings
 xpath_executor:
@@ -712,11 +751,13 @@ xpath_executor:
 entailment:
   model: "facebook/bart-large-mnli"
   hypothesis_template: "This is related to {predicate}."
+  # device: auto-detected (cuda > mps > cpu)
 
 # Cosine scorer settings
 cosine:
   model: "sentence-transformers/msmarco-distilbert-base-tas-b"
   predicate_template: "{predicate}"
+  # device: auto-detected (cuda > mps > cpu)
 ```
 
 ---
@@ -738,11 +779,11 @@ pip install -r requirements.txt
 
 ```
 openai>=1.0.0
-pyyaml
-torch
-transformers
-numpy
-sentence-transformers
+pyyaml>=6.0
+torch>=2.0.0
+transformers>=4.30.0
+numpy>=1.24.0
+pytest>=7.0.0  # for development
 ```
 
 ---
@@ -832,7 +873,20 @@ sentence-transformers
 
 ## Quick Reference
 
-### Predicate Operators
+### Unified Predicate Rule
+
+**ALL semantic predicates MUST use `all()` or `exists()` wrapper - no exceptions.**
+
+| Syntax | Status |
+|--------|--------|
+| `POI[all(description =~ "museum")]` | ✓ Valid |
+| `POI[exists(description =~ "museum")]` | ✓ Valid |
+| `Day[all(description =~ "cultural")]` | ✓ Valid |
+| `Day[exists(description =~ "museum")]` | ✓ Valid |
+| `POI[description =~ "museum"]` | ✗ INVALID |
+| `Day[description =~ "cultural"]` | ✗ INVALID |
+
+### Inner Predicate Operators (inside all/exists)
 
 | Operator | Syntax | Formula | Use Case |
 |----------|--------|---------|----------|
@@ -840,12 +894,20 @@ sentence-transformers
 | AND | `... AND ...` | sigmoid(Σ log-odds) | Must match all |
 | OR | `... OR ...` | 1 - ∏(1-π) | Match any one |
 
-### Hierarchical Quantifiers
+### Quantifier Behavior by Node Type
 
-| Quantifier | Syntax | Formula | Use Case |
-|------------|--------|---------|----------|
-| exists | `exists(pred)` | 1 - ∏(1-π_child) | Any child matches |
-| all | `all(pred)` | (α + Σπ)/(α+β+n) | Children generally match |
+| Node Type | `all(pred)` | `exists(pred)` |
+|-----------|-------------|----------------|
+| **Leaf** | Score node itself | Score node itself (equivalent) |
+| **Container** | Beta-Bernoulli: (α + Σπ)/(α+β+n) | Noisy-OR: 1 - ∏(1-π) |
+
+### Choosing exists() vs all()
+
+| Node Type | Question | Quantifier | Example |
+|-----------|----------|------------|---------|
+| Leaf | (equivalent) | prefer `all()` | `POI[all(description =~ "museum")]` |
+| Container | "Any child match?" | `exists()` | `Day[exists(description =~ "museum")]` |
+| Container | "Children generally?" | `all()` | `Day[all(description =~ "cultural")]` |
 
 ### Scoring Methods
 

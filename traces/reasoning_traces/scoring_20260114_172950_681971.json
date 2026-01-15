@@ -1,0 +1,105 @@
+{
+  "timestamp": "20260114_172950_681971",
+  "predicate": "architecture",
+  "nodes": [
+    {
+      "id": "6044493520_main",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery."
+    },
+    {
+      "id": "6044495120_main",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck."
+    },
+    {
+      "id": "6044529504_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building."
+    },
+    {
+      "id": "6044565888_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history."
+    },
+    {
+      "id": "6044568128_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views."
+    },
+    {
+      "id": "6044582192_main",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists."
+    },
+    {
+      "id": "6044584032_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens."
+    },
+    {
+      "id": "6044585792_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Historic pedestrian village with cobblestone streets and artisan shops."
+    }
+  ],
+  "raw_response": "[\n  {\"id\": \"6044493520_main\", \"score\": 0.0, \"reasoning\": \"No connection to architecture; focus is on food and market.\"},\n  {\"id\": \"6044495120_main\", \"score\": 0.8, \"reasoning\": \"Strong match as the CN Tower is an architectural landmark.\"},\n  {\"id\": \"6044529504_main\", \"score\": 0.9, \"reasoning\": \"Strong match due to the Frank Gehry-designed building, which is significant in architecture.\"},\n  {\"id\": \"6044565888_main\", \"score\": 0.4, \"reasoning\": \"Moderate match; while a museum, it may have architectural interest but is not the primary focus.\"},\n  {\"id\": \"6044568128_main\", \"score\": 0.9, \"reasoning\": \"Strong match as Casa Loma is a historic castle, significant for its architecture.\"},\n  {\"id\": \"6044582192_main\", \"score\": 0.0, \"reasoning\": \"No connection to architecture; focus is on music and performances.\"},\n  {\"id\": \"6044584032_main\", \"score\": 0.3, \"reasoning\": \"Weak match; while scenic, the focus is on natural features rather than architecture.\"},\n  {\"id\": \"6044585792_main\", \"score\": 0.7, \"reasoning\": \"Strong match due to the historic and architectural significance of the cobblestone streets and buildings.\"}\n]",
+  "results": [
+    {
+      "node_id": "6044493520_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to architecture; focus is on food and market."
+    },
+    {
+      "node_id": "6044495120_main",
+      "node_type": "POI",
+      "score": 0.8,
+      "reasoning": "Strong match as the CN Tower is an architectural landmark."
+    },
+    {
+      "node_id": "6044529504_main",
+      "node_type": "POI",
+      "score": 0.9,
+      "reasoning": "Strong match due to the Frank Gehry-designed building, which is significant in architecture."
+    },
+    {
+      "node_id": "6044565888_main",
+      "node_type": "POI",
+      "score": 0.4,
+      "reasoning": "Moderate match; while a museum, it may have architectural interest but is not the primary focus."
+    },
+    {
+      "node_id": "6044568128_main",
+      "node_type": "POI",
+      "score": 0.9,
+      "reasoning": "Strong match as Casa Loma is a historic castle, significant for its architecture."
+    },
+    {
+      "node_id": "6044582192_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to architecture; focus is on music and performances."
+    },
+    {
+      "node_id": "6044584032_main",
+      "node_type": "POI",
+      "score": 0.3,
+      "reasoning": "Weak match; while scenic, the focus is on natural features rather than architecture."
+    },
+    {
+      "node_id": "6044585792_main",
+      "node_type": "POI",
+      "score": 0.7,
+      "reasoning": "Strong match due to the historic and architectural significance of the cobblestone streets and buildings."
+    }
+  ]
+}

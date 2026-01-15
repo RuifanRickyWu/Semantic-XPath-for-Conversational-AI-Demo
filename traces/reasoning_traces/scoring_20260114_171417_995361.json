@@ -1,0 +1,105 @@
+{
+  "timestamp": "20260114_171417_995361",
+  "predicate": "historic",
+  "nodes": [
+    {
+      "id": "4987605936_main",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery."
+    },
+    {
+      "id": "4987606896_main",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck."
+    },
+    {
+      "id": "4987648656_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building."
+    },
+    {
+      "id": "4987691632_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history."
+    },
+    {
+      "id": "4987693872_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views."
+    },
+    {
+      "id": "4987712032_main",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists."
+    },
+    {
+      "id": "4987713872_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens."
+    },
+    {
+      "id": "4987728016_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Historic pedestrian village with cobblestone streets and artisan shops."
+    }
+  ],
+  "raw_response": "```json\n[\n  {\"id\": \"4987605936_main\", \"score\": 0.2, \"reasoning\": \"Weak connection; the market is iconic but not explicitly historic.\"},\n  {\"id\": \"4987606896_main\", \"score\": 0.1, \"reasoning\": \"No historic relevance; focus is on modern architecture and views.\"},\n  {\"id\": \"4987648656_main\", \"score\": 0.0, \"reasoning\": \"No connection to history; focus is on art and architecture.\"},\n  {\"id\": \"4987691632_main\", \"score\": 0.0, \"reasoning\": \"No connection to history; focus is on art, culture, and natural history.\"},\n  {\"id\": \"4987693872_main\", \"score\": 1.0, \"reasoning\": \"Perfect match; explicitly described as a historic castle.\"},\n  {\"id\": \"4987712032_main\", \"score\": 0.0, \"reasoning\": \"No connection to history; focus is on live music.\"},\n  {\"id\": \"4987713872_main\", \"score\": 0.1, \"reasoning\": \"No historic relevance; focus is on natural scenery and recreation.\"},\n  {\"id\": \"4987728016_main\", \"score\": 0.9, \"reasoning\": \"Strong match; described as a historic pedestrian village.\"}\n]\n```",
+  "results": [
+    {
+      "node_id": "4987605936_main",
+      "node_type": "POI",
+      "score": 0.2,
+      "reasoning": "Weak connection; the market is iconic but not explicitly historic."
+    },
+    {
+      "node_id": "4987606896_main",
+      "node_type": "POI",
+      "score": 0.1,
+      "reasoning": "No historic relevance; focus is on modern architecture and views."
+    },
+    {
+      "node_id": "4987648656_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to history; focus is on art and architecture."
+    },
+    {
+      "node_id": "4987691632_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to history; focus is on art, culture, and natural history."
+    },
+    {
+      "node_id": "4987693872_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Perfect match; explicitly described as a historic castle."
+    },
+    {
+      "node_id": "4987712032_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to history; focus is on live music."
+    },
+    {
+      "node_id": "4987713872_main",
+      "node_type": "POI",
+      "score": 0.1,
+      "reasoning": "No historic relevance; focus is on natural scenery and recreation."
+    },
+    {
+      "node_id": "4987728016_main",
+      "node_type": "POI",
+      "score": 0.9,
+      "reasoning": "Strong match; described as a historic pedestrian village."
+    }
+  ]
+}

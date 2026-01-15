@@ -1,0 +1,1454 @@
+{
+  "timestamp": "20260115_140522_199608",
+  "query": "/Itinerary/Day/POI[exists(description =~ \"outdoor\")]",
+  "data_file": "travel_memory_3day.xml",
+  "execution_time_ms": 141.42337499999869,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[exists(description =~ \"outdoor\")]",
+      "action": "type_match",
+      "nodes_before_count": 3,
+      "nodes_after_count": 8,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands",
+          "name": "Toronto Islands",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "POI",
+        "found_count": 8
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[exists(description =~ \"outdoor\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 8,
+      "nodes_after_count": 8,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands",
+          "name": "Toronto Islands",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 0.9112376570701599
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 0.8615187406539917
+        },
+        {
+          "path": "Itinerary > Day 1 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 0.05560445412993431
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.5293493270874023
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 0.9813520312309265
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 0.9705943465232849
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands",
+          "name": "Toronto Islands",
+          "type": "POI",
+          "score": 0.9981764554977417
+        },
+        {
+          "path": "Itinerary > Day 3 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 0.9637036919593811
+        }
+      ],
+      "details": {
+        "predicate": "exists(description =~ \"outdoor\")",
+        "predicate_type": "EXISTS",
+        "scoring_result": {
+          "predicate": "exists(description =~ \"outdoor\")",
+          "predicate_ast": {
+            "operator": "EXISTS",
+            "child_predicate": {
+              "operator": "ATOMIC",
+              "conditions": [
+                {
+                  "field": "description",
+                  "value": "outdoor"
+                }
+              ]
+            }
+          },
+          "config": {
+            "top_k": 3,
+            "score_threshold": 0.01
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "St. Lawrence Market",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "exists_quantifier",
+                  "operator": "EXISTS",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "outdoor"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.9112376570701599
+                      ],
+                      "score": 0.9112376570701599,
+                      "cached": true
+                    }
+                  ],
+                  "result": 0.9112376570701599
+                }
+              ],
+              "final_score": 0.9112376570701599
+            },
+            {
+              "node_idx": 1,
+              "node_name": "CN Tower",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "exists_quantifier",
+                  "operator": "EXISTS",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "outdoor"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.8615187406539917
+                      ],
+                      "score": 0.8615187406539917,
+                      "cached": true
+                    }
+                  ],
+                  "result": 0.8615187406539917
+                }
+              ],
+              "final_score": 0.8615187406539917
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Art Gallery of Ontario",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "exists_quantifier",
+                  "operator": "EXISTS",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "outdoor"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.05560445412993431
+                      ],
+                      "score": 0.05560445412993431,
+                      "cached": true
+                    }
+                  ],
+                  "result": 0.05560445412993431
+                }
+              ],
+              "final_score": 0.05560445412993431
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Royal Ontario Museum",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "exists_quantifier",
+                  "operator": "EXISTS",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "outdoor"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.5293493270874023
+                      ],
+                      "score": 0.5293493270874023,
+                      "cached": true
+                    }
+                  ],
+                  "result": 0.5293493270874023
+                }
+              ],
+              "final_score": 0.5293493270874023
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Casa Loma",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "exists_quantifier",
+                  "operator": "EXISTS",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "outdoor"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.9813520312309265
+                      ],
+                      "score": 0.9813520312309265,
+                      "cached": true
+                    }
+                  ],
+                  "result": 0.9813520312309265
+                }
+              ],
+              "final_score": 0.9813520312309265
+            },
+            {
+              "node_idx": 5,
+              "node_name": "Rivoli",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "exists_quantifier",
+                  "operator": "EXISTS",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "outdoor"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.9705943465232849
+                      ],
+                      "score": 0.9705943465232849,
+                      "cached": true
+                    }
+                  ],
+                  "result": 0.9705943465232849
+                }
+              ],
+              "final_score": 0.9705943465232849
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Toronto Islands",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "exists_quantifier",
+                  "operator": "EXISTS",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "outdoor"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.9981764554977417
+                      ],
+                      "score": 0.9981764554977417,
+                      "cached": true
+                    }
+                  ],
+                  "result": 0.9981764554977417
+                }
+              ],
+              "final_score": 0.9981764554977417
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Distillery District",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "exists_quantifier",
+                  "operator": "EXISTS",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "outdoor"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.9637036919593811
+                      ],
+                      "score": 0.9637036919593811,
+                      "cached": true
+                    }
+                  ],
+                  "result": 0.9637036919593811
+                }
+              ],
+              "final_score": 0.9637036919593811
+            }
+          ],
+          "batch_scoring": {
+            "predicate_values": [
+              "outdoor"
+            ],
+            "per_predicate_stats": [
+              {
+                "value": "outdoor",
+                "num_descriptions": 8,
+                "num_nodes": 8,
+                "call_time_ms": 141.02
+              }
+            ],
+            "total_scorer_calls": 1,
+            "total_descriptions_scored": 8
+          },
+          "ranking": [
+            {
+              "idx": 6,
+              "score": 0.9981764554977417,
+              "name": "Toronto Islands"
+            },
+            {
+              "idx": 4,
+              "score": 0.9813520312309265,
+              "name": "Casa Loma"
+            },
+            {
+              "idx": 5,
+              "score": 0.9705943465232849,
+              "name": "Rivoli"
+            },
+            {
+              "idx": 7,
+              "score": 0.9637036919593811,
+              "name": "Distillery District"
+            },
+            {
+              "idx": 0,
+              "score": 0.9112376570701599,
+              "name": "St. Lawrence Market"
+            },
+            {
+              "idx": 1,
+              "score": 0.8615187406539917,
+              "name": "CN Tower"
+            },
+            {
+              "idx": 3,
+              "score": 0.5293493270874023,
+              "name": "Royal Ontario Museum"
+            },
+            {
+              "idx": 2,
+              "score": 0.05560445412993431,
+              "name": "Art Gallery of Ontario"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "exists(description =~ \"outdoor\")",
+      "predicate_ast": {
+        "operator": "EXISTS",
+        "child_predicate": {
+          "operator": "ATOMIC",
+          "conditions": [
+            {
+              "field": "description",
+              "value": "outdoor"
+            }
+          ]
+        }
+      },
+      "config": {
+        "top_k": 3,
+        "score_threshold": 0.01
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "St. Lawrence Market",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "exists_quantifier",
+              "operator": "EXISTS",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "atomic",
+                  "condition": {
+                    "field": "description",
+                    "value": "outdoor"
+                  },
+                  "num_descriptions_scored": 1,
+                  "individual_scores": [
+                    0.9112376570701599
+                  ],
+                  "score": 0.9112376570701599,
+                  "cached": true
+                }
+              ],
+              "result": 0.9112376570701599
+            }
+          ],
+          "final_score": 0.9112376570701599
+        },
+        {
+          "node_idx": 1,
+          "node_name": "CN Tower",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "exists_quantifier",
+              "operator": "EXISTS",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "atomic",
+                  "condition": {
+                    "field": "description",
+                    "value": "outdoor"
+                  },
+                  "num_descriptions_scored": 1,
+                  "individual_scores": [
+                    0.8615187406539917
+                  ],
+                  "score": 0.8615187406539917,
+                  "cached": true
+                }
+              ],
+              "result": 0.8615187406539917
+            }
+          ],
+          "final_score": 0.8615187406539917
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Art Gallery of Ontario",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "exists_quantifier",
+              "operator": "EXISTS",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "atomic",
+                  "condition": {
+                    "field": "description",
+                    "value": "outdoor"
+                  },
+                  "num_descriptions_scored": 1,
+                  "individual_scores": [
+                    0.05560445412993431
+                  ],
+                  "score": 0.05560445412993431,
+                  "cached": true
+                }
+              ],
+              "result": 0.05560445412993431
+            }
+          ],
+          "final_score": 0.05560445412993431
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Royal Ontario Museum",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "exists_quantifier",
+              "operator": "EXISTS",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "atomic",
+                  "condition": {
+                    "field": "description",
+                    "value": "outdoor"
+                  },
+                  "num_descriptions_scored": 1,
+                  "individual_scores": [
+                    0.5293493270874023
+                  ],
+                  "score": 0.5293493270874023,
+                  "cached": true
+                }
+              ],
+              "result": 0.5293493270874023
+            }
+          ],
+          "final_score": 0.5293493270874023
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Casa Loma",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "exists_quantifier",
+              "operator": "EXISTS",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "atomic",
+                  "condition": {
+                    "field": "description",
+                    "value": "outdoor"
+                  },
+                  "num_descriptions_scored": 1,
+                  "individual_scores": [
+                    0.9813520312309265
+                  ],
+                  "score": 0.9813520312309265,
+                  "cached": true
+                }
+              ],
+              "result": 0.9813520312309265
+            }
+          ],
+          "final_score": 0.9813520312309265
+        },
+        {
+          "node_idx": 5,
+          "node_name": "Rivoli",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "exists_quantifier",
+              "operator": "EXISTS",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "atomic",
+                  "condition": {
+                    "field": "description",
+                    "value": "outdoor"
+                  },
+                  "num_descriptions_scored": 1,
+                  "individual_scores": [
+                    0.9705943465232849
+                  ],
+                  "score": 0.9705943465232849,
+                  "cached": true
+                }
+              ],
+              "result": 0.9705943465232849
+            }
+          ],
+          "final_score": 0.9705943465232849
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Toronto Islands",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "exists_quantifier",
+              "operator": "EXISTS",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "atomic",
+                  "condition": {
+                    "field": "description",
+                    "value": "outdoor"
+                  },
+                  "num_descriptions_scored": 1,
+                  "individual_scores": [
+                    0.9981764554977417
+                  ],
+                  "score": 0.9981764554977417,
+                  "cached": true
+                }
+              ],
+              "result": 0.9981764554977417
+            }
+          ],
+          "final_score": 0.9981764554977417
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Distillery District",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "exists_quantifier",
+              "operator": "EXISTS",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "atomic",
+                  "condition": {
+                    "field": "description",
+                    "value": "outdoor"
+                  },
+                  "num_descriptions_scored": 1,
+                  "individual_scores": [
+                    0.9637036919593811
+                  ],
+                  "score": 0.9637036919593811,
+                  "cached": true
+                }
+              ],
+              "result": 0.9637036919593811
+            }
+          ],
+          "final_score": 0.9637036919593811
+        }
+      ],
+      "batch_scoring": {
+        "predicate_values": [
+          "outdoor"
+        ],
+        "per_predicate_stats": [
+          {
+            "value": "outdoor",
+            "num_descriptions": 8,
+            "num_nodes": 8,
+            "call_time_ms": 141.02
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 8
+      },
+      "ranking": [
+        {
+          "idx": 6,
+          "score": 0.9981764554977417,
+          "name": "Toronto Islands"
+        },
+        {
+          "idx": 4,
+          "score": 0.9813520312309265,
+          "name": "Casa Loma"
+        },
+        {
+          "idx": 5,
+          "score": 0.9705943465232849,
+          "name": "Rivoli"
+        },
+        {
+          "idx": 7,
+          "score": 0.9637036919593811,
+          "name": "Distillery District"
+        },
+        {
+          "idx": 0,
+          "score": 0.9112376570701599,
+          "name": "St. Lawrence Market"
+        },
+        {
+          "idx": 1,
+          "score": 0.8615187406539917,
+          "name": "CN Tower"
+        },
+        {
+          "idx": 3,
+          "score": 0.5293493270874023,
+          "name": "Royal Ontario Museum"
+        },
+        {
+          "idx": 2,
+          "score": 0.05560445412993431,
+          "name": "Art Gallery of Ontario"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "exists(description =~ \"outdoor\")",
+        "predicate_ast": {
+          "operator": "EXISTS",
+          "child_predicate": {
+            "operator": "ATOMIC",
+            "conditions": [
+              {
+                "field": "description",
+                "value": "outdoor"
+              }
+            ]
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "St. Lawrence Market",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "exists_quantifier",
+                "operator": "EXISTS",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "outdoor"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.9112376570701599
+                    ],
+                    "score": 0.9112376570701599,
+                    "cached": true
+                  }
+                ],
+                "result": 0.9112376570701599
+              }
+            ],
+            "final_score": 0.9112376570701599
+          },
+          {
+            "node_idx": 1,
+            "node_name": "CN Tower",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "exists_quantifier",
+                "operator": "EXISTS",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "outdoor"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.8615187406539917
+                    ],
+                    "score": 0.8615187406539917,
+                    "cached": true
+                  }
+                ],
+                "result": 0.8615187406539917
+              }
+            ],
+            "final_score": 0.8615187406539917
+          },
+          {
+            "node_idx": 2,
+            "node_name": "Art Gallery of Ontario",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "exists_quantifier",
+                "operator": "EXISTS",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "outdoor"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.05560445412993431
+                    ],
+                    "score": 0.05560445412993431,
+                    "cached": true
+                  }
+                ],
+                "result": 0.05560445412993431
+              }
+            ],
+            "final_score": 0.05560445412993431
+          },
+          {
+            "node_idx": 3,
+            "node_name": "Royal Ontario Museum",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "exists_quantifier",
+                "operator": "EXISTS",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "outdoor"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.5293493270874023
+                    ],
+                    "score": 0.5293493270874023,
+                    "cached": true
+                  }
+                ],
+                "result": 0.5293493270874023
+              }
+            ],
+            "final_score": 0.5293493270874023
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Casa Loma",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "exists_quantifier",
+                "operator": "EXISTS",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "outdoor"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.9813520312309265
+                    ],
+                    "score": 0.9813520312309265,
+                    "cached": true
+                  }
+                ],
+                "result": 0.9813520312309265
+              }
+            ],
+            "final_score": 0.9813520312309265
+          },
+          {
+            "node_idx": 5,
+            "node_name": "Rivoli",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "exists_quantifier",
+                "operator": "EXISTS",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "outdoor"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.9705943465232849
+                    ],
+                    "score": 0.9705943465232849,
+                    "cached": true
+                  }
+                ],
+                "result": 0.9705943465232849
+              }
+            ],
+            "final_score": 0.9705943465232849
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Toronto Islands",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "exists_quantifier",
+                "operator": "EXISTS",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "outdoor"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.9981764554977417
+                    ],
+                    "score": 0.9981764554977417,
+                    "cached": true
+                  }
+                ],
+                "result": 0.9981764554977417
+              }
+            ],
+            "final_score": 0.9981764554977417
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Distillery District",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "exists_quantifier",
+                "operator": "EXISTS",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "outdoor"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.9637036919593811
+                    ],
+                    "score": 0.9637036919593811,
+                    "cached": true
+                  }
+                ],
+                "result": 0.9637036919593811
+              }
+            ],
+            "final_score": 0.9637036919593811
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 6,
+            "score": 0.9981764554977417,
+            "name": "Toronto Islands"
+          },
+          {
+            "idx": 4,
+            "score": 0.9813520312309265,
+            "name": "Casa Loma"
+          },
+          {
+            "idx": 5,
+            "score": 0.9705943465232849,
+            "name": "Rivoli"
+          },
+          {
+            "idx": 7,
+            "score": 0.9637036919593811,
+            "name": "Distillery District"
+          },
+          {
+            "idx": 0,
+            "score": 0.9112376570701599,
+            "name": "St. Lawrence Market"
+          },
+          {
+            "idx": 1,
+            "score": 0.8615187406539917,
+            "name": "CN Tower"
+          },
+          {
+            "idx": 3,
+            "score": 0.5293493270874023,
+            "name": "Royal Ontario Museum"
+          },
+          {
+            "idx": 2,
+            "score": 0.05560445412993431,
+            "name": "Art Gallery of Ontario"
+          }
+        ]
+      }
+    ],
+    "bayesian_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Day 1 > St. Lawrence Market",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "exists(description =~ \"outdoor\")",
+              "score": 0.9112376570701599,
+              "log_odds": 2.3288412442265494
+            }
+          ],
+          "accumulated_log_odds": 2.3288412442265494,
+          "final_score": 0.9112376570701598
+        },
+        {
+          "node_path": "Itinerary > Day 1 > CN Tower",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "exists(description =~ \"outdoor\")",
+              "score": 0.8615187406539917,
+              "log_odds": 1.827961804356543
+            }
+          ],
+          "accumulated_log_odds": 1.827961804356543,
+          "final_score": 0.8615187406539917
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Art Gallery of Ontario",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "exists(description =~ \"outdoor\")",
+              "score": 0.05560445412993431,
+              "log_odds": -2.832281780542213
+            }
+          ],
+          "accumulated_log_odds": -2.832281780542213,
+          "final_score": 0.0556044541299343
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "exists(description =~ \"outdoor\")",
+              "score": 0.5293493270874023,
+              "log_odds": 0.1175324198393223
+            }
+          ],
+          "accumulated_log_odds": 0.1175324198393223,
+          "final_score": 0.5293493270874023
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Casa Loma",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "exists(description =~ \"outdoor\")",
+              "score": 0.9813520312309265,
+              "log_odds": 3.963194017591319
+            }
+          ],
+          "accumulated_log_odds": 3.963194017591319,
+          "final_score": 0.9813520312309265
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Rivoli",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "exists(description =~ \"outdoor\")",
+              "score": 0.9705943465232849,
+              "log_odds": 3.496721661245902
+            }
+          ],
+          "accumulated_log_odds": 3.496721661245902,
+          "final_score": 0.970594346523285
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Toronto Islands",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "exists(description =~ \"outdoor\")",
+              "score": 0.9981764554977417,
+              "log_odds": 6.305147933971887
+            }
+          ],
+          "accumulated_log_odds": 6.305147933971887,
+          "final_score": 0.9981764554977417
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Distillery District",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "exists(description =~ \"outdoor\")",
+              "score": 0.9637036919593811,
+              "log_odds": 3.2790678446472064
+            }
+          ],
+          "accumulated_log_odds": 3.2790678446472064,
+          "final_score": 0.9637036919593811
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 8,
+    "threshold": 0.01,
+    "top_k": 3,
+    "after_filter_count": 3,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Day 3 > Toronto Islands",
+        "score": 0.9981764554977417,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 2 > Casa Loma",
+        "score": 0.9813520312309265,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 2 > Rivoli",
+        "score": 0.970594346523285,
+        "type": "POI"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Day 3 > Toronto Islands",
+      "score": 0.9981764554977417,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Toronto Islands",
+        "time_block": "11:00 AM - 2:00 PM",
+        "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+        "travel_method": "Walk & Ferry",
+        "expected_cost": "CAD 8.50",
+        "highlights": [
+          "Waterfront views",
+          "Centre Island"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Casa Loma",
+      "score": 0.9813520312309265,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Casa Loma",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 30",
+        "highlights": [
+          "Castle architecture",
+          "City viewpoints"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Rivoli",
+      "score": 0.970594346523285,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Rivoli",
+        "time_block": "8:00 PM - 10:00 PM",
+        "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-20",
+        "highlights": [
+          "Historic venue",
+          "Diverse genres"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 1,
+    "matched_count": 3,
+    "execution_time_ms": 141.42337499999869,
+    "has_bayesian_fusion": true,
+    "num_nodes_before_filter": 8,
+    "num_nodes_after_filter": 3
+  }
+}

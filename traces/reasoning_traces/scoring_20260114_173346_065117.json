@@ -1,0 +1,225 @@
+{
+  "timestamp": "20260114_173346_065117",
+  "predicate": "museum",
+  "nodes": [
+    {
+      "id": "4928812992_main",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery."
+    },
+    {
+      "id": "4928679024_main",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck."
+    },
+    {
+      "id": "4928676864_main",
+      "type": "Restaurant",
+      "name": "Queen Street Warehouse",
+      "description": "Budget-friendly comfort food in a lively setting with a diverse menu."
+    },
+    {
+      "id": "4928678064_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building."
+    },
+    {
+      "id": "4928677824_main",
+      "type": "Restaurant",
+      "name": "Buca Yorkville",
+      "description": "Upscale Italian dining featuring traditional dishes with a modern twist."
+    },
+    {
+      "id": "4928680480_main",
+      "type": "Restaurant",
+      "name": "The Rex Hotel Jazz & Blues Bar",
+      "description": "Live jazz performances in a cozy, iconic Toronto venue."
+    },
+    {
+      "id": "4928680240_main",
+      "type": "Restaurant",
+      "name": "Pow Wow Cafe",
+      "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market."
+    },
+    {
+      "id": "4928682560_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history."
+    },
+    {
+      "id": "4928683760_main",
+      "type": "Restaurant",
+      "name": "Annona Restaurant",
+      "description": "Sophisticated international cuisine in a bright, modern setting."
+    },
+    {
+      "id": "4928815808_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views."
+    },
+    {
+      "id": "4928816688_main",
+      "type": "Restaurant",
+      "name": "DaiLo",
+      "description": "Modern Asian-Canadian fusion cuisine with creative flavors."
+    },
+    {
+      "id": "4928817488_main",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists."
+    },
+    {
+      "id": "4928818368_main",
+      "type": "Restaurant",
+      "name": "Beauty Barbecue & Smokehouse",
+      "description": "Hearty breakfast featuring smoked meats and classic comfort food."
+    },
+    {
+      "id": "4928737504_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens."
+    },
+    {
+      "id": "4928738384_main",
+      "type": "Restaurant",
+      "name": "Amsterdam BrewHouse",
+      "description": "Lakeside pub offering local craft beers and hearty meals."
+    },
+    {
+      "id": "4928739264_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Historic pedestrian village with cobblestone streets and artisan shops."
+    },
+    {
+      "id": "4928740304_main",
+      "type": "Restaurant",
+      "name": "Cluny Bistro",
+      "description": "French-inspired bistro serving classic and modern dishes."
+    },
+    {
+      "id": "4928741104_main",
+      "type": "Restaurant",
+      "name": "Jazz Bistro",
+      "description": "Renowned jazz club with intimate setting and excellent acoustics."
+    }
+  ],
+  "raw_response": "```json\n[\n  {\"id\": \"4928812992_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a market.\"},\n  {\"id\": \"4928679024_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a tower.\"},\n  {\"id\": \"4928676864_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a restaurant.\"},\n  {\"id\": \"4928678064_main\", \"score\": 0.4, \"reasoning\": \"Moderate match as it is an art gallery, which is similar to a museum.\"},\n  {\"id\": \"4928677824_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a restaurant.\"},\n  {\"id\": \"4928680480_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a music venue.\"},\n  {\"id\": \"4928680240_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a restaurant.\"},\n  {\"id\": \"4928682560_main\", \"score\": 1.0, \"reasoning\": \"Perfect match as it is explicitly a museum.\"},\n  {\"id\": \"4928683760_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a restaurant.\"},\n  {\"id\": \"4928815808_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a historic castle.\"},\n  {\"id\": \"4928816688_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a restaurant.\"},\n  {\"id\": \"4928817488_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a music venue.\"},\n  {\"id\": \"4928818368_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a restaurant.\"},\n  {\"id\": \"4928737504_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a recreational area.\"},\n  {\"id\": \"4928738384_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a restaurant.\"},\n  {\"id\": \"4928739264_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a historic district.\"},\n  {\"id\": \"4928740304_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a restaurant.\"},\n  {\"id\": \"4928741104_main\", \"score\": 0.0, \"reasoning\": \"No connection to museums; it's a music venue.\"}\n]\n```",
+  "results": [
+    {
+      "node_id": "4928812992_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a market."
+    },
+    {
+      "node_id": "4928679024_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a tower."
+    },
+    {
+      "node_id": "4928676864_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a restaurant."
+    },
+    {
+      "node_id": "4928678064_main",
+      "node_type": "POI",
+      "score": 0.4,
+      "reasoning": "Moderate match as it is an art gallery, which is similar to a museum."
+    },
+    {
+      "node_id": "4928677824_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a restaurant."
+    },
+    {
+      "node_id": "4928680480_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a music venue."
+    },
+    {
+      "node_id": "4928680240_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a restaurant."
+    },
+    {
+      "node_id": "4928682560_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Perfect match as it is explicitly a museum."
+    },
+    {
+      "node_id": "4928683760_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a restaurant."
+    },
+    {
+      "node_id": "4928815808_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a historic castle."
+    },
+    {
+      "node_id": "4928816688_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a restaurant."
+    },
+    {
+      "node_id": "4928817488_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a music venue."
+    },
+    {
+      "node_id": "4928818368_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a restaurant."
+    },
+    {
+      "node_id": "4928737504_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a recreational area."
+    },
+    {
+      "node_id": "4928738384_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a restaurant."
+    },
+    {
+      "node_id": "4928739264_main",
+      "node_type": "POI",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a historic district."
+    },
+    {
+      "node_id": "4928740304_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a restaurant."
+    },
+    {
+      "node_id": "4928741104_main",
+      "node_type": "Restaurant",
+      "score": 0.0,
+      "reasoning": "No connection to museums; it's a music venue."
+    }
+  ]
+}

@@ -189,14 +189,13 @@ class QueryParser:
                     child_type=None  # No specific child type - applies to all children
                 )
                 predicate_str = bracket_content
-            # Check if it's a compound predicate (AND/OR)
-            elif ' AND ' in bracket_content or ' OR ' in bracket_content:
-                predicate = self._parse_predicate(bracket_content)
-                predicate_str = bracket_content
-            # Check if it's a simple semantic predicate
+            # Check if it's a semantic predicate (=~) without quantifier wrapper - REJECT
             elif '=~' in bracket_content:
-                predicate = self._parse_predicate(bracket_content)
-                predicate_str = bracket_content
+                raise ValueError(
+                    f"Invalid predicate syntax: [{bracket_content}]. "
+                    f"Predicates must be wrapped in all() or exists(). "
+                    f"Example: [all({bracket_content})] or [exists({bracket_content})]"
+                )
             else:
                 # Try to parse as index or range
                 parsed_index = self._parse_index(bracket_content)
@@ -239,12 +238,13 @@ class QueryParser:
         """
         Parse a predicate string into a CompoundPredicate AST.
         
+        This is used for parsing the INNER content of all()/exists() wrappers.
+        
         Handles:
         - Simple: description =~ "value"
         - AND: description =~ "A" AND description =~ "B"
         - OR: description =~ "A" OR description =~ "B"
-        - exists: exists(description =~ "value") - at least one child matches
-        - all: all(description =~ "value") - children generally match
+        - Nested exists/all (recursive)
         """
         predicate_str = predicate_str.strip()
         

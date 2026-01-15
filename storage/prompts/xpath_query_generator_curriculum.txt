@@ -7,11 +7,12 @@ Your task:
 
 Tree hierarchy:
 Curriculum (root)
-├── Course
-│   ├── Concept
-│   └── Exercise
+├── Course (container)
+│   ├── Concept (leaf)
+│   └── Exercise (leaf)
 
-IMPORTANT: Concept and Exercise are SIBLINGS (same level under Course).
+IMPORTANT STRUCTURAL RULES:
+- Concept and Exercise are SIBLINGS (same level under Course).
 - You CANNOT have a path like /Course/Concept/Exercise - this is INVALID.
 - Each query can only target ONE leaf node type (either Concept or Exercise, not both).
 
@@ -22,49 +23,37 @@ Path rules:
 - You may use positional indexing on leaf nodes, e.g., Concept[2], Exercise[1].
 - You may use -1 to mean the last element, e.g., Concept[-1].
 - You may use RANGE indexing with colon syntax: [start:end] (inclusive on both ends).
-  - Concept[1:3] means Concept 1, 2, and 3
-  - Exercise[2:4] means Exercise 2, 3, and 4
 - You may use "to end" RANGE indexing: [-N:] means "last N elements".
-  - Concept[-2:] means the last 2 Concepts
-  - Exercise[-3:] means the last 3 Exercises
-- You may use parentheses for global indexing, e.g., (/Curriculum/Course/Concept)[5] or (/Curriculum/Course/Exercise)[1:3].
+- You may use parentheses for global indexing.
 - Do NOT put any free-text or semantic content in the path.
 
-Semantic predicate rules:
-- Semantic predicates are attached DIRECTLY to the node type (no / before the bracket).
-- Semantic matching uses square brackets: [ ... ].
-- Semantic matching uses the operator =~ .
-- Semantic predicates use the field name: description .
-- Semantic predicates apply to the node they are attached to.
-- Format: NodeType[description =~ "query"]
-- You CAN combine semantic predicate with positional index: NodeType[description =~ "query"][index]
-- You CAN combine semantic predicate with range index: NodeType[description =~ "query"][1:3]
+PREDICATE RULES (CRITICAL):
 
-Logical operators within predicates (same node):
-- Use AND for conjunction: [description =~ "A" AND description =~ "B"]
-  - The node must satisfy BOTH conditions
-  - Example: Concept[description =~ "advanced" AND description =~ "machine learning"]
-- Use OR for disjunction: [description =~ "A" OR description =~ "B"]
-  - The node must satisfy AT LEAST ONE condition
-  - Example: Exercise[description =~ "coding" OR description =~ "programming"]
-- You can combine multiple conditions: [description =~ "A" AND description =~ "B" OR description =~ "C"]
-- Parentheses can group conditions: [(description =~ "A" OR description =~ "B") AND description =~ "C"]
+ALL semantic predicates MUST use all() or exists() wrapper. NO direct predicates allowed.
 
-Hierarchical quantifiers (for internal nodes like Course):
-- Use exists() to check if ANY child (Concept or Exercise) satisfies a predicate:
-  - Course[exists(description =~ "neural network")] - Courses with at least one neural network content
-  - Course[exists(description =~ "hands-on")] - Courses with at least one hands-on activity
-- Use all() to check prevalence/overall characteristic across ALL children:
-  - Course[all(description =~ "advanced")] - Courses where content is generally advanced
-  - Course[all(description =~ "practical")] - Courses with generally practical content
-- exists() returns high score if ANY child matches (existential quantifier ∃)
-- all() returns score based on proportion of children matching (universal quantifier ∀)
-- These operators apply to ALL children regardless of type (Concept and Exercise together)
+1. ALL NODES - MUST use all() or exists():
+   - all(): Concept[all(description =~ "neural network")] - general matching
+   - exists(): Concept[exists(description =~ "neural network")] - same for leaf nodes
+   
+   For LEAF nodes (Concept, Exercise): all() and exists() are semantically equivalent.
+   For CONTAINER nodes (Course): 
+   - exists() = "at least one child matches"
+   - all() = "children generally match"
 
-IMPORTANT: When user asks for "Nth [semantic type]", you MUST include BOTH the semantic predicate AND the index.
-- "second machine learning concept" = Concept[description =~ "machine learning"][2] (NOT just Concept[2])
-- "first coding exercise" = Exercise[description =~ "coding"][1]
-- "first 3 math concepts" = Concept[description =~ "math"][1:3]
+2. INSIDE all()/exists(), you can use AND/OR:
+   - Concept[all(description =~ "advanced" AND description =~ "theoretical")]
+   - Course[exists(description =~ "machine learning" OR description =~ "deep learning")]
+
+NEVER USE DIRECT PREDICATES:
+❌ Concept[description =~ "neural network"]           - INVALID
+✓ Concept[all(description =~ "neural network")]       - VALID
+✓ Concept[exists(description =~ "neural network")]    - VALID
+
+CHOOSING BETWEEN exists() AND all():
+- For LEAF nodes: both are equivalent, prefer all()
+- For CONTAINER nodes:
+  - exists() = "Does any child match?" → "courses with machine learning content"
+  - all() = "Are children generally like this?" → "advanced courses"
 
 Output format:
 - The output MUST be a single XPath-like query string.
@@ -75,9 +64,21 @@ User: second concept in every course
 Output:
 /Curriculum/Course/Concept[2]
 
-User: second programming course
+User: programming courses
 Output:
-(/Curriculum/Course[description =~ "programming"])[2]
+/Curriculum/Course[all(description =~ "programming")]
+
+User: advanced courses
+Output:
+/Curriculum/Course[all(description =~ "advanced")]
+
+User: beginner courses
+Output:
+/Curriculum/Course[all(description =~ "beginner")]
+
+User: practical courses
+Output:
+/Curriculum/Course[all(description =~ "practical")]
 
 User: the third concept
 Output:
@@ -85,7 +86,7 @@ Output:
 
 User: first machine learning exercise
 Output:
-(/Curriculum/Course/Exercise[description =~ "machine learning"])[1]
+(/Curriculum/Course/Exercise[all(description =~ "machine learning")])[1]
 
 User: concepts in second course
 Output:
@@ -93,7 +94,7 @@ Output:
 
 User: last concept in algorithms course
 Output:
-/Curriculum/Course[description =~ "algorithms"]/Concept[-1]
+/Curriculum/Course[all(description =~ "algorithms")]/Concept[-1]
 
 User: globally 5th exercise
 Output:
@@ -101,95 +102,27 @@ Output:
 
 User: all exercises in a data science course
 Output:
-/Curriculum/Course[description =~ "data science"]/Exercise
+/Curriculum/Course[all(description =~ "data science")]/Exercise
 
 User: second neural network concept in a deep learning course
 Output:
-/Curriculum/Course[description =~ "deep learning"]/Concept[description =~ "neural network"][2]
+/Curriculum/Course[all(description =~ "deep learning")]/Concept[all(description =~ "neural network")][2]
 
 User: first sorting exercise in course 1
 Output:
-/Curriculum/Course[1]/Exercise[description =~ "sorting"][1]
+/Curriculum/Course[1]/Exercise[all(description =~ "sorting")][1]
 
 User: the third beginner exercise
 Output:
-(/Curriculum/Course/Exercise[description =~ "beginner"])[3]
-
-User: second recursion concept
-Output:
-(/Curriculum/Course/Concept[description =~ "recursion"])[2]
-
-User: first 2 statistics concepts
-Output:
-(/Curriculum/Course/Concept[description =~ "statistics"])[1:2]
-
-User: top 3 concepts in course 1
-Output:
-/Curriculum/Course[1]/Concept[1:3]
-
-User: first 2 hands-on exercises
-Output:
-(/Curriculum/Course/Exercise[description =~ "hands-on"])[1:2]
-
-User: concepts 2 to 4 globally
-Output:
-(/Curriculum/Course/Concept)[2:4]
-
-User: exercises 1 and 2 in every course
-Output:
-/Curriculum/Course/Exercise[1:2]
-
-User: last 2 concepts
-Output:
-(/Curriculum/Course/Concept)[-2:]
-
-User: last 3 exercises globally
-Output:
-(/Curriculum/Course/Exercise)[-3:]
-
-User: the last 2 advanced concepts
-Output:
-(/Curriculum/Course/Concept[description =~ "advanced"])[-2:]
-
-User: last 2 concepts in every course
-Output:
-/Curriculum/Course/Concept[-2:]
-
-User: last exercise in course 1
-Output:
-/Curriculum/Course[1]/Exercise[-1]
-
-User: all concepts in the Python course
-Output:
-/Curriculum/Course[description =~ "Python"]/Concept
-
-User: all exercises about loops
-Output:
-/Curriculum/Course/Exercise[description =~ "loops"]
-
-User: practical exercises in beginner courses
-Output:
-/Curriculum/Course[description =~ "beginner"]/Exercise[description =~ "practical"]
+(/Curriculum/Course/Exercise[all(description =~ "beginner")])[3]
 
 User: advanced and theoretical concept
 Output:
-/Curriculum/Course/Concept[description =~ "advanced" AND description =~ "theoretical"]
+/Curriculum/Course/Concept[all(description =~ "advanced" AND description =~ "theoretical")]
 
 User: coding or programming exercise
 Output:
-/Curriculum/Course/Exercise[description =~ "coding" OR description =~ "programming"]
-
-User: introductory and foundational concept
-Output:
-/Curriculum/Course/Concept[description =~ "introductory" AND description =~ "foundational"]
-
-User: quiz or test exercise
-Output:
-/Curriculum/Course/Exercise[description =~ "quiz" OR description =~ "test"]
-
-User: hands-on and practical exercise
-Output:
-/Curriculum/Course/Exercise[description =~ "hands-on" AND description =~ "practical"]
+/Curriculum/Course/Exercise[all(description =~ "coding" OR description =~ "programming")]
 
 User: courses that have machine learning content
 Output:
@@ -225,10 +158,22 @@ Output:
 
 User: theoretical and mathematical concepts in advanced courses
 Output:
-/Curriculum/Course[description =~ "advanced"]/Concept[description =~ "theoretical" AND description =~ "mathematical"]
+/Curriculum/Course[all(description =~ "advanced")]/Concept[all(description =~ "theoretical" AND description =~ "mathematical")]
 
 User: project or assignment exercises in practical courses
 Output:
-/Curriculum/Course[description =~ "practical"]/Exercise[description =~ "project" OR description =~ "assignment"]
+/Curriculum/Course[all(description =~ "practical")]/Exercise[all(description =~ "project" OR description =~ "assignment")]
+
+User: courses with neural network and deep learning content
+Output:
+/Curriculum/Course[exists(description =~ "neural network" AND description =~ "deep learning")]
+
+User: neural network concepts
+Output:
+/Curriculum/Course/Concept[all(description =~ "neural network")]
+
+User: hands-on exercises
+Output:
+/Curriculum/Course/Exercise[all(description =~ "hands-on")]
 
 Now convert the following user request into a query.

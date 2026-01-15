@@ -1,0 +1,2696 @@
+{
+  "timestamp": "20260115_140541_366898",
+  "query": "/Itinerary/Day/Restaurant[all(description =~ \"italian\" OR description =~ \"french\")]",
+  "data_file": "travel_memory_3day.xml",
+  "execution_time_ms": 778.5550000000007,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Restaurant[all(description =~ \"italian\" OR description =~ \"french\")]",
+      "action": "type_match",
+      "nodes_before_count": 3,
+      "nodes_after_count": 10,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > Queen Street Warehouse",
+          "name": "Queen Street Warehouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Buca Yorkville",
+          "name": "Buca Yorkville",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "name": "The Rex Hotel Jazz & Blues Bar",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Pow Wow Cafe",
+          "name": "Pow Wow Cafe",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Annona Restaurant",
+          "name": "Annona Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > DaiLo",
+          "name": "DaiLo",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Beauty Barbecue & Smokehouse",
+          "name": "Beauty Barbecue & Smokehouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Amsterdam BrewHouse",
+          "name": "Amsterdam BrewHouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Jazz Bistro",
+          "name": "Jazz Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Restaurant",
+        "found_count": 10
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Restaurant[all(description =~ \"italian\" OR description =~ \"french\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 10,
+      "nodes_after_count": 10,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1 > Queen Street Warehouse",
+          "name": "Queen Street Warehouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Buca Yorkville",
+          "name": "Buca Yorkville",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "name": "The Rex Hotel Jazz & Blues Bar",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Pow Wow Cafe",
+          "name": "Pow Wow Cafe",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Annona Restaurant",
+          "name": "Annona Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > DaiLo",
+          "name": "DaiLo",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Beauty Barbecue & Smokehouse",
+          "name": "Beauty Barbecue & Smokehouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Amsterdam BrewHouse",
+          "name": "Amsterdam BrewHouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Jazz Bistro",
+          "name": "Jazz Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > Queen Street Warehouse",
+          "name": "Queen Street Warehouse",
+          "type": "Restaurant",
+          "score": 0.5397282838221509
+        },
+        {
+          "path": "Itinerary > Day 1 > Buca Yorkville",
+          "name": "Buca Yorkville",
+          "type": "Restaurant",
+          "score": 0.9990061945601488
+        },
+        {
+          "path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "name": "The Rex Hotel Jazz & Blues Bar",
+          "type": "Restaurant",
+          "score": 0.42486675100918525
+        },
+        {
+          "path": "Itinerary > Day 2 > Pow Wow Cafe",
+          "name": "Pow Wow Cafe",
+          "type": "Restaurant",
+          "score": 0.008321124664227963
+        },
+        {
+          "path": "Itinerary > Day 2 > Annona Restaurant",
+          "name": "Annona Restaurant",
+          "type": "Restaurant",
+          "score": 0.9683174201920011
+        },
+        {
+          "path": "Itinerary > Day 2 > DaiLo",
+          "name": "DaiLo",
+          "type": "Restaurant",
+          "score": 0.0039626891783666185
+        },
+        {
+          "path": "Itinerary > Day 3 > Beauty Barbecue & Smokehouse",
+          "name": "Beauty Barbecue & Smokehouse",
+          "type": "Restaurant",
+          "score": 0.024856975956854876
+        },
+        {
+          "path": "Itinerary > Day 3 > Amsterdam BrewHouse",
+          "name": "Amsterdam BrewHouse",
+          "type": "Restaurant",
+          "score": 0.2098186455739074
+        },
+        {
+          "path": "Itinerary > Day 3 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 0.9993392087155563
+        },
+        {
+          "path": "Itinerary > Day 3 > Jazz Bistro",
+          "name": "Jazz Bistro",
+          "type": "Restaurant",
+          "score": 0.7271691389154775
+        }
+      ],
+      "details": {
+        "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+        "predicate_type": "ALL",
+        "scoring_result": {
+          "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+          "predicate_ast": {
+            "operator": "ALL",
+            "child_predicate": {
+              "operator": "OR",
+              "conditions": [
+                {
+                  "operator": "ATOMIC",
+                  "conditions": [
+                    {
+                      "field": "description",
+                      "value": "italian"
+                    }
+                  ]
+                },
+                {
+                  "operator": "ATOMIC",
+                  "conditions": [
+                    {
+                      "field": "description",
+                      "value": "french"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "config": {
+            "top_k": 3,
+            "score_threshold": 0.01
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "Queen Street Warehouse",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.2927604615688324,
+                        0.34919968247413635
+                      ],
+                      "product_of_complements": 0.4602717161778491,
+                      "result": 0.5397282838221509,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.2927604615688324
+                            ],
+                            "score": 0.2927604615688324,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.34919968247413635
+                            ],
+                            "score": 0.34919968247413635,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.5397282838221509
+                }
+              ],
+              "final_score": 0.5397282838221509
+            },
+            {
+              "node_idx": 1,
+              "node_name": "Buca Yorkville",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.9990026354789734,
+                        0.0035684858448803425
+                      ],
+                      "product_of_complements": 0.000993805439851142,
+                      "result": 0.9990061945601488,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.9990026354789734
+                            ],
+                            "score": 0.9990026354789734,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.0035684858448803425
+                            ],
+                            "score": 0.0035684858448803425,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.9990061945601488
+                }
+              ],
+              "final_score": 0.9990061945601488
+            },
+            {
+              "node_idx": 2,
+              "node_name": "The Rex Hotel Jazz & Blues Bar",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.04642599821090698,
+                        0.3968656361103058
+                      ],
+                      "product_of_complements": 0.5751332489908147,
+                      "result": 0.42486675100918525,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.04642599821090698
+                            ],
+                            "score": 0.04642599821090698,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.3968656361103058
+                            ],
+                            "score": 0.3968656361103058,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.42486675100918525
+                }
+              ],
+              "final_score": 0.42486675100918525
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Pow Wow Cafe",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.0012569836108013988,
+                        0.007073031738400459
+                      ],
+                      "product_of_complements": 0.991678875335772,
+                      "result": 0.008321124664227963,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.0012569836108013988
+                            ],
+                            "score": 0.0012569836108013988,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.007073031738400459
+                            ],
+                            "score": 0.007073031738400459,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.008321124664227963
+                }
+              ],
+              "final_score": 0.008321124664227963
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Annona Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.8699019551277161,
+                        0.7564715147018433
+                      ],
+                      "product_of_complements": 0.031682579807998934,
+                      "result": 0.9683174201920011,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.8699019551277161
+                            ],
+                            "score": 0.8699019551277161,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.7564715147018433
+                            ],
+                            "score": 0.7564715147018433,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.9683174201920011
+                }
+              ],
+              "final_score": 0.9683174201920011
+            },
+            {
+              "node_idx": 5,
+              "node_name": "DaiLo",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.0007089207647368312,
+                        0.0032560767140239477
+                      ],
+                      "product_of_complements": 0.9960373108216334,
+                      "result": 0.0039626891783666185,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.0007089207647368312
+                            ],
+                            "score": 0.0007089207647368312,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.0032560767140239477
+                            ],
+                            "score": 0.0032560767140239477,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.0039626891783666185
+                }
+              ],
+              "final_score": 0.0039626891783666185
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Beauty Barbecue & Smokehouse",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.0021119494922459126,
+                        0.02279316447675228
+                      ],
+                      "product_of_complements": 0.9751430240431451,
+                      "result": 0.024856975956854876,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.0021119494922459126
+                            ],
+                            "score": 0.0021119494922459126,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.02279316447675228
+                            ],
+                            "score": 0.02279316447675228,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.024856975956854876
+                }
+              ],
+              "final_score": 0.024856975956854876
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Amsterdam BrewHouse",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.005870011169463396,
+                        0.20515288412570953
+                      ],
+                      "product_of_complements": 0.7901813544260926,
+                      "result": 0.2098186455739074,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.005870011169463396
+                            ],
+                            "score": 0.005870011169463396,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.20515288412570953
+                            ],
+                            "score": 0.20515288412570953,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.2098186455739074
+                }
+              ],
+              "final_score": 0.2098186455739074
+            },
+            {
+              "node_idx": 8,
+              "node_name": "Cluny Bistro",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.00042934721568599343,
+                        0.9993389248847961
+                      ],
+                      "product_of_complements": 0.0006607912844437853,
+                      "result": 0.9993392087155563,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.00042934721568599343
+                            ],
+                            "score": 0.00042934721568599343,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.9993389248847961
+                            ],
+                            "score": 0.9993389248847961,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.9993392087155563
+                }
+              ],
+              "final_score": 0.9993392087155563
+            },
+            {
+              "node_idx": 9,
+              "node_name": "Jazz Bistro",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "all_quantifier",
+                  "operator": "ALL",
+                  "child_type": "*",
+                  "num_children": 0,
+                  "is_leaf_node": true,
+                  "note": "Leaf node - scoring node itself",
+                  "inner_predicate_trace": [
+                    {
+                      "type": "or_composition",
+                      "operator": "OR",
+                      "formula": "1 - ∏(1 - π_j)",
+                      "child_scores": [
+                        0.022561345249414444,
+                        0.72087162733078
+                      ],
+                      "product_of_complements": 0.2728308610845225,
+                      "result": 0.7271691389154775,
+                      "child_traces": [
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "italian"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.022561345249414444
+                            ],
+                            "score": 0.022561345249414444,
+                            "cached": true
+                          }
+                        ],
+                        [
+                          {
+                            "type": "atomic",
+                            "condition": {
+                              "field": "description",
+                              "value": "french"
+                            },
+                            "num_descriptions_scored": 1,
+                            "individual_scores": [
+                              0.72087162733078
+                            ],
+                            "score": 0.72087162733078,
+                            "cached": true
+                          }
+                        ]
+                      ]
+                    }
+                  ],
+                  "result": 0.7271691389154775
+                }
+              ],
+              "final_score": 0.7271691389154775
+            }
+          ],
+          "batch_scoring": {
+            "predicate_values": [
+              "italian",
+              "french"
+            ],
+            "per_predicate_stats": [
+              {
+                "value": "italian",
+                "num_descriptions": 10,
+                "num_nodes": 10,
+                "call_time_ms": 234.69
+              },
+              {
+                "value": "french",
+                "num_descriptions": 10,
+                "num_nodes": 10,
+                "call_time_ms": 543.44
+              }
+            ],
+            "total_scorer_calls": 2,
+            "total_descriptions_scored": 20
+          },
+          "ranking": [
+            {
+              "idx": 8,
+              "score": 0.9993392087155563,
+              "name": "Cluny Bistro"
+            },
+            {
+              "idx": 1,
+              "score": 0.9990061945601488,
+              "name": "Buca Yorkville"
+            },
+            {
+              "idx": 4,
+              "score": 0.9683174201920011,
+              "name": "Annona Restaurant"
+            },
+            {
+              "idx": 9,
+              "score": 0.7271691389154775,
+              "name": "Jazz Bistro"
+            },
+            {
+              "idx": 0,
+              "score": 0.5397282838221509,
+              "name": "Queen Street Warehouse"
+            },
+            {
+              "idx": 2,
+              "score": 0.42486675100918525,
+              "name": "The Rex Hotel Jazz & Blues Bar"
+            },
+            {
+              "idx": 7,
+              "score": 0.2098186455739074,
+              "name": "Amsterdam BrewHouse"
+            },
+            {
+              "idx": 6,
+              "score": 0.024856975956854876,
+              "name": "Beauty Barbecue & Smokehouse"
+            },
+            {
+              "idx": 3,
+              "score": 0.008321124664227963,
+              "name": "Pow Wow Cafe"
+            },
+            {
+              "idx": 5,
+              "score": 0.0039626891783666185,
+              "name": "DaiLo"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+      "predicate_ast": {
+        "operator": "ALL",
+        "child_predicate": {
+          "operator": "OR",
+          "conditions": [
+            {
+              "operator": "ATOMIC",
+              "conditions": [
+                {
+                  "field": "description",
+                  "value": "italian"
+                }
+              ]
+            },
+            {
+              "operator": "ATOMIC",
+              "conditions": [
+                {
+                  "field": "description",
+                  "value": "french"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "config": {
+        "top_k": 3,
+        "score_threshold": 0.01
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "Queen Street Warehouse",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.2927604615688324,
+                    0.34919968247413635
+                  ],
+                  "product_of_complements": 0.4602717161778491,
+                  "result": 0.5397282838221509,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.2927604615688324
+                        ],
+                        "score": 0.2927604615688324,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.34919968247413635
+                        ],
+                        "score": 0.34919968247413635,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.5397282838221509
+            }
+          ],
+          "final_score": 0.5397282838221509
+        },
+        {
+          "node_idx": 1,
+          "node_name": "Buca Yorkville",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.9990026354789734,
+                    0.0035684858448803425
+                  ],
+                  "product_of_complements": 0.000993805439851142,
+                  "result": 0.9990061945601488,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.9990026354789734
+                        ],
+                        "score": 0.9990026354789734,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0035684858448803425
+                        ],
+                        "score": 0.0035684858448803425,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.9990061945601488
+            }
+          ],
+          "final_score": 0.9990061945601488
+        },
+        {
+          "node_idx": 2,
+          "node_name": "The Rex Hotel Jazz & Blues Bar",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.04642599821090698,
+                    0.3968656361103058
+                  ],
+                  "product_of_complements": 0.5751332489908147,
+                  "result": 0.42486675100918525,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.04642599821090698
+                        ],
+                        "score": 0.04642599821090698,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.3968656361103058
+                        ],
+                        "score": 0.3968656361103058,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.42486675100918525
+            }
+          ],
+          "final_score": 0.42486675100918525
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Pow Wow Cafe",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.0012569836108013988,
+                    0.007073031738400459
+                  ],
+                  "product_of_complements": 0.991678875335772,
+                  "result": 0.008321124664227963,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0012569836108013988
+                        ],
+                        "score": 0.0012569836108013988,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.007073031738400459
+                        ],
+                        "score": 0.007073031738400459,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.008321124664227963
+            }
+          ],
+          "final_score": 0.008321124664227963
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Annona Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.8699019551277161,
+                    0.7564715147018433
+                  ],
+                  "product_of_complements": 0.031682579807998934,
+                  "result": 0.9683174201920011,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.8699019551277161
+                        ],
+                        "score": 0.8699019551277161,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.7564715147018433
+                        ],
+                        "score": 0.7564715147018433,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.9683174201920011
+            }
+          ],
+          "final_score": 0.9683174201920011
+        },
+        {
+          "node_idx": 5,
+          "node_name": "DaiLo",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.0007089207647368312,
+                    0.0032560767140239477
+                  ],
+                  "product_of_complements": 0.9960373108216334,
+                  "result": 0.0039626891783666185,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0007089207647368312
+                        ],
+                        "score": 0.0007089207647368312,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0032560767140239477
+                        ],
+                        "score": 0.0032560767140239477,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.0039626891783666185
+            }
+          ],
+          "final_score": 0.0039626891783666185
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Beauty Barbecue & Smokehouse",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.0021119494922459126,
+                    0.02279316447675228
+                  ],
+                  "product_of_complements": 0.9751430240431451,
+                  "result": 0.024856975956854876,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0021119494922459126
+                        ],
+                        "score": 0.0021119494922459126,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.02279316447675228
+                        ],
+                        "score": 0.02279316447675228,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.024856975956854876
+            }
+          ],
+          "final_score": 0.024856975956854876
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Amsterdam BrewHouse",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.005870011169463396,
+                    0.20515288412570953
+                  ],
+                  "product_of_complements": 0.7901813544260926,
+                  "result": 0.2098186455739074,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.005870011169463396
+                        ],
+                        "score": 0.005870011169463396,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.20515288412570953
+                        ],
+                        "score": 0.20515288412570953,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.2098186455739074
+            }
+          ],
+          "final_score": 0.2098186455739074
+        },
+        {
+          "node_idx": 8,
+          "node_name": "Cluny Bistro",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.00042934721568599343,
+                    0.9993389248847961
+                  ],
+                  "product_of_complements": 0.0006607912844437853,
+                  "result": 0.9993392087155563,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.00042934721568599343
+                        ],
+                        "score": 0.00042934721568599343,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.9993389248847961
+                        ],
+                        "score": 0.9993389248847961,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.9993392087155563
+            }
+          ],
+          "final_score": 0.9993392087155563
+        },
+        {
+          "node_idx": 9,
+          "node_name": "Jazz Bistro",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "all_quantifier",
+              "operator": "ALL",
+              "child_type": "*",
+              "num_children": 0,
+              "is_leaf_node": true,
+              "note": "Leaf node - scoring node itself",
+              "inner_predicate_trace": [
+                {
+                  "type": "or_composition",
+                  "operator": "OR",
+                  "formula": "1 - ∏(1 - π_j)",
+                  "child_scores": [
+                    0.022561345249414444,
+                    0.72087162733078
+                  ],
+                  "product_of_complements": 0.2728308610845225,
+                  "result": 0.7271691389154775,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "italian"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.022561345249414444
+                        ],
+                        "score": 0.022561345249414444,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "french"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.72087162733078
+                        ],
+                        "score": 0.72087162733078,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "result": 0.7271691389154775
+            }
+          ],
+          "final_score": 0.7271691389154775
+        }
+      ],
+      "batch_scoring": {
+        "predicate_values": [
+          "italian",
+          "french"
+        ],
+        "per_predicate_stats": [
+          {
+            "value": "italian",
+            "num_descriptions": 10,
+            "num_nodes": 10,
+            "call_time_ms": 234.69
+          },
+          {
+            "value": "french",
+            "num_descriptions": 10,
+            "num_nodes": 10,
+            "call_time_ms": 543.44
+          }
+        ],
+        "total_scorer_calls": 2,
+        "total_descriptions_scored": 20
+      },
+      "ranking": [
+        {
+          "idx": 8,
+          "score": 0.9993392087155563,
+          "name": "Cluny Bistro"
+        },
+        {
+          "idx": 1,
+          "score": 0.9990061945601488,
+          "name": "Buca Yorkville"
+        },
+        {
+          "idx": 4,
+          "score": 0.9683174201920011,
+          "name": "Annona Restaurant"
+        },
+        {
+          "idx": 9,
+          "score": 0.7271691389154775,
+          "name": "Jazz Bistro"
+        },
+        {
+          "idx": 0,
+          "score": 0.5397282838221509,
+          "name": "Queen Street Warehouse"
+        },
+        {
+          "idx": 2,
+          "score": 0.42486675100918525,
+          "name": "The Rex Hotel Jazz & Blues Bar"
+        },
+        {
+          "idx": 7,
+          "score": 0.2098186455739074,
+          "name": "Amsterdam BrewHouse"
+        },
+        {
+          "idx": 6,
+          "score": 0.024856975956854876,
+          "name": "Beauty Barbecue & Smokehouse"
+        },
+        {
+          "idx": 3,
+          "score": 0.008321124664227963,
+          "name": "Pow Wow Cafe"
+        },
+        {
+          "idx": 5,
+          "score": 0.0039626891783666185,
+          "name": "DaiLo"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+        "predicate_ast": {
+          "operator": "ALL",
+          "child_predicate": {
+            "operator": "OR",
+            "conditions": [
+              {
+                "operator": "ATOMIC",
+                "conditions": [
+                  {
+                    "field": "description",
+                    "value": "italian"
+                  }
+                ]
+              },
+              {
+                "operator": "ATOMIC",
+                "conditions": [
+                  {
+                    "field": "description",
+                    "value": "french"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "Queen Street Warehouse",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.2927604615688324,
+                      0.34919968247413635
+                    ],
+                    "product_of_complements": 0.4602717161778491,
+                    "result": 0.5397282838221509,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.2927604615688324
+                          ],
+                          "score": 0.2927604615688324,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.34919968247413635
+                          ],
+                          "score": 0.34919968247413635,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.5397282838221509
+              }
+            ],
+            "final_score": 0.5397282838221509
+          },
+          {
+            "node_idx": 1,
+            "node_name": "Buca Yorkville",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.9990026354789734,
+                      0.0035684858448803425
+                    ],
+                    "product_of_complements": 0.000993805439851142,
+                    "result": 0.9990061945601488,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.9990026354789734
+                          ],
+                          "score": 0.9990026354789734,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.0035684858448803425
+                          ],
+                          "score": 0.0035684858448803425,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.9990061945601488
+              }
+            ],
+            "final_score": 0.9990061945601488
+          },
+          {
+            "node_idx": 2,
+            "node_name": "The Rex Hotel Jazz & Blues Bar",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.04642599821090698,
+                      0.3968656361103058
+                    ],
+                    "product_of_complements": 0.5751332489908147,
+                    "result": 0.42486675100918525,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.04642599821090698
+                          ],
+                          "score": 0.04642599821090698,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.3968656361103058
+                          ],
+                          "score": 0.3968656361103058,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.42486675100918525
+              }
+            ],
+            "final_score": 0.42486675100918525
+          },
+          {
+            "node_idx": 3,
+            "node_name": "Pow Wow Cafe",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.0012569836108013988,
+                      0.007073031738400459
+                    ],
+                    "product_of_complements": 0.991678875335772,
+                    "result": 0.008321124664227963,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.0012569836108013988
+                          ],
+                          "score": 0.0012569836108013988,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.007073031738400459
+                          ],
+                          "score": 0.007073031738400459,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.008321124664227963
+              }
+            ],
+            "final_score": 0.008321124664227963
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Annona Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.8699019551277161,
+                      0.7564715147018433
+                    ],
+                    "product_of_complements": 0.031682579807998934,
+                    "result": 0.9683174201920011,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.8699019551277161
+                          ],
+                          "score": 0.8699019551277161,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.7564715147018433
+                          ],
+                          "score": 0.7564715147018433,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.9683174201920011
+              }
+            ],
+            "final_score": 0.9683174201920011
+          },
+          {
+            "node_idx": 5,
+            "node_name": "DaiLo",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.0007089207647368312,
+                      0.0032560767140239477
+                    ],
+                    "product_of_complements": 0.9960373108216334,
+                    "result": 0.0039626891783666185,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.0007089207647368312
+                          ],
+                          "score": 0.0007089207647368312,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.0032560767140239477
+                          ],
+                          "score": 0.0032560767140239477,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.0039626891783666185
+              }
+            ],
+            "final_score": 0.0039626891783666185
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Beauty Barbecue & Smokehouse",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.0021119494922459126,
+                      0.02279316447675228
+                    ],
+                    "product_of_complements": 0.9751430240431451,
+                    "result": 0.024856975956854876,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.0021119494922459126
+                          ],
+                          "score": 0.0021119494922459126,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.02279316447675228
+                          ],
+                          "score": 0.02279316447675228,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.024856975956854876
+              }
+            ],
+            "final_score": 0.024856975956854876
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Amsterdam BrewHouse",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.005870011169463396,
+                      0.20515288412570953
+                    ],
+                    "product_of_complements": 0.7901813544260926,
+                    "result": 0.2098186455739074,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.005870011169463396
+                          ],
+                          "score": 0.005870011169463396,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.20515288412570953
+                          ],
+                          "score": 0.20515288412570953,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.2098186455739074
+              }
+            ],
+            "final_score": 0.2098186455739074
+          },
+          {
+            "node_idx": 8,
+            "node_name": "Cluny Bistro",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.00042934721568599343,
+                      0.9993389248847961
+                    ],
+                    "product_of_complements": 0.0006607912844437853,
+                    "result": 0.9993392087155563,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.00042934721568599343
+                          ],
+                          "score": 0.00042934721568599343,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.9993389248847961
+                          ],
+                          "score": 0.9993389248847961,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.9993392087155563
+              }
+            ],
+            "final_score": 0.9993392087155563
+          },
+          {
+            "node_idx": 9,
+            "node_name": "Jazz Bistro",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "all_quantifier",
+                "operator": "ALL",
+                "child_type": "*",
+                "num_children": 0,
+                "is_leaf_node": true,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": [
+                  {
+                    "type": "or_composition",
+                    "operator": "OR",
+                    "formula": "1 - ∏(1 - π_j)",
+                    "child_scores": [
+                      0.022561345249414444,
+                      0.72087162733078
+                    ],
+                    "product_of_complements": 0.2728308610845225,
+                    "result": 0.7271691389154775,
+                    "child_traces": [
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "italian"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.022561345249414444
+                          ],
+                          "score": 0.022561345249414444,
+                          "cached": true
+                        }
+                      ],
+                      [
+                        {
+                          "type": "atomic",
+                          "condition": {
+                            "field": "description",
+                            "value": "french"
+                          },
+                          "num_descriptions_scored": 1,
+                          "individual_scores": [
+                            0.72087162733078
+                          ],
+                          "score": 0.72087162733078,
+                          "cached": true
+                        }
+                      ]
+                    ]
+                  }
+                ],
+                "result": 0.7271691389154775
+              }
+            ],
+            "final_score": 0.7271691389154775
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 8,
+            "score": 0.9993392087155563,
+            "name": "Cluny Bistro"
+          },
+          {
+            "idx": 1,
+            "score": 0.9990061945601488,
+            "name": "Buca Yorkville"
+          },
+          {
+            "idx": 4,
+            "score": 0.9683174201920011,
+            "name": "Annona Restaurant"
+          },
+          {
+            "idx": 9,
+            "score": 0.7271691389154775,
+            "name": "Jazz Bistro"
+          },
+          {
+            "idx": 0,
+            "score": 0.5397282838221509,
+            "name": "Queen Street Warehouse"
+          },
+          {
+            "idx": 2,
+            "score": 0.42486675100918525,
+            "name": "The Rex Hotel Jazz & Blues Bar"
+          },
+          {
+            "idx": 7,
+            "score": 0.2098186455739074,
+            "name": "Amsterdam BrewHouse"
+          },
+          {
+            "idx": 6,
+            "score": 0.024856975956854876,
+            "name": "Beauty Barbecue & Smokehouse"
+          },
+          {
+            "idx": 3,
+            "score": 0.008321124664227963,
+            "name": "Pow Wow Cafe"
+          },
+          {
+            "idx": 5,
+            "score": 0.0039626891783666185,
+            "name": "DaiLo"
+          }
+        ]
+      }
+    ],
+    "bayesian_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Day 1 > Queen Street Warehouse",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.5397282838221509,
+              "log_odds": 0.159248832375415
+            }
+          ],
+          "accumulated_log_odds": 0.159248832375415,
+          "final_score": 0.5397282838221509
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Buca Yorkville",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.9990061945601488,
+              "log_odds": 6.912974805430477
+            }
+          ],
+          "accumulated_log_odds": 6.912974805430477,
+          "final_score": 0.9990061945601488
+        },
+        {
+          "node_path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.42486675100918525,
+              "log_odds": -0.3028261585983939
+            }
+          ],
+          "accumulated_log_odds": -0.3028261585983939,
+          "final_score": 0.42486675100918525
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Pow Wow Cafe",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.008321124664227963,
+              "log_odds": -4.780601918812196
+            }
+          ],
+          "accumulated_log_odds": -4.780601918812196,
+          "final_score": 0.008321124664227967
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Annona Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.9683174201920011,
+              "log_odds": 3.4197929499821993
+            }
+          ],
+          "accumulated_log_odds": 3.4197929499821993,
+          "final_score": 0.9683174201920012
+        },
+        {
+          "node_path": "Itinerary > Day 2 > DaiLo",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.0039626891783666185,
+              "log_odds": -5.526861837308937
+            }
+          ],
+          "accumulated_log_odds": -5.526861837308937,
+          "final_score": 0.0039626891783666185
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Beauty Barbecue & Smokehouse",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.024856975956854876,
+              "log_odds": -3.669445715808757
+            }
+          ],
+          "accumulated_log_odds": -3.669445715808757,
+          "final_score": 0.024856975956854873
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Amsterdam BrewHouse",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.2098186455739074,
+              "log_odds": -1.3260189165788554
+            }
+          ],
+          "accumulated_log_odds": -1.3260189165788554,
+          "final_score": 0.20981864557390736
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Cluny Bistro",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.9993392087155563,
+              "log_odds": 7.321411515542377
+            }
+          ],
+          "accumulated_log_odds": 7.321411515542377,
+          "final_score": 0.9993392087155563
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Jazz Bistro",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "all(description =~ \"italian\" OR description =~ \"french\")",
+              "score": 0.7271691389154775,
+              "log_odds": 0.9803070570141078
+            }
+          ],
+          "accumulated_log_odds": 0.9803070570141078,
+          "final_score": 0.7271691389154775
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 10,
+    "threshold": 0.01,
+    "top_k": 3,
+    "after_filter_count": 3,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Day 3 > Cluny Bistro",
+        "score": 0.9993392087155563,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Day 1 > Buca Yorkville",
+        "score": 0.9990061945601488,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Day 2 > Annona Restaurant",
+        "score": 0.9683174201920012,
+        "type": "Restaurant"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Day 3 > Cluny Bistro",
+      "score": 0.9993392087155563,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Cluny Bistro",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "French-inspired bistro serving classic and modern dishes.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Elegant decor",
+          "French pastries"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 1 > Buca Yorkville",
+      "score": 0.9990061945601488,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Buca Yorkville",
+        "time_block": "5:30 PM - 7:00 PM",
+        "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Handmade pasta",
+          "Elegant ambiance"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Annona Restaurant",
+      "score": 0.9683174201920012,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Annona Restaurant",
+        "time_block": "1:30 PM - 2:30 PM",
+        "description": "Sophisticated international cuisine in a bright, modern setting.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 30-40",
+        "highlights": [
+          "Patio seating",
+          "Refined dishes"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 1,
+    "matched_count": 3,
+    "execution_time_ms": 778.5550000000007,
+    "has_bayesian_fusion": true,
+    "num_nodes_before_filter": 10,
+    "num_nodes_after_filter": 3
+  }
+}

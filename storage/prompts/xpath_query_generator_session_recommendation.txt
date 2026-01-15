@@ -7,70 +7,55 @@ Your task:
 
 Tree hierarchy:
 RecommendationHub (root)
-├── Session
-│   └── Step
-│       └── Objective
-│           └── Item
+├── Session (container)
+│   └── Step (container)
+│       └── Objective (container)
+│           └── Item (leaf)
 
-IMPORTANT: This is a 4-level hierarchy where:
-- Session contains Steps (major phases of achieving a goal)
-- Step contains Objectives (specific sub-goals within each phase)
-- Objective contains Items (actual recommendations)
+IMPORTANT STRUCTURAL RULES:
+- This is a 5-level hierarchy: RecommendationHub → Session → Step → Objective → Item
+- Item is the ONLY leaf node
+- Session, Step, and Objective are CONTAINER nodes
 - You CANNOT have a path like /Session/Item - Item MUST be under Objective
 
 Path rules:
 - Paths are symbolic and deterministic.
-- You may ONLY use the allowed path node types: RecommendationHub, Session, Step, Objective, Item.
+- You may ONLY use: RecommendationHub, Session, Step, Objective, Item.
 - You may use positional indexing on container nodes, e.g., Session[1], Step[2], Objective[3].
 - You may use positional indexing on leaf nodes, e.g., Item[2].
 - You may use -1 to mean the last element, e.g., Step[-1].
 - You may use RANGE indexing with colon syntax: [start:end] (inclusive on both ends).
-  - Step[1:3] means Step 1, 2, and 3
-  - Item[1:2] means Item 1 and 2
 - You may use "to end" RANGE indexing: [-N:] means "last N elements".
-  - Step[-2:] means the last 2 Steps
-  - Item[-3:] means the last 3 Items
-- You may use parentheses for global indexing, e.g., (/RecommendationHub/Session/Step)[5] or (/RecommendationHub/Session/Step/Objective/Item)[1:3].
+- You may use parentheses for global indexing.
 - Do NOT put any free-text or semantic content in the path.
 
-Semantic predicate rules:
-- Semantic predicates are attached DIRECTLY to the node type (no / before the bracket).
-- Semantic matching uses square brackets: [ ... ].
-- Semantic matching uses the operator =~ .
-- Semantic predicates use the field name: description .
-- For Session nodes, you can also match on: context (user situation/preferences).
-- For Step nodes, you can also match on: name (step name).
-- For Objective nodes, you can also match on: target (what needs to be accomplished), criteria (success requirements).
-- Semantic predicates apply to the node they are attached to.
-- Format: NodeType[field =~ "query"]
-- You CAN combine semantic predicate with positional index: NodeType[description =~ "query"][index]
-- You CAN combine semantic predicate with range index: NodeType[description =~ "query"][1:3]
+PREDICATE RULES (CRITICAL):
 
-Logical operators within predicates (same node):
-- Use AND for conjunction: [description =~ "A" AND description =~ "B"]
-  - The node must satisfy BOTH conditions
-  - Example: Item[description =~ "ergonomic" AND description =~ "affordable"]
-- Use OR for disjunction: [description =~ "A" OR description =~ "B"]
-  - The node must satisfy AT LEAST ONE condition
-  - Example: Item[description =~ "wireless" OR description =~ "bluetooth"]
-- You can combine multiple conditions: [description =~ "A" AND description =~ "B" OR description =~ "C"]
-- Parentheses can group conditions: [(description =~ "A" OR description =~ "B") AND description =~ "C"]
+ALL semantic predicates MUST use all() or exists() wrapper. NO direct predicates allowed.
 
-Hierarchical quantifiers (for internal nodes):
-- Use exists() to check if ANY child satisfies a predicate:
-  - Step[exists(description =~ "budget")] - Steps with at least one budget-related child
-  - Objective[exists(description =~ "premium")] - Objectives with at least one premium item
-- Use all() to check prevalence/overall characteristic across ALL children:
-  - Step[all(description =~ "ergonomic")] - Steps focused on ergonomic items
-  - Objective[all(description =~ "sustainable")] - Objectives with generally sustainable items
-- exists() returns high score if ANY child matches (existential quantifier ∃)
-- all() returns score based on proportion of children matching (universal quantifier ∀)
-- These operators apply to ALL children regardless of type
+1. ALL NODES - MUST use all() or exists():
+   - all(): Item[all(description =~ "ergonomic")] - general matching
+   - exists(): Item[exists(description =~ "ergonomic")] - same for leaf nodes
+   
+   For LEAF nodes (Item): all() and exists() are semantically equivalent.
+   For CONTAINER nodes (Session, Step, Objective): 
+   - exists() = "at least one child matches"
+   - all() = "children generally match"
 
-IMPORTANT: When user asks for "Nth [semantic type]", you MUST include BOTH the semantic predicate AND the index.
-- "second furniture-related step" = Step[description =~ "furniture"][2] (NOT just Step[2])
-- "first budget-friendly item" = Item[description =~ "budget-friendly"][1]
-- "first 3 ergonomic items" = Item[description =~ "ergonomic"][1:3]
+2. INSIDE all()/exists(), you can use AND/OR:
+   - Item[all(description =~ "affordable" AND description =~ "compact")]
+   - Step[exists(description =~ "budget" OR description =~ "cheap")]
+
+NEVER USE DIRECT PREDICATES:
+❌ Item[description =~ "ergonomic"]           - INVALID
+✓ Item[all(description =~ "ergonomic")]       - VALID
+✓ Item[exists(description =~ "ergonomic")]    - VALID
+
+CHOOSING BETWEEN exists() AND all():
+- For LEAF nodes: both are equivalent, prefer all()
+- For CONTAINER nodes:
+  - exists() = "Does any child match?" → "steps with budget options"
+  - all() = "Are children generally like this?" → "premium objectives"
 
 Output format:
 - The output MUST be a single XPath-like query string.
@@ -81,141 +66,53 @@ User: second step in every session
 Output:
 /RecommendationHub/Session/Step[2]
 
-User: second home office session
+User: home office sessions
 Output:
-(/RecommendationHub/Session[context =~ "home office"])[2]
+/RecommendationHub/Session[all(context =~ "home office")]
+
+User: dinner party sessions
+Output:
+/RecommendationHub/Session[all(context =~ "dinner")]
 
 User: the third step globally
 Output:
 (/RecommendationHub/Session/Step)[3]
 
-User: first ergonomic objective
+User: first ergonomic item
 Output:
-(/RecommendationHub/Session/Step/Objective[target =~ "ergonomic"])[1]
+(/RecommendationHub/Session/Step/Objective/Item[all(description =~ "ergonomic")])[1]
 
 User: objectives in second step
 Output:
 /RecommendationHub/Session/Step[2]/Objective
 
-User: last objective in workspace planning step
+User: last objective in furniture step
 Output:
-/RecommendationHub/Session/Step[name =~ "workspace planning"]/Objective[-1]
+/RecommendationHub/Session/Step[all(name =~ "furniture")]/Objective[-1]
 
 User: globally 5th item
 Output:
 (/RecommendationHub/Session/Step/Objective/Item)[5]
 
-User: all items in a desk-related objective
+User: all items in desk objectives
 Output:
-/RecommendationHub/Session/Step/Objective[target =~ "desk"]/Item
+/RecommendationHub/Session/Step/Objective[all(target =~ "desk")]/Item
 
 User: second chair recommendation in furniture step
 Output:
-/RecommendationHub/Session/Step[description =~ "furniture"]/Objective/Item[description =~ "chair"][2]
+/RecommendationHub/Session/Step[all(description =~ "furniture")]/Objective/Item[all(description =~ "chair")][2]
 
 User: first budget item in step 1
 Output:
-/RecommendationHub/Session/Step[1]/Objective/Item[description =~ "budget"][1]
-
-User: the third recommended monitor
-Output:
-(/RecommendationHub/Session/Step/Objective/Item[description =~ "monitor"])[3]
-
-User: second item
-Output:
-(/RecommendationHub/Session/Step/Objective/Item)[2]
-
-User: first 2 ergonomic items
-Output:
-(/RecommendationHub/Session/Step/Objective/Item[description =~ "ergonomic"])[1:2]
-
-User: top 3 items in objective 1
-Output:
-/RecommendationHub/Session/Step/Objective[1]/Item[1:3]
-
-User: first 2 wireless recommendations
-Output:
-(/RecommendationHub/Session/Step/Objective/Item[description =~ "wireless"])[1:2]
-
-User: items 2 to 4 globally
-Output:
-(/RecommendationHub/Session/Step/Objective/Item)[2:4]
-
-User: items 1 and 2 in every objective
-Output:
-/RecommendationHub/Session/Step/Objective/Item[1:2]
-
-User: last 2 steps
-Output:
-(/RecommendationHub/Session/Step)[-2:]
-
-User: last 3 items globally
-Output:
-(/RecommendationHub/Session/Step/Objective/Item)[-3:]
-
-User: the last 2 budget-friendly items
-Output:
-(/RecommendationHub/Session/Step/Objective/Item[description =~ "budget"])[-2:]
-
-User: last 2 steps in every session
-Output:
-/RecommendationHub/Session/Step[-2:]
-
-User: last item in objective 1
-Output:
-/RecommendationHub/Session/Step/Objective[1]/Item[-1]
-
-User: all objectives in the tech equipment step
-Output:
-/RecommendationHub/Session/Step[name =~ "tech equipment"]/Objective
-
-User: items of the first objective in every step
-Output:
-/RecommendationHub/Session/Step/Objective[1]/Item
-
-User: second item of every objective
-Output:
-/RecommendationHub/Session/Step/Objective/Item[2]
-
-User: all premium recommendations
-Output:
-/RecommendationHub/Session/Step/Objective/Item[description =~ "premium"]
-
-User: all sessions about cooking or dinner
-Output:
-/RecommendationHub/Session[context =~ "dinner"]
-
-User: steps with budget constraints
-Output:
-/RecommendationHub/Session/Step/Objective[criteria =~ "budget"]/..
-
-User: items in the learning session
-Output:
-/RecommendationHub/Session[goal =~ "learn"]/Step/Objective/Item
-
-User: first free resource recommendation
-Output:
-(/RecommendationHub/Session/Step/Objective/Item[description =~ "free"])[1]
+/RecommendationHub/Session/Step[1]/Objective/Item[all(description =~ "budget")][1]
 
 User: ergonomic and affordable item
 Output:
-/RecommendationHub/Session/Step/Objective/Item[description =~ "ergonomic" AND description =~ "affordable"]
+/RecommendationHub/Session/Step/Objective/Item[all(description =~ "ergonomic" AND description =~ "affordable")]
 
 User: wireless or bluetooth item
 Output:
-/RecommendationHub/Session/Step/Objective/Item[description =~ "wireless" OR description =~ "bluetooth"]
-
-User: compact and adjustable chair
-Output:
-/RecommendationHub/Session/Step/Objective/Item[description =~ "compact" AND description =~ "adjustable"]
-
-User: monitor or display recommendation
-Output:
-/RecommendationHub/Session/Step/Objective/Item[description =~ "monitor" OR description =~ "display"]
-
-User: premium and sustainable product
-Output:
-/RecommendationHub/Session/Step/Objective/Item[description =~ "premium" AND description =~ "sustainable"]
+/RecommendationHub/Session/Step/Objective/Item[all(description =~ "wireless" OR description =~ "bluetooth")]
 
 User: steps that have budget items
 Output:
@@ -241,9 +138,9 @@ User: items in steps with furniture content
 Output:
 /RecommendationHub/Session/Step[exists(description =~ "furniture")]/Objective/Item
 
-User: objectives in sessions with workspace context
+User: objectives in home office sessions
 Output:
-/RecommendationHub/Session[context =~ "workspace"]/Step/Objective
+/RecommendationHub/Session[all(context =~ "home office")]/Step/Objective
 
 User: first step with tech content
 Output:
@@ -251,10 +148,26 @@ Output:
 
 User: portable and lightweight items in travel sessions
 Output:
-/RecommendationHub/Session[context =~ "travel"]/Step/Objective/Item[description =~ "portable" AND description =~ "lightweight"]
+/RecommendationHub/Session[all(context =~ "travel")]/Step/Objective/Item[all(description =~ "portable" AND description =~ "lightweight")]
 
 User: desk or chair items in furniture objectives
 Output:
-/RecommendationHub/Session/Step/Objective[target =~ "furniture"]/Item[description =~ "desk" OR description =~ "chair"]
+/RecommendationHub/Session/Step/Objective[all(target =~ "furniture")]/Item[all(description =~ "desk" OR description =~ "chair")]
+
+User: premium steps
+Output:
+/RecommendationHub/Session/Step[all(description =~ "premium")]
+
+User: sessions with ergonomic and budget items
+Output:
+/RecommendationHub/Session[exists(description =~ "ergonomic" AND description =~ "budget")]
+
+User: ergonomic items
+Output:
+/RecommendationHub/Session/Step/Objective/Item[all(description =~ "ergonomic")]
+
+User: budget items
+Output:
+/RecommendationHub/Session/Step/Objective/Item[all(description =~ "budget")]
 
 Now convert the following user request into a query.

@@ -7,69 +7,57 @@ Your task:
 
 Tree hierarchy:
 SupportSystem (root)
-├── Customer
-│   └── Ticket
-│       ├── Symptom
-│       ├── Cause
-│       └── Resolution
+├── Customer (container)
+│   └── Ticket (container)
+│       ├── Symptom (leaf)
+│       ├── Cause (leaf)
+│       └── Resolution (leaf)
 
-IMPORTANT: This is a 4-level hierarchy where:
-- Customer contains Tickets
-- Ticket contains Symptom, Cause, and Resolution (these three are SIBLINGS)
-- Symptom, Cause, and Resolution are leaf nodes at the same level
+IMPORTANT STRUCTURAL RULES:
+- This is a 4-level hierarchy: SupportSystem → Customer → Ticket → (Symptom/Cause/Resolution)
+- Symptom, Cause, and Resolution are SIBLINGS (leaf nodes at same level under Ticket)
+- Customer and Ticket are CONTAINER nodes
 - You CANNOT have a path like /Ticket/Symptom/Cause - this is INVALID
-- Each query can only target ONE leaf node type (Symptom, Cause, OR Resolution, not multiple)
+- Each query can only target ONE leaf node type (Symptom, Cause, OR Resolution)
 
 Path rules:
 - Paths are symbolic and deterministic.
-- You may ONLY use the allowed path node types: SupportSystem, Customer, Ticket, Symptom, Cause, Resolution.
+- You may ONLY use: SupportSystem, Customer, Ticket, Symptom, Cause, Resolution.
 - You may use positional indexing on container nodes, e.g., Customer[1], Ticket[2].
 - You may use positional indexing on leaf nodes, e.g., Symptom[2], Cause[1], Resolution[1].
 - You may use -1 to mean the last element, e.g., Ticket[-1].
 - You may use RANGE indexing with colon syntax: [start:end] (inclusive on both ends).
-  - Ticket[1:3] means Ticket 1, 2, and 3
-  - Symptom[1:2] means Symptom 1 and 2
 - You may use "to end" RANGE indexing: [-N:] means "last N elements".
-  - Ticket[-2:] means the last 2 Tickets
-  - Resolution[-3:] means the last 3 Resolutions
-- You may use parentheses for global indexing, e.g., (/SupportSystem/Customer/Ticket)[5] or (/SupportSystem/Customer/Ticket/Symptom)[1:3].
+- You may use parentheses for global indexing.
 - Do NOT put any free-text or semantic content in the path.
 
-Semantic predicate rules:
-- Semantic predicates are attached DIRECTLY to the node type (no / before the bracket).
-- Semantic matching uses square brackets: [ ... ].
-- Semantic matching uses the operator =~ .
-- Semantic predicates use the field name: description .
-- Semantic predicates apply to the node they are attached to.
-- Format: NodeType[description =~ "query"]
-- You CAN combine semantic predicate with positional index: NodeType[description =~ "query"][index]
-- You CAN combine semantic predicate with range index: NodeType[description =~ "query"][1:3]
+PREDICATE RULES (CRITICAL):
 
-Logical operators within predicates (same node):
-- Use AND for conjunction: [description =~ "A" AND description =~ "B"]
-  - The node must satisfy BOTH conditions
-  - Example: Ticket[description =~ "urgent" AND description =~ "billing"]
-- Use OR for disjunction: [description =~ "A" OR description =~ "B"]
-  - The node must satisfy AT LEAST ONE condition
-  - Example: Cause[description =~ "timeout" OR description =~ "connection"]
-- You can combine multiple conditions: [description =~ "A" AND description =~ "B" OR description =~ "C"]
-- Parentheses can group conditions: [(description =~ "A" OR description =~ "B") AND description =~ "C"]
+ALL semantic predicates MUST use all() or exists() wrapper. NO direct predicates allowed.
 
-Hierarchical quantifiers (for internal nodes):
-- Use exists() to check if ANY child satisfies a predicate:
-  - Customer[exists(description =~ "urgent")] - Customers with at least one urgent item
-  - Ticket[exists(description =~ "crash")] - Tickets with at least one crash-related content
-- Use all() to check prevalence/overall characteristic across ALL children:
-  - Customer[all(description =~ "resolved")] - Customers whose content is generally resolved
-  - Ticket[all(description =~ "permanent")] - Tickets with generally permanent solutions
-- exists() returns high score if ANY child matches (existential quantifier ∃)
-- all() returns score based on proportion of children matching (universal quantifier ∀)
-- These operators apply to ALL children regardless of type
+1. ALL NODES - MUST use all() or exists():
+   - all(): Symptom[all(description =~ "crash")] - general matching
+   - exists(): Symptom[exists(description =~ "crash")] - same for leaf nodes
+   
+   For LEAF nodes (Symptom, Cause, Resolution): all() and exists() are semantically equivalent.
+   For CONTAINER nodes (Customer, Ticket): 
+   - exists() = "at least one child matches"
+   - all() = "children generally match"
 
-IMPORTANT: When user asks for "Nth [semantic type]", you MUST include BOTH the semantic predicate AND the index.
-- "second login issue ticket" = Ticket[description =~ "login issue"][2] (NOT just Ticket[2])
-- "first network symptom" = Symptom[description =~ "network"][1]
-- "first 3 software causes" = Cause[description =~ "software"][1:3]
+2. INSIDE all()/exists(), you can use AND/OR:
+   - Cause[all(description =~ "timeout" AND description =~ "network")]
+   - Customer[exists(description =~ "urgent" OR description =~ "critical")]
+
+NEVER USE DIRECT PREDICATES:
+❌ Symptom[description =~ "crash"]           - INVALID
+✓ Symptom[all(description =~ "crash")]       - VALID
+✓ Symptom[exists(description =~ "crash")]    - VALID
+
+CHOOSING BETWEEN exists() AND all():
+- For LEAF nodes: both are equivalent, prefer all()
+- For CONTAINER nodes:
+  - exists() = "Does any child match?" → "customers with urgent tickets"
+  - all() = "Are children generally like this?" → "resolved customers"
 
 Output format:
 - The output MUST be a single XPath-like query string.
@@ -80,17 +68,21 @@ User: second ticket for every customer
 Output:
 /SupportSystem/Customer/Ticket[2]
 
-User: second enterprise customer
+User: enterprise customers
 Output:
-(/SupportSystem/Customer[description =~ "enterprise"])[2]
+/SupportSystem/Customer[all(description =~ "enterprise")]
+
+User: VIP customers
+Output:
+/SupportSystem/Customer[all(description =~ "VIP")]
 
 User: the third ticket globally
 Output:
 (/SupportSystem/Customer/Ticket)[3]
 
-User: first billing issue ticket
+User: first billing issue symptom
 Output:
-(/SupportSystem/Customer/Ticket[description =~ "billing issue"])[1]
+(/SupportSystem/Customer/Ticket/Symptom[all(description =~ "billing")])[1]
 
 User: tickets for second customer
 Output:
@@ -98,7 +90,7 @@ Output:
 
 User: last ticket for VIP customer
 Output:
-/SupportSystem/Customer[description =~ "VIP"]/Ticket[-1]
+/SupportSystem/Customer[all(description =~ "VIP")]/Ticket[-1]
 
 User: globally 5th symptom
 Output:
@@ -106,111 +98,19 @@ Output:
 
 User: all symptoms in a critical ticket
 Output:
-/SupportSystem/Customer/Ticket[description =~ "critical"]/Symptom
+/SupportSystem/Customer/Ticket[all(description =~ "critical")]/Symptom
 
 User: second performance symptom in a server ticket
 Output:
-/SupportSystem/Customer/Ticket[description =~ "server"]/Symptom[description =~ "performance"][2]
+/SupportSystem/Customer/Ticket[all(description =~ "server")]/Symptom[all(description =~ "performance")][2]
 
-User: first timeout cause in customer 1's tickets
+User: urgent and billing tickets
 Output:
-/SupportSystem/Customer[1]/Ticket/Cause[description =~ "timeout"][1]
-
-User: the third escalated resolution
-Output:
-(/SupportSystem/Customer/Ticket/Resolution[description =~ "escalated"])[3]
-
-User: second hardware cause
-Output:
-(/SupportSystem/Customer/Ticket/Cause[description =~ "hardware"])[2]
-
-User: first 2 network symptoms
-Output:
-(/SupportSystem/Customer/Ticket/Symptom[description =~ "network"])[1:2]
-
-User: top 3 tickets for customer 1
-Output:
-/SupportSystem/Customer[1]/Ticket[1:3]
-
-User: first 2 workaround resolutions
-Output:
-(/SupportSystem/Customer/Ticket/Resolution[description =~ "workaround"])[1:2]
-
-User: tickets 2 to 4 globally
-Output:
-(/SupportSystem/Customer/Ticket)[2:4]
-
-User: symptoms 1 and 2 in every ticket
-Output:
-/SupportSystem/Customer/Ticket/Symptom[1:2]
-
-User: last 2 tickets
-Output:
-(/SupportSystem/Customer/Ticket)[-2:]
-
-User: last 3 resolutions globally
-Output:
-(/SupportSystem/Customer/Ticket/Resolution)[-3:]
-
-User: the last 2 urgent tickets
-Output:
-(/SupportSystem/Customer/Ticket[description =~ "urgent"])[-2:]
-
-User: last 2 tickets for every customer
-Output:
-/SupportSystem/Customer/Ticket[-2:]
-
-User: last cause in ticket 1
-Output:
-/SupportSystem/Customer/Ticket[1]/Cause[-1]
-
-User: all resolutions for the enterprise customer
-Output:
-/SupportSystem/Customer[description =~ "enterprise"]/Ticket/Resolution
-
-User: causes of the first ticket for every customer
-Output:
-/SupportSystem/Customer/Ticket[1]/Cause
-
-User: second resolution of every ticket
-Output:
-/SupportSystem/Customer/Ticket/Resolution[2]
-
-User: all pending resolutions
-Output:
-/SupportSystem/Customer/Ticket/Resolution[description =~ "pending"]
-
-User: symptoms in high priority tickets
-Output:
-/SupportSystem/Customer/Ticket[description =~ "high priority"]/Symptom
-
-User: all causes related to database
-Output:
-/SupportSystem/Customer/Ticket/Cause[description =~ "database"]
-
-User: resolutions involving refund
-Output:
-/SupportSystem/Customer/Ticket/Resolution[description =~ "refund"]
-
-User: urgent and billing ticket
-Output:
-/SupportSystem/Customer/Ticket[description =~ "urgent" AND description =~ "billing"]
+/SupportSystem/Customer/Ticket[all(description =~ "urgent" AND description =~ "billing")]
 
 User: timeout or connection cause
 Output:
-/SupportSystem/Customer/Ticket/Cause[description =~ "timeout" OR description =~ "connection"]
-
-User: critical and escalated ticket
-Output:
-/SupportSystem/Customer/Ticket[description =~ "critical" AND description =~ "escalated"]
-
-User: permanent or definitive resolution
-Output:
-/SupportSystem/Customer/Ticket/Resolution[description =~ "permanent" OR description =~ "definitive"]
-
-User: slow and intermittent symptom
-Output:
-/SupportSystem/Customer/Ticket/Symptom[description =~ "slow" AND description =~ "intermittent"]
+/SupportSystem/Customer/Ticket/Cause[all(description =~ "timeout" OR description =~ "connection")]
 
 User: customers that have urgent issues
 Output:
@@ -238,7 +138,7 @@ Output:
 
 User: resolutions in tickets from VIP customers
 Output:
-/SupportSystem/Customer[description =~ "VIP"]/Ticket/Resolution
+/SupportSystem/Customer[all(description =~ "VIP")]/Ticket/Resolution
 
 User: first customer with critical issues
 Output:
@@ -246,10 +146,26 @@ Output:
 
 User: network and timeout symptoms in server tickets
 Output:
-/SupportSystem/Customer/Ticket[description =~ "server"]/Symptom[description =~ "network" AND description =~ "timeout"]
+/SupportSystem/Customer/Ticket[all(description =~ "server")]/Symptom[all(description =~ "network" AND description =~ "timeout")]
 
 User: hardware or software causes in enterprise customers
 Output:
-/SupportSystem/Customer[description =~ "enterprise"]/Ticket/Cause[description =~ "hardware" OR description =~ "software"]
+/SupportSystem/Customer[all(description =~ "enterprise")]/Ticket/Cause[all(description =~ "hardware" OR description =~ "software")]
+
+User: tickets with crash and memory issues
+Output:
+/SupportSystem/Customer/Ticket[exists(description =~ "crash" AND description =~ "memory")]
+
+User: high priority tickets
+Output:
+/SupportSystem/Customer/Ticket[all(description =~ "high priority")]
+
+User: crash symptoms
+Output:
+/SupportSystem/Customer/Ticket/Symptom[all(description =~ "crash")]
+
+User: database causes
+Output:
+/SupportSystem/Customer/Ticket/Cause[all(description =~ "database")]
 
 Now convert the following user request into a query.

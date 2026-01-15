@@ -1,0 +1,2054 @@
+{
+  "timestamp": "20260114_172940_610860",
+  "query": "/Itinerary/Day/POI[description =~ \"historic\" AND description =~ \"architecture\"]",
+  "data_file": "travel_memory_3day.xml",
+  "execution_time_ms": 10073.891916999997,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[description =~ \"historic\" AND description =~ \"architecture\"]",
+      "action": "type_match",
+      "nodes_before_count": 3,
+      "nodes_after_count": 8,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands",
+          "name": "Toronto Islands",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "POI",
+        "found_count": 8
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[description =~ \"historic\" AND description =~ \"architecture\"]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 8,
+      "nodes_after_count": 8,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands",
+          "name": "Toronto Islands",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 1e-09
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 0.30769230769230776
+        },
+        {
+          "path": "Itinerary > Day 1 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 8.999999927999997e-09
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.2222222222222222
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 0.999999999
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 1e-09
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands",
+          "name": "Toronto Islands",
+          "type": "POI",
+          "score": 0.04545454545454548
+        },
+        {
+          "path": "Itinerary > Day 3 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 0.9545454545454545
+        }
+      ],
+      "details": {
+        "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+        "predicate_type": "AND",
+        "scoring_result": {
+          "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+          "predicate_ast": {
+            "operator": "AND",
+            "conditions": [
+              {
+                "operator": "ATOMIC",
+                "conditions": [
+                  {
+                    "field": "description",
+                    "value": "historic"
+                  }
+                ]
+              },
+              {
+                "operator": "ATOMIC",
+                "conditions": [
+                  {
+                    "field": "description",
+                    "value": "architecture"
+                  }
+                ]
+              }
+            ]
+          },
+          "config": {
+            "top_k": 3,
+            "score_threshold": 0.01
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "St. Lawrence Market",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "and_composition",
+                  "operator": "AND",
+                  "formula": "σ(Σ log(π/(1-π)))",
+                  "child_scores": [
+                    0.2,
+                    1e-09
+                  ],
+                  "individual_log_odds": [
+                    -1.3862943611198906,
+                    -20.72326583594641
+                  ],
+                  "accumulated_log_odds": -22.1095601970663,
+                  "result": 1e-09,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "historic"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.2
+                        ],
+                        "score": 0.2,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "architecture"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0
+                        ],
+                        "score": 1e-09,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "final_score": 1e-09
+            },
+            {
+              "node_idx": 1,
+              "node_name": "CN Tower",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "and_composition",
+                  "operator": "AND",
+                  "formula": "σ(Σ log(π/(1-π)))",
+                  "child_scores": [
+                    0.1,
+                    0.8
+                  ],
+                  "individual_log_odds": [
+                    -2.197224577336219,
+                    1.3862943611198908
+                  ],
+                  "accumulated_log_odds": -0.8109302162163283,
+                  "result": 0.30769230769230776,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "historic"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.1
+                        ],
+                        "score": 0.1,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "architecture"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.8
+                        ],
+                        "score": 0.8,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "final_score": 0.30769230769230776
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Art Gallery of Ontario",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "and_composition",
+                  "operator": "AND",
+                  "formula": "σ(Σ log(π/(1-π)))",
+                  "child_scores": [
+                    1e-09,
+                    0.9
+                  ],
+                  "individual_log_odds": [
+                    -20.72326583594641,
+                    2.1972245773362196
+                  ],
+                  "accumulated_log_odds": -18.526041258610192,
+                  "result": 8.999999927999997e-09,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "historic"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0
+                        ],
+                        "score": 1e-09,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "architecture"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.9
+                        ],
+                        "score": 0.9,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "final_score": 8.999999927999997e-09
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Royal Ontario Museum",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "and_composition",
+                  "operator": "AND",
+                  "formula": "σ(Σ log(π/(1-π)))",
+                  "child_scores": [
+                    0.3,
+                    0.4
+                  ],
+                  "individual_log_odds": [
+                    -0.8472978603872036,
+                    -0.4054651081081643
+                  ],
+                  "accumulated_log_odds": -1.2527629684953678,
+                  "result": 0.2222222222222222,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "historic"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.3
+                        ],
+                        "score": 0.3,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "architecture"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.4
+                        ],
+                        "score": 0.4,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "final_score": 0.2222222222222222
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Casa Loma",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "and_composition",
+                  "operator": "AND",
+                  "formula": "σ(Σ log(π/(1-π)))",
+                  "child_scores": [
+                    0.999999999,
+                    0.9
+                  ],
+                  "individual_log_odds": [
+                    20.723265864228342,
+                    2.1972245773362196
+                  ],
+                  "accumulated_log_odds": 22.92049044156456,
+                  "result": 0.999999999,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "historic"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          1.0
+                        ],
+                        "score": 0.999999999,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "architecture"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.9
+                        ],
+                        "score": 0.9,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "final_score": 0.999999999
+            },
+            {
+              "node_idx": 5,
+              "node_name": "Rivoli",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "and_composition",
+                  "operator": "AND",
+                  "formula": "σ(Σ log(π/(1-π)))",
+                  "child_scores": [
+                    1e-09,
+                    1e-09
+                  ],
+                  "individual_log_odds": [
+                    -20.72326583594641,
+                    -20.72326583594641
+                  ],
+                  "accumulated_log_odds": -41.44653167189282,
+                  "result": 1e-09,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "historic"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0
+                        ],
+                        "score": 1e-09,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "architecture"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.0
+                        ],
+                        "score": 1e-09,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "final_score": 1e-09
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Toronto Islands",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "and_composition",
+                  "operator": "AND",
+                  "formula": "σ(Σ log(π/(1-π)))",
+                  "child_scores": [
+                    0.1,
+                    0.3
+                  ],
+                  "individual_log_odds": [
+                    -2.197224577336219,
+                    -0.8472978603872036
+                  ],
+                  "accumulated_log_odds": -3.0445224377234226,
+                  "result": 0.04545454545454548,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "historic"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.1
+                        ],
+                        "score": 0.1,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "architecture"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.3
+                        ],
+                        "score": 0.3,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "final_score": 0.04545454545454548
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Distillery District",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "and_composition",
+                  "operator": "AND",
+                  "formula": "σ(Σ log(π/(1-π)))",
+                  "child_scores": [
+                    0.9,
+                    0.7
+                  ],
+                  "individual_log_odds": [
+                    2.1972245773362196,
+                    0.8472978603872034
+                  ],
+                  "accumulated_log_odds": 3.044522437723423,
+                  "result": 0.9545454545454545,
+                  "child_traces": [
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "historic"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.9
+                        ],
+                        "score": 0.9,
+                        "cached": true
+                      }
+                    ],
+                    [
+                      {
+                        "type": "atomic",
+                        "condition": {
+                          "field": "description",
+                          "value": "architecture"
+                        },
+                        "num_descriptions_scored": 1,
+                        "individual_scores": [
+                          0.7
+                        ],
+                        "score": 0.7,
+                        "cached": true
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "final_score": 0.9545454545454545
+            }
+          ],
+          "batch_scoring": {
+            "predicate_values": [
+              "historic",
+              "architecture"
+            ],
+            "per_predicate_stats": [
+              {
+                "value": "historic",
+                "num_descriptions": 8,
+                "num_nodes": 8,
+                "call_time_ms": 4691.43
+              },
+              {
+                "value": "architecture",
+                "num_descriptions": 8,
+                "num_nodes": 8,
+                "call_time_ms": 5381.61
+              }
+            ],
+            "total_scorer_calls": 2,
+            "total_descriptions_scored": 16
+          },
+          "ranking": [
+            {
+              "idx": 4,
+              "score": 0.999999999,
+              "name": "Casa Loma"
+            },
+            {
+              "idx": 7,
+              "score": 0.9545454545454545,
+              "name": "Distillery District"
+            },
+            {
+              "idx": 1,
+              "score": 0.30769230769230776,
+              "name": "CN Tower"
+            },
+            {
+              "idx": 3,
+              "score": 0.2222222222222222,
+              "name": "Royal Ontario Museum"
+            },
+            {
+              "idx": 6,
+              "score": 0.04545454545454548,
+              "name": "Toronto Islands"
+            },
+            {
+              "idx": 2,
+              "score": 8.999999927999997e-09,
+              "name": "Art Gallery of Ontario"
+            },
+            {
+              "idx": 0,
+              "score": 1e-09,
+              "name": "St. Lawrence Market"
+            },
+            {
+              "idx": 5,
+              "score": 1e-09,
+              "name": "Rivoli"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+      "predicate_ast": {
+        "operator": "AND",
+        "conditions": [
+          {
+            "operator": "ATOMIC",
+            "conditions": [
+              {
+                "field": "description",
+                "value": "historic"
+              }
+            ]
+          },
+          {
+            "operator": "ATOMIC",
+            "conditions": [
+              {
+                "field": "description",
+                "value": "architecture"
+              }
+            ]
+          }
+        ]
+      },
+      "config": {
+        "top_k": 3,
+        "score_threshold": 0.01
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "St. Lawrence Market",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "and_composition",
+              "operator": "AND",
+              "formula": "σ(Σ log(π/(1-π)))",
+              "child_scores": [
+                0.2,
+                1e-09
+              ],
+              "individual_log_odds": [
+                -1.3862943611198906,
+                -20.72326583594641
+              ],
+              "accumulated_log_odds": -22.1095601970663,
+              "result": 1e-09,
+              "child_traces": [
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "historic"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.2
+                    ],
+                    "score": 0.2,
+                    "cached": true
+                  }
+                ],
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "architecture"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.0
+                    ],
+                    "score": 1e-09,
+                    "cached": true
+                  }
+                ]
+              ]
+            }
+          ],
+          "final_score": 1e-09
+        },
+        {
+          "node_idx": 1,
+          "node_name": "CN Tower",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "and_composition",
+              "operator": "AND",
+              "formula": "σ(Σ log(π/(1-π)))",
+              "child_scores": [
+                0.1,
+                0.8
+              ],
+              "individual_log_odds": [
+                -2.197224577336219,
+                1.3862943611198908
+              ],
+              "accumulated_log_odds": -0.8109302162163283,
+              "result": 0.30769230769230776,
+              "child_traces": [
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "historic"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.1
+                    ],
+                    "score": 0.1,
+                    "cached": true
+                  }
+                ],
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "architecture"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.8
+                    ],
+                    "score": 0.8,
+                    "cached": true
+                  }
+                ]
+              ]
+            }
+          ],
+          "final_score": 0.30769230769230776
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Art Gallery of Ontario",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "and_composition",
+              "operator": "AND",
+              "formula": "σ(Σ log(π/(1-π)))",
+              "child_scores": [
+                1e-09,
+                0.9
+              ],
+              "individual_log_odds": [
+                -20.72326583594641,
+                2.1972245773362196
+              ],
+              "accumulated_log_odds": -18.526041258610192,
+              "result": 8.999999927999997e-09,
+              "child_traces": [
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "historic"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.0
+                    ],
+                    "score": 1e-09,
+                    "cached": true
+                  }
+                ],
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "architecture"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.9
+                    ],
+                    "score": 0.9,
+                    "cached": true
+                  }
+                ]
+              ]
+            }
+          ],
+          "final_score": 8.999999927999997e-09
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Royal Ontario Museum",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "and_composition",
+              "operator": "AND",
+              "formula": "σ(Σ log(π/(1-π)))",
+              "child_scores": [
+                0.3,
+                0.4
+              ],
+              "individual_log_odds": [
+                -0.8472978603872036,
+                -0.4054651081081643
+              ],
+              "accumulated_log_odds": -1.2527629684953678,
+              "result": 0.2222222222222222,
+              "child_traces": [
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "historic"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.3
+                    ],
+                    "score": 0.3,
+                    "cached": true
+                  }
+                ],
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "architecture"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.4
+                    ],
+                    "score": 0.4,
+                    "cached": true
+                  }
+                ]
+              ]
+            }
+          ],
+          "final_score": 0.2222222222222222
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Casa Loma",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "and_composition",
+              "operator": "AND",
+              "formula": "σ(Σ log(π/(1-π)))",
+              "child_scores": [
+                0.999999999,
+                0.9
+              ],
+              "individual_log_odds": [
+                20.723265864228342,
+                2.1972245773362196
+              ],
+              "accumulated_log_odds": 22.92049044156456,
+              "result": 0.999999999,
+              "child_traces": [
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "historic"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      1.0
+                    ],
+                    "score": 0.999999999,
+                    "cached": true
+                  }
+                ],
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "architecture"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.9
+                    ],
+                    "score": 0.9,
+                    "cached": true
+                  }
+                ]
+              ]
+            }
+          ],
+          "final_score": 0.999999999
+        },
+        {
+          "node_idx": 5,
+          "node_name": "Rivoli",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "and_composition",
+              "operator": "AND",
+              "formula": "σ(Σ log(π/(1-π)))",
+              "child_scores": [
+                1e-09,
+                1e-09
+              ],
+              "individual_log_odds": [
+                -20.72326583594641,
+                -20.72326583594641
+              ],
+              "accumulated_log_odds": -41.44653167189282,
+              "result": 1e-09,
+              "child_traces": [
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "historic"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.0
+                    ],
+                    "score": 1e-09,
+                    "cached": true
+                  }
+                ],
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "architecture"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.0
+                    ],
+                    "score": 1e-09,
+                    "cached": true
+                  }
+                ]
+              ]
+            }
+          ],
+          "final_score": 1e-09
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Toronto Islands",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "and_composition",
+              "operator": "AND",
+              "formula": "σ(Σ log(π/(1-π)))",
+              "child_scores": [
+                0.1,
+                0.3
+              ],
+              "individual_log_odds": [
+                -2.197224577336219,
+                -0.8472978603872036
+              ],
+              "accumulated_log_odds": -3.0445224377234226,
+              "result": 0.04545454545454548,
+              "child_traces": [
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "historic"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.1
+                    ],
+                    "score": 0.1,
+                    "cached": true
+                  }
+                ],
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "architecture"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.3
+                    ],
+                    "score": 0.3,
+                    "cached": true
+                  }
+                ]
+              ]
+            }
+          ],
+          "final_score": 0.04545454545454548
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Distillery District",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "and_composition",
+              "operator": "AND",
+              "formula": "σ(Σ log(π/(1-π)))",
+              "child_scores": [
+                0.9,
+                0.7
+              ],
+              "individual_log_odds": [
+                2.1972245773362196,
+                0.8472978603872034
+              ],
+              "accumulated_log_odds": 3.044522437723423,
+              "result": 0.9545454545454545,
+              "child_traces": [
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "historic"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.9
+                    ],
+                    "score": 0.9,
+                    "cached": true
+                  }
+                ],
+                [
+                  {
+                    "type": "atomic",
+                    "condition": {
+                      "field": "description",
+                      "value": "architecture"
+                    },
+                    "num_descriptions_scored": 1,
+                    "individual_scores": [
+                      0.7
+                    ],
+                    "score": 0.7,
+                    "cached": true
+                  }
+                ]
+              ]
+            }
+          ],
+          "final_score": 0.9545454545454545
+        }
+      ],
+      "batch_scoring": {
+        "predicate_values": [
+          "historic",
+          "architecture"
+        ],
+        "per_predicate_stats": [
+          {
+            "value": "historic",
+            "num_descriptions": 8,
+            "num_nodes": 8,
+            "call_time_ms": 4691.43
+          },
+          {
+            "value": "architecture",
+            "num_descriptions": 8,
+            "num_nodes": 8,
+            "call_time_ms": 5381.61
+          }
+        ],
+        "total_scorer_calls": 2,
+        "total_descriptions_scored": 16
+      },
+      "ranking": [
+        {
+          "idx": 4,
+          "score": 0.999999999,
+          "name": "Casa Loma"
+        },
+        {
+          "idx": 7,
+          "score": 0.9545454545454545,
+          "name": "Distillery District"
+        },
+        {
+          "idx": 1,
+          "score": 0.30769230769230776,
+          "name": "CN Tower"
+        },
+        {
+          "idx": 3,
+          "score": 0.2222222222222222,
+          "name": "Royal Ontario Museum"
+        },
+        {
+          "idx": 6,
+          "score": 0.04545454545454548,
+          "name": "Toronto Islands"
+        },
+        {
+          "idx": 2,
+          "score": 8.999999927999997e-09,
+          "name": "Art Gallery of Ontario"
+        },
+        {
+          "idx": 0,
+          "score": 1e-09,
+          "name": "St. Lawrence Market"
+        },
+        {
+          "idx": 5,
+          "score": 1e-09,
+          "name": "Rivoli"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+        "predicate_ast": {
+          "operator": "AND",
+          "conditions": [
+            {
+              "operator": "ATOMIC",
+              "conditions": [
+                {
+                  "field": "description",
+                  "value": "historic"
+                }
+              ]
+            },
+            {
+              "operator": "ATOMIC",
+              "conditions": [
+                {
+                  "field": "description",
+                  "value": "architecture"
+                }
+              ]
+            }
+          ]
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "St. Lawrence Market",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "and_composition",
+                "operator": "AND",
+                "formula": "σ(Σ log(π/(1-π)))",
+                "child_scores": [
+                  0.2,
+                  1e-09
+                ],
+                "individual_log_odds": [
+                  -1.3862943611198906,
+                  -20.72326583594641
+                ],
+                "accumulated_log_odds": -22.1095601970663,
+                "result": 1e-09,
+                "child_traces": [
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "historic"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.2
+                      ],
+                      "score": 0.2,
+                      "cached": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "architecture"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.0
+                      ],
+                      "score": 1e-09,
+                      "cached": true
+                    }
+                  ]
+                ]
+              }
+            ],
+            "final_score": 1e-09
+          },
+          {
+            "node_idx": 1,
+            "node_name": "CN Tower",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "and_composition",
+                "operator": "AND",
+                "formula": "σ(Σ log(π/(1-π)))",
+                "child_scores": [
+                  0.1,
+                  0.8
+                ],
+                "individual_log_odds": [
+                  -2.197224577336219,
+                  1.3862943611198908
+                ],
+                "accumulated_log_odds": -0.8109302162163283,
+                "result": 0.30769230769230776,
+                "child_traces": [
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "historic"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.1
+                      ],
+                      "score": 0.1,
+                      "cached": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "architecture"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.8
+                      ],
+                      "score": 0.8,
+                      "cached": true
+                    }
+                  ]
+                ]
+              }
+            ],
+            "final_score": 0.30769230769230776
+          },
+          {
+            "node_idx": 2,
+            "node_name": "Art Gallery of Ontario",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "and_composition",
+                "operator": "AND",
+                "formula": "σ(Σ log(π/(1-π)))",
+                "child_scores": [
+                  1e-09,
+                  0.9
+                ],
+                "individual_log_odds": [
+                  -20.72326583594641,
+                  2.1972245773362196
+                ],
+                "accumulated_log_odds": -18.526041258610192,
+                "result": 8.999999927999997e-09,
+                "child_traces": [
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "historic"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.0
+                      ],
+                      "score": 1e-09,
+                      "cached": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "architecture"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.9
+                      ],
+                      "score": 0.9,
+                      "cached": true
+                    }
+                  ]
+                ]
+              }
+            ],
+            "final_score": 8.999999927999997e-09
+          },
+          {
+            "node_idx": 3,
+            "node_name": "Royal Ontario Museum",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "and_composition",
+                "operator": "AND",
+                "formula": "σ(Σ log(π/(1-π)))",
+                "child_scores": [
+                  0.3,
+                  0.4
+                ],
+                "individual_log_odds": [
+                  -0.8472978603872036,
+                  -0.4054651081081643
+                ],
+                "accumulated_log_odds": -1.2527629684953678,
+                "result": 0.2222222222222222,
+                "child_traces": [
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "historic"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.3
+                      ],
+                      "score": 0.3,
+                      "cached": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "architecture"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.4
+                      ],
+                      "score": 0.4,
+                      "cached": true
+                    }
+                  ]
+                ]
+              }
+            ],
+            "final_score": 0.2222222222222222
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Casa Loma",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "and_composition",
+                "operator": "AND",
+                "formula": "σ(Σ log(π/(1-π)))",
+                "child_scores": [
+                  0.999999999,
+                  0.9
+                ],
+                "individual_log_odds": [
+                  20.723265864228342,
+                  2.1972245773362196
+                ],
+                "accumulated_log_odds": 22.92049044156456,
+                "result": 0.999999999,
+                "child_traces": [
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "historic"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        1.0
+                      ],
+                      "score": 0.999999999,
+                      "cached": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "architecture"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.9
+                      ],
+                      "score": 0.9,
+                      "cached": true
+                    }
+                  ]
+                ]
+              }
+            ],
+            "final_score": 0.999999999
+          },
+          {
+            "node_idx": 5,
+            "node_name": "Rivoli",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "and_composition",
+                "operator": "AND",
+                "formula": "σ(Σ log(π/(1-π)))",
+                "child_scores": [
+                  1e-09,
+                  1e-09
+                ],
+                "individual_log_odds": [
+                  -20.72326583594641,
+                  -20.72326583594641
+                ],
+                "accumulated_log_odds": -41.44653167189282,
+                "result": 1e-09,
+                "child_traces": [
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "historic"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.0
+                      ],
+                      "score": 1e-09,
+                      "cached": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "architecture"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.0
+                      ],
+                      "score": 1e-09,
+                      "cached": true
+                    }
+                  ]
+                ]
+              }
+            ],
+            "final_score": 1e-09
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Toronto Islands",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "and_composition",
+                "operator": "AND",
+                "formula": "σ(Σ log(π/(1-π)))",
+                "child_scores": [
+                  0.1,
+                  0.3
+                ],
+                "individual_log_odds": [
+                  -2.197224577336219,
+                  -0.8472978603872036
+                ],
+                "accumulated_log_odds": -3.0445224377234226,
+                "result": 0.04545454545454548,
+                "child_traces": [
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "historic"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.1
+                      ],
+                      "score": 0.1,
+                      "cached": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "architecture"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.3
+                      ],
+                      "score": 0.3,
+                      "cached": true
+                    }
+                  ]
+                ]
+              }
+            ],
+            "final_score": 0.04545454545454548
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Distillery District",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "and_composition",
+                "operator": "AND",
+                "formula": "σ(Σ log(π/(1-π)))",
+                "child_scores": [
+                  0.9,
+                  0.7
+                ],
+                "individual_log_odds": [
+                  2.1972245773362196,
+                  0.8472978603872034
+                ],
+                "accumulated_log_odds": 3.044522437723423,
+                "result": 0.9545454545454545,
+                "child_traces": [
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "historic"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.9
+                      ],
+                      "score": 0.9,
+                      "cached": true
+                    }
+                  ],
+                  [
+                    {
+                      "type": "atomic",
+                      "condition": {
+                        "field": "description",
+                        "value": "architecture"
+                      },
+                      "num_descriptions_scored": 1,
+                      "individual_scores": [
+                        0.7
+                      ],
+                      "score": 0.7,
+                      "cached": true
+                    }
+                  ]
+                ]
+              }
+            ],
+            "final_score": 0.9545454545454545
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 4,
+            "score": 0.999999999,
+            "name": "Casa Loma"
+          },
+          {
+            "idx": 7,
+            "score": 0.9545454545454545,
+            "name": "Distillery District"
+          },
+          {
+            "idx": 1,
+            "score": 0.30769230769230776,
+            "name": "CN Tower"
+          },
+          {
+            "idx": 3,
+            "score": 0.2222222222222222,
+            "name": "Royal Ontario Museum"
+          },
+          {
+            "idx": 6,
+            "score": 0.04545454545454548,
+            "name": "Toronto Islands"
+          },
+          {
+            "idx": 2,
+            "score": 8.999999927999997e-09,
+            "name": "Art Gallery of Ontario"
+          },
+          {
+            "idx": 0,
+            "score": 1e-09,
+            "name": "St. Lawrence Market"
+          },
+          {
+            "idx": 5,
+            "score": 1e-09,
+            "name": "Rivoli"
+          }
+        ]
+      }
+    ],
+    "bayesian_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Day 1 > St. Lawrence Market",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+              "score": 1e-09,
+              "log_odds": -20.72326583594641
+            }
+          ],
+          "accumulated_log_odds": -20.72326583594641,
+          "final_score": 1.0000000000000009e-09
+        },
+        {
+          "node_path": "Itinerary > Day 1 > CN Tower",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+              "score": 0.30769230769230776,
+              "log_odds": -0.8109302162163284
+            }
+          ],
+          "accumulated_log_odds": -0.8109302162163284,
+          "final_score": 0.30769230769230776
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Art Gallery of Ontario",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+              "score": 8.999999927999997e-09,
+              "log_odds": -18.526041258610192
+            }
+          ],
+          "accumulated_log_odds": -18.526041258610192,
+          "final_score": 8.999999927999997e-09
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+              "score": 0.2222222222222222,
+              "log_odds": -1.252762968495368
+            }
+          ],
+          "accumulated_log_odds": -1.252762968495368,
+          "final_score": 0.2222222222222222
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Casa Loma",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+              "score": 0.999999999,
+              "log_odds": 20.723265864228342
+            }
+          ],
+          "accumulated_log_odds": 20.723265864228342,
+          "final_score": 0.9999999989999999
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Rivoli",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+              "score": 1e-09,
+              "log_odds": -20.72326583594641
+            }
+          ],
+          "accumulated_log_odds": -20.72326583594641,
+          "final_score": 1.0000000000000009e-09
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Toronto Islands",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+              "score": 0.04545454545454548,
+              "log_odds": -3.0445224377234226
+            }
+          ],
+          "accumulated_log_odds": -3.0445224377234226,
+          "final_score": 0.04545454545454548
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Distillery District",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "description =~ \"historic\" AND description =~ \"architecture\"",
+              "score": 0.9545454545454545,
+              "log_odds": 3.0445224377234212
+            }
+          ],
+          "accumulated_log_odds": 3.0445224377234212,
+          "final_score": 0.9545454545454545
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 8,
+    "threshold": 0.01,
+    "top_k": 3,
+    "after_filter_count": 3,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Day 2 > Casa Loma",
+        "score": 0.9999999989999999,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 3 > Distillery District",
+        "score": 0.9545454545454545,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 1 > CN Tower",
+        "score": 0.30769230769230776,
+        "type": "POI"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Day 2 > Casa Loma",
+      "score": 0.9999999989999999,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Casa Loma",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 30",
+        "highlights": [
+          "Castle architecture",
+          "City viewpoints"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 3 > Distillery District",
+      "score": 0.9545454545454545,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Distillery District",
+        "time_block": "4:00 PM - 5:30 PM",
+        "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+        "travel_method": "Walk",
+        "expected_cost": "Free",
+        "highlights": [
+          "Historic architecture",
+          "Artisan boutiques"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 1 > CN Tower",
+      "score": 0.30769230769230776,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "CN Tower",
+        "time_block": "11:00 AM - 12:30 PM",
+        "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 43",
+        "highlights": [
+          "Glass floor",
+          "360 Restaurant",
+          "EdgeWalk"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 1,
+    "matched_count": 3,
+    "execution_time_ms": 10073.891916999997,
+    "has_bayesian_fusion": true,
+    "num_nodes_before_filter": 8,
+    "num_nodes_after_filter": 3
+  }
+}

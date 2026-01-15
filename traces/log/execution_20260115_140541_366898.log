@@ -1,0 +1,174 @@
+Query: /Itinerary/Day/Restaurant[all(description =~ "italian" OR description =~ "french")]
+Data File: travel_memory_3day.xml
+Execution Time: 778.56ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260115_140541_366898] Executing query: /Itinerary/Day/Restaurant[all(description =~ "italian" OR description =~ "french")]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Day, Restaurant[all(description =~ "italian" OR description =~ "french")]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 3: Restaurant[all(description =~ "italian" OR description =~ "french")] ---
+Found 10 Restaurant nodes across 3 parent(s)
+Applying semantic predicate: all(description =~ "italian" OR description =~ "french")
+Scoring predicate: all(description =~ "italian" OR description =~ "french") (atomic conditions: ['italian', 'french'])
+  Collected 20 descriptions for 2 unique predicate value(s)
+  Made 2 scorer call(s) for 20 total descriptions
+  Node 0 (Queen Street Warehouse): score = 0.5397
+  Node 1 (Buca Yorkville): score = 0.9990
+  Node 2 (The Rex Hotel Jazz & Blues Bar): score = 0.4249
+  Node 3 (Pow Wow Cafe): score = 0.0083
+  Node 4 (Annona Restaurant): score = 0.9683
+  Node 5 (DaiLo): score = 0.0040
+  Node 6 (Beauty Barbecue & Smokehouse): score = 0.0249
+  Node 7 (Amsterdam BrewHouse): score = 0.2098
+  Node 8 (Cluny Bistro): score = 0.9993
+  Node 9 (Jazz Bistro): score = 0.7272
+After step: 10 nodes remaining
+
+=== Bayesian Fusion ===
+  Itinerary > Day 1 > Queen Street Warehouse: log_odds=0.159 → score=0.5397
+  Itinerary > Day 1 > Buca Yorkville: log_odds=6.913 → score=0.9990
+  Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar: log_odds=-0.303 → score=0.4249
+  Itinerary > Day 2 > Pow Wow Cafe: log_odds=-4.781 → score=0.0083
+  Itinerary > Day 2 > Annona Restaurant: log_odds=3.420 → score=0.9683
+  Itinerary > Day 2 > DaiLo: log_odds=-5.527 → score=0.0040
+  Itinerary > Day 3 > Beauty Barbecue & Smokehouse: log_odds=-3.669 → score=0.0249
+  Itinerary > Day 3 > Amsterdam BrewHouse: log_odds=-1.326 → score=0.2098
+  Itinerary > Day 3 > Cluny Bistro: log_odds=7.321 → score=0.9993
+  Itinerary > Day 3 > Jazz Bistro: log_odds=0.980 → score=0.7272
+
+=== Final Filtering (threshold=0.01, top_k=3) ===
+  Filtered: 10 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 778.56ms
+
+============================================================
+Bayesian Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 1 > Queen Street Warehouse (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.5397, log_odds=0.1592
+  Accumulated log-odds: 0.1592
+  Final score: 0.5397
+
+Itinerary > Day 1 > Buca Yorkville (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.9990, log_odds=6.9130
+  Accumulated log-odds: 6.9130
+  Final score: 0.9990
+
+Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.4249, log_odds=-0.3028
+  Accumulated log-odds: -0.3028
+  Final score: 0.4249
+
+Itinerary > Day 2 > Pow Wow Cafe (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.0083, log_odds=-4.7806
+  Accumulated log-odds: -4.7806
+  Final score: 0.0083
+
+Itinerary > Day 2 > Annona Restaurant (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.9683, log_odds=3.4198
+  Accumulated log-odds: 3.4198
+  Final score: 0.9683
+
+Itinerary > Day 2 > DaiLo (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.0040, log_odds=-5.5269
+  Accumulated log-odds: -5.5269
+  Final score: 0.0040
+
+Itinerary > Day 3 > Beauty Barbecue & Smokehouse (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.0249, log_odds=-3.6694
+  Accumulated log-odds: -3.6694
+  Final score: 0.0249
+
+Itinerary > Day 3 > Amsterdam BrewHouse (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.2098, log_odds=-1.3260
+  Accumulated log-odds: -1.3260
+  Final score: 0.2098
+
+Itinerary > Day 3 > Cluny Bistro (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.9993, log_odds=7.3214
+  Accumulated log-odds: 7.3214
+  Final score: 0.9993
+
+Itinerary > Day 3 > Jazz Bistro (Restaurant):
+  Step 2: all(description =~ "italian" OR description =~ "french")
+    score=0.7272, log_odds=0.9803
+  Accumulated log-odds: 0.9803
+  Final score: 0.7272
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 10 nodes
+Threshold: 0.01
+Top-K: 3
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Itinerary > Day 3 > Cluny Bistro (score: 0.9993)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Cluny Bistro",
+  "time_block": "6:00 PM - 7:30 PM",
+  "description": "French-inspired bistro serving classic and modern dishes.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 50-70",
+  "highlights": [
+    "Elegant decor",
+    "French pastries"
+  ]
+}
+
+2. Itinerary > Day 1 > Buca Yorkville (score: 0.9990)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Buca Yorkville",
+  "time_block": "5:30 PM - 7:00 PM",
+  "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 50-70",
+  "highlights": [
+    "Handmade pasta",
+    "Elegant ambiance"
+  ]
+}
+
+3. Itinerary > Day 2 > Annona Restaurant (score: 0.9683)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Annona Restaurant",
+  "time_block": "1:30 PM - 2:30 PM",
+  "description": "Sophisticated international cuisine in a bright, modern setting.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 30-40",
+  "highlights": [
+    "Patio seating",
+    "Refined dishes"
+  ]
+}

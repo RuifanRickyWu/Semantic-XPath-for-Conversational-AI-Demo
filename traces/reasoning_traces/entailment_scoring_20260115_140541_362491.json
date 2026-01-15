@@ -1,0 +1,124 @@
+{
+  "timestamp": "20260115_140541_362491",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "historic",
+  "hypothesis": "This is related to historic.",
+  "nodes": [
+    {
+      "id": "5677838144_main",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+      "premise": "POI: St. Lawrence Market - Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+      "score": 0.9865315556526184
+    },
+    {
+      "id": "5677838224_main",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+      "premise": "POI: CN Tower - Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+      "score": 0.36243537068367004
+    },
+    {
+      "id": "5677874368_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+      "premise": "POI: Art Gallery of Ontario - Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+      "score": 0.010286846198141575
+    },
+    {
+      "id": "5677909952_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history.",
+      "premise": "POI: Royal Ontario Museum - World-renowned museum showcasing art, culture, and natural history.",
+      "score": 0.8189677596092224
+    },
+    {
+      "id": "5677911792_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+      "premise": "POI: Casa Loma - Historic castle featuring secret passages, gardens, and panoramic views.",
+      "score": 0.9984011054039001
+    },
+    {
+      "id": "5677938144_main",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+      "premise": "POI: Rivoli - Live music venue showcasing jazz, indie, and emerging artists.",
+      "score": 0.24238234758377075
+    },
+    {
+      "id": "5677939984_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+      "premise": "POI: Toronto Islands - Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+      "score": 0.2835337221622467
+    },
+    {
+      "id": "5677958224_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+      "premise": "POI: Distillery District - Historic pedestrian village with cobblestone streets and artisan shops.",
+      "score": 0.9980452060699463
+    }
+  ],
+  "results": [
+    {
+      "node_id": "5677838144_main",
+      "node_type": "POI",
+      "score": 0.9865315556526184,
+      "reasoning": "Entailment score: 0.9865"
+    },
+    {
+      "node_id": "5677838224_main",
+      "node_type": "POI",
+      "score": 0.36243537068367004,
+      "reasoning": "Entailment score: 0.3624"
+    },
+    {
+      "node_id": "5677874368_main",
+      "node_type": "POI",
+      "score": 0.010286846198141575,
+      "reasoning": "Entailment score: 0.0103"
+    },
+    {
+      "node_id": "5677909952_main",
+      "node_type": "POI",
+      "score": 0.8189677596092224,
+      "reasoning": "Entailment score: 0.8190"
+    },
+    {
+      "node_id": "5677911792_main",
+      "node_type": "POI",
+      "score": 0.9984011054039001,
+      "reasoning": "Entailment score: 0.9984"
+    },
+    {
+      "node_id": "5677938144_main",
+      "node_type": "POI",
+      "score": 0.24238234758377075,
+      "reasoning": "Entailment score: 0.2424"
+    },
+    {
+      "node_id": "5677939984_main",
+      "node_type": "POI",
+      "score": 0.2835337221622467,
+      "reasoning": "Entailment score: 0.2835"
+    },
+    {
+      "node_id": "5677958224_main",
+      "node_type": "POI",
+      "score": 0.9980452060699463,
+      "reasoning": "Entailment score: 0.9980"
+    }
+  ]
+}

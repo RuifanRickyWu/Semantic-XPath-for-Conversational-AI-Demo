@@ -1,0 +1,160 @@
+Query: /Itinerary/Day/POI[exists(description =~ "museum")]
+Data File: travel_memory_3day.xml
+Execution Time: 0.34ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260115_140256_684310] Executing query: /Itinerary/Day/POI[exists(description =~ "museum")]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Day, POI[exists(description =~ "museum")]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 3: POI[exists(description =~ "museum")] ---
+Found 8 POI nodes across 3 parent(s)
+Applying semantic predicate: exists(description =~ "museum")
+Scoring predicate: exists(description =~ "museum") (atomic conditions: ['museum'])
+  Collected 0 descriptions for 0 unique predicate value(s)
+  Made 0 scorer call(s) for 0 total descriptions
+  Node 0 (St. Lawrence Market): score = 0.9844
+  Node 1 (CN Tower): score = 0.9844
+  Node 2 (Art Gallery of Ontario): score = 0.9844
+  Node 3 (Royal Ontario Museum): score = 0.9844
+  Node 4 (Casa Loma): score = 0.9844
+  Node 5 (Rivoli): score = 0.9844
+  Node 6 (Toronto Islands): score = 0.9844
+  Node 7 (Distillery District): score = 0.9844
+After step: 8 nodes remaining
+
+=== Bayesian Fusion ===
+  Itinerary > Day 1 > St. Lawrence Market: log_odds=4.143 → score=0.9844
+  Itinerary > Day 1 > CN Tower: log_odds=4.143 → score=0.9844
+  Itinerary > Day 1 > Art Gallery of Ontario: log_odds=4.143 → score=0.9844
+  Itinerary > Day 2 > Royal Ontario Museum: log_odds=4.143 → score=0.9844
+  Itinerary > Day 2 > Casa Loma: log_odds=4.143 → score=0.9844
+  Itinerary > Day 2 > Rivoli: log_odds=4.143 → score=0.9844
+  Itinerary > Day 3 > Toronto Islands: log_odds=4.143 → score=0.9844
+  Itinerary > Day 3 > Distillery District: log_odds=4.143 → score=0.9844
+
+=== Final Filtering (threshold=0.01, top_k=3) ===
+  Filtered: 8 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 0.34ms
+
+============================================================
+Bayesian Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 1 > St. Lawrence Market (POI):
+  Step 2: exists(description =~ "museum")
+    score=0.9844, log_odds=4.1431
+  Accumulated log-odds: 4.1431
+  Final score: 0.9844
+
+Itinerary > Day 1 > CN Tower (POI):
+  Step 2: exists(description =~ "museum")
+    score=0.9844, log_odds=4.1431
+  Accumulated log-odds: 4.1431
+  Final score: 0.9844
+
+Itinerary > Day 1 > Art Gallery of Ontario (POI):
+  Step 2: exists(description =~ "museum")
+    score=0.9844, log_odds=4.1431
+  Accumulated log-odds: 4.1431
+  Final score: 0.9844
+
+Itinerary > Day 2 > Royal Ontario Museum (POI):
+  Step 2: exists(description =~ "museum")
+    score=0.9844, log_odds=4.1431
+  Accumulated log-odds: 4.1431
+  Final score: 0.9844
+
+Itinerary > Day 2 > Casa Loma (POI):
+  Step 2: exists(description =~ "museum")
+    score=0.9844, log_odds=4.1431
+  Accumulated log-odds: 4.1431
+  Final score: 0.9844
+
+Itinerary > Day 2 > Rivoli (POI):
+  Step 2: exists(description =~ "museum")
+    score=0.9844, log_odds=4.1431
+  Accumulated log-odds: 4.1431
+  Final score: 0.9844
+
+Itinerary > Day 3 > Toronto Islands (POI):
+  Step 2: exists(description =~ "museum")
+    score=0.9844, log_odds=4.1431
+  Accumulated log-odds: 4.1431
+  Final score: 0.9844
+
+Itinerary > Day 3 > Distillery District (POI):
+  Step 2: exists(description =~ "museum")
+    score=0.9844, log_odds=4.1431
+  Accumulated log-odds: 4.1431
+  Final score: 0.9844
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 8 nodes
+Threshold: 0.01
+Top-K: 3
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Itinerary > Day 1 > St. Lawrence Market (score: 0.9844)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "St. Lawrence Market",
+  "time_block": "9:00 AM - 10:30 AM",
+  "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 10-15",
+  "highlights": [
+    "Fresh produce",
+    "Specialty foods",
+    "Local artisans"
+  ]
+}
+
+2. Itinerary > Day 1 > CN Tower (score: 0.9844)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "CN Tower",
+  "time_block": "11:00 AM - 12:30 PM",
+  "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 43",
+  "highlights": [
+    "Glass floor",
+    "360 Restaurant",
+    "EdgeWalk"
+  ]
+}
+
+3. Itinerary > Day 1 > Art Gallery of Ontario (score: 0.9844)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Art Gallery of Ontario",
+  "time_block": "2:30 PM - 4:00 PM",
+  "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 25",
+  "highlights": [
+    "Group of Seven",
+    "Modern architecture"
+  ]
+}

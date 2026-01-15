@@ -1,0 +1,158 @@
+Query: /Itinerary/Day/POI[all(description =~ "outdoor")]
+Data File: travel_memory_3day.xml
+Execution Time: 140.90ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260115_140522_056422] Executing query: /Itinerary/Day/POI[all(description =~ "outdoor")]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Day, POI[all(description =~ "outdoor")]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 3: POI[all(description =~ "outdoor")] ---
+Found 8 POI nodes across 3 parent(s)
+Applying semantic predicate: all(description =~ "outdoor")
+Scoring predicate: all(description =~ "outdoor") (atomic conditions: ['outdoor'])
+  Collected 8 descriptions for 1 unique predicate value(s)
+  Made 1 scorer call(s) for 8 total descriptions
+  Node 0 (St. Lawrence Market): score = 0.9112
+  Node 1 (CN Tower): score = 0.8615
+  Node 2 (Art Gallery of Ontario): score = 0.0556
+  Node 3 (Royal Ontario Museum): score = 0.5293
+  Node 4 (Casa Loma): score = 0.9814
+  Node 5 (Rivoli): score = 0.9706
+  Node 6 (Toronto Islands): score = 0.9982
+  Node 7 (Distillery District): score = 0.9637
+After step: 8 nodes remaining
+
+=== Bayesian Fusion ===
+  Itinerary > Day 1 > St. Lawrence Market: log_odds=2.329 → score=0.9112
+  Itinerary > Day 1 > CN Tower: log_odds=1.828 → score=0.8615
+  Itinerary > Day 1 > Art Gallery of Ontario: log_odds=-2.832 → score=0.0556
+  Itinerary > Day 2 > Royal Ontario Museum: log_odds=0.118 → score=0.5293
+  Itinerary > Day 2 > Casa Loma: log_odds=3.963 → score=0.9814
+  Itinerary > Day 2 > Rivoli: log_odds=3.497 → score=0.9706
+  Itinerary > Day 3 > Toronto Islands: log_odds=6.305 → score=0.9982
+  Itinerary > Day 3 > Distillery District: log_odds=3.279 → score=0.9637
+
+=== Final Filtering (threshold=0.01, top_k=3) ===
+  Filtered: 8 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 140.90ms
+
+============================================================
+Bayesian Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 1 > St. Lawrence Market (POI):
+  Step 2: all(description =~ "outdoor")
+    score=0.9112, log_odds=2.3288
+  Accumulated log-odds: 2.3288
+  Final score: 0.9112
+
+Itinerary > Day 1 > CN Tower (POI):
+  Step 2: all(description =~ "outdoor")
+    score=0.8615, log_odds=1.8280
+  Accumulated log-odds: 1.8280
+  Final score: 0.8615
+
+Itinerary > Day 1 > Art Gallery of Ontario (POI):
+  Step 2: all(description =~ "outdoor")
+    score=0.0556, log_odds=-2.8323
+  Accumulated log-odds: -2.8323
+  Final score: 0.0556
+
+Itinerary > Day 2 > Royal Ontario Museum (POI):
+  Step 2: all(description =~ "outdoor")
+    score=0.5293, log_odds=0.1175
+  Accumulated log-odds: 0.1175
+  Final score: 0.5293
+
+Itinerary > Day 2 > Casa Loma (POI):
+  Step 2: all(description =~ "outdoor")
+    score=0.9814, log_odds=3.9632
+  Accumulated log-odds: 3.9632
+  Final score: 0.9814
+
+Itinerary > Day 2 > Rivoli (POI):
+  Step 2: all(description =~ "outdoor")
+    score=0.9706, log_odds=3.4967
+  Accumulated log-odds: 3.4967
+  Final score: 0.9706
+
+Itinerary > Day 3 > Toronto Islands (POI):
+  Step 2: all(description =~ "outdoor")
+    score=0.9982, log_odds=6.3051
+  Accumulated log-odds: 6.3051
+  Final score: 0.9982
+
+Itinerary > Day 3 > Distillery District (POI):
+  Step 2: all(description =~ "outdoor")
+    score=0.9637, log_odds=3.2791
+  Accumulated log-odds: 3.2791
+  Final score: 0.9637
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 8 nodes
+Threshold: 0.01
+Top-K: 3
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Itinerary > Day 3 > Toronto Islands (score: 0.9982)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Toronto Islands",
+  "time_block": "11:00 AM - 2:00 PM",
+  "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+  "travel_method": "Walk & Ferry",
+  "expected_cost": "CAD 8.50",
+  "highlights": [
+    "Waterfront views",
+    "Centre Island"
+  ]
+}
+
+2. Itinerary > Day 2 > Casa Loma (score: 0.9814)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Casa Loma",
+  "time_block": "3:00 PM - 5:00 PM",
+  "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 30",
+  "highlights": [
+    "Castle architecture",
+    "City viewpoints"
+  ]
+}
+
+3. Itinerary > Day 2 > Rivoli (score: 0.9706)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Rivoli",
+  "time_block": "8:00 PM - 10:00 PM",
+  "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 10-20",
+  "highlights": [
+    "Historic venue",
+    "Diverse genres"
+  ]
+}

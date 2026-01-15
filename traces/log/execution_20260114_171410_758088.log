@@ -1,0 +1,128 @@
+Query: /Itinerary/Day/POI[description =~ "historic" AND description =~ "free"]
+Data File: travel_memory_3day.xml
+Execution Time: 16850.34ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260114_171410_758088] Executing query: /Itinerary/Day/POI[description =~ "historic" AND description =~ "free"]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Day, POI[description =~ "historic" AND description =~ "free"]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 3: POI[description =~ "historic" AND description =~ "free"] ---
+Found 8 POI nodes across 3 parent(s)
+Applying semantic predicate: description =~ "historic" AND description =~ "free"
+Scoring predicate: description =~ "historic" AND description =~ "free" (atomic conditions: ['historic', 'free'])
+  Collected 16 descriptions for 2 unique predicate value(s)
+  Made 2 scorer call(s) for 16 total descriptions
+  Node 0 (St. Lawrence Market): score = 0.0000
+  Node 1 (CN Tower): score = 0.0000
+  Node 2 (Art Gallery of Ontario): score = 0.0000
+  Node 3 (Royal Ontario Museum): score = 0.0000
+  Node 4 (Casa Loma): score = 0.5000
+  Node 5 (Rivoli): score = 0.0000
+  Node 6 (Toronto Islands): score = 0.0000
+  Node 7 (Distillery District): score = 0.0000
+After step: 8 nodes remaining
+
+=== Bayesian Fusion ===
+  Itinerary > Day 1 > St. Lawrence Market: log_odds=-20.723 → score=0.0000
+  Itinerary > Day 1 > CN Tower: log_odds=-20.723 → score=0.0000
+  Itinerary > Day 1 > Art Gallery of Ontario: log_odds=-20.723 → score=0.0000
+  Itinerary > Day 2 > Royal Ontario Museum: log_odds=-20.723 → score=0.0000
+  Itinerary > Day 2 > Casa Loma: log_odds=0.000 → score=0.5000
+  Itinerary > Day 2 > Rivoli: log_odds=-20.723 → score=0.0000
+  Itinerary > Day 3 > Toronto Islands: log_odds=-20.723 → score=0.0000
+  Itinerary > Day 3 > Distillery District: log_odds=-18.526 → score=0.0000
+
+=== Final Filtering (threshold=0.01, top_k=3) ===
+  Filtered: 8 → 1 nodes
+
+Final result: 1 nodes (sorted by score)
+⏱️  Query execution time: 16850.34ms
+
+============================================================
+Bayesian Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 1 > St. Lawrence Market (POI):
+  Step 2: description =~ "historic" AND description =~ "free"
+    score=0.0000, log_odds=-20.7233
+  Accumulated log-odds: -20.7233
+  Final score: 0.0000
+
+Itinerary > Day 1 > CN Tower (POI):
+  Step 2: description =~ "historic" AND description =~ "free"
+    score=0.0000, log_odds=-20.7233
+  Accumulated log-odds: -20.7233
+  Final score: 0.0000
+
+Itinerary > Day 1 > Art Gallery of Ontario (POI):
+  Step 2: description =~ "historic" AND description =~ "free"
+    score=0.0000, log_odds=-20.7233
+  Accumulated log-odds: -20.7233
+  Final score: 0.0000
+
+Itinerary > Day 2 > Royal Ontario Museum (POI):
+  Step 2: description =~ "historic" AND description =~ "free"
+    score=0.0000, log_odds=-20.7233
+  Accumulated log-odds: -20.7233
+  Final score: 0.0000
+
+Itinerary > Day 2 > Casa Loma (POI):
+  Step 2: description =~ "historic" AND description =~ "free"
+    score=0.5000, log_odds=0.0000
+  Accumulated log-odds: 0.0000
+  Final score: 0.5000
+
+Itinerary > Day 2 > Rivoli (POI):
+  Step 2: description =~ "historic" AND description =~ "free"
+    score=0.0000, log_odds=-20.7233
+  Accumulated log-odds: -20.7233
+  Final score: 0.0000
+
+Itinerary > Day 3 > Toronto Islands (POI):
+  Step 2: description =~ "historic" AND description =~ "free"
+    score=0.0000, log_odds=-20.7233
+  Accumulated log-odds: -20.7233
+  Final score: 0.0000
+
+Itinerary > Day 3 > Distillery District (POI):
+  Step 2: description =~ "historic" AND description =~ "free"
+    score=0.0000, log_odds=-18.5260
+  Accumulated log-odds: -18.5260
+  Final score: 0.0000
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 8 nodes
+Threshold: 0.01
+Top-K: 3
+After: 1 nodes
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+
+1. Itinerary > Day 2 > Casa Loma (score: 0.5000)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Casa Loma",
+  "time_block": "3:00 PM - 5:00 PM",
+  "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 30",
+  "highlights": [
+    "Castle architecture",
+    "City viewpoints"
+  ]
+}

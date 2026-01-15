@@ -62,7 +62,8 @@ class PredicateHandler:
         self,
         scorer: PredicateScorer,
         top_k: int = 5,
-        score_threshold: float = 0.5
+        score_threshold: float = 0.5,
+        schema_node_types: Optional[Set[str]] = None
     ):
         """
         Initialize the predicate handler.
@@ -71,10 +72,13 @@ class PredicateHandler:
             scorer: PredicateScorer implementation (LLM, Entailment, or Cosine)
             top_k: Maximum number of nodes to return (used for step-level filtering)
             score_threshold: Minimum score threshold (used for step-level filtering)
+            schema_node_types: Set of recognized node types from schema (e.g., {"Day", "POI", "Restaurant"})
+                              Used to distinguish hierarchical children from XML sub-elements.
         """
         self.scorer = scorer
         self.top_k = top_k
         self.score_threshold = score_threshold
+        self.schema_node_types = schema_node_types or set()
         
         # Cache for atomic scores: (node_id, predicate_value) -> mean_score
         self._atomic_score_cache: Dict[Tuple[int, str], float] = {}
@@ -84,6 +88,30 @@ class PredicateHandler:
         
         # Track which descriptions belong to which node
         self._node_descriptions: Dict[int, List[str]] = {}  # node_id -> list of desc_ids
+    
+    def _get_hierarchical_children(self, node: ET.Element, child_type: Optional[str] = None) -> List[ET.Element]:
+        """
+        Get hierarchical children of a node (filtering out XML sub-elements).
+        
+        For container nodes like Day, returns children like POI, Restaurant.
+        For leaf nodes like POI, returns empty list (name, description are not hierarchical children).
+        
+        Args:
+            node: XML element
+            child_type: Optional specific child type to filter for
+            
+        Returns:
+            List of child elements that are recognized node types
+        """
+        if child_type:
+            return list(node.findall(child_type))
+        
+        # Filter to only include recognized node types from schema
+        if self.schema_node_types:
+            return [child for child in node if child.tag in self.schema_node_types]
+        else:
+            # Fallback: return all children (old behavior)
+            return list(node)
     
     # =========================================================================
     # Phase 1: Collect Scoring Tasks
@@ -147,16 +175,17 @@ class PredicateHandler:
                     self._add_node_descriptions_to_tasks(node, cond.value, tasks)
         
         elif predicate.operator in ("EXISTS", "ALL"):
-            # Collect for children - if child_type is None, iterate all children
+            # Collect for children - use hierarchical children (not XML sub-elements)
             if predicate.child_predicate:
-                if predicate.child_type:
-                    # Specific child type
-                    children = list(node.findall(predicate.child_type))
+                children = self._get_hierarchical_children(node, predicate.child_type)
+                
+                if children:
+                    # Container node - collect from children
+                    for child in children:
+                        self._collect_tasks_for_node(child, predicate.child_predicate, tasks)
                 else:
-                    # All children (any type)
-                    children = list(node)
-                for child in children:
-                    self._collect_tasks_for_node(child, predicate.child_predicate, tasks)
+                    # Leaf node - collect from node itself using inner predicate
+                    self._collect_tasks_for_node(node, predicate.child_predicate, tasks)
     
     def _add_node_descriptions_to_tasks(
         self,
@@ -606,29 +635,34 @@ class PredicateHandler:
         
         Formula: π(p) = 1 - ∏_{u∈ch(v)}(1 - π_u(p))
         
-        If child_type is None, iterates over ALL children (any type).
+        For leaf nodes (no hierarchical children): scores the node itself directly.
+        For container nodes: Noisy-OR over all children.
         """
         if not predicate.child_predicate:
             return 0.5
         
-        # Find children - if child_type is None, get all children
-        if predicate.child_type:
-            children = list(node.findall(predicate.child_type))
-            child_type_desc = predicate.child_type
-        else:
-            children = list(node)  # All direct children
-            child_type_desc = "*"  # Wildcard - all types
+        # Find hierarchical children (not XML sub-elements like name, description)
+        children = self._get_hierarchical_children(node, predicate.child_type)
+        child_type_desc = predicate.child_type or "*"
         
         if not children:
+            # Leaf node - score the node itself using the inner predicate
+            inner_trace = []
+            result = self._score_compound_predicate(
+                node, predicate.child_predicate, inner_trace, execution_log
+            )
+            
             trace_steps.append({
                 "type": "exists_quantifier",
                 "operator": "EXISTS",
                 "child_type": child_type_desc,
                 "num_children": 0,
-                "child_scores": [],
-                "result": EPSILON
+                "is_leaf_node": True,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": inner_trace,
+                "result": result
             })
-            return EPSILON
+            return result
         
         # Score each child against the child predicate (uses cached scores)
         child_scores = []
@@ -682,31 +716,34 @@ class PredicateHandler:
         
         Formula: π(p) = (α + Σπ_u) / (α + β + n)
         
-        If child_type is None, iterates over ALL children (any type).
+        For leaf nodes (no hierarchical children): scores the node itself directly.
+        For container nodes: Beta-Bernoulli over all children.
         """
         if not predicate.child_predicate:
             return 0.5
         
-        # Find children - if child_type is None, get all children
-        if predicate.child_type:
-            children = list(node.findall(predicate.child_type))
-            child_type_desc = predicate.child_type
-        else:
-            children = list(node)  # All direct children
-            child_type_desc = "*"  # Wildcard - all types
+        # Find hierarchical children (not XML sub-elements like name, description)
+        children = self._get_hierarchical_children(node, predicate.child_type)
+        child_type_desc = predicate.child_type or "*"
         
         if not children:
-            prior_mean = self.BETA_ALPHA / (self.BETA_ALPHA + self.BETA_BETA)
+            # Leaf node - score the node itself using the inner predicate
+            inner_trace = []
+            result = self._score_compound_predicate(
+                node, predicate.child_predicate, inner_trace, execution_log
+            )
+            
             trace_steps.append({
                 "type": "all_quantifier",
                 "operator": "ALL",
                 "child_type": child_type_desc,
                 "num_children": 0,
-                "child_scores": [],
-                "result": prior_mean,
-                "note": "No children - returning prior mean"
+                "is_leaf_node": True,
+                "note": "Leaf node - scoring node itself",
+                "inner_predicate_trace": inner_trace,
+                "result": result
             })
-            return prior_mean
+            return result
         
         # Score each child against the child predicate (uses cached scores)
         child_scores = []

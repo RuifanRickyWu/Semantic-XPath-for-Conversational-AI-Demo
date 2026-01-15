@@ -57,9 +57,33 @@ where:
 
 These posteriors are produced by a calibrated semantic scoring model.
 
-## AND and OR Inside a Predicate
+## Predicate Structure
 
-When a predicate contains multiple atomic conditions, conjunction and disjunction are resolved **within a single node**.
+**ALL semantic predicates MUST use `all()` or `exists()` wrapper.** No direct predicates allowed.
+
+### Unified Syntax
+
+For ALL nodes (leaf or container), predicates must be wrapped:
+- `Node[all(inner_predicate)]`
+- `Node[exists(inner_predicate)]`
+
+The inner predicate can contain AND/OR operators:
+- `POI[all(description =~ "outdoor" AND description =~ "free")]`
+- `Day[exists(description =~ "museum" OR description =~ "gallery")]`
+
+### Semantic Behavior
+
+| Node Type | `all(pred)` | `exists(pred)` |
+|-----------|-------------|----------------|
+| Leaf | Score node itself: π(pred) | Score node itself: π(pred) |
+| Container | Beta-Bernoulli over children | Noisy-OR over children |
+
+For **leaf nodes**, `all()` and `exists()` are semantically equivalent.
+For **container nodes**, the quantifier determines the aggregation method.
+
+## AND and OR Operators
+
+When a predicate contains multiple atomic conditions, conjunction and disjunction are resolved.
 
 ### Disjunction (OR)
 
@@ -74,9 +98,9 @@ For a predicate `p = c1 AND c2 AND ... AND ck`, evidence is aggregated in log-od
 - `ℓ_v(p) = Σ_{j=1..k} log( π_v(cj) / (1 − π_v(cj)) )`
 - `π_v(p) = sigmoid(ℓ_v(p))`
 
-## Existential and Global Predicates over Hierarchy
+## Existential and Global Predicates (for Container Nodes)
 
-Internal nodes without textual attributes infer semantic predicates from child evidence using explicit quantifiers.
+Container nodes infer semantic predicates from child evidence using **required** explicit quantifiers.
 
 ### Existential Predicates (`exists`)
 

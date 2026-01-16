@@ -10,56 +10,63 @@ import xml.etree.ElementTree as ET
 
 
 # =============================================================================
-# Predicate AST Models
+# Predicate AST Models (New Syntax)
 # =============================================================================
 
 @dataclass
-class AtomicCondition:
+class SemanticCondition:
     """
-    Single atomic condition: field =~ "value"
+    Semantic condition: sem(content =~ "value")
     
-    Represents a leaf-level semantic match condition.
+    Represents a semantic match on the node's own content.
+    The 'content' field aggregates all textual fields of the node.
     """
-    field: str  # e.g., "description", "name", "context"
-    value: str  # e.g., "museum", "italian"
+    field: str  # "content" for aggregated content, or specific field name
+    value: str  # The semantic query, e.g., "museum", "italian"
     
     def __repr__(self):
-        return f'{self.field} =~ "{self.value}"'
+        return f'sem({self.field} =~ "{self.value}")'
     
     def to_dict(self) -> Dict[str, Any]:
-        return {"field": self.field, "value": self.value}
+        return {"type": "sem", "field": self.field, "value": self.value}
 
 
 @dataclass
 class CompoundPredicate:
     """
-    Compound predicate with logical operators.
+    Compound predicate with logical and aggregation operators.
     
-    Supports:
-    - ATOMIC: Single atomic condition
+    New Syntax Operators:
+    - SEM: Semantic match on node itself (local only, no subtree)
     - AND: Conjunction of predicates (log-odds aggregation)
     - OR: Disjunction of predicates (Noisy-OR)
-    - EXISTS: Existential quantifier over children (at least one child matches)
-    - ALL: Universal quantifier over children (Beta-Bernoulli prevalence)
+    - EXIST: Existential quantifier - Noisy-OR over specified children
+    - MASS: Prevalence quantifier - Beta-Bernoulli over specified children
+    
+    Key semantic distinction:
+    - sem() looks at the node's OWN content only
+    - exist()/mass() aggregate scores from CHILDREN
     """
-    operator: str  # "AND", "OR", "ATOMIC", "EXISTS", "ALL"
-    conditions: List[Union[AtomicCondition, 'CompoundPredicate']] = field(default_factory=list)
-    child_predicate: Optional['CompoundPredicate'] = None  # For EXISTS/ALL
-    child_type: Optional[str] = None  # Target child node type for EXISTS/ALL
+    operator: str  # "SEM", "AND", "OR", "EXIST", "MASS"
+    conditions: List[Union[SemanticCondition, 'CompoundPredicate']] = field(default_factory=list)
+    child_predicate: Optional['CompoundPredicate'] = None  # For EXIST/MASS
+    child_type: Optional[str] = None  # Target child node type for EXIST/MASS
     
     def __repr__(self):
-        if self.operator == "ATOMIC":
-            return str(self.conditions[0]) if self.conditions else "ATOMIC()"
+        if self.operator == "SEM":
+            return str(self.conditions[0]) if self.conditions else "sem()"
         elif self.operator == "AND":
             return " AND ".join(str(c) for c in self.conditions)
         elif self.operator == "OR":
             return " OR ".join(str(c) for c in self.conditions)
-        elif self.operator == "EXISTS":
-            # New syntax: exists(predicate) - no child type required
-            return f"exists({self.child_predicate})"
-        elif self.operator == "ALL":
-            # New syntax: all(predicate) - no child type required
-            return f"all({self.child_predicate})"
+        elif self.operator == "EXIST":
+            if self.child_type:
+                return f"exist({self.child_type}[{self.child_predicate}])"
+            return f"exist({self.child_predicate})"
+        elif self.operator == "MASS":
+            if self.child_type:
+                return f"mass({self.child_type}[{self.child_predicate}])"
+            return f"mass({self.child_predicate})"
         return f"{self.operator}({self.conditions})"
     
     def to_dict(self) -> Dict[str, Any]:
@@ -75,22 +82,25 @@ class CompoundPredicate:
             result["child_type"] = self.child_type
         return result
     
-    def get_all_atomic_values(self) -> List[str]:
-        """Extract all atomic condition values for batch scoring."""
+    def get_all_semantic_values(self) -> List[str]:
+        """Extract all semantic condition values for batch scoring."""
         values = []
-        if self.operator == "ATOMIC":
-            if self.conditions:
+        if self.operator == "SEM":
+            if self.conditions and isinstance(self.conditions[0], SemanticCondition):
                 values.append(self.conditions[0].value)
         elif self.operator in ("AND", "OR"):
             for cond in self.conditions:
                 if isinstance(cond, CompoundPredicate):
-                    values.extend(cond.get_all_atomic_values())
-                elif isinstance(cond, AtomicCondition):
+                    values.extend(cond.get_all_semantic_values())
+                elif isinstance(cond, SemanticCondition):
                     values.append(cond.value)
-        elif self.operator in ("EXISTS", "ALL"):
+        elif self.operator in ("EXIST", "MASS"):
             if self.child_predicate:
-                values.extend(self.child_predicate.get_all_atomic_values())
+                values.extend(self.child_predicate.get_all_semantic_values())
         return values
+    
+    # Alias for consistency
+    get_all_atomic_values = get_all_semantic_values
 
 
 # =============================================================================

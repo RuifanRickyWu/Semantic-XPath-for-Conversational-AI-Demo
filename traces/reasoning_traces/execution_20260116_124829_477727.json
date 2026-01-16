@@ -1,0 +1,275 @@
+{
+  "timestamp": "20260116_124829_477727",
+  "query": "/Itinerary/Day[@index='2']/POI",
+  "data_file": "travel_memory_3day.xml",
+  "execution_time_ms": 0.10949999999976257,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day[2]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day[2]",
+      "action": "positional_index",
+      "nodes_before_count": 3,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "index": {
+          "start": 2,
+          "type": "single"
+        },
+        "selected_count": 1,
+        "groups_processed": 1,
+        "group_details": [
+          {
+            "group_id": 0,
+            "group_size": 3,
+            "selected_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Rivoli",
+          "name": "Rivoli",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "POI",
+        "found_count": 3
+      }
+    }
+  ],
+  "scoring_traces": [],
+  "scoring_details": {
+    "step_scores": [],
+    "bayesian_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "node_type": "POI",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Casa Loma",
+          "node_type": "POI",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Rivoli",
+          "node_type": "POI",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 3,
+    "threshold": 0.01,
+    "top_k": 5,
+    "after_filter_count": 3,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Day 2 > Royal Ontario Museum",
+        "score": 1.0,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 2 > Casa Loma",
+        "score": 1.0,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 2 > Rivoli",
+        "score": 1.0,
+        "type": "POI"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Day 2 > Royal Ontario Museum",
+      "score": 1.0,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Royal Ontario Museum",
+        "time_block": "11:00 AM - 1:00 PM",
+        "description": "World-renowned museum showcasing art, culture, and natural history.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 23",
+        "highlights": [
+          "Dinosaurs",
+          "Chinese architecture",
+          "Bloor Street design"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Casa Loma",
+      "score": 1.0,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Casa Loma",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 30",
+        "highlights": [
+          "Castle architecture",
+          "City viewpoints"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Rivoli",
+      "score": 1.0,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Rivoli",
+        "time_block": "8:00 PM - 10:00 PM",
+        "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-20",
+        "highlights": [
+          "Historic venue",
+          "Diverse genres"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 0,
+    "matched_count": 3,
+    "execution_time_ms": 0.10949999999976257,
+    "has_bayesian_fusion": true,
+    "num_nodes_before_filter": 3,
+    "num_nodes_after_filter": 3
+  }
+}

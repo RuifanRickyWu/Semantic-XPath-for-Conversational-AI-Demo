@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MovieDatabase>
+  <Genre>
+    <genre_name>Horror</genre_name>
+    <description>Films designed to frighten and invoke fear through suspense, violence, and supernatural elements.</description>
+    
+    <Movie>
+      <title>The Shining</title>
+      <year>1980</year>
+      <director>Stanley Kubrick</director>
+      <description>A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence.</description>
+      <rating>8.4</rating>
+      <duration>146 min</duration>
+      <cast>Jack Nicholson, Shelley Duvall, Danny Lloyd</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Get Out</title>
+      <year>2017</year>
+      <director>Jordan Peele</director>
+      <description>A young African-American visits his white girlfriend's parents for the weekend, uncovering a disturbing secret.</description>
+      <rating>7.7</rating>
+      <duration>104 min</duration>
+      <cast>Daniel Kaluuya, Allison Williams, Bradley Whitford</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Hereditary</title>
+      <year>2018</year>
+      <director>Ari Aster</director>
+      <description>A grieving family is haunted by tragic and disturbing occurrences after the death of their secretive grandmother.</description>
+      <rating>7.3</rating>
+      <duration>127 min</duration>
+      <cast>Toni Collette, Milly Shapiro, Gabriel Byrne</cast>
+    </Movie>
+  </Genre>
+  
+  <Genre>
+    <genre_name>Science Fiction</genre_name>
+    <description>Films exploring futuristic concepts, advanced technology, space exploration, and speculative scenarios.</description>
+    
+    <Movie>
+      <title>Blade Runner 2049</title>
+      <year>2017</year>
+      <director>Denis Villeneuve</director>
+      <description>A young blade runner's discovery of a long-buried secret leads him to track down former blade runner Rick Deckard.</description>
+      <rating>8.0</rating>
+      <duration>164 min</duration>
+      <cast>Ryan Gosling, Harrison Ford, Ana de Armas</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Interstellar</title>
+      <year>2014</year>
+      <director>Christopher Nolan</director>
+      <description>A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.</description>
+      <rating>8.7</rating>
+      <duration>169 min</duration>
+      <cast>Matthew McConaughey, Anne Hathaway, Jessica Chastain</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Arrival</title>
+      <year>2016</year>
+      <director>Denis Villeneuve</director>
+      <description>A linguist works with the military to communicate with alien lifeforms after mysterious spacecraft land around the world.</description>
+      <rating>7.9</rating>
+      <duration>116 min</duration>
+      <cast>Amy Adams, Jeremy Renner, Forest Whitaker</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Dune</title>
+      <year>2021</year>
+      <director>Denis Villeneuve</director>
+      <description>Paul Atreides, a brilliant young man born into a great destiny, must travel to the most dangerous planet in the universe.</description>
+      <rating>8.0</rating>
+      <duration>155 min</duration>
+      <cast>Timothée Chalamet, Rebecca Ferguson, Oscar Isaac</cast>
+    </Movie>
+  </Genre>
+  
+  <Genre>
+    <genre_name>Comedy</genre_name>
+    <description>Films intended to make audiences laugh through humor, satire, and amusing situations.</description>
+    
+    <Movie>
+      <title>The Grand Budapest Hotel</title>
+      <year>2014</year>
+      <director>Wes Anderson</director>
+      <description>A writer encounters the owner of an aging high-class hotel, who tells of his early years serving as a lobby boy.</description>
+      <rating>8.1</rating>
+      <duration>99 min</duration>
+      <cast>Ralph Fiennes, F. Murray Abraham, Mathieu Amalric</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Superbad</title>
+      <year>2007</year>
+      <director>Greg Mottola</director>
+      <description>Two co-dependent high school seniors try to score alcohol for a party to impress their crushes before graduation.</description>
+      <rating>7.6</rating>
+      <duration>113 min</duration>
+      <cast>Jonah Hill, Michael Cera, Christopher Mintz-Plasse</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Parasite</title>
+      <year>2019</year>
+      <director>Bong Joon-ho</director>
+      <description>Greed and class discrimination threaten the newly formed symbiotic relationship between a wealthy family and a destitute one.</description>
+      <rating>8.5</rating>
+      <duration>132 min</duration>
+      <cast>Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong</cast>
+    </Movie>
+  </Genre>
+  
+  <Genre>
+    <genre_name>Drama</genre_name>
+    <description>Films focusing on realistic characters dealing with emotional themes and serious subject matter.</description>
+    
+    <Movie>
+      <title>The Shawshank Redemption</title>
+      <year>1994</year>
+      <director>Frank Darabont</director>
+      <description>Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.</description>
+      <rating>9.3</rating>
+      <duration>142 min</duration>
+      <cast>Tim Robbins, Morgan Freeman, Bob Gunton</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Schindler's List</title>
+      <year>1993</year>
+      <director>Steven Spielberg</director>
+      <description>In German-occupied Poland, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce.</description>
+      <rating>9.0</rating>
+      <duration>195 min</duration>
+      <cast>Liam Neeson, Ralph Fiennes, Ben Kingsley</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Moonlight</title>
+      <year>2016</year>
+      <director>Barry Jenkins</director>
+      <description>A young African-American man grapples with his identity and sexuality while experiencing hardship growing up in Miami.</description>
+      <rating>7.4</rating>
+      <duration>111 min</duration>
+      <cast>Mahershala Ali, Shariff Earp, Duan Sanderson</cast>
+    </Movie>
+  </Genre>
+  
+  <Genre>
+    <genre_name>Action</genre_name>
+    <description>Films featuring fast-paced sequences, physical stunts, chases, fights, and spectacular visuals.</description>
+    
+    <Movie>
+      <title>Mad Max: Fury Road</title>
+      <year>2015</year>
+      <director>George Miller</director>
+      <description>In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search of her homeland.</description>
+      <rating>8.1</rating>
+      <duration>120 min</duration>
+      <cast>Tom Hardy, Charlize Theron, Nicholas Hoult</cast>
+    </Movie>
+    
+    <Movie>
+      <title>John Wick</title>
+      <year>2014</year>
+      <director>Chad Stahelski</director>
+      <description>An ex-hitman comes out of retirement to track down the gangsters that killed his dog and took everything from him.</description>
+      <rating>7.4</rating>
+      <duration>101 min</duration>
+      <cast>Keanu Reeves, Michael Nyqvist, Alfie Allen</cast>
+    </Movie>
+    
+    <Movie>
+      <title>The Dark Knight</title>
+      <year>2008</year>
+      <director>Christopher Nolan</director>
+      <description>Batman raises the stakes in his war on crime, facing the Joker who wreaks havoc and chaos on Gotham City.</description>
+      <rating>9.0</rating>
+      <duration>152 min</duration>
+      <cast>Christian Bale, Heath Ledger, Aaron Eckhart</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Top Gun: Maverick</title>
+      <year>2022</year>
+      <director>Joseph Kosinski</director>
+      <description>After thirty years, Maverick is still pushing the envelope as a top naval aviator while training a group of graduates.</description>
+      <rating>8.2</rating>
+      <duration>130 min</duration>
+      <cast>Tom Cruise, Jennifer Connelly, Miles Teller</cast>
+    </Movie>
+  </Genre>
+  
+  <Genre>
+    <genre_name>Animation</genre_name>
+    <description>Films created using animation techniques including hand-drawn, computer-generated, and stop-motion animation.</description>
+    
+    <Movie>
+      <title>Spider-Man: Into the Spider-Verse</title>
+      <year>2018</year>
+      <director>Bob Persichetti, Peter Ramsey</director>
+      <description>Teen Miles Morales becomes Spider-Man and must team up with other Spider-People to stop a threat to all realities.</description>
+      <rating>8.4</rating>
+      <duration>117 min</duration>
+      <cast>Shameik Moore, Jake Johnson, Hailee Steinfeld</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Spirited Away</title>
+      <year>2001</year>
+      <director>Hayao Miyazaki</director>
+      <description>A young girl becomes trapped in a strange world of spirits and must find a way to free herself and her parents.</description>
+      <rating>8.6</rating>
+      <duration>125 min</duration>
+      <cast>Rumi Hiiragi, Miyu Irino, Mari Natsuki</cast>
+    </Movie>
+    
+    <Movie>
+      <title>Coco</title>
+      <year>2017</year>
+      <director>Lee Unkrich</director>
+      <description>A young musician embarks on an extraordinary journey to the Land of the Dead to unlock his true family history.</description>
+      <rating>8.4</rating>
+      <duration>105 min</duration>
+      <cast>Anthony Gonzalez, Gael García Bernal, Benjamin Bratt</cast>
+    </Movie>
+  </Genre>
+</MovieDatabase>

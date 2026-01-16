@@ -4,11 +4,19 @@ Dense XPath - A semantic XPath-like query execution system.
 This module provides tools for executing XPath-like queries against XML trees
 with support for semantic predicate matching.
 
-Implements the Semantic XPath framework with:
-- Compound predicates (AND/OR)
-- Hierarchical quantifiers (exists/all)
+Implements the Semantic XPath framework (v2) with:
+- sem(): Local semantic match on node content
+- exist(): Existential aggregation (Noisy-OR over children)
+- mass(): Prevalence aggregation (Beta-Bernoulli over children)
+- AND/OR logical operators
 - Bayesian fusion across query steps
 - Detailed reasoning traces
+
+Query Syntax:
+- /Day[@index='2'] - XPath-style attribute index
+- /POI[sem(content =~ "museum")] - local semantic match
+- /Day[exist(POI[sem(content =~ "museum")])] - existential over children
+- /Day[mass(POI[sem(content =~ "artistic")])] - prevalence over children
 
 Modules:
 - models: Data classes for query representation and results
@@ -24,7 +32,7 @@ Modules:
 # Models
 from .models import (
     # Predicate AST
-    AtomicCondition,
+    SemanticCondition,
     CompoundPredicate,
     # Query and Index
     IndexRange,
@@ -53,6 +61,7 @@ from .schema_loader import (
     load_schema,
     get_data_path,
     get_schema_info,
+    get_schema_summary_for_prompt,
     list_available_schemas,
     list_available_data_files
 )
@@ -62,7 +71,7 @@ from .dense_xpath_executor import DenseXPathExecutor
 
 __all__ = [
     # Predicate AST
-    "AtomicCondition",
+    "SemanticCondition",
     "CompoundPredicate",
     # Query and Index Models
     "IndexRange",
@@ -88,6 +97,7 @@ __all__ = [
     "load_schema",
     "get_data_path",
     "get_schema_info",
+    "get_schema_summary_for_prompt",
     "list_available_schemas",
     "list_available_data_files",
     # Main executor

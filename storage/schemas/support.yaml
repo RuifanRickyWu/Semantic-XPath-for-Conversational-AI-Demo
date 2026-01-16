@@ -17,31 +17,33 @@ hierarchy: |
 nodes:
   SupportSystem:
     type: root
+    fields: []
+    children: ["Customer"]
     
   Customer:
     type: container
-    name_field: "name"
-    description_field: "description"
+    fields: ["name", "description", "email", "account_type"]
+    children: ["Ticket"]
     
   Ticket:
     type: container
-    name_field: "title"
-    description_field: "description"
+    fields: ["title", "description", "status", "priority", "created_at"]
+    children: ["Symptom", "Cause", "Resolution"]
     
   Symptom:
     type: leaf
-    name_field: "name"
-    description_field: "description"
+    fields: ["name", "description", "severity"]
+    children: []
     
   Cause:
     type: leaf
-    name_field: "name"
-    description_field: "description"
+    fields: ["name", "description", "category"]
+    children: []
     
   Resolution:
     type: leaf
-    name_field: "name"
-    description_field: "description"
+    fields: ["name", "description", "effectiveness"]
+    children: []
 
 # Available data files for this schema
 data_files:

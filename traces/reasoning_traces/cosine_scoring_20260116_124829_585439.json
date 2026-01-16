@@ -1,0 +1,125 @@
+{
+  "timestamp": "20260116_124829_585439",
+  "method": "cosine",
+  "model": "sentence-transformers/msmarco-distilbert-base-tas-b",
+  "embedding_dim": 768,
+  "predicate_template": "{predicate}",
+  "predicate": "view",
+  "query_text": "view",
+  "nodes": [
+    {
+      "id": "4975047600_main",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+      "text_for_embedding": "POI: St. Lawrence Market - Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+      "score": 0.6451647281646729
+    },
+    {
+      "id": "4975049200_main",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+      "text_for_embedding": "POI: CN Tower - Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+      "score": 0.7168864607810974
+    },
+    {
+      "id": "4974992816_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+      "text_for_embedding": "POI: Art Gallery of Ontario - Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+      "score": 0.686699390411377
+    },
+    {
+      "id": "4975099232_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-renowned museum showcasing art, culture, and natural history.",
+      "text_for_embedding": "POI: Royal Ontario Museum - World-renowned museum showcasing art, culture, and natural history.",
+      "score": 0.6892775297164917
+    },
+    {
+      "id": "4975113616_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Historic castle featuring secret passages, gardens, and panoramic views.",
+      "text_for_embedding": "POI: Casa Loma - Historic castle featuring secret passages, gardens, and panoramic views.",
+      "score": 0.7270047068595886
+    },
+    {
+      "id": "4975115296_main",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+      "text_for_embedding": "POI: Rivoli - Live music venue showcasing jazz, indie, and emerging artists.",
+      "score": 0.6742370128631592
+    },
+    {
+      "id": "4975133616_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+      "text_for_embedding": "POI: Toronto Islands - Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+      "score": 0.6769420504570007
+    },
+    {
+      "id": "4975135376_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+      "text_for_embedding": "POI: Distillery District - Historic pedestrian village with cobblestone streets and artisan shops.",
+      "score": 0.6349258422851562
+    }
+  ],
+  "results": [
+    {
+      "node_id": "4975047600_main",
+      "node_type": "POI",
+      "score": 0.6451647281646729,
+      "reasoning": "Cosine similarity: 0.6452"
+    },
+    {
+      "node_id": "4975049200_main",
+      "node_type": "POI",
+      "score": 0.7168864607810974,
+      "reasoning": "Cosine similarity: 0.7169"
+    },
+    {
+      "node_id": "4974992816_main",
+      "node_type": "POI",
+      "score": 0.686699390411377,
+      "reasoning": "Cosine similarity: 0.6867"
+    },
+    {
+      "node_id": "4975099232_main",
+      "node_type": "POI",
+      "score": 0.6892775297164917,
+      "reasoning": "Cosine similarity: 0.6893"
+    },
+    {
+      "node_id": "4975113616_main",
+      "node_type": "POI",
+      "score": 0.7270047068595886,
+      "reasoning": "Cosine similarity: 0.7270"
+    },
+    {
+      "node_id": "4975115296_main",
+      "node_type": "POI",
+      "score": 0.6742370128631592,
+      "reasoning": "Cosine similarity: 0.6742"
+    },
+    {
+      "node_id": "4975133616_main",
+      "node_type": "POI",
+      "score": 0.6769420504570007,
+      "reasoning": "Cosine similarity: 0.6769"
+    },
+    {
+      "node_id": "4975135376_main",
+      "node_type": "POI",
+      "score": 0.6349258422851562,
+      "reasoning": "Cosine similarity: 0.6349"
+    }
+  ]
+}

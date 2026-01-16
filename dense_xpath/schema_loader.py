@@ -148,3 +148,53 @@ def list_available_data_files(schema_name: Optional[str] = None) -> list:
     schema = load_schema(schema_name)
     return list(schema.get("data_files", {}).keys())
 
+
+def get_schema_summary_for_prompt(schema_name: Optional[str] = None) -> str:
+    """
+    Generate a schema summary for LLM prompts.
+    
+    Shows the tree hierarchy with node types and their available fields.
+    This helps the LLM understand what information is available at each node
+    without knowing the specific values.
+    
+    Args:
+        schema_name: Name of the schema. If None, uses active_schema from config.
+    
+    Returns:
+        Formatted string describing the schema structure and fields.
+    """
+    schema = load_schema(schema_name)
+    nodes = schema.get("nodes", {})
+    
+    lines = ["Schema Structure:"]
+    lines.append("")
+    
+    for node_name, node_config in nodes.items():
+        node_type = node_config.get("type", "unknown")
+        fields = node_config.get("fields", [])
+        children = node_config.get("children", [])
+        index_attr = node_config.get("index_attr")
+        
+        # Node header
+        if node_type == "root":
+            lines.append(f"{node_name} (root)")
+        elif node_type == "container":
+            if index_attr:
+                lines.append(f"{node_name} (container, indexed by @{index_attr})")
+            else:
+                lines.append(f"{node_name} (container)")
+        else:
+            lines.append(f"{node_name} (leaf)")
+        
+        # Fields
+        if fields:
+            lines.append(f"  Fields: {', '.join(fields)}")
+        
+        # Children
+        if children:
+            lines.append(f"  Children: {', '.join(children)}")
+        
+        lines.append("")
+    
+    return "\n".join(lines)
+

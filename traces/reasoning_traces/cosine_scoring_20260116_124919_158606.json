@@ -1,0 +1,279 @@
+{
+  "timestamp": "20260116_124919_158606",
+  "method": "cosine",
+  "model": "sentence-transformers/msmarco-distilbert-base-tas-b",
+  "embedding_dim": 768,
+  "predicate_template": "{predicate}",
+  "predicate": "sorting algorithm",
+  "query_text": "sorting algorithm",
+  "nodes": [
+    {
+      "id": "5697329168_main",
+      "type": "Concept",
+      "name": "Variables and Data Types",
+      "description": "Understanding how to store and manipulate data using variables, integers, strings, and floats",
+      "text_for_embedding": "Concept: Variables and Data Types - Understanding how to store and manipulate data using variables, integers, strings, and floats",
+      "score": 0.6951992511749268
+    },
+    {
+      "id": "5697330128_main",
+      "type": "Concept",
+      "name": "Control Flow",
+      "description": "Learning conditional statements (if/else) and logical operators for decision making",
+      "text_for_embedding": "Concept: Control Flow - Learning conditional statements (if/else) and logical operators for decision making",
+      "score": 0.6922069191932678
+    },
+    {
+      "id": "5697328208_main",
+      "type": "Concept",
+      "name": "Loops",
+      "description": "Iteration using for loops and while loops to repeat code execution",
+      "text_for_embedding": "Concept: Loops - Iteration using for loops and while loops to repeat code execution",
+      "score": 0.6866642236709595
+    },
+    {
+      "id": "5903998384_main",
+      "type": "Concept",
+      "name": "Arrays and Lists",
+      "description": "Understanding sequential data storage, indexing, and common list operations",
+      "text_for_embedding": "Concept: Arrays and Lists - Understanding sequential data storage, indexing, and common list operations",
+      "score": 0.7460619807243347
+    },
+    {
+      "id": "5903997344_main",
+      "type": "Concept",
+      "name": "Stacks and Queues",
+      "description": "LIFO and FIFO data structures for managing ordered collections with specific access patterns",
+      "text_for_embedding": "Concept: Stacks and Queues - LIFO and FIFO data structures for managing ordered collections with specific access patterns",
+      "score": 0.735686182975769
+    },
+    {
+      "id": "5903997744_main",
+      "type": "Concept",
+      "name": "Hash Tables",
+      "description": "Key-value storage with O(1) average lookup time using hashing functions",
+      "text_for_embedding": "Concept: Hash Tables - Key-value storage with O(1) average lookup time using hashing functions",
+      "score": 0.7065153121948242
+    },
+    {
+      "id": "5903997904_main",
+      "type": "Concept",
+      "name": "Trees",
+      "description": "Hierarchical data structures including binary trees, BSTs, and tree traversal algorithms",
+      "text_for_embedding": "Concept: Trees - Hierarchical data structures including binary trees, BSTs, and tree traversal algorithms",
+      "score": 0.7846159338951111
+    },
+    {
+      "id": "5904256432_main",
+      "type": "Concept",
+      "name": "Supervised Learning",
+      "description": "Learning from labeled data to make predictions, including classification and regression tasks",
+      "text_for_embedding": "Concept: Supervised Learning - Learning from labeled data to make predictions, including classification and regression tasks",
+      "score": 0.7139894962310791
+    },
+    {
+      "id": "5904253792_main",
+      "type": "Concept",
+      "name": "Neural Networks",
+      "description": "Artificial neural networks inspired by biological neurons, including perceptrons and activation functions",
+      "text_for_embedding": "Concept: Neural Networks - Artificial neural networks inspired by biological neurons, including perceptrons and activation functions",
+      "score": 0.7065505981445312
+    },
+    {
+      "id": "5904254352_main",
+      "type": "Concept",
+      "name": "Model Evaluation",
+      "description": "Techniques for assessing model performance including accuracy, precision, recall, and cross-validation",
+      "text_for_embedding": "Concept: Model Evaluation - Techniques for assessing model performance including accuracy, precision, recall, and cross-validation",
+      "score": 0.7003499269485474
+    },
+    {
+      "id": "5697232464_main",
+      "type": "Concept",
+      "name": "Feature Engineering",
+      "description": "Creating and selecting meaningful features from raw data to improve model performance",
+      "text_for_embedding": "Concept: Feature Engineering - Creating and selecting meaningful features from raw data to improve model performance",
+      "score": 0.6501427292823792
+    },
+    {
+      "id": "5229908432_main",
+      "type": "Concept",
+      "name": "HTML and CSS",
+      "description": "Building web page structure with HTML and styling with CSS including flexbox and grid layouts",
+      "text_for_embedding": "Concept: HTML and CSS - Building web page structure with HTML and styling with CSS including flexbox and grid layouts",
+      "score": 0.6880283951759338
+    },
+    {
+      "id": "5229908912_main",
+      "type": "Concept",
+      "name": "JavaScript Fundamentals",
+      "description": "Client-side scripting, DOM manipulation, and event handling for interactive web pages",
+      "text_for_embedding": "Concept: JavaScript Fundamentals - Client-side scripting, DOM manipulation, and event handling for interactive web pages",
+      "score": 0.6484538316726685
+    },
+    {
+      "id": "5229908992_main",
+      "type": "Concept",
+      "name": "REST APIs",
+      "description": "Designing and consuming RESTful web services with HTTP methods and JSON data format",
+      "text_for_embedding": "Concept: REST APIs - Designing and consuming RESTful web services with HTTP methods and JSON data format",
+      "score": 0.6963383555412292
+    },
+    {
+      "id": "5229909232_main",
+      "type": "Concept",
+      "name": "Database Design",
+      "description": "Relational database concepts, SQL queries, and schema design for web applications",
+      "text_for_embedding": "Concept: Database Design - Relational database concepts, SQL queries, and schema design for web applications",
+      "score": 0.6842924952507019
+    },
+    {
+      "id": "5229911632_main",
+      "type": "Concept",
+      "name": "Time Complexity",
+      "description": "Big O notation and analyzing algorithm efficiency in terms of input size growth",
+      "text_for_embedding": "Concept: Time Complexity - Big O notation and analyzing algorithm efficiency in terms of input size growth",
+      "score": 0.7419129610061646
+    },
+    {
+      "id": "5229909152_main",
+      "type": "Concept",
+      "name": "Sorting Algorithms",
+      "description": "Comparison-based sorting including quicksort, mergesort, and their time-space tradeoffs",
+      "text_for_embedding": "Concept: Sorting Algorithms - Comparison-based sorting including quicksort, mergesort, and their time-space tradeoffs",
+      "score": 0.8417452573776245
+    },
+    {
+      "id": "5229938944_main",
+      "type": "Concept",
+      "name": "Dynamic Programming",
+      "description": "Solving complex problems by breaking them into overlapping subproblems with memoization",
+      "text_for_embedding": "Concept: Dynamic Programming - Solving complex problems by breaking them into overlapping subproblems with memoization",
+      "score": 0.7145612239837646
+    },
+    {
+      "id": "5229938064_main",
+      "type": "Concept",
+      "name": "Graph Algorithms",
+      "description": "BFS, DFS, shortest path algorithms, and minimum spanning trees for graph problems",
+      "text_for_embedding": "Concept: Graph Algorithms - BFS, DFS, shortest path algorithms, and minimum spanning trees for graph problems",
+      "score": 0.7766306400299072
+    }
+  ],
+  "results": [
+    {
+      "node_id": "5697329168_main",
+      "node_type": "Concept",
+      "score": 0.6951992511749268,
+      "reasoning": "Cosine similarity: 0.6952"
+    },
+    {
+      "node_id": "5697330128_main",
+      "node_type": "Concept",
+      "score": 0.6922069191932678,
+      "reasoning": "Cosine similarity: 0.6922"
+    },
+    {
+      "node_id": "5697328208_main",
+      "node_type": "Concept",
+      "score": 0.6866642236709595,
+      "reasoning": "Cosine similarity: 0.6867"
+    },
+    {
+      "node_id": "5903998384_main",
+      "node_type": "Concept",
+      "score": 0.7460619807243347,
+      "reasoning": "Cosine similarity: 0.7461"
+    },
+    {
+      "node_id": "5903997344_main",
+      "node_type": "Concept",
+      "score": 0.735686182975769,
+      "reasoning": "Cosine similarity: 0.7357"
+    },
+    {
+      "node_id": "5903997744_main",
+      "node_type": "Concept",
+      "score": 0.7065153121948242,
+      "reasoning": "Cosine similarity: 0.7065"
+    },
+    {
+      "node_id": "5903997904_main",
+      "node_type": "Concept",
+      "score": 0.7846159338951111,
+      "reasoning": "Cosine similarity: 0.7846"
+    },
+    {
+      "node_id": "5904256432_main",
+      "node_type": "Concept",
+      "score": 0.7139894962310791,
+      "reasoning": "Cosine similarity: 0.7140"
+    },
+    {
+      "node_id": "5904253792_main",
+      "node_type": "Concept",
+      "score": 0.7065505981445312,
+      "reasoning": "Cosine similarity: 0.7066"
+    },
+    {
+      "node_id": "5904254352_main",
+      "node_type": "Concept",
+      "score": 0.7003499269485474,
+      "reasoning": "Cosine similarity: 0.7003"
+    },
+    {
+      "node_id": "5697232464_main",
+      "node_type": "Concept",
+      "score": 0.6501427292823792,
+      "reasoning": "Cosine similarity: 0.6501"
+    },
+    {
+      "node_id": "5229908432_main",
+      "node_type": "Concept",
+      "score": 0.6880283951759338,
+      "reasoning": "Cosine similarity: 0.6880"
+    },
+    {
+      "node_id": "5229908912_main",
+      "node_type": "Concept",
+      "score": 0.6484538316726685,
+      "reasoning": "Cosine similarity: 0.6485"
+    },
+    {
+      "node_id": "5229908992_main",
+      "node_type": "Concept",
+      "score": 0.6963383555412292,
+      "reasoning": "Cosine similarity: 0.6963"
+    },
+    {
+      "node_id": "5229909232_main",
+      "node_type": "Concept",
+      "score": 0.6842924952507019,
+      "reasoning": "Cosine similarity: 0.6843"
+    },
+    {
+      "node_id": "5229911632_main",
+      "node_type": "Concept",
+      "score": 0.7419129610061646,
+      "reasoning": "Cosine similarity: 0.7419"
+    },
+    {
+      "node_id": "5229909152_main",
+      "node_type": "Concept",
+      "score": 0.8417452573776245,
+      "reasoning": "Cosine similarity: 0.8417"
+    },
+    {
+      "node_id": "5229938944_main",
+      "node_type": "Concept",
+      "score": 0.7145612239837646,
+      "reasoning": "Cosine similarity: 0.7146"
+    },
+    {
+      "node_id": "5229938064_main",
+      "node_type": "Concept",
+      "score": 0.7766306400299072,
+      "reasoning": "Cosine similarity: 0.7766"
+    }
+  ]
+}

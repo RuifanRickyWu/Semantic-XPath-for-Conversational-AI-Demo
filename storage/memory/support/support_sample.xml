@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SupportSystem>
-  <Customer name="Acme Corporation">
+  <Customer>
+    <name>Acme Corporation</name>
     <description>Enterprise customer with premium support plan, manufacturing industry</description>
+    <account_type>enterprise</account_type>
     <Ticket>
       <title>Email Server Outage</title>
       <description>Critical production email server down affecting all employees</description>
@@ -53,8 +55,11 @@
       </Resolution>
     </Ticket>
   </Customer>
-  <Customer name="TechStart Inc">
+  
+  <Customer>
+    <name>TechStart Inc</name>
     <description>Startup customer on basic support plan, software development company</description>
+    <account_type>startup</account_type>
     <Ticket>
       <title>Database Performance Degradation</title>
       <description>Application database queries running extremely slow during peak hours</description>
@@ -114,8 +119,11 @@
       </Resolution>
     </Ticket>
   </Customer>
-  <Customer name="GlobalRetail Ltd">
+  
+  <Customer>
+    <name>GlobalRetail Ltd</name>
     <description>Large retail customer with VIP support, e-commerce platform</description>
+    <account_type>VIP</account_type>
     <Ticket>
       <title>Website Loading Slow</title>
       <description>Main e-commerce website taking over 10 seconds to load on all pages</description>
@@ -198,8 +206,11 @@
       </Resolution>
     </Ticket>
   </Customer>
-  <Customer name="HealthCare Plus">
+  
+  <Customer>
+    <name>HealthCare Plus</name>
     <description>Healthcare provider customer requiring HIPAA compliance, medical services</description>
+    <account_type>enterprise</account_type>
     <Ticket>
       <title>Patient Portal Login Issue</title>
       <description>Patients unable to access their medical records through online portal</description>
@@ -248,6 +259,3 @@
     </Ticket>
   </Customer>
 </SupportSystem>
-
-
-

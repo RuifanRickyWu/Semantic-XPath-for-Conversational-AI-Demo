@@ -1,0 +1,47 @@
+# Movie Database Tree Schema
+# Defines the structure for movie catalog trees
+
+name: "movie"
+description: "Movie database organized by genres with movies as leaf nodes"
+
+# Tree hierarchy (for documentation and LLM prompt generation)
+hierarchy: |
+  MovieDatabase (root)
+  └── Genre
+      └── Movie
+
+# Node type definitions
+nodes:
+  MovieDatabase:
+    type: root
+    fields: []
+    children: ["Genre"]
+    
+  Genre:
+    type: container
+    fields:
+      - genre_name
+      - description
+    children: ["Movie"]
+    
+  Movie:
+    type: leaf
+    fields:
+      - title
+      - year
+      - director
+      - description
+      - rating
+      - duration
+      - cast
+    children: []
+
+# Available data files for this schema
+data_files:
+  movie_sample: "memory/movie/movie_sample.xml"
+
+# Default data file to use
+default_data: "movie_sample"
+
+# Associated prompt file for XPath query generation
+prompt_file: "prompts/xpath_query_generator_movie.txt"

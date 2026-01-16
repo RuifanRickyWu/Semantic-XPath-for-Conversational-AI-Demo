@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TodoList>
-  <Project name="LLM-VM Development">
+  <Project>
+    <name>LLM-VM Development</name>
     <description>Core LLM-VM project for semantic XPath execution and dense retrieval</description>
     <Task>
       <title>Implement Semantic XPath Executor</title>
@@ -59,7 +60,9 @@
       </SubTask>
     </Task>
   </Project>
-  <Project name="Frontend Dashboard">
+  
+  <Project>
+    <name>Frontend Dashboard</name>
     <description>Web-based dashboard for visualizing and interacting with the LLM-VM system</description>
     <Task>
       <title>Design UI Components</title>
@@ -101,7 +104,9 @@
       </SubTask>
     </Task>
   </Project>
-  <Project name="Research">
+  
+  <Project>
+    <name>Research</name>
     <description>Research tasks for improving semantic matching accuracy and performance</description>
     <Task>
       <title>Benchmark Scoring Methods</title>
@@ -143,7 +148,9 @@
       </SubTask>
     </Task>
   </Project>
-  <Project name="Personal">
+  
+  <Project>
+    <name>Personal</name>
     <description>Personal tasks and reminders not related to work projects</description>
     <Task>
       <title>Weekly Review</title>
@@ -181,4 +188,3 @@
     </Task>
   </Project>
 </TodoList>
-

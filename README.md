@@ -1,492 +1,346 @@
-# Semantic XPath: A Probabilistic Hierarchical Retrieval Framework
+# Semantic XPath: Hierarchical Retrieval with Probabilistic Inference
 
-A natural language to XPath-like query system for structured hierarchical data. Convert plain English requests into executable queries against XML trees with **probabilistic semantic matching**, **Bayesian score fusion**, and **hierarchical quantifiers**.
+A framework for querying hierarchical data using natural language with **semantic predicates**, **hierarchical aggregation**, and **Bayesian score fusion**.
 
-## Overview
+## Core Idea
+
+Traditional XPath operates on exact matches. Semantic XPath extends this with:
+- **Semantic matching**: Match by meaning, not just text
+- **Probabilistic scores**: Every match has a confidence score in [0, 1]
+- **Hierarchical aggregation**: Aggregate evidence from children to parents
+- **Bayesian fusion**: Combine scores across query steps
 
 ```
-┌─────────────────┐     ┌──────────────────┐     ┌──────────────────┐     ┌─────────────┐
-│  User Request   │────▶│  Query Generator │────▶│  XPath Executor  │────▶│   Results   │
-│  (Natural Lang) │     │      (LLM)       │     │  (Probabilistic) │     │  (Ranked)   │
-└─────────────────┘     └──────────────────┘     └──────────────────┘     └─────────────┘
-     "find days                                                              [Day 1: 0.92
-    with museums"        /Itinerary/Day                                      Day 2: 0.87]
-                        [exists(description =~ "museum")]
+User: "find museums in artistic days"
+
+Semantic XPath: /Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
+
+Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
 ```
-
-## Key Features
-
-- **Semantic Predicates**: Match nodes by meaning, not just exact text
-- **Compound Predicates**: Combine conditions with `AND` / `OR`
-- **Hierarchical Quantifiers**: `exists()` and `all()` for parent-child relationships
-- **Bayesian Fusion**: Principled score aggregation across query steps
-- **Multiple Scoring Methods**: LLM, NLI Entailment, or Cosine Similarity
-- **Multi-Schema Support**: Itinerary, TodoList, Curriculum, Support, Recommendations
 
 ---
 
 ## Table of Contents
 
-1. [Theoretical Foundation](#theoretical-foundation)
-2. [Project Structure](#project-structure)
-3. [Query Syntax Reference](#query-syntax-reference)
-4. [Predicate Operators](#predicate-operators)
-5. [Hierarchical Quantifiers](#hierarchical-quantifiers)
-6. [Bayesian Score Fusion](#bayesian-score-fusion)
-7. [Scoring Methods](#scoring-methods)
-8. [Schema System](#schema-system)
-9. [Usage](#usage)
-10. [Execution Traces](#execution-traces)
-11. [Configuration](#configuration)
-12. [Installation](#installation)
-13. [Architecture](#architecture)
+1. [End-to-End Flow](#end-to-end-flow)
+2. [Mathematical Foundation](#mathematical-foundation)
+3. [Query Syntax](#query-syntax)
+4. [Predicate Types](#predicate-types)
+5. [Schema System](#schema-system)
+6. [Usage](#usage)
+7. [Configuration](#configuration)
+8. [Project Structure](#project-structure)
 
 ---
 
-## Theoretical Foundation
+## End-to-End Flow
 
-The framework extends classical XPath with **probabilistic inference** while preserving stepwise structural semantics.
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                           SEMANTIC XPATH PIPELINE                            │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+     User Request                    LLM Query                   Structured
+    (Natural Language)              Generator                      Query
+          │                            │                            │
+          ▼                            ▼                            ▼
+┌─────────────────┐           ┌─────────────────┐           ┌─────────────────┐
+│  "find museums  │           │   GPT-4 with    │           │   /Itinerary/   │
+│   in artistic   │  ──────▶  │  schema-aware   │  ──────▶  │   Day[mass(...)]│
+│     days"       │           │    prompts      │           │   /POI[sem(...)]│
+└─────────────────┘           └─────────────────┘           └─────────────────┘
+                                                                    │
+                    ┌───────────────────────────────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                              QUERY EXECUTION                                  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   1. PARSE QUERY                                                             │
+│      ┌─────────────────────────────────────────────────────┐                │
+│      │ Query: /Itinerary/Day[mass(POI[sem(...)])]/POI[sem()]                │
+│      │                                                                       │
+│      │ Steps:                                                                │
+│      │   Step 0: Itinerary (root)                                           │
+│      │   Step 1: Day [predicate: mass(POI[sem(content =~ "artistic")])]     │
+│      │   Step 2: POI [predicate: sem(content =~ "museum")]                  │
+│      └─────────────────────────────────────────────────────┘                │
+│                                                                              │
+│   2. BFS TRAVERSAL WITH SCORING                                             │
+│      ┌─────────────────────────────────────────────────────┐                │
+│      │ Step 0: [Itinerary] ─── root                                         │
+│      │            │                                                          │
+│      │ Step 1: [Day1, Day2, Day3] ─── expand to children                    │
+│      │            │                                                          │
+│      │         Score each Day with mass(POI[sem("artistic")])               │
+│      │            │  Day1: 0.72 (Beta-Bernoulli over POI scores)            │
+│      │            │  Day2: 0.85                                              │
+│      │            │  Day3: 0.45                                              │
+│      │            │                                                          │
+│      │ Step 2: [POI1, POI2, ...] ─── expand to children                     │
+│      │            │                                                          │
+│      │         Score each POI with sem("museum")                            │
+│      │            │  Art Gallery: 0.92 (local score)                        │
+│      │            │  CN Tower: 0.08                                          │
+│      │            │  Royal Ontario Museum: 0.95                             │
+│      └─────────────────────────────────────────────────────┘                │
+│                                                                              │
+│   3. BAYESIAN FUSION                                                         │
+│      ┌─────────────────────────────────────────────────────┐                │
+│      │ For each final node, accumulate log-odds from all steps:             │
+│      │                                                                       │
+│      │ Art Gallery of Ontario (in Day 1):                                   │
+│      │   Step 1: Day "artistic" score = 0.72                                │
+│      │           log-odds = log(0.72/0.28) = 0.944                          │
+│      │   Step 2: POI "museum" score = 0.92                                  │
+│      │           log-odds = log(0.92/0.08) = 2.442                          │
+│      │   Total log-odds = 0.944 + 2.442 = 3.386                             │
+│      │   Final score = sigmoid(3.386) = 0.967                               │
+│      └─────────────────────────────────────────────────────┘                │
+│                                                                              │
+│   4. FILTER & RANK                                                           │
+│      ┌─────────────────────────────────────────────────────┐                │
+│      │ Apply threshold (e.g., 0.5) and top_k (e.g., 5)                      │
+│      │ Sort by final score descending                                        │
+│      │                                                                       │
+│      │ Results:                                                              │
+│      │   1. Royal Ontario Museum: 0.98                                      │
+│      │   2. Art Gallery of Ontario: 0.97                                    │
+│      │   3. Casa Loma: 0.61                                                 │
+│      └─────────────────────────────────────────────────────┘                │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Component Summary
+
+| Component | Role | Key Files |
+|-----------|------|-----------|
+| **Query Generator** | NL → Semantic XPath | `xpath_query_generation/` |
+| **Parser** | Query string → AST | `dense_xpath/parser.py` |
+| **Executor** | BFS traversal + fusion | `dense_xpath/dense_xpath_executor.py` |
+| **Predicate Handler** | Scoring + aggregation | `dense_xpath/predicate_handler.py` |
+| **Scorer** | Semantic similarity | `predicate_classifier/` |
+
+---
+
+## Mathematical Foundation
 
 ### Data Model
 
-Structured data is represented as a rooted tree `T = (V, E, r)`:
-- `V`: set of nodes
-- `E`: set of edges
+Hierarchical data is a rooted tree `T = (V, E, r)`:
+- `V`: nodes (e.g., Day, POI, Restaurant)
+- `E`: parent-child edges
 - `r`: root node
 
-Each node `v ∈ V` has a type `κ(v)` (e.g., *Day*, *POI*, *Restaurant*).
+Each node `v` has:
+- Type `κ(v)` (e.g., "POI", "Day")
+- Content `X_v` (text fields like name, description)
+- Children `ch(v)` (structural children defined in schema)
 
-### Query Execution Model
+### Semantic Scoring
 
-A Semantic XPath query is a sequence of steps: `Q = <q₁, q₂, ..., qₙ>`
-
-Each step applies:
-```
-Cᵢ = Select_ι( Filter_p( Expand_κ(Cᵢ₋₁) ) )
-```
-
-Where:
-- `Expand_κ`: Find children of target type
-- `Filter_p`: Apply semantic predicate scoring
-- `Select_ι`: Apply positional constraints
-
-### Probabilistic Semantics
-
-For each semantic predicate, we compute a **posterior probability**:
+For a semantic condition `c` (e.g., "museum") and node `v` with content `X_v`:
 
 ```
-π_v(c) = Pr(Z_v(c) = 1 | X_v)
+π_v(c) = P(node v satisfies c | X_v)
 ```
 
-Where:
-- `Z_v(c)`: Indicator that node `v` satisfies condition `c`
-- `X_v`: Textual content of node `v`
+This posterior probability is computed by a scorer (LLM, NLI entailment, or cosine similarity).
+
+### Three Predicate Types
+
+#### 1. sem() - Local Semantic Match
+
+Scores the node's **own content only**. Does not look at children.
+
+```
+POI[sem(content =~ "museum")]
+
+π_v("museum") = Scorer(X_v, "museum")
+```
+
+#### 2. exist() - Existential Aggregation (Noisy-OR)
+
+"At least one child matches" - high score if ANY child has high score.
+
+```
+Day[exist(POI[sem(content =~ "museum")])]
+
+π_v(p) = 1 - ∏_{u ∈ children(v)} (1 - π_u(p))
+```
+
+**Example**: Children with scores [0.95, 0.1, 0.05]
+```
+exist() = 1 - (0.05 × 0.9 × 0.95) = 1 - 0.043 = 0.957
+```
+
+#### 3. mass() - Prevalence Aggregation (Beta-Bernoulli)
+
+"Children are generally X" - smoothed average of child scores.
+
+```
+Day[mass(POI[sem(content =~ "artistic")])]
+
+π_v(p) = (α + Σ_{u ∈ children(v)} π_u(p)) / (α + β + |children(v)|)
+```
+
+Where `α = β = 1` (uniform prior).
+
+**Example**: Children with scores [0.8, 0.7, 0.6, 0.3]
+```
+mass() = (1 + 2.4) / (1 + 1 + 4) = 3.4 / 6 = 0.567
+```
+
+### Logical Operators
+
+#### AND (Log-odds aggregation)
+
+```
+sem(content =~ "outdoor") AND sem(content =~ "historic")
+
+ℓ(p) = Σ_j log(π(c_j) / (1 - π(c_j)))
+π(p) = sigmoid(ℓ(p))
+```
+
+#### OR (Noisy-OR)
+
+```
+sem(content =~ "museum") OR sem(content =~ "gallery")
+
+π(p) = 1 - ∏_j (1 - π(c_j))
+```
+
+### Bayesian Fusion Across Steps
+
+For multi-step queries, scores accumulate in log-odds space:
+
+```
+Query: /Day[mass(...)]/POI[sem(...)]
+
+For each final POI node u:
+  ℓ(u) = Σ_{steps with predicates} log(π_i(u) / (1 - π_i(u)))
+  
+Final Score = sigmoid(ℓ(u))
+```
+
+This ensures:
+- High parent score + high child score → very high final score
+- Low parent score penalizes even high-scoring children
+- Scores are properly calibrated probabilities
 
 ---
 
-## Project Structure
+## Query Syntax
 
-```
-LLM-VM/
-├── pipeline/
-│   └── semantic_xpath_pipeline.py   # Main entry point & orchestration
-├── xpath_query_generation/
-│   └── xpath_query_generator.py     # NL → XPath query (LLM-based)
-├── dense_xpath/
-│   ├── dense_xpath_executor.py      # Main executor with Bayesian fusion
-│   ├── models.py                    # Data classes (QueryStep, CompoundPredicate, etc.)
-│   ├── parser.py                    # XPath query string parser (supports AND/OR/exists/all)
-│   ├── index_handler.py             # Positional indexing logic
-│   ├── predicate_handler.py         # Semantic predicate scoring with batch optimization
-│   ├── node_utils.py                # XML node utilities
-│   ├── schema_loader.py             # Schema and data file loading
-│   └── trace_writer.py              # Detailed execution trace logging
-├── predicate_classifier/
-│   ├── base.py                      # PredicateScorer abstract interface
-│   ├── llm_scorer.py                # GPT-4 based scoring
-│   ├── entailment_scorer.py         # BART NLI entailment scoring
-│   └── cosine_scorer.py             # TAS-B embedding similarity
-├── client/
-│   ├── openai_client.py             # OpenAI API wrapper
-│   ├── bart_client.py               # BART NLI model client
-│   └── tas_b_client.py              # TAS-B embedding client
-├── storage/
-│   ├── schemas/                     # Tree schema definitions (5 schemas)
-│   ├── memory/                      # XML data files
-│   └── prompts/                     # XPath generation prompts (per schema)
-├── traces/                          # Execution & scoring traces
-│   ├── log/
-│   └── reasoning_traces/
-├── config.yaml                      # Configuration
-├── framework.md                     # Mathematical framework specification
-└── README.md
-```
-
----
-
-## Query Syntax Reference
-
-### Basic Path Navigation
+### Path Navigation
 
 ```xpath
-/Itinerary/Day/POI                    # All POIs in all Days
-/Itinerary/Day[1]/POI                 # All POIs in first Day
-/Itinerary/Day/POI[2]                 # Second POI in each Day (local)
-(/Itinerary/Day/POI)[2]               # Second POI overall (global)
+/Itinerary/Day/POI                     # All POIs in all Days
+/Itinerary/Day[@index='2']/POI         # POIs in Day 2 (attribute index)
+/Itinerary/Day/POI[2]                  # 2nd POI in EACH Day (local)
+(/Itinerary/Day/POI)[2]                # 2nd POI overall (global)
 ```
 
 ### Positional Indexing
 
-| Syntax | Meaning | Example |
-|--------|---------|---------|
-| `[1]` | First element | `POI[1]` |
-| `[2]` | Second element | `POI[2]` |
-| `[-1]` | Last element | `POI[-1]` |
-| `[1:3]` | Elements 1, 2, 3 | `POI[1:3]` |
-| `[-2:]` | Last 2 elements | `POI[-2:]` |
-
-### Local vs Global Indexing
-
-| Syntax | Scope | Result |
-|--------|-------|--------|
-| `/Day/POI[2]` | Local (per parent) | 2nd POI in EACH Day |
-| `(/Day/POI)[2]` | Global (flattened) | 2nd POI overall |
+| Syntax | Meaning |
+|--------|---------|
+| `[@index='2']` | Attribute-based index |
+| `[2]` | 2nd element |
+| `[-1]` | Last element |
+| `[1:3]` | Elements 1, 2, 3 |
+| `[-2:]` | Last 2 elements |
 
 ### Semantic Predicates
 
-**ALL semantic predicates MUST use `all()` or `exists()` wrapper.**
-
 ```xpath
-/Itinerary/Day/POI[all(description =~ "museum")]
-/Itinerary/Day[all(description =~ "artistic")]/Restaurant
+# Local match (node's own content)
+/Itinerary/Day/POI[sem(content =~ "museum")]
+
+# Existential (any child matches)
+/Itinerary/Day[exist(POI[sem(content =~ "museum")])]
+
+# Prevalence (children generally match)
+/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
+
+# Logical operators
+/Itinerary/Day/POI[sem(content =~ "outdoor") AND sem(content =~ "free")]
+/Itinerary/Day/POI[sem(content =~ "museum") OR sem(content =~ "gallery")]
+
+# Aggregation-level AND/OR
+/Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]
 ```
 
 ---
 
-## Predicate Operators
+## Predicate Types
 
-### Unified Predicate Syntax
+### Decision Guide
 
-**ALL nodes (leaf and container) MUST use `all()` or `exists()` wrapper.**
+| Query Intent | Predicate | Example |
+|--------------|-----------|---------|
+| Property of the node itself | `sem()` | "museum POI" → `POI[sem(...)]` |
+| Any child has property X | `exist()` | "day with a museum" → `Day[exist(POI[...])]` |
+| Children are generally X | `mass()` | "artistic day" → `Day[mass(POI[...])]` |
 
-```
-Query Predicate Structure:
-├── ALL Nodes
-│   └── MUST use all() or exists()
-│       ├── all(inner_predicate)     ← Required wrapper
-│       └── exists(inner_predicate)  ← Required wrapper
-│           └── Inner predicate can use AND/OR
-
-VALID:
-✓ POI[all(description =~ "museum")]
-✓ POI[exists(description =~ "museum")]
-✓ Day[all(description =~ "cultural")]
-✓ Day[exists(description =~ "museum")]
-
-INVALID (will be rejected):
-✗ POI[description =~ "museum"]           ← No wrapper
-✗ Day[description =~ "cultural"]         ← No wrapper
-```
-
-### Semantic Behavior by Node Type
-
-| Node Type | `all(pred)` | `exists(pred)` |
-|-----------|-------------|----------------|
-| **Leaf** | Score node itself: π(pred) | Score node itself: π(pred) |
-| **Container** | Beta-Bernoulli over children | Noisy-OR over children |
-
-For **leaf nodes**, `all()` and `exists()` are semantically equivalent.
-For **container nodes**, choose based on the question:
-- `exists()` = "Does any child match?" → "days with a museum"
-- `all()` = "Are children generally like this?" → "cultural days"
-
-### AND (Conjunction)
-
-```xpath
-# Inside all() wrapper
-POI[all(description =~ "outdoor" AND description =~ "historic")]
-
-# Inside exists() wrapper for containers
-Day[exists(description =~ "outdoor" AND description =~ "free")]
-```
-
-**Scoring Formula** (Log-odds aggregation):
-```
-ℓ_v(p) = Σⱼ log( π_v(cⱼ) / (1 - π_v(cⱼ)) )
-π_v(p) = sigmoid(ℓ_v(p))
-```
-
-**Interpretation**: Node must satisfy BOTH conditions. Scores are combined in log-odds space, then converted back to probability.
-
-**Example**:
-```
-Node: "Historic waterfront park with nature trails"
-  - P(outdoor) = 0.85
-  - P(historic) = 0.78
-  
-Log-odds:
-  - log(0.85/0.15) = 1.735
-  - log(0.78/0.22) = 1.265
-  - Sum = 3.0
-  
-Final: sigmoid(3.0) = 0.953
-```
-
-### OR (Disjunction)
-
-```xpath
-# Leaf node with OR inside wrapper
-Restaurant[all(description =~ "italian" OR description =~ "french")]
-
-# Container node with OR inside quantifier
-Day[all(description =~ "cultural" OR description =~ "historic")]
-```
-
-**Scoring Formula** (Noisy-OR):
-```
-π_v(p) = 1 - ∏ⱼ (1 - π_v(cⱼ))
-```
-
-**Interpretation**: Node satisfies AT LEAST ONE condition. High score if any condition matches.
-
-**Example**:
-```
-Node: "Authentic Italian trattoria"
-  - P(italian) = 0.92
-  - P(french) = 0.15
-  
-Noisy-OR: 1 - (1-0.92)(1-0.15) = 1 - 0.068 = 0.932
-```
-
-### Combined Operators (Inside Quantifiers)
-
-```xpath
-Day[exists((description =~ "outdoor" OR description =~ "nature") AND description =~ "free")]
-```
-
-Operators follow standard precedence: parentheses > AND > OR.
-
----
-
-## Hierarchical Quantifiers
-
-For **container nodes** (non-leaf nodes like `Day`, `Project`, `Course`), predicates **MUST** use explicit quantifiers. Direct predicates like `Day[description =~ "X"]` are not allowed.
-
-### exists() - Existential Quantifier
-
-```xpath
-/Itinerary/Day[exists(description =~ "museum")]
-```
-
-**Meaning**: Day has **at least one child** (POI or Restaurant) related to "museum".
-
-**Scoring Formula** (Noisy-OR over children):
-```
-π_v(p) = 1 - ∏_{u ∈ children(v)} (1 - π_u(p))
-```
-
-**Example**:
-```
-Day 1 children:
-  - St. Lawrence Market: P(museum) = 0.05
-  - CN Tower: P(museum) = 0.08
-  - Art Gallery of Ontario: P(museum) = 0.99
-  
-exists() score: 1 - (0.95)(0.92)(0.01) = 0.991
-```
-
-**Use Cases**:
-- "Days that have a museum" → `Day[exists(description =~ "museum")]`
-- "Days with any Italian option" → `Day[exists(description =~ "italian")]`
-- "Projects with at least one urgent task" → `Project[exists(description =~ "urgent")]`
-
-### all() - Universal/Prevalence Quantifier
-
-```xpath
-/Itinerary/Day[all(description =~ "outdoor")]
-```
-
-**Meaning**: Day's children are **generally/mostly** outdoor-focused.
-
-**Scoring Formula** (Beta-Bernoulli posterior mean):
-```
-π_v(p) = (α + Σ_{u ∈ children(v)} π_u(p)) / (α + β + |children(v)|)
-```
-
-Where `α = 1, β = 1` (uniform prior).
-
-**Example**:
-```
-Day 3 children (6 total):
-  - Toronto Islands: P(outdoor) = 0.95
-  - Beach Boardwalk: P(outdoor) = 0.88
-  - Harbourfront: P(outdoor) = 0.72
-  - Seafood Restaurant: P(outdoor) = 0.45
-  - Cafe: P(outdoor) = 0.30
-  - Park: P(outdoor) = 0.85
-  
-Sum of scores: 4.15
-all() score: (1 + 4.15) / (1 + 1 + 6) = 5.15 / 8 = 0.644
-```
-
-**Use Cases**:
-- "Days focused on outdoor activities" → `Day[all(description =~ "outdoor")]`
-- "Courses with generally practical content" → `Course[all(description =~ "practical")]`
-- "Projects where tasks are mostly completed" → `Project[all(description =~ "completed")]`
-
-### Key Differences
-
-| Quantifier | Question It Answers | High Score When |
-|------------|---------------------|-----------------|
-| `exists()` | "Does any child match?" | At least one child has high score |
-| `all()` | "Do children generally match?" | Most/all children have moderate-high scores |
-
-**Example Comparison**:
-```
-Day with 5 POIs:
-  - Museum (P=0.95), Park (P=0.1), Mall (P=0.05), Theater (P=0.1), Restaurant (P=0.02)
-
-exists(description =~ "museum"): 0.95 (high - museum exists)
-all(description =~ "museum"): (1 + 1.22) / 7 = 0.317 (low - most are not museums)
-```
-
----
-
-## Bayesian Score Fusion
-
-When a query has **multiple predicate steps**, scores are combined using **Bayesian fusion**.
-
-### The Problem
-
-Consider this query:
-```xpath
-/Itinerary/Day[all(description =~ "cultural")]/POI[all(description =~ "museum")]
-```
-
-A POI's final relevance depends on:
-1. Its parent Day's "cultural" score
-2. Its own "museum" score
-
-### The Solution: Log-Odds Accumulation
-
-For each node `u`, we define a latent relevance variable with prior `P(Z_u = 1) = 0.5`.
-
-Each predicate step contributes evidence:
-```
-ℓ(u) = Σᵢ log( πᵢ(u) / (1 - πᵢ(u)) )
-```
-
-Final score:
-```
-Score(u, Q) = sigmoid(ℓ(u))
-```
-
-### Example
-
-```xpath
-/Itinerary/Day[all(description =~ "cultural")]/POI[all(description =~ "historic")]
-```
-
-For "Art Gallery of Ontario" in Day 1:
-```
-Step 1 (Day "cultural"): π₁ = 0.85
-  - log-odds₁ = log(0.85/0.15) = 1.735
-
-Step 2 (POI "historic"): π₂ = 0.78
-  - log-odds₂ = log(0.78/0.22) = 1.265
-
-Accumulated log-odds: 1.735 + 1.265 = 3.0
-Final score: sigmoid(3.0) = 0.953
-```
-
-### Deferred Filtering
-
-**Important**: Score threshold and top-k filtering are applied **after** Bayesian fusion is complete.
+### Comparison
 
 ```
-Query: /Day[p1]/POI[p2] with top_k=3, threshold=0.5
+Day with 5 POIs: [Museum: 0.95, Park: 0.1, Mall: 0.05, Theater: 0.1, Cafe: 0.02]
 
-1. Expand to all Days
-2. Score Days with p1 → accumulate log-odds
-3. Expand to all POIs
-4. Score POIs with p2 → accumulate log-odds
-5. Compute final scores via sigmoid
-6. NOW apply threshold and top_k filtering
+exist(POI[sem(content =~ "museum")]): 0.957 (high - museum exists)
+mass(POI[sem(content =~ "museum")]):  0.317 (low - most aren't museums)
 ```
-
-This ensures fair comparison across all candidates.
-
----
-
-## Scoring Methods
-
-Three methods available for computing `π_v(c)`:
-
-### 1. LLM Scoring (`llm`)
-
-Uses GPT-4 to evaluate semantic relevance.
-
-```
-Premise: "Art Gallery of Ontario - Explore Canadian and European art..."
-Predicate: "museum"
-→ Score: 0.95
-```
-
-| Pros | Cons |
-|------|------|
-| Most accurate | Slow |
-| Understands nuance | API costs |
-| Can reason about context | Rate limits |
-
-### 2. Entailment Scoring (`entailment`)
-
-Uses BART-large-mnli for Natural Language Inference.
-
-```
-Premise: "Art Gallery of Ontario - Explore Canadian and European art..."
-Hypothesis: "This is related to museum."
-→ Entailment probability: 0.87
-```
-
-| Pros | Cons |
-|------|------|
-| Local inference | Less nuanced |
-| No API costs | Fixed hypothesis template |
-| Fast | Model size ~1.5GB |
-
-### 3. Cosine Similarity (`cosine`)
-
-Uses TAS-B embeddings for semantic similarity.
-
-```
-Node embedding: encode("Art Gallery of Ontario...")
-Query embedding: encode("museum")
-→ Cosine similarity: 0.72
-```
-
-| Pros | Cons |
-|------|------|
-| Fastest | Less accurate |
-| Good for keywords | Misses complex relationships |
-| Small model | No reasoning |
-
-### Batch Optimization
-
-All scorers use **batch processing** for efficiency:
-
-```python
-# For predicate: description =~ "A" AND description =~ "B"
-# With 10 nodes to score
-
-# Without batching: 20 scorer calls (10 nodes × 2 predicates)
-# With batching: 2 scorer calls (1 per unique predicate value)
-```
-
-The system collects all scoring tasks first, then batches by predicate value.
 
 ---
 
 ## Schema System
+
+Schemas define the tree structure and distinguish node fields from children.
+
+### Example Schema (itinerary.yaml)
+
+```yaml
+name: "itinerary"
+
+nodes:
+  Itinerary:
+    type: root
+    fields: []
+    children: ["Day"]
+    
+  Day:
+    type: container
+    index_attr: "index"
+    fields: []                      # Day's own fields
+    children: ["POI", "Restaurant"] # Structural children
+    
+  POI:
+    type: leaf
+    fields: [name, time_block, description, travel_method, expected_cost, highlights]
+    children: []
+    
+  Restaurant:
+    type: leaf
+    fields: [name, time_block, description, travel_method, expected_cost, highlights]
+    children: []
+```
+
+### Why fields vs children matters
+
+```xml
+<Day index="1">
+  <POI>...</POI>          <!-- Child: in children list -->
+  <Restaurant>...</Restaurant>  <!-- Child: in children list -->
+  <theme>relaxing</theme>  <!-- Field: NOT in children list, part of Day's own content -->
+</Day>
+```
+
+When scoring `Day[mass(POI[...])]`:
+- `<POI>` and `<Restaurant>` are structural children → aggregated
+- `<theme>` is Day's own field → not treated as child
 
 ### Available Schemas
 
@@ -497,58 +351,6 @@ The system collects all scoring tasks first, then batches by predicate value.
 | `curriculum` | Curriculum → Course → Concept/Exercise | Education |
 | `support` | SupportSystem → Customer → Ticket → Symptom/Cause/Resolution | Help desk |
 | `session_recommendation` | RecommendationHub → Session → Step → Objective → Item | Shopping/DIY |
-
-### Schema Definition Example
-
-```yaml
-# storage/schemas/itinerary.yaml
-name: "itinerary"
-description: "Travel itinerary with days, POIs and restaurants"
-
-hierarchy: |
-  Itinerary (root)
-  ├── Day
-  │   ├── POI
-  │   └── Restaurant
-
-nodes:
-  Day:
-    type: container
-    index_attr: "index"
-  POI:
-    type: leaf
-    name_field: "name"
-    description_field: "description"
-  Restaurant:
-    type: leaf
-    name_field: "name"
-    description_field: "description"
-
-data_files:
-  travel_memory_3day: "memory/travel/travel_memory_3day.xml"
-  travel_memory_5day: "memory/travel/travel_memory_5day.xml"
-
-default_data: "travel_memory_3day"
-prompt_file: "prompts/xpath_query_generator_itinerary.txt"
-```
-
-### Switching Schemas
-
-**Via config.yaml**:
-```yaml
-active_schema: "itinerary"
-active_data: "travel_memory_5day"
-```
-
-**Via code**:
-```python
-from dense_xpath import DenseXPathExecutor
-
-executor = DenseXPathExecutor(
-    schema_name="itinerary",
-    data_name="travel_memory_5day"
-)
-```
 
 ---
 
@@ -564,35 +366,19 @@ python -m pipeline.semantic_xpath_pipeline
 ============================================================
 Semantic XPath Pipeline - Interactive Mode
 ============================================================
-Config: scoring_method=entailment, top_k=5, threshold=0.01
 
-Request: days with museums
-Query: /Itinerary/Day[exists(description =~ "museum")]
+Request: museums in artistic days
 
-Matched 3 node(s) (sorted by score):
+Query: /Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
+
+Matched 2 node(s) (sorted by score):
 ============================================================
 
-[Result 1] ⭐ Score: 0.9991
-📍 Tree Path: Itinerary > Day 2
---------------------------------------------------
-Day 2 contains: Royal Ontario Museum, Casa Loma...
+[Result 1] ⭐ Score: 0.967
+📍 Tree Path: Itinerary > Day 1 > Art Gallery of Ontario
 
-[Result 2] ⭐ Score: 0.9929
-📍 Tree Path: Itinerary > Day 1
---------------------------------------------------
-Day 1 contains: Art Gallery of Ontario...
-```
-
-### Command Line Options
-
-```bash
-# Use different scoring methods
-python -m pipeline.semantic_xpath_pipeline --scoring llm
-python -m pipeline.semantic_xpath_pipeline --scoring cosine
-python -m pipeline.semantic_xpath_pipeline --scoring entailment
-
-# Custom threshold and top_k
-python -m pipeline.semantic_xpath_pipeline --top-k 10 --threshold 0.5
+[Result 2] ⭐ Score: 0.943
+📍 Tree Path: Itinerary > Day 2 > Royal Ontario Museum
 ```
 
 ### Programmatic Usage
@@ -600,127 +386,40 @@ python -m pipeline.semantic_xpath_pipeline --top-k 10 --threshold 0.5
 ```python
 from dense_xpath import DenseXPathExecutor
 
-# Create executor
 executor = DenseXPathExecutor(
     schema_name="itinerary",
-    data_name="travel_memory_3day",
     scoring_method="entailment",
     top_k=5,
     score_threshold=0.3
 )
 
-# Simple semantic query (note: all predicates MUST use all() or exists() wrapper)
-result = executor.execute('/Itinerary/Day/POI[all(description =~ "museum")]')
+# Simple semantic query
+result = executor.execute('/Itinerary/Day/POI[sem(content =~ "museum")]')
+
+# Hierarchical query with aggregation
+result = executor.execute(
+    '/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]'
+)
+
+# Aggregation-level AND
+result = executor.execute(
+    '/Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]'
+)
+
 for node in result.matched_nodes:
     print(f"- {node.tree_path}: {node.score:.3f}")
-
-# Compound predicate with AND
-result = executor.execute(
-    '/Itinerary/Day/POI[all(description =~ "outdoor" AND description =~ "historic")]'
-)
-
-# Hierarchical quantifier - find days that have museums
-result = executor.execute(
-    '/Itinerary/Day[exists(description =~ "museum")]/POI'
-)
-
-# Multi-step with Bayesian fusion
-result = executor.execute(
-    '/Itinerary/Day[all(description =~ "cultural")]/POI[all(description =~ "art")]'
-)
 ```
 
-### Example Queries by Schema
+### Command Line Options
 
-**Itinerary**:
-```xpath
-/Itinerary/Day[exists(description =~ "museum")]
-/Itinerary/Day[all(description =~ "outdoor")]/POI
-/Itinerary/Day/POI[all(description =~ "historic" AND description =~ "free")]
-/Itinerary/Day/Restaurant[all(description =~ "italian" OR description =~ "french")]
-```
+```bash
+# Scoring methods
+python -m pipeline.semantic_xpath_pipeline --scoring llm
+python -m pipeline.semantic_xpath_pipeline --scoring entailment
+python -m pipeline.semantic_xpath_pipeline --scoring cosine
 
-**TodoList**:
-```xpath
-/TodoList/Project[exists(description =~ "urgent")]/Task
-/TodoList/Project[all(description =~ "completed")]
-/TodoList/Project/Task[all(description =~ "backend" AND description =~ "critical")]
-```
-
-**Curriculum**:
-```xpath
-/Curriculum/Course[exists(description =~ "machine learning")]/Concept
-/Curriculum/Course[all(description =~ "practical")]/Exercise
-/Curriculum/Course/Concept[all(description =~ "neural" AND description =~ "advanced")]
-```
-
----
-
-## Execution Traces
-
-All executions generate detailed traces in `traces/reasoning_traces/`.
-
-### Trace Contents
-
-```json
-{
-  "query": "/Itinerary/Day[exists(description =~ \"museum\")]",
-  "scoring_traces": [
-    {
-      "step_index": 1,
-      "predicate": "exists(description =~ \"museum\")",
-      "node_scores": [
-        {
-          "node_name": "Day 1",
-          "final_score": 0.9929,
-          "scoring_steps": [
-            {
-              "type": "exists_quantifier",
-              "child_type": "*",
-              "num_children": 6,
-              "child_scores": [0.01, 0.02, 0.002, 0.99, 0.004, 0.002],
-              "result": 0.9929
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "bayesian_fusion_trace": {
-    "total_nodes_fused": 3,
-    "node_details": [
-      {
-        "node_name": "Day 1",
-        "accumulated_log_odds": 4.95,
-        "final_score": 0.9929,
-        "step_contributions": [
-          {"step_index": 1, "predicate": "exists(...)", "score": 0.9929, "log_odds": 4.95}
-        ]
-      }
-    ]
-  },
-  "final_filtering_trace": {
-    "threshold": 0.01,
-    "top_k": 5,
-    "nodes_before_filter": 3,
-    "nodes_after_filter": 3
-  }
-}
-```
-
-### Viewing Traces
-
-```python
-import json
-
-with open('traces/reasoning_traces/execution_20260114_110248.json') as f:
-    trace = json.load(f)
-    
-# View scoring breakdown
-for node_score in trace['scoring_traces'][0]['node_scores']:
-    print(f"{node_score['node_name']}: {node_score['final_score']:.4f}")
-    for step in node_score['scoring_steps']:
-        print(f"  - {step['type']}: {step.get('result', step.get('score'))}")
+# Threshold and top-k
+python -m pipeline.semantic_xpath_pipeline --top-k 10 --threshold 0.5
 ```
 
 ---
@@ -730,192 +429,101 @@ for node_score in trace['scoring_traces'][0]['node_scores']:
 Edit `config.yaml`:
 
 ```yaml
-# Schema and data file selection
-active_schema: "itinerary"  # Options: itinerary, todolist, curriculum, support, session_recommendation
-active_data: "travel_memory_3day"  # Data file defined in schema
+# Schema selection
+active_schema: "itinerary"
+active_data: "travel_memory_3day"
 
-# OpenAI settings (for LLM scoring and query generation)
-openai:
-  api_key: "${OPENAI_API_KEY}"  # Set via environment variable or replace with your key
-  model: "gpt-4o"
-  temperature: 0.7
-  max_tokens: 4096
-
-# XPath executor settings
+# Executor settings
 xpath_executor:
-  top_k: 5                      # Max nodes to return
-  score_threshold: 0.01         # Min score for semantic matches
+  top_k: 5
+  score_threshold: 0.01
   scoring_method: "entailment"  # "llm", "entailment", or "cosine"
 
-# Entailment scorer settings
-entailment:
-  model: "facebook/bart-large-mnli"
-  hypothesis_template: "This is related to {predicate}."
-  # device: auto-detected (cuda > mps > cpu)
-
-# Cosine scorer settings
-cosine:
-  model: "sentence-transformers/msmarco-distilbert-base-tas-b"
-  predicate_template: "{predicate}"
-  # device: auto-detected (cuda > mps > cpu)
+# OpenAI (for LLM scoring and query generation)
+openai:
+  api_key: "${OPENAI_API_KEY}"
+  model: "gpt-4o"
 ```
+
+### Scoring Methods
+
+| Method | Speed | Accuracy | Cost |
+|--------|-------|----------|------|
+| `llm` | Slow | Highest | API costs |
+| `entailment` | Medium | High | Free (local) |
+| `cosine` | Fast | Good | Free (local) |
 
 ---
 
-## Installation
-
-```bash
-# Clone the repository
-git clone <repo-url>
-cd LLM-VM
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up your OpenAI API key in config.yaml (for LLM scoring/query generation)
-```
-
-### Requirements
+## Project Structure
 
 ```
-openai>=1.0.0
-pyyaml>=6.0
-torch>=2.0.0
-transformers>=4.30.0
-numpy>=1.24.0
-pytest>=7.0.0  # for development
-```
-
----
-
-## Architecture
-
-```
-                         ┌─────────────────────────────────────────────────┐
-                         │              SemanticXPathPipeline              │
-                         │  - Orchestrates query generation & execution    │
-                         │  - Formats results for display                  │
-                         └───────────────────┬─────────────────────────────┘
-                                             │
-              ┌──────────────────────────────┼──────────────────────────────┐
-              │                              │                              │
-              ▼                              ▼                              ▼
-┌─────────────────────────┐    ┌─────────────────────────┐    ┌─────────────────────────┐
-│   XPathQueryGenerator   │    │   DenseXPathExecutor    │    │     PredicateScorer     │
-│                         │    │                         │    │      (Interface)        │
-│  NL → XPath Query       │    │  • BFS traversal        │    │                         │
-│  (LLM-based)            │    │  • Bayesian fusion      │    │  - LLMPredicateScorer   │
-│                         │    │  • Deferred filtering   │    │  - EntailmentScorer     │
-└─────────────────────────┘    │  • Trace generation     │    │  - CosineScorer         │
-                               └───────────┬─────────────┘    └─────────────────────────┘
-                                           │
-                    ┌──────────────────────┼────────────────────────┐
-                    │                      │                        │
-                    ▼                      ▼                        ▼
-          ┌─────────────────┐    ┌─────────────────┐      ┌─────────────────┐
-          │   QueryParser   │    │  IndexHandler   │      │PredicateHandler │
-          │                 │    │                 │      │                 │
-          │ Parse XPath     │    │ Local/Global    │      │ • AND/OR logic  │
-          │ • AND/OR        │    │ indexing        │      │ • exists()/all()│
-          │ • exists/all    │    │ [1], [-1]       │      │ • Batch scoring │
-          │ • CompoundPred  │    │ [1:3], [-2:]    │      │ • Score caching │
-          └─────────────────┘    └─────────────────┘      └─────────────────┘
-```
-
-### End-to-End Flow
-
-```
-1. User Input: "days that have museums"
-                    │
-                    ▼
-2. Query Generation (LLM)
-   → /Itinerary/Day[exists(description =~ "museum")]
-                    │
-                    ▼
-3. Query Parsing
-   → Steps: [Itinerary, Day[exists(...)]]
-   → CompoundPredicate AST: EXISTS(ATOMIC("museum"))
-                    │
-                    ▼
-4. BFS Traversal
-   Step 0: Match root → [Itinerary]
-   Step 1: Expand to Day → [Day1, Day2, Day3]
-                    │
-                    ▼
-5. Predicate Scoring (Batch)
-   Collect all children descriptions
-   Single batch call for "museum"
-   Cache results per node
-                    │
-                    ▼
-6. Hierarchical Quantification
-   For each Day: exists() = Noisy-OR over children
-   Day1: 0.9929, Day2: 0.9991, Day3: 0.0344
-                    │
-                    ▼
-7. Bayesian Fusion
-   Convert scores to log-odds
-   Accumulate across steps
-   Convert back via sigmoid
-                    │
-                    ▼
-8. Deferred Filtering
-   Apply threshold (0.01)
-   Apply top_k (5)
-   Sort by final score
-                    │
-                    ▼
-9. Result Output
-   [Day2: 0.9991, Day1: 0.9929, Day3: 0.0344]
+LLM-VM/
+├── pipeline/
+│   └── semantic_xpath_pipeline.py   # Main entry point
+├── xpath_query_generation/
+│   └── xpath_query_generator.py     # NL → Semantic XPath (LLM)
+├── dense_xpath/
+│   ├── dense_xpath_executor.py      # Main executor with Bayesian fusion
+│   ├── models.py                    # SemanticCondition, CompoundPredicate, etc.
+│   ├── parser.py                    # Query parser (sem/exist/mass/AND/OR)
+│   ├── predicate_handler.py         # Scoring + aggregation logic
+│   ├── node_utils.py                # XML node utilities
+│   ├── schema_loader.py             # Schema loading
+│   └── trace_writer.py              # Execution traces
+├── predicate_classifier/
+│   ├── llm_scorer.py                # GPT-4 scoring
+│   ├── entailment_scorer.py         # BART NLI scoring
+│   └── cosine_scorer.py             # Embedding similarity
+├── storage/
+│   ├── schemas/                     # Schema definitions
+│   ├── memory/                      # XML data files
+│   └── prompts/                     # Query generation prompts
+├── config.yaml
+├── framework.md                     # Mathematical specification
+└── README.md
 ```
 
 ---
 
 ## Quick Reference
 
-### Unified Predicate Rule
+### Predicate Syntax
 
-**ALL semantic predicates MUST use `all()` or `exists()` wrapper - no exceptions.**
+| Predicate | Syntax | Use When |
+|-----------|--------|----------|
+| `sem()` | `sem(content =~ "X")` | Matching node's own content |
+| `exist()` | `exist(Child[sem(...)])` | Any child has property |
+| `mass()` | `mass(Child[sem(...)])` | Children generally have property |
 
-| Syntax | Status |
-|--------|--------|
-| `POI[all(description =~ "museum")]` | ✓ Valid |
-| `POI[exists(description =~ "museum")]` | ✓ Valid |
-| `Day[all(description =~ "cultural")]` | ✓ Valid |
-| `Day[exists(description =~ "museum")]` | ✓ Valid |
-| `POI[description =~ "museum"]` | ✗ INVALID |
-| `Day[description =~ "cultural"]` | ✗ INVALID |
+### Aggregation Formulas
 
-### Inner Predicate Operators (inside all/exists)
+| Operator | Formula | Interpretation |
+|----------|---------|----------------|
+| `sem()` | `π = Scorer(content, query)` | Local score |
+| `exist()` | `π = 1 - ∏(1 - π_child)` | Noisy-OR |
+| `mass()` | `π = (α + Σπ_child) / (α + β + n)` | Beta-Bernoulli |
+| `AND` | `π = sigmoid(Σ log-odds)` | All conditions |
+| `OR` | `π = 1 - ∏(1 - π_j)` | Any condition |
 
-| Operator | Syntax | Formula | Use Case |
-|----------|--------|---------|----------|
-| Simple | `description =~ "X"` | π(X) | Single condition |
-| AND | `... AND ...` | sigmoid(Σ log-odds) | Must match all |
-| OR | `... OR ...` | 1 - ∏(1-π) | Match any one |
+### Example Queries
 
-### Quantifier Behavior by Node Type
+```xpath
+# Find museums
+/Itinerary/Day/POI[sem(content =~ "museum")]
 
-| Node Type | `all(pred)` | `exists(pred)` |
-|-----------|-------------|----------------|
-| **Leaf** | Score node itself | Score node itself (equivalent) |
-| **Container** | Beta-Bernoulli: (α + Σπ)/(α+β+n) | Noisy-OR: 1 - ∏(1-π) |
+# Find days with museums
+/Itinerary/Day[exist(POI[sem(content =~ "museum")])]
 
-### Choosing exists() vs all()
+# Find artistic days
+/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
 
-| Node Type | Question | Quantifier | Example |
-|-----------|----------|------------|---------|
-| Leaf | (equivalent) | prefer `all()` | `POI[all(description =~ "museum")]` |
-| Container | "Any child match?" | `exists()` | `Day[exists(description =~ "museum")]` |
-| Container | "Children generally?" | `all()` | `Day[all(description =~ "cultural")]` |
+# Find museums in artistic days
+/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
 
-### Scoring Methods
-
-| Method | Speed | Accuracy | Cost |
-|--------|-------|----------|------|
-| `llm` | Slow | Highest | $$$ |
-| `entailment` | Medium | High | Free |
-| `cosine` | Fast | Good | Free |
+# Days with both museum AND Italian restaurant
+/Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]
+```
 
 ---
 

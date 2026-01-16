@@ -17,11 +17,15 @@ hierarchy: |
 nodes:
   RecommendationHub:
     type: root
+    fields: []
+    children: ["Session"]
     
   Session:
     type: container
     name_field: "goal"              # What the user wants to achieve
     description_field: "context"    # User's situation, preferences, constraints
+    fields: ["goal", "context", "budget", "constraints"]
+    children: ["Step"]
     # Example: goal="Setup a home office", context="Budget $2000, small apartment, remote work"
     
   Step:
@@ -29,18 +33,24 @@ nodes:
     index_attr: "sequence"          # Order of steps (1, 2, 3...)
     name_field: "name"              # Step name
     description_field: "description"
+    fields: ["name", "description", "duration", "priority"]
+    children: ["Objective"]
     # Example: sequence="1", name="Workspace Planning", description="Define your workspace needs and layout"
     
   Objective:
     type: container
     name_field: "target"            # What needs to be accomplished
     description_field: "criteria"   # Success criteria or requirements
+    fields: ["target", "criteria", "status"]
+    children: ["Item"]
     # Example: target="Choose ergonomic seating", criteria="Back support, adjustable height, under $500"
     
   Item:
     type: leaf
     name_field: "name"              # Product/content name
     description_field: "description"
+    fields: ["name", "description", "price", "rating", "url"]
+    children: []
     # Example: name="Herman Miller Aeron Chair", description="Ergonomic mesh chair with lumbar support, highly adjustable"
 
 # Available data files for this schema

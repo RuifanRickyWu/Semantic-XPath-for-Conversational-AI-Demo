@@ -28,7 +28,7 @@ from predicate_classifier import PredicateScorer, get_scorer
 
 from .models import (
     IndexRange, QueryStep, MatchedNode, TraversalStep, ExecutionResult, NodeItem,
-    CompoundPredicate, AtomicCondition,
+    CompoundPredicate, SemanticCondition,
     StepContribution, NodeFusionTrace, BayesianFusionTrace, FinalFilteringTrace
 )
 from .parser import QueryParser
@@ -118,14 +118,12 @@ class DenseXPathExecutor:
         # Initialize components
         self.parser = QueryParser()
         
-        # Extract recognized node types from schema for hierarchical child filtering
-        schema_node_types = set(self._schema.get("nodes", {}).keys())
-        
+        # Pass full schema to predicate handler for children lookup
         self.predicate_handler = PredicateHandler(
             scorer=self.scorer,
             top_k=self.top_k,
             score_threshold=self.score_threshold,
-            schema_node_types=schema_node_types
+            schema=self._schema
         )
         self.trace_writer = TraceWriter()
         
@@ -160,24 +158,24 @@ class DenseXPathExecutor:
         execution_log: List[str]
     ) -> None:
         """
-        Validate that predicate uses required quantifier syntax.
+        Validate predicate syntax.
         
-        All predicates MUST use all() or exists() wrapper. Naive predicates
-        like [description =~ "X"] are NOT allowed.
+        Valid operators:
+        - SEM: Local semantic match on node content
+        - EXIST: Existential aggregation (Noisy-OR) over children
+        - MASS: Prevalence aggregation (Beta-Bernoulli) over children
+        - AND/OR: Logical operators
         
         Args:
             predicate: The predicate to validate
             node_type: The node type being filtered
             execution_log: Log for recording validation
-            
-        Raises:
-            ValueError: If predicate is not wrapped in all() or exists()
         """
-        if predicate.operator not in ("EXISTS", "ALL"):
+        valid_operators = ("SEM", "EXIST", "MASS", "AND", "OR")
+        if predicate.operator not in valid_operators:
             raise ValueError(
-                f"Invalid predicate on '{node_type}': {predicate}. "
-                f"Predicates must use all() or exists() wrapper. "
-                f"Example: {node_type}[all({predicate})]"
+                f"Invalid predicate operator '{predicate.operator}' on '{node_type}'. "
+                f"Valid operators: {valid_operators}"
             )
     
     @property
@@ -495,10 +493,10 @@ class DenseXPathExecutor:
         if step.predicate:
             predicate = step.predicate
         else:
-            # Legacy: convert string to atomic predicate
+            # Legacy: convert string to SEM predicate
             predicate = CompoundPredicate(
-                operator="ATOMIC",
-                conditions=[AtomicCondition(field="description", value=step.predicate_str)]
+                operator="SEM",
+                conditions=[SemanticCondition(field="content", value=step.predicate_str)]
             )
         
         # Validate predicate uses required quantifier syntax

@@ -1,0 +1,1247 @@
+{
+  "timestamp": "20260116_124918_597632",
+  "query": "/SupportSystem/Customer/Ticket[sem(content =~ \"slow performance\")]",
+  "data_file": "support_sample.xml",
+  "execution_time_ms": 312.40020800000013,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "SupportSystem",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "SupportSystem",
+          "path": "SupportSystem"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Customer",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 4,
+      "nodes_before": [
+        {
+          "path": "SupportSystem",
+          "name": "SupportSystem",
+          "type": "SupportSystem",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "SupportSystem > Acme Corporation",
+          "name": "Acme Corporation",
+          "type": "Customer",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > TechStart Inc",
+          "name": "TechStart Inc",
+          "type": "Customer",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd",
+          "name": "GlobalRetail Ltd",
+          "type": "Customer",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > HealthCare Plus",
+          "name": "HealthCare Plus",
+          "type": "Customer",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Customer",
+        "found_count": 4
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Ticket[sem(content =~ \"slow performance\")]",
+      "action": "type_match",
+      "nodes_before_count": 4,
+      "nodes_after_count": 9,
+      "nodes_before": [
+        {
+          "path": "SupportSystem > Acme Corporation",
+          "name": "Acme Corporation",
+          "type": "Customer",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > TechStart Inc",
+          "name": "TechStart Inc",
+          "type": "Customer",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd",
+          "name": "GlobalRetail Ltd",
+          "type": "Customer",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > HealthCare Plus",
+          "name": "HealthCare Plus",
+          "type": "Customer",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "SupportSystem > Acme Corporation > Email Server Outage",
+          "name": "Email Server Outage",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > Acme Corporation > VPN Authentication Failure",
+          "name": "VPN Authentication Failure",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > TechStart Inc > Database Performance Degradation",
+          "name": "Database Performance Degradation",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > TechStart Inc > Payment Processing Error",
+          "name": "Payment Processing Error",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Website Loading Slow",
+          "name": "Website Loading Slow",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Inventory Sync Issue",
+          "name": "Inventory Sync Issue",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Mobile App Crash on Launch",
+          "name": "Mobile App Crash on Launch",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > HealthCare Plus > Patient Portal Login Issue",
+          "name": "Patient Portal Login Issue",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > HealthCare Plus > Report Generation Failure",
+          "name": "Report Generation Failure",
+          "type": "Ticket",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Ticket",
+        "found_count": 9
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Ticket[sem(content =~ \"slow performance\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 9,
+      "nodes_after_count": 9,
+      "nodes_before": [
+        {
+          "path": "SupportSystem > Acme Corporation > Email Server Outage",
+          "name": "Email Server Outage",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > Acme Corporation > VPN Authentication Failure",
+          "name": "VPN Authentication Failure",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > TechStart Inc > Database Performance Degradation",
+          "name": "Database Performance Degradation",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > TechStart Inc > Payment Processing Error",
+          "name": "Payment Processing Error",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Website Loading Slow",
+          "name": "Website Loading Slow",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Inventory Sync Issue",
+          "name": "Inventory Sync Issue",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Mobile App Crash on Launch",
+          "name": "Mobile App Crash on Launch",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > HealthCare Plus > Patient Portal Login Issue",
+          "name": "Patient Portal Login Issue",
+          "type": "Ticket",
+          "score": 1.0
+        },
+        {
+          "path": "SupportSystem > HealthCare Plus > Report Generation Failure",
+          "name": "Report Generation Failure",
+          "type": "Ticket",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "SupportSystem > Acme Corporation > Email Server Outage",
+          "name": "Email Server Outage",
+          "type": "Ticket",
+          "score": 0.6593635678291321
+        },
+        {
+          "path": "SupportSystem > Acme Corporation > VPN Authentication Failure",
+          "name": "VPN Authentication Failure",
+          "type": "Ticket",
+          "score": 0.6541831493377686
+        },
+        {
+          "path": "SupportSystem > TechStart Inc > Database Performance Degradation",
+          "name": "Database Performance Degradation",
+          "type": "Ticket",
+          "score": 0.7877393960952759
+        },
+        {
+          "path": "SupportSystem > TechStart Inc > Payment Processing Error",
+          "name": "Payment Processing Error",
+          "type": "Ticket",
+          "score": 0.6860500574111938
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Website Loading Slow",
+          "name": "Website Loading Slow",
+          "type": "Ticket",
+          "score": 0.7414835691452026
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Inventory Sync Issue",
+          "name": "Inventory Sync Issue",
+          "type": "Ticket",
+          "score": 0.6530193090438843
+        },
+        {
+          "path": "SupportSystem > GlobalRetail Ltd > Mobile App Crash on Launch",
+          "name": "Mobile App Crash on Launch",
+          "type": "Ticket",
+          "score": 0.6472827196121216
+        },
+        {
+          "path": "SupportSystem > HealthCare Plus > Patient Portal Login Issue",
+          "name": "Patient Portal Login Issue",
+          "type": "Ticket",
+          "score": 0.6208642721176147
+        },
+        {
+          "path": "SupportSystem > HealthCare Plus > Report Generation Failure",
+          "name": "Report Generation Failure",
+          "type": "Ticket",
+          "score": 0.6896628141403198
+        }
+      ],
+      "details": {
+        "predicate": "sem(content =~ \"slow performance\")",
+        "predicate_type": "SEM",
+        "scoring_result": {
+          "predicate": "sem(content =~ \"slow performance\")",
+          "predicate_ast": {
+            "operator": "SEM",
+            "conditions": [
+              {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              }
+            ]
+          },
+          "config": {
+            "top_k": 3,
+            "score_threshold": 0.01
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "Email Server Outage",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.6593635678291321,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.6593635678291321
+            },
+            {
+              "node_idx": 1,
+              "node_name": "VPN Authentication Failure",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.6541831493377686,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.6541831493377686
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Database Performance Degradation",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.7877393960952759,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.7877393960952759
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Payment Processing Error",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.6860500574111938,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.6860500574111938
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Website Loading Slow",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.7414835691452026,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.7414835691452026
+            },
+            {
+              "node_idx": 5,
+              "node_name": "Inventory Sync Issue",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.6530193090438843,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.6530193090438843
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Mobile App Crash on Launch",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.6472827196121216,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.6472827196121216
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Patient Portal Login Issue",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.6208642721176147,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.6208642721176147
+            },
+            {
+              "node_idx": 8,
+              "node_name": "Report Generation Failure",
+              "node_type": "Ticket",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "slow performance"
+                  },
+                  "score": 0.6896628141403198,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.6896628141403198
+            }
+          ],
+          "batch_scoring": {
+            "semantic_values": [
+              "slow performance"
+            ],
+            "per_value_stats": [
+              {
+                "value": "slow performance",
+                "num_descriptions": 9,
+                "call_time_ms": 311.84
+              }
+            ],
+            "total_scorer_calls": 1,
+            "total_descriptions_scored": 9
+          },
+          "ranking": [
+            {
+              "idx": 2,
+              "score": 0.7877393960952759,
+              "name": "Database Performance Degradation"
+            },
+            {
+              "idx": 4,
+              "score": 0.7414835691452026,
+              "name": "Website Loading Slow"
+            },
+            {
+              "idx": 8,
+              "score": 0.6896628141403198,
+              "name": "Report Generation Failure"
+            },
+            {
+              "idx": 3,
+              "score": 0.6860500574111938,
+              "name": "Payment Processing Error"
+            },
+            {
+              "idx": 0,
+              "score": 0.6593635678291321,
+              "name": "Email Server Outage"
+            },
+            {
+              "idx": 1,
+              "score": 0.6541831493377686,
+              "name": "VPN Authentication Failure"
+            },
+            {
+              "idx": 5,
+              "score": 0.6530193090438843,
+              "name": "Inventory Sync Issue"
+            },
+            {
+              "idx": 6,
+              "score": 0.6472827196121216,
+              "name": "Mobile App Crash on Launch"
+            },
+            {
+              "idx": 7,
+              "score": 0.6208642721176147,
+              "name": "Patient Portal Login Issue"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "sem(content =~ \"slow performance\")",
+      "predicate_ast": {
+        "operator": "SEM",
+        "conditions": [
+          {
+            "type": "sem",
+            "field": "content",
+            "value": "slow performance"
+          }
+        ]
+      },
+      "config": {
+        "top_k": 3,
+        "score_threshold": 0.01
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "Email Server Outage",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.6593635678291321,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.6593635678291321
+        },
+        {
+          "node_idx": 1,
+          "node_name": "VPN Authentication Failure",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.6541831493377686,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.6541831493377686
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Database Performance Degradation",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.7877393960952759,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.7877393960952759
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Payment Processing Error",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.6860500574111938,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.6860500574111938
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Website Loading Slow",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.7414835691452026,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.7414835691452026
+        },
+        {
+          "node_idx": 5,
+          "node_name": "Inventory Sync Issue",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.6530193090438843,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.6530193090438843
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Mobile App Crash on Launch",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.6472827196121216,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.6472827196121216
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Patient Portal Login Issue",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.6208642721176147,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.6208642721176147
+        },
+        {
+          "node_idx": 8,
+          "node_name": "Report Generation Failure",
+          "node_type": "Ticket",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "slow performance"
+              },
+              "score": 0.6896628141403198,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.6896628141403198
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "slow performance"
+        ],
+        "per_value_stats": [
+          {
+            "value": "slow performance",
+            "num_descriptions": 9,
+            "call_time_ms": 311.84
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 9
+      },
+      "ranking": [
+        {
+          "idx": 2,
+          "score": 0.7877393960952759,
+          "name": "Database Performance Degradation"
+        },
+        {
+          "idx": 4,
+          "score": 0.7414835691452026,
+          "name": "Website Loading Slow"
+        },
+        {
+          "idx": 8,
+          "score": 0.6896628141403198,
+          "name": "Report Generation Failure"
+        },
+        {
+          "idx": 3,
+          "score": 0.6860500574111938,
+          "name": "Payment Processing Error"
+        },
+        {
+          "idx": 0,
+          "score": 0.6593635678291321,
+          "name": "Email Server Outage"
+        },
+        {
+          "idx": 1,
+          "score": 0.6541831493377686,
+          "name": "VPN Authentication Failure"
+        },
+        {
+          "idx": 5,
+          "score": 0.6530193090438843,
+          "name": "Inventory Sync Issue"
+        },
+        {
+          "idx": 6,
+          "score": 0.6472827196121216,
+          "name": "Mobile App Crash on Launch"
+        },
+        {
+          "idx": 7,
+          "score": 0.6208642721176147,
+          "name": "Patient Portal Login Issue"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "sem(content =~ \"slow performance\")",
+        "predicate_ast": {
+          "operator": "SEM",
+          "conditions": [
+            {
+              "type": "sem",
+              "field": "content",
+              "value": "slow performance"
+            }
+          ]
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "Email Server Outage",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.6593635678291321,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.6593635678291321
+          },
+          {
+            "node_idx": 1,
+            "node_name": "VPN Authentication Failure",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.6541831493377686,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.6541831493377686
+          },
+          {
+            "node_idx": 2,
+            "node_name": "Database Performance Degradation",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.7877393960952759,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.7877393960952759
+          },
+          {
+            "node_idx": 3,
+            "node_name": "Payment Processing Error",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.6860500574111938,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.6860500574111938
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Website Loading Slow",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.7414835691452026,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.7414835691452026
+          },
+          {
+            "node_idx": 5,
+            "node_name": "Inventory Sync Issue",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.6530193090438843,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.6530193090438843
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Mobile App Crash on Launch",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.6472827196121216,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.6472827196121216
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Patient Portal Login Issue",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.6208642721176147,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.6208642721176147
+          },
+          {
+            "node_idx": 8,
+            "node_name": "Report Generation Failure",
+            "node_type": "Ticket",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "slow performance"
+                },
+                "score": 0.6896628141403198,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.6896628141403198
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 2,
+            "score": 0.7877393960952759,
+            "name": "Database Performance Degradation"
+          },
+          {
+            "idx": 4,
+            "score": 0.7414835691452026,
+            "name": "Website Loading Slow"
+          },
+          {
+            "idx": 8,
+            "score": 0.6896628141403198,
+            "name": "Report Generation Failure"
+          },
+          {
+            "idx": 3,
+            "score": 0.6860500574111938,
+            "name": "Payment Processing Error"
+          },
+          {
+            "idx": 0,
+            "score": 0.6593635678291321,
+            "name": "Email Server Outage"
+          },
+          {
+            "idx": 1,
+            "score": 0.6541831493377686,
+            "name": "VPN Authentication Failure"
+          },
+          {
+            "idx": 5,
+            "score": 0.6530193090438843,
+            "name": "Inventory Sync Issue"
+          },
+          {
+            "idx": 6,
+            "score": 0.6472827196121216,
+            "name": "Mobile App Crash on Launch"
+          },
+          {
+            "idx": 7,
+            "score": 0.6208642721176147,
+            "name": "Patient Portal Login Issue"
+          }
+        ]
+      }
+    ],
+    "bayesian_fusion": {
+      "per_node": [
+        {
+          "node_path": "SupportSystem > Acme Corporation > Email Server Outage",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.6593635678291321,
+              "log_odds": 0.6604593514338615
+            }
+          ],
+          "accumulated_log_odds": 0.6604593514338615,
+          "final_score": 0.6593635678291321
+        },
+        {
+          "node_path": "SupportSystem > Acme Corporation > VPN Authentication Failure",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.6541831493377686,
+              "log_odds": 0.6374780555457115
+            }
+          ],
+          "accumulated_log_odds": 0.6374780555457115,
+          "final_score": 0.6541831493377686
+        },
+        {
+          "node_path": "SupportSystem > TechStart Inc > Database Performance Degradation",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.7877393960952759,
+              "log_odds": 1.311352536096755
+            }
+          ],
+          "accumulated_log_odds": 1.311352536096755,
+          "final_score": 0.7877393960952759
+        },
+        {
+          "node_path": "SupportSystem > TechStart Inc > Payment Processing Error",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.6860500574111938,
+              "log_odds": 0.7817170403580825
+            }
+          ],
+          "accumulated_log_odds": 0.7817170403580825,
+          "final_score": 0.6860500574111938
+        },
+        {
+          "node_path": "SupportSystem > GlobalRetail Ltd > Website Loading Slow",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.7414835691452026,
+              "log_odds": 1.0536937481619686
+            }
+          ],
+          "accumulated_log_odds": 1.0536937481619686,
+          "final_score": 0.7414835691452026
+        },
+        {
+          "node_path": "SupportSystem > GlobalRetail Ltd > Inventory Sync Issue",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.6530193090438843,
+              "log_odds": 0.632337565845893
+            }
+          ],
+          "accumulated_log_odds": 0.632337565845893,
+          "final_score": 0.6530193090438843
+        },
+        {
+          "node_path": "SupportSystem > GlobalRetail Ltd > Mobile App Crash on Launch",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.6472827196121216,
+              "log_odds": 0.6071163384710605
+            }
+          ],
+          "accumulated_log_odds": 0.6071163384710605,
+          "final_score": 0.6472827196121216
+        },
+        {
+          "node_path": "SupportSystem > HealthCare Plus > Patient Portal Login Issue",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.6208642721176147,
+              "log_odds": 0.4932182325932375
+            }
+          ],
+          "accumulated_log_odds": 0.4932182325932375,
+          "final_score": 0.6208642721176147
+        },
+        {
+          "node_path": "SupportSystem > HealthCare Plus > Report Generation Failure",
+          "node_type": "Ticket",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"slow performance\")",
+              "score": 0.6896628141403198,
+              "log_odds": 0.798543400304037
+            }
+          ],
+          "accumulated_log_odds": 0.798543400304037,
+          "final_score": 0.6896628141403199
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 9,
+    "threshold": 0.01,
+    "top_k": 3,
+    "after_filter_count": 3,
+    "filtered_nodes": [
+      {
+        "path": "SupportSystem > TechStart Inc > Database Performance Degradation",
+        "score": 0.7877393960952759,
+        "type": "Ticket"
+      },
+      {
+        "path": "SupportSystem > GlobalRetail Ltd > Website Loading Slow",
+        "score": 0.7414835691452026,
+        "type": "Ticket"
+      },
+      {
+        "path": "SupportSystem > HealthCare Plus > Report Generation Failure",
+        "score": 0.6896628141403199,
+        "type": "Ticket"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "SupportSystem > TechStart Inc > Database Performance Degradation",
+      "score": 0.7877393960952759,
+      "node": {
+        "type": "Ticket",
+        "attributes": {},
+        "title": "Database Performance Degradation",
+        "description": "Application database queries running extremely slow during peak hours",
+        "priority": "high",
+        "status": "in_progress",
+        "created_date": "2026-01-04",
+        "Symptom": [
+          "Connection Pool Exhaustion",
+          "Application logs showing connection pool depleted warnings"
+        ],
+        "Cause": [
+          "Inefficient Query Pattern",
+          "N+1 query pattern in application code fetching related records one at a time"
+        ],
+        "Resolution": [
+          "Index Creation",
+          "Added composite index on user_id and created_at columns, pending deployment"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "SupportSystem > GlobalRetail Ltd > Website Loading Slow",
+      "score": 0.7414835691452026,
+      "node": {
+        "type": "Ticket",
+        "attributes": {},
+        "title": "Website Loading Slow",
+        "description": "Main e-commerce website taking over 10 seconds to load on all pages",
+        "priority": "high",
+        "status": "resolved",
+        "created_date": "2026-01-02",
+        "Symptom": [
+          "Image Loading Delay",
+          "Product images loading very slowly or not appearing at all"
+        ],
+        "Cause": [
+          "Unoptimized Images",
+          "Product images uploaded without compression, averaging 5MB per image"
+        ],
+        "Resolution": [
+          "Image Optimization Pipeline",
+          "Implemented automatic image compression and WebP conversion on upload"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "SupportSystem > HealthCare Plus > Report Generation Failure",
+      "score": 0.6896628141403199,
+      "node": {
+        "type": "Ticket",
+        "attributes": {},
+        "title": "Report Generation Failure",
+        "description": "Monthly compliance reports failing to generate with timeout error",
+        "priority": "medium",
+        "status": "pending",
+        "created_date": "2026-01-05",
+        "Symptom": [
+          "Memory Spike",
+          "Server memory usage spikes to 100% during report generation attempts"
+        ],
+        "Cause": [
+          "Data Volume Increase",
+          "Patient data volume grew 300% in Q4, exceeding report generator capacity"
+        ],
+        "Resolution": [
+          "Pending Investigation",
+          "Evaluating options for batched report generation or memory optimization"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 1,
+    "matched_count": 3,
+    "execution_time_ms": 312.40020800000013,
+    "has_bayesian_fusion": true,
+    "num_nodes_before_filter": 9,
+    "num_nodes_after_filter": 3
+  }
+}

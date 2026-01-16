@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Curriculum>
-  <Course name="Introduction to Programming">
+  <Course>
+    <name>Introduction to Programming</name>
     <description>Foundational programming course covering basic concepts and Python syntax for beginners</description>
+    <level>beginner</level>
     <Concept>
       <name>Variables and Data Types</name>
       <description>Understanding how to store and manipulate data using variables, integers, strings, and floats</description>
@@ -36,8 +38,11 @@
       <estimated_time>20 minutes</estimated_time>
     </Exercise>
   </Course>
-  <Course name="Data Structures">
+  
+  <Course>
+    <name>Data Structures</name>
     <description>Intermediate course covering essential data structures for efficient data organization and algorithms</description>
+    <level>intermediate</level>
     <Concept>
       <name>Arrays and Lists</name>
       <description>Understanding sequential data storage, indexing, and common list operations</description>
@@ -77,8 +82,11 @@
       <estimated_time>60 minutes</estimated_time>
     </Exercise>
   </Course>
-  <Course name="Machine Learning Fundamentals">
+  
+  <Course>
+    <name>Machine Learning Fundamentals</name>
     <description>Introduction to machine learning concepts, algorithms, and practical applications using Python</description>
+    <level>intermediate</level>
     <Concept>
       <name>Supervised Learning</name>
       <description>Learning from labeled data to make predictions, including classification and regression tasks</description>
@@ -118,8 +126,11 @@
       <estimated_time>60 minutes</estimated_time>
     </Exercise>
   </Course>
-  <Course name="Web Development">
+  
+  <Course>
+    <name>Web Development</name>
     <description>Full-stack web development course covering frontend, backend, and database technologies</description>
+    <level>beginner</level>
     <Concept>
       <name>HTML and CSS</name>
       <description>Building web page structure with HTML and styling with CSS including flexbox and grid layouts</description>
@@ -159,8 +170,11 @@
       <estimated_time>60 minutes</estimated_time>
     </Exercise>
   </Course>
-  <Course name="Algorithms">
+  
+  <Course>
+    <name>Algorithms</name>
     <description>Advanced course on algorithm design, analysis, and optimization techniques</description>
+    <level>advanced</level>
     <Concept>
       <name>Time Complexity</name>
       <description>Big O notation and analyzing algorithm efficiency in terms of input size growth</description>
@@ -207,6 +221,3 @@
     </Exercise>
   </Course>
 </Curriculum>
-
-
-

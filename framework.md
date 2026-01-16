@@ -43,51 +43,58 @@ Each step applies structural expansion, predicate filtering, and positional sele
 
 Structural operations are deterministic. Semantic predicates introduce probabilistic scoring.
 
-## Semantic Predicates and Leaf-Level Evidence
+## Semantic Predicates
 
-Each semantic predicate consists of one or more **atomic conditions**.
+Semantic XPath v2 introduces three predicate types with clear semantics:
 
-For a leaf node `v` and an atomic condition `c`, define a posterior probability:
+### 1. sem() - Local Semantic Match
+
+Scores the node's **own content only** (no subtree aggregation).
+
+**Syntax:** `sem(content =~ "value")`
+
+**Example:** `POI[sem(content =~ "museum")]`
+
+For a node `v` with textual content `X_v`, the posterior probability is:
 
 - `π_v(c) = Pr(Z_v(c) = 1 | X_v)`
 
-where:
-- `Z_v(c)` indicates whether node `v` satisfies condition `c`,
-- `X_v` denotes the textual content of `v`.
+### 2. exist() - Existential Aggregation
 
-These posteriors are produced by a calibrated semantic scoring model.
+Checks if **at least one child** of specified type matches the inner predicate.
 
-## Predicate Structure
+**Syntax:** `exist(ChildType[inner_predicate])`
 
-**ALL semantic predicates MUST use `all()` or `exists()` wrapper.** No direct predicates allowed.
+**Example:** `Day[exist(POI[sem(content =~ "museum")])]`
 
-### Unified Syntax
+Uses **Noisy-OR** aggregation over children:
 
-For ALL nodes (leaf or container), predicates must be wrapped:
-- `Node[all(inner_predicate)]`
-- `Node[exists(inner_predicate)]`
+- `π_v(p) = 1 − ∏_{u ∈ ch(v)} (1 − π_u(p))`
 
-The inner predicate can contain AND/OR operators:
-- `POI[all(description =~ "outdoor" AND description =~ "free")]`
-- `Day[exists(description =~ "museum" OR description =~ "gallery")]`
+### 3. mass() - Prevalence Aggregation
 
-### Semantic Behavior
+Characterizes the **general prevalence** of a property among children.
 
-| Node Type | `all(pred)` | `exists(pred)` |
-|-----------|-------------|----------------|
-| Leaf | Score node itself: π(pred) | Score node itself: π(pred) |
-| Container | Beta-Bernoulli over children | Noisy-OR over children |
+**Syntax:** `mass(ChildType[inner_predicate])`
 
-For **leaf nodes**, `all()` and `exists()` are semantically equivalent.
-For **container nodes**, the quantifier determines the aggregation method.
+**Example:** `Day[mass(POI[sem(content =~ "artistic")])]`
+
+Uses **Beta-Bernoulli** aggregation:
+
+- `ρ_v(p) ~ Beta(α, β)`
+- `Z_u(p) | ρ_v(p) ~ Bernoulli(ρ_v(p))`
+
+Posterior mean:
+
+- `π_v(p) = (α + Σ_{u ∈ ch(v)} π_u(p)) / (α + β + |ch(v)|)`
 
 ## AND and OR Operators
 
-When a predicate contains multiple atomic conditions, conjunction and disjunction are resolved.
+When a predicate contains multiple conditions, conjunction and disjunction are resolved.
 
 ### Disjunction (OR)
 
-For a predicate `p = c1 OR c2 OR ... OR ck`, we use a Noisy-OR model:
+For a predicate `p = c1 OR c2 OR ... OR ck`, we use Noisy-OR:
 
 - `π_v(p) = 1 − ∏_{j=1..k} (1 − π_v(cj))`
 
@@ -98,26 +105,13 @@ For a predicate `p = c1 AND c2 AND ... AND ck`, evidence is aggregated in log-od
 - `ℓ_v(p) = Σ_{j=1..k} log( π_v(cj) / (1 − π_v(cj)) )`
 - `π_v(p) = sigmoid(ℓ_v(p))`
 
-## Existential and Global Predicates (for Container Nodes)
+## Decision Guide: Choosing Predicates
 
-Container nodes infer semantic predicates from child evidence using **required** explicit quantifiers.
-
-### Existential Predicates (`exists`)
-
-An internal node satisfies predicate `p` if **at least one child** satisfies `p`:
-
-- `π_v(p) = 1 − ∏_{u ∈ ch(v)} (1 − π_u(p))`
-
-### Global Predicates (`all`)
-
-A predicate may characterize an internal node as a whole. We model prevalence using a Beta–Bernoulli hierarchy:
-
-- `ρ_v(p) ~ Beta(α, β)`
-- `Z_u(p) | ρ_v(p) ~ Bernoulli(ρ_v(p))`
-
-The posterior mean prevalence is:
-
-- `π_v(p) = (α + Σ_{u ∈ ch(v)} π_u(p)) / (α + β + |ch(v)|)`
+| Scenario | Predicate | Reasoning |
+|----------|-----------|-----------|
+| Property of the node itself | `sem()` | Score local content |
+| "Any child has property X" | `exist()` | Noisy-OR over children |
+| "Children are generally X" | `mass()` | Beta-Bernoulli prevalence |
 
 ## Bayesian Fusion Across Query Steps
 
@@ -134,3 +128,43 @@ Let `π_i(u)` denote the predicate posterior at step `i` along the execution pat
 The final relevance score is:
 
 - `Score(u, Q) = sigmoid(ℓ(u))`
+
+## Query Examples
+
+### Find Museums in the Second Day
+
+```xpath
+/Itinerary/Day[@index='2']/POI[sem(content =~ "museum")]
+```
+
+### Find Museums and Art Galleries
+
+```xpath
+/Itinerary/Day/POI[sem(content =~ "museum") OR sem(content =~ "art gallery")]
+```
+
+### Find an Artistic Day
+
+```xpath
+/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
+```
+
+Each POI contributes local semantic evidence. The `mass` operator aggregates these scores using Beta-Bernoulli model.
+
+### Find Museums in an Artistic Day
+
+```xpath
+/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
+```
+
+- The `Day` node acquires a contextual score (e.g., artistic day = 0.8)
+- The `POI` node has its own local score (e.g., museum = 0.9)
+- Final relevance is computed via Bayesian log-odds fusion
+
+### Find Days with a Museum
+
+```xpath
+/Itinerary/Day[exist(POI[sem(content =~ "museum")])]
+```
+
+Uses Noisy-OR: day matches if any POI is a museum.

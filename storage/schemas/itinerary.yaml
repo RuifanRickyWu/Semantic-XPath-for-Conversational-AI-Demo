@@ -50,6 +50,8 @@ nodes:
 data_files:
   travel_memory_3day: "memory/travel/travel_memory_3day.xml"
   travel_memory_5day: "memory/travel/travel_memory_5day.xml"
+  travel_memory_3day_diff: "memory/travel/travel_memory_3day_diff.xml"
+  travel_memory_10day_themed: "memory/travel/travel_memory_10day_themed.xml"
 
 # Default data file to use
 default_data: "travel_memory_3day"

@@ -1,0 +1,250 @@
+{
+  "timestamp": "20260116_165624_217507",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "outdoor",
+  "hypothesis": "This is related to outdoor.",
+  "nodes": [
+    {
+      "id": "4360244176_main",
+      "type": "POI",
+      "name": "Ripley's Aquarium of Canada",
+      "description": "Explore one of North America's largest aquariums featuring over 20,000 marine creatures and the stunning Dangerous Lagoon underwater tunnel.",
+      "premise": "POI: Ripley's Aquarium of Canada - Explore one of North America's largest aquariums featuring over 20,000 marine creatures and the stunning Dangerous Lagoon underwater tunnel.",
+      "score": 0.8819114565849304
+    },
+    {
+      "id": "4360188608_main",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "Ascend to the observation deck for breathtaking 360-degree views of Toronto and Lake Ontario.",
+      "premise": "POI: CN Tower - Ascend to the observation deck for breathtaking 360-degree views of Toronto and Lake Ontario.",
+      "score": 0.9725335836410522
+    },
+    {
+      "id": "4360189808_main",
+      "type": "POI",
+      "name": "Steam Whistle Brewery Tour",
+      "description": "Tour a historic brewery housed in a vintage railway roundhouse and learn about craft beer making.",
+      "premise": "POI: Steam Whistle Brewery Tour - Tour a historic brewery housed in a vintage railway roundhouse and learn about craft beer making.",
+      "score": 0.9497801065444946
+    },
+    {
+      "id": "4984556816_main",
+      "type": "POI",
+      "name": "Rogers Centre Stadium Tour",
+      "description": "Go behind the scenes at the iconic home of the Toronto Blue Jays with its retractable roof.",
+      "premise": "POI: Rogers Centre Stadium Tour - Go behind the scenes at the iconic home of the Toronto Blue Jays with its retractable roof.",
+      "score": 0.3500227928161621
+    },
+    {
+      "id": "4984643968_main",
+      "type": "POI",
+      "name": "Harbourfront Centre Evening Stroll",
+      "description": "Walk along the scenic waterfront promenade enjoying sunset views over Lake Ontario.",
+      "premise": "POI: Harbourfront Centre Evening Stroll - Walk along the scenic waterfront promenade enjoying sunset views over Lake Ontario.",
+      "score": 0.9743077158927917
+    },
+    {
+      "id": "4984645008_main",
+      "type": "POI",
+      "name": "TIFF Bell Lightbox Cinema",
+      "description": "Catch a film screening at Toronto's premier cinema destination, home of the Toronto International Film Festival.",
+      "premise": "POI: TIFF Bell Lightbox Cinema - Catch a film screening at Toronto's premier cinema destination, home of the Toronto International Film Festival.",
+      "score": 0.525476336479187
+    },
+    {
+      "id": "4984647328_main",
+      "type": "POI",
+      "name": "Gardiner Museum of Ceramic Art",
+      "description": "Canada's only museum dedicated to ceramic art featuring ancient and contemporary pottery from around the world.",
+      "premise": "POI: Gardiner Museum of Ceramic Art - Canada's only museum dedicated to ceramic art featuring ancient and contemporary pottery from around the world.",
+      "score": 0.772840142250061
+    },
+    {
+      "id": "4984652720_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "World-class museum showcasing Canadian, European, and contemporary art in a stunning Frank Gehry-designed building.",
+      "premise": "POI: Art Gallery of Ontario - World-class museum showcasing Canadian, European, and contemporary art in a stunning Frank Gehry-designed building.",
+      "score": 0.040786657482385635
+    },
+    {
+      "id": "4984654960_main",
+      "type": "POI",
+      "name": "Graffiti Alley (Rush Lane)",
+      "description": "Wander through Toronto's most vibrant outdoor gallery, a kilometer of ever-changing street art murals.",
+      "premise": "POI: Graffiti Alley (Rush Lane) - Wander through Toronto's most vibrant outdoor gallery, a kilometer of ever-changing street art murals.",
+      "score": 0.9950024485588074
+    },
+    {
+      "id": "4984668544_main",
+      "type": "POI",
+      "name": "Museum of Contemporary Art Toronto",
+      "description": "Cutting-edge contemporary art space in a converted industrial building showcasing experimental works.",
+      "premise": "POI: Museum of Contemporary Art Toronto - Cutting-edge contemporary art space in a converted industrial building showcasing experimental works.",
+      "score": 0.1649445742368698
+    },
+    {
+      "id": "4984670704_main",
+      "type": "POI",
+      "name": "Theatre Passe Muraille",
+      "description": "Iconic experimental theatre presenting avant-garde Canadian productions in an intimate setting.",
+      "premise": "POI: Theatre Passe Muraille - Iconic experimental theatre presenting avant-garde Canadian productions in an intimate setting.",
+      "score": 0.2246273308992386
+    },
+    {
+      "id": "4984681312_main",
+      "type": "POI",
+      "name": "Toronto Islands Kayaking",
+      "description": "Paddle around the Toronto Islands chain with stunning skyline views and wildlife sightings.",
+      "premise": "POI: Toronto Islands Kayaking - Paddle around the Toronto Islands chain with stunning skyline views and wildlife sightings.",
+      "score": 0.9952774047851562
+    },
+    {
+      "id": "4984682512_main",
+      "type": "POI",
+      "name": "Ward's Island Beach",
+      "description": "Relax on Toronto's best sandy beach with views of the city skyline and calm Lake Ontario waters.",
+      "premise": "POI: Ward's Island Beach - Relax on Toronto's best sandy beach with views of the city skyline and calm Lake Ontario waters.",
+      "score": 0.9923129677772522
+    },
+    {
+      "id": "4984684352_main",
+      "type": "POI",
+      "name": "Centre Island Bike Trail Loop",
+      "description": "Cycle the scenic car-free trails connecting all three islands through gardens and forested paths.",
+      "premise": "POI: Centre Island Bike Trail Loop - Cycle the scenic car-free trails connecting all three islands through gardens and forested paths.",
+      "score": 0.998583197593689
+    },
+    {
+      "id": "4984693760_main",
+      "type": "POI",
+      "name": "High Park Nature Trails",
+      "description": "Hike through 400 acres of forest, wetlands, and ravines in Toronto's largest urban park.",
+      "premise": "POI: High Park Nature Trails - Hike through 400 acres of forest, wetlands, and ravines in Toronto's largest urban park.",
+      "score": 0.9973522424697876
+    },
+    {
+      "id": "4984694800_main",
+      "type": "POI",
+      "name": "Sunnyside Boardwalk & Beach",
+      "description": "Sunset stroll along the historic boardwalk with views of Lake Ontario and the Humber Bay Arch Bridge.",
+      "premise": "POI: Sunnyside Boardwalk & Beach - Sunset stroll along the historic boardwalk with views of Lake Ontario and the Humber Bay Arch Bridge.",
+      "score": 0.996639609336853
+    },
+    {
+      "id": "4984705328_main",
+      "type": "POI",
+      "name": "Humber Bay Park Stargazing",
+      "description": "End the day with stargazing at this waterfront park, one of the best spots in Toronto for night sky viewing.",
+      "premise": "POI: Humber Bay Park Stargazing - End the day with stargazing at this waterfront park, one of the best spots in Toronto for night sky viewing.",
+      "score": 0.9919716119766235
+    }
+  ],
+  "results": [
+    {
+      "node_id": "4360244176_main",
+      "node_type": "POI",
+      "score": 0.8819114565849304,
+      "reasoning": "Entailment score: 0.8819"
+    },
+    {
+      "node_id": "4360188608_main",
+      "node_type": "POI",
+      "score": 0.9725335836410522,
+      "reasoning": "Entailment score: 0.9725"
+    },
+    {
+      "node_id": "4360189808_main",
+      "node_type": "POI",
+      "score": 0.9497801065444946,
+      "reasoning": "Entailment score: 0.9498"
+    },
+    {
+      "node_id": "4984556816_main",
+      "node_type": "POI",
+      "score": 0.3500227928161621,
+      "reasoning": "Entailment score: 0.3500"
+    },
+    {
+      "node_id": "4984643968_main",
+      "node_type": "POI",
+      "score": 0.9743077158927917,
+      "reasoning": "Entailment score: 0.9743"
+    },
+    {
+      "node_id": "4984645008_main",
+      "node_type": "POI",
+      "score": 0.525476336479187,
+      "reasoning": "Entailment score: 0.5255"
+    },
+    {
+      "node_id": "4984647328_main",
+      "node_type": "POI",
+      "score": 0.772840142250061,
+      "reasoning": "Entailment score: 0.7728"
+    },
+    {
+      "node_id": "4984652720_main",
+      "node_type": "POI",
+      "score": 0.040786657482385635,
+      "reasoning": "Entailment score: 0.0408"
+    },
+    {
+      "node_id": "4984654960_main",
+      "node_type": "POI",
+      "score": 0.9950024485588074,
+      "reasoning": "Entailment score: 0.9950"
+    },
+    {
+      "node_id": "4984668544_main",
+      "node_type": "POI",
+      "score": 0.1649445742368698,
+      "reasoning": "Entailment score: 0.1649"
+    },
+    {
+      "node_id": "4984670704_main",
+      "node_type": "POI",
+      "score": 0.2246273308992386,
+      "reasoning": "Entailment score: 0.2246"
+    },
+    {
+      "node_id": "4984681312_main",
+      "node_type": "POI",
+      "score": 0.9952774047851562,
+      "reasoning": "Entailment score: 0.9953"
+    },
+    {
+      "node_id": "4984682512_main",
+      "node_type": "POI",
+      "score": 0.9923129677772522,
+      "reasoning": "Entailment score: 0.9923"
+    },
+    {
+      "node_id": "4984684352_main",
+      "node_type": "POI",
+      "score": 0.998583197593689,
+      "reasoning": "Entailment score: 0.9986"
+    },
+    {
+      "node_id": "4984693760_main",
+      "node_type": "POI",
+      "score": 0.9973522424697876,
+      "reasoning": "Entailment score: 0.9974"
+    },
+    {
+      "node_id": "4984694800_main",
+      "node_type": "POI",
+      "score": 0.996639609336853,
+      "reasoning": "Entailment score: 0.9966"
+    },
+    {
+      "node_id": "4984705328_main",
+      "node_type": "POI",
+      "score": 0.9919716119766235,
+      "reasoning": "Entailment score: 0.9920"
+    }
+  ]
+}

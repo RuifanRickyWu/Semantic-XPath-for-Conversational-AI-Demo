@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Itinerary>
+  <!-- Day 1: Historic Toronto 历史探索 -->
+  <Day index="1">
+    <POI>
+      <name>Fort York National Historic Site</name>
+      <time_block>9:00 AM - 11:00 AM</time_block>
+      <description>Explore Toronto's birthplace featuring restored 1812 military buildings and costumed interpreters.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 14</expected_cost>
+      <highlights>
+        <highlight>War of 1812 history</highlight>
+        <highlight>Military demonstrations</highlight>
+        <highlight>Period architecture</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>St. Lawrence Market</name>
+      <time_block>11:30 AM - 1:00 PM</time_block>
+      <description>Historic market since 1803, voted the world's best food market by National Geographic.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15-25</expected_cost>
+      <highlights>
+        <highlight>Peameal bacon sandwich</highlight>
+        <highlight>Historic vendors</highlight>
+        <highlight>Saturday farmers market</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>C'est What</name>
+      <time_block>1:30 PM - 2:30 PM</time_block>
+      <description>Historic basement pub in a 19th-century building serving Ontario craft beers since 1988.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 20-30</expected_cost>
+      <highlights>
+        <highlight>Heritage building</highlight>
+        <highlight>Craft beer pioneers</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Distillery District</name>
+      <time_block>3:00 PM - 5:00 PM</time_block>
+      <description>Beautifully preserved Victorian industrial architecture, once the largest distillery in the British Empire.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Cobblestone streets</highlight>
+        <highlight>Victorian industrial</highlight>
+        <highlight>Artisan galleries</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Casa Loma</name>
+      <time_block>5:30 PM - 7:30 PM</time_block>
+      <description>Gothic Revival castle built in 1914 with secret passages, towers, and elaborate gardens.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 40</expected_cost>
+      <highlights>
+        <highlight>Secret tunnels</highlight>
+        <highlight>Castle towers</highlight>
+        <highlight>Period furnishings</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>The Sultan's Tent</name>
+      <time_block>8:00 PM - 10:00 PM</time_block>
+      <description>Moroccan feast in a historic building with belly dancing and traditional music.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 60-80</expected_cost>
+      <highlights>
+        <highlight>Seven-course feast</highlight>
+        <highlight>Live entertainment</highlight>
+        <highlight>Historic ambiance</highlight>
+      </highlights>
+    </Restaurant>
+  </Day>
+
+  <!-- Day 2: Art & Culture 艺术文化 -->
+  <Day index="2">
+    <Restaurant>
+      <name>Cafe Belong at Gardiner Museum</name>
+      <time_block>9:00 AM - 10:00 AM</time_block>
+      <description>Artistic brunch in Canada's ceramics museum with farm-to-table menu.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 25-35</expected_cost>
+      <highlights>
+        <highlight>Museum setting</highlight>
+        <highlight>Local ingredients</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Gardiner Museum</name>
+      <time_block>10:00 AM - 11:30 AM</time_block>
+      <description>Canada's only museum dedicated to ceramic art spanning 4,000 years of history.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15</expected_cost>
+      <highlights>
+        <highlight>Ancient pottery</highlight>
+        <highlight>Contemporary ceramics</highlight>
+        <highlight>Hands-on workshops</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Royal Ontario Museum</name>
+      <time_block>12:00 PM - 2:30 PM</time_block>
+      <description>World-class museum with 13 million artifacts including dinosaurs and ancient civilizations.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 23</expected_cost>
+      <highlights>
+        <highlight>Crystal architecture</highlight>
+        <highlight>Dinosaur gallery</highlight>
+        <highlight>Chinese collections</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>FRANK Restaurant at AGO</name>
+      <time_block>3:00 PM - 4:00 PM</time_block>
+      <description>Chef-driven restaurant inside the Art Gallery with exhibition-inspired menus.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 35-50</expected_cost>
+      <highlights>
+        <highlight>Art-inspired cuisine</highlight>
+        <highlight>Gallery views</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Art Gallery of Ontario</name>
+      <time_block>4:00 PM - 6:30 PM</time_block>
+      <description>One of North America's largest art museums with Frank Gehry's stunning Galleria Italia.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 25</expected_cost>
+      <highlights>
+        <highlight>Group of Seven</highlight>
+        <highlight>Gehry architecture</highlight>
+        <highlight>Henry Moore collection</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Graffiti Alley</name>
+      <time_block>7:00 PM - 8:00 PM</time_block>
+      <description>Kilometer-long outdoor gallery of vibrant street art in the Fashion District.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Street murals</highlight>
+        <highlight>Urban art</highlight>
+        <highlight>Photo opportunities</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Bar Raval</name>
+      <time_block>8:30 PM - 10:00 PM</time_block>
+      <description>Award-winning pintxos bar with Gaudi-inspired hand-carved mahogany interior.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 45-65</expected_cost>
+      <highlights>
+        <highlight>Sculptural design</highlight>
+        <highlight>Spanish tapas</highlight>
+        <highlight>Architectural masterpiece</highlight>
+      </highlights>
+    </Restaurant>
+  </Day>
+
+  <!-- Day 3: Nature & Outdoors 自然户外 -->
+  <Day index="3">
+    <Restaurant>
+      <name>Mildred's Temple Kitchen</name>
+      <time_block>8:00 AM - 9:00 AM</time_block>
+      <description>Hearty brunch to fuel your outdoor adventure day with famous blueberry pancakes.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 25-35</expected_cost>
+      <highlights>
+        <highlight>Power breakfast</highlight>
+        <highlight>Industrial chic</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>High Park Cherry Blossom Walk</name>
+      <time_block>9:30 AM - 11:30 AM</time_block>
+      <description>Toronto's largest public park with 400 acres of trails, gardens, and wildlife.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Sakura trees</highlight>
+        <highlight>Hiking trails</highlight>
+        <highlight>Free zoo</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Humber River Trail Cycling</name>
+      <time_block>12:00 PM - 2:00 PM</time_block>
+      <description>Scenic cycling along the Humber River through forests and wetlands.</description>
+      <travel_method>Bike Rental</travel_method>
+      <expected_cost>CAD 20-30</expected_cost>
+      <highlights>
+        <highlight>River views</highlight>
+        <highlight>Wildlife spotting</highlight>
+        <highlight>Paved trails</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Old Mill Toronto</name>
+      <time_block>2:30 PM - 3:30 PM</time_block>
+      <description>Historic inn along the Humber River serving classic British fare.</description>
+      <travel_method>Bike</travel_method>
+      <expected_cost>CAD 30-45</expected_cost>
+      <highlights>
+        <highlight>Riverside patio</highlight>
+        <highlight>Heritage building</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Scarborough Bluffs</name>
+      <time_block>4:30 PM - 6:30 PM</time_block>
+      <description>Dramatic 90-meter cliffs overlooking Lake Ontario with hiking trails and beaches.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Cliff views</highlight>
+        <highlight>Beach access</highlight>
+        <highlight>Sunset panoramas</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Rouge National Urban Park</name>
+      <time_block>7:00 PM - 8:30 PM</time_block>
+      <description>Canada's first national urban park with forests, wetlands, and rare wildlife.</description>
+      <travel_method>Car/Taxi</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Wilderness trails</highlight>
+        <highlight>Marsh boardwalks</highlight>
+        <highlight>Evening wildlife</highlight>
+      </highlights>
+    </POI>
+  </Day>
+
+  <!-- Day 4: Foodie Paradise 美食天堂 -->
+  <Day index="4">
+    <Restaurant>
+      <name>Lady Marmalade</name>
+      <time_block>9:00 AM - 10:30 AM</time_block>
+      <description>Leslieville's beloved brunch spot famous for creative benedicts and fresh juices.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 25-35</expected_cost>
+      <highlights>
+        <highlight>Famous benedicts</highlight>
+        <highlight>Trendy Leslieville</highlight>
+        <highlight>Weekend queues</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Kensington Market Food Tour</name>
+      <time_block>11:00 AM - 1:30 PM</time_block>
+      <description>Self-guided exploration of Toronto's most eclectic neighborhood with diverse food vendors.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 30-50</expected_cost>
+      <highlights>
+        <highlight>Global cuisines</highlight>
+        <highlight>Vintage shops</highlight>
+        <highlight>Bohemian vibes</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Pai Northern Thai Kitchen</name>
+      <time_block>2:00 PM - 3:00 PM</time_block>
+      <description>Award-winning authentic Northern Thai with famous khao soi and pad thai.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 25-40</expected_cost>
+      <highlights>
+        <highlight>Khao soi</highlight>
+        <highlight>Authentic recipes</highlight>
+        <highlight>Vibrant decor</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>St. Lawrence Market Food Hall</name>
+      <time_block>3:30 PM - 5:00 PM</time_block>
+      <description>Sample artisan cheeses, fresh seafood, and specialty foods from heritage vendors.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 20-40</expected_cost>
+      <highlights>
+        <highlight>Cheese tasting</highlight>
+        <highlight>Fresh seafood</highlight>
+        <highlight>Local artisans</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Alo Restaurant</name>
+      <time_block>6:00 PM - 9:00 PM</time_block>
+      <description>Canada's #1 restaurant serving French tasting menu in an intimate third-floor space.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 200-300</expected_cost>
+      <highlights>
+        <highlight>Michelin-worthy</highlight>
+        <highlight>Tasting menu</highlight>
+        <highlight>Intimate setting</highlight>
+      </highlights>
+    </Restaurant>
+    <Restaurant>
+      <name>Bar Isabel Late Night</name>
+      <time_block>9:30 PM - 11:00 PM</time_block>
+      <description>Spanish-Portuguese small plates and natural wines in a buzzy late-night atmosphere.</description>
+      <travel_method>Taxi</travel_method>
+      <expected_cost>CAD 40-60</expected_cost>
+      <highlights>
+        <highlight>Late night dining</highlight>
+        <highlight>Iberian cuisine</highlight>
+        <highlight>Natural wines</highlight>
+      </highlights>
+    </Restaurant>
+  </Day>
+
+  <!-- Day 5: Science & Technology 科技探索 -->
+  <Day index="5">
+    <Restaurant>
+      <name>Quantum Coffee</name>
+      <time_block>8:30 AM - 9:30 AM</time_block>
+      <description>Minimalist tech-district cafe with precision-brewed specialty coffee.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 10-15</expected_cost>
+      <highlights>
+        <highlight>Specialty beans</highlight>
+        <highlight>Tech crowd</highlight>
+        <highlight>Modern design</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Ontario Science Centre</name>
+      <time_block>10:00 AM - 1:00 PM</time_block>
+      <description>Interactive science museum with over 500 hands-on exhibits and IMAX theatre.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 28</expected_cost>
+      <highlights>
+        <highlight>Interactive exhibits</highlight>
+        <highlight>Planetarium shows</highlight>
+        <highlight>IMAX theatre</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Canteen at Ontario Science Centre</name>
+      <time_block>1:00 PM - 2:00 PM</time_block>
+      <description>Modern cafeteria with healthy options and views of the Don Valley ravine.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15-25</expected_cost>
+      <highlights>
+        <highlight>Ravine views</highlight>
+        <highlight>Quick service</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>MaRS Discovery District</name>
+      <time_block>2:30 PM - 4:00 PM</time_block>
+      <description>Tour North America's largest urban innovation hub housing 150+ startups and research labs.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Startup ecosystem</highlight>
+        <highlight>Innovation tours</highlight>
+        <highlight>Future tech</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Ripley's Aquarium</name>
+      <time_block>4:30 PM - 6:30 PM</time_block>
+      <description>State-of-the-art aquarium with 20,000 marine creatures and underwater tunnel technology.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 45</expected_cost>
+      <highlights>
+        <highlight>Moving walkway tunnel</highlight>
+        <highlight>Touch tanks</highlight>
+        <highlight>Jellyfish exhibits</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>CN Tower EdgeWalk</name>
+      <time_block>7:00 PM - 8:30 PM</time_block>
+      <description>World's highest full-circle hands-free walk on the CN Tower's outer ledge at 356m.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 225</expected_cost>
+      <highlights>
+        <highlight>Engineering marvel</highlight>
+        <highlight>Extreme experience</highlight>
+        <highlight>Sunset timing</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>360 Restaurant at CN Tower</name>
+      <time_block>9:00 PM - 10:30 PM</time_block>
+      <description>Revolving restaurant 351m high completing a full rotation every 72 minutes.</description>
+      <travel_method>Elevator</travel_method>
+      <expected_cost>CAD 80-120</expected_cost>
+      <highlights>
+        <highlight>Revolving floor</highlight>
+        <highlight>City panorama</highlight>
+        <highlight>Engineering wonder</highlight>
+      </highlights>
+    </Restaurant>
+  </Day>
+
+  <!-- Day 6: Entertainment & Nightlife 娱乐夜生活 -->
+  <Day index="6">
+    <Restaurant>
+      <name>School Restaurant</name>
+      <time_block>11:00 AM - 12:30 PM</time_block>
+      <description>Brunch in a converted Victorian schoolhouse in Liberty Village.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 25-40</expected_cost>
+      <highlights>
+        <highlight>Historic building</highlight>
+        <highlight>Brunch cocktails</highlight>
+        <highlight>Exposed brick</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>TIFF Bell Lightbox</name>
+      <time_block>1:00 PM - 3:30 PM</time_block>
+      <description>Home of Toronto International Film Festival with year-round screenings and exhibits.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15-20</expected_cost>
+      <highlights>
+        <highlight>Film screenings</highlight>
+        <highlight>Movie memorabilia</highlight>
+        <highlight>Director talks</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Hockey Hall of Fame</name>
+      <time_block>4:00 PM - 6:00 PM</time_block>
+      <description>Shrine to Canada's national sport with Stanley Cup, interactive games, and legends.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 25</expected_cost>
+      <highlights>
+        <highlight>Stanley Cup</highlight>
+        <highlight>Goalie challenge</highlight>
+        <highlight>Hockey history</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Loose Moose</name>
+      <time_block>6:30 PM - 8:00 PM</time_block>
+      <description>Massive pub with 140 beers on tap and walls of sports screens.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 30-50</expected_cost>
+      <highlights>
+        <highlight>140 beer taps</highlight>
+        <highlight>Sports viewing</highlight>
+        <highlight>Pre-show dining</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Mirvish Theatre - Broadway Show</name>
+      <time_block>8:00 PM - 10:30 PM</time_block>
+      <description>World-class theatre hosting Broadway touring productions and premieres.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 80-200</expected_cost>
+      <highlights>
+        <highlight>Broadway shows</highlight>
+        <highlight>Historic theatre</highlight>
+        <highlight>World premieres</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>The Rex Hotel Jazz Bar</name>
+      <time_block>11:00 PM - 1:00 AM</time_block>
+      <description>Toronto's legendary jazz club with live music seven nights a week since 1951.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15 + drinks</expected_cost>
+      <highlights>
+        <highlight>Live jazz</highlight>
+        <highlight>Intimate venue</highlight>
+        <highlight>Late night vibes</highlight>
+      </highlights>
+    </POI>
+  </Day>
+
+  <!-- Day 7: Waterfront & Islands 水岸风光 -->
+  <Day index="7">
+    <Restaurant>
+      <name>Against the Grain Urban Tavern</name>
+      <time_block>8:30 AM - 9:30 AM</time_block>
+      <description>Harbourfront breakfast spot with lake views and craft beer selection.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 20-30</expected_cost>
+      <highlights>
+        <highlight>Lake views</highlight>
+        <highlight>Outdoor patio</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Toronto Islands Ferry Crossing</name>
+      <time_block>10:00 AM - 10:30 AM</time_block>
+      <description>Scenic ferry ride across the harbour with stunning skyline views.</description>
+      <travel_method>Ferry</travel_method>
+      <expected_cost>CAD 8.50</expected_cost>
+      <highlights>
+        <highlight>Skyline panorama</highlight>
+        <highlight>Harbour views</highlight>
+        <highlight>Fresh air</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Ward's Island Village Walk</name>
+      <time_block>10:30 AM - 12:00 PM</time_block>
+      <description>Explore the charming car-free residential community with cottage gardens.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Cottage gardens</highlight>
+        <highlight>Beach access</highlight>
+        <highlight>Car-free living</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Centre Island Bike &amp; Beach</name>
+      <time_block>12:00 PM - 2:00 PM</time_block>
+      <description>Cycle through gardens and relax on sandy beaches with city skyline backdrop.</description>
+      <travel_method>Bike Rental</travel_method>
+      <expected_cost>CAD 15-25</expected_cost>
+      <highlights>
+        <highlight>Beach time</highlight>
+        <highlight>Cycling paths</highlight>
+        <highlight>Skyline photos</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Rectory Cafe</name>
+      <time_block>2:00 PM - 3:00 PM</time_block>
+      <description>Island institution serving casual fare in a charming heritage building.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15-25</expected_cost>
+      <highlights>
+        <highlight>Island vibes</highlight>
+        <highlight>Patio dining</highlight>
+        <highlight>Heritage charm</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Gibraltar Point Lighthouse</name>
+      <time_block>3:30 PM - 4:30 PM</time_block>
+      <description>Toronto's oldest surviving lighthouse built in 1808, supposedly haunted.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Historic lighthouse</highlight>
+        <highlight>Ghost stories</highlight>
+        <highlight>Nature trails</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Hanlan's Point Beach Sunset</name>
+      <time_block>5:00 PM - 7:00 PM</time_block>
+      <description>Toronto's most spectacular sunset beach facing west toward the lake.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Sunset views</highlight>
+        <highlight>Sandy beach</highlight>
+        <highlight>Peaceful atmosphere</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Amsterdam BrewHouse</name>
+      <time_block>7:30 PM - 9:00 PM</time_block>
+      <description>Lakeside brewery with craft beers and views of the illuminated skyline.</description>
+      <travel_method>Ferry &amp; Walk</travel_method>
+      <expected_cost>CAD 35-50</expected_cost>
+      <highlights>
+        <highlight>Night skyline</highlight>
+        <highlight>Local craft beer</highlight>
+        <highlight>Waterfront dining</highlight>
+      </highlights>
+    </Restaurant>
+  </Day>
+
+  <!-- Day 8: Shopping & Fashion 购物时尚 -->
+  <Day index="8">
+    <Restaurant>
+      <name>Colette Grand Cafe</name>
+      <time_block>9:30 AM - 10:30 AM</time_block>
+      <description>Parisian-style cafe in the Thompson Hotel with elegant pastries.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 25-35</expected_cost>
+      <highlights>
+        <highlight>French pastries</highlight>
+        <highlight>Chic atmosphere</highlight>
+        <highlight>Fashion crowd</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Yorkville Designer District</name>
+      <time_block>11:00 AM - 1:00 PM</time_block>
+      <description>Toronto's most upscale shopping with Chanel, Hermes, Louis Vuitton and more.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Varies</expected_cost>
+      <highlights>
+        <highlight>Luxury boutiques</highlight>
+        <highlight>Designer flagships</highlight>
+        <highlight>People watching</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Cafe Boulud</name>
+      <time_block>1:30 PM - 2:30 PM</time_block>
+      <description>Daniel Boulud's elegant French restaurant in the Four Seasons.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 50-80</expected_cost>
+      <highlights>
+        <highlight>Fine French cuisine</highlight>
+        <highlight>Power lunch spot</highlight>
+        <highlight>Elegant setting</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Queen Street West Boutiques</name>
+      <time_block>3:00 PM - 5:00 PM</time_block>
+      <description>Indie designers, vintage shops, and Canadian fashion labels along trendy Queen West.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>Varies</expected_cost>
+      <highlights>
+        <highlight>Indie fashion</highlight>
+        <highlight>Vintage finds</highlight>
+        <highlight>Local designers</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>CF Toronto Eaton Centre</name>
+      <time_block>5:30 PM - 7:30 PM</time_block>
+      <description>Iconic downtown mall with 230+ stores under the famous Flight Stop sculpture.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Varies</expected_cost>
+      <highlights>
+        <highlight>Major brands</highlight>
+        <highlight>Flight Stop art</highlight>
+        <highlight>Central location</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Byblos</name>
+      <time_block>8:00 PM - 10:00 PM</time_block>
+      <description>Glamorous Eastern Mediterranean restaurant where fashion and food collide.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 60-90</expected_cost>
+      <highlights>
+        <highlight>Fashion scene</highlight>
+        <highlight>Mediterranean fusion</highlight>
+        <highlight>Stylish interior</highlight>
+      </highlights>
+    </Restaurant>
+  </Day>
+
+  <!-- Day 9: Sports & Adventure 运动冒险 -->
+  <Day index="9">
+    <Restaurant>
+      <name>Early Bird Espresso</name>
+      <time_block>7:00 AM - 7:45 AM</time_block>
+      <description>Quick athlete-friendly breakfast with protein options and strong coffee.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 12-18</expected_cost>
+      <highlights>
+        <highlight>Protein-packed</highlight>
+        <highlight>Quick service</highlight>
+        <highlight>Early hours</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Don Valley Trail Running</name>
+      <time_block>8:00 AM - 10:00 AM</time_block>
+      <description>Morning run through Toronto's urban ravine system with forest trails.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Trail running</highlight>
+        <highlight>Ravine forests</highlight>
+        <highlight>Wildlife encounters</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Toronto Rock Climbing Gym</name>
+      <time_block>10:30 AM - 12:30 PM</time_block>
+      <description>Indoor climbing facility with walls for all skill levels and bouldering.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 25-35</expected_cost>
+      <highlights>
+        <highlight>Bouldering</highlight>
+        <highlight>Lead climbing</highlight>
+        <highlight>Beginner lessons</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Fresh Restaurant</name>
+      <time_block>1:00 PM - 2:00 PM</time_block>
+      <description>Plant-based restaurant fueling athletes with energizing whole-food meals.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 20-30</expected_cost>
+      <highlights>
+        <highlight>Plant-powered</highlight>
+        <highlight>Energy bowls</highlight>
+        <highlight>Smoothies</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Stand Up Paddleboarding</name>
+      <time_block>2:30 PM - 4:30 PM</time_block>
+      <description>SUP session on Toronto Harbour with skyline views and core workout.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 40-60</expected_cost>
+      <highlights>
+        <highlight>Core workout</highlight>
+        <highlight>Harbour views</highlight>
+        <highlight>Beginner friendly</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Blue Jays Game at Rogers Centre</name>
+      <time_block>5:00 PM - 8:30 PM</time_block>
+      <description>MLB baseball under the retractable roof with classic ballpark atmosphere.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 30-100</expected_cost>
+      <highlights>
+        <highlight>MLB baseball</highlight>
+        <highlight>Retractable roof</highlight>
+        <highlight>Hot dogs &amp; beer</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Real Sports Bar</name>
+      <time_block>9:00 PM - 11:00 PM</time_block>
+      <description>North America's largest sports bar with 199 screens and massive HD wall.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 30-50</expected_cost>
+      <highlights>
+        <highlight>199 screens</highlight>
+        <highlight>Sports atmosphere</highlight>
+        <highlight>Late night games</highlight>
+      </highlights>
+    </Restaurant>
+  </Day>
+
+  <!-- Day 10: Relaxation & Wellness 休闲养生 -->
+  <Day index="10">
+    <POI>
+      <name>Sunrise Yoga at Trinity Bellwoods</name>
+      <time_block>7:00 AM - 8:00 AM</time_block>
+      <description>Free outdoor yoga session in Toronto's beloved urban park.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Morning meditation</highlight>
+        <highlight>Park setting</highlight>
+        <highlight>Community vibe</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Planta</name>
+      <time_block>8:30 AM - 9:30 AM</time_block>
+      <description>Upscale plant-based brunch with creative dishes and wellness focus.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 30-45</expected_cost>
+      <highlights>
+        <highlight>Plant-based luxury</highlight>
+        <highlight>Wellness menu</highlight>
+        <highlight>Elegant setting</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Hammam Spa</name>
+      <time_block>10:00 AM - 1:00 PM</time_block>
+      <description>Traditional Turkish bath experience with steam rooms, body scrubs, and massage.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 80-150</expected_cost>
+      <highlights>
+        <highlight>Turkish hammam</highlight>
+        <highlight>Body treatments</highlight>
+        <highlight>Relaxation rooms</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Miku Toronto</name>
+      <time_block>1:30 PM - 2:30 PM</time_block>
+      <description>Light Japanese Aburi sushi with waterfront views - clean eating at its finest.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 50-80</expected_cost>
+      <highlights>
+        <highlight>Aburi sushi</highlight>
+        <highlight>Waterfront views</highlight>
+        <highlight>Clean eating</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Allan Gardens Conservatory</name>
+      <time_block>3:00 PM - 4:30 PM</time_block>
+      <description>Peaceful Victorian greenhouses with tropical plants and palm collections.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Tropical plants</highlight>
+        <highlight>Victorian glass</highlight>
+        <highlight>Peaceful escape</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Evergreen Brick Works Garden Walk</name>
+      <time_block>5:00 PM - 6:30 PM</time_block>
+      <description>Nature preserve in a restored quarry with meditation gardens and forest trails.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Nature trails</highlight>
+        <highlight>Restored quarry</highlight>
+        <highlight>Sunset views</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Cafe Cancan</name>
+      <time_block>7:00 PM - 9:00 PM</time_block>
+      <description>Intimate French bistro perfect for a relaxed farewell dinner.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 50-70</expected_cost>
+      <highlights>
+        <highlight>French comfort food</highlight>
+        <highlight>Intimate setting</highlight>
+        <highlight>Farewell dinner</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Nathan Phillips Square Evening Reflection</name>
+      <time_block>9:30 PM - 10:30 PM</time_block>
+      <description>Final evening at Toronto's iconic square, watching city lights reflect in the pool.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Toronto sign</highlight>
+        <highlight>City lights</highlight>
+        <highlight>Peaceful farewell</highlight>
+      </highlights>
+    </POI>
+  </Day>
+</Itinerary>

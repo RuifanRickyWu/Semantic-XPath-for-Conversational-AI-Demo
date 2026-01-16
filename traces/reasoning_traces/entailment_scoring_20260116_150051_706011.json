@@ -1,0 +1,152 @@
+{
+  "timestamp": "20260116_150051_706011",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "italian",
+  "hypothesis": "This is related to italian.",
+  "nodes": [
+    {
+      "id": "4510968064_main",
+      "type": "Restaurant",
+      "name": "Queen Street Warehouse",
+      "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+      "premise": "Restaurant: Queen Street Warehouse - Budget-friendly comfort food in a lively setting with a diverse menu.",
+      "score": 0.29276043176651
+    },
+    {
+      "id": "4511015136_main",
+      "type": "Restaurant",
+      "name": "Buca Yorkville",
+      "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+      "premise": "Restaurant: Buca Yorkville - Upscale Italian dining featuring traditional dishes with a modern twist.",
+      "score": 0.9990026354789734
+    },
+    {
+      "id": "4511016016_main",
+      "type": "Restaurant",
+      "name": "The Rex Hotel Jazz & Blues Bar",
+      "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+      "premise": "Restaurant: The Rex Hotel Jazz & Blues Bar - Live jazz performances in a cozy, iconic Toronto venue.",
+      "score": 0.046425893902778625
+    },
+    {
+      "id": "4511017056_main",
+      "type": "Restaurant",
+      "name": "Pow Wow Cafe",
+      "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+      "premise": "Restaurant: Pow Wow Cafe - Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+      "score": 0.0012569782556965947
+    },
+    {
+      "id": "4511023328_main",
+      "type": "Restaurant",
+      "name": "Annona Restaurant",
+      "description": "Sophisticated international cuisine in a bright, modern setting.",
+      "premise": "Restaurant: Annona Restaurant - Sophisticated international cuisine in a bright, modern setting.",
+      "score": 0.8699033856391907
+    },
+    {
+      "id": "4511025088_main",
+      "type": "Restaurant",
+      "name": "DaiLo",
+      "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+      "premise": "Restaurant: DaiLo - Modern Asian-Canadian fusion cuisine with creative flavors.",
+      "score": 0.0007089177961461246
+    },
+    {
+      "id": "4511026768_main",
+      "type": "Restaurant",
+      "name": "Beauty Barbecue & Smokehouse",
+      "description": "Hearty breakfast featuring smoked meats and classic comfort food.",
+      "premise": "Restaurant: Beauty Barbecue & Smokehouse - Hearty breakfast featuring smoked meats and classic comfort food.",
+      "score": 0.0021119576413184404
+    },
+    {
+      "id": "4511040992_main",
+      "type": "Restaurant",
+      "name": "Amsterdam BrewHouse",
+      "description": "Lakeside pub offering local craft beers and hearty meals.",
+      "premise": "Restaurant: Amsterdam BrewHouse - Lakeside pub offering local craft beers and hearty meals.",
+      "score": 0.005870017223060131
+    },
+    {
+      "id": "4511042912_main",
+      "type": "Restaurant",
+      "name": "Cluny Bistro",
+      "description": "French-inspired bistro serving classic and modern dishes.",
+      "premise": "Restaurant: Cluny Bistro - French-inspired bistro serving classic and modern dishes.",
+      "score": 0.00042934762313961983
+    },
+    {
+      "id": "4511056096_main",
+      "type": "Restaurant",
+      "name": "Jazz Bistro",
+      "description": "Renowned jazz club with intimate setting and excellent acoustics.",
+      "premise": "Restaurant: Jazz Bistro - Renowned jazz club with intimate setting and excellent acoustics.",
+      "score": 0.022561250254511833
+    }
+  ],
+  "results": [
+    {
+      "node_id": "4510968064_main",
+      "node_type": "Restaurant",
+      "score": 0.29276043176651,
+      "reasoning": "Entailment score: 0.2928"
+    },
+    {
+      "node_id": "4511015136_main",
+      "node_type": "Restaurant",
+      "score": 0.9990026354789734,
+      "reasoning": "Entailment score: 0.9990"
+    },
+    {
+      "node_id": "4511016016_main",
+      "node_type": "Restaurant",
+      "score": 0.046425893902778625,
+      "reasoning": "Entailment score: 0.0464"
+    },
+    {
+      "node_id": "4511017056_main",
+      "node_type": "Restaurant",
+      "score": 0.0012569782556965947,
+      "reasoning": "Entailment score: 0.0013"
+    },
+    {
+      "node_id": "4511023328_main",
+      "node_type": "Restaurant",
+      "score": 0.8699033856391907,
+      "reasoning": "Entailment score: 0.8699"
+    },
+    {
+      "node_id": "4511025088_main",
+      "node_type": "Restaurant",
+      "score": 0.0007089177961461246,
+      "reasoning": "Entailment score: 0.0007"
+    },
+    {
+      "node_id": "4511026768_main",
+      "node_type": "Restaurant",
+      "score": 0.0021119576413184404,
+      "reasoning": "Entailment score: 0.0021"
+    },
+    {
+      "node_id": "4511040992_main",
+      "node_type": "Restaurant",
+      "score": 0.005870017223060131,
+      "reasoning": "Entailment score: 0.0059"
+    },
+    {
+      "node_id": "4511042912_main",
+      "node_type": "Restaurant",
+      "score": 0.00042934762313961983,
+      "reasoning": "Entailment score: 0.0004"
+    },
+    {
+      "node_id": "4511056096_main",
+      "node_type": "Restaurant",
+      "score": 0.022561250254511833,
+      "reasoning": "Entailment score: 0.0226"
+    }
+  ]
+}

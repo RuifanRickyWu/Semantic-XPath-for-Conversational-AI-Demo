@@ -1,0 +1,233 @@
+Query: /Itinerary/Day/POI[sem(content =~ "art")]
+Data File: travel_memory_3day_diff.xml
+Execution Time: 393.10ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260116_165625_590129] Executing query: /Itinerary/Day/POI[sem(content =~ "art")]
+Data file: travel_memory_3day_diff.xml
+Parsed steps: [Itinerary, Day, POI[sem(content =~ "art")]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 3: POI[sem(content =~ "art")] ---
+Found 17 POI nodes across 3 parent(s)
+Applying semantic predicate: sem(content =~ "art")
+Scoring predicate: sem(content =~ "art") (semantic values: ['art'])
+  Collected 17 descriptions for 1 unique semantic value(s)
+  Made 1 scorer call(s) for 17 total descriptions
+  Node 0 (Ripley's Aquarium of Canada): score = 0.0926
+  Node 1 (CN Tower): score = 0.5064
+  Node 2 (Steam Whistle Brewery Tour): score = 0.0494
+  Node 3 (Rogers Centre Stadium Tour): score = 0.1738
+  Node 4 (Harbourfront Centre Evening Stroll): score = 0.1132
+  Node 5 (TIFF Bell Lightbox Cinema): score = 0.8674
+  Node 6 (Gardiner Museum of Ceramic Art): score = 0.9988
+  Node 7 (Art Gallery of Ontario): score = 0.9990
+  Node 8 (Graffiti Alley (Rush Lane)): score = 0.9981
+  Node 9 (Museum of Contemporary Art Toronto): score = 0.9992
+  Node 10 (Theatre Passe Muraille): score = 0.9990
+  Node 11 (Toronto Islands Kayaking): score = 0.0696
+  Node 12 (Ward's Island Beach): score = 0.2423
+  Node 13 (Centre Island Bike Trail Loop): score = 0.1007
+  Node 14 (High Park Nature Trails): score = 0.0211
+  Node 15 (Sunnyside Boardwalk & Beach): score = 0.1925
+  Node 16 (Humber Bay Park Stargazing): score = 0.0569
+After step: 17 nodes remaining
+
+=== Bayesian Fusion ===
+  Itinerary > Day 1 > Ripley's Aquarium of Canada: log_odds=-2.283 → score=0.0926
+  Itinerary > Day 1 > CN Tower: log_odds=0.026 → score=0.5064
+  Itinerary > Day 1 > Steam Whistle Brewery Tour: log_odds=-2.958 → score=0.0494
+  Itinerary > Day 1 > Rogers Centre Stadium Tour: log_odds=-1.559 → score=0.1738
+  Itinerary > Day 1 > Harbourfront Centre Evening Stroll: log_odds=-2.058 → score=0.1132
+  Itinerary > Day 1 > TIFF Bell Lightbox Cinema: log_odds=1.878 → score=0.8674
+  Itinerary > Day 2 > Gardiner Museum of Ceramic Art: log_odds=6.764 → score=0.9988
+  Itinerary > Day 2 > Art Gallery of Ontario: log_odds=6.931 → score=0.9990
+  Itinerary > Day 2 > Graffiti Alley (Rush Lane): log_odds=6.282 → score=0.9981
+  Itinerary > Day 2 > Museum of Contemporary Art Toronto: log_odds=7.094 → score=0.9992
+  Itinerary > Day 2 > Theatre Passe Muraille: log_odds=6.913 → score=0.9990
+  Itinerary > Day 3 > Toronto Islands Kayaking: log_odds=-2.593 → score=0.0696
+  Itinerary > Day 3 > Ward's Island Beach: log_odds=-1.140 → score=0.2423
+  Itinerary > Day 3 > Centre Island Bike Trail Loop: log_odds=-2.189 → score=0.1007
+  Itinerary > Day 3 > High Park Nature Trails: log_odds=-3.835 → score=0.0211
+  Itinerary > Day 3 > Sunnyside Boardwalk & Beach: log_odds=-1.434 → score=0.1925
+  Itinerary > Day 3 > Humber Bay Park Stargazing: log_odds=-2.808 → score=0.0569
+
+=== Final Filtering (threshold=0.01, top_k=3) ===
+  Filtered: 17 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 393.10ms
+
+============================================================
+Bayesian Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 1 > Ripley's Aquarium of Canada (POI):
+  Step 2: sem(content =~ "art")
+    score=0.0926, log_odds=-2.2826
+  Accumulated log-odds: -2.2826
+  Final score: 0.0926
+
+Itinerary > Day 1 > CN Tower (POI):
+  Step 2: sem(content =~ "art")
+    score=0.5064, log_odds=0.0255
+  Accumulated log-odds: 0.0255
+  Final score: 0.5064
+
+Itinerary > Day 1 > Steam Whistle Brewery Tour (POI):
+  Step 2: sem(content =~ "art")
+    score=0.0494, log_odds=-2.9575
+  Accumulated log-odds: -2.9575
+  Final score: 0.0494
+
+Itinerary > Day 1 > Rogers Centre Stadium Tour (POI):
+  Step 2: sem(content =~ "art")
+    score=0.1738, log_odds=-1.5590
+  Accumulated log-odds: -1.5590
+  Final score: 0.1738
+
+Itinerary > Day 1 > Harbourfront Centre Evening Stroll (POI):
+  Step 2: sem(content =~ "art")
+    score=0.1132, log_odds=-2.0584
+  Accumulated log-odds: -2.0584
+  Final score: 0.1132
+
+Itinerary > Day 1 > TIFF Bell Lightbox Cinema (POI):
+  Step 2: sem(content =~ "art")
+    score=0.8674, log_odds=1.8778
+  Accumulated log-odds: 1.8778
+  Final score: 0.8674
+
+Itinerary > Day 2 > Gardiner Museum of Ceramic Art (POI):
+  Step 2: sem(content =~ "art")
+    score=0.9988, log_odds=6.7640
+  Accumulated log-odds: 6.7640
+  Final score: 0.9988
+
+Itinerary > Day 2 > Art Gallery of Ontario (POI):
+  Step 2: sem(content =~ "art")
+    score=0.9990, log_odds=6.9312
+  Accumulated log-odds: 6.9312
+  Final score: 0.9990
+
+Itinerary > Day 2 > Graffiti Alley (Rush Lane) (POI):
+  Step 2: sem(content =~ "art")
+    score=0.9981, log_odds=6.2821
+  Accumulated log-odds: 6.2821
+  Final score: 0.9981
+
+Itinerary > Day 2 > Museum of Contemporary Art Toronto (POI):
+  Step 2: sem(content =~ "art")
+    score=0.9992, log_odds=7.0945
+  Accumulated log-odds: 7.0945
+  Final score: 0.9992
+
+Itinerary > Day 2 > Theatre Passe Muraille (POI):
+  Step 2: sem(content =~ "art")
+    score=0.9990, log_odds=6.9135
+  Accumulated log-odds: 6.9135
+  Final score: 0.9990
+
+Itinerary > Day 3 > Toronto Islands Kayaking (POI):
+  Step 2: sem(content =~ "art")
+    score=0.0696, log_odds=-2.5930
+  Accumulated log-odds: -2.5930
+  Final score: 0.0696
+
+Itinerary > Day 3 > Ward's Island Beach (POI):
+  Step 2: sem(content =~ "art")
+    score=0.2423, log_odds=-1.1403
+  Accumulated log-odds: -1.1403
+  Final score: 0.2423
+
+Itinerary > Day 3 > Centre Island Bike Trail Loop (POI):
+  Step 2: sem(content =~ "art")
+    score=0.1007, log_odds=-2.1889
+  Accumulated log-odds: -2.1889
+  Final score: 0.1007
+
+Itinerary > Day 3 > High Park Nature Trails (POI):
+  Step 2: sem(content =~ "art")
+    score=0.0211, log_odds=-3.8355
+  Accumulated log-odds: -3.8355
+  Final score: 0.0211
+
+Itinerary > Day 3 > Sunnyside Boardwalk & Beach (POI):
+  Step 2: sem(content =~ "art")
+    score=0.1925, log_odds=-1.4335
+  Accumulated log-odds: -1.4335
+  Final score: 0.1925
+
+Itinerary > Day 3 > Humber Bay Park Stargazing (POI):
+  Step 2: sem(content =~ "art")
+    score=0.0569, log_odds=-2.8077
+  Accumulated log-odds: -2.8077
+  Final score: 0.0569
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 17 nodes
+Threshold: 0.01
+Top-K: 3
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Itinerary > Day 2 > Museum of Contemporary Art Toronto (score: 0.9992)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Museum of Contemporary Art Toronto",
+  "time_block": "5:30 PM - 7:00 PM",
+  "description": "Cutting-edge contemporary art space in a converted industrial building showcasing experimental works.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 10",
+  "highlights": [
+    "Experimental installations",
+    "Industrial architecture",
+    "Emerging artists"
+  ]
+}
+
+2. Itinerary > Day 2 > Art Gallery of Ontario (score: 0.9990)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Art Gallery of Ontario",
+  "time_block": "12:30 PM - 2:30 PM",
+  "description": "World-class museum showcasing Canadian, European, and contemporary art in a stunning Frank Gehry-designed building.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 25",
+  "highlights": [
+    "Group of Seven collection",
+    "Gehry staircase",
+    "Henry Moore sculptures"
+  ]
+}
+
+3. Itinerary > Day 2 > Theatre Passe Muraille (score: 0.9990)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Theatre Passe Muraille",
+  "time_block": "9:00 PM - 11:00 PM",
+  "description": "Iconic experimental theatre presenting avant-garde Canadian productions in an intimate setting.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 25-40",
+  "highlights": [
+    "Experimental theatre",
+    "Canadian playwrights",
+    "Intimate performances"
+  ]
+}

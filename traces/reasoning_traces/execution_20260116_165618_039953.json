@@ -1,0 +1,278 @@
+{
+  "timestamp": "20260116_165618_039953",
+  "query": "/Itinerary/Day/Restaurant",
+  "data_file": "travel_memory_3day_diff.xml",
+  "execution_time_ms": 1.4785829999999223,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Restaurant",
+      "action": "type_match",
+      "nodes_before_count": 3,
+      "nodes_after_count": 6,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 2 > Cafe Belong at Gardiner Museum",
+          "name": "Cafe Belong at Gardiner Museum",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Bar Raval",
+          "name": "Bar Raval",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Cherry Street Coffee House",
+          "name": "Cherry Street Coffee House",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Island Cafe",
+          "name": "Island Cafe",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Sunnyside Pavilion Cafe",
+          "name": "Sunnyside Pavilion Cafe",
+          "type": "Restaurant",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Restaurant",
+        "found_count": 6
+      }
+    }
+  ],
+  "scoring_traces": [],
+  "scoring_details": {
+    "step_scores": [],
+    "bayesian_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Day 2 > Cafe Belong at Gardiner Museum",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Day 2 > FRANK Restaurant at AGO",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Bar Raval",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Cherry Street Coffee House",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Island Cafe",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Sunnyside Pavilion Cafe",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_log_odds": 0.0,
+          "final_score": 1.0
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 6,
+    "threshold": 0.01,
+    "top_k": 3,
+    "after_filter_count": 3,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Day 2 > Cafe Belong at Gardiner Museum",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Day 2 > FRANK Restaurant at AGO",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Day 2 > Bar Raval",
+        "score": 1.0,
+        "type": "Restaurant"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Day 2 > Cafe Belong at Gardiner Museum",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Cafe Belong at Gardiner Museum",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Artistic brunch in the ceramic arts museum featuring locally sourced ingredients and stunning gallery views.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 25-35",
+        "highlights": [
+          "Museum setting",
+          "Farm-to-table",
+          "Artistic ambiance"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > FRANK Restaurant at AGO",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "FRANK Restaurant at AGO",
+        "time_block": "2:30 PM - 3:30 PM",
+        "description": "Chef-driven restaurant inside the Art Gallery featuring creative dishes inspired by current exhibitions.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 35-50",
+        "highlights": [
+          "Exhibition-inspired menu",
+          "Gallery views",
+          "Art-focused dining"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Bar Raval",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Bar Raval",
+        "time_block": "7:30 PM - 8:30 PM",
+        "description": "Award-winning pintxos bar with stunning hand-carved mahogany interior inspired by Gaudi's Barcelona.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 40-60",
+        "highlights": [
+          "Sculptural interior",
+          "Spanish tapas",
+          "Design destination"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 3,
+    "total_scoring_calls": 0,
+    "matched_count": 3,
+    "execution_time_ms": 1.4785829999999223,
+    "has_bayesian_fusion": true,
+    "num_nodes_before_filter": 6,
+    "num_nodes_after_filter": 3
+  }
+}

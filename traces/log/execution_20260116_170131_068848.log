@@ -1,0 +1,409 @@
+Query: /Itinerary/Day/POI[sem(content =~ "outdoor")]
+Data File: travel_memory_10day_themed.xml
+Execution Time: 725.22ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260116_170131_068848] Executing query: /Itinerary/Day/POI[sem(content =~ "outdoor")]
+Data file: travel_memory_10day_themed.xml
+Parsed steps: [Itinerary, Day, POI[sem(content =~ "outdoor")]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day ---
+Found 10 Day nodes across 1 parent(s)
+After step: 10 nodes remaining
+
+--- Step 3: POI[sem(content =~ "outdoor")] ---
+Found 39 POI nodes across 10 parent(s)
+Applying semantic predicate: sem(content =~ "outdoor")
+Scoring predicate: sem(content =~ "outdoor") (semantic values: ['outdoor'])
+  Collected 39 descriptions for 1 unique semantic value(s)
+  Made 1 scorer call(s) for 39 total descriptions
+  Node 0 (Fort York National Historic Site): score = 0.9701
+  Node 1 (St. Lawrence Market): score = 0.9687
+  Node 2 (Distillery District): score = 0.3909
+  Node 3 (Casa Loma): score = 0.9555
+  Node 4 (Gardiner Museum): score = 0.8080
+  Node 5 (Royal Ontario Museum): score = 0.3872
+  Node 6 (Art Gallery of Ontario): score = 0.1014
+  Node 7 (Graffiti Alley): score = 0.9973
+  Node 8 (High Park Cherry Blossom Walk): score = 0.9986
+  Node 9 (Humber River Trail Cycling): score = 0.9986
+  Node 10 (Scarborough Bluffs): score = 0.9988
+  Node 11 (Rouge National Urban Park): score = 0.9016
+  Node 12 (Kensington Market Food Tour): score = 0.9160
+  Node 13 (St. Lawrence Market Food Hall): score = 0.9021
+  Node 14 (Ontario Science Centre): score = 0.0558
+  Node 15 (MaRS Discovery District): score = 0.5193
+  Node 16 (Ripley's Aquarium): score = 0.1433
+  Node 17 (CN Tower EdgeWalk): score = 0.9625
+  Node 18 (TIFF Bell Lightbox): score = 0.8998
+  Node 19 (Hockey Hall of Fame): score = 0.0593
+  Node 20 (Mirvish Theatre - Broadway Show): score = 0.2569
+  Node 21 (The Rex Hotel Jazz Bar): score = 0.7982
+  Node 22 (Toronto Islands Ferry Crossing): score = 0.1926
+  Node 23 (Ward's Island Village Walk): score = 0.9819
+  Node 24 (Centre Island Bike & Beach): score = 0.9969
+  Node 25 (Gibraltar Point Lighthouse): score = 0.9792
+  Node 26 (Hanlan's Point Beach Sunset): score = 0.9959
+  Node 27 (Yorkville Designer District): score = 0.1698
+  Node 28 (Queen Street West Boutiques): score = 0.3551
+  Node 29 (CF Toronto Eaton Centre): score = 0.0451
+  Node 30 (Don Valley Trail Running): score = 0.9953
+  Node 31 (Toronto Rock Climbing Gym): score = 0.0123
+  Node 32 (Stand Up Paddleboarding): score = 0.9981
+  Node 33 (Blue Jays Game at Rogers Centre): score = 0.4064
+  Node 34 (Sunrise Yoga at Trinity Bellwoods): score = 0.9988
+  Node 35 (Hammam Spa): score = 0.0909
+  Node 36 (Allan Gardens Conservatory): score = 0.9208
+  Node 37 (Evergreen Brick Works Garden Walk): score = 0.9993
+  Node 38 (Nathan Phillips Square Evening Reflection): score = 0.8443
+After step: 39 nodes remaining
+
+=== Bayesian Fusion ===
+  Itinerary > Day 1 > Fort York National Historic Site: log_odds=3.480 → score=0.9701
+  Itinerary > Day 1 > St. Lawrence Market: log_odds=3.433 → score=0.9687
+  Itinerary > Day 1 > Distillery District: log_odds=-0.443 → score=0.3909
+  Itinerary > Day 1 > Casa Loma: log_odds=3.067 → score=0.9555
+  Itinerary > Day 2 > Gardiner Museum: log_odds=1.437 → score=0.8080
+  Itinerary > Day 2 > Royal Ontario Museum: log_odds=-0.459 → score=0.3872
+  Itinerary > Day 2 > Art Gallery of Ontario: log_odds=-2.182 → score=0.1014
+  Itinerary > Day 2 > Graffiti Alley: log_odds=5.917 → score=0.9973
+  Itinerary > Day 3 > High Park Cherry Blossom Walk: log_odds=6.606 → score=0.9986
+  Itinerary > Day 3 > Humber River Trail Cycling: log_odds=6.577 → score=0.9986
+  Itinerary > Day 3 > Scarborough Bluffs: log_odds=6.721 → score=0.9988
+  Itinerary > Day 3 > Rouge National Urban Park: log_odds=2.215 → score=0.9016
+  Itinerary > Day 4 > Kensington Market Food Tour: log_odds=2.390 → score=0.9160
+  Itinerary > Day 4 > St. Lawrence Market Food Hall: log_odds=2.221 → score=0.9021
+  Itinerary > Day 5 > Ontario Science Centre: log_odds=-2.829 → score=0.0558
+  Itinerary > Day 5 > MaRS Discovery District: log_odds=0.077 → score=0.5193
+  Itinerary > Day 5 > Ripley's Aquarium: log_odds=-1.788 → score=0.1433
+  Itinerary > Day 5 > CN Tower EdgeWalk: log_odds=3.244 → score=0.9625
+  Itinerary > Day 6 > TIFF Bell Lightbox: log_odds=2.196 → score=0.8998
+  Itinerary > Day 6 > Hockey Hall of Fame: log_odds=-2.765 → score=0.0593
+  Itinerary > Day 6 > Mirvish Theatre - Broadway Show: log_odds=-1.062 → score=0.2569
+  Itinerary > Day 6 > The Rex Hotel Jazz Bar: log_odds=1.375 → score=0.7982
+  Itinerary > Day 7 > Toronto Islands Ferry Crossing: log_odds=-1.433 → score=0.1926
+  Itinerary > Day 7 > Ward's Island Village Walk: log_odds=3.996 → score=0.9819
+  Itinerary > Day 7 > Centre Island Bike & Beach: log_odds=5.777 → score=0.9969
+  Itinerary > Day 7 > Gibraltar Point Lighthouse: log_odds=3.854 → score=0.9792
+  Itinerary > Day 7 > Hanlan's Point Beach Sunset: log_odds=5.500 → score=0.9959
+  Itinerary > Day 8 > Yorkville Designer District: log_odds=-1.587 → score=0.1698
+  Itinerary > Day 8 > Queen Street West Boutiques: log_odds=-0.597 → score=0.3551
+  Itinerary > Day 8 > CF Toronto Eaton Centre: log_odds=-3.052 → score=0.0451
+  Itinerary > Day 9 > Don Valley Trail Running: log_odds=5.348 → score=0.9953
+  Itinerary > Day 9 > Toronto Rock Climbing Gym: log_odds=-4.384 → score=0.0123
+  Itinerary > Day 9 > Stand Up Paddleboarding: log_odds=6.276 → score=0.9981
+  Itinerary > Day 9 > Blue Jays Game at Rogers Centre: log_odds=-0.379 → score=0.4064
+  Itinerary > Day 10 > Sunrise Yoga at Trinity Bellwoods: log_odds=6.718 → score=0.9988
+  Itinerary > Day 10 > Hammam Spa: log_odds=-2.302 → score=0.0909
+  Itinerary > Day 10 > Allan Gardens Conservatory: log_odds=2.453 → score=0.9208
+  Itinerary > Day 10 > Evergreen Brick Works Garden Walk: log_odds=7.263 → score=0.9993
+  Itinerary > Day 10 > Nathan Phillips Square Evening Reflection: log_odds=1.690 → score=0.8443
+
+=== Final Filtering (threshold=0.01, top_k=3) ===
+  Filtered: 39 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 725.22ms
+
+============================================================
+Bayesian Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 1 > Fort York National Historic Site (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9701, log_odds=3.4796
+  Accumulated log-odds: 3.4796
+  Final score: 0.9701
+
+Itinerary > Day 1 > St. Lawrence Market (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9687, log_odds=3.4333
+  Accumulated log-odds: 3.4333
+  Final score: 0.9687
+
+Itinerary > Day 1 > Distillery District (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.3909, log_odds=-0.4434
+  Accumulated log-odds: -0.4434
+  Final score: 0.3909
+
+Itinerary > Day 1 > Casa Loma (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9555, log_odds=3.0670
+  Accumulated log-odds: 3.0670
+  Final score: 0.9555
+
+Itinerary > Day 2 > Gardiner Museum (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.8080, log_odds=1.4371
+  Accumulated log-odds: 1.4371
+  Final score: 0.8080
+
+Itinerary > Day 2 > Royal Ontario Museum (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.3872, log_odds=-0.4590
+  Accumulated log-odds: -0.4590
+  Final score: 0.3872
+
+Itinerary > Day 2 > Art Gallery of Ontario (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.1014, log_odds=-2.1820
+  Accumulated log-odds: -2.1820
+  Final score: 0.1014
+
+Itinerary > Day 2 > Graffiti Alley (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9973, log_odds=5.9167
+  Accumulated log-odds: 5.9167
+  Final score: 0.9973
+
+Itinerary > Day 3 > High Park Cherry Blossom Walk (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9986, log_odds=6.6061
+  Accumulated log-odds: 6.6061
+  Final score: 0.9986
+
+Itinerary > Day 3 > Humber River Trail Cycling (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9986, log_odds=6.5768
+  Accumulated log-odds: 6.5768
+  Final score: 0.9986
+
+Itinerary > Day 3 > Scarborough Bluffs (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9988, log_odds=6.7208
+  Accumulated log-odds: 6.7208
+  Final score: 0.9988
+
+Itinerary > Day 3 > Rouge National Urban Park (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9016, log_odds=2.2153
+  Accumulated log-odds: 2.2153
+  Final score: 0.9016
+
+Itinerary > Day 4 > Kensington Market Food Tour (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9160, log_odds=2.3898
+  Accumulated log-odds: 2.3898
+  Final score: 0.9160
+
+Itinerary > Day 4 > St. Lawrence Market Food Hall (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9021, log_odds=2.2213
+  Accumulated log-odds: 2.2213
+  Final score: 0.9021
+
+Itinerary > Day 5 > Ontario Science Centre (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.0558, log_odds=-2.8290
+  Accumulated log-odds: -2.8290
+  Final score: 0.0558
+
+Itinerary > Day 5 > MaRS Discovery District (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.5193, log_odds=0.0774
+  Accumulated log-odds: 0.0774
+  Final score: 0.5193
+
+Itinerary > Day 5 > Ripley's Aquarium (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.1433, log_odds=-1.7885
+  Accumulated log-odds: -1.7885
+  Final score: 0.1433
+
+Itinerary > Day 5 > CN Tower EdgeWalk (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9625, log_odds=3.2439
+  Accumulated log-odds: 3.2439
+  Final score: 0.9625
+
+Itinerary > Day 6 > TIFF Bell Lightbox (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.8998, log_odds=2.1955
+  Accumulated log-odds: 2.1955
+  Final score: 0.8998
+
+Itinerary > Day 6 > Hockey Hall of Fame (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.0593, log_odds=-2.7647
+  Accumulated log-odds: -2.7647
+  Final score: 0.0593
+
+Itinerary > Day 6 > Mirvish Theatre - Broadway Show (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.2569, log_odds=-1.0622
+  Accumulated log-odds: -1.0622
+  Final score: 0.2569
+
+Itinerary > Day 6 > The Rex Hotel Jazz Bar (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.7982, log_odds=1.3752
+  Accumulated log-odds: 1.3752
+  Final score: 0.7982
+
+Itinerary > Day 7 > Toronto Islands Ferry Crossing (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.1926, log_odds=-1.4330
+  Accumulated log-odds: -1.4330
+  Final score: 0.1926
+
+Itinerary > Day 7 > Ward's Island Village Walk (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9819, log_odds=3.9955
+  Accumulated log-odds: 3.9955
+  Final score: 0.9819
+
+Itinerary > Day 7 > Centre Island Bike & Beach (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9969, log_odds=5.7769
+  Accumulated log-odds: 5.7769
+  Final score: 0.9969
+
+Itinerary > Day 7 > Gibraltar Point Lighthouse (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9792, log_odds=3.8538
+  Accumulated log-odds: 3.8538
+  Final score: 0.9792
+
+Itinerary > Day 7 > Hanlan's Point Beach Sunset (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9959, log_odds=5.4999
+  Accumulated log-odds: 5.4999
+  Final score: 0.9959
+
+Itinerary > Day 8 > Yorkville Designer District (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.1698, log_odds=-1.5870
+  Accumulated log-odds: -1.5870
+  Final score: 0.1698
+
+Itinerary > Day 8 > Queen Street West Boutiques (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.3551, log_odds=-0.5968
+  Accumulated log-odds: -0.5968
+  Final score: 0.3551
+
+Itinerary > Day 8 > CF Toronto Eaton Centre (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.0451, log_odds=-3.0520
+  Accumulated log-odds: -3.0520
+  Final score: 0.0451
+
+Itinerary > Day 9 > Don Valley Trail Running (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9953, log_odds=5.3481
+  Accumulated log-odds: 5.3481
+  Final score: 0.9953
+
+Itinerary > Day 9 > Toronto Rock Climbing Gym (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.0123, log_odds=-4.3839
+  Accumulated log-odds: -4.3839
+  Final score: 0.0123
+
+Itinerary > Day 9 > Stand Up Paddleboarding (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9981, log_odds=6.2764
+  Accumulated log-odds: 6.2764
+  Final score: 0.9981
+
+Itinerary > Day 9 > Blue Jays Game at Rogers Centre (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.4064, log_odds=-0.3790
+  Accumulated log-odds: -0.3790
+  Final score: 0.4064
+
+Itinerary > Day 10 > Sunrise Yoga at Trinity Bellwoods (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9988, log_odds=6.7181
+  Accumulated log-odds: 6.7181
+  Final score: 0.9988
+
+Itinerary > Day 10 > Hammam Spa (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.0909, log_odds=-2.3024
+  Accumulated log-odds: -2.3024
+  Final score: 0.0909
+
+Itinerary > Day 10 > Allan Gardens Conservatory (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9208, log_odds=2.4533
+  Accumulated log-odds: 2.4533
+  Final score: 0.9208
+
+Itinerary > Day 10 > Evergreen Brick Works Garden Walk (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.9993, log_odds=7.2631
+  Accumulated log-odds: 7.2631
+  Final score: 0.9993
+
+Itinerary > Day 10 > Nathan Phillips Square Evening Reflection (POI):
+  Step 2: sem(content =~ "outdoor")
+    score=0.8443, log_odds=1.6904
+  Accumulated log-odds: 1.6904
+  Final score: 0.8443
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 39 nodes
+Threshold: 0.01
+Top-K: 3
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Itinerary > Day 10 > Evergreen Brick Works Garden Walk (score: 0.9993)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Evergreen Brick Works Garden Walk",
+  "time_block": "5:00 PM - 6:30 PM",
+  "description": "Nature preserve in a restored quarry with meditation gardens and forest trails.",
+  "travel_method": "Public Transit",
+  "expected_cost": "Free",
+  "highlights": [
+    "Nature trails",
+    "Restored quarry",
+    "Sunset views"
+  ]
+}
+
+2. Itinerary > Day 3 > Scarborough Bluffs (score: 0.9988)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Scarborough Bluffs",
+  "time_block": "4:30 PM - 6:30 PM",
+  "description": "Dramatic 90-meter cliffs overlooking Lake Ontario with hiking trails and beaches.",
+  "travel_method": "Public Transit",
+  "expected_cost": "Free",
+  "highlights": [
+    "Cliff views",
+    "Beach access",
+    "Sunset panoramas"
+  ]
+}
+
+3. Itinerary > Day 10 > Sunrise Yoga at Trinity Bellwoods (score: 0.9988)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Sunrise Yoga at Trinity Bellwoods",
+  "time_block": "7:00 AM - 8:00 AM",
+  "description": "Free outdoor yoga session in Toronto's beloved urban park.",
+  "travel_method": "Walk",
+  "expected_cost": "Free",
+  "highlights": [
+    "Morning meditation",
+    "Park setting",
+    "Community vibe"
+  ]
+}

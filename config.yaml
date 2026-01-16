@@ -1,7 +1,7 @@
 # Schema configuration
 # Choose which schema and data file to use
 active_schema: "itinerary" #Can choose between itinerary and todolist， session_recommendation
-active_data: "travel_memory_3day"  # Options: travel_memory_3day, travel_memory_5day, todolist_sample
+active_data: "travel_memory_10day_themed"  # Options: travel_memory_3day, travel_memory_5day, travel_memory_10day_themed
 
 openai:
   api_key: "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"
@@ -10,7 +10,7 @@ openai:
   max_tokens: 4096
 
 xpath_executor:
-  top_k: 3
+  top_k: 10
   score_threshold: 0.01
   # Scoring method: "llm", "entailment", or "cosine"
   scoring_method: "entailment"

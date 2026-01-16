@@ -1,0 +1,558 @@
+{
+  "timestamp": "20260116_170133_063081",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "foodie",
+  "hypothesis": "This is related to foodie.",
+  "nodes": [
+    {
+      "id": "4400769920_main",
+      "type": "POI",
+      "name": "Fort York National Historic Site",
+      "description": "Explore Toronto's birthplace featuring restored 1812 military buildings and costumed interpreters.",
+      "premise": "POI: Fort York National Historic Site - Explore Toronto's birthplace featuring restored 1812 military buildings and costumed interpreters.",
+      "score": 0.011825211346149445
+    },
+    {
+      "id": "4400706160_main",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "Historic market since 1803, voted the world's best food market by National Geographic.",
+      "premise": "POI: St. Lawrence Market - Historic market since 1803, voted the world's best food market by National Geographic.",
+      "score": 0.9983311295509338
+    },
+    {
+      "id": "5016587936_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "Beautifully preserved Victorian industrial architecture, once the largest distillery in the British Empire.",
+      "premise": "POI: Distillery District - Beautifully preserved Victorian industrial architecture, once the largest distillery in the British Empire.",
+      "score": 0.0006967626977711916
+    },
+    {
+      "id": "5016683440_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "Gothic Revival castle built in 1914 with secret passages, towers, and elaborate gardens.",
+      "premise": "POI: Casa Loma - Gothic Revival castle built in 1914 with secret passages, towers, and elaborate gardens.",
+      "score": 0.02331993728876114
+    },
+    {
+      "id": "5016690832_main",
+      "type": "POI",
+      "name": "Gardiner Museum",
+      "description": "Canada's only museum dedicated to ceramic art spanning 4,000 years of history.",
+      "premise": "POI: Gardiner Museum - Canada's only museum dedicated to ceramic art spanning 4,000 years of history.",
+      "score": 0.014054513536393642
+    },
+    {
+      "id": "5016691872_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "World-class museum with 13 million artifacts including dinosaurs and ancient civilizations.",
+      "premise": "POI: Royal Ontario Museum - World-class museum with 13 million artifacts including dinosaurs and ancient civilizations.",
+      "score": 0.006556035950779915
+    },
+    {
+      "id": "5016694032_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "One of North America's largest art museums with Frank Gehry's stunning Galleria Italia.",
+      "premise": "POI: Art Gallery of Ontario - One of North America's largest art museums with Frank Gehry's stunning Galleria Italia.",
+      "score": 0.0006098441663198173
+    },
+    {
+      "id": "5016707536_main",
+      "type": "POI",
+      "name": "Graffiti Alley",
+      "description": "Kilometer-long outdoor gallery of vibrant street art in the Fashion District.",
+      "premise": "POI: Graffiti Alley - Kilometer-long outdoor gallery of vibrant street art in the Fashion District.",
+      "score": 0.00034487590892240405
+    },
+    {
+      "id": "5016710496_main",
+      "type": "POI",
+      "name": "High Park Cherry Blossom Walk",
+      "description": "Toronto's largest public park with 400 acres of trails, gardens, and wildlife.",
+      "premise": "POI: High Park Cherry Blossom Walk - Toronto's largest public park with 400 acres of trails, gardens, and wildlife.",
+      "score": 0.0969279557466507
+    },
+    {
+      "id": "5016719744_main",
+      "type": "POI",
+      "name": "Humber River Trail Cycling",
+      "description": "Scenic cycling along the Humber River through forests and wetlands.",
+      "premise": "POI: Humber River Trail Cycling - Scenic cycling along the Humber River through forests and wetlands.",
+      "score": 0.0037200485821813345
+    },
+    {
+      "id": "5016721744_main",
+      "type": "POI",
+      "name": "Scarborough Bluffs",
+      "description": "Dramatic 90-meter cliffs overlooking Lake Ontario with hiking trails and beaches.",
+      "premise": "POI: Scarborough Bluffs - Dramatic 90-meter cliffs overlooking Lake Ontario with hiking trails and beaches.",
+      "score": 0.02458108402788639
+    },
+    {
+      "id": "5016722784_main",
+      "type": "POI",
+      "name": "Rouge National Urban Park",
+      "description": "Canada's first national urban park with forests, wetlands, and rare wildlife.",
+      "premise": "POI: Rouge National Urban Park - Canada's first national urban park with forests, wetlands, and rare wildlife.",
+      "score": 0.10216948390007019
+    },
+    {
+      "id": "5016733392_main",
+      "type": "POI",
+      "name": "Kensington Market Food Tour",
+      "description": "Self-guided exploration of Toronto's most eclectic neighborhood with diverse food vendors.",
+      "premise": "POI: Kensington Market Food Tour - Self-guided exploration of Toronto's most eclectic neighborhood with diverse food vendors.",
+      "score": 0.9968407154083252
+    },
+    {
+      "id": "5016735392_main",
+      "type": "POI",
+      "name": "St. Lawrence Market Food Hall",
+      "description": "Sample artisan cheeses, fresh seafood, and specialty foods from heritage vendors.",
+      "premise": "POI: St. Lawrence Market Food Hall - Sample artisan cheeses, fresh seafood, and specialty foods from heritage vendors.",
+      "score": 0.9974780678749084
+    },
+    {
+      "id": "5016747600_main",
+      "type": "POI",
+      "name": "Ontario Science Centre",
+      "description": "Interactive science museum with over 500 hands-on exhibits and IMAX theatre.",
+      "premise": "POI: Ontario Science Centre - Interactive science museum with over 500 hands-on exhibits and IMAX theatre.",
+      "score": 0.0004014762816950679
+    },
+    {
+      "id": "5016757648_main",
+      "type": "POI",
+      "name": "MaRS Discovery District",
+      "description": "Tour North America's largest urban innovation hub housing 150+ startups and research labs.",
+      "premise": "POI: MaRS Discovery District - Tour North America's largest urban innovation hub housing 150+ startups and research labs.",
+      "score": 0.005124637857079506
+    },
+    {
+      "id": "5016758768_main",
+      "type": "POI",
+      "name": "Ripley's Aquarium",
+      "description": "State-of-the-art aquarium with 20,000 marine creatures and underwater tunnel technology.",
+      "premise": "POI: Ripley's Aquarium - State-of-the-art aquarium with 20,000 marine creatures and underwater tunnel technology.",
+      "score": 0.0047880616039037704
+    },
+    {
+      "id": "5016759888_main",
+      "type": "POI",
+      "name": "CN Tower EdgeWalk",
+      "description": "World's highest full-circle hands-free walk on the CN Tower's outer ledge at 356m.",
+      "premise": "POI: CN Tower EdgeWalk - World's highest full-circle hands-free walk on the CN Tower's outer ledge at 356m.",
+      "score": 0.01744273118674755
+    },
+    {
+      "id": "5016771536_main",
+      "type": "POI",
+      "name": "TIFF Bell Lightbox",
+      "description": "Home of Toronto International Film Festival with year-round screenings and exhibits.",
+      "premise": "POI: TIFF Bell Lightbox - Home of Toronto International Film Festival with year-round screenings and exhibits.",
+      "score": 0.002686407184228301
+    },
+    {
+      "id": "5016780864_main",
+      "type": "POI",
+      "name": "Hockey Hall of Fame",
+      "description": "Shrine to Canada's national sport with Stanley Cup, interactive games, and legends.",
+      "premise": "POI: Hockey Hall of Fame - Shrine to Canada's national sport with Stanley Cup, interactive games, and legends.",
+      "score": 0.0001709552452666685
+    },
+    {
+      "id": "5016782784_main",
+      "type": "POI",
+      "name": "Mirvish Theatre - Broadway Show",
+      "description": "World-class theatre hosting Broadway touring productions and premieres.",
+      "premise": "POI: Mirvish Theatre - Broadway Show - World-class theatre hosting Broadway touring productions and premieres.",
+      "score": 0.0017790639540180564
+    },
+    {
+      "id": "5016783824_main",
+      "type": "POI",
+      "name": "The Rex Hotel Jazz Bar",
+      "description": "Toronto's legendary jazz club with live music seven nights a week since 1951.",
+      "premise": "POI: The Rex Hotel Jazz Bar - Toronto's legendary jazz club with live music seven nights a week since 1951.",
+      "score": 0.010312128812074661
+    },
+    {
+      "id": "5016794112_main",
+      "type": "POI",
+      "name": "Toronto Islands Ferry Crossing",
+      "description": "Scenic ferry ride across the harbour with stunning skyline views.",
+      "premise": "POI: Toronto Islands Ferry Crossing - Scenic ferry ride across the harbour with stunning skyline views.",
+      "score": 0.016032563522458076
+    },
+    {
+      "id": "5016795152_main",
+      "type": "POI",
+      "name": "Ward's Island Village Walk",
+      "description": "Explore the charming car-free residential community with cottage gardens.",
+      "premise": "POI: Ward's Island Village Walk - Explore the charming car-free residential community with cottage gardens.",
+      "score": 0.02578972652554512
+    },
+    {
+      "id": "5016796112_main",
+      "type": "POI",
+      "name": "Centre Island Bike & Beach",
+      "description": "Cycle through gardens and relax on sandy beaches with city skyline backdrop.",
+      "premise": "POI: Centre Island Bike & Beach - Cycle through gardens and relax on sandy beaches with city skyline backdrop.",
+      "score": 0.004882770590484142
+    },
+    {
+      "id": "5016810336_main",
+      "type": "POI",
+      "name": "Gibraltar Point Lighthouse",
+      "description": "Toronto's oldest surviving lighthouse built in 1808, supposedly haunted.",
+      "premise": "POI: Gibraltar Point Lighthouse - Toronto's oldest surviving lighthouse built in 1808, supposedly haunted.",
+      "score": 0.013294574804604053
+    },
+    {
+      "id": "5016811376_main",
+      "type": "POI",
+      "name": "Hanlan's Point Beach Sunset",
+      "description": "Toronto's most spectacular sunset beach facing west toward the lake.",
+      "premise": "POI: Hanlan's Point Beach Sunset - Toronto's most spectacular sunset beach facing west toward the lake.",
+      "score": 0.06150692328810692
+    },
+    {
+      "id": "5016822864_main",
+      "type": "POI",
+      "name": "Yorkville Designer District",
+      "description": "Toronto's most upscale shopping with Chanel, Hermes, Louis Vuitton and more.",
+      "premise": "POI: Yorkville Designer District - Toronto's most upscale shopping with Chanel, Hermes, Louis Vuitton and more.",
+      "score": 0.0019119950011372566
+    },
+    {
+      "id": "5016825024_main",
+      "type": "POI",
+      "name": "Queen Street West Boutiques",
+      "description": "Indie designers, vintage shops, and Canadian fashion labels along trendy Queen West.",
+      "premise": "POI: Queen Street West Boutiques - Indie designers, vintage shops, and Canadian fashion labels along trendy Queen West.",
+      "score": 0.003071658778935671
+    },
+    {
+      "id": "5016834272_main",
+      "type": "POI",
+      "name": "CF Toronto Eaton Centre",
+      "description": "Iconic downtown mall with 230+ stores under the famous Flight Stop sculpture.",
+      "premise": "POI: CF Toronto Eaton Centre - Iconic downtown mall with 230+ stores under the famous Flight Stop sculpture.",
+      "score": 0.32273155450820923
+    },
+    {
+      "id": "5016837392_main",
+      "type": "POI",
+      "name": "Don Valley Trail Running",
+      "description": "Morning run through Toronto's urban ravine system with forest trails.",
+      "premise": "POI: Don Valley Trail Running - Morning run through Toronto's urban ravine system with forest trails.",
+      "score": 0.004077230580151081
+    },
+    {
+      "id": "5016850816_main",
+      "type": "POI",
+      "name": "Toronto Rock Climbing Gym",
+      "description": "Indoor climbing facility with walls for all skill levels and bouldering.",
+      "premise": "POI: Toronto Rock Climbing Gym - Indoor climbing facility with walls for all skill levels and bouldering.",
+      "score": 0.002312499564141035
+    },
+    {
+      "id": "5016852816_main",
+      "type": "POI",
+      "name": "Stand Up Paddleboarding",
+      "description": "SUP session on Toronto Harbour with skyline views and core workout.",
+      "premise": "POI: Stand Up Paddleboarding - SUP session on Toronto Harbour with skyline views and core workout.",
+      "score": 0.0007032616413198411
+    },
+    {
+      "id": "5016853856_main",
+      "type": "POI",
+      "name": "Blue Jays Game at Rogers Centre",
+      "description": "MLB baseball under the retractable roof with classic ballpark atmosphere.",
+      "premise": "POI: Blue Jays Game at Rogers Centre - MLB baseball under the retractable roof with classic ballpark atmosphere.",
+      "score": 0.004384355153888464
+    },
+    {
+      "id": "5016864304_main",
+      "type": "POI",
+      "name": "Sunrise Yoga at Trinity Bellwoods",
+      "description": "Free outdoor yoga session in Toronto's beloved urban park.",
+      "premise": "POI: Sunrise Yoga at Trinity Bellwoods - Free outdoor yoga session in Toronto's beloved urban park.",
+      "score": 0.006548936944454908
+    },
+    {
+      "id": "5016866224_main",
+      "type": "POI",
+      "name": "Hammam Spa",
+      "description": "Traditional Turkish bath experience with steam rooms, body scrubs, and massage.",
+      "premise": "POI: Hammam Spa - Traditional Turkish bath experience with steam rooms, body scrubs, and massage.",
+      "score": 0.00627359701320529
+    },
+    {
+      "id": "5016876432_main",
+      "type": "POI",
+      "name": "Allan Gardens Conservatory",
+      "description": "Peaceful Victorian greenhouses with tropical plants and palm collections.",
+      "premise": "POI: Allan Gardens Conservatory - Peaceful Victorian greenhouses with tropical plants and palm collections.",
+      "score": 0.24915280938148499
+    },
+    {
+      "id": "5016877392_main",
+      "type": "POI",
+      "name": "Evergreen Brick Works Garden Walk",
+      "description": "Nature preserve in a restored quarry with meditation gardens and forest trails.",
+      "premise": "POI: Evergreen Brick Works Garden Walk - Nature preserve in a restored quarry with meditation gardens and forest trails.",
+      "score": 0.005732936784625053
+    },
+    {
+      "id": "5016887600_main",
+      "type": "POI",
+      "name": "Nathan Phillips Square Evening Reflection",
+      "description": "Final evening at Toronto's iconic square, watching city lights reflect in the pool.",
+      "premise": "POI: Nathan Phillips Square Evening Reflection - Final evening at Toronto's iconic square, watching city lights reflect in the pool.",
+      "score": 0.009558027610182762
+    }
+  ],
+  "results": [
+    {
+      "node_id": "4400769920_main",
+      "node_type": "POI",
+      "score": 0.011825211346149445,
+      "reasoning": "Entailment score: 0.0118"
+    },
+    {
+      "node_id": "4400706160_main",
+      "node_type": "POI",
+      "score": 0.9983311295509338,
+      "reasoning": "Entailment score: 0.9983"
+    },
+    {
+      "node_id": "5016587936_main",
+      "node_type": "POI",
+      "score": 0.0006967626977711916,
+      "reasoning": "Entailment score: 0.0007"
+    },
+    {
+      "node_id": "5016683440_main",
+      "node_type": "POI",
+      "score": 0.02331993728876114,
+      "reasoning": "Entailment score: 0.0233"
+    },
+    {
+      "node_id": "5016690832_main",
+      "node_type": "POI",
+      "score": 0.014054513536393642,
+      "reasoning": "Entailment score: 0.0141"
+    },
+    {
+      "node_id": "5016691872_main",
+      "node_type": "POI",
+      "score": 0.006556035950779915,
+      "reasoning": "Entailment score: 0.0066"
+    },
+    {
+      "node_id": "5016694032_main",
+      "node_type": "POI",
+      "score": 0.0006098441663198173,
+      "reasoning": "Entailment score: 0.0006"
+    },
+    {
+      "node_id": "5016707536_main",
+      "node_type": "POI",
+      "score": 0.00034487590892240405,
+      "reasoning": "Entailment score: 0.0003"
+    },
+    {
+      "node_id": "5016710496_main",
+      "node_type": "POI",
+      "score": 0.0969279557466507,
+      "reasoning": "Entailment score: 0.0969"
+    },
+    {
+      "node_id": "5016719744_main",
+      "node_type": "POI",
+      "score": 0.0037200485821813345,
+      "reasoning": "Entailment score: 0.0037"
+    },
+    {
+      "node_id": "5016721744_main",
+      "node_type": "POI",
+      "score": 0.02458108402788639,
+      "reasoning": "Entailment score: 0.0246"
+    },
+    {
+      "node_id": "5016722784_main",
+      "node_type": "POI",
+      "score": 0.10216948390007019,
+      "reasoning": "Entailment score: 0.1022"
+    },
+    {
+      "node_id": "5016733392_main",
+      "node_type": "POI",
+      "score": 0.9968407154083252,
+      "reasoning": "Entailment score: 0.9968"
+    },
+    {
+      "node_id": "5016735392_main",
+      "node_type": "POI",
+      "score": 0.9974780678749084,
+      "reasoning": "Entailment score: 0.9975"
+    },
+    {
+      "node_id": "5016747600_main",
+      "node_type": "POI",
+      "score": 0.0004014762816950679,
+      "reasoning": "Entailment score: 0.0004"
+    },
+    {
+      "node_id": "5016757648_main",
+      "node_type": "POI",
+      "score": 0.005124637857079506,
+      "reasoning": "Entailment score: 0.0051"
+    },
+    {
+      "node_id": "5016758768_main",
+      "node_type": "POI",
+      "score": 0.0047880616039037704,
+      "reasoning": "Entailment score: 0.0048"
+    },
+    {
+      "node_id": "5016759888_main",
+      "node_type": "POI",
+      "score": 0.01744273118674755,
+      "reasoning": "Entailment score: 0.0174"
+    },
+    {
+      "node_id": "5016771536_main",
+      "node_type": "POI",
+      "score": 0.002686407184228301,
+      "reasoning": "Entailment score: 0.0027"
+    },
+    {
+      "node_id": "5016780864_main",
+      "node_type": "POI",
+      "score": 0.0001709552452666685,
+      "reasoning": "Entailment score: 0.0002"
+    },
+    {
+      "node_id": "5016782784_main",
+      "node_type": "POI",
+      "score": 0.0017790639540180564,
+      "reasoning": "Entailment score: 0.0018"
+    },
+    {
+      "node_id": "5016783824_main",
+      "node_type": "POI",
+      "score": 0.010312128812074661,
+      "reasoning": "Entailment score: 0.0103"
+    },
+    {
+      "node_id": "5016794112_main",
+      "node_type": "POI",
+      "score": 0.016032563522458076,
+      "reasoning": "Entailment score: 0.0160"
+    },
+    {
+      "node_id": "5016795152_main",
+      "node_type": "POI",
+      "score": 0.02578972652554512,
+      "reasoning": "Entailment score: 0.0258"
+    },
+    {
+      "node_id": "5016796112_main",
+      "node_type": "POI",
+      "score": 0.004882770590484142,
+      "reasoning": "Entailment score: 0.0049"
+    },
+    {
+      "node_id": "5016810336_main",
+      "node_type": "POI",
+      "score": 0.013294574804604053,
+      "reasoning": "Entailment score: 0.0133"
+    },
+    {
+      "node_id": "5016811376_main",
+      "node_type": "POI",
+      "score": 0.06150692328810692,
+      "reasoning": "Entailment score: 0.0615"
+    },
+    {
+      "node_id": "5016822864_main",
+      "node_type": "POI",
+      "score": 0.0019119950011372566,
+      "reasoning": "Entailment score: 0.0019"
+    },
+    {
+      "node_id": "5016825024_main",
+      "node_type": "POI",
+      "score": 0.003071658778935671,
+      "reasoning": "Entailment score: 0.0031"
+    },
+    {
+      "node_id": "5016834272_main",
+      "node_type": "POI",
+      "score": 0.32273155450820923,
+      "reasoning": "Entailment score: 0.3227"
+    },
+    {
+      "node_id": "5016837392_main",
+      "node_type": "POI",
+      "score": 0.004077230580151081,
+      "reasoning": "Entailment score: 0.0041"
+    },
+    {
+      "node_id": "5016850816_main",
+      "node_type": "POI",
+      "score": 0.002312499564141035,
+      "reasoning": "Entailment score: 0.0023"
+    },
+    {
+      "node_id": "5016852816_main",
+      "node_type": "POI",
+      "score": 0.0007032616413198411,
+      "reasoning": "Entailment score: 0.0007"
+    },
+    {
+      "node_id": "5016853856_main",
+      "node_type": "POI",
+      "score": 0.004384355153888464,
+      "reasoning": "Entailment score: 0.0044"
+    },
+    {
+      "node_id": "5016864304_main",
+      "node_type": "POI",
+      "score": 0.006548936944454908,
+      "reasoning": "Entailment score: 0.0065"
+    },
+    {
+      "node_id": "5016866224_main",
+      "node_type": "POI",
+      "score": 0.00627359701320529,
+      "reasoning": "Entailment score: 0.0063"
+    },
+    {
+      "node_id": "5016876432_main",
+      "node_type": "POI",
+      "score": 0.24915280938148499,
+      "reasoning": "Entailment score: 0.2492"
+    },
+    {
+      "node_id": "5016877392_main",
+      "node_type": "POI",
+      "score": 0.005732936784625053,
+      "reasoning": "Entailment score: 0.0057"
+    },
+    {
+      "node_id": "5016887600_main",
+      "node_type": "POI",
+      "score": 0.009558027610182762,
+      "reasoning": "Entailment score: 0.0096"
+    }
+  ]
+}

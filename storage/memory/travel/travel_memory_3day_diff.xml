@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Itinerary>
+  <Day index="1">
+    <POI>
+      <name>Ripley's Aquarium of Canada</name>
+      <time_block>9:00 AM - 11:30 AM</time_block>
+      <description>Explore one of North America's largest aquariums featuring over 20,000 marine creatures and the stunning Dangerous Lagoon underwater tunnel.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 45</expected_cost>
+      <highlights>
+        <highlight>Shark tunnel</highlight>
+        <highlight>Interactive touch tanks</highlight>
+        <highlight>Jellyfish gallery</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>CN Tower</name>
+      <time_block>12:00 PM - 1:30 PM</time_block>
+      <description>Ascend to the observation deck for breathtaking 360-degree views of Toronto and Lake Ontario.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 43</expected_cost>
+      <highlights>
+        <highlight>Glass floor experience</highlight>
+        <highlight>SkyPod observation</highlight>
+        <highlight>EdgeWalk thrill</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Steam Whistle Brewery Tour</name>
+      <time_block>2:00 PM - 3:30 PM</time_block>
+      <description>Tour a historic brewery housed in a vintage railway roundhouse and learn about craft beer making.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 20</expected_cost>
+      <highlights>
+        <highlight>Historic roundhouse</highlight>
+        <highlight>Beer tasting</highlight>
+        <highlight>Railway heritage</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Rogers Centre Stadium Tour</name>
+      <time_block>4:00 PM - 5:30 PM</time_block>
+      <description>Go behind the scenes at the iconic home of the Toronto Blue Jays with its retractable roof.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 18</expected_cost>
+      <highlights>
+        <highlight>Dugout access</highlight>
+        <highlight>Press box visit</highlight>
+        <highlight>Retractable roof</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Harbourfront Centre Evening Stroll</name>
+      <time_block>6:00 PM - 7:30 PM</time_block>
+      <description>Walk along the scenic waterfront promenade enjoying sunset views over Lake Ontario.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Sunset views</highlight>
+        <highlight>Public art installations</highlight>
+        <highlight>Marina atmosphere</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>TIFF Bell Lightbox Cinema</name>
+      <time_block>8:00 PM - 10:30 PM</time_block>
+      <description>Catch a film screening at Toronto's premier cinema destination, home of the Toronto International Film Festival.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 15-20</expected_cost>
+      <highlights>
+        <highlight>Art house cinema</highlight>
+        <highlight>Modern architecture</highlight>
+        <highlight>Film exhibitions</highlight>
+      </highlights>
+    </POI>
+  </Day>
+  <Day index="2">
+    <Restaurant>
+      <name>Cafe Belong at Gardiner Museum</name>
+      <time_block>9:00 AM - 10:30 AM</time_block>
+      <description>Artistic brunch in the ceramic arts museum featuring locally sourced ingredients and stunning gallery views.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 25-35</expected_cost>
+      <highlights>
+        <highlight>Museum setting</highlight>
+        <highlight>Farm-to-table</highlight>
+        <highlight>Artistic ambiance</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Gardiner Museum of Ceramic Art</name>
+      <time_block>10:30 AM - 12:00 PM</time_block>
+      <description>Canada's only museum dedicated to ceramic art featuring ancient and contemporary pottery from around the world.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15</expected_cost>
+      <highlights>
+        <highlight>Ancient ceramics</highlight>
+        <highlight>Contemporary installations</highlight>
+        <highlight>Hands-on workshops</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Art Gallery of Ontario</name>
+      <time_block>12:30 PM - 2:30 PM</time_block>
+      <description>World-class museum showcasing Canadian, European, and contemporary art in a stunning Frank Gehry-designed building.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 25</expected_cost>
+      <highlights>
+        <highlight>Group of Seven collection</highlight>
+        <highlight>Gehry staircase</highlight>
+        <highlight>Henry Moore sculptures</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>FRANK Restaurant at AGO</name>
+      <time_block>2:30 PM - 3:30 PM</time_block>
+      <description>Chef-driven restaurant inside the Art Gallery featuring creative dishes inspired by current exhibitions.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 35-50</expected_cost>
+      <highlights>
+        <highlight>Exhibition-inspired menu</highlight>
+        <highlight>Gallery views</highlight>
+        <highlight>Art-focused dining</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Graffiti Alley (Rush Lane)</name>
+      <time_block>4:00 PM - 5:00 PM</time_block>
+      <description>Wander through Toronto's most vibrant outdoor gallery, a kilometer of ever-changing street art murals.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Street art murals</highlight>
+        <highlight>Photography paradise</highlight>
+        <highlight>Urban art culture</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Museum of Contemporary Art Toronto</name>
+      <time_block>5:30 PM - 7:00 PM</time_block>
+      <description>Cutting-edge contemporary art space in a converted industrial building showcasing experimental works.</description>
+      <travel_method>Public Transit</travel_method>
+      <expected_cost>CAD 10</expected_cost>
+      <highlights>
+        <highlight>Experimental installations</highlight>
+        <highlight>Industrial architecture</highlight>
+        <highlight>Emerging artists</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Bar Raval</name>
+      <time_block>7:30 PM - 8:30 PM</time_block>
+      <description>Award-winning pintxos bar with stunning hand-carved mahogany interior inspired by Gaudi's Barcelona.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 40-60</expected_cost>
+      <highlights>
+        <highlight>Sculptural interior</highlight>
+        <highlight>Spanish tapas</highlight>
+        <highlight>Design destination</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Theatre Passe Muraille</name>
+      <time_block>9:00 PM - 11:00 PM</time_block>
+      <description>Iconic experimental theatre presenting avant-garde Canadian productions in an intimate setting.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 25-40</expected_cost>
+      <highlights>
+        <highlight>Experimental theatre</highlight>
+        <highlight>Canadian playwrights</highlight>
+        <highlight>Intimate performances</highlight>
+      </highlights>
+    </POI>
+  </Day>
+  <Day index="3">
+    <Restaurant>
+      <name>Cherry Street Coffee House</name>
+      <time_block>7:30 AM - 8:30 AM</time_block>
+      <description>Quick fuel-up breakfast spot near the waterfront before a day of outdoor adventure.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 12-18</expected_cost>
+      <highlights>
+        <highlight>Quick service</highlight>
+        <highlight>Hearty breakfast</highlight>
+        <highlight>Outdoor seating</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Toronto Islands Kayaking</name>
+      <time_block>9:00 AM - 11:30 AM</time_block>
+      <description>Paddle around the Toronto Islands chain with stunning skyline views and wildlife sightings.</description>
+      <travel_method>Ferry</travel_method>
+      <expected_cost>CAD 45-60</expected_cost>
+      <highlights>
+        <highlight>Skyline panoramas</highlight>
+        <highlight>Wildlife spotting</highlight>
+        <highlight>Island exploration</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Ward's Island Beach</name>
+      <time_block>11:30 AM - 1:00 PM</time_block>
+      <description>Relax on Toronto's best sandy beach with views of the city skyline and calm Lake Ontario waters.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Sandy beach</highlight>
+        <highlight>Swimming</highlight>
+        <highlight>Skyline views</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Island Cafe</name>
+      <time_block>1:00 PM - 2:00 PM</time_block>
+      <description>Casual island eatery serving fresh sandwiches and cold drinks perfect for refueling mid-adventure.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 15-25</expected_cost>
+      <highlights>
+        <highlight>Outdoor patio</highlight>
+        <highlight>Fresh fare</highlight>
+        <highlight>Island vibes</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Centre Island Bike Trail Loop</name>
+      <time_block>2:00 PM - 3:30 PM</time_block>
+      <description>Cycle the scenic car-free trails connecting all three islands through gardens and forested paths.</description>
+      <travel_method>Bike Rental</travel_method>
+      <expected_cost>CAD 15-25</expected_cost>
+      <highlights>
+        <highlight>Car-free cycling</highlight>
+        <highlight>Garden views</highlight>
+        <highlight>Lighthouse visit</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>High Park Nature Trails</name>
+      <time_block>4:30 PM - 6:30 PM</time_block>
+      <description>Hike through 400 acres of forest, wetlands, and ravines in Toronto's largest urban park.</description>
+      <travel_method>Ferry &amp; Public Transit</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Grenadier Pond</highlight>
+        <highlight>Oak savannah</highlight>
+        <highlight>Free zoo</highlight>
+        <highlight>Hiking trails</highlight>
+      </highlights>
+    </POI>
+    <POI>
+      <name>Sunnyside Boardwalk &amp; Beach</name>
+      <time_block>6:30 PM - 7:30 PM</time_block>
+      <description>Sunset stroll along the historic boardwalk with views of Lake Ontario and the Humber Bay Arch Bridge.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Sunset views</highlight>
+        <highlight>Historic pavilion</highlight>
+        <highlight>Waterfront trail</highlight>
+      </highlights>
+    </POI>
+    <Restaurant>
+      <name>Sunnyside Pavilion Cafe</name>
+      <time_block>7:30 PM - 8:30 PM</time_block>
+      <description>Lakeside dining in a restored 1920s heritage building with beautiful sunset views.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 30-45</expected_cost>
+      <highlights>
+        <highlight>Heritage building</highlight>
+        <highlight>Lake views</highlight>
+        <highlight>Al fresco dining</highlight>
+      </highlights>
+    </Restaurant>
+    <POI>
+      <name>Humber Bay Park Stargazing</name>
+      <time_block>9:00 PM - 10:30 PM</time_block>
+      <description>End the day with stargazing at this waterfront park, one of the best spots in Toronto for night sky viewing.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>Free</expected_cost>
+      <highlights>
+        <highlight>Dark sky viewing</highlight>
+        <highlight>City lights backdrop</highlight>
+        <highlight>Peaceful atmosphere</highlight>
+      </highlights>
+    </POI>
+  </Day>
+</Itinerary>

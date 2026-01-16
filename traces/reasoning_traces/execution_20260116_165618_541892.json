@@ -1,0 +1,2023 @@
+{
+  "timestamp": "20260116_165618_541892",
+  "query": "/Itinerary/Day/POI[sem(content =~ \"outdoor\")]",
+  "data_file": "travel_memory_3day_diff.xml",
+  "execution_time_ms": 5677.035708,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[sem(content =~ \"outdoor\")]",
+      "action": "type_match",
+      "nodes_before_count": 3,
+      "nodes_after_count": 17,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > Ripley's Aquarium of Canada",
+          "name": "Ripley's Aquarium of Canada",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Steam Whistle Brewery Tour",
+          "name": "Steam Whistle Brewery Tour",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Rogers Centre Stadium Tour",
+          "name": "Rogers Centre Stadium Tour",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Harbourfront Centre Evening Stroll",
+          "name": "Harbourfront Centre Evening Stroll",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > TIFF Bell Lightbox Cinema",
+          "name": "TIFF Bell Lightbox Cinema",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Gardiner Museum of Ceramic Art",
+          "name": "Gardiner Museum of Ceramic Art",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Graffiti Alley (Rush Lane)",
+          "name": "Graffiti Alley (Rush Lane)",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Museum of Contemporary Art Toronto",
+          "name": "Museum of Contemporary Art Toronto",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Theatre Passe Muraille",
+          "name": "Theatre Passe Muraille",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands Kayaking",
+          "name": "Toronto Islands Kayaking",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Ward's Island Beach",
+          "name": "Ward's Island Beach",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Centre Island Bike Trail Loop",
+          "name": "Centre Island Bike Trail Loop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > High Park Nature Trails",
+          "name": "High Park Nature Trails",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Sunnyside Boardwalk & Beach",
+          "name": "Sunnyside Boardwalk & Beach",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Humber Bay Park Stargazing",
+          "name": "Humber Bay Park Stargazing",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "POI",
+        "found_count": 17
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[sem(content =~ \"outdoor\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 17,
+      "nodes_after_count": 17,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1 > Ripley's Aquarium of Canada",
+          "name": "Ripley's Aquarium of Canada",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Steam Whistle Brewery Tour",
+          "name": "Steam Whistle Brewery Tour",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Rogers Centre Stadium Tour",
+          "name": "Rogers Centre Stadium Tour",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Harbourfront Centre Evening Stroll",
+          "name": "Harbourfront Centre Evening Stroll",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > TIFF Bell Lightbox Cinema",
+          "name": "TIFF Bell Lightbox Cinema",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Gardiner Museum of Ceramic Art",
+          "name": "Gardiner Museum of Ceramic Art",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Graffiti Alley (Rush Lane)",
+          "name": "Graffiti Alley (Rush Lane)",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Museum of Contemporary Art Toronto",
+          "name": "Museum of Contemporary Art Toronto",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Theatre Passe Muraille",
+          "name": "Theatre Passe Muraille",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands Kayaking",
+          "name": "Toronto Islands Kayaking",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Ward's Island Beach",
+          "name": "Ward's Island Beach",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Centre Island Bike Trail Loop",
+          "name": "Centre Island Bike Trail Loop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > High Park Nature Trails",
+          "name": "High Park Nature Trails",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Sunnyside Boardwalk & Beach",
+          "name": "Sunnyside Boardwalk & Beach",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Humber Bay Park Stargazing",
+          "name": "Humber Bay Park Stargazing",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > Ripley's Aquarium of Canada",
+          "name": "Ripley's Aquarium of Canada",
+          "type": "POI",
+          "score": 0.8819114565849304
+        },
+        {
+          "path": "Itinerary > Day 1 > CN Tower",
+          "name": "CN Tower",
+          "type": "POI",
+          "score": 0.9725335836410522
+        },
+        {
+          "path": "Itinerary > Day 1 > Steam Whistle Brewery Tour",
+          "name": "Steam Whistle Brewery Tour",
+          "type": "POI",
+          "score": 0.9497801065444946
+        },
+        {
+          "path": "Itinerary > Day 1 > Rogers Centre Stadium Tour",
+          "name": "Rogers Centre Stadium Tour",
+          "type": "POI",
+          "score": 0.3500227928161621
+        },
+        {
+          "path": "Itinerary > Day 1 > Harbourfront Centre Evening Stroll",
+          "name": "Harbourfront Centre Evening Stroll",
+          "type": "POI",
+          "score": 0.9743077158927917
+        },
+        {
+          "path": "Itinerary > Day 1 > TIFF Bell Lightbox Cinema",
+          "name": "TIFF Bell Lightbox Cinema",
+          "type": "POI",
+          "score": 0.525476336479187
+        },
+        {
+          "path": "Itinerary > Day 2 > Gardiner Museum of Ceramic Art",
+          "name": "Gardiner Museum of Ceramic Art",
+          "type": "POI",
+          "score": 0.772840142250061
+        },
+        {
+          "path": "Itinerary > Day 2 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 0.040786657482385635
+        },
+        {
+          "path": "Itinerary > Day 2 > Graffiti Alley (Rush Lane)",
+          "name": "Graffiti Alley (Rush Lane)",
+          "type": "POI",
+          "score": 0.9950024485588074
+        },
+        {
+          "path": "Itinerary > Day 2 > Museum of Contemporary Art Toronto",
+          "name": "Museum of Contemporary Art Toronto",
+          "type": "POI",
+          "score": 0.1649445742368698
+        },
+        {
+          "path": "Itinerary > Day 2 > Theatre Passe Muraille",
+          "name": "Theatre Passe Muraille",
+          "type": "POI",
+          "score": 0.2246273308992386
+        },
+        {
+          "path": "Itinerary > Day 3 > Toronto Islands Kayaking",
+          "name": "Toronto Islands Kayaking",
+          "type": "POI",
+          "score": 0.9952774047851562
+        },
+        {
+          "path": "Itinerary > Day 3 > Ward's Island Beach",
+          "name": "Ward's Island Beach",
+          "type": "POI",
+          "score": 0.9923129677772522
+        },
+        {
+          "path": "Itinerary > Day 3 > Centre Island Bike Trail Loop",
+          "name": "Centre Island Bike Trail Loop",
+          "type": "POI",
+          "score": 0.998583197593689
+        },
+        {
+          "path": "Itinerary > Day 3 > High Park Nature Trails",
+          "name": "High Park Nature Trails",
+          "type": "POI",
+          "score": 0.9973522424697876
+        },
+        {
+          "path": "Itinerary > Day 3 > Sunnyside Boardwalk & Beach",
+          "name": "Sunnyside Boardwalk & Beach",
+          "type": "POI",
+          "score": 0.996639609336853
+        },
+        {
+          "path": "Itinerary > Day 3 > Humber Bay Park Stargazing",
+          "name": "Humber Bay Park Stargazing",
+          "type": "POI",
+          "score": 0.9919716119766235
+        }
+      ],
+      "details": {
+        "predicate": "sem(content =~ \"outdoor\")",
+        "predicate_type": "SEM",
+        "scoring_result": {
+          "predicate": "sem(content =~ \"outdoor\")",
+          "predicate_ast": {
+            "operator": "SEM",
+            "conditions": [
+              {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              }
+            ]
+          },
+          "config": {
+            "top_k": 3,
+            "score_threshold": 0.01
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "Ripley's Aquarium of Canada",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.8819114565849304,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.8819114565849304
+            },
+            {
+              "node_idx": 1,
+              "node_name": "CN Tower",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9725335836410522,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9725335836410522
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Steam Whistle Brewery Tour",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9497801065444946,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9497801065444946
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Rogers Centre Stadium Tour",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.3500227928161621,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.3500227928161621
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Harbourfront Centre Evening Stroll",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9743077158927917,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9743077158927917
+            },
+            {
+              "node_idx": 5,
+              "node_name": "TIFF Bell Lightbox Cinema",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.525476336479187,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.525476336479187
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Gardiner Museum of Ceramic Art",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.772840142250061,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.772840142250061
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Art Gallery of Ontario",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.040786657482385635,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.040786657482385635
+            },
+            {
+              "node_idx": 8,
+              "node_name": "Graffiti Alley (Rush Lane)",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9950024485588074,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9950024485588074
+            },
+            {
+              "node_idx": 9,
+              "node_name": "Museum of Contemporary Art Toronto",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.1649445742368698,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.1649445742368698
+            },
+            {
+              "node_idx": 10,
+              "node_name": "Theatre Passe Muraille",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.2246273308992386,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.2246273308992386
+            },
+            {
+              "node_idx": 11,
+              "node_name": "Toronto Islands Kayaking",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9952774047851562,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9952774047851562
+            },
+            {
+              "node_idx": 12,
+              "node_name": "Ward's Island Beach",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9923129677772522,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9923129677772522
+            },
+            {
+              "node_idx": 13,
+              "node_name": "Centre Island Bike Trail Loop",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.998583197593689,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.998583197593689
+            },
+            {
+              "node_idx": 14,
+              "node_name": "High Park Nature Trails",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9973522424697876,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9973522424697876
+            },
+            {
+              "node_idx": 15,
+              "node_name": "Sunnyside Boardwalk & Beach",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.996639609336853,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.996639609336853
+            },
+            {
+              "node_idx": 16,
+              "node_name": "Humber Bay Park Stargazing",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9919716119766235,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9919716119766235
+            }
+          ],
+          "batch_scoring": {
+            "semantic_values": [
+              "outdoor"
+            ],
+            "per_value_stats": [
+              {
+                "value": "outdoor",
+                "num_descriptions": 17,
+                "call_time_ms": 5675.42
+              }
+            ],
+            "total_scorer_calls": 1,
+            "total_descriptions_scored": 17
+          },
+          "ranking": [
+            {
+              "idx": 13,
+              "score": 0.998583197593689,
+              "name": "Centre Island Bike Trail Loop"
+            },
+            {
+              "idx": 14,
+              "score": 0.9973522424697876,
+              "name": "High Park Nature Trails"
+            },
+            {
+              "idx": 15,
+              "score": 0.996639609336853,
+              "name": "Sunnyside Boardwalk & Beach"
+            },
+            {
+              "idx": 11,
+              "score": 0.9952774047851562,
+              "name": "Toronto Islands Kayaking"
+            },
+            {
+              "idx": 8,
+              "score": 0.9950024485588074,
+              "name": "Graffiti Alley (Rush Lane)"
+            },
+            {
+              "idx": 12,
+              "score": 0.9923129677772522,
+              "name": "Ward's Island Beach"
+            },
+            {
+              "idx": 16,
+              "score": 0.9919716119766235,
+              "name": "Humber Bay Park Stargazing"
+            },
+            {
+              "idx": 4,
+              "score": 0.9743077158927917,
+              "name": "Harbourfront Centre Evening Stroll"
+            },
+            {
+              "idx": 1,
+              "score": 0.9725335836410522,
+              "name": "CN Tower"
+            },
+            {
+              "idx": 2,
+              "score": 0.9497801065444946,
+              "name": "Steam Whistle Brewery Tour"
+            },
+            {
+              "idx": 0,
+              "score": 0.8819114565849304,
+              "name": "Ripley's Aquarium of Canada"
+            },
+            {
+              "idx": 6,
+              "score": 0.772840142250061,
+              "name": "Gardiner Museum of Ceramic Art"
+            },
+            {
+              "idx": 5,
+              "score": 0.525476336479187,
+              "name": "TIFF Bell Lightbox Cinema"
+            },
+            {
+              "idx": 3,
+              "score": 0.3500227928161621,
+              "name": "Rogers Centre Stadium Tour"
+            },
+            {
+              "idx": 10,
+              "score": 0.2246273308992386,
+              "name": "Theatre Passe Muraille"
+            },
+            {
+              "idx": 9,
+              "score": 0.1649445742368698,
+              "name": "Museum of Contemporary Art Toronto"
+            },
+            {
+              "idx": 7,
+              "score": 0.040786657482385635,
+              "name": "Art Gallery of Ontario"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "sem(content =~ \"outdoor\")",
+      "predicate_ast": {
+        "operator": "SEM",
+        "conditions": [
+          {
+            "type": "sem",
+            "field": "content",
+            "value": "outdoor"
+          }
+        ]
+      },
+      "config": {
+        "top_k": 3,
+        "score_threshold": 0.01
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "Ripley's Aquarium of Canada",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.8819114565849304,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.8819114565849304
+        },
+        {
+          "node_idx": 1,
+          "node_name": "CN Tower",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9725335836410522,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9725335836410522
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Steam Whistle Brewery Tour",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9497801065444946,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9497801065444946
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Rogers Centre Stadium Tour",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.3500227928161621,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.3500227928161621
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Harbourfront Centre Evening Stroll",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9743077158927917,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9743077158927917
+        },
+        {
+          "node_idx": 5,
+          "node_name": "TIFF Bell Lightbox Cinema",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.525476336479187,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.525476336479187
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Gardiner Museum of Ceramic Art",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.772840142250061,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.772840142250061
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Art Gallery of Ontario",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.040786657482385635,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.040786657482385635
+        },
+        {
+          "node_idx": 8,
+          "node_name": "Graffiti Alley (Rush Lane)",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9950024485588074,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9950024485588074
+        },
+        {
+          "node_idx": 9,
+          "node_name": "Museum of Contemporary Art Toronto",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.1649445742368698,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.1649445742368698
+        },
+        {
+          "node_idx": 10,
+          "node_name": "Theatre Passe Muraille",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.2246273308992386,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.2246273308992386
+        },
+        {
+          "node_idx": 11,
+          "node_name": "Toronto Islands Kayaking",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9952774047851562,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9952774047851562
+        },
+        {
+          "node_idx": 12,
+          "node_name": "Ward's Island Beach",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9923129677772522,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9923129677772522
+        },
+        {
+          "node_idx": 13,
+          "node_name": "Centre Island Bike Trail Loop",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.998583197593689,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.998583197593689
+        },
+        {
+          "node_idx": 14,
+          "node_name": "High Park Nature Trails",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9973522424697876,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9973522424697876
+        },
+        {
+          "node_idx": 15,
+          "node_name": "Sunnyside Boardwalk & Beach",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.996639609336853,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.996639609336853
+        },
+        {
+          "node_idx": 16,
+          "node_name": "Humber Bay Park Stargazing",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9919716119766235,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9919716119766235
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "outdoor"
+        ],
+        "per_value_stats": [
+          {
+            "value": "outdoor",
+            "num_descriptions": 17,
+            "call_time_ms": 5675.42
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 17
+      },
+      "ranking": [
+        {
+          "idx": 13,
+          "score": 0.998583197593689,
+          "name": "Centre Island Bike Trail Loop"
+        },
+        {
+          "idx": 14,
+          "score": 0.9973522424697876,
+          "name": "High Park Nature Trails"
+        },
+        {
+          "idx": 15,
+          "score": 0.996639609336853,
+          "name": "Sunnyside Boardwalk & Beach"
+        },
+        {
+          "idx": 11,
+          "score": 0.9952774047851562,
+          "name": "Toronto Islands Kayaking"
+        },
+        {
+          "idx": 8,
+          "score": 0.9950024485588074,
+          "name": "Graffiti Alley (Rush Lane)"
+        },
+        {
+          "idx": 12,
+          "score": 0.9923129677772522,
+          "name": "Ward's Island Beach"
+        },
+        {
+          "idx": 16,
+          "score": 0.9919716119766235,
+          "name": "Humber Bay Park Stargazing"
+        },
+        {
+          "idx": 4,
+          "score": 0.9743077158927917,
+          "name": "Harbourfront Centre Evening Stroll"
+        },
+        {
+          "idx": 1,
+          "score": 0.9725335836410522,
+          "name": "CN Tower"
+        },
+        {
+          "idx": 2,
+          "score": 0.9497801065444946,
+          "name": "Steam Whistle Brewery Tour"
+        },
+        {
+          "idx": 0,
+          "score": 0.8819114565849304,
+          "name": "Ripley's Aquarium of Canada"
+        },
+        {
+          "idx": 6,
+          "score": 0.772840142250061,
+          "name": "Gardiner Museum of Ceramic Art"
+        },
+        {
+          "idx": 5,
+          "score": 0.525476336479187,
+          "name": "TIFF Bell Lightbox Cinema"
+        },
+        {
+          "idx": 3,
+          "score": 0.3500227928161621,
+          "name": "Rogers Centre Stadium Tour"
+        },
+        {
+          "idx": 10,
+          "score": 0.2246273308992386,
+          "name": "Theatre Passe Muraille"
+        },
+        {
+          "idx": 9,
+          "score": 0.1649445742368698,
+          "name": "Museum of Contemporary Art Toronto"
+        },
+        {
+          "idx": 7,
+          "score": 0.040786657482385635,
+          "name": "Art Gallery of Ontario"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "sem(content =~ \"outdoor\")",
+        "predicate_ast": {
+          "operator": "SEM",
+          "conditions": [
+            {
+              "type": "sem",
+              "field": "content",
+              "value": "outdoor"
+            }
+          ]
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "Ripley's Aquarium of Canada",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.8819114565849304,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.8819114565849304
+          },
+          {
+            "node_idx": 1,
+            "node_name": "CN Tower",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9725335836410522,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9725335836410522
+          },
+          {
+            "node_idx": 2,
+            "node_name": "Steam Whistle Brewery Tour",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9497801065444946,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9497801065444946
+          },
+          {
+            "node_idx": 3,
+            "node_name": "Rogers Centre Stadium Tour",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.3500227928161621,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.3500227928161621
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Harbourfront Centre Evening Stroll",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9743077158927917,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9743077158927917
+          },
+          {
+            "node_idx": 5,
+            "node_name": "TIFF Bell Lightbox Cinema",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.525476336479187,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.525476336479187
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Gardiner Museum of Ceramic Art",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.772840142250061,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.772840142250061
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Art Gallery of Ontario",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.040786657482385635,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.040786657482385635
+          },
+          {
+            "node_idx": 8,
+            "node_name": "Graffiti Alley (Rush Lane)",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9950024485588074,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9950024485588074
+          },
+          {
+            "node_idx": 9,
+            "node_name": "Museum of Contemporary Art Toronto",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.1649445742368698,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.1649445742368698
+          },
+          {
+            "node_idx": 10,
+            "node_name": "Theatre Passe Muraille",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.2246273308992386,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.2246273308992386
+          },
+          {
+            "node_idx": 11,
+            "node_name": "Toronto Islands Kayaking",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9952774047851562,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9952774047851562
+          },
+          {
+            "node_idx": 12,
+            "node_name": "Ward's Island Beach",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9923129677772522,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9923129677772522
+          },
+          {
+            "node_idx": 13,
+            "node_name": "Centre Island Bike Trail Loop",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.998583197593689,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.998583197593689
+          },
+          {
+            "node_idx": 14,
+            "node_name": "High Park Nature Trails",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9973522424697876,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9973522424697876
+          },
+          {
+            "node_idx": 15,
+            "node_name": "Sunnyside Boardwalk & Beach",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.996639609336853,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.996639609336853
+          },
+          {
+            "node_idx": 16,
+            "node_name": "Humber Bay Park Stargazing",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9919716119766235,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9919716119766235
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 13,
+            "score": 0.998583197593689,
+            "name": "Centre Island Bike Trail Loop"
+          },
+          {
+            "idx": 14,
+            "score": 0.9973522424697876,
+            "name": "High Park Nature Trails"
+          },
+          {
+            "idx": 15,
+            "score": 0.996639609336853,
+            "name": "Sunnyside Boardwalk & Beach"
+          },
+          {
+            "idx": 11,
+            "score": 0.9952774047851562,
+            "name": "Toronto Islands Kayaking"
+          },
+          {
+            "idx": 8,
+            "score": 0.9950024485588074,
+            "name": "Graffiti Alley (Rush Lane)"
+          },
+          {
+            "idx": 12,
+            "score": 0.9923129677772522,
+            "name": "Ward's Island Beach"
+          },
+          {
+            "idx": 16,
+            "score": 0.9919716119766235,
+            "name": "Humber Bay Park Stargazing"
+          },
+          {
+            "idx": 4,
+            "score": 0.9743077158927917,
+            "name": "Harbourfront Centre Evening Stroll"
+          },
+          {
+            "idx": 1,
+            "score": 0.9725335836410522,
+            "name": "CN Tower"
+          },
+          {
+            "idx": 2,
+            "score": 0.9497801065444946,
+            "name": "Steam Whistle Brewery Tour"
+          },
+          {
+            "idx": 0,
+            "score": 0.8819114565849304,
+            "name": "Ripley's Aquarium of Canada"
+          },
+          {
+            "idx": 6,
+            "score": 0.772840142250061,
+            "name": "Gardiner Museum of Ceramic Art"
+          },
+          {
+            "idx": 5,
+            "score": 0.525476336479187,
+            "name": "TIFF Bell Lightbox Cinema"
+          },
+          {
+            "idx": 3,
+            "score": 0.3500227928161621,
+            "name": "Rogers Centre Stadium Tour"
+          },
+          {
+            "idx": 10,
+            "score": 0.2246273308992386,
+            "name": "Theatre Passe Muraille"
+          },
+          {
+            "idx": 9,
+            "score": 0.1649445742368698,
+            "name": "Museum of Contemporary Art Toronto"
+          },
+          {
+            "idx": 7,
+            "score": 0.040786657482385635,
+            "name": "Art Gallery of Ontario"
+          }
+        ]
+      }
+    ],
+    "bayesian_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Day 1 > Ripley's Aquarium of Canada",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.8819114565849304,
+              "log_odds": 2.0106569506032277
+            }
+          ],
+          "accumulated_log_odds": 2.0106569506032277,
+          "final_score": 0.8819114565849303
+        },
+        {
+          "node_path": "Itinerary > Day 1 > CN Tower",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.9725335836410522,
+              "log_odds": 3.56694057314265
+            }
+          ],
+          "accumulated_log_odds": 3.56694057314265,
+          "final_score": 0.9725335836410524
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Steam Whistle Brewery Tour",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.9497801065444946,
+              "log_odds": 2.9398192588346066
+            }
+          ],
+          "accumulated_log_odds": 2.9398192588346066,
+          "final_score": 0.9497801065444947
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Rogers Centre Stadium Tour",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.3500227928161621,
+              "log_odds": -0.618939021708858
+            }
+          ],
+          "accumulated_log_odds": -0.618939021708858,
+          "final_score": 0.35002279281616216
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Harbourfront Centre Evening Stroll",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.9743077158927917,
+              "log_odds": 3.6355364662900427
+            }
+          ],
+          "accumulated_log_odds": 3.6355364662900427,
+          "final_score": 0.9743077158927919
+        },
+        {
+          "node_path": "Itinerary > Day 1 > TIFF Bell Lightbox Cinema",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.525476336479187,
+              "log_odds": 0.10199367157606294
+            }
+          ],
+          "accumulated_log_odds": 0.10199367157606294,
+          "final_score": 0.525476336479187
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Gardiner Museum of Ceramic Art",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.772840142250061,
+              "log_odds": 1.2244182366564622
+            }
+          ],
+          "accumulated_log_odds": 1.2244182366564622,
+          "final_score": 0.772840142250061
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Art Gallery of Ontario",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.040786657482385635,
+              "log_odds": -3.1577585082280626
+            }
+          ],
+          "accumulated_log_odds": -3.1577585082280626,
+          "final_score": 0.040786657482385635
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Graffiti Alley (Rush Lane)",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.9950024485588074,
+              "log_odds": 5.293797117294028
+            }
+          ],
+          "accumulated_log_odds": 5.293797117294028,
+          "final_score": 0.9950024485588073
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Museum of Contemporary Art Toronto",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.1649445742368698,
+              "log_odds": -1.6218885970543704
+            }
+          ],
+          "accumulated_log_odds": -1.6218885970543704,
+          "final_score": 0.16494457423686978
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Theatre Passe Muraille",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.2246273308992386,
+              "log_odds": -1.2389010552346342
+            }
+          ],
+          "accumulated_log_odds": -1.2389010552346342,
+          "final_score": 0.22462733089923861
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Toronto Islands Kayaking",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.9952774047851562,
+              "log_odds": 5.350663014932824
+            }
+          ],
+          "accumulated_log_odds": 5.350663014932824,
+          "final_score": 0.9952774047851564
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Ward's Island Beach",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.9923129677772522,
+              "log_odds": 4.860503767030968
+            }
+          ],
+          "accumulated_log_odds": 4.860503767030968,
+          "final_score": 0.9923129677772523
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Centre Island Bike Trail Loop",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.998583197593689,
+              "log_odds": 6.557934966064603
+            }
+          ],
+          "accumulated_log_odds": 6.557934966064603,
+          "final_score": 0.9985831975936889
+        },
+        {
+          "node_path": "Itinerary > Day 3 > High Park Nature Trails",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.9973522424697876,
+              "log_odds": 5.931390943200264
+            }
+          ],
+          "accumulated_log_odds": 5.931390943200264,
+          "final_score": 0.9973522424697875
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Sunnyside Boardwalk & Beach",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.996639609336853,
+              "log_odds": 5.6923319935153955
+            }
+          ],
+          "accumulated_log_odds": 5.6923319935153955,
+          "final_score": 0.996639609336853
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Humber Bay Park Stargazing",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"outdoor\")",
+              "score": 0.9919716119766235,
+              "log_odds": 4.816710726396378
+            }
+          ],
+          "accumulated_log_odds": 4.816710726396378,
+          "final_score": 0.9919716119766235
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 17,
+    "threshold": 0.01,
+    "top_k": 3,
+    "after_filter_count": 3,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Day 3 > Centre Island Bike Trail Loop",
+        "score": 0.9985831975936889,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 3 > High Park Nature Trails",
+        "score": 0.9973522424697875,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 3 > Sunnyside Boardwalk & Beach",
+        "score": 0.996639609336853,
+        "type": "POI"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Day 3 > Centre Island Bike Trail Loop",
+      "score": 0.9985831975936889,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Centre Island Bike Trail Loop",
+        "time_block": "2:00 PM - 3:30 PM",
+        "description": "Cycle the scenic car-free trails connecting all three islands through gardens and forested paths.",
+        "travel_method": "Bike Rental",
+        "expected_cost": "CAD 15-25",
+        "highlights": [
+          "Car-free cycling",
+          "Garden views",
+          "Lighthouse visit"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 3 > High Park Nature Trails",
+      "score": 0.9973522424697875,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "High Park Nature Trails",
+        "time_block": "4:30 PM - 6:30 PM",
+        "description": "Hike through 400 acres of forest, wetlands, and ravines in Toronto's largest urban park.",
+        "travel_method": "Ferry & Public Transit",
+        "expected_cost": "Free",
+        "highlights": [
+          "Grenadier Pond",
+          "Oak savannah",
+          "Free zoo",
+          "Hiking trails"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 3 > Sunnyside Boardwalk & Beach",
+      "score": 0.996639609336853,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Sunnyside Boardwalk & Beach",
+        "time_block": "6:30 PM - 7:30 PM",
+        "description": "Sunset stroll along the historic boardwalk with views of Lake Ontario and the Humber Bay Arch Bridge.",
+        "travel_method": "Walk",
+        "expected_cost": "Free",
+        "highlights": [
+          "Sunset views",
+          "Historic pavilion",
+          "Waterfront trail"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 1,
+    "matched_count": 3,
+    "execution_time_ms": 5677.035708,
+    "has_bayesian_fusion": true,
+    "num_nodes_before_filter": 17,
+    "num_nodes_after_filter": 3
+  }
+}

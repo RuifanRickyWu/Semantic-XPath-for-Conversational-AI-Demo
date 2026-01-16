@@ -1,0 +1,107 @@
+Query: /Itinerary/Day[@index='2']/Restaurant
+Data File: travel_memory_3day.xml
+Execution Time: 0.72ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260116_150139_431296] Executing query: /Itinerary/Day[@index='2']/Restaurant
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Day[2], Restaurant]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day[2] ---
+Found 3 Day nodes across 1 parent(s)
+Applying positional index: [2]
+Selected node at index 2 (0-based: 1)
+After step: 1 nodes remaining
+
+--- Step 3: Restaurant ---
+Found 3 Restaurant nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+=== Bayesian Fusion ===
+  Itinerary > Day 2 > Pow Wow Cafe: log_odds=0.000 → score=1.0000
+  Itinerary > Day 2 > Annona Restaurant: log_odds=0.000 → score=1.0000
+  Itinerary > Day 2 > DaiLo: log_odds=0.000 → score=1.0000
+
+=== Final Filtering (threshold=0.01, top_k=3) ===
+  Filtered: 3 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 0.72ms
+
+============================================================
+Bayesian Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 2 > Pow Wow Cafe (Restaurant):
+  Accumulated log-odds: 0.0000
+  Final score: 1.0000
+
+Itinerary > Day 2 > Annona Restaurant (Restaurant):
+  Accumulated log-odds: 0.0000
+  Final score: 1.0000
+
+Itinerary > Day 2 > DaiLo (Restaurant):
+  Accumulated log-odds: 0.0000
+  Final score: 1.0000
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 3 nodes
+Threshold: 0.01
+Top-K: 3
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Itinerary > Day 2 > Pow Wow Cafe (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Pow Wow Cafe",
+  "time_block": "9:00 AM - 10:30 AM",
+  "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 15-20",
+  "highlights": [
+    "Indigenous cuisine",
+    "Bohemian neighborhood"
+  ]
+}
+
+2. Itinerary > Day 2 > Annona Restaurant (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Annona Restaurant",
+  "time_block": "1:30 PM - 2:30 PM",
+  "description": "Sophisticated international cuisine in a bright, modern setting.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 30-40",
+  "highlights": [
+    "Patio seating",
+    "Refined dishes"
+  ]
+}
+
+3. Itinerary > Day 2 > DaiLo (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "DaiLo",
+  "time_block": "6:00 PM - 7:30 PM",
+  "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 50-60",
+  "highlights": [
+    "Fusion menu",
+    "Trendy vibe"
+  ]
+}

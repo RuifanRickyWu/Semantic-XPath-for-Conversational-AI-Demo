@@ -42,14 +42,6 @@ Select nodes by their index attribute using XPath attribute syntax.
 ```
 **Result**: All POIs in Day 2.
 
-### 2.2 Numeric Index (Legacy)
-Direct numeric indexing (1-based).
-
-```xpath
-/Itinerary/Day[2]/POI
-```
-**Result**: Second Day's POIs.
-
 ---
 
 ## 3. Semantic Predicates

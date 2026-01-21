@@ -1,0 +1,569 @@
+{
+  "timestamp": "20260121_143148_429515",
+  "query": "/Itinerary/Day[@index='1']/Restaurant[sem(content =~ \"breakfast\")]",
+  "data_file": "travel_memory_3day.xml",
+  "execution_time_ms": 542.0236249999562,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day[1]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day[1]",
+      "action": "positional_index",
+      "nodes_before_count": 3,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "index": {
+          "start": 1,
+          "type": "single"
+        },
+        "selected_count": 1,
+        "groups_processed": 1,
+        "group_details": [
+          {
+            "group_id": 0,
+            "group_size": 3,
+            "selected_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Restaurant[sem(content =~ \"breakfast\")]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > Queen Street Warehouse",
+          "name": "Queen Street Warehouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Buca Yorkville",
+          "name": "Buca Yorkville",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "name": "The Rex Hotel Jazz & Blues Bar",
+          "type": "Restaurant",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Restaurant",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Restaurant[sem(content =~ \"breakfast\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 3,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1 > Queen Street Warehouse",
+          "name": "Queen Street Warehouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Buca Yorkville",
+          "name": "Buca Yorkville",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "name": "The Rex Hotel Jazz & Blues Bar",
+          "type": "Restaurant",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > Queen Street Warehouse",
+          "name": "Queen Street Warehouse",
+          "type": "Restaurant",
+          "score": 0.19241702556610107
+        },
+        {
+          "path": "Itinerary > Day 1 > Buca Yorkville",
+          "name": "Buca Yorkville",
+          "type": "Restaurant",
+          "score": 0.1580417901277542
+        },
+        {
+          "path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "name": "The Rex Hotel Jazz & Blues Bar",
+          "type": "Restaurant",
+          "score": 0.009716750122606754
+        }
+      ],
+      "details": {
+        "predicate": "sem(content =~ \"breakfast\")",
+        "predicate_type": "SEM",
+        "scoring_result": {
+          "predicate": "sem(content =~ \"breakfast\")",
+          "predicate_ast": {
+            "operator": "SEM",
+            "conditions": [
+              {
+                "type": "sem",
+                "field": "content",
+                "value": "breakfast"
+              }
+            ]
+          },
+          "config": {
+            "top_k": 5,
+            "score_threshold": 0.3
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "Queen Street Warehouse",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "breakfast"
+                  },
+                  "score": 0.19241702556610107,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.19241702556610107
+            },
+            {
+              "node_idx": 1,
+              "node_name": "Buca Yorkville",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "breakfast"
+                  },
+                  "score": 0.1580417901277542,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.1580417901277542
+            },
+            {
+              "node_idx": 2,
+              "node_name": "The Rex Hotel Jazz & Blues Bar",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "breakfast"
+                  },
+                  "score": 0.009716750122606754,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.009716750122606754
+            }
+          ],
+          "batch_scoring": {
+            "semantic_values": [
+              "breakfast"
+            ],
+            "per_value_stats": [
+              {
+                "value": "breakfast",
+                "num_descriptions": 3,
+                "call_time_ms": 539.83
+              }
+            ],
+            "total_scorer_calls": 1,
+            "total_descriptions_scored": 3
+          },
+          "ranking": [
+            {
+              "idx": 0,
+              "score": 0.19241702556610107,
+              "name": "Queen Street Warehouse"
+            },
+            {
+              "idx": 1,
+              "score": 0.1580417901277542,
+              "name": "Buca Yorkville"
+            },
+            {
+              "idx": 2,
+              "score": 0.009716750122606754,
+              "name": "The Rex Hotel Jazz & Blues Bar"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "sem(content =~ \"breakfast\")",
+      "predicate_ast": {
+        "operator": "SEM",
+        "conditions": [
+          {
+            "type": "sem",
+            "field": "content",
+            "value": "breakfast"
+          }
+        ]
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.3
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "Queen Street Warehouse",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "breakfast"
+              },
+              "score": 0.19241702556610107,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.19241702556610107
+        },
+        {
+          "node_idx": 1,
+          "node_name": "Buca Yorkville",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "breakfast"
+              },
+              "score": 0.1580417901277542,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.1580417901277542
+        },
+        {
+          "node_idx": 2,
+          "node_name": "The Rex Hotel Jazz & Blues Bar",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "breakfast"
+              },
+              "score": 0.009716750122606754,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.009716750122606754
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "breakfast"
+        ],
+        "per_value_stats": [
+          {
+            "value": "breakfast",
+            "num_descriptions": 3,
+            "call_time_ms": 539.83
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 3
+      },
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.19241702556610107,
+          "name": "Queen Street Warehouse"
+        },
+        {
+          "idx": 1,
+          "score": 0.1580417901277542,
+          "name": "Buca Yorkville"
+        },
+        {
+          "idx": 2,
+          "score": 0.009716750122606754,
+          "name": "The Rex Hotel Jazz & Blues Bar"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "sem(content =~ \"breakfast\")",
+        "predicate_ast": {
+          "operator": "SEM",
+          "conditions": [
+            {
+              "type": "sem",
+              "field": "content",
+              "value": "breakfast"
+            }
+          ]
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "Queen Street Warehouse",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "breakfast"
+                },
+                "score": 0.19241702556610107,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.19241702556610107
+          },
+          {
+            "node_idx": 1,
+            "node_name": "Buca Yorkville",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "breakfast"
+                },
+                "score": 0.1580417901277542,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.1580417901277542
+          },
+          {
+            "node_idx": 2,
+            "node_name": "The Rex Hotel Jazz & Blues Bar",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "breakfast"
+                },
+                "score": 0.009716750122606754,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.009716750122606754
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.19241702556610107,
+            "name": "Queen Street Warehouse"
+          },
+          {
+            "idx": 1,
+            "score": 0.1580417901277542,
+            "name": "Buca Yorkville"
+          },
+          {
+            "idx": 2,
+            "score": 0.009716750122606754,
+            "name": "The Rex Hotel Jazz & Blues Bar"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Day 1 > Queen Street Warehouse",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"breakfast\")",
+              "score": 0.19241702556610107
+            }
+          ],
+          "accumulated_product": 0.19241702556610107,
+          "final_score": 0.19241702556610107
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Buca Yorkville",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"breakfast\")",
+              "score": 0.1580417901277542
+            }
+          ],
+          "accumulated_product": 0.1580417901277542,
+          "final_score": 0.1580417901277542
+        },
+        {
+          "node_path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"breakfast\")",
+              "score": 0.009716750122606754
+            }
+          ],
+          "accumulated_product": 0.009716750122606754,
+          "final_score": 0.009716750122606754
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 3,
+    "threshold": 0.3,
+    "top_k": 5,
+    "after_filter_count": 0,
+    "filtered_nodes": []
+  },
+  "matched_nodes": [],
+  "summary": {
+    "total_steps": 5,
+    "total_scoring_calls": 1,
+    "matched_count": 0,
+    "execution_time_ms": 542.0236249999562,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 3,
+    "num_nodes_after_filter": 0
+  }
+}

@@ -1,0 +1,30 @@
+CRUD Operation: READ
+User Query: find me all the museums
+Full Query: Read(/Itinerary/Day/POI[sem(content =~ "museum")])
+Timestamp: 20260121_122022_240678
+Success: True
+============================================================
+
+Intent Classification:
+----------------------------------------
+  Type: READ
+  XPath Hint: museums
+  Confidence: 0.95
+  Details: {
+    "target": "all museums"
+}
+
+XPath Query: /Itinerary/Day/POI[sem(content =~ "museum")]
+
+=== READ Operation Results ===
+Candidates: 2
+Selected: 2
+
+Selected Nodes:
+----------------------------------------
+
+1. POI: Royal Ontario Museum
+   World-renowned museum showcasing art, culture, and natural history....
+
+2. POI: Art Gallery of Ontario
+   Explore Canadian, European, and contemporary art in a Frank Gehry-designed building....

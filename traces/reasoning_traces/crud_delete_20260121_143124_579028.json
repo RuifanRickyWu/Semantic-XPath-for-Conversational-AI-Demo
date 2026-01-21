@@ -1,0 +1,35 @@
+{
+  "timestamp": "20260121_143124_579028",
+  "operation": "DELETE",
+  "user_query": "delete the breakfest on first day",
+  "full_query": "Delete(/Itinerary/Day[@index='1']/Restaurant[sem(content =~ \"breakfast\")])",
+  "xpath_query": "/Itinerary/Day[@index='1']/Restaurant[sem(content =~ \"breakfast\")]",
+  "success": false,
+  "intent": {
+    "intent": "DELETE",
+    "xpath_hint": "breakfast first day",
+    "operation_details": {
+      "target": "breakfast on first day"
+    },
+    "confidence": 0.95
+  },
+  "reasoning_trace": {
+    "user_query": "delete the breakfest on first day",
+    "total_candidates": 0,
+    "selected_count": 0,
+    "results": [],
+    "selected_nodes": [],
+    "metadata": {}
+  },
+  "operation_data": {
+    "deleted_count": null,
+    "deleted_paths": null,
+    "deletion_results": null
+  },
+  "tree_version": null,
+  "summary": {
+    "operation": "DELETE",
+    "success": false,
+    "affected_count": 0
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "base_name": "travel_memory_3day",
+  "versions": [
+    {
+      "version": 1,
+      "path": "/Users/rwu/dev/ConvAI/LLM-VM/result/demo/travel_memory_3day_v1.xml",
+      "timestamp": "2026-01-21T11:42:58.422712",
+      "operation": "DELETE",
+      "changes": {
+        "deleted_nodes": [
+          "Itinerary > Day 2 > Royal Ontario Museum",
+          "Itinerary > Day 1 > Art Gallery of Ontario"
+        ]
+      }
+    },
+    {
+      "version": 2,
+      "path": "/Users/rwu/dev/ConvAI/LLM-VM/result/demo/travel_memory_3day_v2.xml",
+      "timestamp": "2026-01-21T11:45:33.605620",
+      "operation": "UPDATE",
+      "changes": {
+        "updated_nodes": [
+          "Itinerary > Day 2 > Royal Ontario Museum",
+          "Itinerary > Day 1 > Art Gallery of Ontario"
+        ]
+      }
+    },
+    {
+      "version": 3,
+      "path": "/Users/rwu/dev/ConvAI/LLM-VM/result/demo/travel_memory_3day_v3.xml",
+      "timestamp": "2026-01-21T12:21:18.169934",
+      "operation": "UPDATE",
+      "changes": {
+        "updated_nodes": [
+          "Itinerary > Day 2 > Royal Ontario Museum",
+          "Itinerary > Day 1 > Art Gallery of Ontario"
+        ]
+      }
+    },
+    {
+      "version": 4,
+      "path": "/Users/rwu/dev/ConvAI/LLM-VM/result/demo/travel_memory_3day_v4.xml",
+      "timestamp": "2026-01-21T12:24:38.860673",
+      "operation": "UPDATE",
+      "changes": {
+        "updated_nodes": [
+          "Itinerary > Day 2 > Royal Ontario Museum",
+          "Itinerary > Day 1 > Art Gallery of Ontario"
+        ]
+      }
+    },
+    {
+      "version": 5,
+      "path": "/Users/rwu/dev/ConvAI/LLM-VM/result/demo/travel_memory_3day_v5.xml",
+      "timestamp": "2026-01-21T14:07:49.459406",
+      "operation": "UPDATE",
+      "changes": {
+        "updated_nodes": [
+          "Itinerary > Day 2 > Royal Ontario Museum",
+          "Itinerary > Day 1 > Art Gallery of Ontario"
+        ]
+      }
+    },
+    {
+      "version": 6,
+      "path": "/Users/rwu/dev/ConvAI/LLM-VM/result/demo/travel_memory_3day_v6.xml",
+      "timestamp": "2026-01-21T14:23:33.079995",
+      "operation": "CREATE",
+      "changes": {
+        "created_node": "Itinerary > Day 1 > Queen Street Warehouse > Restaurant 1",
+        "parent_path": "Itinerary > Day 1 > Queen Street Warehouse",
+        "position": 0
+      }
+    },
+    {
+      "version": 7,
+      "path": "/Users/rwu/dev/ConvAI/LLM-VM/result/demo/travel_memory_3day_v7.xml",
+      "timestamp": "2026-01-21T14:34:07.444402",
+      "operation": "DELETE",
+      "changes": {
+        "deleted_nodes": [
+          "Itinerary > Day 1 > Queen Street Warehouse",
+          "Itinerary > Day 1 > Buca Yorkville",
+          "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar"
+        ]
+      }
+    }
+  ]
+}

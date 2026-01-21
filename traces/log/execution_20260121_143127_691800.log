@@ -1,0 +1,75 @@
+Query: /Itinerary/Day[@index='1']/Restaurant[sem(content =~ "breakfast")]
+Data File: travel_memory_3day.xml
+Execution Time: 828.63ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260121_143127_691800] Executing query: /Itinerary/Day[@index='1']/Restaurant[sem(content =~ "breakfast")]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Day[1], Restaurant[sem(content =~ "breakfast")]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Day[1] ---
+Found 3 Day nodes across 1 parent(s)
+Applying positional index: [1]
+Selected node at index 1 (0-based: 0)
+After step: 1 nodes remaining
+
+--- Step 3: Restaurant[sem(content =~ "breakfast")] ---
+Found 3 Restaurant nodes across 1 parent(s)
+Applying semantic predicate: sem(content =~ "breakfast")
+Scoring predicate: sem(content =~ "breakfast") (semantic values: ['breakfast'])
+  Collected 3 descriptions for 1 unique semantic value(s)
+  Made 1 scorer call(s) for 3 total descriptions
+  Node 0 (Queen Street Warehouse): score = 0.1924
+  Node 1 (Buca Yorkville): score = 0.1580
+  Node 2 (The Rex Hotel Jazz & Blues Bar): score = 0.0097
+After step: 3 nodes remaining
+
+=== Score Fusion ===
+  Itinerary > Day 1 > Queen Street Warehouse: product=0.1924 → score=0.1924
+  Itinerary > Day 1 > Buca Yorkville: product=0.1580 → score=0.1580
+  Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar: product=0.0097 → score=0.0097
+
+=== Final Filtering (threshold=0.3, top_k=5) ===
+  Filtered: 3 → 0 nodes
+
+Final result: 0 nodes (sorted by score)
+⏱️  Query execution time: 828.63ms
+
+============================================================
+Score Fusion Summary:
+----------------------------------------
+
+Itinerary > Day 1 > Queen Street Warehouse (Restaurant):
+  Step 2: sem(content =~ "breakfast")
+    score=0.1924
+  Accumulated product: 0.1924
+  Final score: 0.1924
+
+Itinerary > Day 1 > Buca Yorkville (Restaurant):
+  Step 2: sem(content =~ "breakfast")
+    score=0.1580
+  Accumulated product: 0.1580
+  Final score: 0.1580
+
+Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar (Restaurant):
+  Step 2: sem(content =~ "breakfast")
+    score=0.0097
+  Accumulated product: 0.0097
+  Final score: 0.0097
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 3 nodes
+Threshold: 0.3
+Top-K: 5
+After: 0 nodes
+
+============================================================
+Matched Nodes: 0
+----------------------------------------

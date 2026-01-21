@@ -1,0 +1,98 @@
+{
+  "timestamp": "20260121_122034_132875",
+  "user_query": "find me all the museums",
+  "total_candidates": 2,
+  "selected_count": 2,
+  "results": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Day 2 > Royal Ontario Museum",
+      "decision": "RELEVANT",
+      "confidence": 0.99,
+      "reasoning": "Royal Ontario Museum is explicitly a museum, directly matching the user's query.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Royal Ontario Museum",
+        "time_block": "11:00 AM - 1:00 PM",
+        "description": "World-renowned museum showcasing art, culture, and natural history.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 23",
+        "highlights": [
+          "Dinosaurs",
+          "Chinese architecture",
+          "Bloor Street design"
+        ]
+      }
+    },
+    {
+      "node_id": "2",
+      "node_path": "Itinerary > Day 1 > Art Gallery of Ontario",
+      "decision": "RELEVANT",
+      "confidence": 0.99,
+      "reasoning": "Art Gallery of Ontario is an art museum, directly matching the user's query for museums.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Art Gallery of Ontario",
+        "time_block": "2:30 PM - 4:00 PM",
+        "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Group of Seven",
+          "Modern architecture"
+        ]
+      }
+    }
+  ],
+  "selected_nodes": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Day 2 > Royal Ontario Museum",
+      "decision": "RELEVANT",
+      "confidence": 0.99,
+      "reasoning": "Royal Ontario Museum is explicitly a museum, directly matching the user's query.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Royal Ontario Museum",
+        "time_block": "11:00 AM - 1:00 PM",
+        "description": "World-renowned museum showcasing art, culture, and natural history.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 23",
+        "highlights": [
+          "Dinosaurs",
+          "Chinese architecture",
+          "Bloor Street design"
+        ]
+      }
+    },
+    {
+      "node_id": "2",
+      "node_path": "Itinerary > Day 1 > Art Gallery of Ontario",
+      "decision": "RELEVANT",
+      "confidence": 0.99,
+      "reasoning": "Art Gallery of Ontario is an art museum, directly matching the user's query for museums.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Art Gallery of Ontario",
+        "time_block": "2:30 PM - 4:00 PM",
+        "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Group of Seven",
+          "Modern architecture"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "operation": "READ",
+    "total_candidates": 2,
+    "batch_size": 10,
+    "num_batches": 1
+  }
+}

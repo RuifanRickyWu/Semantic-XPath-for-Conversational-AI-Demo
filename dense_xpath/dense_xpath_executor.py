@@ -3,8 +3,8 @@ Dense XPath Executor - Main executor class that orchestrates query execution.
 
 Implements the Semantic XPath framework with:
 - Stepwise structural traversal
-- Compound predicate scoring (AND/OR/exists/all)
-- Bayesian fusion across query steps
+- Compound predicate scoring (AND/OR/exists/mass)
+- Score fusion across query steps (product of step scores)
 - Deferred TopK and threshold filtering
 
 Uses modular components for parsing, node operations, indexing, and scoring.
@@ -12,7 +12,6 @@ Supports multiple data files through schema configuration.
 """
 
 import logging
-import math
 import yaml
 import xml.etree.ElementTree as ET
 from collections import defaultdict
@@ -29,7 +28,7 @@ from predicate_classifier import PredicateScorer, get_scorer
 from .models import (
     IndexRange, QueryStep, MatchedNode, TraversalStep, ExecutionResult, NodeItem,
     CompoundPredicate, SemanticCondition,
-    StepContribution, NodeFusionTrace, BayesianFusionTrace, FinalFilteringTrace
+    StepContribution, NodeFusionTrace, ScoreFusionTrace, FinalFilteringTrace
 )
 from .parser import QueryParser
 from .node_utils import NodeUtils
@@ -51,7 +50,7 @@ class DenseXPathExecutor:
     
     Implements the Semantic XPath framework:
     - Stepwise execution: C_i = Select(Filter(Expand(C_{i-1})))
-    - Bayesian fusion: Score = σ(Σ log(π_i / (1-π_i)))
+    - Score fusion: Score = ∏(π_i) (product of step scores)
     - Deferred filtering: TopK and threshold applied after all scoring
     
     Supports:
@@ -221,10 +220,10 @@ class DenseXPathExecutor:
         execution_log.append(f"Parsed steps: {steps}")
         
         # =====================================================================
-        # Bayesian Fusion: Track accumulated log-odds per node
+        # Score Fusion: Track accumulated product per node
         # =====================================================================
         # Key: (node_id, path) to handle nodes that appear in multiple steps
-        node_log_odds: Dict[int, float] = defaultdict(float)
+        node_score_product: Dict[int, float] = defaultdict(lambda: 1.0)
         node_step_contributions: Dict[int, List[StepContribution]] = defaultdict(list)
         node_paths: Dict[int, str] = {}  # Track paths for trace
         
@@ -274,24 +273,22 @@ class DenseXPathExecutor:
                 scoring_traces.append(pred_trace)
                 traversal_steps.append(pred_step)
                 
-                # Accumulate log-odds for Bayesian fusion
+                # Accumulate product for score fusion
                 predicate_str = str(step.predicate) if step.predicate else step.predicate_str
                 for item in next_items:
                     node_id = id(item.node)
                     step_score = step_scores.get(node_id, 0.5)
                     
-                    # Clamp to avoid log(0) or log(inf)
+                    # Clamp to avoid zero
                     step_score = max(EPSILON, min(1 - EPSILON, step_score))
-                    log_odds = math.log(step_score / (1 - step_score))
                     
-                    node_log_odds[node_id] += log_odds
+                    node_score_product[node_id] *= step_score
                     node_paths[node_id] = item.path
                     
                     node_step_contributions[node_id].append(StepContribution(
                         step_index=step_idx,
                         predicate_str=predicate_str,
-                        score=step_score,
-                        log_odds=log_odds
+                        score=step_score
                     ))
             
             # Step 3: Apply positional index if present
@@ -312,21 +309,21 @@ class DenseXPathExecutor:
             traversal_steps.append(global_step)
         
         # =====================================================================
-        # Final Score Computation: Bayesian Fusion
+        # Final Score Computation: Score Fusion (Product)
         # =====================================================================
-        execution_log.append(f"\n=== Bayesian Fusion ===")
+        execution_log.append(f"\n=== Score Fusion ===")
         
         fusion_traces = []
         for item in current_items:
             node_id = id(item.node)
-            accumulated = node_log_odds.get(node_id, 0.0)
+            accumulated_product = node_score_product.get(node_id, 1.0)
             
-            # Sigmoid to convert log-odds to probability
-            if accumulated == 0.0:
+            # Use product directly, or keep default if no predicates
+            if node_id in node_score_product:
+                final_score = accumulated_product
+            else:
                 # No semantic predicates applied - keep default score
                 final_score = item.score
-            else:
-                final_score = 1 / (1 + math.exp(-accumulated))
             
             item.score = final_score
             
@@ -335,15 +332,15 @@ class DenseXPathExecutor:
                 node_path=item.path,
                 node_type=item.node.tag,
                 step_contributions=node_step_contributions.get(node_id, []),
-                accumulated_log_odds=accumulated,
+                accumulated_product=accumulated_product,
                 final_score=final_score
             ))
             
             execution_log.append(
-                f"  {item.path}: log_odds={accumulated:.3f} → score={final_score:.4f}"
+                f"  {item.path}: product={accumulated_product:.4f} → score={final_score:.4f}"
             )
         
-        bayesian_fusion_trace = BayesianFusionTrace(per_node_traces=fusion_traces)
+        score_fusion_trace = ScoreFusionTrace(per_node_traces=fusion_traces)
         
         # =====================================================================
         # Deferred Filtering: TopK and Threshold
@@ -399,7 +396,7 @@ class DenseXPathExecutor:
             traversal_steps=traversal_steps,
             execution_time_ms=execution_time_ms,
             data_file=self._memory_path.name,
-            bayesian_fusion_trace=bayesian_fusion_trace,
+            score_fusion_trace=score_fusion_trace,
             final_filtering_trace=final_filtering_trace
         )
         

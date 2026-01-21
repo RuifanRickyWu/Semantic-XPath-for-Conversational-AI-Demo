@@ -36,12 +36,12 @@ class CompoundPredicate:
     """
     Compound predicate with logical and aggregation operators.
     
-    New Syntax Operators:
+    Syntax Operators:
     - SEM: Semantic match on node itself (local only, no subtree)
-    - AND: Conjunction of predicates (log-odds aggregation)
-    - OR: Disjunction of predicates (Noisy-OR)
-    - EXIST: Existential quantifier - Noisy-OR over specified children
-    - MASS: Prevalence quantifier - Beta-Bernoulli over specified children
+    - AND: Conjunction of predicates (product of scores)
+    - OR: Disjunction of predicates (max of scores)
+    - EXIST: Existential quantifier - max over specified children
+    - MASS: Prevalence quantifier - average over specified children
     
     Key semantic distinction:
     - sem() looks at the node's OWN content only
@@ -239,24 +239,22 @@ class StepContribution:
     step_index: int
     predicate_str: str
     score: float
-    log_odds: float
     
     def to_dict(self) -> Dict[str, Any]:
         return {
             "step_index": self.step_index,
             "predicate": self.predicate_str,
-            "score": self.score,
-            "log_odds": self.log_odds
+            "score": self.score
         }
 
 
 @dataclass
 class NodeFusionTrace:
-    """Bayesian fusion trace for a single node."""
+    """Score fusion trace for a single node."""
     node_path: str
     node_type: str
     step_contributions: List[StepContribution] = field(default_factory=list)
-    accumulated_log_odds: float = 0.0
+    accumulated_product: float = 1.0
     final_score: float = 0.5
     
     def to_dict(self) -> Dict[str, Any]:
@@ -264,14 +262,14 @@ class NodeFusionTrace:
             "node_path": self.node_path,
             "node_type": self.node_type,
             "step_contributions": [s.to_dict() for s in self.step_contributions],
-            "accumulated_log_odds": self.accumulated_log_odds,
+            "accumulated_product": self.accumulated_product,
             "final_score": self.final_score
         }
 
 
 @dataclass
-class BayesianFusionTrace:
-    """Complete Bayesian fusion trace across all nodes and steps."""
+class ScoreFusionTrace:
+    """Complete score fusion trace across all nodes and steps."""
     per_node_traces: List[NodeFusionTrace] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
@@ -310,7 +308,89 @@ class ExecutionResult:
     execution_time_ms: float = 0.0  # Total query execution time in milliseconds
     data_file: str = ""  # Name of the data file used
     
-    # New: Detailed scoring and fusion traces
-    bayesian_fusion_trace: Optional[BayesianFusionTrace] = None
+    # Detailed scoring and fusion traces
+    score_fusion_trace: Optional[ScoreFusionTrace] = None
     final_filtering_trace: Optional[FinalFilteringTrace] = None
+
+
+# =============================================================================
+# CRUD Operation Models
+# =============================================================================
+
+@dataclass
+class CRUDExecutionResult:
+    """
+    Result of executing a CRUD operation.
+    
+    Extends the basic ExecutionResult with CRUD-specific fields for
+    tracking intent classification, reasoning, tree modifications, and versioning.
+    """
+    # Operation identification
+    operation: str  # "READ", "CREATE", "UPDATE", "DELETE"
+    user_query: str  # Original natural language query
+    full_query: str  # Formatted query, e.g., "Read(/Itinerary/Day/POI[...])"
+    
+    # Intent classification
+    intent_classification: Dict[str, Any] = field(default_factory=dict)
+    
+    # XPath execution
+    xpath_query: str = ""
+    execution_result: Optional[ExecutionResult] = None
+    
+    # LLM reasoning
+    reasoner_trace: Dict[str, Any] = field(default_factory=dict)
+    
+    # For CREATE operations
+    insertion_point_trace: Dict[str, Any] = field(default_factory=dict)
+    content_generation_trace: Dict[str, Any] = field(default_factory=dict)
+    
+    # For UPDATE operations
+    content_update_trace: Dict[str, Any] = field(default_factory=dict)
+    
+    # Tree modification results
+    modification_trace: Dict[str, Any] = field(default_factory=dict)
+    
+    # Version management
+    tree_version: Optional[int] = None
+    tree_path: str = ""
+    
+    # Status
+    success: bool = False
+    message: str = ""
+    timestamp: str = ""
+    
+    # Affected nodes
+    affected_nodes: List[str] = field(default_factory=list)
+    selected_nodes: List[Dict[str, Any]] = field(default_factory=list)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Serialize to dictionary for tracing."""
+        result = {
+            "operation": self.operation,
+            "user_query": self.user_query,
+            "full_query": self.full_query,
+            "xpath_query": self.xpath_query,
+            "success": self.success,
+            "message": self.message,
+            "timestamp": self.timestamp,
+            "intent_classification": self.intent_classification,
+            "reasoner_trace": self.reasoner_trace,
+            "affected_nodes": self.affected_nodes,
+            "selected_nodes": self.selected_nodes
+        }
+        
+        # Add operation-specific traces
+        if self.operation == "CREATE":
+            result["insertion_point_trace"] = self.insertion_point_trace
+            result["content_generation_trace"] = self.content_generation_trace
+        
+        if self.operation == "UPDATE":
+            result["content_update_trace"] = self.content_update_trace
+        
+        if self.operation in ("CREATE", "UPDATE", "DELETE"):
+            result["modification_trace"] = self.modification_trace
+            result["tree_version"] = self.tree_version
+            result["tree_path"] = self.tree_path
+        
+        return result
 

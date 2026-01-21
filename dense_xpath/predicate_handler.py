@@ -3,10 +3,10 @@ Predicate Handler - Applies semantic predicate scoring to nodes.
 
 Implements the Semantic XPath scoring framework:
 - SEM: Score the node's OWN content only (no subtree aggregation)
-- AND: Conjunction using log-odds aggregation with sigmoid
-- OR: Disjunction using Noisy-OR model
-- EXIST: Existential quantifier - Noisy-OR over specified children
-- MASS: Prevalence quantifier - Beta-Bernoulli over specified children
+- AND: Conjunction using product of scores
+- OR: Disjunction using max of scores
+- EXIST: Existential quantifier - max over specified children
+- MASS: Prevalence quantifier - average over specified children
 
 Key Semantic Distinction:
 - sem() looks at the node's LOCAL content only
@@ -18,7 +18,6 @@ Batch Optimization:
 - Reduces N*M calls to just M calls (where M = unique semantic values)
 """
 
-import math
 import time
 import xml.etree.ElementTree as ET
 from typing import List, Dict, Any, Tuple, Optional, Set
@@ -46,15 +45,11 @@ class PredicateHandler:
     
     Scoring methods:
     - SEM: Score node's own content (local only)
-    - OR (Noisy-OR): π(p) = 1 - ∏(1 - π(cj))
-    - AND (Log-odds): π(p) = σ(Σ log(π/(1-π)))
-    - EXIST: Noisy-OR over children of specified type
-    - MASS (Beta-Bernoulli): π(p) = (α + Σπ_u) / (α + β + n)
+    - OR: π(p) = max(π(cj))
+    - AND: π(p) = ∏(π(cj))
+    - EXIST: max over children of specified type
+    - MASS: average over children of specified type
     """
-    
-    # Beta-Bernoulli prior parameters (uninformative prior)
-    BETA_ALPHA = 1.0
-    BETA_BETA = 1.0
     
     def __init__(
         self,
@@ -418,7 +413,7 @@ class PredicateHandler:
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
-        """Score OR using Noisy-OR model: π(p) = 1 - ∏(1 - π(cj))"""
+        """Score OR using max: π(p) = max(π(cj))"""
         child_scores = []
         
         for cond in predicate.conditions:
@@ -428,15 +423,12 @@ class PredicateHandler:
                 score = 0.5
             child_scores.append(score)
         
-        product = 1.0
-        for s in child_scores:
-            product *= (1 - s)
-        result = 1 - product
+        result = max(child_scores) if child_scores else 0.5
         result = max(EPSILON, min(1 - EPSILON, result))
         
         trace_steps.append({
             "type": "or",
-            "formula": "1 - ∏(1 - π_j)",
+            "formula": "max(π_j)",
             "child_scores": child_scores,
             "result": result
         })
@@ -450,7 +442,7 @@ class PredicateHandler:
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
-        """Score AND using log-odds: π(p) = σ(Σ log(π/(1-π)))"""
+        """Score AND using product: π(p) = ∏(π(cj))"""
         child_scores = []
         
         for cond in predicate.conditions:
@@ -460,19 +452,15 @@ class PredicateHandler:
                 score = 0.5
             child_scores.append(score)
         
-        log_odds_sum = 0.0
+        result = 1.0
         for s in child_scores:
-            s_clamped = max(EPSILON, min(1 - EPSILON, s))
-            log_odds_sum += math.log(s_clamped / (1 - s_clamped))
-        
-        result = 1 / (1 + math.exp(-log_odds_sum))
+            result *= s
         result = max(EPSILON, min(1 - EPSILON, result))
         
         trace_steps.append({
             "type": "and",
-            "formula": "σ(Σ log(π/(1-π)))",
+            "formula": "∏(π_j)",
             "child_scores": child_scores,
-            "log_odds_sum": log_odds_sum,
             "result": result
         })
         
@@ -486,9 +474,9 @@ class PredicateHandler:
         execution_log: List[str]
     ) -> float:
         """
-        Score EXIST using Noisy-OR over children.
+        Score EXIST using max over children.
         
-        exist(ChildType[pred]) = 1 - ∏_{ch}(1 - π_ch(pred))
+        exist(ChildType[pred]) = max(π_ch(pred))
         
         "At least one child matches" semantics.
         """
@@ -515,16 +503,13 @@ class PredicateHandler:
             )
             child_scores.append(score)
         
-        # Noisy-OR
-        product = 1.0
-        for s in child_scores:
-            product *= (1 - s)
-        result = 1 - product
+        # Max over children
+        result = max(child_scores)
         result = max(EPSILON, min(1 - EPSILON, result))
         
         trace_steps.append({
             "type": "exist",
-            "formula": "1 - ∏_{ch}(1 - π_ch)",
+            "formula": "max(π_ch)",
             "child_type": predicate.child_type or "*",
             "num_children": len(children),
             "child_scores": child_scores,
@@ -541,9 +526,9 @@ class PredicateHandler:
         execution_log: List[str]
     ) -> float:
         """
-        Score MASS using Beta-Bernoulli over children.
+        Score MASS using average over children.
         
-        mass(ChildType[pred]) = (α + Σπ_ch) / (α + β + n)
+        mass(ChildType[pred]) = Σπ_ch / n
         
         "General prevalence among children" semantics.
         """
@@ -553,16 +538,15 @@ class PredicateHandler:
         children = self._get_hierarchical_children(node, predicate.child_type)
         
         if not children:
-            # No children - return prior mean
-            prior_mean = self.BETA_ALPHA / (self.BETA_ALPHA + self.BETA_BETA)
+            # No children - return neutral
             trace_steps.append({
                 "type": "mass",
                 "child_type": predicate.child_type or "*",
                 "num_children": 0,
-                "note": "No children found, returning prior mean",
-                "result": prior_mean
+                "note": "No children found",
+                "result": 0.5
             })
-            return prior_mean
+            return 0.5
         
         child_scores = []
         for child in children:
@@ -571,21 +555,19 @@ class PredicateHandler:
             )
             child_scores.append(score)
         
-        # Beta-Bernoulli posterior mean
+        # Average over children
         sum_scores = sum(child_scores)
         n = len(children)
-        result = (self.BETA_ALPHA + sum_scores) / (self.BETA_ALPHA + self.BETA_BETA + n)
+        result = sum_scores / n
         result = max(EPSILON, min(1 - EPSILON, result))
         
         trace_steps.append({
             "type": "mass",
-            "formula": "(α + Σπ_ch) / (α + β + n)",
+            "formula": "Σπ_ch / n",
             "child_type": predicate.child_type or "*",
             "num_children": n,
             "child_scores": child_scores,
             "sum_scores": sum_scores,
-            "alpha": self.BETA_ALPHA,
-            "beta": self.BETA_BETA,
             "result": result
         })
         

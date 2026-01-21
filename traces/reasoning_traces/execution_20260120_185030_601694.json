@@ -1,0 +1,4457 @@
+{
+  "timestamp": "20260120_185030_601694",
+  "query": "/Itinerary/Day/POI[sem(content =~ \"museum\")]",
+  "data_file": "travel_memory_10day_themed.xml",
+  "execution_time_ms": 6350.739167000001,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 10,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 4",
+          "name": "Day 4",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5",
+          "name": "Day 5",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6",
+          "name": "Day 6",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7",
+          "name": "Day 7",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 8",
+          "name": "Day 8",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9",
+          "name": "Day 9",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10",
+          "name": "Day 10",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 10
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[sem(content =~ \"museum\")]",
+      "action": "type_match",
+      "nodes_before_count": 10,
+      "nodes_after_count": 39,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 4",
+          "name": "Day 4",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5",
+          "name": "Day 5",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6",
+          "name": "Day 6",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7",
+          "name": "Day 7",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 8",
+          "name": "Day 8",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9",
+          "name": "Day 9",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10",
+          "name": "Day 10",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > Fort York National Historic Site",
+          "name": "Fort York National Historic Site",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Gardiner Museum",
+          "name": "Gardiner Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Graffiti Alley",
+          "name": "Graffiti Alley",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > High Park Cherry Blossom Walk",
+          "name": "High Park Cherry Blossom Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Humber River Trail Cycling",
+          "name": "Humber River Trail Cycling",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Scarborough Bluffs",
+          "name": "Scarborough Bluffs",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Rouge National Urban Park",
+          "name": "Rouge National Urban Park",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 4 > Kensington Market Food Tour",
+          "name": "Kensington Market Food Tour",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 4 > St. Lawrence Market Food Hall",
+          "name": "St. Lawrence Market Food Hall",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5 > Ontario Science Centre",
+          "name": "Ontario Science Centre",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5 > MaRS Discovery District",
+          "name": "MaRS Discovery District",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6 > TIFF Bell Lightbox",
+          "name": "TIFF Bell Lightbox",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6 > Hockey Hall of Fame",
+          "name": "Hockey Hall of Fame",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6 > Mirvish Theatre - Broadway Show",
+          "name": "Mirvish Theatre - Broadway Show",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6 > The Rex Hotel Jazz Bar",
+          "name": "The Rex Hotel Jazz Bar",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Toronto Islands Ferry Crossing",
+          "name": "Toronto Islands Ferry Crossing",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Ward's Island Village Walk",
+          "name": "Ward's Island Village Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Centre Island Bike & Beach",
+          "name": "Centre Island Bike & Beach",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Gibraltar Point Lighthouse",
+          "name": "Gibraltar Point Lighthouse",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Hanlan's Point Beach Sunset",
+          "name": "Hanlan's Point Beach Sunset",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 8 > Yorkville Designer District",
+          "name": "Yorkville Designer District",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 8 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 8 > CF Toronto Eaton Centre",
+          "name": "CF Toronto Eaton Centre",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9 > Don Valley Trail Running",
+          "name": "Don Valley Trail Running",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9 > Toronto Rock Climbing Gym",
+          "name": "Toronto Rock Climbing Gym",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9 > Stand Up Paddleboarding",
+          "name": "Stand Up Paddleboarding",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9 > Blue Jays Game at Rogers Centre",
+          "name": "Blue Jays Game at Rogers Centre",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Sunrise Yoga at Trinity Bellwoods",
+          "name": "Sunrise Yoga at Trinity Bellwoods",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Hammam Spa",
+          "name": "Hammam Spa",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Allan Gardens Conservatory",
+          "name": "Allan Gardens Conservatory",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Evergreen Brick Works Garden Walk",
+          "name": "Evergreen Brick Works Garden Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Nathan Phillips Square Evening Reflection",
+          "name": "Nathan Phillips Square Evening Reflection",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "POI",
+        "found_count": 39
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "POI[sem(content =~ \"museum\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 39,
+      "nodes_after_count": 39,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Day 1 > Fort York National Historic Site",
+          "name": "Fort York National Historic Site",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 1 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Gardiner Museum",
+          "name": "Gardiner Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 2 > Graffiti Alley",
+          "name": "Graffiti Alley",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > High Park Cherry Blossom Walk",
+          "name": "High Park Cherry Blossom Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Humber River Trail Cycling",
+          "name": "Humber River Trail Cycling",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Scarborough Bluffs",
+          "name": "Scarborough Bluffs",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 3 > Rouge National Urban Park",
+          "name": "Rouge National Urban Park",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 4 > Kensington Market Food Tour",
+          "name": "Kensington Market Food Tour",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 4 > St. Lawrence Market Food Hall",
+          "name": "St. Lawrence Market Food Hall",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5 > Ontario Science Centre",
+          "name": "Ontario Science Centre",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5 > MaRS Discovery District",
+          "name": "MaRS Discovery District",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 5 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6 > TIFF Bell Lightbox",
+          "name": "TIFF Bell Lightbox",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6 > Hockey Hall of Fame",
+          "name": "Hockey Hall of Fame",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6 > Mirvish Theatre - Broadway Show",
+          "name": "Mirvish Theatre - Broadway Show",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 6 > The Rex Hotel Jazz Bar",
+          "name": "The Rex Hotel Jazz Bar",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Toronto Islands Ferry Crossing",
+          "name": "Toronto Islands Ferry Crossing",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Ward's Island Village Walk",
+          "name": "Ward's Island Village Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Centre Island Bike & Beach",
+          "name": "Centre Island Bike & Beach",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Gibraltar Point Lighthouse",
+          "name": "Gibraltar Point Lighthouse",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 7 > Hanlan's Point Beach Sunset",
+          "name": "Hanlan's Point Beach Sunset",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 8 > Yorkville Designer District",
+          "name": "Yorkville Designer District",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 8 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 8 > CF Toronto Eaton Centre",
+          "name": "CF Toronto Eaton Centre",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9 > Don Valley Trail Running",
+          "name": "Don Valley Trail Running",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9 > Toronto Rock Climbing Gym",
+          "name": "Toronto Rock Climbing Gym",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9 > Stand Up Paddleboarding",
+          "name": "Stand Up Paddleboarding",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 9 > Blue Jays Game at Rogers Centre",
+          "name": "Blue Jays Game at Rogers Centre",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Sunrise Yoga at Trinity Bellwoods",
+          "name": "Sunrise Yoga at Trinity Bellwoods",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Hammam Spa",
+          "name": "Hammam Spa",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Allan Gardens Conservatory",
+          "name": "Allan Gardens Conservatory",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Evergreen Brick Works Garden Walk",
+          "name": "Evergreen Brick Works Garden Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Day 10 > Nathan Phillips Square Evening Reflection",
+          "name": "Nathan Phillips Square Evening Reflection",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Day 1 > Fort York National Historic Site",
+          "name": "Fort York National Historic Site",
+          "type": "POI",
+          "score": 0.60999995470047
+        },
+        {
+          "path": "Itinerary > Day 1 > St. Lawrence Market",
+          "name": "St. Lawrence Market",
+          "type": "POI",
+          "score": 0.01795712672173977
+        },
+        {
+          "path": "Itinerary > Day 1 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 0.0478748120367527
+        },
+        {
+          "path": "Itinerary > Day 1 > Casa Loma",
+          "name": "Casa Loma",
+          "type": "POI",
+          "score": 0.32673901319503784
+        },
+        {
+          "path": "Itinerary > Day 2 > Gardiner Museum",
+          "name": "Gardiner Museum",
+          "type": "POI",
+          "score": 0.9964509010314941
+        },
+        {
+          "path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.9989707469940186
+        },
+        {
+          "path": "Itinerary > Day 2 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 0.9970306158065796
+        },
+        {
+          "path": "Itinerary > Day 2 > Graffiti Alley",
+          "name": "Graffiti Alley",
+          "type": "POI",
+          "score": 0.003194889286532998
+        },
+        {
+          "path": "Itinerary > Day 3 > High Park Cherry Blossom Walk",
+          "name": "High Park Cherry Blossom Walk",
+          "type": "POI",
+          "score": 0.01236950047314167
+        },
+        {
+          "path": "Itinerary > Day 3 > Humber River Trail Cycling",
+          "name": "Humber River Trail Cycling",
+          "type": "POI",
+          "score": 0.00271588540636003
+        },
+        {
+          "path": "Itinerary > Day 3 > Scarborough Bluffs",
+          "name": "Scarborough Bluffs",
+          "type": "POI",
+          "score": 0.017916280776262283
+        },
+        {
+          "path": "Itinerary > Day 3 > Rouge National Urban Park",
+          "name": "Rouge National Urban Park",
+          "type": "POI",
+          "score": 0.010021946392953396
+        },
+        {
+          "path": "Itinerary > Day 4 > Kensington Market Food Tour",
+          "name": "Kensington Market Food Tour",
+          "type": "POI",
+          "score": 0.005787976551800966
+        },
+        {
+          "path": "Itinerary > Day 4 > St. Lawrence Market Food Hall",
+          "name": "St. Lawrence Market Food Hall",
+          "type": "POI",
+          "score": 0.013831793330609798
+        },
+        {
+          "path": "Itinerary > Day 5 > Ontario Science Centre",
+          "name": "Ontario Science Centre",
+          "type": "POI",
+          "score": 0.9971049427986145
+        },
+        {
+          "path": "Itinerary > Day 5 > MaRS Discovery District",
+          "name": "MaRS Discovery District",
+          "type": "POI",
+          "score": 0.2193898856639862
+        },
+        {
+          "path": "Itinerary > Day 5 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 0.03528404235839844
+        },
+        {
+          "path": "Itinerary > Day 5 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 0.004276549909263849
+        },
+        {
+          "path": "Itinerary > Day 6 > TIFF Bell Lightbox",
+          "name": "TIFF Bell Lightbox",
+          "type": "POI",
+          "score": 0.12009228765964508
+        },
+        {
+          "path": "Itinerary > Day 6 > Hockey Hall of Fame",
+          "name": "Hockey Hall of Fame",
+          "type": "POI",
+          "score": 0.9920958876609802
+        },
+        {
+          "path": "Itinerary > Day 6 > Mirvish Theatre - Broadway Show",
+          "name": "Mirvish Theatre - Broadway Show",
+          "type": "POI",
+          "score": 0.06881338357925415
+        },
+        {
+          "path": "Itinerary > Day 6 > The Rex Hotel Jazz Bar",
+          "name": "The Rex Hotel Jazz Bar",
+          "type": "POI",
+          "score": 0.017179671674966812
+        },
+        {
+          "path": "Itinerary > Day 7 > Toronto Islands Ferry Crossing",
+          "name": "Toronto Islands Ferry Crossing",
+          "type": "POI",
+          "score": 0.01884956657886505
+        },
+        {
+          "path": "Itinerary > Day 7 > Ward's Island Village Walk",
+          "name": "Ward's Island Village Walk",
+          "type": "POI",
+          "score": 0.012678294442594051
+        },
+        {
+          "path": "Itinerary > Day 7 > Centre Island Bike & Beach",
+          "name": "Centre Island Bike & Beach",
+          "type": "POI",
+          "score": 0.006054562516510487
+        },
+        {
+          "path": "Itinerary > Day 7 > Gibraltar Point Lighthouse",
+          "name": "Gibraltar Point Lighthouse",
+          "type": "POI",
+          "score": 0.03191336244344711
+        },
+        {
+          "path": "Itinerary > Day 7 > Hanlan's Point Beach Sunset",
+          "name": "Hanlan's Point Beach Sunset",
+          "type": "POI",
+          "score": 0.005473794881254435
+        },
+        {
+          "path": "Itinerary > Day 8 > Yorkville Designer District",
+          "name": "Yorkville Designer District",
+          "type": "POI",
+          "score": 0.02293827012181282
+        },
+        {
+          "path": "Itinerary > Day 8 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 0.005508913658559322
+        },
+        {
+          "path": "Itinerary > Day 8 > CF Toronto Eaton Centre",
+          "name": "CF Toronto Eaton Centre",
+          "type": "POI",
+          "score": 0.008100544102489948
+        },
+        {
+          "path": "Itinerary > Day 9 > Don Valley Trail Running",
+          "name": "Don Valley Trail Running",
+          "type": "POI",
+          "score": 0.0043699005618691444
+        },
+        {
+          "path": "Itinerary > Day 9 > Toronto Rock Climbing Gym",
+          "name": "Toronto Rock Climbing Gym",
+          "type": "POI",
+          "score": 0.004950475879013538
+        },
+        {
+          "path": "Itinerary > Day 9 > Stand Up Paddleboarding",
+          "name": "Stand Up Paddleboarding",
+          "type": "POI",
+          "score": 0.003534970572218299
+        },
+        {
+          "path": "Itinerary > Day 9 > Blue Jays Game at Rogers Centre",
+          "name": "Blue Jays Game at Rogers Centre",
+          "type": "POI",
+          "score": 0.005695836618542671
+        },
+        {
+          "path": "Itinerary > Day 10 > Sunrise Yoga at Trinity Bellwoods",
+          "name": "Sunrise Yoga at Trinity Bellwoods",
+          "type": "POI",
+          "score": 0.005451609380543232
+        },
+        {
+          "path": "Itinerary > Day 10 > Hammam Spa",
+          "name": "Hammam Spa",
+          "type": "POI",
+          "score": 0.0045130690559744835
+        },
+        {
+          "path": "Itinerary > Day 10 > Allan Gardens Conservatory",
+          "name": "Allan Gardens Conservatory",
+          "type": "POI",
+          "score": 0.012873942963778973
+        },
+        {
+          "path": "Itinerary > Day 10 > Evergreen Brick Works Garden Walk",
+          "name": "Evergreen Brick Works Garden Walk",
+          "type": "POI",
+          "score": 0.012028729543089867
+        },
+        {
+          "path": "Itinerary > Day 10 > Nathan Phillips Square Evening Reflection",
+          "name": "Nathan Phillips Square Evening Reflection",
+          "type": "POI",
+          "score": 0.008243556134402752
+        }
+      ],
+      "details": {
+        "predicate": "sem(content =~ \"museum\")",
+        "predicate_type": "SEM",
+        "scoring_result": {
+          "predicate": "sem(content =~ \"museum\")",
+          "predicate_ast": {
+            "operator": "SEM",
+            "conditions": [
+              {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              }
+            ]
+          },
+          "config": {
+            "top_k": 10,
+            "score_threshold": 0.01
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "Fort York National Historic Site",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.60999995470047,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.60999995470047
+            },
+            {
+              "node_idx": 1,
+              "node_name": "St. Lawrence Market",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.01795712672173977,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.01795712672173977
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Distillery District",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.0478748120367527,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.0478748120367527
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Casa Loma",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.32673901319503784,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.32673901319503784
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Gardiner Museum",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.9964509010314941,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9964509010314941
+            },
+            {
+              "node_idx": 5,
+              "node_name": "Royal Ontario Museum",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.9989707469940186,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9989707469940186
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Art Gallery of Ontario",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.9970306158065796,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9970306158065796
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Graffiti Alley",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.003194889286532998,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.003194889286532998
+            },
+            {
+              "node_idx": 8,
+              "node_name": "High Park Cherry Blossom Walk",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.01236950047314167,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.01236950047314167
+            },
+            {
+              "node_idx": 9,
+              "node_name": "Humber River Trail Cycling",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.00271588540636003,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.00271588540636003
+            },
+            {
+              "node_idx": 10,
+              "node_name": "Scarborough Bluffs",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.017916280776262283,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.017916280776262283
+            },
+            {
+              "node_idx": 11,
+              "node_name": "Rouge National Urban Park",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.010021946392953396,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.010021946392953396
+            },
+            {
+              "node_idx": 12,
+              "node_name": "Kensington Market Food Tour",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.005787976551800966,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.005787976551800966
+            },
+            {
+              "node_idx": 13,
+              "node_name": "St. Lawrence Market Food Hall",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.013831793330609798,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.013831793330609798
+            },
+            {
+              "node_idx": 14,
+              "node_name": "Ontario Science Centre",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.9971049427986145,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9971049427986145
+            },
+            {
+              "node_idx": 15,
+              "node_name": "MaRS Discovery District",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.2193898856639862,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.2193898856639862
+            },
+            {
+              "node_idx": 16,
+              "node_name": "Ripley's Aquarium",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.03528404235839844,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.03528404235839844
+            },
+            {
+              "node_idx": 17,
+              "node_name": "CN Tower EdgeWalk",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.004276549909263849,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.004276549909263849
+            },
+            {
+              "node_idx": 18,
+              "node_name": "TIFF Bell Lightbox",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.12009228765964508,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.12009228765964508
+            },
+            {
+              "node_idx": 19,
+              "node_name": "Hockey Hall of Fame",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.9920958876609802,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.9920958876609802
+            },
+            {
+              "node_idx": 20,
+              "node_name": "Mirvish Theatre - Broadway Show",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.06881338357925415,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.06881338357925415
+            },
+            {
+              "node_idx": 21,
+              "node_name": "The Rex Hotel Jazz Bar",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.017179671674966812,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.017179671674966812
+            },
+            {
+              "node_idx": 22,
+              "node_name": "Toronto Islands Ferry Crossing",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.01884956657886505,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.01884956657886505
+            },
+            {
+              "node_idx": 23,
+              "node_name": "Ward's Island Village Walk",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.012678294442594051,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.012678294442594051
+            },
+            {
+              "node_idx": 24,
+              "node_name": "Centre Island Bike & Beach",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.006054562516510487,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.006054562516510487
+            },
+            {
+              "node_idx": 25,
+              "node_name": "Gibraltar Point Lighthouse",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.03191336244344711,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.03191336244344711
+            },
+            {
+              "node_idx": 26,
+              "node_name": "Hanlan's Point Beach Sunset",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.005473794881254435,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.005473794881254435
+            },
+            {
+              "node_idx": 27,
+              "node_name": "Yorkville Designer District",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.02293827012181282,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.02293827012181282
+            },
+            {
+              "node_idx": 28,
+              "node_name": "Queen Street West Boutiques",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.005508913658559322,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.005508913658559322
+            },
+            {
+              "node_idx": 29,
+              "node_name": "CF Toronto Eaton Centre",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.008100544102489948,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.008100544102489948
+            },
+            {
+              "node_idx": 30,
+              "node_name": "Don Valley Trail Running",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.0043699005618691444,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.0043699005618691444
+            },
+            {
+              "node_idx": 31,
+              "node_name": "Toronto Rock Climbing Gym",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.004950475879013538,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.004950475879013538
+            },
+            {
+              "node_idx": 32,
+              "node_name": "Stand Up Paddleboarding",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.003534970572218299,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.003534970572218299
+            },
+            {
+              "node_idx": 33,
+              "node_name": "Blue Jays Game at Rogers Centre",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.005695836618542671,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.005695836618542671
+            },
+            {
+              "node_idx": 34,
+              "node_name": "Sunrise Yoga at Trinity Bellwoods",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.005451609380543232,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.005451609380543232
+            },
+            {
+              "node_idx": 35,
+              "node_name": "Hammam Spa",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.0045130690559744835,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.0045130690559744835
+            },
+            {
+              "node_idx": 36,
+              "node_name": "Allan Gardens Conservatory",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.012873942963778973,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.012873942963778973
+            },
+            {
+              "node_idx": 37,
+              "node_name": "Evergreen Brick Works Garden Walk",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.012028729543089867,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.012028729543089867
+            },
+            {
+              "node_idx": 38,
+              "node_name": "Nathan Phillips Square Evening Reflection",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "sem",
+                  "condition": {
+                    "type": "sem",
+                    "field": "content",
+                    "value": "museum"
+                  },
+                  "score": 0.008243556134402752,
+                  "note": "Local node content only (no subtree)"
+                }
+              ],
+              "final_score": 0.008243556134402752
+            }
+          ],
+          "batch_scoring": {
+            "semantic_values": [
+              "museum"
+            ],
+            "per_value_stats": [
+              {
+                "value": "museum",
+                "num_descriptions": 39,
+                "call_time_ms": 6345.76
+              }
+            ],
+            "total_scorer_calls": 1,
+            "total_descriptions_scored": 39
+          },
+          "ranking": [
+            {
+              "idx": 5,
+              "score": 0.9989707469940186,
+              "name": "Royal Ontario Museum"
+            },
+            {
+              "idx": 14,
+              "score": 0.9971049427986145,
+              "name": "Ontario Science Centre"
+            },
+            {
+              "idx": 6,
+              "score": 0.9970306158065796,
+              "name": "Art Gallery of Ontario"
+            },
+            {
+              "idx": 4,
+              "score": 0.9964509010314941,
+              "name": "Gardiner Museum"
+            },
+            {
+              "idx": 19,
+              "score": 0.9920958876609802,
+              "name": "Hockey Hall of Fame"
+            },
+            {
+              "idx": 0,
+              "score": 0.60999995470047,
+              "name": "Fort York National Historic Site"
+            },
+            {
+              "idx": 3,
+              "score": 0.32673901319503784,
+              "name": "Casa Loma"
+            },
+            {
+              "idx": 15,
+              "score": 0.2193898856639862,
+              "name": "MaRS Discovery District"
+            },
+            {
+              "idx": 18,
+              "score": 0.12009228765964508,
+              "name": "TIFF Bell Lightbox"
+            },
+            {
+              "idx": 20,
+              "score": 0.06881338357925415,
+              "name": "Mirvish Theatre - Broadway Show"
+            },
+            {
+              "idx": 2,
+              "score": 0.0478748120367527,
+              "name": "Distillery District"
+            },
+            {
+              "idx": 16,
+              "score": 0.03528404235839844,
+              "name": "Ripley's Aquarium"
+            },
+            {
+              "idx": 25,
+              "score": 0.03191336244344711,
+              "name": "Gibraltar Point Lighthouse"
+            },
+            {
+              "idx": 27,
+              "score": 0.02293827012181282,
+              "name": "Yorkville Designer District"
+            },
+            {
+              "idx": 22,
+              "score": 0.01884956657886505,
+              "name": "Toronto Islands Ferry Crossing"
+            },
+            {
+              "idx": 1,
+              "score": 0.01795712672173977,
+              "name": "St. Lawrence Market"
+            },
+            {
+              "idx": 10,
+              "score": 0.017916280776262283,
+              "name": "Scarborough Bluffs"
+            },
+            {
+              "idx": 21,
+              "score": 0.017179671674966812,
+              "name": "The Rex Hotel Jazz Bar"
+            },
+            {
+              "idx": 13,
+              "score": 0.013831793330609798,
+              "name": "St. Lawrence Market Food Hall"
+            },
+            {
+              "idx": 36,
+              "score": 0.012873942963778973,
+              "name": "Allan Gardens Conservatory"
+            },
+            {
+              "idx": 23,
+              "score": 0.012678294442594051,
+              "name": "Ward's Island Village Walk"
+            },
+            {
+              "idx": 8,
+              "score": 0.01236950047314167,
+              "name": "High Park Cherry Blossom Walk"
+            },
+            {
+              "idx": 37,
+              "score": 0.012028729543089867,
+              "name": "Evergreen Brick Works Garden Walk"
+            },
+            {
+              "idx": 11,
+              "score": 0.010021946392953396,
+              "name": "Rouge National Urban Park"
+            },
+            {
+              "idx": 38,
+              "score": 0.008243556134402752,
+              "name": "Nathan Phillips Square Evening Reflection"
+            },
+            {
+              "idx": 29,
+              "score": 0.008100544102489948,
+              "name": "CF Toronto Eaton Centre"
+            },
+            {
+              "idx": 24,
+              "score": 0.006054562516510487,
+              "name": "Centre Island Bike & Beach"
+            },
+            {
+              "idx": 12,
+              "score": 0.005787976551800966,
+              "name": "Kensington Market Food Tour"
+            },
+            {
+              "idx": 33,
+              "score": 0.005695836618542671,
+              "name": "Blue Jays Game at Rogers Centre"
+            },
+            {
+              "idx": 28,
+              "score": 0.005508913658559322,
+              "name": "Queen Street West Boutiques"
+            },
+            {
+              "idx": 26,
+              "score": 0.005473794881254435,
+              "name": "Hanlan's Point Beach Sunset"
+            },
+            {
+              "idx": 34,
+              "score": 0.005451609380543232,
+              "name": "Sunrise Yoga at Trinity Bellwoods"
+            },
+            {
+              "idx": 31,
+              "score": 0.004950475879013538,
+              "name": "Toronto Rock Climbing Gym"
+            },
+            {
+              "idx": 35,
+              "score": 0.0045130690559744835,
+              "name": "Hammam Spa"
+            },
+            {
+              "idx": 30,
+              "score": 0.0043699005618691444,
+              "name": "Don Valley Trail Running"
+            },
+            {
+              "idx": 17,
+              "score": 0.004276549909263849,
+              "name": "CN Tower EdgeWalk"
+            },
+            {
+              "idx": 32,
+              "score": 0.003534970572218299,
+              "name": "Stand Up Paddleboarding"
+            },
+            {
+              "idx": 7,
+              "score": 0.003194889286532998,
+              "name": "Graffiti Alley"
+            },
+            {
+              "idx": 9,
+              "score": 0.00271588540636003,
+              "name": "Humber River Trail Cycling"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "sem(content =~ \"museum\")",
+      "predicate_ast": {
+        "operator": "SEM",
+        "conditions": [
+          {
+            "type": "sem",
+            "field": "content",
+            "value": "museum"
+          }
+        ]
+      },
+      "config": {
+        "top_k": 10,
+        "score_threshold": 0.01
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "Fort York National Historic Site",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.60999995470047,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.60999995470047
+        },
+        {
+          "node_idx": 1,
+          "node_name": "St. Lawrence Market",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.01795712672173977,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.01795712672173977
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Distillery District",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.0478748120367527,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.0478748120367527
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Casa Loma",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.32673901319503784,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.32673901319503784
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Gardiner Museum",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.9964509010314941,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9964509010314941
+        },
+        {
+          "node_idx": 5,
+          "node_name": "Royal Ontario Museum",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.9989707469940186,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9989707469940186
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Art Gallery of Ontario",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.9970306158065796,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9970306158065796
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Graffiti Alley",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.003194889286532998,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.003194889286532998
+        },
+        {
+          "node_idx": 8,
+          "node_name": "High Park Cherry Blossom Walk",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.01236950047314167,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.01236950047314167
+        },
+        {
+          "node_idx": 9,
+          "node_name": "Humber River Trail Cycling",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.00271588540636003,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.00271588540636003
+        },
+        {
+          "node_idx": 10,
+          "node_name": "Scarborough Bluffs",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.017916280776262283,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.017916280776262283
+        },
+        {
+          "node_idx": 11,
+          "node_name": "Rouge National Urban Park",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.010021946392953396,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.010021946392953396
+        },
+        {
+          "node_idx": 12,
+          "node_name": "Kensington Market Food Tour",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.005787976551800966,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.005787976551800966
+        },
+        {
+          "node_idx": 13,
+          "node_name": "St. Lawrence Market Food Hall",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.013831793330609798,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.013831793330609798
+        },
+        {
+          "node_idx": 14,
+          "node_name": "Ontario Science Centre",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.9971049427986145,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9971049427986145
+        },
+        {
+          "node_idx": 15,
+          "node_name": "MaRS Discovery District",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.2193898856639862,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.2193898856639862
+        },
+        {
+          "node_idx": 16,
+          "node_name": "Ripley's Aquarium",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.03528404235839844,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.03528404235839844
+        },
+        {
+          "node_idx": 17,
+          "node_name": "CN Tower EdgeWalk",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.004276549909263849,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.004276549909263849
+        },
+        {
+          "node_idx": 18,
+          "node_name": "TIFF Bell Lightbox",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.12009228765964508,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.12009228765964508
+        },
+        {
+          "node_idx": 19,
+          "node_name": "Hockey Hall of Fame",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.9920958876609802,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.9920958876609802
+        },
+        {
+          "node_idx": 20,
+          "node_name": "Mirvish Theatre - Broadway Show",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.06881338357925415,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.06881338357925415
+        },
+        {
+          "node_idx": 21,
+          "node_name": "The Rex Hotel Jazz Bar",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.017179671674966812,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.017179671674966812
+        },
+        {
+          "node_idx": 22,
+          "node_name": "Toronto Islands Ferry Crossing",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.01884956657886505,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.01884956657886505
+        },
+        {
+          "node_idx": 23,
+          "node_name": "Ward's Island Village Walk",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.012678294442594051,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.012678294442594051
+        },
+        {
+          "node_idx": 24,
+          "node_name": "Centre Island Bike & Beach",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.006054562516510487,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.006054562516510487
+        },
+        {
+          "node_idx": 25,
+          "node_name": "Gibraltar Point Lighthouse",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.03191336244344711,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.03191336244344711
+        },
+        {
+          "node_idx": 26,
+          "node_name": "Hanlan's Point Beach Sunset",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.005473794881254435,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.005473794881254435
+        },
+        {
+          "node_idx": 27,
+          "node_name": "Yorkville Designer District",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.02293827012181282,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.02293827012181282
+        },
+        {
+          "node_idx": 28,
+          "node_name": "Queen Street West Boutiques",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.005508913658559322,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.005508913658559322
+        },
+        {
+          "node_idx": 29,
+          "node_name": "CF Toronto Eaton Centre",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.008100544102489948,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.008100544102489948
+        },
+        {
+          "node_idx": 30,
+          "node_name": "Don Valley Trail Running",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.0043699005618691444,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.0043699005618691444
+        },
+        {
+          "node_idx": 31,
+          "node_name": "Toronto Rock Climbing Gym",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.004950475879013538,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.004950475879013538
+        },
+        {
+          "node_idx": 32,
+          "node_name": "Stand Up Paddleboarding",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.003534970572218299,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.003534970572218299
+        },
+        {
+          "node_idx": 33,
+          "node_name": "Blue Jays Game at Rogers Centre",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.005695836618542671,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.005695836618542671
+        },
+        {
+          "node_idx": 34,
+          "node_name": "Sunrise Yoga at Trinity Bellwoods",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.005451609380543232,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.005451609380543232
+        },
+        {
+          "node_idx": 35,
+          "node_name": "Hammam Spa",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.0045130690559744835,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.0045130690559744835
+        },
+        {
+          "node_idx": 36,
+          "node_name": "Allan Gardens Conservatory",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.012873942963778973,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.012873942963778973
+        },
+        {
+          "node_idx": 37,
+          "node_name": "Evergreen Brick Works Garden Walk",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.012028729543089867,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.012028729543089867
+        },
+        {
+          "node_idx": 38,
+          "node_name": "Nathan Phillips Square Evening Reflection",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "sem",
+              "condition": {
+                "type": "sem",
+                "field": "content",
+                "value": "museum"
+              },
+              "score": 0.008243556134402752,
+              "note": "Local node content only (no subtree)"
+            }
+          ],
+          "final_score": 0.008243556134402752
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "museum"
+        ],
+        "per_value_stats": [
+          {
+            "value": "museum",
+            "num_descriptions": 39,
+            "call_time_ms": 6345.76
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 39
+      },
+      "ranking": [
+        {
+          "idx": 5,
+          "score": 0.9989707469940186,
+          "name": "Royal Ontario Museum"
+        },
+        {
+          "idx": 14,
+          "score": 0.9971049427986145,
+          "name": "Ontario Science Centre"
+        },
+        {
+          "idx": 6,
+          "score": 0.9970306158065796,
+          "name": "Art Gallery of Ontario"
+        },
+        {
+          "idx": 4,
+          "score": 0.9964509010314941,
+          "name": "Gardiner Museum"
+        },
+        {
+          "idx": 19,
+          "score": 0.9920958876609802,
+          "name": "Hockey Hall of Fame"
+        },
+        {
+          "idx": 0,
+          "score": 0.60999995470047,
+          "name": "Fort York National Historic Site"
+        },
+        {
+          "idx": 3,
+          "score": 0.32673901319503784,
+          "name": "Casa Loma"
+        },
+        {
+          "idx": 15,
+          "score": 0.2193898856639862,
+          "name": "MaRS Discovery District"
+        },
+        {
+          "idx": 18,
+          "score": 0.12009228765964508,
+          "name": "TIFF Bell Lightbox"
+        },
+        {
+          "idx": 20,
+          "score": 0.06881338357925415,
+          "name": "Mirvish Theatre - Broadway Show"
+        },
+        {
+          "idx": 2,
+          "score": 0.0478748120367527,
+          "name": "Distillery District"
+        },
+        {
+          "idx": 16,
+          "score": 0.03528404235839844,
+          "name": "Ripley's Aquarium"
+        },
+        {
+          "idx": 25,
+          "score": 0.03191336244344711,
+          "name": "Gibraltar Point Lighthouse"
+        },
+        {
+          "idx": 27,
+          "score": 0.02293827012181282,
+          "name": "Yorkville Designer District"
+        },
+        {
+          "idx": 22,
+          "score": 0.01884956657886505,
+          "name": "Toronto Islands Ferry Crossing"
+        },
+        {
+          "idx": 1,
+          "score": 0.01795712672173977,
+          "name": "St. Lawrence Market"
+        },
+        {
+          "idx": 10,
+          "score": 0.017916280776262283,
+          "name": "Scarborough Bluffs"
+        },
+        {
+          "idx": 21,
+          "score": 0.017179671674966812,
+          "name": "The Rex Hotel Jazz Bar"
+        },
+        {
+          "idx": 13,
+          "score": 0.013831793330609798,
+          "name": "St. Lawrence Market Food Hall"
+        },
+        {
+          "idx": 36,
+          "score": 0.012873942963778973,
+          "name": "Allan Gardens Conservatory"
+        },
+        {
+          "idx": 23,
+          "score": 0.012678294442594051,
+          "name": "Ward's Island Village Walk"
+        },
+        {
+          "idx": 8,
+          "score": 0.01236950047314167,
+          "name": "High Park Cherry Blossom Walk"
+        },
+        {
+          "idx": 37,
+          "score": 0.012028729543089867,
+          "name": "Evergreen Brick Works Garden Walk"
+        },
+        {
+          "idx": 11,
+          "score": 0.010021946392953396,
+          "name": "Rouge National Urban Park"
+        },
+        {
+          "idx": 38,
+          "score": 0.008243556134402752,
+          "name": "Nathan Phillips Square Evening Reflection"
+        },
+        {
+          "idx": 29,
+          "score": 0.008100544102489948,
+          "name": "CF Toronto Eaton Centre"
+        },
+        {
+          "idx": 24,
+          "score": 0.006054562516510487,
+          "name": "Centre Island Bike & Beach"
+        },
+        {
+          "idx": 12,
+          "score": 0.005787976551800966,
+          "name": "Kensington Market Food Tour"
+        },
+        {
+          "idx": 33,
+          "score": 0.005695836618542671,
+          "name": "Blue Jays Game at Rogers Centre"
+        },
+        {
+          "idx": 28,
+          "score": 0.005508913658559322,
+          "name": "Queen Street West Boutiques"
+        },
+        {
+          "idx": 26,
+          "score": 0.005473794881254435,
+          "name": "Hanlan's Point Beach Sunset"
+        },
+        {
+          "idx": 34,
+          "score": 0.005451609380543232,
+          "name": "Sunrise Yoga at Trinity Bellwoods"
+        },
+        {
+          "idx": 31,
+          "score": 0.004950475879013538,
+          "name": "Toronto Rock Climbing Gym"
+        },
+        {
+          "idx": 35,
+          "score": 0.0045130690559744835,
+          "name": "Hammam Spa"
+        },
+        {
+          "idx": 30,
+          "score": 0.0043699005618691444,
+          "name": "Don Valley Trail Running"
+        },
+        {
+          "idx": 17,
+          "score": 0.004276549909263849,
+          "name": "CN Tower EdgeWalk"
+        },
+        {
+          "idx": 32,
+          "score": 0.003534970572218299,
+          "name": "Stand Up Paddleboarding"
+        },
+        {
+          "idx": 7,
+          "score": 0.003194889286532998,
+          "name": "Graffiti Alley"
+        },
+        {
+          "idx": 9,
+          "score": 0.00271588540636003,
+          "name": "Humber River Trail Cycling"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "sem(content =~ \"museum\")",
+        "predicate_ast": {
+          "operator": "SEM",
+          "conditions": [
+            {
+              "type": "sem",
+              "field": "content",
+              "value": "museum"
+            }
+          ]
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "Fort York National Historic Site",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.60999995470047,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.60999995470047
+          },
+          {
+            "node_idx": 1,
+            "node_name": "St. Lawrence Market",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.01795712672173977,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.01795712672173977
+          },
+          {
+            "node_idx": 2,
+            "node_name": "Distillery District",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.0478748120367527,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.0478748120367527
+          },
+          {
+            "node_idx": 3,
+            "node_name": "Casa Loma",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.32673901319503784,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.32673901319503784
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Gardiner Museum",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.9964509010314941,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9964509010314941
+          },
+          {
+            "node_idx": 5,
+            "node_name": "Royal Ontario Museum",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.9989707469940186,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9989707469940186
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Art Gallery of Ontario",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.9970306158065796,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9970306158065796
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Graffiti Alley",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.003194889286532998,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.003194889286532998
+          },
+          {
+            "node_idx": 8,
+            "node_name": "High Park Cherry Blossom Walk",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.01236950047314167,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.01236950047314167
+          },
+          {
+            "node_idx": 9,
+            "node_name": "Humber River Trail Cycling",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.00271588540636003,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.00271588540636003
+          },
+          {
+            "node_idx": 10,
+            "node_name": "Scarborough Bluffs",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.017916280776262283,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.017916280776262283
+          },
+          {
+            "node_idx": 11,
+            "node_name": "Rouge National Urban Park",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.010021946392953396,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.010021946392953396
+          },
+          {
+            "node_idx": 12,
+            "node_name": "Kensington Market Food Tour",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.005787976551800966,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.005787976551800966
+          },
+          {
+            "node_idx": 13,
+            "node_name": "St. Lawrence Market Food Hall",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.013831793330609798,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.013831793330609798
+          },
+          {
+            "node_idx": 14,
+            "node_name": "Ontario Science Centre",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.9971049427986145,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9971049427986145
+          },
+          {
+            "node_idx": 15,
+            "node_name": "MaRS Discovery District",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.2193898856639862,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.2193898856639862
+          },
+          {
+            "node_idx": 16,
+            "node_name": "Ripley's Aquarium",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.03528404235839844,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.03528404235839844
+          },
+          {
+            "node_idx": 17,
+            "node_name": "CN Tower EdgeWalk",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.004276549909263849,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.004276549909263849
+          },
+          {
+            "node_idx": 18,
+            "node_name": "TIFF Bell Lightbox",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.12009228765964508,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.12009228765964508
+          },
+          {
+            "node_idx": 19,
+            "node_name": "Hockey Hall of Fame",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.9920958876609802,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.9920958876609802
+          },
+          {
+            "node_idx": 20,
+            "node_name": "Mirvish Theatre - Broadway Show",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.06881338357925415,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.06881338357925415
+          },
+          {
+            "node_idx": 21,
+            "node_name": "The Rex Hotel Jazz Bar",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.017179671674966812,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.017179671674966812
+          },
+          {
+            "node_idx": 22,
+            "node_name": "Toronto Islands Ferry Crossing",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.01884956657886505,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.01884956657886505
+          },
+          {
+            "node_idx": 23,
+            "node_name": "Ward's Island Village Walk",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.012678294442594051,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.012678294442594051
+          },
+          {
+            "node_idx": 24,
+            "node_name": "Centre Island Bike & Beach",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.006054562516510487,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.006054562516510487
+          },
+          {
+            "node_idx": 25,
+            "node_name": "Gibraltar Point Lighthouse",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.03191336244344711,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.03191336244344711
+          },
+          {
+            "node_idx": 26,
+            "node_name": "Hanlan's Point Beach Sunset",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.005473794881254435,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.005473794881254435
+          },
+          {
+            "node_idx": 27,
+            "node_name": "Yorkville Designer District",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.02293827012181282,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.02293827012181282
+          },
+          {
+            "node_idx": 28,
+            "node_name": "Queen Street West Boutiques",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.005508913658559322,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.005508913658559322
+          },
+          {
+            "node_idx": 29,
+            "node_name": "CF Toronto Eaton Centre",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.008100544102489948,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.008100544102489948
+          },
+          {
+            "node_idx": 30,
+            "node_name": "Don Valley Trail Running",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.0043699005618691444,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.0043699005618691444
+          },
+          {
+            "node_idx": 31,
+            "node_name": "Toronto Rock Climbing Gym",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.004950475879013538,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.004950475879013538
+          },
+          {
+            "node_idx": 32,
+            "node_name": "Stand Up Paddleboarding",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.003534970572218299,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.003534970572218299
+          },
+          {
+            "node_idx": 33,
+            "node_name": "Blue Jays Game at Rogers Centre",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.005695836618542671,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.005695836618542671
+          },
+          {
+            "node_idx": 34,
+            "node_name": "Sunrise Yoga at Trinity Bellwoods",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.005451609380543232,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.005451609380543232
+          },
+          {
+            "node_idx": 35,
+            "node_name": "Hammam Spa",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.0045130690559744835,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.0045130690559744835
+          },
+          {
+            "node_idx": 36,
+            "node_name": "Allan Gardens Conservatory",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.012873942963778973,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.012873942963778973
+          },
+          {
+            "node_idx": 37,
+            "node_name": "Evergreen Brick Works Garden Walk",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.012028729543089867,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.012028729543089867
+          },
+          {
+            "node_idx": 38,
+            "node_name": "Nathan Phillips Square Evening Reflection",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "sem",
+                "condition": {
+                  "type": "sem",
+                  "field": "content",
+                  "value": "museum"
+                },
+                "score": 0.008243556134402752,
+                "note": "Local node content only (no subtree)"
+              }
+            ],
+            "final_score": 0.008243556134402752
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 5,
+            "score": 0.9989707469940186,
+            "name": "Royal Ontario Museum"
+          },
+          {
+            "idx": 14,
+            "score": 0.9971049427986145,
+            "name": "Ontario Science Centre"
+          },
+          {
+            "idx": 6,
+            "score": 0.9970306158065796,
+            "name": "Art Gallery of Ontario"
+          },
+          {
+            "idx": 4,
+            "score": 0.9964509010314941,
+            "name": "Gardiner Museum"
+          },
+          {
+            "idx": 19,
+            "score": 0.9920958876609802,
+            "name": "Hockey Hall of Fame"
+          },
+          {
+            "idx": 0,
+            "score": 0.60999995470047,
+            "name": "Fort York National Historic Site"
+          },
+          {
+            "idx": 3,
+            "score": 0.32673901319503784,
+            "name": "Casa Loma"
+          },
+          {
+            "idx": 15,
+            "score": 0.2193898856639862,
+            "name": "MaRS Discovery District"
+          },
+          {
+            "idx": 18,
+            "score": 0.12009228765964508,
+            "name": "TIFF Bell Lightbox"
+          },
+          {
+            "idx": 20,
+            "score": 0.06881338357925415,
+            "name": "Mirvish Theatre - Broadway Show"
+          },
+          {
+            "idx": 2,
+            "score": 0.0478748120367527,
+            "name": "Distillery District"
+          },
+          {
+            "idx": 16,
+            "score": 0.03528404235839844,
+            "name": "Ripley's Aquarium"
+          },
+          {
+            "idx": 25,
+            "score": 0.03191336244344711,
+            "name": "Gibraltar Point Lighthouse"
+          },
+          {
+            "idx": 27,
+            "score": 0.02293827012181282,
+            "name": "Yorkville Designer District"
+          },
+          {
+            "idx": 22,
+            "score": 0.01884956657886505,
+            "name": "Toronto Islands Ferry Crossing"
+          },
+          {
+            "idx": 1,
+            "score": 0.01795712672173977,
+            "name": "St. Lawrence Market"
+          },
+          {
+            "idx": 10,
+            "score": 0.017916280776262283,
+            "name": "Scarborough Bluffs"
+          },
+          {
+            "idx": 21,
+            "score": 0.017179671674966812,
+            "name": "The Rex Hotel Jazz Bar"
+          },
+          {
+            "idx": 13,
+            "score": 0.013831793330609798,
+            "name": "St. Lawrence Market Food Hall"
+          },
+          {
+            "idx": 36,
+            "score": 0.012873942963778973,
+            "name": "Allan Gardens Conservatory"
+          },
+          {
+            "idx": 23,
+            "score": 0.012678294442594051,
+            "name": "Ward's Island Village Walk"
+          },
+          {
+            "idx": 8,
+            "score": 0.01236950047314167,
+            "name": "High Park Cherry Blossom Walk"
+          },
+          {
+            "idx": 37,
+            "score": 0.012028729543089867,
+            "name": "Evergreen Brick Works Garden Walk"
+          },
+          {
+            "idx": 11,
+            "score": 0.010021946392953396,
+            "name": "Rouge National Urban Park"
+          },
+          {
+            "idx": 38,
+            "score": 0.008243556134402752,
+            "name": "Nathan Phillips Square Evening Reflection"
+          },
+          {
+            "idx": 29,
+            "score": 0.008100544102489948,
+            "name": "CF Toronto Eaton Centre"
+          },
+          {
+            "idx": 24,
+            "score": 0.006054562516510487,
+            "name": "Centre Island Bike & Beach"
+          },
+          {
+            "idx": 12,
+            "score": 0.005787976551800966,
+            "name": "Kensington Market Food Tour"
+          },
+          {
+            "idx": 33,
+            "score": 0.005695836618542671,
+            "name": "Blue Jays Game at Rogers Centre"
+          },
+          {
+            "idx": 28,
+            "score": 0.005508913658559322,
+            "name": "Queen Street West Boutiques"
+          },
+          {
+            "idx": 26,
+            "score": 0.005473794881254435,
+            "name": "Hanlan's Point Beach Sunset"
+          },
+          {
+            "idx": 34,
+            "score": 0.005451609380543232,
+            "name": "Sunrise Yoga at Trinity Bellwoods"
+          },
+          {
+            "idx": 31,
+            "score": 0.004950475879013538,
+            "name": "Toronto Rock Climbing Gym"
+          },
+          {
+            "idx": 35,
+            "score": 0.0045130690559744835,
+            "name": "Hammam Spa"
+          },
+          {
+            "idx": 30,
+            "score": 0.0043699005618691444,
+            "name": "Don Valley Trail Running"
+          },
+          {
+            "idx": 17,
+            "score": 0.004276549909263849,
+            "name": "CN Tower EdgeWalk"
+          },
+          {
+            "idx": 32,
+            "score": 0.003534970572218299,
+            "name": "Stand Up Paddleboarding"
+          },
+          {
+            "idx": 7,
+            "score": 0.003194889286532998,
+            "name": "Graffiti Alley"
+          },
+          {
+            "idx": 9,
+            "score": 0.00271588540636003,
+            "name": "Humber River Trail Cycling"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Day 1 > Fort York National Historic Site",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.60999995470047
+            }
+          ],
+          "accumulated_product": 0.60999995470047,
+          "final_score": 0.60999995470047
+        },
+        {
+          "node_path": "Itinerary > Day 1 > St. Lawrence Market",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.01795712672173977
+            }
+          ],
+          "accumulated_product": 0.01795712672173977,
+          "final_score": 0.01795712672173977
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Distillery District",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.0478748120367527
+            }
+          ],
+          "accumulated_product": 0.0478748120367527,
+          "final_score": 0.0478748120367527
+        },
+        {
+          "node_path": "Itinerary > Day 1 > Casa Loma",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.32673901319503784
+            }
+          ],
+          "accumulated_product": 0.32673901319503784,
+          "final_score": 0.32673901319503784
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Gardiner Museum",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.9964509010314941
+            }
+          ],
+          "accumulated_product": 0.9964509010314941,
+          "final_score": 0.9964509010314941
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Royal Ontario Museum",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.9989707469940186
+            }
+          ],
+          "accumulated_product": 0.9989707469940186,
+          "final_score": 0.9989707469940186
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Art Gallery of Ontario",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.9970306158065796
+            }
+          ],
+          "accumulated_product": 0.9970306158065796,
+          "final_score": 0.9970306158065796
+        },
+        {
+          "node_path": "Itinerary > Day 2 > Graffiti Alley",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.003194889286532998
+            }
+          ],
+          "accumulated_product": 0.003194889286532998,
+          "final_score": 0.003194889286532998
+        },
+        {
+          "node_path": "Itinerary > Day 3 > High Park Cherry Blossom Walk",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.01236950047314167
+            }
+          ],
+          "accumulated_product": 0.01236950047314167,
+          "final_score": 0.01236950047314167
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Humber River Trail Cycling",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.00271588540636003
+            }
+          ],
+          "accumulated_product": 0.00271588540636003,
+          "final_score": 0.00271588540636003
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Scarborough Bluffs",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.017916280776262283
+            }
+          ],
+          "accumulated_product": 0.017916280776262283,
+          "final_score": 0.017916280776262283
+        },
+        {
+          "node_path": "Itinerary > Day 3 > Rouge National Urban Park",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.010021946392953396
+            }
+          ],
+          "accumulated_product": 0.010021946392953396,
+          "final_score": 0.010021946392953396
+        },
+        {
+          "node_path": "Itinerary > Day 4 > Kensington Market Food Tour",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.005787976551800966
+            }
+          ],
+          "accumulated_product": 0.005787976551800966,
+          "final_score": 0.005787976551800966
+        },
+        {
+          "node_path": "Itinerary > Day 4 > St. Lawrence Market Food Hall",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.013831793330609798
+            }
+          ],
+          "accumulated_product": 0.013831793330609798,
+          "final_score": 0.013831793330609798
+        },
+        {
+          "node_path": "Itinerary > Day 5 > Ontario Science Centre",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.9971049427986145
+            }
+          ],
+          "accumulated_product": 0.9971049427986145,
+          "final_score": 0.9971049427986145
+        },
+        {
+          "node_path": "Itinerary > Day 5 > MaRS Discovery District",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.2193898856639862
+            }
+          ],
+          "accumulated_product": 0.2193898856639862,
+          "final_score": 0.2193898856639862
+        },
+        {
+          "node_path": "Itinerary > Day 5 > Ripley's Aquarium",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.03528404235839844
+            }
+          ],
+          "accumulated_product": 0.03528404235839844,
+          "final_score": 0.03528404235839844
+        },
+        {
+          "node_path": "Itinerary > Day 5 > CN Tower EdgeWalk",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.004276549909263849
+            }
+          ],
+          "accumulated_product": 0.004276549909263849,
+          "final_score": 0.004276549909263849
+        },
+        {
+          "node_path": "Itinerary > Day 6 > TIFF Bell Lightbox",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.12009228765964508
+            }
+          ],
+          "accumulated_product": 0.12009228765964508,
+          "final_score": 0.12009228765964508
+        },
+        {
+          "node_path": "Itinerary > Day 6 > Hockey Hall of Fame",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.9920958876609802
+            }
+          ],
+          "accumulated_product": 0.9920958876609802,
+          "final_score": 0.9920958876609802
+        },
+        {
+          "node_path": "Itinerary > Day 6 > Mirvish Theatre - Broadway Show",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.06881338357925415
+            }
+          ],
+          "accumulated_product": 0.06881338357925415,
+          "final_score": 0.06881338357925415
+        },
+        {
+          "node_path": "Itinerary > Day 6 > The Rex Hotel Jazz Bar",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.017179671674966812
+            }
+          ],
+          "accumulated_product": 0.017179671674966812,
+          "final_score": 0.017179671674966812
+        },
+        {
+          "node_path": "Itinerary > Day 7 > Toronto Islands Ferry Crossing",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.01884956657886505
+            }
+          ],
+          "accumulated_product": 0.01884956657886505,
+          "final_score": 0.01884956657886505
+        },
+        {
+          "node_path": "Itinerary > Day 7 > Ward's Island Village Walk",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.012678294442594051
+            }
+          ],
+          "accumulated_product": 0.012678294442594051,
+          "final_score": 0.012678294442594051
+        },
+        {
+          "node_path": "Itinerary > Day 7 > Centre Island Bike & Beach",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.006054562516510487
+            }
+          ],
+          "accumulated_product": 0.006054562516510487,
+          "final_score": 0.006054562516510487
+        },
+        {
+          "node_path": "Itinerary > Day 7 > Gibraltar Point Lighthouse",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.03191336244344711
+            }
+          ],
+          "accumulated_product": 0.03191336244344711,
+          "final_score": 0.03191336244344711
+        },
+        {
+          "node_path": "Itinerary > Day 7 > Hanlan's Point Beach Sunset",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.005473794881254435
+            }
+          ],
+          "accumulated_product": 0.005473794881254435,
+          "final_score": 0.005473794881254435
+        },
+        {
+          "node_path": "Itinerary > Day 8 > Yorkville Designer District",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.02293827012181282
+            }
+          ],
+          "accumulated_product": 0.02293827012181282,
+          "final_score": 0.02293827012181282
+        },
+        {
+          "node_path": "Itinerary > Day 8 > Queen Street West Boutiques",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.005508913658559322
+            }
+          ],
+          "accumulated_product": 0.005508913658559322,
+          "final_score": 0.005508913658559322
+        },
+        {
+          "node_path": "Itinerary > Day 8 > CF Toronto Eaton Centre",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.008100544102489948
+            }
+          ],
+          "accumulated_product": 0.008100544102489948,
+          "final_score": 0.008100544102489948
+        },
+        {
+          "node_path": "Itinerary > Day 9 > Don Valley Trail Running",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.0043699005618691444
+            }
+          ],
+          "accumulated_product": 0.0043699005618691444,
+          "final_score": 0.0043699005618691444
+        },
+        {
+          "node_path": "Itinerary > Day 9 > Toronto Rock Climbing Gym",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.004950475879013538
+            }
+          ],
+          "accumulated_product": 0.004950475879013538,
+          "final_score": 0.004950475879013538
+        },
+        {
+          "node_path": "Itinerary > Day 9 > Stand Up Paddleboarding",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.003534970572218299
+            }
+          ],
+          "accumulated_product": 0.003534970572218299,
+          "final_score": 0.003534970572218299
+        },
+        {
+          "node_path": "Itinerary > Day 9 > Blue Jays Game at Rogers Centre",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.005695836618542671
+            }
+          ],
+          "accumulated_product": 0.005695836618542671,
+          "final_score": 0.005695836618542671
+        },
+        {
+          "node_path": "Itinerary > Day 10 > Sunrise Yoga at Trinity Bellwoods",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.005451609380543232
+            }
+          ],
+          "accumulated_product": 0.005451609380543232,
+          "final_score": 0.005451609380543232
+        },
+        {
+          "node_path": "Itinerary > Day 10 > Hammam Spa",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.0045130690559744835
+            }
+          ],
+          "accumulated_product": 0.0045130690559744835,
+          "final_score": 0.0045130690559744835
+        },
+        {
+          "node_path": "Itinerary > Day 10 > Allan Gardens Conservatory",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.012873942963778973
+            }
+          ],
+          "accumulated_product": 0.012873942963778973,
+          "final_score": 0.012873942963778973
+        },
+        {
+          "node_path": "Itinerary > Day 10 > Evergreen Brick Works Garden Walk",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.012028729543089867
+            }
+          ],
+          "accumulated_product": 0.012028729543089867,
+          "final_score": 0.012028729543089867
+        },
+        {
+          "node_path": "Itinerary > Day 10 > Nathan Phillips Square Evening Reflection",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 2,
+              "predicate": "sem(content =~ \"museum\")",
+              "score": 0.008243556134402752
+            }
+          ],
+          "accumulated_product": 0.008243556134402752,
+          "final_score": 0.008243556134402752
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 39,
+    "threshold": 0.01,
+    "top_k": 10,
+    "after_filter_count": 10,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Day 2 > Royal Ontario Museum",
+        "score": 0.9989707469940186,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 5 > Ontario Science Centre",
+        "score": 0.9971049427986145,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 2 > Art Gallery of Ontario",
+        "score": 0.9970306158065796,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 2 > Gardiner Museum",
+        "score": 0.9964509010314941,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 6 > Hockey Hall of Fame",
+        "score": 0.9920958876609802,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 1 > Fort York National Historic Site",
+        "score": 0.60999995470047,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 1 > Casa Loma",
+        "score": 0.32673901319503784,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 5 > MaRS Discovery District",
+        "score": 0.2193898856639862,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 6 > TIFF Bell Lightbox",
+        "score": 0.12009228765964508,
+        "type": "POI"
+      },
+      {
+        "path": "Itinerary > Day 6 > Mirvish Theatre - Broadway Show",
+        "score": 0.06881338357925415,
+        "type": "POI"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Day 2 > Royal Ontario Museum",
+      "score": 0.9989707469940186,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Royal Ontario Museum",
+        "time_block": "12:00 PM - 2:30 PM",
+        "description": "World-class museum with 13 million artifacts including dinosaurs and ancient civilizations.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 23",
+        "highlights": [
+          "Crystal architecture",
+          "Dinosaur gallery",
+          "Chinese collections"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 5 > Ontario Science Centre",
+      "score": 0.9971049427986145,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Ontario Science Centre",
+        "time_block": "10:00 AM - 1:00 PM",
+        "description": "Interactive science museum with over 500 hands-on exhibits and IMAX theatre.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 28",
+        "highlights": [
+          "Interactive exhibits",
+          "Planetarium shows",
+          "IMAX theatre"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Art Gallery of Ontario",
+      "score": 0.9970306158065796,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Art Gallery of Ontario",
+        "time_block": "4:00 PM - 6:30 PM",
+        "description": "One of North America's largest art museums with Frank Gehry's stunning Galleria Italia.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Group of Seven",
+          "Gehry architecture",
+          "Henry Moore collection"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 2 > Gardiner Museum",
+      "score": 0.9964509010314941,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Gardiner Museum",
+        "time_block": "10:00 AM - 11:30 AM",
+        "description": "Canada's only museum dedicated to ceramic art spanning 4,000 years of history.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15",
+        "highlights": [
+          "Ancient pottery",
+          "Contemporary ceramics",
+          "Hands-on workshops"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 6 > Hockey Hall of Fame",
+      "score": 0.9920958876609802,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Hockey Hall of Fame",
+        "time_block": "4:00 PM - 6:00 PM",
+        "description": "Shrine to Canada's national sport with Stanley Cup, interactive games, and legends.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Stanley Cup",
+          "Goalie challenge",
+          "Hockey history"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 1 > Fort York National Historic Site",
+      "score": 0.60999995470047,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Fort York National Historic Site",
+        "time_block": "9:00 AM - 11:00 AM",
+        "description": "Explore Toronto's birthplace featuring restored 1812 military buildings and costumed interpreters.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 14",
+        "highlights": [
+          "War of 1812 history",
+          "Military demonstrations",
+          "Period architecture"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 1 > Casa Loma",
+      "score": 0.32673901319503784,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Casa Loma",
+        "time_block": "5:30 PM - 7:30 PM",
+        "description": "Gothic Revival castle built in 1914 with secret passages, towers, and elaborate gardens.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 40",
+        "highlights": [
+          "Secret tunnels",
+          "Castle towers",
+          "Period furnishings"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 5 > MaRS Discovery District",
+      "score": 0.2193898856639862,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "MaRS Discovery District",
+        "time_block": "2:30 PM - 4:00 PM",
+        "description": "Tour North America's largest urban innovation hub housing 150+ startups and research labs.",
+        "travel_method": "Public Transit",
+        "expected_cost": "Free",
+        "highlights": [
+          "Startup ecosystem",
+          "Innovation tours",
+          "Future tech"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 6 > TIFF Bell Lightbox",
+      "score": 0.12009228765964508,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "TIFF Bell Lightbox",
+        "time_block": "1:00 PM - 3:30 PM",
+        "description": "Home of Toronto International Film Festival with year-round screenings and exhibits.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15-20",
+        "highlights": [
+          "Film screenings",
+          "Movie memorabilia",
+          "Director talks"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Day 6 > Mirvish Theatre - Broadway Show",
+      "score": 0.06881338357925415,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Mirvish Theatre - Broadway Show",
+        "time_block": "8:00 PM - 10:30 PM",
+        "description": "World-class theatre hosting Broadway touring productions and premieres.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 80-200",
+        "highlights": [
+          "Broadway shows",
+          "Historic theatre",
+          "World premieres"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 1,
+    "matched_count": 10,
+    "execution_time_ms": 6350.739167000001,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 39,
+    "num_nodes_after_filter": 10
+  }
+}

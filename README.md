@@ -1,21 +1,30 @@
-# Semantic XPath: Hierarchical Retrieval with Probabilistic Inference
+# Semantic XPath: Hierarchical Retrieval with Score Fusion
 
-A framework for querying hierarchical data using natural language with **semantic predicates**, **hierarchical aggregation**, and **Bayesian score fusion**.
+A framework for querying and modifying hierarchical data using natural language with **semantic predicates**, **hierarchical aggregation**, **score fusion**, and **CRUD operations**.
 
 ## Core Idea
 
 Traditional XPath operates on exact matches. Semantic XPath extends this with:
 - **Semantic matching**: Match by meaning, not just text
 - **Probabilistic scores**: Every match has a confidence score in [0, 1]
-- **Hierarchical aggregation**: Aggregate evidence from children to parents
-- **Bayesian fusion**: Combine scores across query steps
+- **Hierarchical aggregation**: Aggregate scores from children to parents
+- **Score fusion**: Combine scores across query steps (product)
+- **CRUD Operations**: Create, Read, Update, Delete nodes using natural language
 
 ```
 User: "find museums in artistic days"
 
-Semantic XPath: /Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
+Semantic XPath: Read(/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")])
 
 Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
+```
+
+```
+User: "delete all the museums"
+
+Semantic XPath: Delete(/Itinerary/Day/POI[sem(content =~ "museum")])
+
+Result: Deleted 2 nodes, saved to result/travel_memory_v1.xml
 ```
 
 ---
@@ -23,13 +32,14 @@ Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
 ## Table of Contents
 
 1. [End-to-End Flow](#end-to-end-flow)
-2. [Mathematical Foundation](#mathematical-foundation)
-3. [Query Syntax](#query-syntax)
-4. [Predicate Types](#predicate-types)
-5. [Schema System](#schema-system)
-6. [Usage](#usage)
-7. [Configuration](#configuration)
-8. [Project Structure](#project-structure)
+2. [CRUD Operations](#crud-operations)
+3. [Mathematical Foundation](#mathematical-foundation)
+4. [Query Syntax](#query-syntax)
+5. [Predicate Types](#predicate-types)
+6. [Schema System](#schema-system)
+7. [Usage](#usage)
+8. [Configuration](#configuration)
+9. [Project Structure](#project-structure)
 
 ---
 
@@ -86,17 +96,17 @@ Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
 │      │            │  Royal Ontario Museum: 0.95                             │
 │      └─────────────────────────────────────────────────────┘                │
 │                                                                              │
-│   3. BAYESIAN FUSION                                                         │
+│   3. SCORE FUSION (PRODUCT)                                                  │
 │      ┌─────────────────────────────────────────────────────┐                │
-│      │ For each final node, accumulate log-odds from all steps:             │
+│      │ For each final node, multiply scores from all steps:                 │
 │      │                                                                       │
 │      │ Art Gallery of Ontario (in Day 1):                                   │
 │      │   Step 1: Day "artistic" score = 0.72                                │
-│      │           log-odds = log(0.72/0.28) = 0.944                          │
 │      │   Step 2: POI "museum" score = 0.92                                  │
-│      │           log-odds = log(0.92/0.08) = 2.442                          │
-│      │   Total log-odds = 0.944 + 2.442 = 3.386                             │
-│      │   Final score = sigmoid(3.386) = 0.967                               │
+│      │   Final score = 0.72 × 0.92 = 0.662                                  │
+│      │                                                                       │
+│      │                                                                       │
+│      │                                                                       │
 │      └─────────────────────────────────────────────────────┘                │
 │                                                                              │
 │   4. FILTER & RANK                                                           │
@@ -122,6 +132,138 @@ Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
 | **Executor** | BFS traversal + fusion | `dense_xpath/dense_xpath_executor.py` |
 | **Predicate Handler** | Scoring + aggregation | `dense_xpath/predicate_handler.py` |
 | **Scorer** | Semantic similarity | `predicate_classifier/` |
+| **CRUD Executor** | CRUD operations | `crud/crud_executor.py` |
+
+---
+
+## CRUD Operations
+
+The system supports full CRUD (Create, Read, Update, Delete) operations on tree data using natural language.
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         CRUD PIPELINE                                    │
+└─────────────────────────────────────────────────────────────────────────┘
+
+    User Query              Intent              XPath Query
+   (Natural Lang)         Classifier            Generator
+        │                     │                     │
+        ▼                     ▼                     ▼
+┌───────────────┐     ┌───────────────┐     ┌───────────────┐
+│ "delete all   │     │   Classify:   │     │  Generate:    │
+│  museums"     │ ──▶ │   DELETE      │ ──▶ │  /Day/POI     │
+│               │     │               │     │  [sem(...)]   │
+└───────────────┘     └───────────────┘     └───────────────┘
+                                                   │
+                      ┌────────────────────────────┘
+                      │
+                      ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      SEMANTIC XPATH EXECUTION                            │
+│  Find candidate nodes with semantic scoring                              │
+└─────────────────────────────────────────────────────────────────────────┘
+                      │
+                      ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      LLM NODE REASONING                                  │
+│  Batched LLM calls to select truly relevant nodes from candidates        │
+└─────────────────────────────────────────────────────────────────────────┘
+                      │
+          ┌───────────┴───────────┬───────────────┬───────────────┐
+          ▼                       ▼               ▼               ▼
+     ┌─────────┐            ┌─────────┐     ┌─────────┐     ┌─────────┐
+     │  READ   │            │ DELETE  │     │ UPDATE  │     │ CREATE  │
+     │ Return  │            │ Remove  │     │ Modify  │     │ Insert  │
+     │ Results │            │ Nodes   │     │ Content │     │ New Node│
+     └─────────┘            └────┬────┘     └────┬────┘     └────┬────┘
+                                 │               │               │
+                                 └───────────────┴───────────────┘
+                                                 │
+                                                 ▼
+                                 ┌───────────────────────────────┐
+                                 │     VERSION MANAGER           │
+                                 │  Save to result/ folder       │
+                                 │  (tree_v1.xml, tree_v2.xml)   │
+                                 └───────────────────────────────┘
+```
+
+### Operation Types
+
+| Operation | Description | Example Query |
+|-----------|-------------|---------------|
+| **Read** | Find and retrieve nodes | "find museums in the itinerary" |
+| **Create** | Add new nodes | "add a sushi restaurant after lunch on day 1" |
+| **Update** | Modify existing nodes | "change the CN Tower visit to 2pm" |
+| **Delete** | Remove nodes | "delete all the museums" |
+
+### Full Query Format
+
+Each operation displays a full query showing the operation type and XPath:
+
+```
+Read(/Itinerary/Day/POI[sem(content =~ "museum")])
+Delete(/Itinerary/Day[@index='2']/POI[sem(content =~ "cafe")])
+Update(/Itinerary/Day/POI[sem(content =~ "CN Tower")])
+Create(/Itinerary/Day[@index='1']/Restaurant)
+```
+
+### Step Timing
+
+Each operation displays detailed timing for performance analysis:
+
+```
+⏱️  Step Timing:
+---------------------------------------------
+  Intent Classification          523.4ms  ██████░░░░░░░░░░░░░░  28.5%
+  XPath Generation               412.1ms  ████░░░░░░░░░░░░░░░░  22.4%
+  Semantic XPath Execution       156.2ms  ██░░░░░░░░░░░░░░░░░░   8.5%
+  LLM Node Reasoning             689.3ms  ████████░░░░░░░░░░░░  37.5%
+  Tree Modification                2.1ms  ░░░░░░░░░░░░░░░░░░░░   0.1%
+  Save Version                    55.8ms  █░░░░░░░░░░░░░░░░░░░   3.0%
+---------------------------------------------
+  TOTAL                         1838.9ms
+```
+
+### Output Files
+
+Modified trees are saved to the `result/` folder with versioning:
+
+```
+result/
+├── travel_memory_10day_themed_v1.xml    # After first modification
+├── travel_memory_10day_themed_v2.xml    # After second modification
+├── travel_memory_10day_themed_versions.json  # Version history
+└── ...
+```
+
+### CRUD Usage
+
+```python
+from pipeline import SemanticXPathPipeline
+
+pipeline = SemanticXPathPipeline()
+
+# Read operation
+result = pipeline.process_request("find museums in the itinerary")
+# Displays: Read(/Itinerary/Day/POI[sem(content =~ "museum")])
+
+# Delete operation
+result = pipeline.process_request("delete all the museums")
+# Displays: Delete(/Itinerary/Day/POI[sem(content =~ "museum")])
+# Saves: result/travel_memory_v1.xml
+
+# Update operation
+result = pipeline.process_request("change the CN Tower visit to 2pm")
+# Displays: Update(/Itinerary/Day/POI[sem(content =~ "CN Tower")])
+# Saves: result/travel_memory_v2.xml
+
+# Create operation
+result = pipeline.process_request("add a sushi restaurant after lunch on day 1")
+# Displays: Create(/Itinerary/Day[@index='1']/Restaurant)
+# Saves: result/travel_memory_v3.xml
+```
 
 ---
 
@@ -161,74 +303,69 @@ POI[sem(content =~ "museum")]
 π_v("museum") = Scorer(X_v, "museum")
 ```
 
-#### 2. exist() - Existential Aggregation (Noisy-OR)
+#### 2. exist() - Existential Aggregation (Max)
 
 "At least one child matches" - high score if ANY child has high score.
 
 ```
 Day[exist(POI[sem(content =~ "museum")])]
 
-π_v(p) = 1 - ∏_{u ∈ children(v)} (1 - π_u(p))
+π_v(p) = max_{u ∈ children(v)} π_u(p)
 ```
 
 **Example**: Children with scores [0.95, 0.1, 0.05]
 ```
-exist() = 1 - (0.05 × 0.9 × 0.95) = 1 - 0.043 = 0.957
+exist() = max(0.95, 0.1, 0.05) = 0.95
 ```
 
-#### 3. mass() - Prevalence Aggregation (Beta-Bernoulli)
+#### 3. mass() - Prevalence Aggregation (Average)
 
-"Children are generally X" - smoothed average of child scores.
+"Children are generally X" - average of child scores.
 
 ```
 Day[mass(POI[sem(content =~ "artistic")])]
 
-π_v(p) = (α + Σ_{u ∈ children(v)} π_u(p)) / (α + β + |children(v)|)
+π_v(p) = Σ_{u ∈ children(v)} π_u(p) / |children(v)|
 ```
-
-Where `α = β = 1` (uniform prior).
 
 **Example**: Children with scores [0.8, 0.7, 0.6, 0.3]
 ```
-mass() = (1 + 2.4) / (1 + 1 + 4) = 3.4 / 6 = 0.567
+mass() = (0.8 + 0.7 + 0.6 + 0.3) / 4 = 2.4 / 4 = 0.6
 ```
 
 ### Logical Operators
 
-#### AND (Log-odds aggregation)
+#### AND (Product)
 
 ```
 sem(content =~ "outdoor") AND sem(content =~ "historic")
 
-ℓ(p) = Σ_j log(π(c_j) / (1 - π(c_j)))
-π(p) = sigmoid(ℓ(p))
+π(p) = ∏_j π(c_j)
 ```
 
-#### OR (Noisy-OR)
+#### OR (Max)
 
 ```
 sem(content =~ "museum") OR sem(content =~ "gallery")
 
-π(p) = 1 - ∏_j (1 - π(c_j))
+π(p) = max_j π(c_j)
 ```
 
-### Bayesian Fusion Across Steps
+### Score Fusion Across Steps
 
-For multi-step queries, scores accumulate in log-odds space:
+For multi-step queries, scores are multiplied:
 
 ```
 Query: /Day[mass(...)]/POI[sem(...)]
 
 For each final POI node u:
-  ℓ(u) = Σ_{steps with predicates} log(π_i(u) / (1 - π_i(u)))
-  
-Final Score = sigmoid(ℓ(u))
+  Final Score = ∏_{steps with predicates} π_i(u)
 ```
 
 This ensures:
-- High parent score + high child score → very high final score
+- High parent score + high child score → high final score
 - Low parent score penalizes even high-scoring children
-- Scores are properly calibrated probabilities
+- Simple and interpretable score combination
 
 ---
 
@@ -290,8 +427,8 @@ This ensures:
 ```
 Day with 5 POIs: [Museum: 0.95, Park: 0.1, Mall: 0.05, Theater: 0.1, Cafe: 0.02]
 
-exist(POI[sem(content =~ "museum")]): 0.957 (high - museum exists)
-mass(POI[sem(content =~ "museum")]):  0.317 (low - most aren't museums)
+exist(POI[sem(content =~ "museum")]): 0.95 (max - museum exists)
+mass(POI[sem(content =~ "museum")]):  0.244 (avg - most aren't museums)
 ```
 
 ---
@@ -356,7 +493,7 @@ When scoring `Day[mass(POI[...])]`:
 
 ## Usage
 
-### Interactive Mode
+### Interactive Mode (CRUD Operations)
 
 ```bash
 python -m pipeline.semantic_xpath_pipeline
@@ -364,26 +501,64 @@ python -m pipeline.semantic_xpath_pipeline
 
 ```
 ============================================================
-Semantic XPath Pipeline - Interactive Mode
+Semantic XPath Pipeline - CRUD Operations
+============================================================
+Commands:
+  - Natural language query for CRUD operations
+  - 'stats' - Session statistics
+  - 'reload' - Reload tree from file
+  - 'exit' or 'quit' - Exit
 ============================================================
 
-Request: museums in artistic days
+🔄 Query: find museums in the itinerary
 
-Query: /Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
+📋 Read(/Itinerary/Day/POI[sem(content =~ "museum")])
 
-Matched 2 node(s) (sorted by score):
+⏱️  Step Timing:
+---------------------------------------------
+  Intent Classification          412.3ms  ████░░░░░░░░░░░░░░░░  22.1%
+  XPath Generation               523.1ms  ██████░░░░░░░░░░░░░░  28.0%
+  Semantic XPath Execution       245.6ms  ███░░░░░░░░░░░░░░░░░  13.2%
+  LLM Node Reasoning             685.2ms  ████████░░░░░░░░░░░░  36.7%
+---------------------------------------------
+  TOTAL                         1866.2ms
+
+✅ READ Operation Succeeded
 ============================================================
+⏱️  Time: 1872.4ms
 
-[Result 1] ⭐ Score: 0.967
-📍 Tree Path: Itinerary > Day 1 > Art Gallery of Ontario
+📊 Results: 2 selected from 6 candidates
 
-[Result 2] ⭐ Score: 0.943
-📍 Tree Path: Itinerary > Day 2 > Royal Ontario Museum
+📋 Selected Nodes:
+--------------------------------------------------
+
+[1] POI: Royal Ontario Museum
+    📝 World-renowned museum showcasing art, culture, and natural history.
+    🕐 11:00 AM - 1:00 PM
+
+[2] POI: Art Gallery of Ontario
+    📝 Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.
+    🕐 2:30 PM - 4:00 PM
+============================================================
 ```
 
 ### Programmatic Usage
 
 ```python
+# Full CRUD Pipeline
+from pipeline import SemanticXPathPipeline
+
+pipeline = SemanticXPathPipeline(
+    scoring_method="entailment",
+    top_k=10,
+    score_threshold=0.3
+)
+
+# Any CRUD operation via natural language
+result = pipeline.process_request("delete all the museums")
+print(pipeline.format_result(result))
+
+# Direct XPath execution (read-only)
 from dense_xpath import DenseXPathExecutor
 
 executor = DenseXPathExecutor(
@@ -401,11 +576,6 @@ result = executor.execute(
     '/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]'
 )
 
-# Aggregation-level AND
-result = executor.execute(
-    '/Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]'
-)
-
 for node in result.matched_nodes:
     print(f"- {node.tree_path}: {node.score:.3f}")
 ```
@@ -420,6 +590,9 @@ python -m pipeline.semantic_xpath_pipeline --scoring cosine
 
 # Threshold and top-k
 python -m pipeline.semantic_xpath_pipeline --top-k 10 --threshold 0.5
+
+# Single query mode (non-interactive)
+python -m pipeline.semantic_xpath_pipeline -q "find museums"
 ```
 
 ---
@@ -460,17 +633,35 @@ openai:
 ```
 LLM-VM/
 ├── pipeline/
-│   └── semantic_xpath_pipeline.py   # Main entry point
+│   └── semantic_xpath_pipeline.py   # Main entry point (CRUD pipeline)
+├── crud/
+│   └── crud_executor.py             # CRUD operation orchestrator
+├── intent_classifier/
+│   ├── base.py                      # IntentType enum, ClassifiedIntent
+│   └── intent_classifier.py         # LLM-based intent classification
+├── reasoner/
+│   ├── base.py                      # ReasonerDecision, InsertionPoint
+│   ├── node_reasoner.py             # Batched LLM node selection
+│   └── insertion_reasoner.py        # Find insertion points for Create
+├── tree_modification/
+│   ├── base.py                      # OperationResult, path utilities
+│   ├── node_deleter.py              # Delete nodes by path
+│   ├── node_inserter.py             # Insert/replace nodes
+│   └── version_manager.py           # Versioned tree saves
+├── content_creator/
+│   ├── base.py                      # ContentGenerationResult
+│   ├── node_creator.py              # LLM content generation
+│   └── node_updater.py              # LLM content updates
 ├── xpath_query_generation/
 │   └── xpath_query_generator.py     # NL → Semantic XPath (LLM)
 ├── dense_xpath/
-│   ├── dense_xpath_executor.py      # Main executor with Bayesian fusion
+│   ├── dense_xpath_executor.py      # Main executor with score fusion
 │   ├── models.py                    # SemanticCondition, CompoundPredicate, etc.
 │   ├── parser.py                    # Query parser (sem/exist/mass/AND/OR)
 │   ├── predicate_handler.py         # Scoring + aggregation logic
 │   ├── node_utils.py                # XML node utilities
 │   ├── schema_loader.py             # Schema loading
-│   └── trace_writer.py              # Execution traces
+│   └── trace_writer.py              # Execution + CRUD traces
 ├── predicate_classifier/
 │   ├── llm_scorer.py                # GPT-4 scoring
 │   ├── entailment_scorer.py         # BART NLI scoring
@@ -478,7 +669,17 @@ LLM-VM/
 ├── storage/
 │   ├── schemas/                     # Schema definitions
 │   ├── memory/                      # XML data files
-│   └── prompts/                     # Query generation prompts
+│   └── prompts/                     # All LLM prompts
+│       ├── intent_classifier.txt
+│       ├── node_reasoner.txt
+│       ├── insertion_reasoner.txt
+│       ├── content_creator.txt
+│       ├── content_updater.txt
+│       └── xpath_query_generator_*.txt
+├── result/                          # Modified trees (versioned)
+├── traces/                          # Execution logs and traces
+│   ├── log/
+│   └── reasoning_traces/
 ├── config.yaml
 ├── framework.md                     # Mathematical specification
 └── README.md
@@ -487,6 +688,15 @@ LLM-VM/
 ---
 
 ## Quick Reference
+
+### CRUD Operations
+
+| Operation | Natural Language Example | Full Query |
+|-----------|-------------------------|------------|
+| **Read** | "find museums" | `Read(/Itinerary/Day/POI[sem(...)])` |
+| **Create** | "add a cafe on day 1" | `Create(/Itinerary/Day[@index='1']/Restaurant)` |
+| **Update** | "change CN Tower to 2pm" | `Update(/Itinerary/Day/POI[sem(...)])` |
+| **Delete** | "remove all museums" | `Delete(/Itinerary/Day/POI[sem(...)])` |
 
 ### Predicate Syntax
 
@@ -501,10 +711,10 @@ LLM-VM/
 | Operator | Formula | Interpretation |
 |----------|---------|----------------|
 | `sem()` | `π = Scorer(content, query)` | Local score |
-| `exist()` | `π = 1 - ∏(1 - π_child)` | Noisy-OR |
-| `mass()` | `π = (α + Σπ_child) / (α + β + n)` | Beta-Bernoulli |
-| `AND` | `π = sigmoid(Σ log-odds)` | All conditions |
-| `OR` | `π = 1 - ∏(1 - π_j)` | Any condition |
+| `exist()` | `π = max(π_child)` | Max over children |
+| `mass()` | `π = Σπ_child / n` | Average over children |
+| `AND` | `π = ∏(π_j)` | Product of scores |
+| `OR` | `π = max(π_j)` | Max of scores |
 
 ### Example Queries
 
@@ -524,6 +734,18 @@ LLM-VM/
 # Days with both museum AND Italian restaurant
 /Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]
 ```
+
+### CRUD Pipeline Components
+
+| Component | Purpose |
+|-----------|---------|
+| `IntentClassifier` | Classify NL → CREATE/READ/UPDATE/DELETE |
+| `NodeReasoner` | LLM selects relevant nodes from candidates |
+| `InsertionReasoner` | LLM finds best insertion point |
+| `NodeCreator` | LLM generates new node content |
+| `NodeUpdater` | LLM modifies existing content |
+| `NodeDeleter` | Remove nodes by path |
+| `VersionManager` | Save versioned trees to `result/` |
 
 ---
 

@@ -1,0 +1,41 @@
+{
+  "base_name": "travel_memory_3day",
+  "versions": [
+    {
+      "version": 1,
+      "path": "/Users/rwu/dev/LLM-VM/result/travel_memory_3day_v1.xml",
+      "timestamp": "2026-01-20T19:51:01.546990",
+      "operation": "DELETE",
+      "changes": {
+        "deleted_nodes": [
+          "Itinerary > Day 2 > Royal Ontario Museum",
+          "Itinerary > Day 1 > Art Gallery of Ontario"
+        ]
+      }
+    },
+    {
+      "version": 2,
+      "path": "/Users/rwu/dev/LLM-VM/result/travel_memory_3day_v2.xml",
+      "timestamp": "2026-01-20T19:53:52.941898",
+      "operation": "CREATE",
+      "changes": {
+        "created_node": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar > Restaurant 1",
+        "parent_path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+        "position": -1
+      }
+    },
+    {
+      "version": 3,
+      "path": "/Users/rwu/dev/LLM-VM/result/travel_memory_3day_v3.xml",
+      "timestamp": "2026-01-20T19:57:21.393273",
+      "operation": "UPDATE",
+      "changes": {
+        "updated_nodes": [
+          "Itinerary > Day 1 > Queen Street Warehouse",
+          "Itinerary > Day 1 > Buca Yorkville",
+          "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar"
+        ]
+      }
+    }
+  ]
+}

@@ -1,18 +1,29 @@
 """
-Semantic XPath Pipeline - Interactive pipeline for generating and executing XPath queries.
+Semantic XPath Pipeline - Full CRUD Pipeline for tree operations.
+
+Provides an interactive interface for executing CRUD operations on tree data
+with full query display, trace saving, and result formatting.
+
+Supports:
+- Read: Find and retrieve nodes using semantic XPath
+- Create: Add new nodes to the tree
+- Update: Modify existing nodes
+- Delete: Remove nodes from the tree
 """
 
 import json
 import yaml
 import time
 from pathlib import Path
+from typing import Dict, Any, Optional
+from datetime import datetime
 import sys
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from xpath_query_generation import XPathQueryGenerator
-from dense_xpath import DenseXPathExecutor
+from crud import CRUDExecutor
+from dense_xpath.trace_writer import TraceWriter
 
 
 def load_config() -> dict:
@@ -24,10 +35,14 @@ def load_config() -> dict:
 
 class SemanticXPathPipeline:
     """
-    Pipeline for semantic XPath query generation and execution.
+    Full CRUD Pipeline for semantic XPath operations.
     
-    Converts natural language requests to XPath queries and executes them
-    against the tree memory with semantic scoring.
+    Converts natural language requests to CRUD operations:
+    - Classifies intent (Create, Read, Update, Delete)
+    - Generates XPath queries
+    - Executes operations with LLM reasoning
+    - Saves versioned tree modifications
+    - Provides full query display (e.g., "Read(/Itinerary/Day/POI[...])")
     """
     
     def __init__(
@@ -47,181 +62,317 @@ class SemanticXPathPipeline:
             scoring_method: Scoring method ("llm" or "entailment").
                    If None, uses value from config.yaml.
         """
-        self.query_generator = XPathQueryGenerator()
-        # Let executor load from config if values not provided
-        self.executor = DenseXPathExecutor(
-            top_k=top_k, 
-            score_threshold=score_threshold,
-            scoring_method=scoring_method
+        self.executor = CRUDExecutor(
+            scoring_method=scoring_method,
+            top_k=top_k,
+            score_threshold=score_threshold
         )
+        self.trace_writer = TraceWriter()
+        
+        # Session statistics
+        self.session_stats = {
+            "operations": 0,
+            "reads": 0,
+            "creates": 0,
+            "updates": 0,
+            "deletes": 0,
+            "successes": 0,
+            "failures": 0
+        }
     
-    def process_request(self, user_request: str) -> dict:
+    def process_request(self, user_request: str) -> Dict[str, Any]:
         """
-        Process a user request: generate query and execute it.
+        Process a user request as a CRUD operation.
         
         Args:
             user_request: Natural language request from the user
             
         Returns:
-            dict with 'request', 'query', 'matched_nodes', 'execution_log', timing info
+            Dict with operation results, traces, and timing info
         """
-        total_start = time.perf_counter()
+        start_time = time.perf_counter()
         
-        # Generate query
-        query_gen_start = time.perf_counter()
-        query = self.query_generator.generate(user_request)
-        query_gen_time_ms = (time.perf_counter() - query_gen_start) * 1000
+        # Execute the CRUD operation (includes step timing)
+        result = self.executor.execute(user_request)
         
-        # Execute query
-        execution_result = self.executor.execute(query)
+        # Calculate total pipeline timing
+        total_time_ms = (time.perf_counter() - start_time) * 1000
+        result["total_time_ms"] = total_time_ms
         
-        total_time_ms = (time.perf_counter() - total_start) * 1000
+        # Preserve step timing from executor, add total
+        if "timing" not in result:
+            result["timing"] = {}
+        result["timing"]["pipeline_total_ms"] = total_time_ms
         
-        return {
-            "request": user_request,
-            "query": query,
-            "matched_nodes": execution_result.matched_nodes,
-            "execution_log": execution_result.execution_log,
-            "scoring_traces": execution_result.scoring_traces,
-            "timing": {
-                "query_generation_ms": query_gen_time_ms,
-                "query_execution_ms": execution_result.execution_time_ms,
-                "total_ms": total_time_ms
-            }
-        }
+        # Save traces
+        timestamp = result.get("timestamp", datetime.now().strftime("%Y%m%d_%H%M%S_%f"))
+        self.trace_writer.save_crud_traces(timestamp, result)
+        
+        # Update session stats
+        self._update_stats(result)
+        
+        return result
     
-    def format_result(self, result: dict) -> str:
-        """Format the result for display (sorted by score, highest first)."""
+    def _update_stats(self, result: Dict[str, Any]):
+        """Update session statistics."""
+        self.session_stats["operations"] += 1
+        
+        operation = result.get("operation", "").upper()
+        if operation == "READ":
+            self.session_stats["reads"] += 1
+        elif operation == "CREATE":
+            self.session_stats["creates"] += 1
+        elif operation == "UPDATE":
+            self.session_stats["updates"] += 1
+        elif operation == "DELETE":
+            self.session_stats["deletes"] += 1
+        
+        if result.get("success"):
+            self.session_stats["successes"] += 1
+        else:
+            self.session_stats["failures"] += 1
+    
+    def format_result(self, result: Dict[str, Any]) -> str:
+        """Format the result for display."""
         lines = []
-        lines.append(f"\nQuery: {result['query']}")
         
-        # Display timing information if available
-        if "timing" in result:
-            timing = result["timing"]
-            lines.append(f"⏱️  Timing: query_gen={timing['query_generation_ms']:.1f}ms, "
-                        f"execution={timing['query_execution_ms']:.1f}ms, "
-                        f"total={timing['total_ms']:.1f}ms")
+        operation = result.get("operation", "UNKNOWN")
+        success = result.get("success", False)
+        status_icon = "✅" if success else "❌"
         
-        lines.append(f"\nMatched {len(result['matched_nodes'])} node(s) (sorted by score):")
+        lines.append(f"\n{status_icon} {operation} Operation {'Succeeded' if success else 'Failed'}")
         lines.append("=" * 60)
         
-        for i, matched in enumerate(result['matched_nodes']):
-            lines.append(f"\n[Result {i + 1}] ⭐ Score: {matched.score:.3f}")
-            lines.append(f"📍 Tree Path: {matched.tree_path}")
+        # Timing
+        if "total_time_ms" in result:
+            lines.append(f"⏱️  Time: {result['total_time_ms']:.1f}ms")
+        
+        # Operation-specific formatting
+        if operation == "READ":
+            lines.extend(self._format_read_result(result))
+        elif operation == "DELETE":
+            lines.extend(self._format_delete_result(result))
+        elif operation == "UPDATE":
+            lines.extend(self._format_update_result(result))
+        elif operation == "CREATE":
+            lines.extend(self._format_create_result(result))
+        
+        # Tree version info
+        tree_version = result.get("tree_version")
+        if tree_version:
+            lines.append(f"\n📁 Tree saved: {tree_version.get('path', 'N/A')}")
+            lines.append(f"   Version: {tree_version.get('version', 'N/A')}")
+        
+        lines.append("=" * 60)
+        return "\n".join(lines)
+    
+    def _format_read_result(self, result: Dict[str, Any]) -> list:
+        """Format READ operation results."""
+        lines = []
+        
+        candidates = result.get("candidates_count", 0)
+        selected = result.get("selected_count", 0)
+        lines.append(f"\n📊 Results: {selected} selected from {candidates} candidates")
+        
+        selected_nodes = result.get("selected_nodes", [])
+        if selected_nodes:
+            lines.append("\n📋 Selected Nodes:")
             lines.append("-" * 50)
             
-            node = matched.node_data
-            node_type = node.get("type", "?")
-            
-            # Display node info
-            if node_type == "Day":
-                attrs = node.get("attributes", {})
-                day_idx = attrs.get("index", "?")
-                lines.append(f"📅 Day {day_idx}")
-            else:
-                # Try multiple common name fields (generic across schemas)
-                name = node.get("name") or node.get("title") or node.get("label") or "Unknown"
-                lines.append(f"🏷️  {node_type}: {name}")
+            for i, node in enumerate(selected_nodes, 1):
+                node_type = node.get("type", "?")
+                name = node.get("name", "Unknown")
+                
+                lines.append(f"\n[{i}] {node_type}: {name}")
+                
                 if node.get("description"):
-                    lines.append(f"📝 {node['description']}")
+                    desc = node["description"]
+                    if len(desc) > 100:
+                        desc = desc[:100] + "..."
+                    lines.append(f"    📝 {desc}")
+                
                 if node.get("time_block"):
-                    lines.append(f"🕐 {node['time_block']}")
+                    lines.append(f"    🕐 {node['time_block']}")
+                
                 if node.get("expected_cost"):
-                    lines.append(f"💰 {node['expected_cost']}")
+                    lines.append(f"    💰 {node['expected_cost']}")
+                
                 if node.get("highlights"):
-                    lines.append(f"✨ {', '.join(node['highlights'])}")
-            
-            # Display children (subtree)
-            if matched.children:
-                lines.append(f"\n📂 Children ({len(matched.children)}):")
-                for j, child in enumerate(matched.children):
-                    child_type = child.get("type", "?")
-                    child_name = child.get("name") or child.get("title") or child.get("label") or "Unknown"
-                    child_time = child.get("time_block", "")
-                    
-                    prefix = "├──" if j < len(matched.children) - 1 else "└──"
-                    type_icon = "📍" if child_type == "POI" else "🍽️"
-                    
-                    lines.append(f"   {prefix} {type_icon} [{child_type}] {child_name}")
-                    if child_time:
-                        lines.append(f"   │      🕐 {child_time}")
-                    if child.get("description"):
-                        desc = child['description'][:80]
-                        lines.append(f"   │      📝 {desc}{'...' if len(child.get('description', '')) > 80 else ''}")
+                    highlights = node["highlights"]
+                    if isinstance(highlights, list):
+                        lines.append(f"    ✨ {', '.join(highlights)}")
+        else:
+            lines.append("\n⚠️  No nodes matched the query")
         
-        lines.append("\n" + "=" * 60)
-        return "\n".join(lines)
+        return lines
+    
+    def _format_delete_result(self, result: Dict[str, Any]) -> list:
+        """Format DELETE operation results."""
+        lines = []
+        
+        deleted_count = result.get("deleted_count", 0)
+        deleted_paths = result.get("deleted_paths", [])
+        
+        lines.append(f"\n🗑️  Deleted: {deleted_count} node(s)")
+        
+        if deleted_paths:
+            lines.append("\nDeleted Paths:")
+            for path in deleted_paths:
+                lines.append(f"  ❌ {path}")
+        
+        return lines
+    
+    def _format_update_result(self, result: Dict[str, Any]) -> list:
+        """Format UPDATE operation results."""
+        lines = []
+        
+        updated_count = result.get("updated_count", 0)
+        updated_paths = result.get("updated_paths", [])
+        
+        lines.append(f"\n✏️  Updated: {updated_count} node(s)")
+        
+        update_results = result.get("update_results", [])
+        for update in update_results:
+            path = update.get("path", "Unknown")
+            success = update.get("success", False)
+            icon = "✅" if success else "❌"
+            lines.append(f"\n{icon} {path}")
+            
+            changes_data = update.get("changes", {})
+            changes = changes_data.get("changes", {})
+            if changes:
+                for field, change in changes.items():
+                    old_val = change.get("from", "?")
+                    new_val = change.get("to", "?")
+                    lines.append(f"    {field}: {old_val} → {new_val}")
+        
+        return lines
+    
+    def _format_create_result(self, result: Dict[str, Any]) -> list:
+        """Format CREATE operation results."""
+        lines = []
+        
+        created_path = result.get("created_path")
+        
+        if created_path:
+            lines.append(f"\n➕ Created: {created_path}")
+            
+            # Show insertion point
+            insertion = result.get("insertion_point", {})
+            if insertion:
+                lines.append(f"\n📍 Insertion Point:")
+                lines.append(f"    Parent: {insertion.get('parent_path', 'Unknown')}")
+                lines.append(f"    Position: {insertion.get('position', -1)}")
+            
+            # Show generated content summary
+            content = result.get("content_result", {})
+            if content.get("success"):
+                fields = content.get("fields", {})
+                lines.append(f"\n📄 Generated Content:")
+                for key, value in fields.items():
+                    if isinstance(value, list):
+                        lines.append(f"    {key}: {', '.join(str(v) for v in value[:3])}...")
+                    elif len(str(value)) > 50:
+                        lines.append(f"    {key}: {str(value)[:50]}...")
+                    else:
+                        lines.append(f"    {key}: {value}")
+        else:
+            lines.append("\n⚠️  Creation failed")
+            if result.get("message"):
+                lines.append(f"    Reason: {result['message']}")
+        
+        return lines
     
     def run_interactive(self):
         """
-        Run an interactive loop where user can continuously send requests.
-        Each request generates a query and executes it.
+        Run an interactive loop for CRUD operations.
         
-        Type 'exit' or 'quit' to stop.
-        Type 'stats' to see session statistics.
+        Commands:
+        - Type a natural language query to execute a CRUD operation
+        - Type 'stats' to see session statistics
+        - Type 'reload' to reload the tree from the original file
+        - Type 'exit' or 'quit' to stop
         """
         print("=" * 60)
-        print("Semantic XPath Pipeline - Interactive Mode")
+        print("Semantic XPath Pipeline - CRUD Operations")
         print("=" * 60)
-        print(f"Config: scoring_method={self.executor.scoring_method}, top_k={self.executor.top_k}, score_threshold={self.executor.score_threshold}")
-        print("Enter your request to generate and execute an XPath query.")
-        print("Type 'exit' to quit, 'stats' for session timing.\n")
+        print("Commands:")
+        print("  - Natural language query for CRUD operations")
+        print("  - 'stats' - Session statistics")
+        print("  - 'reload' - Reload tree from file")
+        print("  - 'exit' or 'quit' - Exit")
+        print("=" * 60)
+        print()
         
-        # Session statistics
         session_start = time.perf_counter()
-        query_count = 0
-        total_query_time_ms = 0.0
         
         while True:
             try:
-                user_input = input("Request: ").strip()
+                user_input = input("🔄 Query: ").strip()
                 
                 if not user_input:
                     continue
                 
                 if user_input.lower() in ("exit", "quit", "q"):
-                    session_time = (time.perf_counter() - session_start) * 1000
-                    print(f"\n📊 Session Summary:")
-                    print(f"   Queries: {query_count}")
-                    print(f"   Total query time: {total_query_time_ms:.1f}ms")
-                    print(f"   Session duration: {session_time:.1f}ms")
-                    if query_count > 0:
-                        print(f"   Average per query: {total_query_time_ms / query_count:.1f}ms")
+                    self._print_session_summary(session_start)
                     print("Goodbye!")
                     break
                 
                 if user_input.lower() == "stats":
-                    session_time = (time.perf_counter() - session_start) * 1000
-                    print(f"\n📊 Session Statistics:")
-                    print(f"   Queries executed: {query_count}")
-                    print(f"   Total query time: {total_query_time_ms:.1f}ms")
-                    print(f"   Session duration: {session_time:.1f}ms")
-                    if query_count > 0:
-                        print(f"   Average per query: {total_query_time_ms / query_count:.1f}ms")
-                    print()
+                    self._print_stats()
                     continue
                 
+                if user_input.lower() == "reload":
+                    self.executor.reload_tree()
+                    print("✅ Tree reloaded from original file")
+                    continue
+                
+                # Process the query
                 result = self.process_request(user_input)
                 print(self.format_result(result))
                 print()
                 
-                # Update session stats
-                query_count += 1
-                if "timing" in result:
-                    total_query_time_ms += result["timing"]["total_ms"]
-                
             except KeyboardInterrupt:
-                session_time = (time.perf_counter() - session_start) * 1000
-                print(f"\n\n📊 Session Summary:")
-                print(f"   Queries: {query_count}")
-                print(f"   Total query time: {total_query_time_ms:.1f}ms")
-                print(f"   Session duration: {session_time:.1f}ms")
-                print("Goodbye!")
+                self._print_session_summary(session_start)
+                print("\nGoodbye!")
                 break
             except Exception as e:
-                print(f"Error: {e}\n")
+                print(f"❌ Error: {e}")
                 import traceback
                 traceback.print_exc()
+    
+    def _print_stats(self):
+        """Print session statistics."""
+        print("\n📊 Session Statistics:")
+        print("-" * 40)
+        print(f"  Total Operations: {self.session_stats['operations']}")
+        print(f"  - Reads:   {self.session_stats['reads']}")
+        print(f"  - Creates: {self.session_stats['creates']}")
+        print(f"  - Updates: {self.session_stats['updates']}")
+        print(f"  - Deletes: {self.session_stats['deletes']}")
+        print(f"  Successes: {self.session_stats['successes']}")
+        print(f"  Failures:  {self.session_stats['failures']}")
+        print()
+    
+    def _print_session_summary(self, session_start: float):
+        """Print session summary on exit."""
+        session_time = (time.perf_counter() - session_start) * 1000
+        
+        print("\n" + "=" * 60)
+        print("📊 Session Summary:")
+        print("-" * 40)
+        print(f"  Duration: {session_time/1000:.1f}s")
+        print(f"  Operations: {self.session_stats['operations']}")
+        print(f"  - Reads:   {self.session_stats['reads']}")
+        print(f"  - Creates: {self.session_stats['creates']}")
+        print(f"  - Updates: {self.session_stats['updates']}")
+        print(f"  - Deletes: {self.session_stats['deletes']}")
+        
+        if self.session_stats['operations'] > 0:
+            success_rate = self.session_stats['successes'] / self.session_stats['operations'] * 100
+            print(f"  Success Rate: {success_rate:.1f}%")
+        
+        print("=" * 60)
 
 
 def main():
@@ -232,9 +383,9 @@ def main():
     executor_config = config.get("xpath_executor", {})
     default_top_k = executor_config.get("top_k", 5)
     default_threshold = executor_config.get("score_threshold", 0.5)
-    default_method = executor_config.get("scoring_method", "llm")
+    default_method = executor_config.get("scoring_method", "entailment")
     
-    parser = argparse.ArgumentParser(description="Semantic XPath Pipeline")
+    parser = argparse.ArgumentParser(description="Semantic XPath Pipeline - CRUD Operations")
     parser.add_argument("--top-k", type=int, default=None, 
                         help=f"Top K nodes for semantic matching (default from config: {default_top_k})")
     parser.add_argument("--threshold", type=float, default=None, 
@@ -242,6 +393,8 @@ def main():
     parser.add_argument("--scoring", "-s", type=str, default=None,
                         choices=["llm", "entailment", "cosine"],
                         help=f"Scoring method: llm, entailment, or cosine (default from config: {default_method})")
+    parser.add_argument("--query", "-q", type=str, default=None,
+                        help="Single query to execute (non-interactive)")
     
     args = parser.parse_args()
     
@@ -250,7 +403,14 @@ def main():
         score_threshold=args.threshold,
         scoring_method=args.scoring
     )
-    pipeline.run_interactive()
+    
+    if args.query:
+        # Single query mode
+        result = pipeline.process_request(args.query)
+        print(pipeline.format_result(result))
+    else:
+        # Interactive mode
+        pipeline.run_interactive()
 
 
 if __name__ == "__main__":

@@ -84,7 +84,7 @@ We use a travel itinerary represented as a hierarchical XML document:
 ]
 ```
 
-- `or` operator combines the two predicate scores using Noisy-OR.
+- `or` operator combines the two predicate scores using max.
 ---
 
 ### Query: Find an artistic day
@@ -108,7 +108,7 @@ We use a travel itinerary represented as a hierarchical XML document:
 ```
 
 - Each POI contributes local semantic evidence.
-- `mass` operator aggregates these local scores across all POIs under a day using Beta–Bernoulli model.
+- `mass` operator aggregates these local scores across all POIs under a day using average.
 
 ---
 
@@ -131,7 +131,7 @@ We use a travel itinerary represented as a hierarchical XML document:
 ```
 - The `Day` node acquires a contextual score (e.g., artistic day = 0.8).
 - The `POI` node has its own local score (e.g., museum = 0.9).
-- Final relevance is computed via Bayesian log-odds fusion.
+- Final relevance is computed as the product: 0.8 × 0.9 = 0.72.
 
 
 

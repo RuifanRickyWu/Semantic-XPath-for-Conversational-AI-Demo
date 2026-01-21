@@ -1,6 +1,6 @@
-# Hierarchical Semantic XPath with Bayesian Fusion
+# Hierarchical Semantic XPath with Score Fusion
 
-We formalize **Semantic XPath** as a hierarchical retrieval framework over tree-structured data. The framework extends classical XPath with semantic predicates and probabilistic inference, while preserving stepwise structural semantics and enabling principled score aggregation across hierarchy levels.
+We formalize **Semantic XPath** as a hierarchical retrieval framework over tree-structured data. The framework extends classical XPath with semantic predicates and score aggregation, while preserving stepwise structural semantics and enabling principled score combination across hierarchy levels.
 
 ## Data Model
 
@@ -67,9 +67,9 @@ Checks if **at least one child** of specified type matches the inner predicate.
 
 **Example:** `Day[exist(POI[sem(content =~ "museum")])]`
 
-Uses **Noisy-OR** aggregation over children:
+Uses **max** aggregation over children:
 
-- `π_v(p) = 1 − ∏_{u ∈ ch(v)} (1 − π_u(p))`
+- `π_v(p) = max_{u ∈ ch(v)} π_u(p)`
 
 ### 3. mass() - Prevalence Aggregation
 
@@ -79,14 +79,9 @@ Characterizes the **general prevalence** of a property among children.
 
 **Example:** `Day[mass(POI[sem(content =~ "artistic")])]`
 
-Uses **Beta-Bernoulli** aggregation:
+Uses **average** aggregation over children:
 
-- `ρ_v(p) ~ Beta(α, β)`
-- `Z_u(p) | ρ_v(p) ~ Bernoulli(ρ_v(p))`
-
-Posterior mean:
-
-- `π_v(p) = (α + Σ_{u ∈ ch(v)} π_u(p)) / (α + β + |ch(v)|)`
+- `π_v(p) = Σ_{u ∈ ch(v)} π_u(p) / |ch(v)|`
 
 ## AND and OR Operators
 
@@ -94,40 +89,31 @@ When a predicate contains multiple conditions, conjunction and disjunction are r
 
 ### Disjunction (OR)
 
-For a predicate `p = c1 OR c2 OR ... OR ck`, we use Noisy-OR:
+For a predicate `p = c1 OR c2 OR ... OR ck`, we use **max**:
 
-- `π_v(p) = 1 − ∏_{j=1..k} (1 − π_v(cj))`
+- `π_v(p) = max_{j=1..k} π_v(cj)`
 
 ### Conjunction (AND)
 
-For a predicate `p = c1 AND c2 AND ... AND ck`, evidence is aggregated in log-odds space:
+For a predicate `p = c1 AND c2 AND ... AND ck`, we use **product**:
 
-- `ℓ_v(p) = Σ_{j=1..k} log( π_v(cj) / (1 − π_v(cj)) )`
-- `π_v(p) = sigmoid(ℓ_v(p))`
+- `π_v(p) = ∏_{j=1..k} π_v(cj)`
 
 ## Decision Guide: Choosing Predicates
 
 | Scenario | Predicate | Reasoning |
 |----------|-----------|-----------|
 | Property of the node itself | `sem()` | Score local content |
-| "Any child has property X" | `exist()` | Noisy-OR over children |
-| "Children are generally X" | `mass()` | Beta-Bernoulli prevalence |
+| "Any child has property X" | `exist()` | Max over children |
+| "Children are generally X" | `mass()` | Average over children |
 
-## Bayesian Fusion Across Query Steps
+## Score Fusion Across Query Steps
 
-For each returned node `u`, define a latent relevance variable:
+For each returned node `u`, the final score is the **product** of all predicate scores along the execution path.
 
-- `Pr(Z_u = 1) = 0.5`
+Let `π_i(u)` denote the predicate score at step `i` along the execution path to `u`. The final relevance score is:
 
-Each query step with a semantic predicate contributes independent evidence.
-
-Let `π_i(u)` denote the predicate posterior at step `i` along the execution path to `u`. Accumulated log-odds are:
-
-- `ℓ(u) = Σ_{i : pi ≠ ⊥} log( π_i(u) / (1 − π_i(u)) )`
-
-The final relevance score is:
-
-- `Score(u, Q) = sigmoid(ℓ(u))`
+- `Score(u, Q) = ∏_{i : pi ≠ ⊥} π_i(u)`
 
 ## Query Examples
 
@@ -149,7 +135,7 @@ The final relevance score is:
 /Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
 ```
 
-Each POI contributes local semantic evidence. The `mass` operator aggregates these scores using Beta-Bernoulli model.
+Each POI contributes local semantic evidence. The `mass` operator aggregates these scores using average.
 
 ### Find Museums in an Artistic Day
 
@@ -159,7 +145,7 @@ Each POI contributes local semantic evidence. The `mass` operator aggregates the
 
 - The `Day` node acquires a contextual score (e.g., artistic day = 0.8)
 - The `POI` node has its own local score (e.g., museum = 0.9)
-- Final relevance is computed via Bayesian log-odds fusion
+- Final relevance is computed as the product: 0.8 × 0.9 = 0.72
 
 ### Find Days with a Museum
 
@@ -167,4 +153,4 @@ Each POI contributes local semantic evidence. The `mass` operator aggregates the
 /Itinerary/Day[exist(POI[sem(content =~ "museum")])]
 ```
 
-Uses Noisy-OR: day matches if any POI is a museum.
+Uses max aggregation: day score is the highest museum score among its POIs.

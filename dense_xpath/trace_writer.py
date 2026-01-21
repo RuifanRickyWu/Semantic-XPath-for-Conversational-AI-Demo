@@ -66,7 +66,7 @@ class TraceWriter:
         """Save human-readable text log."""
         log_file = self.log_path / f"execution_{timestamp}.log"
         
-        with open(log_file, "w") as f:
+        with open(log_file, "w", encoding="utf-8") as f:
             f.write(f"Query: {result.query}\n")
             f.write(f"Data File: {result.data_file}\n")
             f.write(f"Execution Time: {result.execution_time_ms:.2f}ms\n")
@@ -199,7 +199,7 @@ class TraceWriter:
             }
         }
         
-        with open(trace_file, "w") as f:
+        with open(trace_file, "w", encoding="utf-8") as f:
             json.dump(trace_data, f, indent=2, ensure_ascii=False)
         
         logger.debug(f"Saved reasoning trace to {trace_file}")
@@ -227,7 +227,7 @@ class TraceWriter:
         operation = result.get("operation", "UNKNOWN")
         log_file = self.log_path / f"crud_{operation.lower()}_{timestamp}.log"
         
-        with open(log_file, "w") as f:
+        with open(log_file, "w", encoding="utf-8") as f:
             f.write(f"CRUD Operation: {operation}\n")
             f.write(f"User Query: {result.get('user_query', '')}\n")
             f.write(f"Full Query: {result.get('full_query', '')}\n")
@@ -384,7 +384,7 @@ class TraceWriter:
             }
         }
         
-        with open(trace_file, "w") as f:
+        with open(trace_file, "w", encoding="utf-8") as f:
             json.dump(trace_data, f, indent=2, ensure_ascii=False)
         
         logger.debug(f"Saved CRUD trace to {trace_file}")

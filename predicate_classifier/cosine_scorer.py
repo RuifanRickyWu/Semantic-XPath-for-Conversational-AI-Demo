@@ -207,7 +207,7 @@ class CosinePredicateScorer(PredicateScorer):
             ]
         }
         
-        with open(trace_file, "w") as f:
+        with open(trace_file, "w", encoding="utf-8") as f:
             json.dump(trace_data, f, indent=2, ensure_ascii=False)
         
         logger.debug(f"Saved cosine scoring trace to {trace_file}")

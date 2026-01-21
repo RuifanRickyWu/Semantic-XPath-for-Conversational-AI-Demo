@@ -1,0 +1,116 @@
+{
+  "timestamp": "20260121_164331_567029",
+  "user_query": "Change the dinner on the first day to be after we go to The Rex Hotel Jazz",
+  "total_candidates": 3,
+  "selected_count": 2,
+  "results": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Day 1 > Buca Yorkville",
+      "decision": "RELEVANT",
+      "confidence": 0.85,
+      "reasoning": "Buca Yorkville is a dinner location on Day 1, which matches the user's intent to change the dinner timing.",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Buca Yorkville",
+        "time_block": "5:30 PM - 7:00 PM",
+        "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Handmade pasta",
+          "Elegant ambiance"
+        ]
+      }
+    },
+    {
+      "node_id": "2",
+      "node_path": "Itinerary > Day 1 > Queen Street Warehouse",
+      "decision": "RELEVANT",
+      "confidence": 0.8,
+      "reasoning": "Queen Street Warehouse is another dinner option on Day 1, relevant for the user's request to adjust dinner timing.",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Queen Street Warehouse",
+        "time_block": "1:00 PM - 2:00 PM",
+        "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-15",
+        "highlights": [
+          "Funky decor",
+          "Vibrant atmosphere"
+        ]
+      }
+    },
+    {
+      "node_id": "3",
+      "node_path": "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar",
+      "decision": "NOT_RELEVANT",
+      "confidence": 0.9,
+      "reasoning": "The Rex Hotel Jazz & Blues Bar is the event after which the dinner should be scheduled, not the dinner itself.",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "The Rex Hotel Jazz & Blues Bar",
+        "time_block": "8:00 PM - 10:30 PM",
+        "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15 + drinks",
+        "highlights": [
+          "Live jazz",
+          "Intimate atmosphere"
+        ]
+      }
+    }
+  ],
+  "selected_nodes": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Day 1 > Buca Yorkville",
+      "decision": "RELEVANT",
+      "confidence": 0.85,
+      "reasoning": "Buca Yorkville is a dinner location on Day 1, which matches the user's intent to change the dinner timing.",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Buca Yorkville",
+        "time_block": "5:30 PM - 7:00 PM",
+        "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Handmade pasta",
+          "Elegant ambiance"
+        ]
+      }
+    },
+    {
+      "node_id": "2",
+      "node_path": "Itinerary > Day 1 > Queen Street Warehouse",
+      "decision": "RELEVANT",
+      "confidence": 0.8,
+      "reasoning": "Queen Street Warehouse is another dinner option on Day 1, relevant for the user's request to adjust dinner timing.",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Queen Street Warehouse",
+        "time_block": "1:00 PM - 2:00 PM",
+        "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-15",
+        "highlights": [
+          "Funky decor",
+          "Vibrant atmosphere"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "operation": "UPDATE",
+    "total_candidates": 3,
+    "batch_size": 10,
+    "num_batches": 1
+  }
+}

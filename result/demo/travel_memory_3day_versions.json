@@ -84,6 +84,18 @@
           "Itinerary > Day 1 > The Rex Hotel Jazz & Blues Bar"
         ]
       }
+    },
+    {
+      "version": 8,
+      "path": "c:\\Users\\Liam\\Desktop\\LLM-VM\\result\\demo\\travel_memory_3day_v8.xml",
+      "timestamp": "2026-01-21T16:43:36.031200",
+      "operation": "UPDATE",
+      "changes": {
+        "updated_nodes": [
+          "Itinerary > Day 1 > Buca Yorkville",
+          "Itinerary > Day 1 > Queen Street Warehouse"
+        ]
+      }
     }
   ]
 }

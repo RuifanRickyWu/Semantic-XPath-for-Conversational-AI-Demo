@@ -230,7 +230,7 @@ Output JSON array with objects containing: id, score, reasoning"""
             ]
         }
         
-        with open(trace_file, "w") as f:
+        with open(trace_file, "w", encoding="utf-8") as f:
             json.dump(trace_data, f, indent=2)
         
         logger.debug(f"Saved scoring trace to {trace_file}")

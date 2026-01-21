@@ -242,7 +242,7 @@ Determine the best insertion point for the new content.
             "raw_response": raw_response
         }
         
-        with open(trace_file, "w") as f:
+        with open(trace_file, "w", encoding="utf-8") as f:
             json.dump(trace_data, f, indent=2, ensure_ascii=False)
         
         logger.debug(f"Saved insertion reasoning trace to {trace_file}")

@@ -1,0 +1,52 @@
+{
+  "timestamp": "20260121_164336_029201",
+  "user_query": "Change the dinner on the first day to be after we go to The Rex Hotel Jazz",
+  "node_type": "Restaurant",
+  "original": {
+    "type": "Restaurant",
+    "name": "Queen Street Warehouse",
+    "time_block": "1:00 PM - 2:00 PM",
+    "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+    "travel_method": "Walk",
+    "expected_cost": "CAD 10-15",
+    "highlights": [
+      "Funky decor",
+      "Vibrant atmosphere"
+    ]
+  },
+  "result": {
+    "success": true,
+    "original_fields": {
+      "type": "Restaurant",
+      "name": "Queen Street Warehouse",
+      "time_block": "1:00 PM - 2:00 PM",
+      "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 10-15",
+      "highlights": [
+        "Funky decor",
+        "Vibrant atmosphere"
+      ]
+    },
+    "updated_fields": {
+      "name": "Queen Street Warehouse",
+      "time_block": "8:00 PM - 9:30 PM",
+      "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 10-15",
+      "highlights": [
+        "Funky decor",
+        "Vibrant atmosphere"
+      ]
+    },
+    "changes": {
+      "time_block": {
+        "from": "1:00 PM - 2:00 PM",
+        "to": "8:00 PM - 9:30 PM"
+      }
+    },
+    "xml_string": "<Restaurant><name>Queen Street Warehouse</name><time_block>8:00 PM - 9:30 PM</time_block><description>Budget-friendly comfort food in a lively setting with a diverse menu.</description><travel_method>Walk</travel_method><expected_cost>CAD 10-15</expected_cost><highlights><highlight>Funky decor</highlight><highlight>Vibrant atmosphere</highlight></highlights></Restaurant>",
+    "reasoning": "Updated the time_block to 8:00 PM - 9:30 PM to reflect a dinner time after visiting The Rex Hotel Jazz. All other fields remain unchanged."
+  },
+  "raw_response": "```json\n{\n  \"fields\": {\n    \"name\": \"Queen Street Warehouse\",\n    \"time_block\": \"8:00 PM - 9:30 PM\",\n    \"description\": \"Budget-friendly comfort food in a lively setting with a diverse menu.\",\n    \"travel_method\": \"Walk\",\n    \"expected_cost\": \"CAD 10-15\",\n    \"highlights\": [\"Funky decor\", \"Vibrant atmosphere\"]\n  },\n  \"reasoning\": \"Updated the time_block to 8:00 PM - 9:30 PM to reflect a dinner time after visiting The Rex Hotel Jazz. All other fields remain unchanged.\"\n}\n```"
+}

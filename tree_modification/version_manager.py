@@ -95,7 +95,7 @@ class VersionManager:
                 # Fallback for older Python versions
                 self._indent_element(tree.getroot())
             
-            tree.write(versioned_path, encoding="unicode", xml_declaration=True)
+            tree.write(versioned_path, encoding="utf-8", xml_declaration=True)
             
             timestamp = datetime.now().isoformat()
             
@@ -245,7 +245,7 @@ class VersionManager:
         history_path = self._get_history_path(directory, base_name)
         
         if history_path.exists():
-            with open(history_path, "r") as f:
+            with open(history_path, "r", encoding="utf-8") as f:
                 return json.load(f)
         
         return {"base_name": base_name, "versions": []}
@@ -261,7 +261,7 @@ class VersionManager:
         history["versions"].append(version_info.to_dict())
         
         history_path = self._get_history_path(directory, base_name)
-        with open(history_path, "w") as f:
+        with open(history_path, "w", encoding="utf-8") as f:
             json.dump(history, f, indent=2)
     
     def _indent_element(self, elem: ET.Element, level: int = 0):

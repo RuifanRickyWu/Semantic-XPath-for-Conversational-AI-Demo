@@ -43,13 +43,18 @@ class SemanticXPathPipeline:
     - Executes operations with LLM reasoning
     - Saves versioned tree modifications
     - Provides full query display (e.g., "Read(/Itinerary/Day/POI[...])")
+    
+    Supports two modes:
+    - demo: Evolving tree across queries (tree persists between operations)
+    - eval: Single-turn per query (tree resets to original for each query)
     """
     
     def __init__(
         self, 
         top_k: int = None, 
         score_threshold: float = None,
-        scoring_method: str = None
+        scoring_method: str = None,
+        mode: str = None
     ):
         """
         Initialize the pipeline.
@@ -61,11 +66,18 @@ class SemanticXPathPipeline:
                    If None, uses value from config.yaml.
             scoring_method: Scoring method ("llm" or "entailment").
                    If None, uses value from config.yaml.
+            mode: Pipeline mode - "demo" (evolving tree) or "eval" (single-turn).
+                   If None, uses value from config.yaml.
         """
+        # Load config to get mode if not provided
+        config = load_config()
+        self.mode = mode or config.get("mode", "demo")
+        
         self.executor = CRUDExecutor(
             scoring_method=scoring_method,
             top_k=top_k,
-            score_threshold=score_threshold
+            score_threshold=score_threshold,
+            mode=self.mode
         )
         self.trace_writer = TraceWriter()
         
@@ -296,6 +308,12 @@ class SemanticXPathPipeline:
         print("=" * 60)
         print("Semantic XPath Pipeline - CRUD Operations")
         print("=" * 60)
+        print(f"Mode: {self.mode.upper()}")
+        if self.mode == "demo":
+            print("  (Tree evolves across queries)")
+        else:
+            print("  (Tree resets for each query)")
+        print("-" * 60)
         print("Commands:")
         print("  - Natural language query for CRUD operations")
         print("  - 'stats' - Session statistics")
@@ -384,6 +402,7 @@ def main():
     default_top_k = executor_config.get("top_k", 5)
     default_threshold = executor_config.get("score_threshold", 0.5)
     default_method = executor_config.get("scoring_method", "entailment")
+    default_mode = config.get("mode", "demo")
     
     parser = argparse.ArgumentParser(description="Semantic XPath Pipeline - CRUD Operations")
     parser.add_argument("--top-k", type=int, default=None, 
@@ -393,6 +412,9 @@ def main():
     parser.add_argument("--scoring", "-s", type=str, default=None,
                         choices=["llm", "entailment", "cosine"],
                         help=f"Scoring method: llm, entailment, or cosine (default from config: {default_method})")
+    parser.add_argument("--mode", "-m", type=str, default=None,
+                        choices=["demo", "eval"],
+                        help=f"Pipeline mode: demo (evolving tree) or eval (single-turn) (default from config: {default_mode})")
     parser.add_argument("--query", "-q", type=str, default=None,
                         help="Single query to execute (non-interactive)")
     
@@ -401,7 +423,8 @@ def main():
     pipeline = SemanticXPathPipeline(
         top_k=args.top_k, 
         score_threshold=args.threshold,
-        scoring_method=args.scoring
+        scoring_method=args.scoring,
+        mode=args.mode
     )
     
     if args.query:

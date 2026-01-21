@@ -33,8 +33,9 @@ from content_creator import NodeCreator, NodeUpdater, ContentGenerationResult, C
 
 logger = logging.getLogger(__name__)
 
-# Result directory for modified trees
-RESULT_DIR = Path(__file__).parent.parent / "result"
+# Result directories for modified trees
+DEMO_DIR = Path(__file__).parent.parent / "result" / "demo"
+EVAL_DIR = Path(__file__).parent.parent / "result" / "eval"
 
 
 class StepTimer:
@@ -101,7 +102,8 @@ class CRUDExecutor:
         self,
         scoring_method: str = None,
         top_k: int = None,
-        score_threshold: float = None
+        score_threshold: float = None,
+        mode: str = "demo"
     ):
         """
         Initialize the CRUD executor.
@@ -110,9 +112,12 @@ class CRUDExecutor:
             scoring_method: Scoring method for semantic XPath
             top_k: Number of top results to consider
             score_threshold: Minimum score threshold
+            mode: Pipeline mode - "demo" (evolving tree) or "eval" (single-turn)
         """
-        # Ensure result directory exists
-        RESULT_DIR.mkdir(parents=True, exist_ok=True)
+        # Set mode and determine result directory
+        self.mode = mode
+        result_dir = EVAL_DIR if mode == "eval" else DEMO_DIR
+        result_dir.mkdir(parents=True, exist_ok=True)
         
         # Initialize components
         self.intent_classifier = IntentClassifier()
@@ -127,12 +132,15 @@ class CRUDExecutor:
         self.node_deleter = NodeDeleter()
         self.node_inserter = NodeInserter()
         # Store modified trees in result directory
-        self.version_manager = VersionManager(base_directory=RESULT_DIR)
+        self.version_manager = VersionManager(base_directory=result_dir)
         self.node_creator = NodeCreator()
         self.node_updater = NodeUpdater()
         
         # Store reference to tree for modifications
         self._tree = None
+        
+        # Eval mode counter for unique filenames
+        self._eval_counter = 0
     
     @property
     def tree(self) -> ET.ElementTree:
@@ -151,6 +159,11 @@ class CRUDExecutor:
         Returns:
             Dict with operation results, traces, timing info, and modified tree info
         """
+        # In eval mode, reset tree to original before each query
+        if self.mode == "eval":
+            self._tree = None
+            self._eval_counter += 1
+        
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         timer = StepTimer()
         
@@ -285,11 +298,14 @@ class CRUDExecutor:
         timer.start("Save Version")
         version_info = None
         if deleted_paths:
+            # Use custom name for eval mode (unique per query)
+            custom_name = f"eval_{self._eval_counter:03d}" if self.mode == "eval" else None
             version_info = self.version_manager.save_version(
                 tree,
                 self.executor.memory_path,
                 operation="DELETE",
-                changes={"deleted_nodes": deleted_paths}
+                changes={"deleted_nodes": deleted_paths},
+                custom_name=custom_name
             )
         timer.stop()
         
@@ -394,11 +410,14 @@ class CRUDExecutor:
         timer.start("Save Version")
         version_info = None
         if updated_paths:
+            # Use custom name for eval mode (unique per query)
+            custom_name = f"eval_{self._eval_counter:03d}" if self.mode == "eval" else None
             version_info = self.version_manager.save_version(
                 tree,
                 self.executor.memory_path,
                 operation="UPDATE",
-                changes={"updated_nodes": updated_paths}
+                changes={"updated_nodes": updated_paths},
+                custom_name=custom_name
             )
         timer.stop()
         
@@ -499,6 +518,8 @@ class CRUDExecutor:
         timer.start("Save Version")
         version_info = None
         if insert_result.success:
+            # Use custom name for eval mode (unique per query)
+            custom_name = f"eval_{self._eval_counter:03d}" if self.mode == "eval" else None
             version_info = self.version_manager.save_version(
                 tree,
                 self.executor.memory_path,
@@ -507,7 +528,8 @@ class CRUDExecutor:
                     "created_node": insert_result.node_path,
                     "parent_path": insertion_point.parent_path,
                     "position": insertion_point.position
-                }
+                },
+                custom_name=custom_name
             )
         timer.stop()
         

@@ -1,0 +1,43 @@
+CRUD Operation: UPDATE
+User Query: update all the museum with chinese foods
+Full Query: Update(/Itinerary/Day/POI[sem(content =~ "museum")])
+Timestamp: 20260121_103033_042474
+Success: True
+============================================================
+
+Intent Classification:
+----------------------------------------
+  Type: UPDATE
+  XPath Hint: museums
+  Confidence: 0.85
+  Details: {
+    "target": "all the museums",
+    "changes": {
+        "food": "Chinese"
+    }
+}
+
+XPath Query: /Itinerary/Day/POI[sem(content =~ "museum")]
+
+=== UPDATE Operation Results ===
+Updated: 2 node(s)
+
+
+1. Itinerary > Day 2 > Royal Ontario Museum
+   Success: True
+   Changes:
+     description: World-renowned museum showcasing art, culture, and natural history. -> World-renowned museum showcasing art, culture, and natural history. Enjoy a selection of Chinese cuisine at the museum's café, offering a variety of traditional dishes.
+     highlights: ['Dinosaurs', 'Chinese architecture', 'Bloor Street design'] -> ['Dinosaurs', 'Chinese architecture', 'Bloor Street design', 'Chinese cuisine']
+
+2. Itinerary > Day 1 > Art Gallery of Ontario
+   Success: True
+   Changes:
+     description: Explore Canadian, European, and contemporary art in a Frank Gehry-designed building. -> Explore Canadian, European, and contemporary art in a Frank Gehry-designed building. After your visit, enjoy a selection of Chinese cuisine at the gallery's dining area.
+     highlights: ['Group of Seven', 'Modern architecture'] -> ['Group of Seven', 'Modern architecture', 'Chinese cuisine']
+
+============================================================
+Tree Version:
+----------------------------------------
+  Version: 0
+  Path: /Users/rwu/dev/LLM-VM/result/eval/eval_003.xml
+  Operation: UPDATE

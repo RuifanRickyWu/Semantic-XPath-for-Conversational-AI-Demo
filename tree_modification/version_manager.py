@@ -44,7 +44,8 @@ class VersionManager:
         tree: ET.ElementTree,
         original_path: Path,
         operation: str,
-        changes: dict = None
+        changes: dict = None,
+        custom_name: str = None
     ) -> TreeVersion:
         """
         Save a new version of the tree.
@@ -54,6 +55,8 @@ class VersionManager:
             original_path: Path to the original file
             operation: Description of the operation that triggered this version
             changes: Summary of changes made
+            custom_name: Optional custom filename (without .xml extension).
+                        If provided, skips versioning and uses this name directly.
             
         Returns:
             TreeVersion with version info
@@ -66,15 +69,22 @@ class VersionManager:
         else:
             output_dir = original_path.parent
         
-        # Get the base name without any version suffix
-        base_name = self._get_base_name(original_path)
-        
-        # Find next version number
-        next_version = self._get_next_version(output_dir, base_name)
-        
-        # Create versioned filename
-        versioned_filename = f"{base_name}_v{next_version}.xml"
-        versioned_path = output_dir / versioned_filename
+        # Use custom name if provided, otherwise use versioning
+        if custom_name:
+            versioned_filename = f"{custom_name}.xml"
+            versioned_path = output_dir / versioned_filename
+            next_version = 0  # No version tracking for custom names
+            base_name = custom_name
+        else:
+            # Get the base name without any version suffix
+            base_name = self._get_base_name(original_path)
+            
+            # Find next version number
+            next_version = self._get_next_version(output_dir, base_name)
+            
+            # Create versioned filename
+            versioned_filename = f"{base_name}_v{next_version}.xml"
+            versioned_path = output_dir / versioned_filename
         
         # Save the tree
         try:
@@ -97,8 +107,9 @@ class VersionManager:
                 changes=changes or {}
             )
             
-            # Update version history
-            self._update_history(output_dir, base_name, version_info)
+            # Update version history (skip for custom names - used in eval mode)
+            if not custom_name:
+                self._update_history(output_dir, base_name, version_info)
             
             logger.info(f"Saved version {next_version} to {versioned_path}")
             print(f"📁 Tree saved: {versioned_path}")

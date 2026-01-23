@@ -183,6 +183,9 @@ Update the node content based on the user's request.
                 updated_fields = parsed.get("fields", parsed.get("updated_fields", parsed))
                 reasoning = parsed.get("reasoning", "")
                 
+                # Check if LLM suggests a new type (e.g., POI -> Restaurant)
+                final_type = parsed.get("new_type", node_type)
+                
                 # Merge with original (preserve fields not mentioned)
                 merged = dict(original_dict)
                 merged.pop("type", None)  # Don't include type in fields
@@ -196,8 +199,13 @@ Update the node content based on the user's request.
                         changes[key] = (None, new_value)
                     merged[key] = new_value
                 
-                # Generate XML
-                element = dict_to_xml_element(node_type, merged)
+                # Track type change if applicable
+                if final_type != node_type:
+                    changes["_node_type"] = (node_type, final_type)
+                    reasoning = f"[Type: {node_type} → {final_type}] " + reasoning
+                
+                # Generate XML with the final type (may be new_type)
+                element = dict_to_xml_element(final_type, merged)
                 xml_string = ET.tostring(element, encoding="unicode")
                 
                 return ContentUpdateResult(

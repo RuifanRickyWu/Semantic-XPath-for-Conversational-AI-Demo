@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <Itinerary>
   <Day index="1">
     <POI>
@@ -36,17 +36,20 @@
         <highlight>Vibrant atmosphere</highlight>
       </highlights>
     </Restaurant>
-    <POI>
-      <name>Art Gallery of Ontario</name>
+    <Restaurant>
+      <name>DaiLo</name>
       <time_block>2:30 PM - 4:00 PM</time_block>
-      <description>Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.</description>
+      <description>A modern Chinese restaurant offering a fusion of traditional Chinese flavors with contemporary techniques. Known for its creative dishes and vibrant atmosphere.</description>
       <travel_method>Walk</travel_method>
-      <expected_cost>CAD 25</expected_cost>
+      <expected_cost>CAD 40</expected_cost>
       <highlights>
-        <highlight>Group of Seven</highlight>
-        <highlight>Modern architecture</highlight>
+        <highlight>Fusion cuisine</highlight>
+        <highlight>Dim sum</highlight>
+        <highlight>Creative cocktails</highlight>
+        <highlight>Vibrant atmosphere</highlight>
+        <highlight>Chef's tasting menu</highlight>
       </highlights>
-    </POI>
+    </Restaurant>
     <Restaurant>
       <name>Buca Yorkville</name>
       <time_block>5:30 PM - 7:00 PM</time_block>
@@ -68,18 +71,6 @@
         <highlight>Live jazz</highlight>
         <highlight>Intimate atmosphere</highlight>
       </highlights>
-      <Restaurant>
-        <name>Maple Leaf Diner</name>
-        <time_block>8:00 PM - 9:30 PM</time_block>
-        <description>A classic Canadian diner offering hearty comfort food with a modern twist, perfect for winding down after a day of exploration.</description>
-        <travel_method>Walk</travel_method>
-        <expected_cost>CAD 20-35</expected_cost>
-        <highlights>
-          <highlight>All-day breakfast</highlight>
-          <highlight>Poutine specialties</highlight>
-          <highlight>Retro decor</highlight>
-        </highlights>
-      </Restaurant>
     </Restaurant>
   </Day>
   <Day index="2">
@@ -94,18 +85,20 @@
         <highlight>Bohemian neighborhood</highlight>
       </highlights>
     </Restaurant>
-    <POI>
-      <name>Royal Ontario Museum</name>
-      <time_block>11:00 AM - 1:00 PM</time_block>
-      <description>World-renowned museum showcasing art, culture, and natural history.</description>
+    <Restaurant>
+      <name>Mother's Dumplings</name>
+      <time_block>11:30 AM - 1:00 PM</time_block>
+      <description>A popular casual Chinese restaurant known for its handmade dumplings and Northern Chinese comfort dishes. The menu focuses on freshly prepared dumplings with a variety of fillings, along with classic noodle and stir-fry options.</description>
       <travel_method>Walk</travel_method>
-      <expected_cost>CAD 23</expected_cost>
+      <expected_cost>CAD 18</expected_cost>
       <highlights>
-        <highlight>Dinosaurs</highlight>
-        <highlight>Chinese architecture</highlight>
-        <highlight>Bloor Street design</highlight>
+        <highlight>Handmade dumplings</highlight>
+        <highlight>Pan-fried pork dumplings</highlight>
+        <highlight>Vegetarian dumpling options</highlight>
+        <highlight>Casual local atmosphere</highlight>
+        <highlight>Quick lunch-friendly service</highlight>
       </highlights>
-    </POI>
+    </Restaurant>
     <Restaurant>
       <name>Annona Restaurant</name>
       <time_block>1:30 PM - 2:30 PM</time_block>

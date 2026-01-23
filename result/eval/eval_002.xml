@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <Itinerary>
   <Day index="1">
     <POI>
@@ -36,6 +36,20 @@
         <highlight>Vibrant atmosphere</highlight>
       </highlights>
     </Restaurant>
+    <POI>
+      <name>DaiLo</name>
+      <time_block>2:30 PM - 4:00 PM</time_block>
+      <description>A modern Chinese restaurant offering a fusion of traditional Chinese flavors with a contemporary twist. Known for its innovative dishes and stylish ambiance, it's a perfect spot for an artistic culinary experience.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 40</expected_cost>
+      <highlights>
+        <highlight>Fusion cuisine</highlight>
+        <highlight>Innovative dishes</highlight>
+        <highlight>Stylish ambiance</highlight>
+        <highlight>Signature cocktails</highlight>
+        <highlight>Chef's tasting menu</highlight>
+      </highlights>
+    </POI>
     <Restaurant>
       <name>Buca Yorkville</name>
       <time_block>5:30 PM - 7:00 PM</time_block>
@@ -71,6 +85,20 @@
         <highlight>Bohemian neighborhood</highlight>
       </highlights>
     </Restaurant>
+    <POI>
+      <name>Mother's Dumplings</name>
+      <time_block>11:30 AM - 1:00 PM</time_block>
+      <description>A popular casual Chinese restaurant known for its handmade dumplings and Northern Chinese comfort dishes. The menu focuses on freshly prepared dumplings with a variety of fillings, along with classic noodle and stir-fry options.</description>
+      <travel_method>Walk</travel_method>
+      <expected_cost>CAD 18</expected_cost>
+      <highlights>
+        <highlight>Handmade dumplings</highlight>
+        <highlight>Pan-fried pork dumplings</highlight>
+        <highlight>Vegetarian dumpling options</highlight>
+        <highlight>Casual local atmosphere</highlight>
+        <highlight>Quick lunch-friendly service</highlight>
+      </highlights>
+    </POI>
     <Restaurant>
       <name>Annona Restaurant</name>
       <time_block>1:30 PM - 2:30 PM</time_block>

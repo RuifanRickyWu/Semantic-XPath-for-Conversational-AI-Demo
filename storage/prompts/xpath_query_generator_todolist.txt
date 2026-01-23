@@ -32,36 +32,36 @@ TodoList (root)
 
 ### Semantic Predicates
 
-THREE types of semantic predicates:
+THREE types of semantic predicates (Paper Formalization):
 
-1. **sem()** - Score the node's OWN content only
+1. **atom()** - Atomic predicate Atom(u, φ) on the node's OWN content
    - Use when the property can be determined from the node itself
-   - Syntax: sem(content =~ "value")
-   - Example: SubTask[sem(content =~ "testing")] - subtasks about testing
+   - Syntax: atom(content =~ "value")
+   - Example: SubTask[atom(content =~ "testing")] - subtasks about testing
 
-2. **exist()** - At least one child matches (Noisy-OR aggregation)
+2. **agg_exists()** - Existential aggregation Agg∃ (max over children)
    - Use when checking if ANY child of a container has a property
-   - Syntax: exist(ChildType[sem(content =~ "value")])
-   - Example: Project[exist(Task[sem(content =~ "urgent")])] - projects with at least one urgent task
+   - Syntax: agg_exists(ChildType[atom(content =~ "value")])
+   - Example: Project[agg_exists(Task[atom(content =~ "urgent")])] - projects with at least one urgent task
 
-3. **mass()** - General prevalence among children (Beta-Bernoulli aggregation)
+3. **agg_prev()** - Prevalence aggregation Aggprev (average over children)
    - Use when the property characterizes the container as a whole
-   - Syntax: mass(ChildType[sem(content =~ "value")])
-   - Example: Project[mass(Task[sem(content =~ "completed")])] - mostly completed projects
+   - Syntax: agg_prev(ChildType[atom(content =~ "value")])
+   - Example: Project[agg_prev(Task[atom(content =~ "completed")])] - mostly completed projects
 
 ### Logical Operators
-- AND: sem(content =~ "X") AND sem(content =~ "Y")
-- OR: sem(content =~ "X") OR sem(content =~ "Y")
-- Aggregation AND/OR: exist(...) AND exist(...), exist(...) OR mass(...)
+- AND: atom(content =~ "X") AND atom(content =~ "Y") - conjunction (product)
+- OR: atom(content =~ "X") OR atom(content =~ "Y") - disjunction (max)
+- Aggregation AND/OR: agg_exists(...) AND agg_exists(...), agg_exists(...) OR agg_prev(...)
 
 ## Decision Guide: When to Use Each Predicate
 
-| Query Pattern | Predicate | Reasoning |
-|--------------|-----------|-----------|
-| "urgent subtask" | sem() | Property of the subtask itself |
-| "project with urgent tasks" | exist() | Checking if any child is urgent |
-| "completed project" | mass() | Overall completion status |
-| "active project" | mass() | General state of tasks |
+| Query Pattern | Predicate | Paper Formalization |
+|--------------|-----------|---------------------|
+| "urgent subtask" | atom() | Atom(u, φ) from attr(u) |
+| "project with urgent tasks" | agg_exists() | Agg∃ = max over Sφ(u) |
+| "completed project" | agg_prev() | Aggprev = avg over Sφ(u) |
+| "active project" | agg_prev() | Aggprev = avg over Sφ(u) |
 
 ## Examples
 
@@ -71,11 +71,11 @@ Output:
 
 User: frontend projects
 Output:
-/TodoList/Project[sem(content =~ "frontend")]
+/TodoList/Project[atom(content =~ "frontend")]
 
 User: backend projects
 Output:
-/TodoList/Project[sem(content =~ "backend")]
+/TodoList/Project[atom(content =~ "backend")]
 
 User: the third task globally
 Output:
@@ -83,7 +83,7 @@ Output:
 
 User: first urgent subtask
 Output:
-(/TodoList/Project/Task/SubTask[sem(content =~ "urgent")])[1]
+(/TodoList/Project/Task/SubTask[atom(content =~ "urgent")])[1]
 
 User: tasks in second project
 Output:
@@ -91,7 +91,7 @@ Output:
 
 User: last task in backend project
 Output:
-/TodoList/Project[sem(content =~ "backend")]/Task[-1]
+/TodoList/Project[atom(content =~ "backend")]/Task[-1]
 
 User: globally 5th subtask
 Output:
@@ -99,66 +99,66 @@ Output:
 
 User: all subtasks in a bug-related task
 Output:
-/TodoList/Project/Task[sem(content =~ "bug")]/SubTask
+/TodoList/Project/Task[atom(content =~ "bug")]/SubTask
 
 User: second documentation subtask in a feature task
 Output:
-/TodoList/Project/Task[sem(content =~ "feature")]/SubTask[sem(content =~ "documentation")][2]
+/TodoList/Project/Task[atom(content =~ "feature")]/SubTask[atom(content =~ "documentation")][2]
 
 User: projects that have urgent items
 Output:
-/TodoList/Project[exist(Task[sem(content =~ "urgent")])]
+/TodoList/Project[agg_exists(Task[atom(content =~ "urgent")])]
 
 User: projects with at least one blocked item
 Output:
-/TodoList/Project[exist(Task[sem(content =~ "blocked")])]
+/TodoList/Project[agg_exists(Task[atom(content =~ "blocked")])]
 
 User: tasks that have any pending subtask
 Output:
-/TodoList/Project/Task[exist(SubTask[sem(content =~ "pending")])]
+/TodoList/Project/Task[agg_exists(SubTask[atom(content =~ "pending")])]
 
 User: projects that are mostly completed
 Output:
-/TodoList/Project[mass(Task[sem(content =~ "completed")])]
+/TodoList/Project[agg_prev(Task[atom(content =~ "completed")])]
 
 User: tasks where subtasks are generally tested
 Output:
-/TodoList/Project/Task[mass(SubTask[sem(content =~ "tested")])]
+/TodoList/Project/Task[agg_prev(SubTask[atom(content =~ "tested")])]
 
 User: tasks in projects with blocking issues
 Output:
-/TodoList/Project[exist(Task[sem(content =~ "blocking")])]/Task
+/TodoList/Project[agg_exists(Task[atom(content =~ "blocking")])]/Task
 
 User: subtasks in tasks with any failed tests
 Output:
-/TodoList/Project/Task[exist(SubTask[sem(content =~ "failed")])]/SubTask
+/TodoList/Project/Task[agg_exists(SubTask[atom(content =~ "failed")])]/SubTask
 
 User: first project with urgent items
 Output:
-(/TodoList/Project[exist(Task[sem(content =~ "urgent")])])[1]
+(/TodoList/Project[agg_exists(Task[atom(content =~ "urgent")])])[1]
 
 User: urgent and backend subtasks in active projects
 Output:
-/TodoList/Project[mass(Task[sem(content =~ "active")])]/Task/SubTask[sem(content =~ "urgent") AND sem(content =~ "backend")]
+/TodoList/Project[agg_prev(Task[atom(content =~ "active")])]/Task/SubTask[atom(content =~ "urgent") AND atom(content =~ "backend")]
 
 User: bug or security related subtasks
 Output:
-/TodoList/Project/Task/SubTask[sem(content =~ "bug") OR sem(content =~ "security")]
+/TodoList/Project/Task/SubTask[atom(content =~ "bug") OR atom(content =~ "security")]
 
 User: projects with both urgent tasks and blocked tasks
 Output:
-/TodoList/Project[exist(Task[sem(content =~ "urgent")]) AND exist(Task[sem(content =~ "blocked")])]
+/TodoList/Project[agg_exists(Task[atom(content =~ "urgent")]) AND agg_exists(Task[atom(content =~ "blocked")])]
 
 User: testing subtasks
 Output:
-/TodoList/Project/Task/SubTask[sem(content =~ "testing")]
+/TodoList/Project/Task/SubTask[atom(content =~ "testing")]
 
 User: blocked subtasks
 Output:
-/TodoList/Project/Task/SubTask[sem(content =~ "blocked")]
+/TodoList/Project/Task/SubTask[atom(content =~ "blocked")]
 
 User: completed subtasks in active projects
 Output:
-/TodoList/Project[mass(Task[sem(content =~ "active")])]/Task/SubTask[sem(content =~ "completed")]
+/TodoList/Project[agg_prev(Task[atom(content =~ "active")])]/Task/SubTask[atom(content =~ "completed")]
 
 Now convert the following user request into a query.

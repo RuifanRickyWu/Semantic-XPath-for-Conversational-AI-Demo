@@ -1,32 +1,35 @@
 """
 Query Parser - Parses Semantic XPath query strings into structured QueryStep objects.
 
-New Syntax (v2):
+Paper Formalization Syntax:
 - Index: /Day[@index='2'] - XPath-style attribute index
-- Semantic: /POI[sem(content =~ "museum")] - local node scoring
-- Existential: /Day[exist(POI[sem(content =~ "museum")])] - Noisy-OR over children
-- Prevalence: /Day[mass(POI[sem(content =~ "artistic")])] - Beta-Bernoulli over children
-- Logical: sem(X) AND sem(Y), sem(X) OR sem(Y)
+- Atomic: /POI[atom(content =~ "museum")] - local node scoring (Atom(u, φ))
+- Existential: /Day[agg_exists(POI[atom(...)])] - Agg∃ aggregation (max over children)
+- Prevalence: /Day[agg_prev(POI[atom(...)])] - Aggprev aggregation (avg over children)
+- Conjunction: atom(X) AND atom(Y) - ψ₁ ∧ ψ₂ (product of scores)
+- Disjunction: atom(X) OR atom(Y) - ψ₁ ∨ ψ₂ (max of scores)
 - Global index: (/Itinerary/Day/POI)[5] or (/Itinerary/Day/POI)[1:3]
 """
 
 import re
 from typing import List, Optional, Tuple
 
-from .models import IndexRange, QueryStep, SemanticCondition, CompoundPredicate
+from .models import IndexRange, QueryStep, AtomicPredicate, CompoundPredicate
 
 
 class QueryParser:
     """
     Parses Semantic XPath queries into structured steps.
     
+    Paper Formalization - Query Q = s₁/s₂/.../sₘ where each step sᵢ = (axisᵢ, κᵢ, ψᵢ)
+    
     Supports:
-    - Type matching: /Itinerary/Day/POI
-    - Attribute index: Day[@index='2']
+    - Type matching: /Itinerary/Day/POI (κ - node type)
+    - Attribute index: Day[@index='2'] (ι - positional constraint)
     - Positional index: POI[2], POI[-1], POI[1:3]
-    - Semantic predicates: POI[sem(content =~ "museum")]
-    - Aggregation predicates: Day[exist(POI[sem(...)])], Day[mass(POI[sem(...)])]
-    - Logical operators: sem(X) AND sem(Y), sem(X) OR sem(Y)
+    - Atomic predicates: POI[atom(content =~ "museum")] (Atom(u, φ))
+    - Hierarchical predicates: Day[agg_exists(POI[atom(...)])], Day[agg_prev(POI[atom(...)])]
+    - Logical operators: atom(X) AND atom(Y), atom(X) OR atom(Y) (ψ₁ ∧ ψ₂, ψ₁ ∨ ψ₂)
     - Global indexing: (/Itinerary/Day/POI)[5]
     """
     
@@ -140,9 +143,9 @@ class QueryParser:
                 index = IndexRange(start=idx)
                 continue
             
-            # Check for semantic predicates (sem, exist, mass, AND, OR)
+            # Check for predicates (atom, agg_exists, agg_prev, AND, OR)
             # Use _parse_logical_predicate which handles all combinations
-            if any(kw in bracket_content for kw in ['sem(', 'exist(', 'mass(']):
+            if any(kw in bracket_content for kw in ['atom(', 'agg_exists(', 'agg_prev(']):
                 predicate = self._parse_logical_predicate(bracket_content)
                 predicate_str = bracket_content
                 continue
@@ -161,11 +164,16 @@ class QueryParser:
     
     def _parse_aggregation(self, operator: str, inner: str) -> CompoundPredicate:
         """
-        Parse exist() or mass() aggregation.
+        Parse agg_exists() or agg_prev() hierarchical aggregation.
+        
+        Paper Formalization:
+        - Atom(u, φ) = Agg({Atom(x, φ) | x ∈ Sφ(u)}) for hierarchical predicates
+        - AGG_EXISTS uses Agg∃(A) = max A
+        - AGG_PREV uses Aggprev(A) = (1/|A|)∑A
         
         Formats:
-        - exist(POI[sem(content =~ "museum")]) - with child type
-        - exist(sem(content =~ "museum")) - without child type (applies to all children)
+        - agg_exists(POI[atom(content =~ "museum")]) - with child type (Sφ(u) = children of type)
+        - agg_exists(atom(content =~ "museum")) - without child type (all children)
         """
         # Try to match ChildType[predicate] pattern
         child_type_match = re.match(r'^(\w+)\s*\[\s*(.+)\s*\]$', inner, re.DOTALL)
@@ -193,53 +201,53 @@ class QueryParser:
     
     def _parse_logical_predicate(self, pred_str: str) -> CompoundPredicate:
         """
-        Parse a predicate that may contain AND/OR operators.
+        Parse a predicate expression ψ that may contain AND/OR operators.
         
-        Handles:
-        - sem(content =~ "value")
-        - sem(X) AND sem(Y)
-        - sem(X) OR sem(Y)
-        - exist(ChildType[sem(...)]) AND exist(ChildType[sem(...)])
-        - mass(ChildType[sem(...)]) OR mass(ChildType[sem(...)])
+        Paper Formalization - Score(u, ψ):
+        - atom(content =~ "value") → Atom(u, φ)
+        - ψ₁ AND ψ₂ → Score(u, ψ₁) · Score(u, ψ₂)
+        - ψ₁ OR ψ₂ → max{Score(u, ψ₁), Score(u, ψ₂)}
+        - agg_exists(Type[ψ]) → Agg∃({Atom(x, φ) | x ∈ Sφ(u)})
+        - agg_prev(Type[ψ]) → Aggprev({Atom(x, φ) | x ∈ Sφ(u)})
         """
         pred_str = pred_str.strip()
         
-        # Check for AND (split carefully to avoid breaking on AND inside quotes)
+        # Check for AND (conjunction: ψ₁ ∧ ψ₂)
         and_parts = self._split_logical_operator(pred_str, ' AND ')
         if len(and_parts) > 1:
             conditions = [self._parse_logical_predicate(p) for p in and_parts]
             return CompoundPredicate(operator="AND", conditions=conditions)
         
-        # Check for OR
+        # Check for OR (disjunction: ψ₁ ∨ ψ₂)
         or_parts = self._split_logical_operator(pred_str, ' OR ')
         if len(or_parts) > 1:
             conditions = [self._parse_logical_predicate(p) for p in or_parts]
             return CompoundPredicate(operator="OR", conditions=conditions)
         
-        # Check for exist() aggregation
-        exist_match = re.match(r'^exist\s*\(\s*(.+)\s*\)$', pred_str, re.DOTALL)
-        if exist_match:
-            return self._parse_aggregation("EXIST", exist_match.group(1).strip())
+        # Check for agg_exists() aggregation (Agg∃ = max)
+        agg_exists_match = re.match(r'^agg_exists\s*\(\s*(.+)\s*\)$', pred_str, re.DOTALL)
+        if agg_exists_match:
+            return self._parse_aggregation("AGG_EXISTS", agg_exists_match.group(1).strip())
         
-        # Check for mass() aggregation
-        mass_match = re.match(r'^mass\s*\(\s*(.+)\s*\)$', pred_str, re.DOTALL)
-        if mass_match:
-            return self._parse_aggregation("MASS", mass_match.group(1).strip())
+        # Check for agg_prev() aggregation (Aggprev = avg)
+        agg_prev_match = re.match(r'^agg_prev\s*\(\s*(.+)\s*\)$', pred_str, re.DOTALL)
+        if agg_prev_match:
+            return self._parse_aggregation("AGG_PREV", agg_prev_match.group(1).strip())
         
-        # Single sem() condition
-        sem_match = re.match(r'^sem\s*\(\s*(\w+)\s*=~\s*["\']([^"\']+)["\']\s*\)$', pred_str)
-        if sem_match:
-            field = sem_match.group(1)
-            value = sem_match.group(2)
+        # Atomic predicate: atom(field =~ "value")
+        atom_match = re.match(r'^atom\s*\(\s*(\w+)\s*=~\s*["\']([^"\']+)["\']\s*\)$', pred_str)
+        if atom_match:
+            field = atom_match.group(1)
+            value = atom_match.group(2)
             return CompoundPredicate(
-                operator="SEM",
-                conditions=[SemanticCondition(field=field, value=value)]
+                operator="ATOM",
+                conditions=[AtomicPredicate(field=field, value=value)]
             )
         
         # Fallback: treat as simple value (for backward compatibility during transition)
         return CompoundPredicate(
-            operator="SEM",
-            conditions=[SemanticCondition(field="content", value=pred_str)]
+            operator="ATOM",
+            conditions=[AtomicPredicate(field="content", value=pred_str)]
         )
     
     def _parse_index(self, index_str: str) -> Optional[IndexRange]:

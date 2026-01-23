@@ -1,146 +1,213 @@
-# Hierarchical Semantic XPath with Score Fusion
+# Hierarchical Retrieval with Semantic Predicates
 
-We formalize **Semantic XPath** as a hierarchical retrieval framework over tree-structured data. The framework extends classical XPath with semantic predicates and score aggregation, while preserving stepwise structural semantics and enabling principled score combination across hierarchy levels.
+We formalize **Hierarchical Retrieval** as a structure-aware retrieval mechanism for localizing relevant substructure of conversational history over tree-structured data.
 
 ## Data Model
 
-Structured data are represented as a rooted tree:
+Conversational history is represented as a rooted tree:
 
 - Tree: `T = (V, E, r)`
-- `V`: set of nodes  
-- `E`: set of edges  
-- `r`: root node  
+- `V`: set of nodes (versioned units of conversational state)
+- `E ⊆ V × V`: parent-child relations between versions
+- `r ∈ V`: root (initial conversational state)
 
-Each node `v ∈ V` has a type `κ(v)` (e.g., *Day*, *POI*, *Restaurant*).
+Each node `v ∈ V` has:
+- A node type `κ(v) ∈ K` (e.g., Turn, Plan, Day, POI)
+- A (possibly empty) set of textual attributes `attr(v)`
 
-- Leaf nodes may contain textual attributes.
-- Internal nodes may be non-textual and derive semantics from descendants.
+## Query Generation
 
-## Semantic XPath Queries
+A query generator produces a **hierarchical retrieval query** that specifies a navigation path over the conversational history tree.
 
-A Semantic XPath query is an ordered sequence of query steps:
+Formally, a query is an XPath-style path expression:
 
-- `Q = <q1, q2, ..., qn>`
+- `Q = s₁/s₂/.../sₘ`
 
-Each step is a triple:
+where each step:
 
-- `qi = (κi, pi, ιi)`
+- `sᵢ = (axisᵢ, κᵢ, ψᵢ)`
 
-where:
-- `κi` is the target node type,
-- `pi` is an optional semantic predicate,
-- `ιi` is an optional positional constraint.
+consists of:
+- An axis `axisᵢ ∈ {child, desc}` (children or descendants)
+- A node-type test `κᵢ ∈ K`
+- A (possibly empty) semantic predicate expression `ψᵢ`
 
-### Query Execution Semantics
+## Query Execution
 
-Query execution follows standard XPath semantics. Starting from the root candidate set:
+Query execution follows the standard XPath execution model: evaluation proceeds by recursively consuming path steps while propagating a set of candidate nodes over the conversational history tree.
 
-- `C0 = {r}`
+### Weighted Node Sets
 
-Each step applies structural expansion, predicate filtering, and positional selection:
+We represent intermediate results as weighted node sets:
 
-- `Ci = Select_ιi( Filter_pi( Expand_κi(Ci-1) ) )`
+- `W ⊆ V × [0, 1]`
 
-Structural operations are deterministic. Semantic predicates introduce probabilistic scoring.
+where each pair `(v, w)` associates a history node `v` with a relevance weight `w`.
 
-## Semantic Predicates
+### Evaluator
 
-Semantic XPath v2 introduces three predicate types with clear semantics:
+We define an evaluation function:
 
-### 1. sem() - Local Semantic Match
+- `Eval : P(V × [0, 1]) × Q → P(V × [0, 1])`
 
-Scores the node's **own content only** (no subtree aggregation).
+where `Q` is the set of all hierarchical path expressions. The evaluator is defined recursively as:
 
-**Syntax:** `sem(content =~ "value")`
+```
+Eval(W, Q) = {
+  W,                        if Q = ε (empty)
+  Eval(Step(W, s), Q'),     if Q = s/Q'
+}
+```
 
-**Example:** `POI[sem(content =~ "museum")]`
+Execution is initialized from the root:
 
-For a node `v` with textual content `X_v`, the posterior probability is:
+- `Eval({(r, 1)}, Q)`
 
-- `π_v(c) = Pr(Z_v(c) = 1 | X_v)`
+## Step Semantics
 
-### 2. exist() - Existential Aggregation
+Each recursive step `Step(W, s)` expands the current node set structurally and then evaluates semantic predicates.
+
+### Structural Expansion
+
+For a node `v` and step `s = (axis, κ, ψ)`, let:
+
+- `Axis(v, axis) ∈ {Ch(v), Desc(v)}`
+
+where `Ch(v)` denotes children nodes and `Desc(v)` denotes descendant nodes. The typed candidate set is:
+
+- `Cand(v, s) = {u ∈ Axis(v, axis) | κ(u) = κ}`
+
+### Step Transition
+
+The one-step transition function is defined as:
+
+- `Step(W, s) = {(u, w · Score(u, ψ)) | (v,w)∈W, u∈Cand(v,s)}`
+
+Thus, each recursive step updates relevance weights according to semantic predicate evaluation.
+
+## Semantic Predicate Evaluation
+
+Semantic predicate evaluation assigns graded relevance scores in `[0, 1]` and is defined recursively over predicate structure.
+
+### Atomic Predicates - Atom(u, φ)
+
+An atomic semantic predicate `φ` evaluates a node `u` and returns a score:
+
+- `Atom(u, φ) ∈ [0, 1]`
+
+Atomic predicates may be:
+- **Local**: evaluated from `attr(u)`
+- **Hierarchical**: inferred from descendant nodes
+
+### Hierarchical Aggregation
+
+For a hierarchical predicate `φ`, let `Sφ(u) ⊆ Desc(u)` denote the set of evidence nodes. We define two aggregation operators:
+
+- `Agg∃(A) = max A` (existential - "at least one")
+- `Aggprev(A) = (1/|A|) Σ A` (prevalence - "on average")
+
+The hierarchical predicate score is then:
+
+- `Atom(u, φ) = Aggφ({Atom(x, φ) | x ∈ Sφ(u)})`
+
+### Predicate Composition - Score(u, ψ)
+
+For a composite predicate expression `ψ`, the score is defined as:
+
+```
+Score(u, ψ) = {
+  Atom(u, φ)                           if ψ = φ (atomic)
+  Score(u, ψ₁) · Score(u, ψ₂)          if ψ = ψ₁ ∧ ψ₂ (conjunction)
+  max{Score(u, ψ₁), Score(u, ψ₂)}      if ψ = ψ₁ ∨ ψ₂ (disjunction)
+}
+```
+
+## Syntax Reference
+
+### 1. atom() - Local Atomic Predicate
+
+Evaluates the node's **own content** (local attribute scoring).
+
+**Syntax:** `atom(content =~ "value")`
+
+**Example:** `POI[atom(content =~ "museum")]`
+
+**Paper:** `Atom(u, φ)` evaluated from `attr(u)`
+
+### 2. agg_exists() - Existential Aggregation
 
 Checks if **at least one child** of specified type matches the inner predicate.
 
-**Syntax:** `exist(ChildType[inner_predicate])`
+**Syntax:** `agg_exists(ChildType[inner_predicate])`
 
-**Example:** `Day[exist(POI[sem(content =~ "museum")])]`
+**Example:** `Day[agg_exists(POI[atom(content =~ "museum")])]`
 
-Uses **max** aggregation over children:
+**Paper:** `Atom(u, φ) = Agg∃({Atom(x, φ) | x ∈ Sφ(u)})` where `Agg∃(A) = max A`
 
-- `π_v(p) = max_{u ∈ ch(v)} π_u(p)`
-
-### 3. mass() - Prevalence Aggregation
+### 3. agg_prev() - Prevalence Aggregation
 
 Characterizes the **general prevalence** of a property among children.
 
-**Syntax:** `mass(ChildType[inner_predicate])`
+**Syntax:** `agg_prev(ChildType[inner_predicate])`
 
-**Example:** `Day[mass(POI[sem(content =~ "artistic")])]`
+**Example:** `Day[agg_prev(POI[atom(content =~ "artistic")])]`
 
-Uses **average** aggregation over children:
+**Paper:** `Atom(u, φ) = Aggprev({Atom(x, φ) | x ∈ Sφ(u)})` where `Aggprev(A) = (1/|A|) Σ A`
 
-- `π_v(p) = Σ_{u ∈ ch(v)} π_u(p) / |ch(v)|`
-
-## AND and OR Operators
-
-When a predicate contains multiple conditions, conjunction and disjunction are resolved.
+## Logical Operators
 
 ### Disjunction (OR)
 
-For a predicate `p = c1 OR c2 OR ... OR ck`, we use **max**:
+For a predicate `ψ = ψ₁ ∨ ψ₂`, use **max**:
 
-- `π_v(p) = max_{j=1..k} π_v(cj)`
+- `Score(u, ψ) = max{Score(u, ψ₁), Score(u, ψ₂)}`
 
 ### Conjunction (AND)
 
-For a predicate `p = c1 AND c2 AND ... AND ck`, we use **product**:
+For a predicate `ψ = ψ₁ ∧ ψ₂`, use **product**:
 
-- `π_v(p) = ∏_{j=1..k} π_v(cj)`
+- `Score(u, ψ) = Score(u, ψ₁) · Score(u, ψ₂)`
 
 ## Decision Guide: Choosing Predicates
 
-| Scenario | Predicate | Reasoning |
-|----------|-----------|-----------|
-| Property of the node itself | `sem()` | Score local content |
-| "Any child has property X" | `exist()` | Max over children |
-| "Children are generally X" | `mass()` | Average over children |
+| Scenario | Predicate | Paper Formalization |
+|----------|-----------|---------------------|
+| Property of the node itself | `atom()` | `Atom(u, φ)` from `attr(u)` |
+| "Any child has property X" | `agg_exists()` | `Agg∃ = max` over `Sφ(u)` |
+| "Children are generally X" | `agg_prev()` | `Aggprev = avg` over `Sφ(u)` |
 
 ## Score Fusion Across Query Steps
 
-For each returned node `u`, the final score is the **product** of all predicate scores along the execution path.
+For each returned node `u`, the final score is the **product** of all predicate scores along the execution path:
 
-Let `π_i(u)` denote the predicate score at step `i` along the execution path to `u`. The final relevance score is:
-
-- `Score(u, Q) = ∏_{i : pi ≠ ⊥} π_i(u)`
+- `Score(u, Q) = ∏_{i : ψᵢ ≠ ⊥} Score(u, ψᵢ)`
 
 ## Query Examples
 
 ### Find Museums in the Second Day
 
 ```xpath
-/Itinerary/Day[@index='2']/POI[sem(content =~ "museum")]
+/Itinerary/Day[@index='2']/POI[atom(content =~ "museum")]
 ```
 
 ### Find Museums and Art Galleries
 
 ```xpath
-/Itinerary/Day/POI[sem(content =~ "museum") OR sem(content =~ "art gallery")]
+/Itinerary/Day/POI[atom(content =~ "museum") OR atom(content =~ "art gallery")]
 ```
 
 ### Find an Artistic Day
 
 ```xpath
-/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]
 ```
 
-Each POI contributes local semantic evidence. The `mass` operator aggregates these scores using average.
+Each POI contributes local semantic evidence. The `agg_prev` operator aggregates these scores using average (`Aggprev`).
 
 ### Find Museums in an Artistic Day
 
 ```xpath
-/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
 ```
 
 - The `Day` node acquires a contextual score (e.g., artistic day = 0.8)
@@ -150,7 +217,7 @@ Each POI contributes local semantic evidence. The `mass` operator aggregates the
 ### Find Days with a Museum
 
 ```xpath
-/Itinerary/Day[exist(POI[sem(content =~ "museum")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")])]
 ```
 
-Uses max aggregation: day score is the highest museum score among its POIs.
+Uses existential aggregation (`Agg∃ = max`): day score is the highest museum score among its POIs.

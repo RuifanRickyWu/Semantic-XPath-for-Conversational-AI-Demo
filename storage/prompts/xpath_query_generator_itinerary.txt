@@ -32,38 +32,61 @@ Itinerary (root)
 
 ### Semantic Predicates
 
-THREE types of semantic predicates:
+THREE types of semantic predicates (Paper Formalization):
 
-1. **sem()** - Score the node's OWN content only
+1. **atom()** - Atomic predicate Atom(u, φ) on the node's OWN content
    - Use when the property can be determined from the node itself
-   - Syntax: sem(content =~ "value")
-   - Example: POI[sem(content =~ "museum")] - POIs that are museums
+   - Syntax: atom(content =~ "value")
+   - Example: POI[atom(content =~ "museum")] - POIs that are museums
 
-2. **exist()** - At least one child matches (Noisy-OR aggregation)
+2. **agg_exists()** - Existential aggregation Agg∃ (max over children)
    - Use when checking if ANY child of a container has a property
-   - Syntax: exist(ChildType[sem(content =~ "value")])
-   - Example: Day[exist(POI[sem(content =~ "museum")])] - Days with at least one museum
+   - Syntax: agg_exists(ChildType[atom(content =~ "value")])
+   - Example: Day[agg_exists(POI[atom(content =~ "museum")])] - Days with at least one museum
 
-3. **mass()** - General prevalence among children (Beta-Bernoulli aggregation)
+3. **agg_prev()** - Prevalence aggregation Aggprev (average over children)
    - Use when the property characterizes the container as a whole
-   - Syntax: mass(ChildType[sem(content =~ "value")])
-   - Example: Day[mass(POI[sem(content =~ "artistic")])] - Artistic days (POIs are generally artistic)
+   - Syntax: agg_prev(ChildType[atom(content =~ "value")])
+   - Example: Day[agg_prev(POI[atom(content =~ "artistic")])] - Artistic days (POIs are generally artistic)
 
 ### Logical Operators
-- AND: sem(content =~ "X") AND sem(content =~ "Y")
-- OR: sem(content =~ "X") OR sem(content =~ "Y")
+- AND: atom(content =~ "X") AND atom(content =~ "Y") - conjunction (product)
+- OR: atom(content =~ "X") OR atom(content =~ "Y") - disjunction (max)
 
 ## Decision Guide: When to Use Each Predicate
 
-| Query Pattern | Predicate | Reasoning |
-|--------------|-----------|-----------|
-| "museum POI" | sem() | Property of the POI itself |
-| "Italian restaurant" | sem() | Property of the restaurant itself |
-| "day with a museum" | exist() | Checking if any child is a museum |
-| "day with Italian food" | exist() | Checking if any child is Italian |
-| "artistic day" | mass() | Overall character of the day's activities |
-| "cultural day" | mass() | General prevalence across children |
-| "relaxing day" | mass() | Aggregate property of children |
+| Query Pattern | Predicate | Paper Formalization |
+|--------------|-----------|---------------------|
+| "museum POI" | atom() | Atom(u, φ) from attr(u) |
+| "Italian restaurant" | atom() | Atom(u, φ) from attr(u) |
+| "day with a museum" | agg_exists() | Agg∃ = max over Sφ(u) |
+| "day with Italian food" | agg_exists() | Agg∃ = max over Sφ(u) |
+| "artistic day" | agg_prev() | Aggprev = avg over Sφ(u) |
+| "cultural day" | agg_prev() | Aggprev = avg over Sφ(u) |
+| "relaxing day" | agg_prev() | Aggprev = avg over Sφ(u) |
+
+## CRITICAL: Returning Containers vs Children
+
+**This is the most important distinction:**
+
+When the user wants **children INSIDE a filtered container** (returns POI/Restaurant):
+- Use path continuation with `/` after the container predicate
+- Pattern: `Day[container_predicate]/POI[child_predicate]`
+- Example: "museum in an artistic day" → `.../Day[agg_prev(...)]/POI[atom("museum")]`
+
+When the user wants **the container itself** with multiple properties (returns Day):
+- Use AND/OR to combine predicates on the same node
+- Pattern: `Day[predicate1 AND predicate2]`
+- Example: "days with museums AND Italian food" → `.../Day[agg_exists(...) AND agg_exists(...)]`
+
+**Key phrases that indicate CHILDREN are wanted (use path continuation `/`):**
+- "museum in a ...", "POI in a ...", "restaurant in a ..."
+- "find me a museum/POI/restaurant on/in ..."
+- "museums/POIs/restaurants in ... days"
+
+**Key phrases that indicate CONTAINERS are wanted (use AND/OR):**
+- "days with ... AND ...", "days that have both ..."
+- "find days/the day that ..."
 
 ## Examples
 
@@ -77,11 +100,11 @@ Output:
 
 User: museums
 Output:
-/Itinerary/Day/POI[sem(content =~ "museum")]
+/Itinerary/Day/POI[atom(content =~ "museum")]
 
 User: Italian restaurants
 Output:
-/Itinerary/Day/Restaurant[sem(content =~ "italian")]
+/Itinerary/Day/Restaurant[atom(content =~ "italian")]
 
 User: the third POI globally
 Output:
@@ -89,59 +112,79 @@ Output:
 
 User: second museum
 Output:
-(/Itinerary/Day/POI[sem(content =~ "museum")])[2]
+(/Itinerary/Day/POI[atom(content =~ "museum")])[2]
 
 User: first Italian restaurant
 Output:
-(/Itinerary/Day/Restaurant[sem(content =~ "italian")])[1]
+(/Itinerary/Day/Restaurant[atom(content =~ "italian")])[1]
 
 User: artistic days
 Output:
-/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]
 
 User: cultural days
 Output:
-/Itinerary/Day[mass(POI[sem(content =~ "cultural")])]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "cultural")])]
 
 User: relaxing days
 Output:
-/Itinerary/Day[mass(POI[sem(content =~ "relaxing")])]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "relaxing")])]
 
 User: days with a museum
 Output:
-/Itinerary/Day[exist(POI[sem(content =~ "museum")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")])]
 
 User: days with Italian food
 Output:
-/Itinerary/Day[exist(Restaurant[sem(content =~ "italian")])]
+/Itinerary/Day[agg_exists(Restaurant[atom(content =~ "italian")])]
 
 User: days with any beach activity
 Output:
-/Itinerary/Day[exist(POI[sem(content =~ "beach")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "beach")])]
 
 User: last POI in a relaxing day
 Output:
-/Itinerary/Day[mass(POI[sem(content =~ "relaxing")])]/POI[-1]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "relaxing")])]/POI[-1]
 
 User: museums in an artistic day
 Output:
-/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+
+User: find me a museum in an artistic day
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+
+User: a museum POI on a cultural day
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "cultural")])]/POI[atom(content =~ "museum")]
+
+User: find a historic POI in a relaxing day
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "relaxing")])]/POI[atom(content =~ "historic")]
 
 User: restaurants in days with outdoor activities
 Output:
-/Itinerary/Day[exist(POI[sem(content =~ "outdoor")])]/Restaurant
+/Itinerary/Day[agg_exists(POI[atom(content =~ "outdoor")])]/Restaurant
+
+User: Italian restaurant in a day with museums
+Output:
+/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")])]/Restaurant[atom(content =~ "italian")]
+
+User: find me a cafe in an artistic day
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/Restaurant[atom(content =~ "cafe")]
 
 User: outdoor and historic POI
 Output:
-/Itinerary/Day/POI[sem(content =~ "outdoor") AND sem(content =~ "historic")]
+/Itinerary/Day/POI[atom(content =~ "outdoor") AND atom(content =~ "historic")]
 
 User: Italian or French restaurant
 Output:
-/Itinerary/Day/Restaurant[sem(content =~ "italian") OR sem(content =~ "french")]
+/Itinerary/Day/Restaurant[atom(content =~ "italian") OR atom(content =~ "french")]
 
 User: first 2 museums
 Output:
-(/Itinerary/Day/POI[sem(content =~ "museum")])[1:2]
+(/Itinerary/Day/POI[atom(content =~ "museum")])[1:2]
 
 User: last 3 restaurants globally
 Output:
@@ -149,7 +192,7 @@ Output:
 
 User: the last 2 museums
 Output:
-(/Itinerary/Day/POI[sem(content =~ "museum")])[-2:]
+(/Itinerary/Day/POI[atom(content =~ "museum")])[-2:]
 
 User: POIs 2 to 4 globally
 Output:
@@ -157,42 +200,62 @@ Output:
 
 User: first day with a museum
 Output:
-(/Itinerary/Day[exist(POI[sem(content =~ "museum")])])[1]
+(/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")])])[1]
 
 User: family-friendly and educational POI
 Output:
-/Itinerary/Day/POI[sem(content =~ "family-friendly") AND sem(content =~ "educational")]
+/Itinerary/Day/POI[atom(content =~ "family-friendly") AND atom(content =~ "educational")]
 
 User: romantic or scenic POI
 Output:
-/Itinerary/Day/POI[sem(content =~ "romantic") OR sem(content =~ "scenic")]
+/Itinerary/Day/POI[atom(content =~ "romantic") OR atom(content =~ "scenic")]
 
 User: cheap and quick restaurant
 Output:
-/Itinerary/Day/Restaurant[sem(content =~ "cheap") AND sem(content =~ "quick")]
+/Itinerary/Day/Restaurant[atom(content =~ "cheap") AND atom(content =~ "quick")]
 
 User: jazz venue on day 1
 Output:
-/Itinerary/Day[@index='1']/POI[sem(content =~ "jazz")]
+/Itinerary/Day[@index='1']/POI[atom(content =~ "jazz")]
 
 User: second museum in day 2
 Output:
-/Itinerary/Day[@index='2']/POI[sem(content =~ "museum")][2]
+/Itinerary/Day[@index='2']/POI[atom(content =~ "museum")][2]
 
 User: historic or artistic POI in cultural days
 Output:
-/Itinerary/Day[mass(POI[sem(content =~ "cultural")])]/POI[sem(content =~ "historic") OR sem(content =~ "artistic")]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "cultural")])]/POI[atom(content =~ "historic") OR atom(content =~ "artistic")]
 
 User: days with both a museum and an Italian restaurant
 Output:
-/Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")]) AND agg_exists(Restaurant[atom(content =~ "italian")])]
 
 User: days with outdoor activities or good restaurants
 Output:
-/Itinerary/Day[exist(POI[sem(content =~ "outdoor")]) OR exist(Restaurant[sem(content =~ "good")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "outdoor")]) OR agg_exists(Restaurant[atom(content =~ "good")])]
 
 User: artistic days with at least one museum
 Output:
-/Itinerary/Day[mass(POI[sem(content =~ "artistic")]) AND exist(POI[sem(content =~ "museum")])]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")]) AND agg_exists(POI[atom(content =~ "museum")])]
+
+User: POI in an artistic day that has a museum
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")]) AND agg_exists(POI[atom(content =~ "museum")])]/POI
+
+User: find the museum in an artistic day
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+
+User: get me a POI in a cultural day
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "cultural")])]/POI
+
+User: show me restaurants on relaxing days
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "relaxing")])]/Restaurant
+
+User: find an outdoor POI in an active day
+Output:
+/Itinerary/Day[agg_prev(POI[atom(content =~ "active")])]/POI[atom(content =~ "outdoor")]
 
 Now convert the following user request into a query.

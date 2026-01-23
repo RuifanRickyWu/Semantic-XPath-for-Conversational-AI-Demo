@@ -14,7 +14,7 @@ Traditional XPath operates on exact matches. Semantic XPath extends this with:
 ```
 User: "find museums in artistic days"
 
-Semantic XPath: Read(/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")])
+Semantic XPath: Read(/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")])
 
 Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
 ```
@@ -22,7 +22,7 @@ Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
 ```
 User: "delete all the museums"
 
-Semantic XPath: Delete(/Itinerary/Day/POI[sem(content =~ "museum")])
+Semantic XPath: Delete(/Itinerary/Day/POI[atom(content =~ "museum")])
 
 Result: Deleted 2 nodes, saved to result/travel_memory_v1.xml
 ```
@@ -69,12 +69,12 @@ Result: Deleted 2 nodes, saved to result/travel_memory_v1.xml
 │                                                                              │
 │   1. PARSE QUERY                                                             │
 │      ┌─────────────────────────────────────────────────────┐                │
-│      │ Query: /Itinerary/Day[mass(POI[sem(...)])]/POI[sem()]                │
+│      │ Query: /Itinerary/Day[agg_prev(POI[atom(...)])]/POI[atom()]          │
 │      │                                                                       │
 │      │ Steps:                                                                │
 │      │   Step 0: Itinerary (root)                                           │
-│      │   Step 1: Day [predicate: mass(POI[sem(content =~ "artistic")])]     │
-│      │   Step 2: POI [predicate: sem(content =~ "museum")]                  │
+│      │   Step 1: Day [predicate: agg_prev(POI[atom(content =~ "artistic")])]│
+│      │   Step 2: POI [predicate: atom(content =~ "museum")]                 │
 │      └─────────────────────────────────────────────────────┘                │
 │                                                                              │
 │   2. BFS TRAVERSAL WITH SCORING                                             │
@@ -83,14 +83,14 @@ Result: Deleted 2 nodes, saved to result/travel_memory_v1.xml
 │      │            │                                                          │
 │      │ Step 1: [Day1, Day2, Day3] ─── expand to children                    │
 │      │            │                                                          │
-│      │         Score each Day with mass(POI[sem("artistic")])               │
-│      │            │  Day1: 0.72 (Beta-Bernoulli over POI scores)            │
+│      │         Score each Day with agg_prev(POI[atom("artistic")])          │
+│      │            │  Day1: 0.72 (average over POI scores)                   │
 │      │            │  Day2: 0.85                                              │
 │      │            │  Day3: 0.45                                              │
 │      │            │                                                          │
 │      │ Step 2: [POI1, POI2, ...] ─── expand to children                     │
 │      │            │                                                          │
-│      │         Score each POI with sem("museum")                            │
+│      │         Score each POI with atom("museum")                           │
 │      │            │  Art Gallery: 0.92 (local score)                        │
 │      │            │  CN Tower: 0.08                                          │
 │      │            │  Royal Ontario Museum: 0.95                             │
@@ -128,7 +128,7 @@ Result: Deleted 2 nodes, saved to result/travel_memory_v1.xml
 | Component | Role | Key Files |
 |-----------|------|-----------|
 | **Query Generator** | NL → Semantic XPath | `xpath_query_generation/` |
-| **Parser** | Query string → AST | `dense_xpath/parser.py` |
+| **Parser** | Query string → AST (atom/agg_exists/agg_prev) | `dense_xpath/parser.py` |
 | **Executor** | BFS traversal + fusion | `dense_xpath/dense_xpath_executor.py` |
 | **Predicate Handler** | Scoring + aggregation | `dense_xpath/predicate_handler.py` |
 | **Scorer** | Semantic similarity | `predicate_classifier/` |
@@ -203,9 +203,9 @@ The system supports full CRUD (Create, Read, Update, Delete) operations on tree 
 Each operation displays a full query showing the operation type and XPath:
 
 ```
-Read(/Itinerary/Day/POI[sem(content =~ "museum")])
-Delete(/Itinerary/Day[@index='2']/POI[sem(content =~ "cafe")])
-Update(/Itinerary/Day/POI[sem(content =~ "CN Tower")])
+Read(/Itinerary/Day/POI[atom(content =~ "museum")])
+Delete(/Itinerary/Day[@index='2']/POI[atom(content =~ "cafe")])
+Update(/Itinerary/Day/POI[atom(content =~ "CN Tower")])
 Create(/Itinerary/Day[@index='1']/Restaurant)
 ```
 
@@ -247,22 +247,28 @@ pipeline = SemanticXPathPipeline()
 
 # Read operation
 result = pipeline.process_request("find museums in the itinerary")
-# Displays: Read(/Itinerary/Day/POI[sem(content =~ "museum")])
+# Displays: Read(/Itinerary/Day/POI[atom(content =~ "museum")])
 
 # Delete operation
 result = pipeline.process_request("delete all the museums")
-# Displays: Delete(/Itinerary/Day/POI[sem(content =~ "museum")])
+# Displays: Delete(/Itinerary/Day/POI[atom(content =~ "museum")])
 # Saves: result/travel_memory_v1.xml
 
 # Update operation
 result = pipeline.process_request("change the CN Tower visit to 2pm")
-# Displays: Update(/Itinerary/Day/POI[sem(content =~ "CN Tower")])
+# Displays: Update(/Itinerary/Day/POI[atom(content =~ "CN Tower")])
 # Saves: result/travel_memory_v2.xml
+
+# Update with type change (POI → Restaurant)
+result = pipeline.process_request("change the museum to Chinese food")
+# Displays: Update(/Itinerary/Day/POI[atom(content =~ "museum")])
+# The content updater detects the semantic shift and changes <POI> to <Restaurant>
+# Saves: result/travel_memory_v3.xml
 
 # Create operation
 result = pipeline.process_request("add a sushi restaurant after lunch on day 1")
 # Displays: Create(/Itinerary/Day[@index='1']/Restaurant)
-# Saves: result/travel_memory_v3.xml
+# Saves: result/travel_memory_v4.xml
 ```
 
 ---
@@ -293,62 +299,64 @@ This posterior probability is computed by a scorer (LLM, NLI entailment, or cosi
 
 ### Three Predicate Types
 
-#### 1. sem() - Local Semantic Match
+Following the paper formalization, we define recursive predicate scoring `Score(u, ψ)`:
+
+#### 1. atom() - Atomic Predicate (Local Semantic Match)
 
 Scores the node's **own content only**. Does not look at children.
 
 ```
-POI[sem(content =~ "museum")]
+POI[atom(content =~ "museum")]
 
-π_v("museum") = Scorer(X_v, "museum")
+Atom(u, φ) = Scorer(attr(u), φ)  where attr(u) = node's text content
 ```
 
-#### 2. exist() - Existential Aggregation (Max)
+#### 2. agg_exists() - Existential Aggregation (Max)
 
 "At least one child matches" - high score if ANY child has high score.
 
 ```
-Day[exist(POI[sem(content =~ "museum")])]
+Day[agg_exists(POI[atom(content =~ "museum")])]
 
-π_v(p) = max_{u ∈ children(v)} π_u(p)
+Score(u, ψ) = Agg∃({Score(c, ψ') | c ∈ children(u)}) = max(...)
 ```
 
 **Example**: Children with scores [0.95, 0.1, 0.05]
 ```
-exist() = max(0.95, 0.1, 0.05) = 0.95
+agg_exists() = max(0.95, 0.1, 0.05) = 0.95
 ```
 
-#### 3. mass() - Prevalence Aggregation (Average)
+#### 3. agg_prev() - Prevalence Aggregation (Average)
 
 "Children are generally X" - average of child scores.
 
 ```
-Day[mass(POI[sem(content =~ "artistic")])]
+Day[agg_prev(POI[atom(content =~ "artistic")])]
 
-π_v(p) = Σ_{u ∈ children(v)} π_u(p) / |children(v)|
+Score(u, ψ) = Aggprev({Score(c, ψ') | c ∈ children(u)}) = mean(...)
 ```
 
 **Example**: Children with scores [0.8, 0.7, 0.6, 0.3]
 ```
-mass() = (0.8 + 0.7 + 0.6 + 0.3) / 4 = 2.4 / 4 = 0.6
+agg_prev() = (0.8 + 0.7 + 0.6 + 0.3) / 4 = 2.4 / 4 = 0.6
 ```
 
 ### Logical Operators
 
-#### AND (Product)
+#### AND (Conjunction - Product)
 
 ```
-sem(content =~ "outdoor") AND sem(content =~ "historic")
+atom(content =~ "outdoor") AND atom(content =~ "historic")
 
-π(p) = ∏_j π(c_j)
+Score(u, ψ₁ ∧ ψ₂) = Score(u, ψ₁) × Score(u, ψ₂)
 ```
 
-#### OR (Max)
+#### OR (Disjunction - Max)
 
 ```
-sem(content =~ "museum") OR sem(content =~ "gallery")
+atom(content =~ "museum") OR atom(content =~ "gallery")
 
-π(p) = max_j π(c_j)
+Score(u, ψ₁ ∨ ψ₂) = max(Score(u, ψ₁), Score(u, ψ₂))
 ```
 
 ### Score Fusion Across Steps
@@ -356,10 +364,10 @@ sem(content =~ "museum") OR sem(content =~ "gallery")
 For multi-step queries, scores are multiplied:
 
 ```
-Query: /Day[mass(...)]/POI[sem(...)]
+Query: /Day[agg_prev(...)]/POI[atom(...)]
 
 For each final POI node u:
-  Final Score = ∏_{steps with predicates} π_i(u)
+  Final Score = ∏_{steps with predicates} Score(u, ψ_i)
 ```
 
 This ensures:
@@ -394,20 +402,20 @@ This ensures:
 
 ```xpath
 # Local match (node's own content)
-/Itinerary/Day/POI[sem(content =~ "museum")]
+/Itinerary/Day/POI[atom(content =~ "museum")]
 
 # Existential (any child matches)
-/Itinerary/Day[exist(POI[sem(content =~ "museum")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")])]
 
 # Prevalence (children generally match)
-/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]
 
 # Logical operators
-/Itinerary/Day/POI[sem(content =~ "outdoor") AND sem(content =~ "free")]
-/Itinerary/Day/POI[sem(content =~ "museum") OR sem(content =~ "gallery")]
+/Itinerary/Day/POI[atom(content =~ "outdoor") AND atom(content =~ "free")]
+/Itinerary/Day/POI[atom(content =~ "museum") OR atom(content =~ "gallery")]
 
 # Aggregation-level AND/OR
-/Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")]) AND agg_exists(Restaurant[atom(content =~ "italian")])]
 ```
 
 ---
@@ -418,17 +426,17 @@ This ensures:
 
 | Query Intent | Predicate | Example |
 |--------------|-----------|---------|
-| Property of the node itself | `sem()` | "museum POI" → `POI[sem(...)]` |
-| Any child has property X | `exist()` | "day with a museum" → `Day[exist(POI[...])]` |
-| Children are generally X | `mass()` | "artistic day" → `Day[mass(POI[...])]` |
+| Property of the node itself | `atom()` | "museum POI" → `POI[atom(...)]` |
+| Any child has property X | `agg_exists()` | "day with a museum" → `Day[agg_exists(POI[...])]` |
+| Children are generally X | `agg_prev()` | "artistic day" → `Day[agg_prev(POI[...])]` |
 
 ### Comparison
 
 ```
 Day with 5 POIs: [Museum: 0.95, Park: 0.1, Mall: 0.05, Theater: 0.1, Cafe: 0.02]
 
-exist(POI[sem(content =~ "museum")]): 0.95 (max - museum exists)
-mass(POI[sem(content =~ "museum")]):  0.244 (avg - most aren't museums)
+agg_exists(POI[atom(content =~ "museum")]): 0.95 (max - museum exists)
+agg_prev(POI[atom(content =~ "museum")]):   0.244 (avg - most aren't museums)
 ```
 
 ---
@@ -475,7 +483,7 @@ nodes:
 </Day>
 ```
 
-When scoring `Day[mass(POI[...])]`:
+When scoring `Day[agg_prev(POI[...])]`:
 - `<POI>` and `<Restaurant>` are structural children → aggregated
 - `<theme>` is Day's own field → not treated as child
 
@@ -512,7 +520,7 @@ Commands:
 
 🔄 Query: find museums in the itinerary
 
-📋 Read(/Itinerary/Day/POI[sem(content =~ "museum")])
+📋 Read(/Itinerary/Day/POI[atom(content =~ "museum")])
 
 ⏱️  Step Timing:
 ---------------------------------------------
@@ -569,11 +577,11 @@ executor = DenseXPathExecutor(
 )
 
 # Simple semantic query
-result = executor.execute('/Itinerary/Day/POI[sem(content =~ "museum")]')
+result = executor.execute('/Itinerary/Day/POI[atom(content =~ "museum")]')
 
 # Hierarchical query with aggregation
 result = executor.execute(
-    '/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]'
+    '/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]'
 )
 
 for node in result.matched_nodes:
@@ -656,8 +664,8 @@ LLM-VM/
 │   └── xpath_query_generator.py     # NL → Semantic XPath (LLM)
 ├── dense_xpath/
 │   ├── dense_xpath_executor.py      # Main executor with score fusion
-│   ├── models.py                    # SemanticCondition, CompoundPredicate, etc.
-│   ├── parser.py                    # Query parser (sem/exist/mass/AND/OR)
+│   ├── models.py                    # AtomicPredicate, CompoundPredicate, etc.
+│   ├── parser.py                    # Query parser (atom/agg_exists/agg_prev/AND/OR)
 │   ├── predicate_handler.py         # Scoring + aggregation logic
 │   ├── node_utils.py                # XML node utilities
 │   ├── schema_loader.py             # Schema loading
@@ -693,46 +701,47 @@ LLM-VM/
 
 | Operation | Natural Language Example | Full Query |
 |-----------|-------------------------|------------|
-| **Read** | "find museums" | `Read(/Itinerary/Day/POI[sem(...)])` |
+| **Read** | "find museums" | `Read(/Itinerary/Day/POI[atom(...)])` |
 | **Create** | "add a cafe on day 1" | `Create(/Itinerary/Day[@index='1']/Restaurant)` |
-| **Update** | "change CN Tower to 2pm" | `Update(/Itinerary/Day/POI[sem(...)])` |
-| **Delete** | "remove all museums" | `Delete(/Itinerary/Day/POI[sem(...)])` |
+| **Update** | "change CN Tower to 2pm" | `Update(/Itinerary/Day/POI[atom(...)])` |
+| **Update** | "change museum to Chinese food" | Updates content and changes `<POI>` → `<Restaurant>` |
+| **Delete** | "remove all museums" | `Delete(/Itinerary/Day/POI[atom(...)])` |
 
 ### Predicate Syntax
 
 | Predicate | Syntax | Use When |
 |-----------|--------|----------|
-| `sem()` | `sem(content =~ "X")` | Matching node's own content |
-| `exist()` | `exist(Child[sem(...)])` | Any child has property |
-| `mass()` | `mass(Child[sem(...)])` | Children generally have property |
+| `atom()` | `atom(content =~ "X")` | Matching node's own content |
+| `agg_exists()` | `agg_exists(Child[atom(...)])` | Any child has property |
+| `agg_prev()` | `agg_prev(Child[atom(...)])` | Children generally have property |
 
 ### Aggregation Formulas
 
 | Operator | Formula | Interpretation |
 |----------|---------|----------------|
-| `sem()` | `π = Scorer(content, query)` | Local score |
-| `exist()` | `π = max(π_child)` | Max over children |
-| `mass()` | `π = Σπ_child / n` | Average over children |
-| `AND` | `π = ∏(π_j)` | Product of scores |
-| `OR` | `π = max(π_j)` | Max of scores |
+| `atom()` | `Atom(u, φ) = Scorer(attr(u), φ)` | Local score |
+| `agg_exists()` | `Agg∃(A) = max(A)` | Max over children |
+| `agg_prev()` | `Aggprev(A) = mean(A)` | Average over children |
+| `AND` | `Score(u, ψ₁ ∧ ψ₂) = ∏` | Product of scores |
+| `OR` | `Score(u, ψ₁ ∨ ψ₂) = max` | Max of scores |
 
 ### Example Queries
 
 ```xpath
 # Find museums
-/Itinerary/Day/POI[sem(content =~ "museum")]
+/Itinerary/Day/POI[atom(content =~ "museum")]
 
 # Find days with museums
-/Itinerary/Day[exist(POI[sem(content =~ "museum")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")])]
 
 # Find artistic days
-/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]
 
 # Find museums in artistic days
-/Itinerary/Day[mass(POI[sem(content =~ "artistic")])]/POI[sem(content =~ "museum")]
+/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
 
 # Days with both museum AND Italian restaurant
-/Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]
+/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")]) AND agg_exists(Restaurant[atom(content =~ "italian")])]
 ```
 
 ### CRUD Pipeline Components
@@ -743,7 +752,7 @@ LLM-VM/
 | `NodeReasoner` | LLM selects relevant nodes from candidates |
 | `InsertionReasoner` | LLM finds best insertion point |
 | `NodeCreator` | LLM generates new node content |
-| `NodeUpdater` | LLM modifies existing content |
+| `NodeUpdater` | LLM modifies existing content (can change node type, e.g., POI → Restaurant) |
 | `NodeDeleter` | Remove nodes by path |
 | `VersionManager` | Save versioned trees to `result/` |
 

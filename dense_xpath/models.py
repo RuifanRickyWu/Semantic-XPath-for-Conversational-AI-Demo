@@ -10,25 +10,32 @@ import xml.etree.ElementTree as ET
 
 
 # =============================================================================
-# Predicate AST Models (New Syntax)
+# Predicate AST Models (Paper Formalization)
 # =============================================================================
 
 @dataclass
-class SemanticCondition:
+class AtomicPredicate:
     """
-    Semantic condition: sem(content =~ "value")
+    Atomic predicate φ: atom(content =~ "value")
     
-    Represents a semantic match on the node's own content.
-    The 'content' field aggregates all textual fields of the node.
+    Paper formalization: Atom(u, φ) evaluates a node's attribute.
+    - Local atomic predicates are evaluated from attr(u)
+    - The 'content' field aggregates all textual fields of the node
+    
+    This is the base unit for semantic predicate evaluation.
     """
     field: str  # "content" for aggregated content, or specific field name
-    value: str  # The semantic query, e.g., "museum", "italian"
+    value: str  # The semantic query value, e.g., "museum", "italian"
     
     def __repr__(self):
-        return f'sem({self.field} =~ "{self.value}")'
+        return f'atom({self.field} =~ "{self.value}")'
     
     def to_dict(self) -> Dict[str, Any]:
-        return {"type": "sem", "field": self.field, "value": self.value}
+        return {"type": "atom", "field": self.field, "value": self.value}
+
+
+# Backward compatibility alias
+SemanticCondition = AtomicPredicate
 
 
 @dataclass
@@ -36,37 +43,37 @@ class CompoundPredicate:
     """
     Compound predicate with logical and aggregation operators.
     
-    Syntax Operators:
-    - SEM: Semantic match on node itself (local only, no subtree)
-    - AND: Conjunction of predicates (product of scores)
-    - OR: Disjunction of predicates (max of scores)
-    - EXIST: Existential quantifier - max over specified children
-    - MASS: Prevalence quantifier - average over specified children
+    Paper Formalization - Score(u, ψ):
+    - ATOM: Atomic predicate Atom(u, φ) - local node content scoring
+    - AND: Conjunction ψ₁ ∧ ψ₂ - Score(u, ψ₁) · Score(u, ψ₂)
+    - OR: Disjunction ψ₁ ∨ ψ₂ - max{Score(u, ψ₁), Score(u, ψ₂)}
+    - AGG_EXISTS: Existential aggregation Agg∃ - max over children
+    - AGG_PREV: Prevalence aggregation Aggprev - average over children
     
     Key semantic distinction:
-    - sem() looks at the node's OWN content only
-    - exist()/mass() aggregate scores from CHILDREN
+    - atom() evaluates the node's OWN content (local)
+    - agg_exists()/agg_prev() aggregate scores from CHILDREN (hierarchical)
     """
-    operator: str  # "SEM", "AND", "OR", "EXIST", "MASS"
-    conditions: List[Union[SemanticCondition, 'CompoundPredicate']] = field(default_factory=list)
-    child_predicate: Optional['CompoundPredicate'] = None  # For EXIST/MASS
-    child_type: Optional[str] = None  # Target child node type for EXIST/MASS
+    operator: str  # "ATOM", "AND", "OR", "AGG_EXISTS", "AGG_PREV"
+    conditions: List[Union[AtomicPredicate, 'CompoundPredicate']] = field(default_factory=list)
+    child_predicate: Optional['CompoundPredicate'] = None  # For AGG_EXISTS/AGG_PREV
+    child_type: Optional[str] = None  # Target child node type for hierarchical predicates
     
     def __repr__(self):
-        if self.operator == "SEM":
-            return str(self.conditions[0]) if self.conditions else "sem()"
+        if self.operator == "ATOM":
+            return str(self.conditions[0]) if self.conditions else "atom()"
         elif self.operator == "AND":
             return " AND ".join(str(c) for c in self.conditions)
         elif self.operator == "OR":
             return " OR ".join(str(c) for c in self.conditions)
-        elif self.operator == "EXIST":
+        elif self.operator == "AGG_EXISTS":
             if self.child_type:
-                return f"exist({self.child_type}[{self.child_predicate}])"
-            return f"exist({self.child_predicate})"
-        elif self.operator == "MASS":
+                return f"agg_exists({self.child_type}[{self.child_predicate}])"
+            return f"agg_exists({self.child_predicate})"
+        elif self.operator == "AGG_PREV":
             if self.child_type:
-                return f"mass({self.child_type}[{self.child_predicate}])"
-            return f"mass({self.child_predicate})"
+                return f"agg_prev({self.child_type}[{self.child_predicate}])"
+            return f"agg_prev({self.child_predicate})"
         return f"{self.operator}({self.conditions})"
     
     def to_dict(self) -> Dict[str, Any]:
@@ -82,25 +89,29 @@ class CompoundPredicate:
             result["child_type"] = self.child_type
         return result
     
-    def get_all_semantic_values(self) -> List[str]:
-        """Extract all semantic condition values for batch scoring."""
+    def get_all_atomic_values(self) -> List[str]:
+        """
+        Extract all atomic predicate values for batch scoring.
+        
+        Paper: Collects all φ values from Atom(u, φ) predicates in the tree.
+        """
         values = []
-        if self.operator == "SEM":
-            if self.conditions and isinstance(self.conditions[0], SemanticCondition):
+        if self.operator == "ATOM":
+            if self.conditions and isinstance(self.conditions[0], AtomicPredicate):
                 values.append(self.conditions[0].value)
         elif self.operator in ("AND", "OR"):
             for cond in self.conditions:
                 if isinstance(cond, CompoundPredicate):
-                    values.extend(cond.get_all_semantic_values())
-                elif isinstance(cond, SemanticCondition):
+                    values.extend(cond.get_all_atomic_values())
+                elif isinstance(cond, AtomicPredicate):
                     values.append(cond.value)
-        elif self.operator in ("EXIST", "MASS"):
+        elif self.operator in ("AGG_EXISTS", "AGG_PREV"):
             if self.child_predicate:
-                values.extend(self.child_predicate.get_all_semantic_values())
+                values.extend(self.child_predicate.get_all_atomic_values())
         return values
     
-    # Alias for consistency
-    get_all_atomic_values = get_all_semantic_values
+    # Backward compatibility alias
+    get_all_semantic_values = get_all_atomic_values
 
 
 # =============================================================================

@@ -22,12 +22,26 @@ Output a JSON object:
     "field1": "value1",
     "field2": "value2"
   },
+  "new_type": "Restaurant",
   "reasoning": "Brief explanation of what was changed and why"
 }
 ```
 
 - **fields**: Must include **every** field present in the current node. Use the exact same keys. For list fields (e.g. highlights), use a JSON array.
+- **new_type**: (OPTIONAL) Include this ONLY if the node type should change. See "Node Type Changes" below.
 - **reasoning**: One or two sentences describing the changes.
+
+## Node Type Changes (Travel Domain)
+
+In the Travel/Itinerary domain, POI and Restaurant are **sibling types** under Day. They have the same fields but represent different kinds of places:
+- **POI**: Attractions, museums, parks, landmarks, activities (non-food places)
+- **Restaurant**: Restaurants, cafes, bars, bakeries, food markets (food/dining places)
+
+**CRITICAL**: When a transformation changes the nature of the place:
+- If updating a **POI** to food/dining (e.g., "change museum to Chinese food") → include `"new_type": "Restaurant"`
+- If updating a **Restaurant** to a non-food activity (e.g., "change cafe to a museum") → include `"new_type": "POI"`
+
+Do NOT include `new_type` if the type should stay the same.
 
 ## Guidelines
 
@@ -88,7 +102,7 @@ Output:
 }
 ```
 
-### Example 2: Complete node transformation (Travel) – Museum to Chinese food
+### Example 2: Complete node transformation (Travel) – Museum to Chinese food (TYPE CHANGE)
 
 User Request: "Change the museum to Chinese food"
 
@@ -112,7 +126,8 @@ Output:
     "expected_cost": "CAD 18",
     "highlights": ["Handmade dumplings", "Pan-fried pork dumplings", "Vegetarian dumpling options", "Casual local atmosphere", "Quick lunch-friendly service"]
   },
-  "reasoning": "Transformed the museum into a Chinese restaurant as requested. All fields rewritten to describe a coherent dining POI: new name, adjusted time, full description, lower cost, and food-focused highlights."
+  "new_type": "Restaurant",
+  "reasoning": "Transformed the museum POI into a Chinese restaurant. Changed node type from POI to Restaurant since this is now a dining location. All fields rewritten for a coherent restaurant."
 }
 ```
 

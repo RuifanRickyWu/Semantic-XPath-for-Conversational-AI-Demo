@@ -1,14 +1,28 @@
 """
 Dense XPath Executor - Main executor class that orchestrates query execution.
 
-Implements the Semantic XPath framework with:
-- Stepwise structural traversal
-- Compound predicate scoring (AND/OR/exists/mass)
-- Score fusion across query steps (product of step scores)
-- Deferred TopK and threshold filtering
+Paper Formalization - Hierarchical Retrieval:
 
-Uses modular components for parsing, node operations, indexing, and scoring.
-Supports multiple data files through schema configuration.
+Query Execution follows Eval(W, Q) where:
+- W is a weighted node set: W ⊆ V × [0,1]
+- Q = s₁/s₂/.../sₘ is a sequence of query steps
+- Each step s = (axis, κ, ψ) has type κ and predicate ψ
+
+Step Semantics - Step(W, s):
+1. Structural expansion: Cand(v, s) = {u ∈ Axis(v) | κ(u) = κ}
+2. Predicate scoring: Score(u, ψ) - recursive evaluation
+3. Weight update: w_u = w · Score(u, ψ)
+
+Predicate Types:
+- ATOM: Local atomic predicate - Atom(u, φ) from attr(u)
+- AND: Conjunction - Score(u, ψ₁) · Score(u, ψ₂)
+- OR: Disjunction - max{Score(u, ψ₁), Score(u, ψ₂)}
+- AGG_EXISTS: Existential aggregation - Agg∃ = max over children
+- AGG_PREV: Prevalence aggregation - Aggprev = avg over children
+
+Post-processing:
+- TopK selection and threshold filtering
+- LLM reasoning for final selection
 """
 
 import logging
@@ -48,19 +62,18 @@ class DenseXPathExecutor:
     """
     Executes XPath-like queries against an XML tree with semantic matching.
     
-    Implements the Semantic XPath framework:
-    - Stepwise execution: C_i = Select(Filter(Expand(C_{i-1})))
-    - Score fusion: Score = ∏(π_i) (product of step scores)
-    - Deferred filtering: TopK and threshold applied after all scoring
+    Paper Formalization - Eval(W, Q):
+    - Iterative step execution over Q = s₁/s₂/.../sₘ
+    - Each step applies Step(W, s) for structural expansion and predicate scoring
+    - Final score is product of step scores: Score(u, Q) = ∏ Score_i(u, ψ_i)
     
     Supports:
-    - Type matching: /Itinerary/Day/POI
-    - Positional indexing: Day[1], POI[2], POI[-1], POI[1:3]
-    - Semantic predicates: Day[description =~ "artistic"]
-    - Compound predicates: POI[description =~ "outdoor" AND description =~ "historic"]
-    - Hierarchical quantifiers: Day[exists(POI[description =~ "museum"])]
-    - Global indexing: (/Itinerary/Day/POI)[5], (/Itinerary/Day/POI)[1:3]
-    - Combined: Day[description =~ "artistic"][2]
+    - Type matching: /Itinerary/Day/POI (κ - node type)
+    - Positional indexing: Day[1], POI[2], POI[-1], POI[1:3] (ι - positional constraint)
+    - Atomic predicates: POI[atom(content =~ "museum")] (Atom(u, φ))
+    - Compound predicates: POI[atom(...) AND atom(...)]
+    - Hierarchical predicates: Day[agg_exists(POI[atom(...)])]
+    - Global indexing: (/Itinerary/Day/POI)[5]
     - Multiple data files via schema configuration
     """
     
@@ -159,18 +172,19 @@ class DenseXPathExecutor:
         """
         Validate predicate syntax.
         
-        Valid operators:
-        - SEM: Local semantic match on node content
-        - EXIST: Existential aggregation (Noisy-OR) over children
-        - MASS: Prevalence aggregation (Beta-Bernoulli) over children
-        - AND/OR: Logical operators
+        Paper Formalization - Valid operators:
+        - ATOM: Local atomic predicate Atom(u, φ) from attr(u)
+        - AGG_EXISTS: Existential aggregation Agg∃ = max over children
+        - AGG_PREV: Prevalence aggregation Aggprev = avg over children
+        - AND: Conjunction ψ₁ ∧ ψ₂
+        - OR: Disjunction ψ₁ ∨ ψ₂
         
         Args:
             predicate: The predicate to validate
             node_type: The node type being filtered
             execution_log: Log for recording validation
         """
-        valid_operators = ("SEM", "EXIST", "MASS", "AND", "OR")
+        valid_operators = ("ATOM", "AGG_EXISTS", "AGG_PREV", "AND", "OR")
         if predicate.operator not in valid_operators:
             raise ValueError(
                 f"Invalid predicate operator '{predicate.operator}' on '{node_type}'. "

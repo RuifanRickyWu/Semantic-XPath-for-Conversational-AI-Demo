@@ -1,8 +1,17 @@
 """
-Intent Classifier module for CRUD operations.
+Intent Classifier module (DEPRECATED).
 
-Provides LLM-based classification of natural language queries into
-Create, Read, Update, and Delete operations.
+Intent classification is now integrated into the XPath Query Generator,
+which outputs CRUD-prefixed queries in a single LLM call:
+- Read(/Itinerary/Version[-1]/Day/POI[...])
+- Delete(/Itinerary/Version[-1]/Day/POI[...])
+- Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, ...)
+- Update(/Itinerary/Version[-1]/Day/POI[...], field: value)
+
+The base classes are kept for backward compatibility but the IntentClassifier
+class is no longer used in the main pipeline.
+
+See xpath_query_generation.XPathQueryGenerator for the unified approach.
 """
 
 from .base import IntentType, ClassifiedIntent, IntentClassifierBase

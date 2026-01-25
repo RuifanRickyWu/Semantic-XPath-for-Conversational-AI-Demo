@@ -1,21 +1,32 @@
 # TodoList Tree Schema
-# Defines the structure for task management trees
+# Defines the structure for task management trees with versioning
 
 name: "todolist"
-description: "Task management with projects, tasks and subtasks"
+description: "Task management with versioning, projects, tasks and subtasks"
 
 # Tree hierarchy (for documentation and LLM prompt generation)
 hierarchy: |
   TodoList (root)
-  ├── Project
-  │   └── Task
-  │       └── SubTask
+  └── Version (container, indexed by @number)
+      ├── patch_info: describes changes made in this version
+      ├── conversation_history: user's natural language request
+      └── Project (container)
+          └── Task (container)
+              └── SubTask (leaf)
 
 # Node type definitions
 nodes:
   TodoList:
     type: root
     fields: []
+    children: ["Version"]
+    
+  Version:
+    type: container
+    index_attr: "number"  # Uses <Version number="1"> for identification
+    fields:
+      - patch_info
+      - conversation_history
     children: ["Project"]
     
   Project:

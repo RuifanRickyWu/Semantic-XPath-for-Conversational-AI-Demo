@@ -1,0 +1,54 @@
+{
+  "timestamp": "20260125_180627_750359",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "delete museum",
+  "hypothesis": "This is related to delete museum.",
+  "nodes": [
+    {
+      "id": "version_1",
+      "type": "Version",
+      "name": "Version 1",
+      "description": "(no changes recorded)",
+      "premise": "Version: Version 1 - (no changes recorded)",
+      "score": 0.047299034893512726
+    },
+    {
+      "id": "version_2",
+      "type": "Version",
+      "name": "Version 2",
+      "description": "Changes: Deleted: Itinerary > Version 1 > Day 2 > Royal Ontario Museum, Itinerary > Version 1 > Day 1 > Art Gallery of Ontario | Request: delete all the museums",
+      "premise": "Version: Version 2 - Changes: Deleted: Itinerary > Version 1 > Day 2 > Royal Ontario Museum, Itinerary > Version 1 > Day 1 > Art Gallery of Ontario | Request: delete all the museums",
+      "score": 0.9958439469337463
+    },
+    {
+      "id": "version_3",
+      "type": "Version",
+      "name": "Version 3",
+      "description": "Changes: Updated: Itinerary > Version 1 > Day 1 > St. Lawrence Market | Request: revert to version 1, and replace the first activity to chinese food",
+      "premise": "Version: Version 3 - Changes: Updated: Itinerary > Version 1 > Day 1 > St. Lawrence Market | Request: revert to version 1, and replace the first activity to chinese food",
+      "score": 0.004096307326108217
+    }
+  ],
+  "results": [
+    {
+      "node_id": "version_1",
+      "node_type": "Version",
+      "score": 0.047299034893512726,
+      "reasoning": "Entailment score: 0.0473"
+    },
+    {
+      "node_id": "version_2",
+      "node_type": "Version",
+      "score": 0.9958439469337463,
+      "reasoning": "Entailment score: 0.9958"
+    },
+    {
+      "node_id": "version_3",
+      "node_type": "Version",
+      "score": 0.004096307326108217,
+      "reasoning": "Entailment score: 0.0041"
+    }
+  ]
+}

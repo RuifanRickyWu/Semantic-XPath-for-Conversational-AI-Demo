@@ -1,0 +1,134 @@
+Query: /Itinerary/Version[@number='2']/Day/POI[atom(content =~ "jazz")]
+Data File: travel_memory_3day.xml
+Execution Time: 146.65ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260125_180627_750684] Executing query: /Itinerary/Version[@number='2']/Day/POI[atom(content =~ "jazz")]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Version[2], Day, POI[atom(content =~ "jazz")]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Version[2] ---
+Found 3 Version nodes across 1 parent(s)
+Applying positional index: [2]
+Selected node at index 2 (0-based: 1)
+After step: 1 nodes remaining
+
+--- Step 3: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 4: POI[atom(content =~ "jazz")] ---
+Found 6 POI nodes across 3 parent(s)
+Applying semantic predicate: atom(content =~ "jazz")
+Scoring predicate: atom(content =~ "jazz") (atomic values: ['jazz'])
+  Collected 6 descriptions for 1 unique semantic value(s)
+  Made 1 scorer call(s) for 6 total descriptions
+  Node 0 (St. Lawrence Market): score = 0.0451
+  Node 1 (CN Tower): score = 0.0098
+  Node 2 (Casa Loma): score = 0.0056
+  Node 3 (Rivoli): score = 0.9961
+  Node 4 (Toronto Islands): score = 0.0039
+  Node 5 (Distillery District): score = 0.0008
+After step: 6 nodes remaining
+
+=== Score Fusion ===
+  Itinerary > Version 2 > Day 1 > St. Lawrence Market: product=0.0451 → score=0.0451
+  Itinerary > Version 2 > Day 1 > CN Tower: product=0.0098 → score=0.0098
+  Itinerary > Version 2 > Day 2 > Casa Loma: product=0.0056 → score=0.0056
+  Itinerary > Version 2 > Day 2 > Rivoli: product=0.9961 → score=0.9961
+  Itinerary > Version 2 > Day 3 > Toronto Islands: product=0.0039 → score=0.0039
+  Itinerary > Version 2 > Day 3 > Distillery District: product=0.0008 → score=0.0008
+
+=== Final Filtering (threshold=0.01, top_k=10) ===
+  Filtered: 6 → 2 nodes
+
+Final result: 2 nodes (sorted by score)
+⏱️  Query execution time: 146.65ms
+
+============================================================
+Score Fusion Summary:
+----------------------------------------
+
+Itinerary > Version 2 > Day 1 > St. Lawrence Market (POI):
+  Step 3: atom(content =~ "jazz")
+    score=0.0451
+  Accumulated product: 0.0451
+  Final score: 0.0451
+
+Itinerary > Version 2 > Day 1 > CN Tower (POI):
+  Step 3: atom(content =~ "jazz")
+    score=0.0098
+  Accumulated product: 0.0098
+  Final score: 0.0098
+
+Itinerary > Version 2 > Day 2 > Casa Loma (POI):
+  Step 3: atom(content =~ "jazz")
+    score=0.0056
+  Accumulated product: 0.0056
+  Final score: 0.0056
+
+Itinerary > Version 2 > Day 2 > Rivoli (POI):
+  Step 3: atom(content =~ "jazz")
+    score=0.9961
+  Accumulated product: 0.9961
+  Final score: 0.9961
+
+Itinerary > Version 2 > Day 3 > Toronto Islands (POI):
+  Step 3: atom(content =~ "jazz")
+    score=0.0039
+  Accumulated product: 0.0039
+  Final score: 0.0039
+
+Itinerary > Version 2 > Day 3 > Distillery District (POI):
+  Step 3: atom(content =~ "jazz")
+    score=0.0008
+  Accumulated product: 0.0008
+  Final score: 0.0008
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 6 nodes
+Threshold: 0.01
+Top-K: 10
+After: 2 nodes
+
+============================================================
+Matched Nodes: 2
+----------------------------------------
+
+1. Itinerary > Version 2 > Day 2 > Rivoli (score: 0.9961)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Rivoli",
+  "time_block": "8:00 PM - 10:00 PM",
+  "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 10-20",
+  "highlights": [
+    "Historic venue",
+    "Diverse genres"
+  ]
+}
+
+2. Itinerary > Version 2 > Day 1 > St. Lawrence Market (score: 0.0451)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "St. Lawrence Market",
+  "time_block": "9:00 AM - 10:30 AM",
+  "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 10-15",
+  "highlights": [
+    "Fresh produce",
+    "Specialty foods",
+    "Local artisans"
+  ]
+}

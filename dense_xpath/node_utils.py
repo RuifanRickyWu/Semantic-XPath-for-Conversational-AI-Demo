@@ -112,19 +112,20 @@ class NodeUtils:
         """
         Get the display name of a node.
         
-        For container nodes with index attribute, uses "{NodeType} {index}" format.
+        For container nodes with index/number attribute, uses "{NodeType} {index}" format.
         For leaf nodes, tries common name fields.
         Works with any tree structure.
         """
-        # First try common name fields
+        # For container nodes with index or number, use "{Tag} {index}" format
+        # Check both 'index' and 'number' attributes (Version uses 'number')
+        index = node.get("index") or node.get("number")
+        if index is not None:
+            return f"{node.tag} {index}"
+        
+        # For leaf nodes, try common name fields
         name = NodeUtils._get_field_value(node, NodeUtils.NAME_FIELDS)
         if name:
             return name
-        
-        # For container nodes with index, use "{Tag} {index}" format
-        index = node.get("index")
-        if index is not None:
-            return f"{node.tag} {index}"
         
         # Fallback to tag name
         return node.tag

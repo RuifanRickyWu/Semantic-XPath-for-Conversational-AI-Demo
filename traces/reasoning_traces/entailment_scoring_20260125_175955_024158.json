@@ -1,0 +1,26 @@
+{
+  "timestamp": "20260125_175955_024158",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "chinese food",
+  "hypothesis": "This is related to chinese food.",
+  "nodes": [
+    {
+      "id": "version_1",
+      "type": "Version",
+      "name": "Version 1",
+      "description": "(no changes recorded)",
+      "premise": "Version: Version 1 - (no changes recorded)",
+      "score": 0.06174793094396591
+    }
+  ],
+  "results": [
+    {
+      "node_id": "version_1",
+      "node_type": "Version",
+      "score": 0.06174793094396591,
+      "reasoning": "Entailment score: 0.0617"
+    }
+  ]
+}

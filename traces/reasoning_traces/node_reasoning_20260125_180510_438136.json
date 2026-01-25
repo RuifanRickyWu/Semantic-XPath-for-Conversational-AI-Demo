@@ -1,0 +1,99 @@
+{
+  "timestamp": "20260125_180510_438136",
+  "user_query": "revert to version 1, and replace the first activity to chinese food",
+  "total_candidates": 3,
+  "selected_count": 1,
+  "results": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Version 1 > Day 1 > St. Lawrence Market",
+      "decision": "RELEVANT",
+      "confidence": 0.9,
+      "reasoning": "The user wants to replace the first activity in Version 1 with Chinese food. St. Lawrence Market is the first activity on Day 1 in Version 1, making it relevant for the update.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "St. Lawrence Market",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-15",
+        "highlights": [
+          "Fresh produce",
+          "Specialty foods",
+          "Local artisans"
+        ]
+      }
+    },
+    {
+      "node_id": "2",
+      "node_path": "Itinerary > Version 1 > Day 2 > Royal Ontario Museum",
+      "decision": "NOT_RELEVANT",
+      "confidence": 0.85,
+      "reasoning": "This node is not the first activity on Day 1 in Version 1, so it is not relevant to the user's request to replace the first activity.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Royal Ontario Museum",
+        "time_block": "11:00 AM - 1:00 PM",
+        "description": "World-renowned museum showcasing art, culture, and natural history.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 23",
+        "highlights": [
+          "Dinosaurs",
+          "Chinese architecture",
+          "Bloor Street design"
+        ]
+      }
+    },
+    {
+      "node_id": "3",
+      "node_path": "Itinerary > Version 1 > Day 3 > Toronto Islands",
+      "decision": "NOT_RELEVANT",
+      "confidence": 0.85,
+      "reasoning": "This node is not the first activity on Day 1 in Version 1, so it is not relevant to the user's request to replace the first activity.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Toronto Islands",
+        "time_block": "11:00 AM - 2:00 PM",
+        "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+        "travel_method": "Walk & Ferry",
+        "expected_cost": "CAD 8.50",
+        "highlights": [
+          "Waterfront views",
+          "Centre Island"
+        ]
+      }
+    }
+  ],
+  "selected_nodes": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Version 1 > Day 1 > St. Lawrence Market",
+      "decision": "RELEVANT",
+      "confidence": 0.9,
+      "reasoning": "The user wants to replace the first activity in Version 1 with Chinese food. St. Lawrence Market is the first activity on Day 1 in Version 1, making it relevant for the update.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "St. Lawrence Market",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-15",
+        "highlights": [
+          "Fresh produce",
+          "Specialty foods",
+          "Local artisans"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "operation": "UPDATE",
+    "total_candidates": 3,
+    "batch_size": 10,
+    "num_batches": 1
+  }
+}

@@ -1,21 +1,32 @@
 # Itinerary Tree Schema
-# Defines the structure for travel itinerary trees
+# Defines the structure for travel itinerary trees with versioning
 
 name: "itinerary"
-description: "Travel itinerary with days, POIs and restaurants"
+description: "Travel itinerary with versioning, days, POIs and restaurants"
 
 # Tree hierarchy (for documentation and LLM prompt generation)
 hierarchy: |
   Itinerary (root)
-  ├── Day
-  │   ├── POI
-  │   └── Restaurant
+  └── Version (container, indexed by @number)
+      ├── patch_info: describes changes made in this version
+      ├── conversation_history: user's natural language request
+      └── Day (container, indexed by @index)
+          ├── POI (leaf)
+          └── Restaurant (leaf)
 
 # Node type definitions with fields
 nodes:
   Itinerary:
     type: root
     fields: []
+    children: ["Version"]
+    
+  Version:
+    type: container
+    index_attr: "number"  # Uses <Version number="1"> for identification
+    fields:
+      - patch_info
+      - conversation_history
     children: ["Day"]
     
   Day:

@@ -1,0 +1,553 @@
+{
+  "timestamp": "20260125_175957_027477",
+  "query": "/Itinerary/Version[@number='1']/Day/Restaurant",
+  "data_file": "travel_memory_3day.xml",
+  "execution_time_ms": 0.14720899999964843,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Version[1]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Version 1",
+          "name": "Version 1",
+          "type": "Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Version",
+        "found_count": 1
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Version[1]",
+      "action": "positional_index",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Version 1",
+          "name": "Version 1",
+          "type": "Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Version 1",
+          "name": "Version 1",
+          "type": "Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "index": {
+          "start": 1,
+          "type": "single"
+        },
+        "selected_count": 1,
+        "groups_processed": 1,
+        "group_details": [
+          {
+            "group_id": 0,
+            "group_size": 1,
+            "selected_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Version 1",
+          "name": "Version 1",
+          "type": "Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Version 1 > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 3
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "Restaurant",
+      "action": "type_match",
+      "nodes_before_count": 3,
+      "nodes_after_count": 10,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Version 1 > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Version 1 > Day 1 > Queen Street Warehouse",
+          "name": "Queen Street Warehouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 1 > Buca Yorkville",
+          "name": "Buca Yorkville",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "name": "The Rex Hotel Jazz & Blues Bar",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 2 > Pow Wow Cafe",
+          "name": "Pow Wow Cafe",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 2 > Annona Restaurant",
+          "name": "Annona Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 2 > DaiLo",
+          "name": "DaiLo",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 3 > Beauty Barbecue & Smokehouse",
+          "name": "Beauty Barbecue & Smokehouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 3 > Amsterdam BrewHouse",
+          "name": "Amsterdam BrewHouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 3 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Itinerary > Version 1 > Day 3 > Jazz Bistro",
+          "name": "Jazz Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Restaurant",
+        "found_count": 10
+      }
+    }
+  ],
+  "scoring_traces": [],
+  "scoring_details": {
+    "step_scores": [],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Version 1 > Day 1 > Queen Street Warehouse",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 1 > Buca Yorkville",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 2 > Pow Wow Cafe",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 2 > Annona Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 2 > DaiLo",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 3 > Beauty Barbecue & Smokehouse",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 3 > Amsterdam BrewHouse",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 3 > Cluny Bistro",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        },
+        {
+          "node_path": "Itinerary > Version 1 > Day 3 > Jazz Bistro",
+          "node_type": "Restaurant",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 10,
+    "threshold": 0.01,
+    "top_k": 10,
+    "after_filter_count": 10,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Version 1 > Day 1 > Queen Street Warehouse",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 1 > Buca Yorkville",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 2 > Pow Wow Cafe",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 2 > Annona Restaurant",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 2 > DaiLo",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 3 > Beauty Barbecue & Smokehouse",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 3 > Amsterdam BrewHouse",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 3 > Cluny Bistro",
+        "score": 1.0,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Itinerary > Version 1 > Day 3 > Jazz Bistro",
+        "score": 1.0,
+        "type": "Restaurant"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Version 1 > Day 1 > Queen Street Warehouse",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Queen Street Warehouse",
+        "time_block": "1:00 PM - 2:00 PM",
+        "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-15",
+        "highlights": [
+          "Funky decor",
+          "Vibrant atmosphere"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 1 > Buca Yorkville",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Buca Yorkville",
+        "time_block": "5:30 PM - 7:00 PM",
+        "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Handmade pasta",
+          "Elegant ambiance"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "The Rex Hotel Jazz & Blues Bar",
+        "time_block": "8:00 PM - 10:30 PM",
+        "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15 + drinks",
+        "highlights": [
+          "Live jazz",
+          "Intimate atmosphere"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 2 > Pow Wow Cafe",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Pow Wow Cafe",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 15-20",
+        "highlights": [
+          "Indigenous cuisine",
+          "Bohemian neighborhood"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 2 > Annona Restaurant",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Annona Restaurant",
+        "time_block": "1:30 PM - 2:30 PM",
+        "description": "Sophisticated international cuisine in a bright, modern setting.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 30-40",
+        "highlights": [
+          "Patio seating",
+          "Refined dishes"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 2 > DaiLo",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "DaiLo",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-60",
+        "highlights": [
+          "Fusion menu",
+          "Trendy vibe"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 3 > Beauty Barbecue & Smokehouse",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Beauty Barbecue & Smokehouse",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Hearty breakfast featuring smoked meats and classic comfort food.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15-25",
+        "highlights": [
+          "Smoked meats",
+          "Casual atmosphere"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 3 > Amsterdam BrewHouse",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Amsterdam BrewHouse",
+        "time_block": "2:30 PM - 3:30 PM",
+        "description": "Lakeside pub offering local craft beers and hearty meals.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25-35",
+        "highlights": [
+          "Craft beer",
+          "Lake views"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 3 > Cluny Bistro",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Cluny Bistro",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "French-inspired bistro serving classic and modern dishes.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Elegant decor",
+          "French pastries"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Itinerary > Version 1 > Day 3 > Jazz Bistro",
+      "score": 1.0,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Jazz Bistro",
+        "time_block": "8:00 PM - 10:30 PM",
+        "description": "Renowned jazz club with intimate setting and excellent acoustics.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 15 + drinks",
+        "highlights": [
+          "Live jazz",
+          "Classic red piano"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 5,
+    "total_scoring_calls": 0,
+    "matched_count": 10,
+    "execution_time_ms": 0.14720899999964843,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 10,
+    "num_nodes_after_filter": 10
+  }
+}

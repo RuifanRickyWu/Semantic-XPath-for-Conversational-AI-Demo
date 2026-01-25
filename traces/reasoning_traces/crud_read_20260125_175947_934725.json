@@ -1,0 +1,49 @@
+{
+  "timestamp": "20260125_175947_934725",
+  "operation": "READ",
+  "user_query": "show me the version where I changed to chinese food",
+  "full_query": null,
+  "xpath_query": null,
+  "success": true,
+  "intent": null,
+  "reasoning_trace": {
+    "user_query": "show me the version where I changed to chinese food",
+    "total_candidates": 1,
+    "selected_count": 0,
+    "results": [
+      {
+        "node_id": "1",
+        "node_path": "Itinerary > Version 1",
+        "decision": "UNCERTAIN",
+        "confidence": 0.6,
+        "reasoning": "The node represents a version of the itinerary, but there is no specific information indicating that this version includes a change to Chinese food. More context about the contents of Version 1 is needed to determine relevance.",
+        "node_data": {
+          "type": "Version",
+          "attributes": {
+            "number": "1"
+          },
+          "patch_info": null,
+          "conversation_history": null
+        }
+      }
+    ],
+    "selected_nodes": [],
+    "metadata": {
+      "operation": "READ",
+      "total_candidates": 1,
+      "batch_size": 10,
+      "num_batches": 1
+    }
+  },
+  "operation_data": {
+    "candidates_count": 1,
+    "selected_count": 0,
+    "selected_nodes": []
+  },
+  "tree_version": null,
+  "summary": {
+    "operation": "READ",
+    "success": true,
+    "affected_count": 0
+  }
+}

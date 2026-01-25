@@ -1,0 +1,204 @@
+{
+  "timestamp": "20260125_175955_027177",
+  "query": "/Itinerary/Version[@number='1']",
+  "data_file": "travel_memory_3day.xml",
+  "execution_time_ms": 0.5061659999991974,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Itinerary",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Itinerary",
+          "path": "Itinerary"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Version[1]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Version 1",
+          "name": "Version 1",
+          "type": "Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Version",
+        "found_count": 1
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Version[1]",
+      "action": "positional_index",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Itinerary > Version 1",
+          "name": "Version 1",
+          "type": "Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Itinerary > Version 1",
+          "name": "Version 1",
+          "type": "Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "index": {
+          "start": 1,
+          "type": "single"
+        },
+        "selected_count": 1,
+        "groups_processed": 1,
+        "group_details": [
+          {
+            "group_id": 0,
+            "group_size": 1,
+            "selected_count": 1
+          }
+        ]
+      }
+    }
+  ],
+  "scoring_traces": [],
+  "scoring_details": {
+    "step_scores": [],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Itinerary > Version 1",
+          "node_type": "Version",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 1.0
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 1,
+    "threshold": 0.01,
+    "top_k": 10,
+    "after_filter_count": 1,
+    "filtered_nodes": [
+      {
+        "path": "Itinerary > Version 1",
+        "score": 1.0,
+        "type": "Version"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Itinerary > Version 1",
+      "score": 1.0,
+      "node": {
+        "type": "Version",
+        "attributes": {
+          "number": "1"
+        },
+        "patch_info": null,
+        "conversation_history": null
+      },
+      "children": [
+        {
+          "type": "Day",
+          "POI": [
+            "Art Gallery of Ontario",
+            "2:30 PM - 4:00 PM",
+            "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+            "Walk",
+            "CAD 25",
+            "\n          "
+          ],
+          "Restaurant": [
+            "The Rex Hotel Jazz & Blues Bar",
+            "8:00 PM - 10:30 PM",
+            "Live jazz performances in a cozy, iconic Toronto venue.",
+            "Walk",
+            "CAD 15 + drinks",
+            "\n          "
+          ]
+        },
+        {
+          "type": "Day",
+          "Restaurant": [
+            "DaiLo",
+            "6:00 PM - 7:30 PM",
+            "Modern Asian-Canadian fusion cuisine with creative flavors.",
+            "Public Transit",
+            "CAD 50-60",
+            "\n          "
+          ],
+          "POI": [
+            "Rivoli",
+            "8:00 PM - 10:00 PM",
+            "Live music venue showcasing jazz, indie, and emerging artists.",
+            "Walk",
+            "CAD 10-20",
+            "\n          "
+          ]
+        },
+        {
+          "type": "Day",
+          "Restaurant": [
+            "Jazz Bistro",
+            "8:00 PM - 10:30 PM",
+            "Renowned jazz club with intimate setting and excellent acoustics.",
+            "Public Transit",
+            "CAD 15 + drinks",
+            "\n          "
+          ],
+          "POI": [
+            "Distillery District",
+            "4:00 PM - 5:30 PM",
+            "Historic pedestrian village with cobblestone streets and artisan shops.",
+            "Walk",
+            "Free",
+            "\n          "
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_steps": 3,
+    "total_scoring_calls": 0,
+    "matched_count": 1,
+    "execution_time_ms": 0.5061659999991974,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 1,
+    "num_nodes_after_filter": 1
+  }
+}

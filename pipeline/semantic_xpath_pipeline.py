@@ -4,11 +4,14 @@ Semantic XPath Pipeline - Full CRUD Pipeline for tree operations.
 Provides an interactive interface for executing CRUD operations on tree data
 with full query display, trace saving, and result formatting.
 
+Uses in-tree versioning - all operations create new Version nodes within the tree,
+enabling full history tracking and version-based queries.
+
 Supports:
 - Read: Find and retrieve nodes using semantic XPath
-- Create: Add new nodes to the tree
-- Update: Modify existing nodes
-- Delete: Remove nodes from the tree
+- Create: Add new nodes to the tree (creates new version)
+- Update: Modify existing nodes (creates new version)
+- Delete: Remove nodes from the tree (creates new version)
 """
 
 import json
@@ -35,26 +38,25 @@ def load_config() -> dict:
 
 class SemanticXPathPipeline:
     """
-    Full CRUD Pipeline for semantic XPath operations.
+    Full CRUD Pipeline for semantic XPath operations with in-tree versioning.
     
     Converts natural language requests to CRUD operations:
-    - Classifies intent (Create, Read, Update, Delete)
-    - Generates XPath queries
+    - Classifies intent and generates XPath in a single LLM call
     - Executes operations with LLM reasoning
-    - Saves versioned tree modifications
-    - Provides full query display (e.g., "Read(/Itinerary/Day/POI[...])")
+    - Creates new versions within the tree for modifications
+    - Provides full query display (e.g., "Delete(/Itinerary/Version[-1]/Day/POI[...])")
     
-    Supports two modes:
-    - demo: Evolving tree across queries (tree persists between operations)
-    - eval: Single-turn per query (tree resets to original for each query)
+    All modifications create new Version nodes in the tree, enabling:
+    - Full history tracking
+    - Version-based queries ("show me the second version")
+    - Semantic version search ("what did I change about the museum?")
     """
     
     def __init__(
         self, 
         top_k: int = None, 
         score_threshold: float = None,
-        scoring_method: str = None,
-        mode: str = None
+        scoring_method: str = None
     ):
         """
         Initialize the pipeline.
@@ -66,18 +68,11 @@ class SemanticXPathPipeline:
                    If None, uses value from config.yaml.
             scoring_method: Scoring method ("llm" or "entailment").
                    If None, uses value from config.yaml.
-            mode: Pipeline mode - "demo" (evolving tree) or "eval" (single-turn).
-                   If None, uses value from config.yaml.
         """
-        # Load config to get mode if not provided
-        config = load_config()
-        self.mode = mode or config.get("mode", "demo")
-        
         self.executor = CRUDExecutor(
             scoring_method=scoring_method,
             top_k=top_k,
-            score_threshold=score_threshold,
-            mode=self.mode
+            score_threshold=score_threshold
         )
         self.trace_writer = TraceWriter()
         
@@ -89,7 +84,8 @@ class SemanticXPathPipeline:
             "updates": 0,
             "deletes": 0,
             "successes": 0,
-            "failures": 0
+            "failures": 0,
+            "versions_created": 0
         }
     
     def process_request(self, user_request: str) -> Dict[str, Any]:
@@ -141,6 +137,9 @@ class SemanticXPathPipeline:
         
         if result.get("success"):
             self.session_stats["successes"] += 1
+            # Track version creation for non-READ operations
+            if operation in ("CREATE", "UPDATE", "DELETE") and result.get("tree_version"):
+                self.session_stats["versions_created"] += 1
         else:
             self.session_stats["failures"] += 1
     
@@ -154,6 +153,11 @@ class SemanticXPathPipeline:
         
         lines.append(f"\n{status_icon} {operation} Operation {'Succeeded' if success else 'Failed'}")
         lines.append("=" * 60)
+        
+        # Version info
+        version_used = result.get("version_used")
+        if version_used:
+            lines.append(f"📌 Operating on Version: {version_used}")
         
         # Timing
         if "total_time_ms" in result:
@@ -169,11 +173,11 @@ class SemanticXPathPipeline:
         elif operation == "CREATE":
             lines.extend(self._format_create_result(result))
         
-        # Tree version info
+        # Tree version info (for modifications)
         tree_version = result.get("tree_version")
         if tree_version:
             lines.append(f"\n📁 Tree saved: {tree_version.get('path', 'N/A')}")
-            lines.append(f"   Version: {tree_version.get('version', 'N/A')}")
+            lines.append(f"   Total versions: {tree_version.get('version', 'N/A')}")
         
         lines.append("=" * 60)
         return "\n".join(lines)
@@ -302,21 +306,22 @@ class SemanticXPathPipeline:
         Commands:
         - Type a natural language query to execute a CRUD operation
         - Type 'stats' to see session statistics
+        - Type 'history' to see version history
         - Type 'reload' to reload the tree from the original file
         - Type 'exit' or 'quit' to stop
         """
         print("=" * 60)
         print("Semantic XPath Pipeline - CRUD Operations")
         print("=" * 60)
-        print(f"Mode: {self.mode.upper()}")
-        if self.mode == "demo":
-            print("  (Tree evolves across queries)")
-        else:
-            print("  (Tree resets for each query)")
+        print("In-tree versioning enabled:")
+        print("  - All modifications create new versions")
+        print("  - Query specific versions with Version[N] or Version[-1]")
+        print("  - Search versions: 'what changed about museum?'")
         print("-" * 60)
         print("Commands:")
         print("  - Natural language query for CRUD operations")
         print("  - 'stats' - Session statistics")
+        print("  - 'history' - View version history")
         print("  - 'reload' - Reload tree from file")
         print("  - 'exit' or 'quit' - Exit")
         print("=" * 60)
@@ -338,6 +343,10 @@ class SemanticXPathPipeline:
                 
                 if user_input.lower() == "stats":
                     self._print_stats()
+                    continue
+                
+                if user_input.lower() == "history":
+                    self._print_version_history()
                     continue
                 
                 if user_input.lower() == "reload":
@@ -370,6 +379,27 @@ class SemanticXPathPipeline:
         print(f"  - Deletes: {self.session_stats['deletes']}")
         print(f"  Successes: {self.session_stats['successes']}")
         print(f"  Failures:  {self.session_stats['failures']}")
+        print(f"  Versions Created: {self.session_stats['versions_created']}")
+        print()
+    
+    def _print_version_history(self):
+        """Print version history from the tree."""
+        print("\n📜 Version History:")
+        print("-" * 50)
+        
+        history = self.executor.version_manager.get_version_history(self.executor.tree)
+        
+        if not history:
+            print("  No versions found")
+            return
+        
+        for version in history:
+            print(f"\n  Version {version['number']}:")
+            if version['patch_info']:
+                print(f"    📝 Changes: {version['patch_info']}")
+            if version['conversation_history']:
+                print(f"    💬 Request: {version['conversation_history']}")
+            print(f"    📦 Content: {version['content_count']} items")
         print()
     
     def _print_session_summary(self, session_start: float):
@@ -385,6 +415,7 @@ class SemanticXPathPipeline:
         print(f"  - Creates: {self.session_stats['creates']}")
         print(f"  - Updates: {self.session_stats['updates']}")
         print(f"  - Deletes: {self.session_stats['deletes']}")
+        print(f"  Versions Created: {self.session_stats['versions_created']}")
         
         if self.session_stats['operations'] > 0:
             success_rate = self.session_stats['successes'] / self.session_stats['operations'] * 100
@@ -402,7 +433,6 @@ def main():
     default_top_k = executor_config.get("top_k", 5)
     default_threshold = executor_config.get("score_threshold", 0.5)
     default_method = executor_config.get("scoring_method", "entailment")
-    default_mode = config.get("mode", "demo")
     
     parser = argparse.ArgumentParser(description="Semantic XPath Pipeline - CRUD Operations")
     parser.add_argument("--top-k", type=int, default=None, 
@@ -412,9 +442,6 @@ def main():
     parser.add_argument("--scoring", "-s", type=str, default=None,
                         choices=["llm", "entailment", "cosine"],
                         help=f"Scoring method: llm, entailment, or cosine (default from config: {default_method})")
-    parser.add_argument("--mode", "-m", type=str, default=None,
-                        choices=["demo", "eval"],
-                        help=f"Pipeline mode: demo (evolving tree) or eval (single-turn) (default from config: {default_mode})")
     parser.add_argument("--query", "-q", type=str, default=None,
                         help="Single query to execute (non-interactive)")
     
@@ -423,8 +450,7 @@ def main():
     pipeline = SemanticXPathPipeline(
         top_k=args.top_k, 
         score_threshold=args.threshold,
-        scoring_method=args.scoring,
-        mode=args.mode
+        scoring_method=args.scoring
     )
     
     if args.query:

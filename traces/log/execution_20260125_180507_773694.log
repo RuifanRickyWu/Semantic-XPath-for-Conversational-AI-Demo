@@ -1,0 +1,117 @@
+Query: /Itinerary/Version[@number='1']/Day/POI[1]
+Data File: travel_memory_3day.xml
+Execution Time: 0.18ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260125_180507_773694] Executing query: /Itinerary/Version[@number='1']/Day/POI[1]
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Version[1], Day, POI[1]]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Version[1] ---
+Found 2 Version nodes across 1 parent(s)
+Applying positional index: [1]
+Selected node at index 1 (0-based: 0)
+After step: 1 nodes remaining
+
+--- Step 3: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 4: POI[1] ---
+Found 8 POI nodes across 3 parent(s)
+Applying positional index: [1]
+Selected node at index 1 (0-based: 0)
+Selected node at index 1 (0-based: 0)
+Selected node at index 1 (0-based: 0)
+After step: 3 nodes remaining
+
+=== Score Fusion ===
+  Itinerary > Version 1 > Day 1 > St. Lawrence Market: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 2 > Royal Ontario Museum: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 3 > Toronto Islands: product=1.0000 → score=1.0000
+
+=== Final Filtering (threshold=0.01, top_k=10) ===
+  Filtered: 3 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 0.18ms
+
+============================================================
+Score Fusion Summary:
+----------------------------------------
+
+Itinerary > Version 1 > Day 1 > St. Lawrence Market (POI):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 2 > Royal Ontario Museum (POI):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 3 > Toronto Islands (POI):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 3 nodes
+Threshold: 0.01
+Top-K: 10
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Itinerary > Version 1 > Day 1 > St. Lawrence Market (score: 1.0000)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "St. Lawrence Market",
+  "time_block": "9:00 AM - 10:30 AM",
+  "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 10-15",
+  "highlights": [
+    "Fresh produce",
+    "Specialty foods",
+    "Local artisans"
+  ]
+}
+
+2. Itinerary > Version 1 > Day 2 > Royal Ontario Museum (score: 1.0000)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Royal Ontario Museum",
+  "time_block": "11:00 AM - 1:00 PM",
+  "description": "World-renowned museum showcasing art, culture, and natural history.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 23",
+  "highlights": [
+    "Dinosaurs",
+    "Chinese architecture",
+    "Bloor Street design"
+  ]
+}
+
+3. Itinerary > Version 1 > Day 3 > Toronto Islands (score: 1.0000)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Toronto Islands",
+  "time_block": "11:00 AM - 2:00 PM",
+  "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+  "travel_method": "Walk & Ferry",
+  "expected_cost": "CAD 8.50",
+  "highlights": [
+    "Waterfront views",
+    "Centre Island"
+  ]
+}

@@ -1,0 +1,251 @@
+Query: /Itinerary/Version[@number='1']/Day/Restaurant
+Data File: travel_memory_3day.xml
+Execution Time: 0.15ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260125_175957_027477] Executing query: /Itinerary/Version[@number='1']/Day/Restaurant
+Data file: travel_memory_3day.xml
+Parsed steps: [Itinerary, Version[1], Day, Restaurant]
+
+--- Step 1: Itinerary ---
+Matched Itinerary root
+
+--- Step 2: Version[1] ---
+Found 1 Version nodes across 1 parent(s)
+Applying positional index: [1]
+Selected node at index 1 (0-based: 0)
+After step: 1 nodes remaining
+
+--- Step 3: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 4: Restaurant ---
+Found 10 Restaurant nodes across 3 parent(s)
+After step: 10 nodes remaining
+
+=== Score Fusion ===
+  Itinerary > Version 1 > Day 1 > Queen Street Warehouse: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 1 > Buca Yorkville: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 2 > Pow Wow Cafe: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 2 > Annona Restaurant: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 2 > DaiLo: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 3 > Beauty Barbecue & Smokehouse: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 3 > Amsterdam BrewHouse: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 3 > Cluny Bistro: product=1.0000 → score=1.0000
+  Itinerary > Version 1 > Day 3 > Jazz Bistro: product=1.0000 → score=1.0000
+
+=== Final Filtering (threshold=0.01, top_k=10) ===
+  Filtered: 10 → 10 nodes
+
+Final result: 10 nodes (sorted by score)
+⏱️  Query execution time: 0.15ms
+
+============================================================
+Score Fusion Summary:
+----------------------------------------
+
+Itinerary > Version 1 > Day 1 > Queen Street Warehouse (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 1 > Buca Yorkville (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 2 > Pow Wow Cafe (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 2 > Annona Restaurant (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 2 > DaiLo (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 3 > Beauty Barbecue & Smokehouse (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 3 > Amsterdam BrewHouse (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 3 > Cluny Bistro (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+Itinerary > Version 1 > Day 3 > Jazz Bistro (Restaurant):
+  Accumulated product: 1.0000
+  Final score: 1.0000
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 10 nodes
+Threshold: 0.01
+Top-K: 10
+After: 10 nodes
+
+============================================================
+Matched Nodes: 10
+----------------------------------------
+
+1. Itinerary > Version 1 > Day 1 > Queen Street Warehouse (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Queen Street Warehouse",
+  "time_block": "1:00 PM - 2:00 PM",
+  "description": "Budget-friendly comfort food in a lively setting with a diverse menu.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 10-15",
+  "highlights": [
+    "Funky decor",
+    "Vibrant atmosphere"
+  ]
+}
+
+2. Itinerary > Version 1 > Day 1 > Buca Yorkville (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Buca Yorkville",
+  "time_block": "5:30 PM - 7:00 PM",
+  "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 50-70",
+  "highlights": [
+    "Handmade pasta",
+    "Elegant ambiance"
+  ]
+}
+
+3. Itinerary > Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "The Rex Hotel Jazz & Blues Bar",
+  "time_block": "8:00 PM - 10:30 PM",
+  "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 15 + drinks",
+  "highlights": [
+    "Live jazz",
+    "Intimate atmosphere"
+  ]
+}
+
+4. Itinerary > Version 1 > Day 2 > Pow Wow Cafe (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Pow Wow Cafe",
+  "time_block": "9:00 AM - 10:30 AM",
+  "description": "Indigenous-inspired brunch featuring bannock tacos in Kensington Market.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 15-20",
+  "highlights": [
+    "Indigenous cuisine",
+    "Bohemian neighborhood"
+  ]
+}
+
+5. Itinerary > Version 1 > Day 2 > Annona Restaurant (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Annona Restaurant",
+  "time_block": "1:30 PM - 2:30 PM",
+  "description": "Sophisticated international cuisine in a bright, modern setting.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 30-40",
+  "highlights": [
+    "Patio seating",
+    "Refined dishes"
+  ]
+}
+
+6. Itinerary > Version 1 > Day 2 > DaiLo (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "DaiLo",
+  "time_block": "6:00 PM - 7:30 PM",
+  "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 50-60",
+  "highlights": [
+    "Fusion menu",
+    "Trendy vibe"
+  ]
+}
+
+7. Itinerary > Version 1 > Day 3 > Beauty Barbecue & Smokehouse (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Beauty Barbecue & Smokehouse",
+  "time_block": "9:00 AM - 10:30 AM",
+  "description": "Hearty breakfast featuring smoked meats and classic comfort food.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 15-25",
+  "highlights": [
+    "Smoked meats",
+    "Casual atmosphere"
+  ]
+}
+
+8. Itinerary > Version 1 > Day 3 > Amsterdam BrewHouse (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Amsterdam BrewHouse",
+  "time_block": "2:30 PM - 3:30 PM",
+  "description": "Lakeside pub offering local craft beers and hearty meals.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 25-35",
+  "highlights": [
+    "Craft beer",
+    "Lake views"
+  ]
+}
+
+9. Itinerary > Version 1 > Day 3 > Cluny Bistro (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Cluny Bistro",
+  "time_block": "6:00 PM - 7:30 PM",
+  "description": "French-inspired bistro serving classic and modern dishes.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 50-70",
+  "highlights": [
+    "Elegant decor",
+    "French pastries"
+  ]
+}
+
+10. Itinerary > Version 1 > Day 3 > Jazz Bistro (score: 1.0000)
+{
+  "type": "Restaurant",
+  "attributes": {},
+  "name": "Jazz Bistro",
+  "time_block": "8:00 PM - 10:30 PM",
+  "description": "Renowned jazz club with intimate setting and excellent acoustics.",
+  "travel_method": "Public Transit",
+  "expected_cost": "CAD 15 + drinks",
+  "highlights": [
+    "Live jazz",
+    "Classic red piano"
+  ]
+}

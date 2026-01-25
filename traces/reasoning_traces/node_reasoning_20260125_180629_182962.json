@@ -1,0 +1,77 @@
+{
+  "timestamp": "20260125_180629_182962",
+  "user_query": "revert to the version that deletes the museum, find all jazz places",
+  "total_candidates": 2,
+  "selected_count": 1,
+  "results": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Version 2 > Day 2 > Rivoli",
+      "decision": "RELEVANT",
+      "confidence": 0.98,
+      "reasoning": "Rivoli is a live music venue that showcases jazz, directly matching the user's request to find jazz places.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Rivoli",
+        "time_block": "8:00 PM - 10:00 PM",
+        "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-20",
+        "highlights": [
+          "Historic venue",
+          "Diverse genres"
+        ]
+      }
+    },
+    {
+      "node_id": "2",
+      "node_path": "Itinerary > Version 2 > Day 1 > St. Lawrence Market",
+      "decision": "NOT_RELEVANT",
+      "confidence": 0.9,
+      "reasoning": "St. Lawrence Market is a market, not a jazz venue, and does not match the user's query for jazz places.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "St. Lawrence Market",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-15",
+        "highlights": [
+          "Fresh produce",
+          "Specialty foods",
+          "Local artisans"
+        ]
+      }
+    }
+  ],
+  "selected_nodes": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Version 2 > Day 2 > Rivoli",
+      "decision": "RELEVANT",
+      "confidence": 0.98,
+      "reasoning": "Rivoli is a live music venue that showcases jazz, directly matching the user's request to find jazz places.",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Rivoli",
+        "time_block": "8:00 PM - 10:00 PM",
+        "description": "Live music venue showcasing jazz, indie, and emerging artists.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-20",
+        "highlights": [
+          "Historic venue",
+          "Diverse genres"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "operation": "READ",
+    "total_candidates": 2,
+    "batch_size": 10,
+    "num_batches": 1
+  }
+}

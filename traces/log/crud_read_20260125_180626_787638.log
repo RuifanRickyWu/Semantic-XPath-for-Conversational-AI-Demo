@@ -1,0 +1,18 @@
+CRUD Operation: READ
+User Query: revert to the version that deletes the museum, find all jazz places
+Full Query: 
+Timestamp: 20260125_180626_787638
+Success: True
+============================================================
+
+XPath Query: 
+
+=== READ Operation Results ===
+Candidates: 2
+Selected: 1
+
+Selected Nodes:
+----------------------------------------
+
+1. POI: Rivoli
+   Live music venue showcasing jazz, indie, and emerging artists....

@@ -2,12 +2,13 @@
 CRUD Executor - Orchestrates the full CRUD pipeline for each operation type.
 
 Coordinates:
-- Intent classification
-- Semantic XPath query generation and execution
+- Unified query generation (CRUD + XPath in single LLM call)
+- Version resolution from in-tree versioning
+- Semantic XPath query execution
 - LLM reasoning for node selection
 - Tree modifications (for Create, Update, Delete)
 - Content generation (for Create, Update)
-- Version management
+- In-tree version management
 
 Includes step-by-step timing for performance analysis.
 """
@@ -23,8 +24,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from intent_classifier import IntentClassifier, IntentType, ClassifiedIntent
-from xpath_query_generation import XPathQueryGenerator
+from xpath_query_generation import XPathQueryGenerator, CRUDOperation, ParsedQuery
 from dense_xpath import DenseXPathExecutor
 from reasoner import NodeReasoner, InsertionReasoner, BatchReasoningResult
 from tree_modification import NodeDeleter, NodeInserter, VersionManager, OperationResult
@@ -33,9 +33,8 @@ from content_creator import NodeCreator, NodeUpdater, ContentGenerationResult, C
 
 logger = logging.getLogger(__name__)
 
-# Result directories for modified trees
-DEMO_DIR = Path(__file__).parent.parent / "result" / "demo"
-EVAL_DIR = Path(__file__).parent.parent / "result" / "eval"
+# Result directory for saved trees
+RESULT_DIR = Path(__file__).parent.parent / "result" / "demo"
 
 
 class StepTimer:
@@ -74,36 +73,36 @@ class StepTimer:
         """Print a formatted timing summary."""
         print("\n⏱️  Step Timing:")
         print("-" * 45)
+        total = sum(s["time_ms"] for s in self.steps)
         for step in self.steps:
-            pct = (step["time_ms"] / sum(s["time_ms"] for s in self.steps) * 100) if self.steps else 0
+            pct = (step["time_ms"] / total * 100) if total > 0 else 0
             bar_len = int(pct / 5)
             bar = "█" * bar_len + "░" * (20 - bar_len)
             print(f"  {step['step']:<25} {step['time_ms']:>8.1f}ms  {bar} {pct:>5.1f}%")
         print("-" * 45)
-        print(f"  {'TOTAL':<25} {sum(s['time_ms'] for s in self.steps):>8.1f}ms")
+        print(f"  {'TOTAL':<25} {total:>8.1f}ms")
 
 
 class CRUDExecutor:
     """
-    Main executor for CRUD operations.
+    Main executor for CRUD operations with in-tree versioning.
     
     Orchestrates the full pipeline:
-    1. Intent Classification
-    2. XPath Query Generation
-    3. Semantic XPath Execution
+    1. Unified Query Generation (CRUD + XPath)
+    2. Version Resolution
+    3. Semantic XPath Execution (on version subtree)
     4. LLM Reasoning
     5. Tree Modification (if applicable)
-    6. Version Management
+    6. New Version Creation
     
-    Modified trees are saved to the 'result' folder.
+    Trees are modified in-place with versions stored as child nodes.
     """
     
     def __init__(
         self,
         scoring_method: str = None,
         top_k: int = None,
-        score_threshold: float = None,
-        mode: str = "demo"
+        score_threshold: float = None
     ):
         """
         Initialize the CRUD executor.
@@ -112,15 +111,11 @@ class CRUDExecutor:
             scoring_method: Scoring method for semantic XPath
             top_k: Number of top results to consider
             score_threshold: Minimum score threshold
-            mode: Pipeline mode - "demo" (evolving tree) or "eval" (single-turn)
         """
-        # Set mode and determine result directory
-        self.mode = mode
-        result_dir = EVAL_DIR if mode == "eval" else DEMO_DIR
-        result_dir.mkdir(parents=True, exist_ok=True)
+        # Ensure result directory exists
+        RESULT_DIR.mkdir(parents=True, exist_ok=True)
         
         # Initialize components
-        self.intent_classifier = IntentClassifier()
         self.query_generator = XPathQueryGenerator()
         self.executor = DenseXPathExecutor(
             scoring_method=scoring_method,
@@ -131,16 +126,12 @@ class CRUDExecutor:
         self.insertion_reasoner = InsertionReasoner()
         self.node_deleter = NodeDeleter()
         self.node_inserter = NodeInserter()
-        # Store modified trees in result directory
-        self.version_manager = VersionManager(base_directory=result_dir)
+        self.version_manager = VersionManager(base_directory=RESULT_DIR)
         self.node_creator = NodeCreator()
         self.node_updater = NodeUpdater()
         
         # Store reference to tree for modifications
         self._tree = None
-        
-        # Eval mode counter for unique filenames
-        self._eval_counter = 0
     
     @property
     def tree(self) -> ET.ElementTree:
@@ -148,6 +139,17 @@ class CRUDExecutor:
         if self._tree is None:
             self._tree = copy.deepcopy(self.executor.tree)
         return self._tree
+    
+    def _sync_executor_tree(self):
+        """
+        Sync the DenseXPathExecutor's tree with our modified tree.
+        
+        This must be called after any modification to ensure subsequent
+        queries operate on the updated tree.
+        """
+        # Update the executor's tree reference to our modified tree
+        self.executor._tree = self._tree
+        self.executor._root = self._tree.getroot()
     
     def execute(self, user_query: str) -> Dict[str, Any]:
         """
@@ -159,47 +161,56 @@ class CRUDExecutor:
         Returns:
             Dict with operation results, traces, timing info, and modified tree info
         """
-        # In eval mode, reset tree to original before each query
-        if self.mode == "eval":
-            self._tree = None
-            self._eval_counter += 1
-        
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         timer = StepTimer()
         
-        # Step 1: Classify intent
-        timer.start("Intent Classification")
-        intent = self.intent_classifier.classify(user_query)
-        timer.stop()
-        logger.info(f"Classified intent: {intent.intent.value}")
-        
-        # Step 2: Generate XPath query
-        timer.start("XPath Generation")
-        xpath_query = self.query_generator.generate(intent.xpath_hint)
+        # Step 1: Generate and parse CRUD query (single LLM call)
+        timer.start("Query Generation")
+        parsed_query = self.query_generator.generate_and_parse(user_query)
         timer.stop()
         
-        # Format full query with operation
-        full_query = intent.format_full_query(xpath_query)
-        print(f"\n📋 {full_query}")
+        logger.info(f"Generated query: {parsed_query.full_query}")
+        print(f"\n📋 {parsed_query.full_query}")
+        
+        # Step 2: Resolve version
+        timer.start("Version Resolution")
+        version_selector, remaining_xpath = XPathQueryGenerator.extract_version_selector(parsed_query.xpath)
+        target_version = self.version_manager.get_version_by_selector(
+            self.tree, 
+            version_selector, 
+            scorer=self.executor.scorer  # Use entailment scorer for semantic version matching
+        )
+        timer.stop()
+        
+        if target_version is None:
+            return {
+                "success": False,
+                "error": "No version found in tree",
+                "timestamp": timestamp,
+                "user_query": user_query,
+                "parsed_query": parsed_query.to_dict()
+            }
+        
+        version_number = target_version.get("number", "?")
+        logger.info(f"Operating on version {version_number}")
         
         # Step 3: Execute based on operation type
-        if intent.intent == IntentType.READ:
-            result = self._execute_read(user_query, xpath_query, intent, timer)
-        elif intent.intent == IntentType.DELETE:
-            result = self._execute_delete(user_query, xpath_query, intent, timer)
-        elif intent.intent == IntentType.UPDATE:
-            result = self._execute_update(user_query, xpath_query, intent, timer)
-        elif intent.intent == IntentType.CREATE:
-            result = self._execute_create(user_query, xpath_query, intent, timer)
+        if parsed_query.operation == CRUDOperation.READ:
+            result = self._execute_read(user_query, parsed_query, target_version, timer)
+        elif parsed_query.operation == CRUDOperation.DELETE:
+            result = self._execute_delete(user_query, parsed_query, target_version, timer)
+        elif parsed_query.operation == CRUDOperation.UPDATE:
+            result = self._execute_update(user_query, parsed_query, target_version, timer)
+        elif parsed_query.operation == CRUDOperation.CREATE:
+            result = self._execute_create(user_query, parsed_query, target_version, timer)
         else:
-            result = {"error": f"Unknown intent: {intent.intent}"}
+            result = {"error": f"Unknown operation: {parsed_query.operation}"}
         
         # Add common fields
         result["timestamp"] = timestamp
         result["user_query"] = user_query
-        result["intent"] = intent.to_dict()
-        result["xpath_query"] = xpath_query
-        result["full_query"] = full_query
+        result["parsed_query"] = parsed_query.to_dict()
+        result["version_used"] = version_number
         result["timing"] = timer.to_dict()
         
         # Print timing summary
@@ -210,11 +221,14 @@ class CRUDExecutor:
     def _execute_read(
         self,
         user_query: str,
-        xpath_query: str,
-        intent: ClassifiedIntent,
+        parsed_query: ParsedQuery,
+        target_version: ET.Element,
         timer: StepTimer
     ) -> Dict[str, Any]:
-        """Execute a READ operation."""
+        """Execute a READ operation on a specific version."""
+        # Build xpath for version subtree
+        xpath_query = self._build_version_xpath(parsed_query.xpath, target_version)
+        
         # Execute semantic XPath
         timer.start("Semantic XPath Execution")
         execution_result = self.executor.execute(xpath_query)
@@ -250,11 +264,14 @@ class CRUDExecutor:
     def _execute_delete(
         self,
         user_query: str,
-        xpath_query: str,
-        intent: ClassifiedIntent,
+        parsed_query: ParsedQuery,
+        target_version: ET.Element,
         timer: StepTimer
     ) -> Dict[str, Any]:
-        """Execute a DELETE operation."""
+        """Execute a DELETE operation and create a new version."""
+        # Build xpath for version subtree
+        xpath_query = self._build_version_xpath(parsed_query.xpath, target_version)
+        
         # Execute semantic XPath
         timer.start("Semantic XPath Execution")
         execution_result = self.executor.execute(xpath_query)
@@ -279,34 +296,48 @@ class CRUDExecutor:
                 "reasoning_trace": reasoning_result.to_dict()
             }
         
-        # Delete selected nodes
+        # Copy version content for modification
+        timer.start("Version Copy")
+        new_version_content = self._copy_version_content(target_version)
+        timer.stop()
+        
+        # Delete selected nodes from the copy
         timer.start("Tree Modification")
-        tree = self.tree
         deletion_results = []
         deleted_paths = []
         
         for node_result in reasoning_result.selected_nodes:
             tree_path = node_result.node_path
-            result = self.node_deleter.delete_node(tree, tree_path)
-            deletion_results.append(result.to_dict())
+            # Adjust path to be relative to version content
+            relative_path = self._adjust_path_for_version(tree_path, target_version)
+            result = self._delete_from_content(new_version_content, relative_path)
+            deletion_results.append({"path": relative_path, "success": result})
             
-            if result.success:
+            if result:
                 deleted_paths.append(tree_path)
         timer.stop()
         
-        # Save new version
-        timer.start("Save Version")
+        # Create new version
+        timer.start("Create New Version")
         version_info = None
         if deleted_paths:
-            # Use custom name for eval mode (unique per query)
-            custom_name = f"eval_{self._eval_counter:03d}" if self.mode == "eval" else None
-            version_info = self.version_manager.save_version(
-                tree,
-                self.executor.memory_path,
-                operation="DELETE",
-                changes={"deleted_nodes": deleted_paths},
-                custom_name=custom_name
+            patch_info = f"Deleted: {', '.join(deleted_paths)}"
+            new_version = self.version_manager.create_new_version(
+                self.tree,
+                target_version,
+                patch_info=patch_info,
+                conversation_history=user_query,
+                modified_content=new_version_content
             )
+            
+            # Save the tree
+            version_info = self.version_manager.save_tree(
+                self.tree,
+                self.executor.memory_path
+            )
+            
+            # Sync executor tree for subsequent operations
+            self._sync_executor_tree()
         timer.stop()
         
         return {
@@ -322,11 +353,14 @@ class CRUDExecutor:
     def _execute_update(
         self,
         user_query: str,
-        xpath_query: str,
-        intent: ClassifiedIntent,
+        parsed_query: ParsedQuery,
+        target_version: ET.Element,
         timer: StepTimer
     ) -> Dict[str, Any]:
-        """Execute an UPDATE operation."""
+        """Execute an UPDATE operation and create a new version."""
+        # Build xpath for version subtree
+        xpath_query = self._build_version_xpath(parsed_query.xpath, target_version)
+        
         # Execute semantic XPath
         timer.start("Semantic XPath Execution")
         execution_result = self.executor.execute(xpath_query)
@@ -351,32 +385,41 @@ class CRUDExecutor:
                 "reasoning_trace": reasoning_result.to_dict()
             }
         
+        # Copy version content for modification
+        timer.start("Version Copy")
+        new_version_content = self._copy_version_content(target_version)
+        timer.stop()
+        
         # Update selected nodes
-        tree = self.tree
         update_results = []
         updated_paths = []
         
         for node_result in reasoning_result.selected_nodes:
             tree_path = node_result.node_path
+            relative_path = self._adjust_path_for_version(tree_path, target_version)
             
-            # Find the actual node in the tree
-            from tree_modification.base import find_node_by_path
-            original_node = find_node_by_path(tree.getroot(), tree_path)
+            # Find the node in the copy
+            original_node = self._find_node_in_content(new_version_content, relative_path)
             
             if original_node is None:
                 update_results.append({
                     "success": False,
                     "path": tree_path,
-                    "error": "Node not found"
+                    "error": "Node not found in version"
                 })
                 continue
+            
+            # Get update details
+            operation_details = {}
+            if parsed_query.update_info:
+                operation_details = parsed_query.update_info[1]
             
             # Generate updated content
             timer.start("LLM Content Update")
             update_content = self.node_updater.update_node(
                 user_query,
                 original_node,
-                intent.operation_details
+                operation_details
             )
             timer.stop()
             
@@ -388,37 +431,45 @@ class CRUDExecutor:
                 })
                 continue
             
-            # Replace the node
+            # Replace the node in the copy
             timer.start("Tree Modification")
-            replace_result = self.node_inserter.replace_node(
-                tree,
-                tree_path,
+            replace_result = self._replace_in_content(
+                new_version_content, 
+                relative_path, 
                 update_content.xml_element
             )
             timer.stop()
             
             update_results.append({
-                "success": replace_result.success,
+                "success": replace_result,
                 "path": tree_path,
                 "changes": update_content.to_dict()
             })
             
-            if replace_result.success:
+            if replace_result:
                 updated_paths.append(tree_path)
         
-        # Save new version
-        timer.start("Save Version")
+        # Create new version
+        timer.start("Create New Version")
         version_info = None
         if updated_paths:
-            # Use custom name for eval mode (unique per query)
-            custom_name = f"eval_{self._eval_counter:03d}" if self.mode == "eval" else None
-            version_info = self.version_manager.save_version(
-                tree,
-                self.executor.memory_path,
-                operation="UPDATE",
-                changes={"updated_nodes": updated_paths},
-                custom_name=custom_name
+            patch_info = f"Updated: {', '.join(updated_paths)}"
+            new_version = self.version_manager.create_new_version(
+                self.tree,
+                target_version,
+                patch_info=patch_info,
+                conversation_history=user_query,
+                modified_content=new_version_content
             )
+            
+            # Save the tree
+            version_info = self.version_manager.save_tree(
+                self.tree,
+                self.executor.memory_path
+            )
+            
+            # Sync executor tree for subsequent operations
+            self._sync_executor_tree()
         timer.stop()
         
         return {
@@ -434,11 +485,24 @@ class CRUDExecutor:
     def _execute_create(
         self,
         user_query: str,
-        xpath_query: str,
-        intent: ClassifiedIntent,
+        parsed_query: ParsedQuery,
+        target_version: ET.Element,
         timer: StepTimer
     ) -> Dict[str, Any]:
-        """Execute a CREATE operation."""
+        """Execute a CREATE operation and create a new version."""
+        # Get create info
+        if not parsed_query.create_info:
+            return {
+                "operation": "CREATE",
+                "success": False,
+                "message": "No create information provided"
+            }
+        
+        parent_path, node_type, description = parsed_query.create_info
+        
+        # Build xpath for finding parent context
+        xpath_query = self._build_version_xpath(parent_path, target_version)
+        
         # Execute semantic XPath to find context
         timer.start("Semantic XPath Execution")
         execution_result = self.executor.execute(xpath_query)
@@ -456,15 +520,15 @@ class CRUDExecutor:
         )
         timer.stop()
         
-        # Determine parent candidates (use selected or all)
+        # Determine parent candidates
         parent_candidates = [r.to_dict() for r in reasoning_result.selected_nodes] if reasoning_result.selected_nodes else candidates
         
         if not parent_candidates:
-            # Fallback: use root's children
+            # Fallback to version root
             parent_candidates = [{
-                "tree_path": self.executor.root.tag,
-                "node": {"type": self.executor.root.tag},
-                "children": [{"type": c.tag} for c in self.executor.root]
+                "tree_path": f"Version {target_version.get('number', '?')}",
+                "node": {"type": "Version"},
+                "children": [{"type": c.tag} for c in self.version_manager.get_version_content(target_version)]
             }]
         
         # Find best insertion point
@@ -472,12 +536,9 @@ class CRUDExecutor:
         insertion_point = self.insertion_reasoner.find_insertion_point(
             user_query,
             parent_candidates,
-            intent.operation_details
+            {"new_content": description, "node_type": node_type}
         )
         timer.stop()
-        
-        # Determine node type to create
-        node_type = self._infer_node_type(intent.operation_details)
         
         # Generate content for new node
         timer.start("LLM Content Creation")
@@ -490,7 +551,7 @@ class CRUDExecutor:
             user_query,
             node_type,
             context,
-            intent.operation_details
+            {"new_content": description}
         )
         timer.stop()
         
@@ -503,59 +564,377 @@ class CRUDExecutor:
                 "insertion_point": insertion_point.to_dict()
             }
         
+        # Copy version content for modification
+        timer.start("Version Copy")
+        new_version_content = self._copy_version_content(target_version)
+        timer.stop()
+        
         # Insert the new node
         timer.start("Tree Modification")
-        tree = self.tree
-        insert_result = self.node_inserter.insert_node(
-            tree,
-            insertion_point.parent_path,
+        relative_parent_path = self._adjust_path_for_version(insertion_point.parent_path, target_version)
+        insert_result = self._insert_in_content(
+            new_version_content,
+            relative_parent_path,
             content_result.xml_element,
             insertion_point.position
         )
         timer.stop()
         
-        # Save new version
-        timer.start("Save Version")
+        # Create new version
+        timer.start("Create New Version")
         version_info = None
-        if insert_result.success:
-            # Use custom name for eval mode (unique per query)
-            custom_name = f"eval_{self._eval_counter:03d}" if self.mode == "eval" else None
-            version_info = self.version_manager.save_version(
-                tree,
-                self.executor.memory_path,
-                operation="CREATE",
-                changes={
-                    "created_node": insert_result.node_path,
-                    "parent_path": insertion_point.parent_path,
-                    "position": insertion_point.position
-                },
-                custom_name=custom_name
+        created_path = None
+        if insert_result:
+            created_path = f"{insertion_point.parent_path}/{node_type}"
+            patch_info = f"Created: {created_path}"
+            new_version = self.version_manager.create_new_version(
+                self.tree,
+                target_version,
+                patch_info=patch_info,
+                conversation_history=user_query,
+                modified_content=new_version_content
             )
+            
+            # Save the tree
+            version_info = self.version_manager.save_tree(
+                self.tree,
+                self.executor.memory_path
+            )
+            
+            # Sync executor tree for subsequent operations
+            self._sync_executor_tree()
         timer.stop()
         
         return {
             "operation": "CREATE",
-            "success": insert_result.success,
-            "created_path": insert_result.node_path if insert_result.success else None,
-            "insert_result": insert_result.to_dict(),
+            "success": insert_result,
+            "created_path": created_path if insert_result else None,
             "content_result": content_result.to_dict(),
             "insertion_point": insertion_point.to_dict(),
             "reasoning_trace": reasoning_result.to_dict(),
             "tree_version": version_info.to_dict() if version_info else None
         }
     
-    def _infer_node_type(self, operation_details: Dict[str, Any]) -> str:
-        """Infer the node type to create based on operation details."""
-        new_content = operation_details.get("new_content", "").lower()
+    def _build_version_xpath(self, xpath: str, version: ET.Element) -> str:
+        """
+        Build an xpath query that targets the specific version.
         
-        # Check for restaurant indicators
-        restaurant_keywords = ["restaurant", "cafe", "bistro", "bar", "diner", 
-                             "eatery", "food", "dining", "lunch", "dinner", "breakfast"]
-        if any(kw in new_content for kw in restaurant_keywords):
-            return "Restaurant"
+        Args:
+            xpath: Original xpath (may or may not have Version in path)
+            version: The target Version element
+            
+        Returns:
+            XPath query targeting the version
+        """
+        version_number = version.get("number", "1")
+        root_type = self.executor.root_type
         
-        # Default to POI
-        return "POI"
+        # If xpath starts with root, insert Version after it
+        if xpath.startswith(f"/{root_type}"):
+            remaining = xpath[len(f"/{root_type}"):]
+            # Skip any existing Version selector
+            if remaining.startswith("/Version"):
+                # Find end of Version selector
+                import re
+                match = re.match(r'/Version(\[[^\]]+\])?', remaining)
+                if match:
+                    remaining = remaining[match.end():]
+            return f"/{root_type}/Version[@number='{version_number}']{remaining}"
+        
+        # If xpath doesn't start with root, prepend full path
+        if not xpath.startswith("/"):
+            xpath = "/" + xpath
+        
+        return f"/{root_type}/Version[@number='{version_number}']{xpath}"
+    
+    def _copy_version_content(self, version: ET.Element) -> List[ET.Element]:
+        """
+        Create a deep copy of the content nodes from a version.
+        
+        Args:
+            version: The Version element
+            
+        Returns:
+            List of deep-copied content elements
+        """
+        return [
+            copy.deepcopy(child) 
+            for child in version 
+            if child.tag not in ("patch_info", "conversation_history")
+        ]
+    
+    def _adjust_path_for_version(self, tree_path: str, version: ET.Element) -> str:
+        """
+        Adjust a tree path to be relative to version content.
+        
+        Removes the root and Version prefix from the path.
+        
+        Args:
+            tree_path: Full tree path (e.g., "Itinerary > Version 1 > Day 1 > POI 2")
+            version: The Version element
+            
+        Returns:
+            Path relative to version content (e.g., "Day 1 > POI 2")
+        """
+        parts = [p.strip() for p in tree_path.split(">")]
+        
+        # Skip root and Version
+        result_parts = []
+        skip_next = 0
+        for i, part in enumerate(parts):
+            if skip_next > 0:
+                skip_next -= 1
+                continue
+            if part == self.executor.root_type:
+                continue
+            if part.startswith("Version"):
+                continue
+            result_parts.append(part)
+        
+        return " > ".join(result_parts)
+    
+    def _find_node_in_content(
+        self, 
+        content: List[ET.Element], 
+        relative_path: str
+    ) -> Optional[ET.Element]:
+        """
+        Find a node within the content list by relative path.
+        
+        Supports multiple path formats:
+        - Indexed: "Day 1 > POI 2"
+        - Name-based: "Day 1 > Royal Ontario Museum"
+        - Tag-based: "Day > POI"
+        
+        Args:
+            content: List of content elements
+            relative_path: Path relative to version
+            
+        Returns:
+            The found element, or None
+        """
+        if not relative_path:
+            return None
+        
+        parts = [p.strip() for p in relative_path.split(">")]
+        
+        # Find the first element in content
+        first_part = parts[0]
+        current = self._find_element_by_part(content, first_part)
+        
+        if current is None:
+            return None
+        
+        # Navigate remaining path
+        for part in parts[1:]:
+            children = list(current)
+            current = self._find_element_by_part(children, part)
+            if current is None:
+                return None
+        
+        return current
+    
+    def _find_element_by_part(
+        self,
+        elements: List[ET.Element],
+        part: str
+    ) -> Optional[ET.Element]:
+        """
+        Find an element in a list by a path part.
+        
+        Handles:
+        - Indexed notation: "Day 1", "POI 2"
+        - Name-based: "Royal Ontario Museum"
+        - Tag-based: "Day", "POI"
+        
+        Args:
+            elements: List of elements to search
+            part: Path part to match
+            
+        Returns:
+            The found element, or None
+        """
+        words = part.split()
+        
+        # Case 1: Indexed notation like "Day 1" or "POI 2"
+        if len(words) == 2 and words[1].isdigit():
+            node_type = words[0]
+            index = int(words[1])
+            
+            # Check for index/number attribute first (for Day, Version)
+            for elem in elements:
+                if elem.tag == node_type:
+                    elem_index = elem.get("index") or elem.get("number")
+                    if elem_index == str(index):
+                        return elem
+            
+            # Fall back to positional index
+            matching = [e for e in elements if e.tag == node_type]
+            if 0 < index <= len(matching):
+                return matching[index - 1]
+            
+            return None
+        
+        # Case 2: Try direct tag match
+        for elem in elements:
+            if elem.tag == part:
+                return elem
+        
+        # Case 3: Try name-based match (search by <name> or <title> element)
+        for elem in elements:
+            name_elem = elem.find("name")
+            if name_elem is not None and name_elem.text and name_elem.text.strip() == part:
+                return elem
+            
+            title_elem = elem.find("title")
+            if title_elem is not None and title_elem.text and title_elem.text.strip() == part:
+                return elem
+        
+        return None
+    
+    def _delete_from_content(
+        self, 
+        content: List[ET.Element], 
+        relative_path: str
+    ) -> bool:
+        """
+        Delete a node from the content list.
+        
+        Supports multiple path formats:
+        - Indexed: "Day 1 > POI 2"
+        - Name-based: "Day 1 > Royal Ontario Museum"
+        
+        Args:
+            content: List of content elements (will be modified)
+            relative_path: Path to the node to delete
+            
+        Returns:
+            True if deletion succeeded
+        """
+        if not relative_path:
+            return False
+        
+        parts = [p.strip() for p in relative_path.split(">")]
+        
+        if len(parts) == 1:
+            # Delete from top level - find and remove from content list
+            old_elem = self._find_element_by_part(content, parts[0])
+            if old_elem is not None:
+                content.remove(old_elem)
+                return True
+            return False
+        
+        # Find parent and delete child
+        parent_path = " > ".join(parts[:-1])
+        parent = self._find_node_in_content(content, parent_path)
+        
+        if parent is None:
+            return False
+        
+        child_part = parts[-1]
+        
+        # Find the child to delete
+        old_child = self._find_element_by_part(list(parent), child_part)
+        
+        if old_child is not None:
+            parent.remove(old_child)
+            return True
+        
+        return False
+    
+    def _replace_in_content(
+        self,
+        content: List[ET.Element],
+        relative_path: str,
+        new_element: ET.Element
+    ) -> bool:
+        """
+        Replace a node in the content list.
+        
+        Supports multiple path formats:
+        - Indexed: "Day 1 > POI 2"
+        - Name-based: "Day 1 > Royal Ontario Museum"
+        
+        Args:
+            content: List of content elements (will be modified)
+            relative_path: Path to the node to replace
+            new_element: The replacement element
+            
+        Returns:
+            True if replacement succeeded
+        """
+        if not relative_path:
+            return False
+        
+        parts = [p.strip() for p in relative_path.split(">")]
+        
+        if len(parts) == 1:
+            # Replace at top level - find and replace in content list
+            old_elem = self._find_element_by_part(content, parts[0])
+            if old_elem is not None:
+                idx = content.index(old_elem)
+                content[idx] = new_element
+                return True
+            return False
+        
+        # Find parent and replace child
+        parent_path = " > ".join(parts[:-1])
+        parent = self._find_node_in_content(content, parent_path)
+        
+        if parent is None:
+            return False
+        
+        child_part = parts[-1]
+        
+        # Find the child to replace
+        old_child = self._find_element_by_part(list(parent), child_part)
+        
+        if old_child is not None:
+            idx = list(parent).index(old_child)
+            parent.remove(old_child)
+            parent.insert(idx, new_element)
+            return True
+        
+        return False
+    
+    def _insert_in_content(
+        self,
+        content: List[ET.Element],
+        relative_parent_path: str,
+        new_element: ET.Element,
+        position: int = -1
+    ) -> bool:
+        """
+        Insert a new node into the content.
+        
+        Args:
+            content: List of content elements (will be modified)
+            relative_parent_path: Path to the parent node
+            new_element: The element to insert
+            position: Position to insert at (-1 for end)
+            
+        Returns:
+            True if insertion succeeded
+        """
+        if not relative_parent_path:
+            # Insert at top level
+            if position < 0:
+                content.append(new_element)
+            else:
+                content.insert(position, new_element)
+            return True
+        
+        parent = self._find_node_in_content(content, relative_parent_path)
+        
+        if parent is None:
+            return False
+        
+        if position < 0:
+            parent.append(new_element)
+        else:
+            parent.insert(position, new_element)
+        
+        return True
     
     def reload_tree(self):
         """Reload the tree from the original file."""

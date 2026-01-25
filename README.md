@@ -1,6 +1,6 @@
 # Semantic XPath: Hierarchical Retrieval with Score Fusion
 
-A framework for querying and modifying hierarchical data using natural language with **semantic predicates**, **hierarchical aggregation**, **score fusion**, and **CRUD operations**.
+A framework for querying and modifying hierarchical data using natural language with **semantic predicates**, **hierarchical aggregation**, **score fusion**, **CRUD operations**, and **in-tree versioning**.
 
 ## Core Idea
 
@@ -10,11 +10,12 @@ Traditional XPath operates on exact matches. Semantic XPath extends this with:
 - **Hierarchical aggregation**: Aggregate scores from children to parents
 - **Score fusion**: Combine scores across query steps (product)
 - **CRUD Operations**: Create, Read, Update, Delete nodes using natural language
+- **In-Tree Versioning**: Every modification creates a new version within the tree
 
 ```
 User: "find museums in artistic days"
 
-Semantic XPath: Read(/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")])
+Semantic XPath: Read(/Itinerary/Version[-1]/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")])
 
 Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
 ```
@@ -22,9 +23,17 @@ Result: [Art Gallery of Ontario: 0.95, Royal Ontario Museum: 0.89, ...]
 ```
 User: "delete all the museums"
 
-Semantic XPath: Delete(/Itinerary/Day/POI[atom(content =~ "museum")])
+Semantic XPath: Delete(/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")])
 
-Result: Deleted 2 nodes, saved to result/travel_memory_v1.xml
+Result: Deleted 2 nodes, created Version 2
+```
+
+```
+User: "in the version where I deleted museums, update the first POI to chinese food"
+
+Semantic XPath: Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], type: chinese food)
+
+Result: Found Version 2 via semantic matching, updated POI, created Version 3
 ```
 
 ---
@@ -32,14 +41,15 @@ Result: Deleted 2 nodes, saved to result/travel_memory_v1.xml
 ## Table of Contents
 
 1. [End-to-End Flow](#end-to-end-flow)
-2. [CRUD Operations](#crud-operations)
-3. [Mathematical Foundation](#mathematical-foundation)
-4. [Query Syntax](#query-syntax)
-5. [Predicate Types](#predicate-types)
-6. [Schema System](#schema-system)
-7. [Usage](#usage)
-8. [Configuration](#configuration)
-9. [Project Structure](#project-structure)
+2. [In-Tree Versioning](#in-tree-versioning)
+3. [CRUD Operations](#crud-operations)
+4. [Mathematical Foundation](#mathematical-foundation)
+5. [Query Syntax](#query-syntax)
+6. [Predicate Types](#predicate-types)
+7. [Schema System](#schema-system)
+8. [Usage](#usage)
+9. [Configuration](#configuration)
+10. [Project Structure](#project-structure)
 
 ---
 
@@ -127,18 +137,74 @@ Result: Deleted 2 nodes, saved to result/travel_memory_v1.xml
 
 | Component | Role | Key Files |
 |-----------|------|-----------|
-| **Query Generator** | NL → Semantic XPath | `xpath_query_generation/` |
+| **Query Generator** | Unified NL → CRUD + XPath (single LLM call) | `xpath_query_generation/` |
+| **Version Manager** | In-tree versioning, semantic version resolution | `tree_modification/version_manager.py` |
 | **Parser** | Query string → AST (atom/agg_exists/agg_prev) | `dense_xpath/parser.py` |
 | **Executor** | BFS traversal + fusion | `dense_xpath/dense_xpath_executor.py` |
 | **Predicate Handler** | Scoring + aggregation | `dense_xpath/predicate_handler.py` |
-| **Scorer** | Semantic similarity | `predicate_classifier/` |
-| **CRUD Executor** | CRUD operations | `crud/crud_executor.py` |
+| **Scorer** | Semantic similarity (also for version resolution) | `predicate_classifier/` |
+| **CRUD Executor** | CRUD orchestration with versioning | `crud/crud_executor.py` |
+
+---
+
+## In-Tree Versioning
+
+The system uses **in-tree versioning** where each modification creates a new Version node within the tree structure itself.
+
+### Version Structure
+
+```xml
+<Itinerary>
+  <Version number="1">
+    <patch_info></patch_info>
+    <conversation_history></conversation_history>
+    <Day index="1">...</Day>
+    <Day index="2">...</Day>
+  </Version>
+  <Version number="2">
+    <patch_info>Deleted: Royal Ontario Museum, Art Gallery of Ontario</patch_info>
+    <conversation_history>delete the museum</conversation_history>
+    <Day index="1">...</Day>
+    <Day index="2">...</Day>
+  </Version>
+</Itinerary>
+```
+
+### Version Selectors
+
+| Selector | Meaning | Example |
+|----------|---------|---------|
+| `Version[-1]` | Latest version (default) | `Read(/Itinerary/Version[-1]/Day/POI)` |
+| `Version[N]` | Specific version number | `Read(/Itinerary/Version[2]/Day)` |
+| `Version[atom(content =~ "...")]` | Semantic search on version metadata | `Read(/Itinerary/Version[atom(content =~ "delete museum")]/Day)` |
+
+### Semantic Version Resolution
+
+When using semantic version selectors, the system:
+1. Builds descriptions from `patch_info` + `conversation_history` for each version
+2. Scores all versions in a **single batch** using entailment scoring
+3. Selects the **top-1** version by score (threshold > 0.5)
+
+### Compound Version + Operation Queries
+
+You can reference versions by their changes AND perform operations in one query:
+
+```
+User: "in the version that deleted the museum, update the first POI to chinese food"
+
+Generated: Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], type: chinese food)
+
+Flow:
+1. Semantic search finds Version 2 (deleted museums)
+2. Update applied to Version 2's content
+3. New Version 3 created with the changes
+```
 
 ---
 
 ## CRUD Operations
 
-The system supports full CRUD (Create, Read, Update, Delete) operations on tree data using natural language.
+The system supports full CRUD (Create, Read, Update, Delete) operations on tree data using natural language with a **unified LLM call** for both intent classification and query generation.
 
 ### Architecture
 
@@ -147,46 +213,59 @@ The system supports full CRUD (Create, Read, Update, Delete) operations on tree 
 │                         CRUD PIPELINE                                    │
 └─────────────────────────────────────────────────────────────────────────┘
 
-    User Query              Intent              XPath Query
-   (Natural Lang)         Classifier            Generator
-        │                     │                     │
-        ▼                     ▼                     ▼
-┌───────────────┐     ┌───────────────┐     ┌───────────────┐
-│ "delete all   │     │   Classify:   │     │  Generate:    │
-│  museums"     │ ──▶ │   DELETE      │ ──▶ │  /Day/POI     │
-│               │     │               │     │  [sem(...)]   │
-└───────────────┘     └───────────────┘     └───────────────┘
-                                                   │
-                      ┌────────────────────────────┘
-                      │
-                      ▼
+    User Query             Unified LLM Call           CRUD + XPath
+   (Natural Lang)      (Intent + Query Gen)             Query
+        │                       │                         │
+        ▼                       ▼                         ▼
+┌───────────────┐       ┌───────────────┐       ┌─────────────────────┐
+│ "in version   │       │  Single LLM   │       │ Update(/Itinerary/  │
+│  that deleted │  ──▶  │  generates    │  ──▶  │ Version[atom(...)]/ │
+│  museum, ..." │       │  full query   │       │ Day/POI[1], ...)    │
+└───────────────┘       └───────────────┘       └─────────────────────┘
+                                                         │
+                        ┌────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      VERSION RESOLUTION                                  │
+│  Extract version selector → Semantic scoring (batched) → Top-1 select   │
+└─────────────────────────────────────────────────────────────────────────┘
+                        │
+                        ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                      SEMANTIC XPATH EXECUTION                            │
 │  Find candidate nodes with semantic scoring                              │
 └─────────────────────────────────────────────────────────────────────────┘
-                      │
-                      ▼
+                        │
+                        ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                      LLM NODE REASONING                                  │
 │  Batched LLM calls to select truly relevant nodes from candidates        │
 └─────────────────────────────────────────────────────────────────────────┘
-                      │
-          ┌───────────┴───────────┬───────────────┬───────────────┐
-          ▼                       ▼               ▼               ▼
-     ┌─────────┐            ┌─────────┐     ┌─────────┐     ┌─────────┐
-     │  READ   │            │ DELETE  │     │ UPDATE  │     │ CREATE  │
-     │ Return  │            │ Remove  │     │ Modify  │     │ Insert  │
-     │ Results │            │ Nodes   │     │ Content │     │ New Node│
-     └─────────┘            └────┬────┘     └────┬────┘     └────┬────┘
-                                 │               │               │
-                                 └───────────────┴───────────────┘
-                                                 │
-                                                 ▼
-                                 ┌───────────────────────────────┐
-                                 │     VERSION MANAGER           │
-                                 │  Save to result/ folder       │
-                                 │  (tree_v1.xml, tree_v2.xml)   │
-                                 └───────────────────────────────┘
+                        │
+          ┌─────────────┴─────────────┬───────────────┬───────────────┐
+          ▼                           ▼               ▼               ▼
+     ┌─────────┐                ┌─────────┐     ┌─────────┐     ┌─────────┐
+     │  READ   │                │ DELETE  │     │ UPDATE  │     │ CREATE  │
+     │ Return  │                │ Remove  │     │ Modify  │     │ Insert  │
+     │ Results │                │ Nodes   │     │ Content │     │ New Node│
+     └─────────┘                └────┬────┘     └────┬────┘     └────┬────┘
+                                     │               │               │
+                                     └───────────────┴───────────────┘
+                                                     │
+                                                     ▼
+                                     ┌───────────────────────────────┐
+                                     │     CREATE NEW VERSION        │
+                                     │  Copy content → Apply changes │
+                                     │  → Append Version node        │
+                                     └───────────────────────────────┘
+                                                     │
+                                                     ▼
+                                     ┌───────────────────────────────┐
+                                     │     SAVE TREE                 │
+                                     │  result/demo/<filename>.xml   │
+                                     │  (all versions in one file)   │
+                                     └───────────────────────────────┘
 ```
 
 ### Operation Types
@@ -200,13 +279,17 @@ The system supports full CRUD (Create, Read, Update, Delete) operations on tree 
 
 ### Full Query Format
 
-Each operation displays a full query showing the operation type and XPath:
+Each operation displays a full query showing the operation type, version selector, and XPath:
 
 ```
-Read(/Itinerary/Day/POI[atom(content =~ "museum")])
-Delete(/Itinerary/Day[@index='2']/POI[atom(content =~ "cafe")])
-Update(/Itinerary/Day/POI[atom(content =~ "CN Tower")])
-Create(/Itinerary/Day[@index='1']/Restaurant)
+Read(/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")])
+Delete(/Itinerary/Version[-1]/Day[@index='2']/POI[atom(content =~ "cafe")])
+Update(/Itinerary/Version[-1]/Day/POI[atom(content =~ "CN Tower")], time_block: 2:00 PM)
+Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, sushi restaurant for lunch)
+
+# Compound queries with semantic version selection
+Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], type: chinese food)
+Read(/Itinerary/Version[atom(content =~ "add restaurant")]/Day/POI)
 ```
 
 ### Step Timing
@@ -216,26 +299,33 @@ Each operation displays detailed timing for performance analysis:
 ```
 ⏱️  Step Timing:
 ---------------------------------------------
-  Intent Classification          523.4ms  ██████░░░░░░░░░░░░░░  28.5%
-  XPath Generation               412.1ms  ████░░░░░░░░░░░░░░░░  22.4%
-  Semantic XPath Execution       156.2ms  ██░░░░░░░░░░░░░░░░░░   8.5%
-  LLM Node Reasoning             689.3ms  ████████░░░░░░░░░░░░  37.5%
-  Tree Modification                2.1ms  ░░░░░░░░░░░░░░░░░░░░   0.1%
-  Save Version                    55.8ms  █░░░░░░░░░░░░░░░░░░░   3.0%
+  Query Generation             622.1ms  █░░░░░░░░░░░░░░░░░░░   7.9%
+  Version Resolution           616.1ms  █░░░░░░░░░░░░░░░░░░░   7.8%
+  Semantic XPath Execution       0.8ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
+  LLM Node Reasoning          2468.9ms  ██████░░░░░░░░░░░░░░  31.3%
+  Version Copy                   0.1ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
+  LLM Content Update          4184.9ms  ██████████░░░░░░░░░░  53.0%
+  Tree Modification              0.0ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
+  Create New Version             1.6ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
 ---------------------------------------------
-  TOTAL                         1838.9ms
+  TOTAL                       7894.5ms
 ```
 
 ### Output Files
 
-Modified trees are saved to the `result/` folder with versioning:
+Modified trees are saved to the `result/demo/` folder. The tree file contains all versions:
 
 ```
 result/
-├── travel_memory_10day_themed_v1.xml    # After first modification
-├── travel_memory_10day_themed_v2.xml    # After second modification
-├── travel_memory_10day_themed_versions.json  # Version history
-└── ...
+└── demo/
+    └── travel_memory_3day.xml    # Contains Version 1, 2, 3, ... all in one file
+
+# Example tree structure with versions:
+<Itinerary>
+  <Version number="1">...</Version>
+  <Version number="2">...</Version>
+  <Version number="3">...</Version>
+</Itinerary>
 ```
 
 ### CRUD Usage
@@ -245,30 +335,34 @@ from pipeline import SemanticXPathPipeline
 
 pipeline = SemanticXPathPipeline()
 
-# Read operation
+# Read operation (default: Version[-1])
 result = pipeline.process_request("find museums in the itinerary")
-# Displays: Read(/Itinerary/Day/POI[atom(content =~ "museum")])
+# Displays: Read(/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")])
 
-# Delete operation
+# Delete operation → creates new version
 result = pipeline.process_request("delete all the museums")
-# Displays: Delete(/Itinerary/Day/POI[atom(content =~ "museum")])
-# Saves: result/travel_memory_v1.xml
+# Displays: Delete(/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")])
+# Creates: Version 2 in the tree
 
-# Update operation
+# Update operation → creates new version
 result = pipeline.process_request("change the CN Tower visit to 2pm")
-# Displays: Update(/Itinerary/Day/POI[atom(content =~ "CN Tower")])
-# Saves: result/travel_memory_v2.xml
+# Displays: Update(/Itinerary/Version[-1]/Day/POI[atom(content =~ "CN Tower")], time_block: 2:00 PM)
+# Creates: Version 3 in the tree
 
-# Update with type change (POI → Restaurant)
-result = pipeline.process_request("change the museum to Chinese food")
-# Displays: Update(/Itinerary/Day/POI[atom(content =~ "museum")])
-# The content updater detects the semantic shift and changes <POI> to <Restaurant>
-# Saves: result/travel_memory_v3.xml
+# Compound query: reference version by changes + perform operation
+result = pipeline.process_request("in the version that deleted museums, update the first POI to chinese food")
+# Displays: Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], type: chinese food)
+# Semantic scoring finds Version 2, applies update, creates Version 4
 
 # Create operation
 result = pipeline.process_request("add a sushi restaurant after lunch on day 1")
-# Displays: Create(/Itinerary/Day[@index='1']/Restaurant)
-# Saves: result/travel_memory_v4.xml
+# Displays: Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, sushi restaurant after lunch)
+# Creates: Version 5 in the tree
+
+# View version history
+history = pipeline.executor.version_manager.get_version_history(pipeline.executor.tree)
+for v in history:
+    print(f"Version {v['number']}: {v['patch_info']}")
 ```
 
 ---
@@ -454,6 +548,14 @@ nodes:
   Itinerary:
     type: root
     fields: []
+    children: ["Version"]           # Root contains Version nodes
+    
+  Version:
+    type: container
+    index_attr: "number"            # <Version number="1">
+    fields:
+      - patch_info                  # Description of changes
+      - conversation_history        # User's original request
     children: ["Day"]
     
   Day:
@@ -509,44 +611,49 @@ python -m pipeline.semantic_xpath_pipeline
 
 ```
 ============================================================
-Semantic XPath Pipeline - CRUD Operations
+Semantic XPath Pipeline - CRUD Operations (with In-Tree Versioning)
 ============================================================
 Commands:
   - Natural language query for CRUD operations
+  - 'history' - Show version history
   - 'stats' - Session statistics
   - 'reload' - Reload tree from file
   - 'exit' or 'quit' - Exit
 ============================================================
 
-🔄 Query: find museums in the itinerary
+🔄 Query: delete the museum
 
-📋 Read(/Itinerary/Day/POI[atom(content =~ "museum")])
+📋 Delete(/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")])
+📁 Tree saved: result/demo/travel_memory_3day.xml (2 versions)
 
 ⏱️  Step Timing:
 ---------------------------------------------
-  Intent Classification          412.3ms  ████░░░░░░░░░░░░░░░░  22.1%
-  XPath Generation               523.1ms  ██████░░░░░░░░░░░░░░  28.0%
-  Semantic XPath Execution       245.6ms  ███░░░░░░░░░░░░░░░░░  13.2%
-  LLM Node Reasoning             685.2ms  ████████░░░░░░░░░░░░  36.7%
+  Query Generation             621.9ms  █░░░░░░░░░░░░░░░░░░░   6.5%
+  Version Resolution             1.5ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
+  Semantic XPath Execution    5713.9ms  ███████████░░░░░░░░░  59.9%
+  LLM Node Reasoning          3205.7ms  ██████░░░░░░░░░░░░░░  33.6%
+  Version Copy                   0.5ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
+  Tree Modification              0.0ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
+  Create New Version             1.7ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
 ---------------------------------------------
-  TOTAL                         1866.2ms
+  TOTAL                       9545.1ms
 
-✅ READ Operation Succeeded
+✅ DELETE Operation Succeeded - Created Version 2
 ============================================================
-⏱️  Time: 1872.4ms
 
-📊 Results: 2 selected from 6 candidates
+🔄 Query: in the version that deleted museums, update first POI to chinese food
 
-📋 Selected Nodes:
---------------------------------------------------
+📋 Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], type: chinese food)
+📁 Tree saved: result/demo/travel_memory_3day.xml (3 versions)
 
-[1] POI: Royal Ontario Museum
-    📝 World-renowned museum showcasing art, culture, and natural history.
-    🕐 11:00 AM - 1:00 PM
+⏱️  Step Timing:
+---------------------------------------------
+  Query Generation             622.1ms  █░░░░░░░░░░░░░░░░░░░   7.9%
+  Version Resolution           616.1ms  █░░░░░░░░░░░░░░░░░░░   7.8%   ← Semantic scoring
+  ...
+---------------------------------------------
 
-[2] POI: Art Gallery of Ontario
-    📝 Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.
-    🕐 2:30 PM - 4:00 PM
+✅ UPDATE Operation Succeeded (Version 2 → Version 3)
 ============================================================
 ```
 
@@ -644,9 +751,6 @@ LLM-VM/
 │   └── semantic_xpath_pipeline.py   # Main entry point (CRUD pipeline)
 ├── crud/
 │   └── crud_executor.py             # CRUD operation orchestrator
-├── intent_classifier/
-│   ├── base.py                      # IntentType enum, ClassifiedIntent
-│   └── intent_classifier.py         # LLM-based intent classification
 ├── reasoner/
 │   ├── base.py                      # ReasonerDecision, InsertionPoint
 │   ├── node_reasoner.py             # Batched LLM node selection
@@ -655,13 +759,13 @@ LLM-VM/
 │   ├── base.py                      # OperationResult, path utilities
 │   ├── node_deleter.py              # Delete nodes by path
 │   ├── node_inserter.py             # Insert/replace nodes
-│   └── version_manager.py           # Versioned tree saves
+│   └── version_manager.py           # In-tree versioning (create/resolve versions)
 ├── content_creator/
 │   ├── base.py                      # ContentGenerationResult
 │   ├── node_creator.py              # LLM content generation
 │   └── node_updater.py              # LLM content updates
 ├── xpath_query_generation/
-│   └── xpath_query_generator.py     # NL → Semantic XPath (LLM)
+│   └── xpath_query_generator.py     # Unified: NL → CRUD + XPath (single LLM call)
 ├── dense_xpath/
 │   ├── dense_xpath_executor.py      # Main executor with score fusion
 │   ├── models.py                    # AtomicPredicate, CompoundPredicate, etc.
@@ -672,19 +776,19 @@ LLM-VM/
 │   └── trace_writer.py              # Execution + CRUD traces
 ├── predicate_classifier/
 │   ├── llm_scorer.py                # GPT-4 scoring
-│   ├── entailment_scorer.py         # BART NLI scoring
+│   ├── entailment_scorer.py         # BART NLI scoring (used for version resolution)
 │   └── cosine_scorer.py             # Embedding similarity
 ├── storage/
-│   ├── schemas/                     # Schema definitions
-│   ├── memory/                      # XML data files
+│   ├── schemas/                     # Schema definitions (with Version nodes)
+│   ├── memory/                      # XML data files (versioned structure)
 │   └── prompts/                     # All LLM prompts
-│       ├── intent_classifier.txt
 │       ├── node_reasoner.txt
 │       ├── insertion_reasoner.txt
 │       ├── content_creator.txt
 │       ├── content_updater.txt
-│       └── xpath_query_generator_*.txt
-├── result/                          # Modified trees (versioned)
+│       └── xpath_query_generator_*.txt  # Unified CRUD + XPath prompts
+├── result/
+│   └── demo/                        # Modified trees (all versions in one file)
 ├── traces/                          # Execution logs and traces
 │   ├── log/
 │   └── reasoning_traces/
@@ -697,15 +801,23 @@ LLM-VM/
 
 ## Quick Reference
 
+### Version Selectors
+
+| Selector | Meaning | Example |
+|----------|---------|---------|
+| `Version[-1]` | Latest version (default) | `/Itinerary/Version[-1]/Day/POI` |
+| `Version[N]` | Specific version | `/Itinerary/Version[2]/Day` |
+| `Version[atom(...)]` | Semantic search | `/Itinerary/Version[atom(content =~ "delete museum")]/Day` |
+
 ### CRUD Operations
 
 | Operation | Natural Language Example | Full Query |
 |-----------|-------------------------|------------|
-| **Read** | "find museums" | `Read(/Itinerary/Day/POI[atom(...)])` |
-| **Create** | "add a cafe on day 1" | `Create(/Itinerary/Day[@index='1']/Restaurant)` |
-| **Update** | "change CN Tower to 2pm" | `Update(/Itinerary/Day/POI[atom(...)])` |
-| **Update** | "change museum to Chinese food" | Updates content and changes `<POI>` → `<Restaurant>` |
-| **Delete** | "remove all museums" | `Delete(/Itinerary/Day/POI[atom(...)])` |
+| **Read** | "find museums" | `Read(/Itinerary/Version[-1]/Day/POI[atom(...)])` |
+| **Create** | "add a cafe on day 1" | `Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, ...)` |
+| **Update** | "change CN Tower to 2pm" | `Update(/Itinerary/Version[-1]/Day/POI[atom(...)], time_block: 2:00 PM)` |
+| **Compound** | "in version that deleted museum, update first POI" | `Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], ...)` |
+| **Delete** | "remove all museums" | `Delete(/Itinerary/Version[-1]/Day/POI[atom(...)])` |
 
 ### Predicate Syntax
 
@@ -728,33 +840,37 @@ LLM-VM/
 ### Example Queries
 
 ```xpath
-# Find museums
-/Itinerary/Day/POI[atom(content =~ "museum")]
+# Find museums (latest version)
+/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")]
 
 # Find days with museums
-/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")])]
+/Itinerary/Version[-1]/Day[agg_exists(POI[atom(content =~ "museum")])]
 
 # Find artistic days
-/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]
+/Itinerary/Version[-1]/Day[agg_prev(POI[atom(content =~ "artistic")])]
 
 # Find museums in artistic days
-/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+/Itinerary/Version[-1]/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
 
 # Days with both museum AND Italian restaurant
-/Itinerary/Day[agg_exists(POI[atom(content =~ "museum")]) AND agg_exists(Restaurant[atom(content =~ "italian")])]
+/Itinerary/Version[-1]/Day[agg_exists(POI[atom(content =~ "museum")]) AND agg_exists(Restaurant[atom(content =~ "italian")])]
+
+# Query specific version by semantic search
+/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI
 ```
 
 ### CRUD Pipeline Components
 
 | Component | Purpose |
 |-----------|---------|
-| `IntentClassifier` | Classify NL → CREATE/READ/UPDATE/DELETE |
+| `XPathQueryGenerator` | Unified LLM call: NL → CRUD operation + XPath query |
+| `VersionManager` | In-tree versioning: resolve versions, create new versions |
 | `NodeReasoner` | LLM selects relevant nodes from candidates |
 | `InsertionReasoner` | LLM finds best insertion point |
 | `NodeCreator` | LLM generates new node content |
 | `NodeUpdater` | LLM modifies existing content (can change node type, e.g., POI → Restaurant) |
 | `NodeDeleter` | Remove nodes by path |
-| `VersionManager` | Save versioned trees to `result/` |
+| `EntailmentScorer` | Semantic scoring for version resolution (batched, top-1) |
 
 ---
 

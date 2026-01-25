@@ -1,0 +1,30 @@
+{
+  "timestamp": "20260125_175956_069080",
+  "user_query": "show me the version where I changed to chinese food",
+  "total_candidates": 1,
+  "selected_count": 0,
+  "results": [
+    {
+      "node_id": "1",
+      "node_path": "Itinerary > Version 1",
+      "decision": "UNCERTAIN",
+      "confidence": 0.6,
+      "reasoning": "The node represents a version of the itinerary, but there is no specific information indicating that this version includes a change to Chinese food. More context about the contents of Version 1 is needed to determine relevance.",
+      "node_data": {
+        "type": "Version",
+        "attributes": {
+          "number": "1"
+        },
+        "patch_info": null,
+        "conversation_history": null
+      }
+    }
+  ],
+  "selected_nodes": [],
+  "metadata": {
+    "operation": "READ",
+    "total_candidates": 1,
+    "batch_size": 10,
+    "num_batches": 1
+  }
+}

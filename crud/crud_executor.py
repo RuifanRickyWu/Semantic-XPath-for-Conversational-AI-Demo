@@ -244,8 +244,19 @@ class CRUDExecutor:
         )
         timer.stop()
         
-        # Get final selected nodes
-        selected = [r.node_data for r in reasoning_result.selected_nodes]
+        # Get final selected nodes with full info (tree_path and children)
+        # Build a lookup from tree_path to candidate for retrieving children
+        candidate_lookup = {c.get("tree_path"): c for c in candidates}
+        
+        selected = []
+        for r in reasoning_result.selected_nodes:
+            # Get the original candidate to retrieve children
+            original_candidate = candidate_lookup.get(r.node_path, {})
+            selected.append({
+                **r.node_data,
+                "tree_path": r.node_path,
+                "children": original_candidate.get("children", [])
+            })
         
         return {
             "operation": "READ",

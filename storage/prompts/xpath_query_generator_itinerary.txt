@@ -192,4 +192,49 @@ User: go back to the version before I changed the restaurants, show all POIs
 Output:
 Read(/Itinerary/Version[atom(content =~ "restaurant")]/Day/POI)
 
+## Compound Queries (CRITICAL)
+
+When the user provides multiple constraints in their request, combine them into a SINGLE query using AND/OR operators.
+- Multiple location/content constraints → use AND between predicates
+- Alternative options → use OR between predicates
+- NEVER split a single user request into multiple queries
+- ALWAYS output exactly ONE query line
+
+User: My friend lives in Mississauga. I need a day without work commitments.
+Output:
+Read(/Itinerary/Version[-1]/Day[agg_exists(POI[atom(content =~ "near Mississauga")]) AND atom(content =~ "no work commitments")])
+
+User: I want a cultural day with good food options
+Output:
+Read(/Itinerary/Version[-1]/Day[agg_exists(POI[atom(content =~ "cultural")]) AND agg_exists(Restaurant[atom(content =~ "good food")])])
+
+User: Find a relaxing day, not too busy
+Output:
+Read(/Itinerary/Version[-1]/Day[atom(content =~ "relaxing") AND atom(content =~ "not busy")])
+
+## Negative Conditions
+
+For negative conditions (e.g., "without", "no", "not"), use semantic atoms with natural language.
+Do NOT use not() as an operator - instead embed the negation in the semantic value.
+
+- "day without work" → Day[atom(content =~ "no work")]
+- "not a museum" → POI[atom(content =~ "not a museum")]
+- "days without museums" → Day[atom(content =~ "no museums")]
+
+User: days without museums
+Output:
+Read(/Itinerary/Version[-1]/Day[atom(content =~ "no museums")])
+
+User: Find a day without expensive restaurants
+Output:
+Read(/Itinerary/Version[-1]/Day[atom(content =~ "no expensive restaurants")])
+
+User: POIs that are not outdoors
+Output:
+Read(/Itinerary/Version[-1]/Day/POI[atom(content =~ "not outdoors")])
+
+User: a quiet day without too many activities
+Output:
+Read(/Itinerary/Version[-1]/Day[atom(content =~ "quiet") AND atom(content =~ "not too many activities")])
+
 Now convert the following user request into a CRUD query.

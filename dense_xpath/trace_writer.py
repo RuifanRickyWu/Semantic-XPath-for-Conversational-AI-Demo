@@ -283,9 +283,36 @@ class TraceWriter:
             f.write("Selected Nodes:\n")
             f.write("-" * 40 + "\n")
             for i, node in enumerate(selected, 1):
-                f.write(f"\n{i}. {node.get('type', '?')}: {node.get('name', 'Unknown')}\n")
+                # Use tree_path as primary display name, fallback to type/name
+                tree_path = node.get('tree_path', '')
+                node_type = node.get('type', '?')
+                
+                # For container nodes (Day), extract display name from tree_path or attributes
+                if tree_path:
+                    # Extract last part of path (e.g., "Day 2" from "Itinerary > Version 1 > Day 2")
+                    display_name = tree_path.split(' > ')[-1] if ' > ' in tree_path else tree_path
+                elif node.get('attributes', {}).get('index'):
+                    display_name = f"{node_type} {node['attributes']['index']}"
+                else:
+                    display_name = node.get('name', 'Unknown')
+                
+                f.write(f"\n{i}. {display_name}\n")
+                f.write(f"   Path: {tree_path}\n")
+                
                 if node.get("description"):
-                    f.write(f"   {node['description'][:100]}...\n")
+                    f.write(f"   Description: {node['description'][:100]}...\n")
+                
+                # Print children subtree
+                children = node.get('children', [])
+                if children:
+                    f.write(f"   Children ({len(children)}):\n")
+                    for child in children:
+                        child_type = child.get('type', '?')
+                        child_name = child.get('name', '')
+                        child_desc = child.get('description', '')
+                        f.write(f"      - {child_type}: {child_name}\n")
+                        if child_desc:
+                            f.write(f"        {child_desc[:80]}...\n")
     
     def _write_delete_log(self, f, result: Dict[str, Any]):
         """Write DELETE operation specific log sections."""

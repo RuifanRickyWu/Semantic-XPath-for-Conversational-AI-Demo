@@ -171,7 +171,7 @@ Analyze each node and determine if it's relevant to the user's query.
             ]
     
     def _format_nodes(self, nodes: List[Dict[str, Any]]) -> str:
-        """Format nodes for the prompt."""
+        """Format nodes for the prompt, including children for context."""
         lines = []
         for i, node in enumerate(nodes):
             node_id = str(i + 1)
@@ -180,6 +180,7 @@ Analyze each node and determine if it's relevant to the user's query.
             name = node.get("node", {}).get("name", "")
             description = node.get("node", {}).get("description", "")
             score = node.get("score", 0.0)
+            children = node.get("children", [])
             
             lines.append(f"[{node_id}] Path: {tree_path}")
             lines.append(f"    Type: {node_type}")
@@ -188,6 +189,18 @@ Analyze each node and determine if it's relevant to the user's query.
             if description:
                 lines.append(f"    Description: {description[:200]}...")
             lines.append(f"    Semantic Score: {score:.3f}")
+            
+            # Include children summary for parent nodes
+            if children:
+                lines.append(f"    Children ({len(children)}):")
+                for child in children[:10]:  # Limit to first 10
+                    child_type = child.get("type", "Unknown")
+                    child_name = child.get("name", "")
+                    child_desc = child.get("description", "")[:100] if child.get("description") else ""
+                    lines.append(f"      - {child_type}: {child_name}")
+                    if child_desc:
+                        lines.append(f"        {child_desc}...")
+            
             lines.append("")
         
         return "\n".join(lines)

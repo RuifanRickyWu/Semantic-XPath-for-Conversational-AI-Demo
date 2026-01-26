@@ -197,9 +197,19 @@ class SemanticXPathPipeline:
             
             for i, node in enumerate(selected_nodes, 1):
                 node_type = node.get("type", "?")
-                name = node.get("name", "Unknown")
+                tree_path = node.get("tree_path", "")
                 
-                lines.append(f"\n[{i}] {node_type}: {name}")
+                # For container nodes (Day, Version), use tree_path for display
+                if tree_path:
+                    display_name = tree_path.split(" > ")[-1] if " > " in tree_path else tree_path
+                elif node.get("attributes", {}).get("index"):
+                    display_name = f"{node_type} {node['attributes']['index']}"
+                else:
+                    display_name = node.get("name", "Unknown")
+                
+                lines.append(f"\n[{i}] {display_name}")
+                if tree_path:
+                    lines.append(f"    📍 Path: {tree_path}")
                 
                 if node.get("description"):
                     desc = node["description"]
@@ -217,6 +227,19 @@ class SemanticXPathPipeline:
                     highlights = node["highlights"]
                     if isinstance(highlights, list):
                         lines.append(f"    ✨ {', '.join(highlights)}")
+                
+                # For container nodes, display children subtree
+                children = node.get("children", [])
+                if children:
+                    lines.append(f"    📦 Children ({len(children)}):")
+                    for child in children:
+                        child_type = child.get("type", "?")
+                        child_name = child.get("name", "Unknown")
+                        child_desc = child.get("description", "")
+                        lines.append(f"        - {child_type}: {child_name}")
+                        if child_desc:
+                            short_desc = child_desc[:60] + "..." if len(child_desc) > 60 else child_desc
+                            lines.append(f"          {short_desc}")
         else:
             lines.append("\n⚠️  No nodes matched the query")
         

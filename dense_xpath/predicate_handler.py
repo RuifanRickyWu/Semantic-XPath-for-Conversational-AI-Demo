@@ -294,16 +294,39 @@ class PredicateHandler:
         semantic_value: str,
         tasks: Dict[str, List[ScoringTask]]
     ):
-        """Add a node's content to scoring tasks."""
+        """Add a node's content to scoring tasks.
+        
+        For container nodes (like Day), aggregates full content from all children
+        to provide comprehensive information for semantic scoring.
+        """
         node_id = id(node)
         
         # Skip if already added
         if any(t[0] == node_id for t in tasks.get(semantic_value, [])):
             return
         
-        # Get node's own content (not subtree)
-        node_desc = NodeUtils.get_node_description(node)
         node_name = NodeUtils.get_node_name(node)
+        
+        # For container nodes, build comprehensive description from all children
+        if NodeUtils._is_container_node(node):
+            # Aggregate full content from all structured children
+            parts = []
+            for child in node:
+                if NodeUtils._is_structured_node(child):
+                    child_name = NodeUtils._get_field_value(child, NodeUtils.NAME_FIELDS)
+                    child_desc = NodeUtils._get_field_value(child, NodeUtils.DESC_FIELDS)
+                    if child_name and child_desc:
+                        parts.append(f"{child.tag}: {child_name} - {child_desc}")
+                    elif child_name:
+                        parts.append(f"{child.tag}: {child_name}")
+                    elif child_desc:
+                        parts.append(f"{child.tag}: {child_desc}")
+            
+            # Use aggregated description if available, otherwise fallback
+            node_desc = "; ".join(parts) if parts else NodeUtils.get_node_description(node)
+        else:
+            # For leaf nodes, use standard description
+            node_desc = NodeUtils.get_node_description(node)
         
         desc_ids = []
         

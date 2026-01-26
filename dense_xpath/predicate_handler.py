@@ -296,8 +296,9 @@ class PredicateHandler:
     ):
         """Add a node's content to scoring tasks.
         
-        For container nodes (like Day), aggregates full content from all children
-        to provide comprehensive information for semantic scoring.
+        For container nodes (like Day), aggregates full content from all children.
+        For leaf nodes, builds comprehensive content from ALL schema-defined fields
+        (not just description) to enable temporal/cost-aware semantic matching.
         """
         node_id = id(node)
         
@@ -325,8 +326,8 @@ class PredicateHandler:
             # Use aggregated description if available, otherwise fallback
             node_desc = "; ".join(parts) if parts else NodeUtils.get_node_description(node)
         else:
-            # For leaf nodes, use standard description
-            node_desc = NodeUtils.get_node_description(node)
+            # For leaf nodes, build content from ALL schema-defined fields
+            node_desc = self._build_leaf_node_content(node)
         
         desc_ids = []
         
@@ -345,6 +346,52 @@ class PredicateHandler:
             ))
         
         self._node_descriptions[node_id] = desc_ids
+    
+    def _build_leaf_node_content(self, node: ET.Element) -> str:
+        """
+        Build comprehensive content string for a leaf node using schema-defined fields.
+        
+        Uses the schema's 'fields' list for the node type to include ALL relevant
+        fields (name, time_block, description, expected_cost, etc.) in the content
+        string. This enables semantic matching that considers temporal and cost context.
+        
+        Args:
+            node: XML element (leaf node like POI, Restaurant)
+            
+        Returns:
+            Content string with all field values, formatted as "field: value" pairs
+        """
+        node_type = node.tag
+        node_config = self._node_configs.get(node_type, {})
+        schema_fields = node_config.get("fields", [])
+        
+        parts = []
+        
+        if schema_fields:
+            # Use schema-defined fields
+            for field_name in schema_fields:
+                elem = node.find(field_name)
+                if elem is not None:
+                    if len(elem) == 0 and elem.text:
+                        # Simple text field
+                        parts.append(f"{field_name}: {elem.text}")
+                    elif len(elem) > 0:
+                        # List field (like highlights)
+                        items = [child.text for child in elem if child.text]
+                        if items:
+                            parts.append(f"{field_name}: {', '.join(items)}")
+        else:
+            # Fallback: extract all text child elements
+            for child in node:
+                if len(child) == 0 and child.text:
+                    parts.append(f"{child.tag}: {child.text}")
+                elif len(child) > 0 and all(len(gc) == 0 for gc in child):
+                    # Simple list
+                    items = [gc.text for gc in child if gc.text]
+                    if items:
+                        parts.append(f"{child.tag}: {', '.join(items)}")
+        
+        return " | ".join(parts) if parts else NodeUtils.get_node_description(node)
     
     # =========================================================================
     # Phase 2: Batch Score Semantics

@@ -171,24 +171,38 @@ Analyze each node and determine if it's relevant to the user's query.
             ]
     
     def _format_nodes(self, nodes: List[Dict[str, Any]]) -> str:
-        """Format nodes for the prompt, including children for context."""
+        """Format nodes for the prompt, including all fields for context."""
         lines = []
         for i, node in enumerate(nodes):
             node_id = str(i + 1)
             tree_path = node.get("tree_path", f"node_{i}")
-            node_type = node.get("node", {}).get("type", "Unknown")
-            name = node.get("node", {}).get("name", "")
-            description = node.get("node", {}).get("description", "")
+            node_data = node.get("node", {})
+            node_type = node_data.get("type", "Unknown")
             score = node.get("score", 0.0)
             children = node.get("children", [])
             
             lines.append(f"[{node_id}] Path: {tree_path}")
             lines.append(f"    Type: {node_type}")
-            if name:
-                lines.append(f"    Name: {name}")
-            if description:
-                lines.append(f"    Description: {description[:200]}...")
             lines.append(f"    Semantic Score: {score:.3f}")
+            
+            # Include ALL fields from node_data (except type and attributes)
+            skip_fields = {"type", "attributes"}
+            for field_name, field_value in node_data.items():
+                if field_name in skip_fields:
+                    continue
+                if field_value is None:
+                    continue
+                    
+                if isinstance(field_value, list):
+                    # Handle list fields (like highlights)
+                    if field_value:
+                        lines.append(f"    {field_name}: {', '.join(str(v) for v in field_value[:5])}")
+                elif isinstance(field_value, str):
+                    # Truncate long strings
+                    display_value = field_value[:200] + "..." if len(field_value) > 200 else field_value
+                    lines.append(f"    {field_name}: {display_value}")
+                else:
+                    lines.append(f"    {field_name}: {field_value}")
             
             # Include children summary for parent nodes
             if children:
@@ -196,10 +210,14 @@ Analyze each node and determine if it's relevant to the user's query.
                 for child in children[:10]:  # Limit to first 10
                     child_type = child.get("type", "Unknown")
                     child_name = child.get("name", "")
-                    child_desc = child.get("description", "")[:100] if child.get("description") else ""
-                    lines.append(f"      - {child_type}: {child_name}")
-                    if child_desc:
-                        lines.append(f"        {child_desc}...")
+                    child_time = child.get("time_block", "")
+                    child_cost = child.get("expected_cost", "")
+                    child_info = f"{child_type}: {child_name}"
+                    if child_time:
+                        child_info += f" ({child_time})"
+                    if child_cost:
+                        child_info += f" - {child_cost}"
+                    lines.append(f"      - {child_info}")
             
             lines.append("")
         

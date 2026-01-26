@@ -20,21 +20,21 @@ nodes:
     type: root
     fields: []
     children: ["Version"]
-    
+
   Version:
     type: container
-    index_attr: "number"  # Uses <Version number="1"> for identification
+    index_attr: "number" # Uses <Version number="1"> for identification
     fields:
       - patch_info
       - conversation_history
     children: ["Day"]
-    
+
   Day:
     type: container
-    index_attr: "index"  # Uses <Day index="1"> for identification
-    fields: []  # Container node - no direct content fields
+    index_attr: "index" # Uses <Day index="1"> for identification
+    fields: [] # Container node - no direct content fields
     children: ["POI", "Restaurant"]
-    
+
   POI:
     type: leaf
     fields:
@@ -45,7 +45,7 @@ nodes:
       - expected_cost
       - highlights
     children: []
-    
+
   Restaurant:
     type: leaf
     fields:
@@ -63,10 +63,10 @@ data_files:
   travel_memory_5day: "memory/travel/travel_memory_5day.xml"
   travel_memory_3day_diff: "memory/travel/travel_memory_3day_diff.xml"
   travel_memory_10day_themed: "memory/travel/travel_memory_10day_themed.xml"
+  travel_toronto_10day: "memory/travel/travel_toronto_10day.xml"
 
 # Default data file to use
 default_data: "travel_memory_3day"
 
 # Associated prompt file for XPath query generation
 prompt_file: "prompts/xpath_query_generator_itinerary.txt"
-

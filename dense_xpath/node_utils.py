@@ -3,6 +3,9 @@ Node Utilities - Helper functions for working with XML Element nodes.
 
 Fully dynamic implementation that works with any tree structure.
 No hardcoded node type names - uses structural analysis instead.
+
+Supports schema-aware field lookup when instantiated with a schema,
+or falls back to default field names for backwards compatibility.
 """
 
 import xml.etree.ElementTree as ET
@@ -22,11 +25,152 @@ class NodeUtils:
     
     All methods are dynamic and work with any tree structure by analyzing
     node structure rather than checking specific node type names.
+    
+    Can be instantiated with a schema for dynamic field lookup per node type,
+    or used with static methods for backwards compatibility.
     """
     
-    # Common field names to check (in priority order)
-    NAME_FIELDS = ("name", "title", "label")
-    DESC_FIELDS = ("description", "desc", "summary", "content")
+    # Default field names to check (in priority order) - used as fallback
+    DEFAULT_NAME_FIELDS = ("name", "title", "label")
+    DEFAULT_DESC_FIELDS = ("description", "desc", "summary", "content")
+    
+    # Class-level aliases for backwards compatibility
+    NAME_FIELDS = DEFAULT_NAME_FIELDS
+    DESC_FIELDS = DEFAULT_DESC_FIELDS
+    
+    def __init__(self, schema: Optional[Dict[str, Any]] = None):
+        """
+        Initialize NodeUtils with optional schema for dynamic field lookup.
+        
+        Args:
+            schema: Full schema dict with 'nodes' containing node type definitions.
+                    Each node type can have a 'fields' list defining available fields.
+        """
+        self.schema = schema or {}
+        self._node_configs: Dict[str, Dict[str, Any]] = self.schema.get("nodes", {})
+    
+    def _get_name_field_for_node(self, node_tag: str) -> Optional[str]:
+        """
+        Get the name field for a node type from schema.
+        
+        Searches the node's schema-defined fields for one that matches
+        the known name field patterns.
+        
+        Args:
+            node_tag: The XML tag name of the node type
+            
+        Returns:
+            The field name to use for name, or None if not found in schema
+        """
+        node_config = self._node_configs.get(node_tag, {})
+        fields = node_config.get("fields", [])
+        for f in fields:
+            if f in self.DEFAULT_NAME_FIELDS:
+                return f
+        return None
+    
+    def _get_desc_field_for_node(self, node_tag: str) -> Optional[str]:
+        """
+        Get the description field for a node type from schema.
+        
+        Searches the node's schema-defined fields for one that matches
+        the known description field patterns.
+        
+        Args:
+            node_tag: The XML tag name of the node type
+            
+        Returns:
+            The field name to use for description, or None if not found in schema
+        """
+        node_config = self._node_configs.get(node_tag, {})
+        fields = node_config.get("fields", [])
+        for f in fields:
+            if f in self.DEFAULT_DESC_FIELDS:
+                return f
+        return None
+    
+    def get_field_value(self, node: ET.Element, field_type: str) -> str:
+        """
+        Get field value using schema-defined field or fallback to defaults.
+        
+        Instance method that uses schema when available.
+        
+        Args:
+            node: XML element to extract field from
+            field_type: Either "name" or "desc" to indicate which field type
+            
+        Returns:
+            The field value, or empty string if not found
+        """
+        if field_type == "name":
+            # Try schema-specific field first
+            schema_field = self._get_name_field_for_node(node.tag)
+            if schema_field:
+                elem = node.find(schema_field)
+                if elem is not None and elem.text:
+                    return elem.text
+            # Fallback to default fields
+            for field in self.DEFAULT_NAME_FIELDS:
+                elem = node.find(field)
+                if elem is not None and elem.text:
+                    return elem.text
+        elif field_type == "desc":
+            # Try schema-specific field first
+            schema_field = self._get_desc_field_for_node(node.tag)
+            if schema_field:
+                elem = node.find(schema_field)
+                if elem is not None and elem.text:
+                    return elem.text
+            # Fallback to default fields
+            for field in self.DEFAULT_DESC_FIELDS:
+                elem = node.find(field)
+                if elem is not None and elem.text:
+                    return elem.text
+        return ""
+    
+    def get_name(self, node: ET.Element) -> str:
+        """
+        Get the display name of a node (schema-aware instance method).
+        
+        For container nodes with index/number attribute, uses "{NodeType} {index}" format.
+        For leaf nodes, uses schema-defined name field or falls back to defaults.
+        """
+        # For container nodes with index or number, use "{Tag} {index}" format
+        index = node.get("index") or node.get("number")
+        if index is not None:
+            return f"{node.tag} {index}"
+        
+        # For leaf nodes, use schema-aware field lookup
+        name = self.get_field_value(node, "name")
+        if name:
+            return name
+        
+        # Fallback to tag name
+        return node.tag
+    
+    def get_description(self, node: ET.Element) -> str:
+        """
+        Get the description of a node (schema-aware instance method).
+        
+        For container nodes without explicit description, creates summary from children.
+        """
+        # First, try to find an explicit description field
+        desc = self.get_field_value(node, "desc")
+        if desc:
+            return desc
+        
+        # For container nodes, generate summary from children
+        if self._is_container_node(node):
+            children_names = []
+            for child in node:
+                if self._is_structured_node(child):
+                    child_name = self.get_field_value(child, "name")
+                    if child_name:
+                        children_names.append(child_name)
+            if children_names:
+                return f"{node.tag} with: {', '.join(children_names[:3])}"
+        
+        return ""
     
     @staticmethod
     def _get_field_value(node: ET.Element, field_names: Tuple[str, ...]) -> str:
@@ -225,11 +369,31 @@ class NodeUtils:
         score: float
     ) -> Dict[str, Any]:
         """
-        Create an info dictionary for tracing/logging.
+        Create an info dictionary for tracing/logging (static version).
+        
+        Note: For schema-aware name lookup, use the instance method to_info_dict().
         """
         return {
             "path": path,
             "name": cls.get_node_name(node),
+            "type": node.tag,
+            "score": score
+        }
+    
+    def to_info_dict(
+        self, 
+        node: ET.Element, 
+        path: str, 
+        score: float
+    ) -> Dict[str, Any]:
+        """
+        Create an info dictionary for tracing/logging (schema-aware instance method).
+        
+        Uses schema-defined fields to get node name.
+        """
+        return {
+            "path": path,
+            "name": self.get_name(node),
             "type": node.tag,
             "score": score
         }

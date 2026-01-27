@@ -130,6 +130,9 @@ class DenseXPathExecutor:
         # Initialize components
         self.parser = QueryParser()
         
+        # Create schema-aware NodeUtils instance for dynamic field lookup
+        self._node_utils = NodeUtils(self._schema)
+        
         # Pass full schema to predicate handler for children lookup
         self.predicate_handler = PredicateHandler(
             scorer=self.scorer,
@@ -425,7 +428,7 @@ class DenseXPathExecutor:
     ) -> List[dict]:
         """Convert items to info dictionaries for tracing."""
         return [
-            NodeUtils.node_to_info_dict(item.node, item.path, item.score)
+            self._node_utils.to_info_dict(item.node, item.path, item.score)
             for item in items
         ]
     
@@ -470,7 +473,7 @@ class DenseXPathExecutor:
         for group_id, item in enumerate(current_items):
             children = list(item.node.findall(step.node_type))
             for child in children:
-                child_name = NodeUtils.get_node_name(child)
+                child_name = self._node_utils.get_name(child)
                 child_path = f"{item.path} > {child_name}"
                 # Children inherit group_id from their parent's position
                 next_items.append(NodeItem(child, child_path, item.score, group_id))

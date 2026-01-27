@@ -92,6 +92,9 @@ class PredicateHandler:
         # Extract node configs for quick lookup
         self._node_configs: Dict[str, Dict[str, Any]] = self.schema.get("nodes", {})
         
+        # Create schema-aware NodeUtils instance for dynamic field lookup
+        self._node_utils = NodeUtils(self.schema)
+        
         # Cache for scores: (node_id, semantic_value) -> score
         self._score_cache: Dict[Tuple[int, str], float] = {}
         
@@ -268,7 +271,7 @@ class PredicateHandler:
         scores_map: Dict[int, float] = {}
         
         for idx, node in enumerate(nodes):
-            node_name = NodeUtils.get_node_name(node)
+            node_name = self._node_utils.get_name(node)
             node_trace = {
                 "node_idx": idx,
                 "node_name": node_name,
@@ -291,7 +294,7 @@ class PredicateHandler:
         
         # Add ranking info
         sorted_nodes = sorted(
-            [(idx, scores_map[id(node)], NodeUtils.get_node_name(node)) 
+            [(idx, scores_map[id(node)], self._node_utils.get_name(node)) 
              for idx, node in enumerate(nodes)],
             key=lambda x: x[1],
             reverse=True
@@ -393,7 +396,7 @@ class PredicateHandler:
         if any(t[0] == node_id for t in tasks.get(semantic_value, [])):
             return
         
-        node_name = NodeUtils.get_node_name(node)
+        node_name = self._node_utils.get_name(node)
         
         # For container nodes, build comprehensive description from all children
         if NodeUtils._is_container_node(node):
@@ -401,8 +404,9 @@ class PredicateHandler:
             parts = []
             for child in node:
                 if NodeUtils._is_structured_node(child):
-                    child_name = NodeUtils._get_field_value(child, NodeUtils.NAME_FIELDS)
-                    child_desc = NodeUtils._get_field_value(child, NodeUtils.DESC_FIELDS)
+                    # Use schema-aware field lookup for child name/desc
+                    child_name = self._node_utils.get_field_value(child, "name")
+                    child_desc = self._node_utils.get_field_value(child, "desc")
                     if child_name and child_desc:
                         parts.append(f"{child.tag}: {child_name} - {child_desc}")
                     elif child_name:
@@ -411,7 +415,7 @@ class PredicateHandler:
                         parts.append(f"{child.tag}: {child_desc}")
             
             # Use aggregated description if available, otherwise fallback
-            node_desc = "; ".join(parts) if parts else NodeUtils.get_node_description(node)
+            node_desc = "; ".join(parts) if parts else self._node_utils.get_description(node)
         else:
             # For leaf nodes, build content from ALL schema-defined fields
             node_desc = self._build_leaf_node_content(node)
@@ -478,7 +482,7 @@ class PredicateHandler:
                     if items:
                         parts.append(f"{child.tag}: {', '.join(items)}")
         
-        return " | ".join(parts) if parts else NodeUtils.get_node_description(node)
+        return " | ".join(parts) if parts else self._node_utils.get_description(node)
     
     # =========================================================================
     # Phase 2: Batch Score Semantics

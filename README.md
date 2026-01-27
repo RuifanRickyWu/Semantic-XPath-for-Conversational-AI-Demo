@@ -40,16 +40,93 @@ Result: Found Version 2 via semantic matching, updated POI, created Version 3
 
 ## Table of Contents
 
-1. [End-to-End Flow](#end-to-end-flow)
-2. [In-Tree Versioning](#in-tree-versioning)
-3. [CRUD Operations](#crud-operations)
-4. [Mathematical Foundation](#mathematical-foundation)
-5. [Query Syntax](#query-syntax)
-6. [Predicate Types](#predicate-types)
-7. [Schema System](#schema-system)
-8. [Usage](#usage)
-9. [Configuration](#configuration)
-10. [Project Structure](#project-structure)
+1. [Installation](#installation)
+2. [Quick Start](#quick-start)
+3. [End-to-End Flow](#end-to-end-flow)
+4. [In-Tree Versioning](#in-tree-versioning)
+5. [CRUD Operations](#crud-operations)
+6. [REST API](#rest-api)
+7. [Mathematical Foundation](#mathematical-foundation)
+8. [Query Syntax](#query-syntax)
+9. [Predicate Types](#predicate-types)
+10. [Schema System](#schema-system)
+11. [Usage](#usage)
+12. [Configuration](#configuration)
+13. [Project Structure](#project-structure)
+14. [Quick Reference](#quick-reference)
+
+---
+
+## Installation
+
+### Prerequisites
+
+- Python 3.9+
+- OpenAI API key (for LLM scoring and query generation)
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/your-org/LLM-VM.git
+cd LLM-VM
+
+# Create virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Configuration
+
+Set your OpenAI API key in `config.yaml`:
+
+```yaml
+openai:
+  api_key: "your-api-key-here"  # Or use ${OPENAI_API_KEY} for env var
+  model: "gpt-4o"
+```
+
+---
+
+## Quick Start
+
+### Interactive CLI
+
+```bash
+# Start the interactive pipeline
+python -m pipeline.semantic_xpath_pipeline
+
+# With custom options
+python -m pipeline.semantic_xpath_pipeline --scoring entailment --top-k 10
+```
+
+### REST API Server
+
+```bash
+# Start the API server
+python -m api.run --port 5000
+
+# With options
+python -m api.run --port 5000 --scoring entailment --debug
+```
+
+### Python API
+
+```python
+from pipeline import SemanticXPathPipeline
+
+pipeline = SemanticXPathPipeline()
+
+# Execute natural language queries
+result = pipeline.process_request("find museums in the itinerary")
+result = pipeline.process_request("delete all the museums")
+result = pipeline.process_request("add a sushi restaurant on day 1")
+
+print(pipeline.format_result(result))
+```
 
 ---
 
@@ -367,6 +444,89 @@ for v in history:
 
 ---
 
+## REST API
+
+The framework includes a Flask-based REST API for integration with web applications.
+
+### Starting the Server
+
+```bash
+# Basic usage
+python -m api.run
+
+# With options
+python -m api.run --port 5000 --host 0.0.0.0 --scoring entailment --debug
+```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/query` | Execute a natural language CRUD query |
+| `GET` | `/api/tree` | Get current tree state |
+| `GET` | `/api/tree/versions` | List all tree versions |
+| `GET` | `/api/tree/version/<id>` | Get specific version |
+| `POST` | `/api/tree/reset` | Reset tree to original state |
+| `GET` | `/api/config` | Get current configuration |
+| `PUT` | `/api/config` | Update configuration |
+| `GET` | `/api/health` | Health check |
+
+### Execute Query
+
+```bash
+curl -X POST http://localhost:5000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"query": "find museums in the itinerary"}'
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "operation": "READ",
+  "full_query": "Read(/Itinerary/Version[-1]/Day/POI[atom(content =~ \"museum\")])",
+  "selected_nodes": [
+    {
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "tree_path": "Itinerary > Version 1 > Day 1 > Royal Ontario Museum",
+      "description": "World-renowned museum featuring art, culture, and natural history..."
+    }
+  ],
+  "timing": {
+    "query_generation_ms": 622.1,
+    "semantic_xpath_ms": 5713.9,
+    "total_ms": 9545.1
+  },
+  "tree": {
+    "before": { ... },
+    "after": { ... }
+  }
+}
+```
+
+### Get Tree State
+
+```bash
+curl http://localhost:5000/api/tree
+```
+
+### Reset Tree
+
+```bash
+curl -X POST http://localhost:5000/api/tree/reset
+```
+
+### CORS Configuration
+
+The API supports CORS for frontend integration (React, Vue, etc.):
+
+- Allowed origins: `localhost:5173`, `localhost:3000`, `127.0.0.1:5173`
+- Allowed methods: `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`
+
+---
+
 ## Mathematical Foundation
 
 ### Data Model
@@ -603,20 +763,27 @@ When scoring `Day[agg_prev(POI[...])]`:
 
 ## Usage
 
-### Interactive Mode (CRUD Operations)
+### CLI Interactive Mode
 
 ```bash
 python -m pipeline.semantic_xpath_pipeline
 ```
 
+**Example Session:**
+
 ```
 ============================================================
-Semantic XPath Pipeline - CRUD Operations (with In-Tree Versioning)
+Semantic XPath Pipeline - CRUD Operations
 ============================================================
+In-tree versioning enabled:
+  - All modifications create new versions
+  - Query specific versions with Version[N] or Version[-1]
+  - Search versions: 'what changed about museum?'
+------------------------------------------------------------
 Commands:
   - Natural language query for CRUD operations
-  - 'history' - Show version history
   - 'stats' - Session statistics
+  - 'history' - View version history
   - 'reload' - Reload tree from file
   - 'exit' or 'quit' - Exit
 ============================================================
@@ -632,9 +799,7 @@ Commands:
   Version Resolution             1.5ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
   Semantic XPath Execution    5713.9ms  ███████████░░░░░░░░░  59.9%
   LLM Node Reasoning          3205.7ms  ██████░░░░░░░░░░░░░░  33.6%
-  Version Copy                   0.5ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
-  Tree Modification              0.0ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
-  Create New Version             1.7ms  ░░░░░░░░░░░░░░░░░░░░   0.0%
+  ...
 ---------------------------------------------
   TOTAL                       9545.1ms
 
@@ -646,15 +811,22 @@ Commands:
 📋 Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], type: chinese food)
 📁 Tree saved: result/demo/travel_memory_3day.xml (3 versions)
 
-⏱️  Step Timing:
----------------------------------------------
-  Query Generation             622.1ms  █░░░░░░░░░░░░░░░░░░░   7.9%
-  Version Resolution           616.1ms  █░░░░░░░░░░░░░░░░░░░   7.8%   ← Semantic scoring
-  ...
----------------------------------------------
-
 ✅ UPDATE Operation Succeeded (Version 2 → Version 3)
-============================================================
+```
+
+### CLI Options
+
+```bash
+# Scoring methods
+python -m pipeline.semantic_xpath_pipeline --scoring llm        # GPT-4 scoring (highest accuracy)
+python -m pipeline.semantic_xpath_pipeline --scoring entailment # BART NLI (balanced)
+python -m pipeline.semantic_xpath_pipeline --scoring cosine     # Embedding similarity (fastest)
+
+# Threshold and top-k
+python -m pipeline.semantic_xpath_pipeline --top-k 10 --threshold 0.5
+
+# Single query mode (non-interactive)
+python -m pipeline.semantic_xpath_pipeline -q "find museums"
 ```
 
 ### Programmatic Usage
@@ -695,21 +867,6 @@ for node in result.matched_nodes:
     print(f"- {node.tree_path}: {node.score:.3f}")
 ```
 
-### Command Line Options
-
-```bash
-# Scoring methods
-python -m pipeline.semantic_xpath_pipeline --scoring llm
-python -m pipeline.semantic_xpath_pipeline --scoring entailment
-python -m pipeline.semantic_xpath_pipeline --scoring cosine
-
-# Threshold and top-k
-python -m pipeline.semantic_xpath_pipeline --top-k 10 --threshold 0.5
-
-# Single query mode (non-interactive)
-python -m pipeline.semantic_xpath_pipeline -q "find museums"
-```
-
 ---
 
 ## Configuration
@@ -747,8 +904,16 @@ openai:
 
 ```
 LLM-VM/
+├── api/                             # REST API (Flask)
+│   ├── app.py                       # Flask app factory
+│   ├── run.py                       # Server entry point
+│   └── routes/
+│       ├── query.py                 # POST /api/query
+│       ├── tree.py                  # GET/POST /api/tree/*
+│       └── config.py                # GET/PUT /api/config
 ├── pipeline/
-│   └── semantic_xpath_pipeline.py   # Main entry point (CRUD pipeline)
+│   ├── semantic_xpath_pipeline.py   # Main entry point (CRUD pipeline)
+│   └── serializers.py               # JSON serialization for API
 ├── crud/
 │   └── crud_executor.py             # CRUD operation orchestrator
 ├── reasoner/
@@ -778,21 +943,20 @@ LLM-VM/
 │   ├── llm_scorer.py                # GPT-4 scoring
 │   ├── entailment_scorer.py         # BART NLI scoring (used for version resolution)
 │   └── cosine_scorer.py             # Embedding similarity
+├── client/                          # Model clients
+│   ├── openai_client.py             # OpenAI API wrapper
+│   ├── bart_client.py               # BART NLI client
+│   └── tas_b_client.py              # TAS-B embedding client
 ├── storage/
-│   ├── schemas/                     # Schema definitions (with Version nodes)
+│   ├── schemas/                     # Schema definitions (itinerary, todolist, etc.)
 │   ├── memory/                      # XML data files (versioned structure)
 │   └── prompts/                     # All LLM prompts
-│       ├── node_reasoner.txt
-│       ├── insertion_reasoner.txt
-│       ├── content_creator.txt
-│       ├── content_updater.txt
-│       └── xpath_query_generator_*.txt  # Unified CRUD + XPath prompts
 ├── result/
 │   └── demo/                        # Modified trees (all versions in one file)
-├── traces/                          # Execution logs and traces
-│   ├── log/
-│   └── reasoning_traces/
-├── config.yaml
+├── traces/                          # Execution logs and reasoning traces
+├── tests/                           # Test suite
+├── config.yaml                      # Main configuration
+├── requirements.txt                 # Python dependencies
 ├── framework.md                     # Mathematical specification
 └── README.md
 ```
@@ -859,21 +1023,35 @@ LLM-VM/
 /Itinerary/Version[atom(content =~ "delete museum")]/Day/POI
 ```
 
-### CRUD Pipeline Components
+### Key Components
 
 | Component | Purpose |
 |-----------|---------|
-| `XPathQueryGenerator` | Unified LLM call: NL → CRUD operation + XPath query |
-| `VersionManager` | In-tree versioning: resolve versions, create new versions |
+| `SemanticXPathPipeline` | Main entry point for CRUD operations |
+| `CRUDExecutor` | Orchestrates CRUD operations with versioning |
+| `XPathQueryGenerator` | Unified LLM call: NL → CRUD + XPath |
+| `VersionManager` | In-tree versioning: resolve/create versions |
+| `DenseXPathExecutor` | Core XPath execution with semantic scoring |
 | `NodeReasoner` | LLM selects relevant nodes from candidates |
-| `InsertionReasoner` | LLM finds best insertion point |
-| `NodeCreator` | LLM generates new node content |
-| `NodeUpdater` | LLM modifies existing content (can change node type, e.g., POI → Restaurant) |
-| `NodeDeleter` | Remove nodes by path |
-| `EntailmentScorer` | Semantic scoring for version resolution (batched, top-1) |
+| `NodeCreator` / `NodeUpdater` | LLM generates/modifies node content |
+| `EntailmentScorer` | BART NLI scoring for version resolution |
 
 ---
 
 ## License
 
 MIT License
+
+---
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+```bash
+# Run tests
+pytest tests/
+
+# Run a single test
+pytest tests/test_query_generation.py -v
+```

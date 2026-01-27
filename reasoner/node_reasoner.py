@@ -15,6 +15,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from client import get_client
+from dense_xpath.node_utils import NodeUtils
 from .base import (
     ReasonerBase, 
     NodeReasoningResult, 
@@ -45,7 +46,8 @@ class NodeReasoner(ReasonerBase):
         self, 
         client=None, 
         batch_size: int = None,
-        save_traces: bool = True
+        save_traces: bool = True,
+        schema: Optional[Dict[str, Any]] = None
     ):
         """
         Initialize the node reasoner.
@@ -54,11 +56,17 @@ class NodeReasoner(ReasonerBase):
             client: Optional OpenAI client
             batch_size: Number of nodes to process per LLM call
             save_traces: Whether to save reasoning traces
+            schema: Optional schema dict for dynamic field lookup per node type
         """
         self._client = client
         self._system_prompt = None
         self.batch_size = batch_size or self.DEFAULT_BATCH_SIZE
         self.save_traces = save_traces
+        
+        # Create schema-aware NodeUtils instance for dynamic field formatting
+        self.schema = schema or {}
+        self._node_utils = NodeUtils(schema)
+        self._node_configs: Dict[str, Dict[str, Any]] = self.schema.get("nodes", {})
         
         # Ensure traces directory exists
         self.TRACES_PATH.mkdir(parents=True, exist_ok=True)
@@ -170,8 +178,121 @@ Analyze each node and determine if it's relevant to the user's query.
                 for i, n in enumerate(nodes)
             ]
     
+    def _get_schema_fields(self, node_type: str) -> List[str]:
+        """Get the list of fields defined in schema for a node type."""
+        node_config = self._node_configs.get(node_type, {})
+        return node_config.get("fields", [])
+    
+    def _format_field_value(self, field_name: str, field_value: Any) -> str:
+        """Format a single field value for display."""
+        if field_value is None:
+            return ""
+        
+        if isinstance(field_value, list):
+            if field_value:
+                return f"{field_name}: {', '.join(str(v) for v in field_value)}"
+            return ""
+        elif isinstance(field_value, str):
+            # Truncate long strings
+            display_value = field_value[:200] + "..." if len(field_value) > 200 else field_value
+            return f"{field_name}: {display_value}"
+        else:
+            return f"{field_name}: {field_value}"
+    
+    def _format_node_fields(self, node_data: Dict[str, Any], indent: str = "    ") -> List[str]:
+        """
+        Format node fields using schema-defined order, with fallback to dynamic extraction.
+        
+        Args:
+            node_data: Dictionary containing node fields
+            indent: Indentation string for formatting
+            
+        Returns:
+            List of formatted field lines
+        """
+        lines = []
+        node_type = node_data.get("type", "Unknown")
+        skip_fields = {"type", "attributes", "children"}
+        
+        # Get schema-defined fields for this node type
+        schema_fields = self._get_schema_fields(node_type)
+        
+        if schema_fields:
+            # Use schema-defined field order
+            for field_name in schema_fields:
+                if field_name in node_data:
+                    formatted = self._format_field_value(field_name, node_data[field_name])
+                    if formatted:
+                        lines.append(f"{indent}{formatted}")
+        else:
+            # Fallback: include all fields dynamically
+            for field_name, field_value in node_data.items():
+                if field_name in skip_fields:
+                    continue
+                formatted = self._format_field_value(field_name, field_value)
+                if formatted:
+                    lines.append(f"{indent}{formatted}")
+        
+        return lines
+    
+    def _format_subtree(self, children: List[Dict[str, Any]], base_indent: str = "      ") -> List[str]:
+        """
+        Recursively format the full subtree with schema-aware fields.
+        
+        Args:
+            children: List of child node dictionaries
+            base_indent: Base indentation for this level
+            
+        Returns:
+            List of formatted lines for the entire subtree
+        """
+        lines = []
+        
+        for child in children:
+            child_type = child.get("type", "Unknown")
+            
+            # Get display name using schema-aware lookup
+            child_name = ""
+            for name_field in NodeUtils.DEFAULT_NAME_FIELDS:
+                if name_field in child and child[name_field]:
+                    child_name = child[name_field]
+                    break
+            
+            # Format child header
+            if child_name:
+                lines.append(f"{base_indent}{child_type}: {child_name}")
+            else:
+                lines.append(f"{base_indent}{child_type}")
+            
+            # Format child's own fields
+            field_indent = base_indent + "  "
+            field_lines = self._format_node_fields(child, indent=field_indent)
+            # Skip the name field if already shown in header
+            for line in field_lines:
+                # Check if this line is for name field already shown
+                is_name_line = any(
+                    line.strip().startswith(f"{nf}:") 
+                    for nf in NodeUtils.DEFAULT_NAME_FIELDS
+                )
+                if not is_name_line:
+                    lines.append(line)
+            
+            # Recursively format grandchildren
+            grandchildren = child.get("children", [])
+            if grandchildren:
+                subtree_lines = self._format_subtree(grandchildren, base_indent=field_indent)
+                lines.extend(subtree_lines)
+        
+        return lines
+    
     def _format_nodes(self, nodes: List[Dict[str, Any]]) -> str:
-        """Format nodes for the prompt, including all fields for context."""
+        """
+        Format nodes for the prompt using schema-aware fields and full subtree.
+        
+        Uses schema-defined fields for each node type when available,
+        with fallback to dynamic field extraction.
+        Includes the complete subtree hierarchy recursively.
+        """
         lines = []
         for i, node in enumerate(nodes):
             node_id = str(i + 1)
@@ -181,43 +302,20 @@ Analyze each node and determine if it's relevant to the user's query.
             score = node.get("score", 0.0)
             children = node.get("children", [])
             
+            # Node header
             lines.append(f"[{node_id}] Path: {tree_path}")
             lines.append(f"    Type: {node_type}")
             lines.append(f"    Semantic Score: {score:.3f}")
             
-            # Include ALL fields from node_data (except type and attributes)
-            skip_fields = {"type", "attributes"}
-            for field_name, field_value in node_data.items():
-                if field_name in skip_fields:
-                    continue
-                if field_value is None:
-                    continue
-                    
-                if isinstance(field_value, list):
-                    # Handle list fields (like highlights)
-                    if field_value:
-                        lines.append(f"    {field_name}: {', '.join(str(v) for v in field_value[:5])}")
-                elif isinstance(field_value, str):
-                    # Truncate long strings
-                    display_value = field_value[:200] + "..." if len(field_value) > 200 else field_value
-                    lines.append(f"    {field_name}: {display_value}")
-                else:
-                    lines.append(f"    {field_name}: {field_value}")
+            # Format node's own fields using schema
+            field_lines = self._format_node_fields(node_data)
+            lines.extend(field_lines)
             
-            # Include children summary for parent nodes
+            # Include full subtree for parent nodes
             if children:
-                lines.append(f"    Children ({len(children)}):")
-                for child in children[:10]:  # Limit to first 10
-                    child_type = child.get("type", "Unknown")
-                    child_name = child.get("name", "")
-                    child_time = child.get("time_block", "")
-                    child_cost = child.get("expected_cost", "")
-                    child_info = f"{child_type}: {child_name}"
-                    if child_time:
-                        child_info += f" ({child_time})"
-                    if child_cost:
-                        child_info += f" - {child_cost}"
-                    lines.append(f"      - {child_info}")
+                lines.append(f"    Subtree:")
+                subtree_lines = self._format_subtree(children, base_indent="      ")
+                lines.extend(subtree_lines)
             
             lines.append("")
         

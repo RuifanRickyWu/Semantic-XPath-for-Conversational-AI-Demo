@@ -341,6 +341,93 @@ class NodeUtils:
         
         return children
     
+    def get_fields_for_node(self, node_tag: str) -> List[str]:
+        """
+        Get the list of fields defined for a node type in the schema.
+        
+        Args:
+            node_tag: The XML tag name of the node type
+            
+        Returns:
+            List of field names defined in schema, or empty list if not found
+        """
+        node_config = self._node_configs.get(node_tag, {})
+        return node_config.get("fields", [])
+    
+    def node_to_dict_schema_aware(self, node: ET.Element) -> Dict[str, Any]:
+        """
+        Convert an XML node to a dictionary using schema-defined fields.
+        
+        Unlike the static node_to_dict, this uses the schema to determine
+        which fields to include for each node type.
+        
+        Args:
+            node: XML element to convert
+            
+        Returns:
+            Dictionary with type, attributes, and schema-defined fields
+        """
+        result = {
+            "type": node.tag,
+            "attributes": dict(node.attrib)
+        }
+        
+        # Get schema-defined fields for this node type
+        schema_fields = self.get_fields_for_node(node.tag)
+        
+        if schema_fields:
+            # Use schema-defined fields
+            for field_name in schema_fields:
+                elem = node.find(field_name)
+                if elem is not None:
+                    if len(elem) == 0:
+                        # Simple text element
+                        result[field_name] = elem.text
+                    elif all(len(gc) == 0 for gc in elem):
+                        # Simple list (like highlights)
+                        result[field_name] = [gc.text for gc in elem if gc.text]
+        else:
+            # Fallback to dynamic extraction (like static node_to_dict)
+            for child in node:
+                if len(child) == 0:
+                    result[child.tag] = child.text
+                elif all(len(grandchild) == 0 for grandchild in child):
+                    result[child.tag] = [gc.text for gc in child if gc.text]
+        
+        return result
+    
+    def get_full_subtree(self, node: ET.Element) -> List[Dict[str, Any]]:
+        """
+        Recursively get the full subtree with schema-aware fields.
+        
+        Unlike get_all_children which only gets immediate children,
+        this method recursively includes all descendants with their
+        schema-defined fields and nested children.
+        
+        Args:
+            node: XML element to get subtree from
+            
+        Returns:
+            List of child dictionaries, each with 'type', schema fields,
+            and 'children' containing their own subtrees recursively
+        """
+        children = []
+        
+        for child in node:
+            # Only include structured nodes (not simple text or list elements)
+            if self._is_structured_node(child):
+                # Get schema-aware node data
+                child_dict = self.node_to_dict_schema_aware(child)
+                
+                # Recursively get children's subtrees
+                grandchildren = self.get_full_subtree(child)
+                if grandchildren:
+                    child_dict["children"] = grandchildren
+                
+                children.append(child_dict)
+        
+        return children
+    
     @classmethod
     def node_to_matched(
         cls, 

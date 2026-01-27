@@ -130,7 +130,8 @@ class CRUDExecutor:
             top_k=top_k,
             score_threshold=score_threshold
         )
-        self.node_reasoner = NodeReasoner()
+        # Pass schema to NodeReasoner for schema-aware field formatting
+        self.node_reasoner = NodeReasoner(schema=self.executor._schema)
         self.insertion_reasoner = InsertionReasoner()
         self.node_deleter = NodeDeleter()
         self.node_inserter = NodeInserter()

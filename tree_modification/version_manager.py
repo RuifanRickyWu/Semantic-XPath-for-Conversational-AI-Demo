@@ -252,7 +252,7 @@ class VersionManager:
                         None
                     )
                     
-                    if best_idx is not None and best_result.score > 0.5:
+                    if best_idx is not None and best_result.score > 0:
                         logger.info(f"Semantic version match: Version {versions[best_idx].get('number')} "
                                   f"(score: {best_result.score:.3f})")
                         return versions[best_idx]

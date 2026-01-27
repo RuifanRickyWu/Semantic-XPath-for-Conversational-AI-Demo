@@ -241,7 +241,7 @@ class DenseXPathExecutor:
         node_step_contributions: Dict[int, List[StepContribution]] = defaultdict(list)
         node_paths: Dict[int, str] = {}  # Track paths for trace
         
-        # Execute BFS-like traversal with path and score tracking
+        # Execute traversal with path and score tracking
         root_type = self.root_type
         current_items: List[NodeItem] = [NodeItem(self.root, root_type, 1.0, 0)]
         

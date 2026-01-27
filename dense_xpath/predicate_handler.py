@@ -133,6 +133,71 @@ class PredicateHandler:
             # Leaf node or no children defined - return empty
             return []
     
+    def _recursive_subtree_score(
+        self,
+        node: ET.Element,
+        child_predicate: CompoundPredicate,
+        agg_operator: str,  # "EXISTS" or "PREV"
+        trace_steps: List[Dict],
+        execution_log: List[str]
+    ) -> Tuple[float, int]:
+        """
+        Recursively aggregate scores from node and its entire subtree.
+        
+        Bottom-up aggregation: scores leaf nodes first, then propagates up
+        combining each node's own score with its descendants' scores.
+        
+        Args:
+            node: XML element to score
+            child_predicate: Predicate to evaluate at each node
+            agg_operator: "EXISTS" (max, no weighting) or "PREV" (weighted avg)
+            trace_steps: List to record scoring trace
+            execution_log: Execution log for debugging
+            
+        Returns:
+            Tuple of (aggregated_score, subtree_size) where:
+            - aggregated_score: Combined score for this node and all descendants
+            - subtree_size: Number of nodes in subtree (1 + sum of children sizes)
+        """
+        # 1. Score this node's own content against the predicate
+        own_score = self.score(node, child_predicate, [], execution_log)
+        
+        # 2. Get ALL hierarchical children (not filtered by type)
+        children = self._get_hierarchical_children(node, child_type=None)
+        
+        if not children:
+            # Leaf node - return own score and size=1
+            return (own_score, 1)
+        
+        # 3. Recursively get (score, size) from all children
+        child_results: List[Tuple[float, int]] = []
+        for child in children:
+            child_score, child_size = self._recursive_subtree_score(
+                child, child_predicate, agg_operator, trace_steps, execution_log
+            )
+            child_results.append((child_score, child_size))
+        
+        # 4. Calculate subtree size: 1 (self) + sum of children sizes
+        total_children_size = sum(size for _, size in child_results)
+        subtree_size = 1 + total_children_size
+        
+        # 5. Aggregate based on operator
+        if agg_operator == "EXISTS":
+            # Max - no weighting (max is max)
+            all_scores = [own_score] + [s for s, _ in child_results]
+            result = max(all_scores)
+        else:  # PREV - weighted average by subtree size
+            # own_score has weight 1 (just this node)
+            # each child has weight = its subtree size
+            weighted_sum = own_score * 1
+            total_weight = 1
+            for child_score, child_size in child_results:
+                weighted_sum += child_score * child_size
+                total_weight += child_size
+            result = weighted_sum / total_weight
+        
+        return (result, subtree_size)
+    
     # =========================================================================
     # Main Entry Point
     # =========================================================================
@@ -282,11 +347,33 @@ class PredicateHandler:
                     self._collect_tasks_for_node(node, cond, tasks)
         
         elif predicate.operator in ("AGG_EXISTS", "AGG_PREV"):
-            # Hierarchical: collect from children of specified type (Sφ(u) ⊆ Desc(u))
+            # Hierarchical: collect from children AND their entire subtrees
+            # for recursive bottom-up aggregation
             if predicate.child_predicate:
                 children = self._get_hierarchical_children(node, predicate.child_type)
                 for child in children:
-                    self._collect_tasks_for_node(child, predicate.child_predicate, tasks)
+                    # Collect for child AND all its descendants (recursive subtree)
+                    self._collect_subtree_tasks(child, predicate.child_predicate, tasks)
+    
+    def _collect_subtree_tasks(
+        self,
+        node: ET.Element,
+        predicate: CompoundPredicate,
+        tasks: Dict[str, List[ScoringTask]]
+    ):
+        """
+        Recursively collect scoring tasks for node and ALL descendants.
+        
+        Used by AGG_EXISTS/AGG_PREV to collect tasks for the entire subtree
+        so that recursive bottom-up aggregation can score all nodes.
+        """
+        # Collect for this node
+        self._collect_tasks_for_node(node, predicate, tasks)
+        
+        # Recurse into all hierarchical children (any type)
+        children = self._get_hierarchical_children(node, child_type=None)
+        for child in children:
+            self._collect_subtree_tasks(child, predicate, tasks)
     
     def _add_node_content_to_tasks(
         self,
@@ -596,14 +683,15 @@ class PredicateHandler:
         execution_log: List[str]
     ) -> float:
         """
-        Hierarchical predicate with existential aggregation.
+        Hierarchical predicate with existential aggregation and recursive subtree scoring.
         
-        Paper Formalization:
-        - Atom(u, φ) = Agg∃({Atom(x, φ) | x ∈ Sφ(u)})
-        - Agg∃(A) = max A
+        Paper Formalization (extended for recursive aggregation):
+        - For each child x ∈ Sφ(u), recursively aggregate its subtree with max
+        - Agg∃(A) = max A (no weighting - max is max)
         - Sφ(u) ⊆ Desc(u) is the set of evidence nodes (children of specified type)
         
-        Semantics: "At least one child matches" - returns max score among children.
+        Semantics: "At least one node in the subtree matches" - returns max score
+        across all nodes in all child subtrees.
         """
         if not predicate.child_predicate:
             return 0
@@ -622,24 +710,26 @@ class PredicateHandler:
             })
             return 0
         
-        # Collect Atom(x, φ) for all x ∈ Sφ(u)
-        child_scores = []
+        # Recursively score each child's entire subtree
+        # Each child returns (score, subtree_size) but for EXISTS we only use score
+        child_results: List[Tuple[float, int]] = []
         for child in children:
-            s = self.score(
-                child, predicate.child_predicate, [], execution_log
+            score, size = self._recursive_subtree_score(
+                child, predicate.child_predicate, "EXISTS", trace_steps, execution_log
             )
-            child_scores.append(s)
+            child_results.append((score, size))
         
-        # Agg∃(A) = max A
+        # Agg∃(A) = max A (no weighting for EXISTS)
+        child_scores = [s for s, _ in child_results]
         result = max(child_scores)
         result = max(EPSILON, min(1 - EPSILON, result))
         
         trace_steps.append({
-            "type": "agg_exists",
-            "formula": "Agg∃(A) = max A",
+            "type": "agg_exists_recursive",
+            "formula": "Agg∃(A) = max(recursive_subtree_scores)",
             "child_type": predicate.child_type or "*",
             "num_children": len(children),
-            "child_scores": child_scores,
+            "child_results": [{"score": s, "subtree_size": sz} for s, sz in child_results],
             "result": result
         })
         
@@ -653,14 +743,15 @@ class PredicateHandler:
         execution_log: List[str]
     ) -> float:
         """
-        Hierarchical predicate with prevalence aggregation.
+        Hierarchical predicate with prevalence aggregation and weighted recursive scoring.
         
-        Paper Formalization:
-        - Atom(u, φ) = Aggprev({Atom(x, φ) | x ∈ Sφ(u)})
-        - Aggprev(A) = (1/|A|) ∑ A
-        - Sφ(u) ⊆ Desc(u) is the set of evidence nodes (children of specified type)
+        Paper Formalization (extended for weighted recursive aggregation):
+        - For each child x ∈ Sφ(u), recursively aggregate its subtree with weighted avg
+        - Aggprev uses WEIGHTED average where weight = subtree size
+        - More subnodes = more weight (fair representation for unbalanced trees)
         
-        Semantics: "General prevalence among children" - returns average score.
+        Semantics: "General prevalence across subtree" - returns weighted average
+        where branches with more content contribute proportionally more.
         """
         if not predicate.child_predicate:
             return 0
@@ -679,27 +770,30 @@ class PredicateHandler:
             })
             return 0
         
-        # Collect Atom(x, φ) for all x ∈ Sφ(u)
-        child_scores = []
+        # Recursively score each child's entire subtree with weighted aggregation
+        # Each child returns (score, subtree_size) for weighting
+        child_results: List[Tuple[float, int]] = []
         for child in children:
-            s = self.score(
-                child, predicate.child_predicate, [], execution_log
+            score, size = self._recursive_subtree_score(
+                child, predicate.child_predicate, "PREV", trace_steps, execution_log
             )
-            child_scores.append(s)
+            child_results.append((score, size))
         
-        # Aggprev(A) = (1/|A|) ∑ A
-        sum_scores = sum(child_scores)
-        n = len(children)
-        result = sum_scores / n
+        # Weighted average: weight = subtree size
+        # More subnodes = more weight
+        weighted_sum = sum(score * size for score, size in child_results)
+        total_weight = sum(size for _, size in child_results)
+        result = weighted_sum / total_weight if total_weight > 0 else 0
         result = max(EPSILON, min(1 - EPSILON, result))
         
         trace_steps.append({
-            "type": "agg_prev",
-            "formula": "Aggprev(A) = (1/|A|) ∑ A",
+            "type": "agg_prev_weighted",
+            "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
             "child_type": predicate.child_type or "*",
-            "num_children": n,
-            "child_scores": child_scores,
-            "sum_scores": sum_scores,
+            "num_children": len(children),
+            "child_results": [{"score": s, "subtree_size": sz} for s, sz in child_results],
+            "weighted_sum": weighted_sum,
+            "total_weight": total_weight,
             "result": result
         })
         

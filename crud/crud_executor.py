@@ -1,8 +1,11 @@
 """
-CRUD Executor - Orchestrates the full CRUD pipeline for each operation type.
+CRUD Executor - Orchestrates the full CRUD pipeline with 2-stage query processing.
+
+2-Stage Query Processing:
+1. Version Resolution (LLM Call 1): Determines version selector and CRUD operation
+2. XPath Generation (LLM Call 2): Generates tree-traversal semantic XPath query
 
 Coordinates:
-- Unified query generation (CRUD + XPath in single LLM call)
 - Version resolution from in-tree versioning
 - Semantic XPath query execution
 - LLM reasoning for node selection
@@ -24,6 +27,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from version_resolver import VersionResolver, VersionSelector, ResolvedVersion
 from xpath_query_generation import XPathQueryGenerator, CRUDOperation, ParsedQuery
 from dense_xpath import DenseXPathExecutor
 from reasoner import NodeReasoner, InsertionReasoner, BatchReasoningResult
@@ -72,28 +76,29 @@ class StepTimer:
     def print_summary(self):
         """Print a formatted timing summary."""
         print("\n⏱️  Step Timing:")
-        print("-" * 45)
+        print("-" * 50)
         total = sum(s["time_ms"] for s in self.steps)
         for step in self.steps:
             pct = (step["time_ms"] / total * 100) if total > 0 else 0
             bar_len = int(pct / 5)
             bar = "█" * bar_len + "░" * (20 - bar_len)
-            print(f"  {step['step']:<25} {step['time_ms']:>8.1f}ms  {bar} {pct:>5.1f}%")
-        print("-" * 45)
-        print(f"  {'TOTAL':<25} {total:>8.1f}ms")
+            print(f"  {step['step']:<30} {step['time_ms']:>8.1f}ms  {bar} {pct:>5.1f}%")
+        print("-" * 50)
+        print(f"  {'TOTAL':<30} {total:>8.1f}ms")
 
 
 class CRUDExecutor:
     """
-    Main executor for CRUD operations with in-tree versioning.
+    Main executor for CRUD operations with 2-stage query processing.
     
     Orchestrates the full pipeline:
-    1. Unified Query Generation (CRUD + XPath)
-    2. Version Resolution
-    3. Semantic XPath Execution (on version subtree)
-    4. LLM Reasoning
-    5. Tree Modification (if applicable)
-    6. New Version Creation
+    1. Version Resolution (LLM Call 1) - determines version selector and CRUD operation
+    2. Version Lookup - finds the actual version element in the tree
+    3. XPath Generation (LLM Call 2) - generates tree-traversal query
+    4. Semantic XPath Execution - runs the query on the version subtree
+    5. LLM Reasoning - filters/selects nodes
+    6. Tree Modification (if applicable)
+    7. New Version Creation
     
     Trees are modified in-place with versions stored as child nodes.
     """
@@ -115,8 +120,11 @@ class CRUDExecutor:
         # Ensure result directory exists
         RESULT_DIR.mkdir(parents=True, exist_ok=True)
         
-        # Initialize components
+        # Initialize 2-stage query components
+        self.version_resolver = VersionResolver()
         self.query_generator = XPathQueryGenerator()
+        
+        # Initialize execution components
         self.executor = DenseXPathExecutor(
             scoring_method=scoring_method,
             top_k=top_k,
@@ -155,6 +163,10 @@ class CRUDExecutor:
         """
         Execute a CRUD operation based on the user's query.
         
+        Uses 2-stage query processing:
+        1. Version Resolution (LLM Call 1)
+        2. XPath Generation (LLM Call 2)
+        
         Args:
             user_query: Natural language query from the user
             
@@ -164,22 +176,18 @@ class CRUDExecutor:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         timer = StepTimer()
         
-        # Step 1: Generate and parse CRUD query (single LLM call)
-        timer.start("Query Generation")
-        parsed_query = self.query_generator.generate_and_parse(user_query)
+        # Stage 1: Version Resolution (LLM Call 1)
+        timer.start("Stage 1: Version Resolution (LLM)")
+        version_result = self.version_resolver.resolve(user_query)
         timer.stop()
         
-        logger.info(f"Generated query: {parsed_query.full_query}")
-        print(f"\n📋 {parsed_query.full_query}")
+        logger.info(f"Version resolved: {version_result.get_version_selector_string()}, {version_result.crud_operation.value}")
+        print(f"\n🔍 Version: {version_result.get_version_selector_string()}")
+        print(f"📋 Operation: {version_result.crud_operation.value}")
         
-        # Step 2: Resolve version
-        timer.start("Version Resolution")
-        version_selector, remaining_xpath = XPathQueryGenerator.extract_version_selector(parsed_query.xpath)
-        target_version = self.version_manager.get_version_by_selector(
-            self.tree, 
-            version_selector, 
-            scorer=self.executor.scorer  # Use entailment scorer for semantic version matching
-        )
+        # Stage 1.5: Version Lookup
+        timer.start("Version Lookup")
+        target_version = self._resolve_version_element(version_result)
         timer.stop()
         
         if target_version is None:
@@ -188,27 +196,40 @@ class CRUDExecutor:
                 "error": "No version found in tree",
                 "timestamp": timestamp,
                 "user_query": user_query,
-                "parsed_query": parsed_query.to_dict()
+                "version_resolution": version_result.to_dict()
             }
         
         version_number = target_version.get("number", "?")
         logger.info(f"Operating on version {version_number}")
+        print(f"📁 Target version: {version_number}")
         
-        # Step 3: Execute based on operation type
-        if parsed_query.operation == CRUDOperation.READ:
+        # Stage 2: XPath Generation (LLM Call 2)
+        timer.start("Stage 2: XPath Generation (LLM)")
+        parsed_query = self.query_generator.generate_and_parse(
+            user_query, 
+            version_result.crud_operation
+        )
+        timer.stop()
+        
+        logger.info(f"Generated XPath: {parsed_query.xpath}")
+        print(f"🛤️  XPath: {parsed_query.xpath}")
+        
+        # Stage 3: Execute based on operation type
+        if version_result.crud_operation == CRUDOperation.READ:
             result = self._execute_read(user_query, parsed_query, target_version, timer)
-        elif parsed_query.operation == CRUDOperation.DELETE:
+        elif version_result.crud_operation == CRUDOperation.DELETE:
             result = self._execute_delete(user_query, parsed_query, target_version, timer)
-        elif parsed_query.operation == CRUDOperation.UPDATE:
+        elif version_result.crud_operation == CRUDOperation.UPDATE:
             result = self._execute_update(user_query, parsed_query, target_version, timer)
-        elif parsed_query.operation == CRUDOperation.CREATE:
+        elif version_result.crud_operation == CRUDOperation.CREATE:
             result = self._execute_create(user_query, parsed_query, target_version, timer)
         else:
-            result = {"error": f"Unknown operation: {parsed_query.operation}"}
+            result = {"error": f"Unknown operation: {version_result.crud_operation}"}
         
         # Add common fields
         result["timestamp"] = timestamp
         result["user_query"] = user_query
+        result["version_resolution"] = version_result.to_dict()
         result["parsed_query"] = parsed_query.to_dict()
         result["version_used"] = version_number
         result["timing"] = timer.to_dict()
@@ -217,6 +238,39 @@ class CRUDExecutor:
         timer.print_summary()
         
         return result
+    
+    def _resolve_version_element(self, version_result: ResolvedVersion) -> Optional[ET.Element]:
+        """
+        Resolve the actual version element from the version resolution result.
+        
+        Handles both 'at' and 'before' selectors.
+        
+        Args:
+            version_result: Result from version resolver
+            
+        Returns:
+            The target Version/Itinerary_Version element, or None
+        """
+        # Find version by semantic query or index
+        if version_result.semantic_query:
+            # Semantic version lookup
+            matched_version = self.version_manager.get_version_by_semantic(
+                self.tree,
+                version_result.semantic_query,
+                scorer=self.executor.scorer
+            )
+        else:
+            # Index-based version lookup
+            matched_version = self.version_manager.get_version_by_number(
+                self.tree,
+                version_result.index
+            )
+        
+        # If 'before' selector, get the previous version
+        if version_result.selector_type == VersionSelector.BEFORE and matched_version is not None:
+            return self.version_manager.get_previous_version(self.tree, matched_version)
+        
+        return matched_version
     
     def _execute_read(
         self,
@@ -522,6 +576,9 @@ class CRUDExecutor:
         # Get parent candidates for insertion
         candidates = [m.to_dict() for m in execution_result.matched_nodes]
         
+        # Build lookup for children data by tree_path
+        children_lookup = {c.get("tree_path"): c.get("children", []) for c in candidates}
+        
         # Apply reasoning to find relevant context
         timer.start("LLM Node Reasoning")
         reasoning_result = self.node_reasoner.reason(
@@ -531,14 +588,22 @@ class CRUDExecutor:
         )
         timer.stop()
         
-        # Determine parent candidates
-        parent_candidates = [r.to_dict() for r in reasoning_result.selected_nodes] if reasoning_result.selected_nodes else candidates
+        # Determine parent candidates - preserve children from original candidates
+        if reasoning_result.selected_nodes:
+            parent_candidates = []
+            for r in reasoning_result.selected_nodes:
+                result_dict = r.to_dict()
+                # Add children from original candidates (not stored in NodeReasoningResult)
+                result_dict["children"] = children_lookup.get(result_dict.get("tree_path"), [])
+                parent_candidates.append(result_dict)
+        else:
+            parent_candidates = candidates
         
         if not parent_candidates:
             # Fallback to version root
             parent_candidates = [{
-                "tree_path": f"Version {target_version.get('number', '?')}",
-                "node": {"type": "Version"},
+                "tree_path": f"Itinerary_Version {target_version.get('number', '?')}",
+                "node": {"type": "Itinerary_Version"},
                 "children": [{"type": c.tag} for c in self.version_manager.get_version_content(target_version)]
             }]
         
@@ -631,74 +696,72 @@ class CRUDExecutor:
         Build an xpath query that targets the specific version.
         
         Args:
-            xpath: Original xpath (may or may not have Version in path)
-            version: The target Version element
+            xpath: Original xpath (from XPath generator, starts with /Itinerary)
+            version: The target Itinerary_Version element
             
         Returns:
             XPath query targeting the version
         """
         version_number = version.get("number", "1")
-        root_type = self.executor.root_type
         
-        # If xpath starts with root, insert Version after it
-        if xpath.startswith(f"/{root_type}"):
-            remaining = xpath[len(f"/{root_type}"):]
-            # Skip any existing Version selector
-            if remaining.startswith("/Version"):
-                # Find end of Version selector
-                import re
-                match = re.match(r'/Version(\[[^\]]+\])?', remaining)
-                if match:
-                    remaining = remaining[match.end():]
-            return f"/{root_type}/Version[@number='{version_number}']{remaining}"
+        # Handle paths that start with /Itinerary
+        if xpath.startswith("/Itinerary"):
+            remaining = xpath[len("/Itinerary"):]
+            return f"/Root/Itinerary_Version[@number='{version_number}']/Itinerary{remaining}"
         
-        # If xpath doesn't start with root, prepend full path
+        # If xpath doesn't start with /Itinerary, prepend full path
         if not xpath.startswith("/"):
             xpath = "/" + xpath
         
-        return f"/{root_type}/Version[@number='{version_number}']{xpath}"
+        return f"/Root/Itinerary_Version[@number='{version_number}']/Itinerary{xpath}"
     
     def _copy_version_content(self, version: ET.Element) -> List[ET.Element]:
         """
         Create a deep copy of the content nodes from a version.
         
+        For the new structure, this returns the Itinerary element's children (Days).
+        
         Args:
-            version: The Version element
+            version: The Itinerary_Version element
             
         Returns:
             List of deep-copied content elements
         """
+        # Find the Itinerary element within the version
+        itinerary = version.find("Itinerary")
+        if itinerary is not None:
+            return [copy.deepcopy(child) for child in itinerary]
+        
+        # Fallback: return non-metadata children
         return [
             copy.deepcopy(child) 
             for child in version 
-            if child.tag not in ("patch_info", "conversation_history")
+            if child.tag not in ("patch_info", "conversation_history", "Itinerary")
         ]
     
     def _adjust_path_for_version(self, tree_path: str, version: ET.Element) -> str:
         """
         Adjust a tree path to be relative to version content.
         
-        Removes the root and Version prefix from the path.
+        Removes the Root, Itinerary_Version, and Itinerary prefix from the path.
         
         Args:
-            tree_path: Full tree path (e.g., "Itinerary > Version 1 > Day 1 > POI 2")
-            version: The Version element
+            tree_path: Full tree path (e.g., "Root > Itinerary_Version 1 > Itinerary > Day 1 > POI 2")
+            version: The Itinerary_Version element
             
         Returns:
-            Path relative to version content (e.g., "Day 1 > POI 2")
+            Path relative to Itinerary content (e.g., "Day 1 > POI 2")
         """
         parts = [p.strip() for p in tree_path.split(">")]
         
-        # Skip root and Version
+        # Skip Root, Itinerary_Version, and Itinerary
         result_parts = []
-        skip_next = 0
-        for i, part in enumerate(parts):
-            if skip_next > 0:
-                skip_next -= 1
+        for part in parts:
+            if part == "Root":
                 continue
-            if part == self.executor.root_type:
+            if part.startswith("Itinerary_Version"):
                 continue
-            if part.startswith("Version"):
+            if part == "Itinerary":
                 continue
             result_parts.append(part)
         
@@ -772,7 +835,7 @@ class CRUDExecutor:
             node_type = words[0]
             index = int(words[1])
             
-            # Check for index/number attribute first (for Day, Version)
+            # Check for index/number attribute first (for Day, Itinerary_Version)
             for elem in elements:
                 if elem.tag == node_type:
                     elem_index = elem.get("index") or elem.get("number")

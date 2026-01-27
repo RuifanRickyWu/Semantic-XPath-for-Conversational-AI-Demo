@@ -38,14 +38,18 @@ class NodeReasoningResult:
     reasoning: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize to dictionary."""
+        """Serialize to dictionary.
+        
+        Note: Uses tree_path and node as keys (not node_path/node_data)
+        for compatibility with InsertionReasoner which expects these field names.
+        """
         return {
             "node_id": self.node_id,
-            "node_path": self.node_path,
+            "tree_path": self.node_path,  # InsertionReasoner expects tree_path
+            "node": self.node_data,        # InsertionReasoner expects node
             "decision": self.decision.value,
             "confidence": self.confidence,
             "reasoning": self.reasoning,
-            "node_data": self.node_data
         }
 
 

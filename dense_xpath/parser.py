@@ -121,7 +121,8 @@ class QueryParser:
         Parse a single step like 'Day[@index='2']' or 'POI[sem(content =~ "museum")]'.
         """
         # Extract node type (everything before first [)
-        match = re.match(r'^([A-Za-z]+)', step_str)
+        # Support underscores in node types like Itinerary_Version
+        match = re.match(r'^([A-Za-z][A-Za-z0-9_]*)', step_str)
         if not match:
             return None
         

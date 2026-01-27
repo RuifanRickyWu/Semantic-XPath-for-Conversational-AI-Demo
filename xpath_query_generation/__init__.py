@@ -1,14 +1,14 @@
 """
 XPath Query Generation module.
 
-Provides unified CRUD + XPath query generation in a single LLM call.
-Output format: Operation(/Path/...)
+Second stage of 2-stage semantic XPath processing.
+Generates tree-traversal queries from natural language.
+Version handling is done separately by VersionResolver.
 
 Examples:
-- Read(/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")])
-- Delete(/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")])
-- Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, sushi restaurant)
-- Update(/Itinerary/Version[-1]/Day/POI[...], time_block: 2:00 PM)
+- /Itinerary/Day/POI[atom(content =~ "museum")]
+- /Itinerary/Day[@index='1'], Restaurant, sushi restaurant
+- /Itinerary/Day/POI[...], time_block: 2:00 PM
 """
 
 from .xpath_query_generator import (

@@ -1,11 +1,13 @@
 """
-XPath Query Generator - Uses LLM to convert user requests into CRUD XPath queries.
+XPath Query Generator - Second stage LLM call for 2-stage semantic XPath processing.
 
-Supports multiple domains (itinerary, todolist, etc.) by loading prompts
-dynamically based on the active schema in config.yaml.
+Generates tree-traversal semantic XPath queries from natural language.
+Version handling and CRUD classification are done in the first stage (VersionResolver).
 
-Now combines intent classification with xpath generation in a single LLM call.
-Output format: Operation(/Path/...)
+This generator focuses purely on:
+1. Understanding the tree structure
+2. Generating appropriate semantic predicates
+3. Reasoning about context vs actual query information
 """
 
 import re
@@ -71,22 +73,20 @@ class ParsedQuery:
 
 class XPathQueryGenerator:
     """
-    Converts natural language user requests into CRUD XPath queries using LLM.
+    Converts natural language user requests into semantic XPath queries using LLM.
     
-    Combines intent classification and xpath generation in a single LLM call.
-    Output format: Operation(/Path/...)
+    Second stage of 2-stage semantic XPath processing:
+    1. Version Resolution (VersionResolver) - determines which version to operate on
+    2. XPath Generation (this class) - generates the tree traversal query
     
-    Supports multiple domains by loading the appropriate prompt based on
-    the active schema configuration.
+    This class focuses on tree structure navigation and semantic predicate generation.
+    It expects the CRUD operation to be provided externally (from VersionResolver).
     """
     
-    # Pattern to parse CRUD query: Operation(/path...)
-    CRUD_PATTERN = re.compile(r'^(Read|Create|Update|Delete)\((.+)\)$', re.DOTALL)
-    
-    # Pattern for Create: Create(/parent/path, NodeType, description)
+    # Pattern for Create: /parent/path, NodeType, description
     CREATE_PATTERN = re.compile(r'^(.+?),\s*(\w+),\s*(.+)$', re.DOTALL)
     
-    # Pattern for Update: Update(/node/path, field: value)
+    # Pattern for Update: /node/path, field: value
     UPDATE_PATTERN = re.compile(r'^(.+?),\s*(.+)$', re.DOTALL)
     
     def __init__(self, client=None, schema_name: Optional[str] = None):
@@ -126,17 +126,22 @@ class XPathQueryGenerator:
                 self._system_prompt = f.read()
         return self._system_prompt
     
-    def generate(self, user_request: str) -> str:
+    def generate(self, user_request: str, operation: CRUDOperation = None) -> str:
         """
-        Convert a user request into a CRUD XPath query.
+        Convert a user request into a semantic XPath query.
         
         Args:
             user_request: Natural language request from the user
+            operation: Pre-determined CRUD operation (from VersionResolver)
             
         Returns:
-            CRUD XPath query string in format: Operation(/path/...)
+            XPath query string (path only, no operation prefix)
         """
-        prompt = f"User: {user_request}"
+        # Build prompt with operation hint if provided
+        if operation:
+            prompt = f"Operation: {operation.value}\nUser: {user_request}"
+        else:
+            prompt = f"User: {user_request}"
         
         response = self.client.complete(
             prompt,
@@ -160,63 +165,53 @@ class XPathQueryGenerator:
         
         return query
     
-    def generate_and_parse(self, user_request: str) -> ParsedQuery:
+    def generate_and_parse(
+        self, 
+        user_request: str, 
+        operation: CRUDOperation = None
+    ) -> ParsedQuery:
         """
-        Generate and parse a CRUD query from user request.
+        Generate and parse a query from user request.
         
         Args:
             user_request: Natural language request from the user
+            operation: Pre-determined CRUD operation (from VersionResolver).
+                      If None, will try to infer from the query output.
             
         Returns:
             ParsedQuery with operation type and parsed components
         """
-        full_query = self.generate(user_request)
-        return self.parse_query(full_query)
+        xpath_query = self.generate(user_request, operation)
+        
+        # Use provided operation or default to READ
+        final_operation = operation if operation else CRUDOperation.READ
+        
+        return self._parse_xpath(xpath_query, final_operation)
     
-    def parse_query(self, query: str) -> ParsedQuery:
+    def _parse_xpath(self, xpath: str, operation: CRUDOperation) -> ParsedQuery:
         """
-        Parse a CRUD query into its components.
+        Parse an xpath query based on operation type.
         
         Args:
-            query: CRUD query string in format Operation(/path/...)
+            xpath: XPath query string
+            operation: CRUD operation type
             
         Returns:
             ParsedQuery with parsed components
-            
-        Raises:
-            ValueError: If query format is invalid
         """
-        query = query.strip()
+        xpath = xpath.strip()
+        full_query = f"{operation.value}({xpath})"
         
-        # Match the CRUD pattern
-        match = self.CRUD_PATTERN.match(query)
-        if not match:
-            # Default to READ if no operation prefix
-            return ParsedQuery(
-                operation=CRUDOperation.READ,
-                xpath=query,
-                full_query=f"Read({query})"
-            )
-        
-        operation_str = match.group(1)
-        content = match.group(2).strip()
-        
-        try:
-            operation = CRUDOperation(operation_str)
-        except ValueError:
-            operation = CRUDOperation.READ
-        
-        # Parse based on operation type
         if operation == CRUDOperation.CREATE:
-            return self._parse_create(content, query)
+            return self._parse_create(xpath, full_query)
         elif operation == CRUDOperation.UPDATE:
-            return self._parse_update(content, query)
+            return self._parse_update(xpath, full_query)
         else:
             # READ or DELETE - just xpath
             return ParsedQuery(
                 operation=operation,
-                xpath=content,
-                full_query=query
+                xpath=xpath,
+                full_query=full_query
             )
     
     def _parse_create(self, content: str, full_query: str) -> ParsedQuery:
@@ -277,25 +272,60 @@ class XPathQueryGenerator:
             full_query=full_query
         )
     
+    # Legacy method for backward compatibility
+    def parse_query(self, query: str) -> ParsedQuery:
+        """
+        Parse a CRUD query into its components (legacy support).
+        
+        Args:
+            query: CRUD query string in format Operation(/path/...)
+            
+        Returns:
+            ParsedQuery with parsed components
+        """
+        query = query.strip()
+        
+        # Pattern to match Operation(/path...)
+        crud_pattern = re.compile(r'^(Read|Create|Update|Delete)\((.+)\)$', re.DOTALL)
+        match = crud_pattern.match(query)
+        
+        if not match:
+            # Default to READ if no operation prefix
+            return ParsedQuery(
+                operation=CRUDOperation.READ,
+                xpath=query,
+                full_query=f"Read({query})"
+            )
+        
+        operation_str = match.group(1)
+        content = match.group(2).strip()
+        
+        try:
+            operation = CRUDOperation(operation_str)
+        except ValueError:
+            operation = CRUDOperation.READ
+        
+        return self._parse_xpath(content, operation)
+    
     @staticmethod
     def extract_version_selector(xpath: str) -> Tuple[str, str]:
         """
-        Extract version selector from xpath query.
+        Extract version selector from xpath query (legacy support).
         
         Args:
-            xpath: XPath query that may contain Version selector
+            xpath: XPath query that may contain Version/Itinerary_Version selector
             
         Returns:
             Tuple of (version_selector, remaining_xpath)
             version_selector is like "[-1]", "[2]", or "[atom(content =~ ...)]"
             If no Version in path, returns ("[-1]", xpath) as default
         """
-        # Pattern to find Version[...] in the path
-        version_pattern = re.compile(r'/Version(\[[^\]]+\]|\[-?\d+\])')
+        # Pattern to find Version[...] or Itinerary_Version[...] in the path
+        version_pattern = re.compile(r'/(Version|Itinerary_Version)(\[[^\]]+\]|\[-?\d+\])')
         
         match = version_pattern.search(xpath)
         if match:
-            version_selector = match.group(1)
+            version_selector = match.group(2)
             # Remove the Version[...] from the path but keep the parts before and after
             before = xpath[:match.start()]
             after = xpath[match.end():]

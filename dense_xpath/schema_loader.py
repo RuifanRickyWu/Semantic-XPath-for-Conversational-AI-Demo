@@ -117,7 +117,8 @@ def get_schema_info(schema_name: Optional[str] = None) -> Dict[str, Any]:
         "nodes": schema.get("nodes", {}),
         "active_data": active_data,
         "data_files": resolved_data_files,
-        "prompt_file": str(_STORAGE_DIR / schema.get("prompt_file", ""))
+        "prompt_file": str(_STORAGE_DIR / schema.get("prompt_file", "")),
+        "version_resolver_prompt": schema.get("version_resolver_prompt", "prompts/version_resolver.txt")
     }
 
 

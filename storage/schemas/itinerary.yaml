@@ -6,33 +6,39 @@ description: "Travel itinerary with versioning, days, POIs and restaurants"
 
 # Tree hierarchy (for documentation and LLM prompt generation)
 hierarchy: |
-  Itinerary (root)
-  └── Version (container, indexed by @number)
+  Root (root node)
+  └── Itinerary_Version (container, indexed by @number)
       ├── patch_info: describes changes made in this version
       ├── conversation_history: user's natural language request
-      └── Day (container, indexed by @index)
-          ├── POI (leaf)
-          └── Restaurant (leaf)
+      └── Itinerary (container)
+          └── Day (container, indexed by @index)
+              ├── POI (leaf)
+              └── Restaurant (leaf)
 
 # Node type definitions with fields
 nodes:
-  Itinerary:
+  Root:
     type: root
     fields: []
-    children: ["Version"]
+    children: ["Itinerary_Version"]
 
-  Version:
+  Itinerary_Version:
     type: container
-    index_attr: "number" # Uses <Version number="1"> for identification
+    index_attr: "number"  # Uses <Itinerary_Version number="1"> for identification
     fields:
       - patch_info
       - conversation_history
+    children: ["Itinerary"]
+
+  Itinerary:
+    type: container
+    fields: []  # Container node - no direct content fields
     children: ["Day"]
 
   Day:
     type: container
-    index_attr: "index" # Uses <Day index="1"> for identification
-    fields: [] # Container node - no direct content fields
+    index_attr: "index"  # Uses <Day index="1"> for identification
+    fields: []  # Container node - no direct content fields
     children: ["POI", "Restaurant"]
 
   POI:
@@ -70,3 +76,6 @@ default_data: "travel_memory_3day"
 
 # Associated prompt file for XPath query generation
 prompt_file: "prompts/xpath_query_generator_itinerary.txt"
+
+# Associated prompt file for version resolution (new 2-stage approach)
+version_resolver_prompt: "prompts/version_resolver.txt"

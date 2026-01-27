@@ -424,7 +424,7 @@ class PredicateHandler:
             # Store scores in cache
             for i, task in enumerate(tasks):
                 node_id, desc_id, _ = task
-                score = batch_result.results[i].score if i < len(batch_result.results) else 0.5
+                score = batch_result.results[i].score if i < len(batch_result.results) else 0
                 score = max(EPSILON, min(1 - EPSILON, score))
                 self._score_cache[(node_id, semantic_value)] = score
             
@@ -484,7 +484,7 @@ class PredicateHandler:
         elif predicate.operator == "AGG_PREV":
             return self._score_agg_prev(node, predicate, trace_steps, execution_log)
         
-        return 0.5
+        return 0
     
     def _score_atom(
         self,
@@ -501,15 +501,15 @@ class PredicateHandler:
         - This is distinct from hierarchical predicates that aggregate over Desc(u)
         """
         if not predicate.conditions:
-            return 0.5
+            return 0
         
         condition = predicate.conditions[0]
         if not isinstance(condition, AtomicPredicate):
-            return 0.5
+            return 0
         
         node_id = id(node)
         cache_key = (node_id, condition.value)
-        score = self._score_cache.get(cache_key, 0.5)
+        score = self._score_cache.get(cache_key, 0)
         
         trace_steps.append({
             "type": "atom",
@@ -538,10 +538,10 @@ class PredicateHandler:
             if isinstance(cond, CompoundPredicate):
                 s = self.score(node, cond, [], execution_log)
             else:
-                s = 0.5
+                s = 0
             child_scores.append(s)
         
-        result = max(child_scores) if child_scores else 0.5
+        result = max(child_scores) if child_scores else 0
         result = max(EPSILON, min(1 - EPSILON, result))
         
         trace_steps.append({
@@ -571,7 +571,7 @@ class PredicateHandler:
             if isinstance(cond, CompoundPredicate):
                 s = self.score(node, cond, [], execution_log)
             else:
-                s = 0.5
+                s = 0
             child_scores.append(s)
         
         result = 1.0
@@ -606,7 +606,7 @@ class PredicateHandler:
         Semantics: "At least one child matches" - returns max score among children.
         """
         if not predicate.child_predicate:
-            return 0.5
+            return 0
         
         # Sφ(u) - evidence nodes (children of specified type)
         children = self._get_hierarchical_children(node, predicate.child_type)
@@ -618,9 +618,9 @@ class PredicateHandler:
                 "child_type": predicate.child_type or "*",
                 "num_children": 0,
                 "note": "Sφ(u) is empty - no children found",
-                "result": 0.5
+                "result": 0
             })
-            return 0.5
+            return 0
         
         # Collect Atom(x, φ) for all x ∈ Sφ(u)
         child_scores = []
@@ -663,7 +663,7 @@ class PredicateHandler:
         Semantics: "General prevalence among children" - returns average score.
         """
         if not predicate.child_predicate:
-            return 0.5
+            return 0
         
         # Sφ(u) - evidence nodes (children of specified type)
         children = self._get_hierarchical_children(node, predicate.child_type)
@@ -675,9 +675,9 @@ class PredicateHandler:
                 "child_type": predicate.child_type or "*",
                 "num_children": 0,
                 "note": "Sφ(u) is empty - no children found",
-                "result": 0.5
+                "result": 0
             })
-            return 0.5
+            return 0
         
         # Collect Atom(x, φ) for all x ∈ Sφ(u)
         child_scores = []

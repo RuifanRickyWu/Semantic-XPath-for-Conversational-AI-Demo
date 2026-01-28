@@ -1,6 +1,16 @@
 """
 Content Creator module for CRUD operations.
 
+DEPRECATED: This module has been replaced by the new CRUD handlers in crud/.
+- NodeCreator -> crud.CreateHandler
+- NodeUpdater -> crud.UpdateHandler
+
+The new handlers consolidate relevance reasoning with content generation
+into single LLM calls, reducing the number of LLM calls per operation.
+
+These classes are kept for backward compatibility but may be removed in
+a future version. Please migrate to the new crud handlers.
+
 Provides:
 - NodeCreator: Generate new node content using LLM
 - NodeUpdater: Update existing node content using LLM

@@ -1,8 +1,8 @@
 {
-  "timestamp": "20260127_131405_316912",
-  "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[agg_prev(POI[atom(content =~ \"artistic\")])]/POI[atom(content =~ \"museum\")]",
+  "timestamp": "20260128_124839_818581",
+  "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ \"museum\")]",
   "data_file": "travel_memory_3day.xml",
-  "execution_time_ms": 8300.357583999998,
+  "execution_time_ms": 6085.897875000001,
   "traversal_steps": [
     {
       "step_index": 0,
@@ -119,7 +119,7 @@
     },
     {
       "step_index": 3,
-      "step_query": "Day[agg_prev(POI[atom(content =~ \"artistic\")])]",
+      "step_query": "Day",
       "action": "type_match",
       "nodes_before_count": 1,
       "nodes_after_count": 3,
@@ -157,200 +157,6 @@
       }
     },
     {
-      "step_index": 3,
-      "step_query": "Day[agg_prev(POI[atom(content =~ \"artistic\")])]",
-      "action": "semantic_predicate",
-      "nodes_before_count": 3,
-      "nodes_after_count": 3,
-      "nodes_before": [
-        {
-          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
-          "name": "Day 1",
-          "type": "Day",
-          "score": 1.0
-        },
-        {
-          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2",
-          "name": "Day 2",
-          "type": "Day",
-          "score": 1.0
-        },
-        {
-          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3",
-          "name": "Day 3",
-          "type": "Day",
-          "score": 1.0
-        }
-      ],
-      "nodes_after": [
-        {
-          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
-          "name": "Day 1",
-          "type": "Day",
-          "score": 0.6960118611653646
-        },
-        {
-          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2",
-          "name": "Day 2",
-          "type": "Day",
-          "score": 0.9547310272852579
-        },
-        {
-          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3",
-          "name": "Day 3",
-          "type": "Day",
-          "score": 0.5825297459959984
-        }
-      ],
-      "details": {
-        "predicate": "agg_prev(POI[atom(content =~ \"artistic\")])",
-        "predicate_type": "AGG_PREV",
-        "scoring_result": {
-          "predicate": "agg_prev(POI[atom(content =~ \"artistic\")])",
-          "predicate_ast": {
-            "operator": "AGG_PREV",
-            "child_predicate": {
-              "operator": "ATOM",
-              "conditions": [
-                {
-                  "type": "atom",
-                  "field": "content",
-                  "value": "artistic"
-                }
-              ]
-            },
-            "child_type": "POI"
-          },
-          "config": {
-            "top_k": 10,
-            "score_threshold": 0.01
-          },
-          "node_scores": [
-            {
-              "node_idx": 0,
-              "node_name": "Day 1",
-              "node_type": "Day",
-              "scoring_steps": [
-                {
-                  "type": "agg_prev_weighted",
-                  "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-                  "child_type": "POI",
-                  "num_children": 3,
-                  "child_results": [
-                    {
-                      "score": 0.6897202730178833,
-                      "subtree_size": 1
-                    },
-                    {
-                      "score": 0.4009290337562561,
-                      "subtree_size": 1
-                    },
-                    {
-                      "score": 0.9973862767219543,
-                      "subtree_size": 1
-                    }
-                  ],
-                  "weighted_sum": 2.0880355834960938,
-                  "total_weight": 3,
-                  "result": 0.6960118611653646
-                }
-              ],
-              "final_score": 0.6960118611653646
-            },
-            {
-              "node_idx": 1,
-              "node_name": "Day 2",
-              "node_type": "Day",
-              "scoring_steps": [
-                {
-                  "type": "agg_prev_weighted",
-                  "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-                  "child_type": "POI",
-                  "num_children": 3,
-                  "child_results": [
-                    {
-                      "score": 0.9904342889785767,
-                      "subtree_size": 1
-                    },
-                    {
-                      "score": 0.8791905641555786,
-                      "subtree_size": 1
-                    },
-                    {
-                      "score": 0.9945682287216187,
-                      "subtree_size": 1
-                    }
-                  ],
-                  "weighted_sum": 2.864193081855774,
-                  "total_weight": 3,
-                  "result": 0.9547310272852579
-                }
-              ],
-              "final_score": 0.9547310272852579
-            },
-            {
-              "node_idx": 2,
-              "node_name": "Day 3",
-              "node_type": "Day",
-              "scoring_steps": [
-                {
-                  "type": "agg_prev_weighted",
-                  "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-                  "child_type": "POI",
-                  "num_children": 2,
-                  "child_results": [
-                    {
-                      "score": 0.18104426562786102,
-                      "subtree_size": 1
-                    },
-                    {
-                      "score": 0.9840152263641357,
-                      "subtree_size": 1
-                    }
-                  ],
-                  "weighted_sum": 1.1650594919919968,
-                  "total_weight": 2,
-                  "result": 0.5825297459959984
-                }
-              ],
-              "final_score": 0.5825297459959984
-            }
-          ],
-          "batch_scoring": {
-            "semantic_values": [
-              "artistic"
-            ],
-            "per_value_stats": [
-              {
-                "value": "artistic",
-                "num_descriptions": 8,
-                "call_time_ms": 7938.3
-              }
-            ],
-            "total_scorer_calls": 1,
-            "total_descriptions_scored": 8
-          },
-          "ranking": [
-            {
-              "idx": 1,
-              "score": 0.9547310272852579,
-              "name": "Day 2"
-            },
-            {
-              "idx": 0,
-              "score": 0.6960118611653646,
-              "name": "Day 1"
-            },
-            {
-              "idx": 2,
-              "score": 0.5825297459959984,
-              "name": "Day 3"
-            }
-          ]
-        }
-      }
-    },
-    {
       "step_index": 4,
       "step_query": "POI[atom(content =~ \"museum\")]",
       "action": "type_match",
@@ -361,19 +167,19 @@
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
           "name": "Day 1",
           "type": "Day",
-          "score": 0.6960118611653646
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 2",
           "name": "Day 2",
           "type": "Day",
-          "score": 0.9547310272852579
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 3",
           "name": "Day 3",
           "type": "Day",
-          "score": 0.5825297459959984
+          "score": 1.0
         }
       ],
       "nodes_after": [
@@ -381,49 +187,49 @@
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > St. Lawrence Market",
           "name": "St. Lawrence Market",
           "type": "POI",
-          "score": 0.6960118611653646
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower",
           "name": "CN Tower",
           "type": "POI",
-          "score": 0.6960118611653646
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Art Gallery of Ontario",
           "name": "Art Gallery of Ontario",
           "type": "POI",
-          "score": 0.6960118611653646
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Royal Ontario Museum",
           "name": "Royal Ontario Museum",
           "type": "POI",
-          "score": 0.9547310272852579
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Casa Loma",
           "name": "Casa Loma",
           "type": "POI",
-          "score": 0.9547310272852579
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Rivoli",
           "name": "Rivoli",
           "type": "POI",
-          "score": 0.9547310272852579
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Toronto Islands",
           "name": "Toronto Islands",
           "type": "POI",
-          "score": 0.5825297459959984
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Distillery District",
           "name": "Distillery District",
           "type": "POI",
-          "score": 0.5825297459959984
+          "score": 1.0
         }
       ],
       "details": {
@@ -442,49 +248,49 @@
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > St. Lawrence Market",
           "name": "St. Lawrence Market",
           "type": "POI",
-          "score": 0.6960118611653646
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower",
           "name": "CN Tower",
           "type": "POI",
-          "score": 0.6960118611653646
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Art Gallery of Ontario",
           "name": "Art Gallery of Ontario",
           "type": "POI",
-          "score": 0.6960118611653646
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Royal Ontario Museum",
           "name": "Royal Ontario Museum",
           "type": "POI",
-          "score": 0.9547310272852579
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Casa Loma",
           "name": "Casa Loma",
           "type": "POI",
-          "score": 0.9547310272852579
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Rivoli",
           "name": "Rivoli",
           "type": "POI",
-          "score": 0.9547310272852579
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Toronto Islands",
           "name": "Toronto Islands",
           "type": "POI",
-          "score": 0.5825297459959984
+          "score": 1.0
         },
         {
           "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Distillery District",
           "name": "Distillery District",
           "type": "POI",
-          "score": 0.5825297459959984
+          "score": 1.0
         }
       ],
       "nodes_after": [
@@ -710,7 +516,7 @@
               {
                 "value": "museum",
                 "num_descriptions": 8,
-                "call_time_ms": 359.55
+                "call_time_ms": 6082.97
               }
             ],
             "total_scorer_calls": 1,
@@ -763,149 +569,6 @@
     }
   ],
   "scoring_traces": [
-    {
-      "predicate": "agg_prev(POI[atom(content =~ \"artistic\")])",
-      "predicate_ast": {
-        "operator": "AGG_PREV",
-        "child_predicate": {
-          "operator": "ATOM",
-          "conditions": [
-            {
-              "type": "atom",
-              "field": "content",
-              "value": "artistic"
-            }
-          ]
-        },
-        "child_type": "POI"
-      },
-      "config": {
-        "top_k": 10,
-        "score_threshold": 0.01
-      },
-      "node_scores": [
-        {
-          "node_idx": 0,
-          "node_name": "Day 1",
-          "node_type": "Day",
-          "scoring_steps": [
-            {
-              "type": "agg_prev_weighted",
-              "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-              "child_type": "POI",
-              "num_children": 3,
-              "child_results": [
-                {
-                  "score": 0.6897202730178833,
-                  "subtree_size": 1
-                },
-                {
-                  "score": 0.4009290337562561,
-                  "subtree_size": 1
-                },
-                {
-                  "score": 0.9973862767219543,
-                  "subtree_size": 1
-                }
-              ],
-              "weighted_sum": 2.0880355834960938,
-              "total_weight": 3,
-              "result": 0.6960118611653646
-            }
-          ],
-          "final_score": 0.6960118611653646
-        },
-        {
-          "node_idx": 1,
-          "node_name": "Day 2",
-          "node_type": "Day",
-          "scoring_steps": [
-            {
-              "type": "agg_prev_weighted",
-              "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-              "child_type": "POI",
-              "num_children": 3,
-              "child_results": [
-                {
-                  "score": 0.9904342889785767,
-                  "subtree_size": 1
-                },
-                {
-                  "score": 0.8791905641555786,
-                  "subtree_size": 1
-                },
-                {
-                  "score": 0.9945682287216187,
-                  "subtree_size": 1
-                }
-              ],
-              "weighted_sum": 2.864193081855774,
-              "total_weight": 3,
-              "result": 0.9547310272852579
-            }
-          ],
-          "final_score": 0.9547310272852579
-        },
-        {
-          "node_idx": 2,
-          "node_name": "Day 3",
-          "node_type": "Day",
-          "scoring_steps": [
-            {
-              "type": "agg_prev_weighted",
-              "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-              "child_type": "POI",
-              "num_children": 2,
-              "child_results": [
-                {
-                  "score": 0.18104426562786102,
-                  "subtree_size": 1
-                },
-                {
-                  "score": 0.9840152263641357,
-                  "subtree_size": 1
-                }
-              ],
-              "weighted_sum": 1.1650594919919968,
-              "total_weight": 2,
-              "result": 0.5825297459959984
-            }
-          ],
-          "final_score": 0.5825297459959984
-        }
-      ],
-      "batch_scoring": {
-        "semantic_values": [
-          "artistic"
-        ],
-        "per_value_stats": [
-          {
-            "value": "artistic",
-            "num_descriptions": 8,
-            "call_time_ms": 7938.3
-          }
-        ],
-        "total_scorer_calls": 1,
-        "total_descriptions_scored": 8
-      },
-      "ranking": [
-        {
-          "idx": 1,
-          "score": 0.9547310272852579,
-          "name": "Day 2"
-        },
-        {
-          "idx": 0,
-          "score": 0.6960118611653646,
-          "name": "Day 1"
-        },
-        {
-          "idx": 2,
-          "score": 0.5825297459959984,
-          "name": "Day 3"
-        }
-      ]
-    },
     {
       "predicate": "atom(content =~ \"museum\")",
       "predicate_ast": {
@@ -1076,7 +739,7 @@
           {
             "value": "museum",
             "num_descriptions": 8,
-            "call_time_ms": 359.55
+            "call_time_ms": 6082.97
           }
         ],
         "total_scorer_calls": 1,
@@ -1130,132 +793,6 @@
     "step_scores": [
       {
         "step_index": 0,
-        "predicate": "agg_prev(POI[atom(content =~ \"artistic\")])",
-        "predicate_ast": {
-          "operator": "AGG_PREV",
-          "child_predicate": {
-            "operator": "ATOM",
-            "conditions": [
-              {
-                "type": "atom",
-                "field": "content",
-                "value": "artistic"
-              }
-            ]
-          },
-          "child_type": "POI"
-        },
-        "node_scores": [
-          {
-            "node_idx": 0,
-            "node_name": "Day 1",
-            "node_type": "Day",
-            "scoring_steps": [
-              {
-                "type": "agg_prev_weighted",
-                "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-                "child_type": "POI",
-                "num_children": 3,
-                "child_results": [
-                  {
-                    "score": 0.6897202730178833,
-                    "subtree_size": 1
-                  },
-                  {
-                    "score": 0.4009290337562561,
-                    "subtree_size": 1
-                  },
-                  {
-                    "score": 0.9973862767219543,
-                    "subtree_size": 1
-                  }
-                ],
-                "weighted_sum": 2.0880355834960938,
-                "total_weight": 3,
-                "result": 0.6960118611653646
-              }
-            ],
-            "final_score": 0.6960118611653646
-          },
-          {
-            "node_idx": 1,
-            "node_name": "Day 2",
-            "node_type": "Day",
-            "scoring_steps": [
-              {
-                "type": "agg_prev_weighted",
-                "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-                "child_type": "POI",
-                "num_children": 3,
-                "child_results": [
-                  {
-                    "score": 0.9904342889785767,
-                    "subtree_size": 1
-                  },
-                  {
-                    "score": 0.8791905641555786,
-                    "subtree_size": 1
-                  },
-                  {
-                    "score": 0.9945682287216187,
-                    "subtree_size": 1
-                  }
-                ],
-                "weighted_sum": 2.864193081855774,
-                "total_weight": 3,
-                "result": 0.9547310272852579
-              }
-            ],
-            "final_score": 0.9547310272852579
-          },
-          {
-            "node_idx": 2,
-            "node_name": "Day 3",
-            "node_type": "Day",
-            "scoring_steps": [
-              {
-                "type": "agg_prev_weighted",
-                "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-                "child_type": "POI",
-                "num_children": 2,
-                "child_results": [
-                  {
-                    "score": 0.18104426562786102,
-                    "subtree_size": 1
-                  },
-                  {
-                    "score": 0.9840152263641357,
-                    "subtree_size": 1
-                  }
-                ],
-                "weighted_sum": 1.1650594919919968,
-                "total_weight": 2,
-                "result": 0.5825297459959984
-              }
-            ],
-            "final_score": 0.5825297459959984
-          }
-        ],
-        "ranking": [
-          {
-            "idx": 1,
-            "score": 0.9547310272852579,
-            "name": "Day 2"
-          },
-          {
-            "idx": 0,
-            "score": 0.6960118611653646,
-            "name": "Day 1"
-          },
-          {
-            "idx": 2,
-            "score": 0.5825297459959984,
-            "name": "Day 3"
-          }
-        ]
-      },
-      {
-        "step_index": 1,
         "predicate": "atom(content =~ \"museum\")",
         "predicate_ast": {
           "operator": "ATOM",
@@ -1741,10 +1278,10 @@
     }
   ],
   "summary": {
-    "total_steps": 8,
-    "total_scoring_calls": 2,
+    "total_steps": 7,
+    "total_scoring_calls": 1,
     "matched_count": 7,
-    "execution_time_ms": 8300.357583999998,
+    "execution_time_ms": 6085.897875000001,
     "has_score_fusion": true,
     "num_nodes_before_filter": 8,
     "num_nodes_after_filter": 7

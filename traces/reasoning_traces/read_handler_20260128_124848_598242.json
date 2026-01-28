@@ -1,0 +1,49 @@
+{
+  "user_query": "find all museums",
+  "candidates_count": 7,
+  "selected_count": 2,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Royal Ontario Museum",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Royal Ontario Museum",
+        "time_block": "11:00 AM - 1:00 PM",
+        "description": "World-renowned museum showcasing art, culture, and natural history.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 23",
+        "highlights": [
+          "Dinosaurs",
+          "Chinese architecture",
+          "Bloor Street design"
+        ]
+      },
+      "reasoning": "Royal Ontario Museum is explicitly a museum, matching the user's query."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Art Gallery of Ontario",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Art Gallery of Ontario",
+        "time_block": "2:30 PM - 4:00 PM",
+        "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Group of Seven",
+          "Modern architecture"
+        ]
+      },
+      "reasoning": "Art Gallery of Ontario is an art museum, which fits the user's request for museums."
+    }
+  ],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Royal Ontario Museum is explicitly a museum, matching the user's query.\"\n    },\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Art Gallery of Ontario is an art museum, which fits the user's request for museums.\"\n    }\n  ],\n  \"reasoning\": \"Selected nodes 1 and 2 because they are both museums, directly matching the user's query. Other nodes like Casa Loma, Distillery District, St. Lawrence Market, CN Tower, and Rivoli are not museums and therefore not relevant to the query.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1621,
+    "completion_tokens": 136,
+    "total_tokens": 1757
+  },
+  "processing_time_ms": 2692.1645420000004
+}

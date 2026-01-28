@@ -214,8 +214,8 @@
     </Itinerary>
   </Itinerary_Version>
   <Itinerary_Version number="2">
-    <patch_info>Updated: Root &gt; Itinerary_Version 1 &gt; Itinerary &gt; Day 2 &gt; Royal Ontario Museum, Root &gt; Itinerary_Version 1 &gt; Itinerary &gt; Day 1 &gt; Art Gallery of Ontario</patch_info>
-    <conversation_history>replace all the museums in an artistic day with chinese food</conversation_history>
+    <patch_info>Created: Root &gt; Itinerary_Version 1 &gt; Itinerary &gt; Day 1/Restaurant</patch_info>
+    <conversation_history>add a sushi restaurant after lunch on day 1</conversation_history>
     <Itinerary>
       <Day index="1">
         <POI>
@@ -254,19 +254,28 @@
           </highlights>
         </Restaurant>
         <Restaurant>
-          <name>DaiLo</name>
-          <time_block>2:30 PM - 4:00 PM</time_block>
-          <description>A modern Chinese restaurant offering a fusion of traditional Chinese flavors with a contemporary twist. Known for its innovative dishes and stylish ambiance, DaiLo provides a unique dining experience.</description>
+          <name>Kinka Izakaya</name>
+          <time_block>2:00 PM - 3:00 PM</time_block>
+          <description>Authentic Japanese izakaya offering a variety of sushi, sashimi, and small plates in a vibrant setting.</description>
           <travel_method>Walk</travel_method>
-          <expected_cost>CAD 40</expected_cost>
+          <expected_cost>CAD 30-45</expected_cost>
           <highlights>
-            <highlight>Fusion dishes</highlight>
-            <highlight>Stylish ambiance</highlight>
-            <highlight>Innovative menu</highlight>
-            <highlight>Signature cocktails</highlight>
-            <highlight>Chef's tasting menu</highlight>
+            <highlight>Fresh sushi</highlight>
+            <highlight>Sake selection</highlight>
+            <highlight>Lively atmosphere</highlight>
           </highlights>
         </Restaurant>
+        <POI>
+          <name>Art Gallery of Ontario</name>
+          <time_block>2:30 PM - 4:00 PM</time_block>
+          <description>Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.</description>
+          <travel_method>Walk</travel_method>
+          <expected_cost>CAD 25</expected_cost>
+          <highlights>
+            <highlight>Group of Seven</highlight>
+            <highlight>Modern architecture</highlight>
+          </highlights>
+        </POI>
         <Restaurant>
           <name>Buca Yorkville</name>
           <time_block>5:30 PM - 7:00 PM</time_block>
@@ -302,20 +311,18 @@
             <highlight>Bohemian neighborhood</highlight>
           </highlights>
         </Restaurant>
-        <Restaurant>
-          <name>Mother's Dumplings</name>
-          <time_block>11:30 AM - 1:00 PM</time_block>
-          <description>A popular casual Chinese restaurant known for its handmade dumplings and Northern Chinese comfort dishes. The menu focuses on freshly prepared dumplings with a variety of fillings, along with classic noodle and stir-fry options.</description>
+        <POI>
+          <name>Royal Ontario Museum</name>
+          <time_block>11:00 AM - 1:00 PM</time_block>
+          <description>World-renowned museum showcasing art, culture, and natural history.</description>
           <travel_method>Walk</travel_method>
-          <expected_cost>CAD 18</expected_cost>
+          <expected_cost>CAD 23</expected_cost>
           <highlights>
-            <highlight>Handmade dumplings</highlight>
-            <highlight>Pan-fried pork dumplings</highlight>
-            <highlight>Vegetarian dumpling options</highlight>
-            <highlight>Casual local atmosphere</highlight>
-            <highlight>Quick lunch-friendly service</highlight>
+            <highlight>Dinosaurs</highlight>
+            <highlight>Chinese architecture</highlight>
+            <highlight>Bloor Street design</highlight>
           </highlights>
-        </Restaurant>
+        </POI>
         <Restaurant>
           <name>Annona Restaurant</name>
           <time_block>1:30 PM - 2:30 PM</time_block>

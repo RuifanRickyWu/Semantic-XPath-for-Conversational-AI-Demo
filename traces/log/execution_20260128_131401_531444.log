@@ -1,11 +1,11 @@
 Query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "museum")]
 Data File: travel_memory_3day.xml
-Execution Time: 754.03ms
+Execution Time: 6702.51ms
 ============================================================
 
 Execution Log:
 ----------------------------------------
-[20260127_131518_838013] Executing query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "museum")]
+[20260128_131401_531444] Executing query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "museum")]
 Data file: travel_memory_3day.xml
 Parsed steps: [Root, Itinerary_Version[1], Itinerary, Day, POI[atom(content =~ "museum")]]
 
@@ -13,7 +13,7 @@ Parsed steps: [Root, Itinerary_Version[1], Itinerary, Day, POI[atom(content =~ "
 Matched Root root
 
 --- Step 2: Itinerary_Version[1] ---
-Found 2 Itinerary_Version nodes across 1 parent(s)
+Found 1 Itinerary_Version nodes across 1 parent(s)
 Applying positional index: [1]
 Selected node at index 1 (0-based: 0)
 After step: 1 nodes remaining
@@ -56,7 +56,7 @@ After step: 8 nodes remaining
   Filtered: 8 → 7 nodes
 
 Final result: 7 nodes (sorted by score)
-⏱️  Query execution time: 754.03ms
+⏱️  Query execution time: 6702.51ms
 
 ============================================================
 Score Fusion Summary:

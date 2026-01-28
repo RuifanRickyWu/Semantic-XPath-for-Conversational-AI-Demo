@@ -1,0 +1,139 @@
+Query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "CN Tower")]
+Data File: travel_memory_3day.xml
+Execution Time: 4687.49ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260128_131420_210786] Executing query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "CN Tower")]
+Data file: travel_memory_3day.xml
+Parsed steps: [Root, Itinerary_Version[1], Itinerary, Day, POI[atom(content =~ "CN Tower")]]
+
+--- Step 1: Root ---
+Matched Root root
+
+--- Step 2: Itinerary_Version[1] ---
+Found 1 Itinerary_Version nodes across 1 parent(s)
+Applying positional index: [1]
+Selected node at index 1 (0-based: 0)
+After step: 1 nodes remaining
+
+--- Step 3: Itinerary ---
+Found 1 Itinerary nodes across 1 parent(s)
+After step: 1 nodes remaining
+
+--- Step 4: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 5: POI[atom(content =~ "CN Tower")] ---
+Found 8 POI nodes across 3 parent(s)
+Applying semantic predicate: atom(content =~ "CN Tower")
+Scoring predicate: atom(content =~ "CN Tower") (atomic values: ['CN Tower'])
+  Collected 8 descriptions for 1 unique semantic value(s)
+  Made 1 scorer call(s) for 8 total descriptions
+  Node 0 (St. Lawrence Market): score = 0.0034
+  Node 1 (CN Tower): score = 0.9897
+  Node 2 (Art Gallery of Ontario): score = 0.0083
+  Node 3 (Royal Ontario Museum): score = 0.0035
+  Node 4 (Casa Loma): score = 0.0022
+  Node 5 (Rivoli): score = 0.0021
+  Node 6 (Toronto Islands): score = 0.0029
+  Node 7 (Distillery District): score = 0.0013
+After step: 8 nodes remaining
+
+=== Score Fusion ===
+  Root > Itinerary_Version 1 > Itinerary > Day 1 > St. Lawrence Market: product=0.0034 → score=0.0034
+  Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower: product=0.9897 → score=0.9897
+  Root > Itinerary_Version 1 > Itinerary > Day 1 > Art Gallery of Ontario: product=0.0083 → score=0.0083
+  Root > Itinerary_Version 1 > Itinerary > Day 2 > Royal Ontario Museum: product=0.0035 → score=0.0035
+  Root > Itinerary_Version 1 > Itinerary > Day 2 > Casa Loma: product=0.0022 → score=0.0022
+  Root > Itinerary_Version 1 > Itinerary > Day 2 > Rivoli: product=0.0021 → score=0.0021
+  Root > Itinerary_Version 1 > Itinerary > Day 3 > Toronto Islands: product=0.0029 → score=0.0029
+  Root > Itinerary_Version 1 > Itinerary > Day 3 > Distillery District: product=0.0013 → score=0.0013
+
+=== Final Filtering (threshold=0.01, top_k=10) ===
+  Filtered: 8 → 1 nodes
+
+Final result: 1 nodes (sorted by score)
+⏱️  Query execution time: 4687.49ms
+
+============================================================
+Score Fusion Summary:
+----------------------------------------
+
+Root > Itinerary_Version 1 > Itinerary > Day 1 > St. Lawrence Market (POI):
+  Step 4: atom(content =~ "CN Tower")
+    score=0.0034
+  Accumulated product: 0.0034
+  Final score: 0.0034
+
+Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower (POI):
+  Step 4: atom(content =~ "CN Tower")
+    score=0.9897
+  Accumulated product: 0.9897
+  Final score: 0.9897
+
+Root > Itinerary_Version 1 > Itinerary > Day 1 > Art Gallery of Ontario (POI):
+  Step 4: atom(content =~ "CN Tower")
+    score=0.0083
+  Accumulated product: 0.0083
+  Final score: 0.0083
+
+Root > Itinerary_Version 1 > Itinerary > Day 2 > Royal Ontario Museum (POI):
+  Step 4: atom(content =~ "CN Tower")
+    score=0.0035
+  Accumulated product: 0.0035
+  Final score: 0.0035
+
+Root > Itinerary_Version 1 > Itinerary > Day 2 > Casa Loma (POI):
+  Step 4: atom(content =~ "CN Tower")
+    score=0.0022
+  Accumulated product: 0.0022
+  Final score: 0.0022
+
+Root > Itinerary_Version 1 > Itinerary > Day 2 > Rivoli (POI):
+  Step 4: atom(content =~ "CN Tower")
+    score=0.0021
+  Accumulated product: 0.0021
+  Final score: 0.0021
+
+Root > Itinerary_Version 1 > Itinerary > Day 3 > Toronto Islands (POI):
+  Step 4: atom(content =~ "CN Tower")
+    score=0.0029
+  Accumulated product: 0.0029
+  Final score: 0.0029
+
+Root > Itinerary_Version 1 > Itinerary > Day 3 > Distillery District (POI):
+  Step 4: atom(content =~ "CN Tower")
+    score=0.0013
+  Accumulated product: 0.0013
+  Final score: 0.0013
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 8 nodes
+Threshold: 0.01
+Top-K: 10
+After: 1 nodes
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+
+1. Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower (score: 0.9897)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "CN Tower",
+  "time_block": "11:00 AM - 12:30 PM",
+  "description": "Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 43",
+  "highlights": [
+    "Glass floor",
+    "360 Restaurant",
+    "EdgeWalk"
+  ]
+}

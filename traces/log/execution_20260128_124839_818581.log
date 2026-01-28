@@ -1,13 +1,13 @@
-Query: /Root/Itinerary_Version[@number='1']/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+Query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "museum")]
 Data File: travel_memory_3day.xml
-Execution Time: 1026.26ms
+Execution Time: 6085.90ms
 ============================================================
 
 Execution Log:
 ----------------------------------------
-[20260127_131443_091042] Executing query: /Root/Itinerary_Version[@number='1']/Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+[20260128_124839_818581] Executing query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "museum")]
 Data file: travel_memory_3day.xml
-Parsed steps: [Root, Itinerary_Version[1], Itinerary, Day[agg_prev(POI[atom(content =~ "artistic")])], POI[atom(content =~ "museum")]]
+Parsed steps: [Root, Itinerary_Version[1], Itinerary, Day, POI[atom(content =~ "museum")]]
 
 --- Step 1: Root ---
 Matched Root root
@@ -22,15 +22,8 @@ After step: 1 nodes remaining
 Found 1 Itinerary nodes across 1 parent(s)
 After step: 1 nodes remaining
 
---- Step 4: Day[agg_prev(POI[atom(content =~ "artistic")])] ---
+--- Step 4: Day ---
 Found 3 Day nodes across 1 parent(s)
-Applying semantic predicate: agg_prev(POI[atom(content =~ "artistic")])
-Scoring predicate: agg_prev(POI[atom(content =~ "artistic")]) (atomic values: ['artistic'])
-  Collected 8 descriptions for 1 unique semantic value(s)
-  Made 1 scorer call(s) for 8 total descriptions
-  Node 0 (Day 1): score = 0.6960
-  Node 1 (Day 2): score = 0.9547
-  Node 2 (Day 3): score = 0.5825
 After step: 3 nodes remaining
 
 --- Step 5: POI[atom(content =~ "museum")] ---
@@ -63,7 +56,7 @@ After step: 8 nodes remaining
   Filtered: 8 → 7 nodes
 
 Final result: 7 nodes (sorted by score)
-⏱️  Query execution time: 1026.26ms
+⏱️  Query execution time: 6085.90ms
 
 ============================================================
 Score Fusion Summary:

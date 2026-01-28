@@ -1,0 +1,139 @@
+Query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "Royal Ontario Museum")]
+Data File: travel_memory_3day.xml
+Execution Time: 4160.05ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260128_131435_980002] Executing query: /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI[atom(content =~ "Royal Ontario Museum")]
+Data file: travel_memory_3day.xml
+Parsed steps: [Root, Itinerary_Version[1], Itinerary, Day, POI[atom(content =~ "Royal Ontario Museum")]]
+
+--- Step 1: Root ---
+Matched Root root
+
+--- Step 2: Itinerary_Version[1] ---
+Found 1 Itinerary_Version nodes across 1 parent(s)
+Applying positional index: [1]
+Selected node at index 1 (0-based: 0)
+After step: 1 nodes remaining
+
+--- Step 3: Itinerary ---
+Found 1 Itinerary nodes across 1 parent(s)
+After step: 1 nodes remaining
+
+--- Step 4: Day ---
+Found 3 Day nodes across 1 parent(s)
+After step: 3 nodes remaining
+
+--- Step 5: POI[atom(content =~ "Royal Ontario Museum")] ---
+Found 8 POI nodes across 3 parent(s)
+Applying semantic predicate: atom(content =~ "Royal Ontario Museum")
+Scoring predicate: atom(content =~ "Royal Ontario Museum") (atomic values: ['Royal Ontario Museum'])
+  Collected 8 descriptions for 1 unique semantic value(s)
+  Made 1 scorer call(s) for 8 total descriptions
+  Node 0 (St. Lawrence Market): score = 0.0032
+  Node 1 (CN Tower): score = 0.0016
+  Node 2 (Art Gallery of Ontario): score = 0.0026
+  Node 3 (Royal Ontario Museum): score = 0.9933
+  Node 4 (Casa Loma): score = 0.0016
+  Node 5 (Rivoli): score = 0.0017
+  Node 6 (Toronto Islands): score = 0.0015
+  Node 7 (Distillery District): score = 0.0013
+After step: 8 nodes remaining
+
+=== Score Fusion ===
+  Root > Itinerary_Version 1 > Itinerary > Day 1 > St. Lawrence Market: product=0.0032 → score=0.0032
+  Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower: product=0.0016 → score=0.0016
+  Root > Itinerary_Version 1 > Itinerary > Day 1 > Art Gallery of Ontario: product=0.0026 → score=0.0026
+  Root > Itinerary_Version 1 > Itinerary > Day 2 > Royal Ontario Museum: product=0.9933 → score=0.9933
+  Root > Itinerary_Version 1 > Itinerary > Day 2 > Casa Loma: product=0.0016 → score=0.0016
+  Root > Itinerary_Version 1 > Itinerary > Day 2 > Rivoli: product=0.0017 → score=0.0017
+  Root > Itinerary_Version 1 > Itinerary > Day 3 > Toronto Islands: product=0.0015 → score=0.0015
+  Root > Itinerary_Version 1 > Itinerary > Day 3 > Distillery District: product=0.0013 → score=0.0013
+
+=== Final Filtering (threshold=0.01, top_k=10) ===
+  Filtered: 8 → 1 nodes
+
+Final result: 1 nodes (sorted by score)
+⏱️  Query execution time: 4160.05ms
+
+============================================================
+Score Fusion Summary:
+----------------------------------------
+
+Root > Itinerary_Version 1 > Itinerary > Day 1 > St. Lawrence Market (POI):
+  Step 4: atom(content =~ "Royal Ontario Museum")
+    score=0.0032
+  Accumulated product: 0.0032
+  Final score: 0.0032
+
+Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower (POI):
+  Step 4: atom(content =~ "Royal Ontario Museum")
+    score=0.0016
+  Accumulated product: 0.0016
+  Final score: 0.0016
+
+Root > Itinerary_Version 1 > Itinerary > Day 1 > Art Gallery of Ontario (POI):
+  Step 4: atom(content =~ "Royal Ontario Museum")
+    score=0.0026
+  Accumulated product: 0.0026
+  Final score: 0.0026
+
+Root > Itinerary_Version 1 > Itinerary > Day 2 > Royal Ontario Museum (POI):
+  Step 4: atom(content =~ "Royal Ontario Museum")
+    score=0.9933
+  Accumulated product: 0.9933
+  Final score: 0.9933
+
+Root > Itinerary_Version 1 > Itinerary > Day 2 > Casa Loma (POI):
+  Step 4: atom(content =~ "Royal Ontario Museum")
+    score=0.0016
+  Accumulated product: 0.0016
+  Final score: 0.0016
+
+Root > Itinerary_Version 1 > Itinerary > Day 2 > Rivoli (POI):
+  Step 4: atom(content =~ "Royal Ontario Museum")
+    score=0.0017
+  Accumulated product: 0.0017
+  Final score: 0.0017
+
+Root > Itinerary_Version 1 > Itinerary > Day 3 > Toronto Islands (POI):
+  Step 4: atom(content =~ "Royal Ontario Museum")
+    score=0.0015
+  Accumulated product: 0.0015
+  Final score: 0.0015
+
+Root > Itinerary_Version 1 > Itinerary > Day 3 > Distillery District (POI):
+  Step 4: atom(content =~ "Royal Ontario Museum")
+    score=0.0013
+  Accumulated product: 0.0013
+  Final score: 0.0013
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 8 nodes
+Threshold: 0.01
+Top-K: 10
+After: 1 nodes
+
+============================================================
+Matched Nodes: 1
+----------------------------------------
+
+1. Root > Itinerary_Version 1 > Itinerary > Day 2 > Royal Ontario Museum (score: 0.9933)
+{
+  "type": "POI",
+  "attributes": {},
+  "name": "Royal Ontario Museum",
+  "time_block": "11:00 AM - 1:00 PM",
+  "description": "World-renowned museum showcasing art, culture, and natural history.",
+  "travel_method": "Walk",
+  "expected_cost": "CAD 23",
+  "highlights": [
+    "Dinosaurs",
+    "Chinese architecture",
+    "Bloor Street design"
+  ]
+}

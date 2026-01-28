@@ -1,0 +1,15 @@
+{
+  "user_query": "delete the CN Tower visit",
+  "candidates_count": 1,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower"
+  ],
+  "reasoning": "Selected CN Tower for deletion as it matches the user's request to delete the CN Tower visit. There are no other candidates to consider.",
+  "raw_response": "```json\n{\n  \"nodes_to_delete\": [\n    {\n      \"id\": \"1\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 1 > CN Tower\",\n      \"reasoning\": \"CN Tower exactly matches the user's deletion target by name and is the only candidate provided.\"\n    }\n  ],\n  \"reasoning\": \"Selected CN Tower for deletion as it matches the user's request to delete the CN Tower visit. There are no other candidates to consider.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1172,
+    "completion_tokens": 105,
+    "total_tokens": 1277
+  },
+  "processing_time_ms": 3027.1705419999985
+}

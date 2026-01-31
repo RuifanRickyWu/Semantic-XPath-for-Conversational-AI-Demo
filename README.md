@@ -597,13 +597,15 @@ agg_prev() = (0.8 + 0.7 + 0.6 + 0.3) / 4 = 2.4 / 4 = 0.6
 
 ### Logical Operators
 
-#### AND (Conjunction - Product)
+#### AND (Conjunction - Min)
 
 ```
 atom(content =~ "outdoor") AND atom(content =~ "historic")
 
-Score(u, ψ₁ ∧ ψ₂) = Score(u, ψ₁) × Score(u, ψ₂)
+Score(u, ψ₁ ∧ ψ₂) = min(Score(u, ψ₁), Score(u, ψ₂))
 ```
+
+Both conditions must be satisfied - the score is limited by the weakest match.
 
 #### OR (Disjunction - Max)
 
@@ -612,6 +614,16 @@ atom(content =~ "museum") OR atom(content =~ "gallery")
 
 Score(u, ψ₁ ∨ ψ₂) = max(Score(u, ψ₁), Score(u, ψ₂))
 ```
+
+#### NOT (Negation - Complement)
+
+```
+not(atom(content =~ "expensive"))
+
+Score(u, ¬ψ) = 1 - Score(u, ψ)
+```
+
+Inverts the score - high match becomes low, low match becomes high. Use for exclusion queries like "not work related" or "not expensive".
 
 ### Score Fusion Across Steps
 
@@ -667,6 +679,16 @@ This ensures:
 # Logical operators
 /Itinerary/Day/POI[atom(content =~ "outdoor") AND atom(content =~ "free")]
 /Itinerary/Day/POI[atom(content =~ "museum") OR atom(content =~ "gallery")]
+
+# Negation - exclude matches
+/Itinerary/Day/POI[not(atom(content =~ "expensive"))]
+/Itinerary/Day/POI[not(atom(content =~ "work related"))]
+
+# Combined AND with NOT
+/Itinerary/Day/POI[atom(content =~ "museum") AND not(atom(content =~ "expensive"))]
+
+# NOT with aggregation
+/Itinerary/Day[not(agg_exists(Restaurant[atom(content =~ "upscale")]))]
 
 # Aggregation-level AND/OR
 /Itinerary/Day[agg_exists(POI[atom(content =~ "museum")]) AND agg_exists(Restaurant[atom(content =~ "italian")])]
@@ -934,7 +956,7 @@ LLM-VM/
 ├── dense_xpath/
 │   ├── dense_xpath_executor.py      # Main executor with score fusion
 │   ├── models.py                    # AtomicPredicate, CompoundPredicate, etc.
-│   ├── parser.py                    # Query parser (atom/agg_exists/agg_prev/AND/OR)
+│   ├── parser.py                    # Query parser (atom/agg_exists/agg_prev/AND/OR/NOT)
 │   ├── predicate_handler.py         # Scoring + aggregation logic
 │   ├── node_utils.py                # XML node utilities
 │   ├── schema_loader.py             # Schema loading
@@ -990,6 +1012,7 @@ LLM-VM/
 | `atom()` | `atom(content =~ "X")` | Matching node's own content |
 | `agg_exists()` | `agg_exists(Child[atom(...)])` | Any child has property |
 | `agg_prev()` | `agg_prev(Child[atom(...)])` | Children generally have property |
+| `not()` | `not(atom(...))` | Excluding matches (negation) |
 
 ### Aggregation Formulas
 
@@ -998,8 +1021,9 @@ LLM-VM/
 | `atom()` | `Atom(u, φ) = Scorer(attr(u), φ)` | Local score |
 | `agg_exists()` | `Agg∃(A) = max(A)` | Max over children |
 | `agg_prev()` | `Aggprev(A) = mean(A)` | Average over children |
-| `AND` | `Score(u, ψ₁ ∧ ψ₂) = ∏` | Product of scores |
-| `OR` | `Score(u, ψ₁ ∨ ψ₂) = max` | Max of scores |
+| `AND` | `Score(u, ψ₁ ∧ ψ₂) = min(...)` | Min of scores |
+| `OR` | `Score(u, ψ₁ ∨ ψ₂) = max(...)` | Max of scores |
+| `NOT` | `Score(u, ¬ψ) = 1 - Score(u, ψ)` | Complement (inversion) |
 
 ### Example Queries
 
@@ -1018,6 +1042,15 @@ LLM-VM/
 
 # Days with both museum AND Italian restaurant
 /Itinerary/Version[-1]/Day[agg_exists(POI[atom(content =~ "museum")]) AND agg_exists(Restaurant[atom(content =~ "italian")])]
+
+# Find POIs that are NOT expensive
+/Itinerary/Version[-1]/Day/POI[not(atom(content =~ "expensive"))]
+
+# Find museums that are NOT expensive (AND + NOT)
+/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum") AND not(atom(content =~ "expensive"))]
+
+# Days without upscale restaurants (NOT with aggregation)
+/Itinerary/Version[-1]/Day[not(agg_exists(Restaurant[atom(content =~ "upscale")]))]
 
 # Query specific version by semantic search
 /Itinerary/Version[atom(content =~ "delete museum")]/Day/POI
@@ -1054,4 +1087,7 @@ pytest tests/
 
 # Run a single test
 pytest tests/test_query_generation.py -v
+
+# Run NOT and AND operator tests
+python tests/test_not_and_operators.py
 ```

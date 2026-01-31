@@ -1,0 +1,27 @@
+CRUD Operation: READ
+User Query: I'm putting together my expense report. Can you show me all the restaurants I've booked that are expensive or upscale?
+Full Query: 
+Timestamp: 20260130_133852_840682
+Success: True
+============================================================
+
+XPath Query: 
+
+=== READ Operation Results ===
+Candidates: 10
+Selected: 3
+
+Selected Nodes:
+----------------------------------------
+
+1. Buca Yorkville
+   Path: Root > Itinerary_Version 1 > Itinerary > Day 1 > Buca Yorkville
+   Description: Upscale Italian dining featuring traditional dishes with a modern twist....
+
+2. Cluny Bistro
+   Path: Root > Itinerary_Version 1 > Itinerary > Day 3 > Cluny Bistro
+   Description: French-inspired bistro serving classic and modern dishes....
+
+3. DaiLo
+   Path: Root > Itinerary_Version 1 > Itinerary > Day 2 > DaiLo
+   Description: Modern Asian-Canadian fusion cuisine with creative flavors....

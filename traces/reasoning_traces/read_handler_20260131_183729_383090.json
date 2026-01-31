@@ -1,0 +1,34 @@
+{
+  "user_query": "My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.",
+  "candidates_count": 4,
+  "selected_count": 2,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "9"
+        }
+      },
+      "reasoning": "Day 9 includes activities like shopping and dining, which are suitable for a day without work commitments or flights."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "8"
+        }
+      },
+      "reasoning": "Day 8 features a day trip to Niagara Falls, which is a leisure activity fitting the user's request for a day without work commitments."
+    }
+  ],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [\n    {\"id\": \"1\", \"reasoning\": \"Day 9 includes activities like shopping and dining, which are suitable for a day without work commitments or flights.\"},\n    {\"id\": \"2\", \"reasoning\": \"Day 8 features a day trip to Niagara Falls, which is a leisure activity fitting the user's request for a day without work commitments.\"}\n  ],\n  \"reasoning\": \"Selected days that include leisure activities without any indication of work commitments or flights. Day 9 offers shopping and dining, while Day 8 includes a day trip to Niagara Falls. Days 6 and 7 include POIs and restaurants but do not explicitly indicate a lack of work commitments or flights.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 942,
+    "completion_tokens": 154,
+    "total_tokens": 1096
+  },
+  "processing_time_ms": 2561.591374999999
+}

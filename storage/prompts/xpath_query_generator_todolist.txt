@@ -19,7 +19,7 @@ TodoList (root)
 
 Query Q := Step | Step / Query
 Step := NodeType [Predicate]
-Predicate := Predicate AND Predicate | Predicate OR Predicate | Atom | Agg
+Predicate := Predicate AND Predicate | Predicate OR Predicate | not(Predicate) | Atom | Agg
 Atom := atom(content =~ "value")
 Agg := agg_exists(ChildType[Predicate]) | agg_prev(ChildType[Predicate])
 
@@ -40,6 +40,11 @@ Agg := agg_exists(ChildType[Predicate]) | agg_prev(ChildType[Predicate])
 - Use when looking for nodes where children GENERALLY have a property
 - Example: Project[agg_prev(Task[atom(content =~ "urgent")])] → Projects that are generally urgent (most tasks are urgent)
 
+**not(Predicate)** - Logical negation
+- Inverts the truth value of the inner predicate
+- Use for exclusion queries ("not blocked", "not complete")
+- Example: Task[not(atom(content =~ "complete"))] → Tasks that are NOT complete
+
 ## Operator Selection Guide
 
 Ask: Does the predicate describe the node itself, or describe a parent via its children?
@@ -58,7 +63,7 @@ Rule: Containers (Project, Version) don't have intrinsic "blocked" or "urgent" a
 - Specific version: Version[2]; semantic: Version[atom(content =~ "login")]
 - Paths: /TodoList/Version[-1]/Project/Task/SubTask
 - Indices: Task[2], Task[-1], Task[1:3]
-- Logical: AND / OR combine predicates WITHIN brackets (e.g., [A OR B]), never between paths
+- Logical: AND / OR / not() combine predicates WITHIN brackets (e.g., [A OR B], [not(A)]), never between paths
 
 ## Output Formats
 
@@ -101,5 +106,11 @@ Output: Delete(/TodoList/Version[-1]/Project/Task[atom(content =~ "completed")])
 
 User: in version 2, show projects
 Output: Read(/TodoList/Version[2]/Project)
+
+User: tasks that are not blocked
+Output: Read(/TodoList/Version[-1]/Project/Task[not(atom(content =~ "blocked"))])
+
+User: incomplete tasks (not done)
+Output: Read(/TodoList/Version[-1]/Project/Task[not(atom(content =~ "complete"))])
 
 Now convert the following user request into a CRUD query.

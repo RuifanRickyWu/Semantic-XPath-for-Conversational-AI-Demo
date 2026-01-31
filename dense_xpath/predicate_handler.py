@@ -6,8 +6,9 @@ The Score function is defined recursively over predicate structure:
 
   Score(u, ψ) = {
     Atom(u, φ)                           if ψ = φ (atomic predicate)
-    Score(u, ψ₁) · Score(u, ψ₂)          if ψ = ψ₁ ∧ ψ₂ (conjunction)
+    min{Score(u, ψ₁), Score(u, ψ₂)}      if ψ = ψ₁ ∧ ψ₂ (conjunction)
     max{Score(u, ψ₁), Score(u, ψ₂)}      if ψ = ψ₁ ∨ ψ₂ (disjunction)
+    1 - Score(u, ψ)                      if ψ = ¬ψ (negation)
   }
 
 Atomic Predicate Evaluation - Atom(u, φ):
@@ -20,8 +21,9 @@ Aggregation Operators:
 
 Operator Mapping:
 - ATOM: Local atomic predicate - Atom(u, φ) from attr(u)
-- AND: Conjunction ψ₁ ∧ ψ₂ - product of scores
+- AND: Conjunction ψ₁ ∧ ψ₂ - min of scores
 - OR: Disjunction ψ₁ ∨ ψ₂ - max of scores
+- NOT: Negation ¬ψ - 1 minus score
 - AGG_EXISTS: Hierarchical with Agg∃ - max over children
 - AGG_PREV: Hierarchical with Aggprev - average over children
 
@@ -63,7 +65,8 @@ class PredicateHandler:
     Operator Scoring:
     - ATOM: Atom(u, φ) - local node content scoring
     - OR: max{Score(u, ψ₁), Score(u, ψ₂)} - disjunction
-    - AND: Score(u, ψ₁) · Score(u, ψ₂) - conjunction
+    - AND: min{Score(u, ψ₁), Score(u, ψ₂)} - conjunction
+    - NOT: 1 - Score(u, ψ) - negation
     - AGG_EXISTS: Agg∃({Atom(x, φ) | x ∈ Sφ(u)}) = max - existential
     - AGG_PREV: Aggprev({Atom(x, φ) | x ∈ Sφ(u)}) = avg - prevalence
     """
@@ -349,6 +352,13 @@ class PredicateHandler:
                 if isinstance(cond, CompoundPredicate):
                     self._collect_tasks_for_node(node, cond, tasks)
         
+        elif predicate.operator == "NOT":
+            # Negation: collect from inner predicate
+            if predicate.conditions:
+                for cond in predicate.conditions:
+                    if isinstance(cond, CompoundPredicate):
+                        self._collect_tasks_for_node(node, cond, tasks)
+        
         elif predicate.operator in ("AGG_EXISTS", "AGG_PREV"):
             # Hierarchical: collect from children AND their entire subtrees
             # for recursive bottom-up aggregation
@@ -547,8 +557,9 @@ class PredicateHandler:
         Paper Formalization - Score(u, ψ):
           Score(u, ψ) = {
             Atom(u, φ)                           if ψ = φ (atomic)
-            Score(u, ψ₁) · Score(u, ψ₂)          if ψ = ψ₁ ∧ ψ₂ (AND)
+            min{Score(u, ψ₁), Score(u, ψ₂)}      if ψ = ψ₁ ∧ ψ₂ (AND)
             max{Score(u, ψ₁), Score(u, ψ₂)}      if ψ = ψ₁ ∨ ψ₂ (OR)
+            1 - Score(u, ψ)                      if ψ = ¬ψ (NOT)
           }
         
         Args:
@@ -568,6 +579,9 @@ class PredicateHandler:
         
         elif predicate.operator == "AND":
             return self._score_and(node, predicate, trace_steps, execution_log)
+        
+        elif predicate.operator == "NOT":
+            return self._score_not(node, predicate, trace_steps, execution_log)
         
         elif predicate.operator == "AGG_EXISTS":
             return self._score_agg_exists(node, predicate, trace_steps, execution_log)
@@ -654,7 +668,7 @@ class PredicateHandler:
         """
         Score conjunction: ψ₁ ∧ ψ₂
         
-        Paper: Score(u, ψ₁ ∧ ψ₂) = Score(u, ψ₁) · Score(u, ψ₂)
+        Paper: Score(u, ψ₁ ∧ ψ₂) = min{Score(u, ψ₁), Score(u, ψ₂)}
         """
         child_scores = []
         
@@ -665,15 +679,46 @@ class PredicateHandler:
                 s = 0
             child_scores.append(s)
         
-        result = 1.0
-        for s in child_scores:
-            result *= s
+        result = min(child_scores) if child_scores else 0
         result = max(EPSILON, min(1 - EPSILON, result))
         
         trace_steps.append({
             "type": "and",
-            "formula": "Score(u, ψ₁) · Score(u, ψ₂)",
+            "formula": "min{Score(u, ψ_j)}",
             "child_scores": child_scores,
+            "result": result
+        })
+        
+        return result
+    
+    def _score_not(
+        self,
+        node: ET.Element,
+        predicate: CompoundPredicate,
+        trace_steps: List[Dict],
+        execution_log: List[str]
+    ) -> float:
+        """
+        Score negation: ¬ψ
+        
+        Paper: Score(u, ¬ψ) = 1 - Score(u, ψ)
+        """
+        if not predicate.conditions:
+            return 0
+        
+        inner_cond = predicate.conditions[0]
+        if isinstance(inner_cond, CompoundPredicate):
+            inner_score = self.score(node, inner_cond, [], execution_log)
+        else:
+            inner_score = 0
+        
+        result = 1 - inner_score
+        result = max(EPSILON, min(1 - EPSILON, result))
+        
+        trace_steps.append({
+            "type": "not",
+            "formula": "1 - Score(u, ψ)",
+            "inner_score": inner_score,
             "result": result
         })
         

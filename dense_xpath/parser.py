@@ -6,8 +6,9 @@ Paper Formalization Syntax:
 - Atomic: /POI[atom(content =~ "museum")] - local node scoring (Atom(u, φ))
 - Existential: /Day[agg_exists(POI[atom(...)])] - Agg∃ aggregation (max over children)
 - Prevalence: /Day[agg_prev(POI[atom(...)])] - Aggprev aggregation (avg over children)
-- Conjunction: atom(X) AND atom(Y) - ψ₁ ∧ ψ₂ (product of scores)
+- Conjunction: atom(X) AND atom(Y) - ψ₁ ∧ ψ₂ (min of scores)
 - Disjunction: atom(X) OR atom(Y) - ψ₁ ∨ ψ₂ (max of scores)
+- Negation: not(atom(X)) - ¬ψ (1 - score)
 - Global index: (/Itinerary/Day/POI)[5] or (/Itinerary/Day/POI)[1:3]
 """
 
@@ -29,7 +30,7 @@ class QueryParser:
     - Positional index: POI[2], POI[-1], POI[1:3]
     - Atomic predicates: POI[atom(content =~ "museum")] (Atom(u, φ))
     - Hierarchical predicates: Day[agg_exists(POI[atom(...)])], Day[agg_prev(POI[atom(...)])]
-    - Logical operators: atom(X) AND atom(Y), atom(X) OR atom(Y) (ψ₁ ∧ ψ₂, ψ₁ ∨ ψ₂)
+    - Logical operators: atom(X) AND atom(Y), atom(X) OR atom(Y), not(atom(X)) (ψ₁ ∧ ψ₂, ψ₁ ∨ ψ₂, ¬ψ)
     - Global indexing: (/Itinerary/Day/POI)[5]
     """
     
@@ -144,9 +145,9 @@ class QueryParser:
                 index = IndexRange(start=idx)
                 continue
             
-            # Check for predicates (atom, agg_exists, agg_prev, AND, OR)
+            # Check for predicates (atom, agg_exists, agg_prev, not, AND, OR)
             # Use _parse_logical_predicate which handles all combinations
-            if any(kw in bracket_content for kw in ['atom(', 'agg_exists(', 'agg_prev(']):
+            if any(kw in bracket_content for kw in ['atom(', 'agg_exists(', 'agg_prev(', 'not(']):
                 predicate = self._parse_logical_predicate(bracket_content)
                 predicate_str = bracket_content
                 continue
@@ -202,12 +203,13 @@ class QueryParser:
     
     def _parse_logical_predicate(self, pred_str: str) -> CompoundPredicate:
         """
-        Parse a predicate expression ψ that may contain AND/OR operators.
+        Parse a predicate expression ψ that may contain AND/OR/NOT operators.
         
         Paper Formalization - Score(u, ψ):
         - atom(content =~ "value") → Atom(u, φ)
-        - ψ₁ AND ψ₂ → Score(u, ψ₁) · Score(u, ψ₂)
+        - ψ₁ AND ψ₂ → min{Score(u, ψ₁), Score(u, ψ₂)}
         - ψ₁ OR ψ₂ → max{Score(u, ψ₁), Score(u, ψ₂)}
+        - not(ψ) → 1 - Score(u, ψ)
         - agg_exists(Type[ψ]) → Agg∃({Atom(x, φ) | x ∈ Sφ(u)})
         - agg_prev(Type[ψ]) → Aggprev({Atom(x, φ) | x ∈ Sφ(u)})
         """
@@ -224,6 +226,12 @@ class QueryParser:
         if len(or_parts) > 1:
             conditions = [self._parse_logical_predicate(p) for p in or_parts]
             return CompoundPredicate(operator="OR", conditions=conditions)
+        
+        # Check for NOT (negation: ¬ψ)
+        not_match = re.match(r'^not\s*\(\s*(.+)\s*\)$', pred_str, re.DOTALL)
+        if not_match:
+            inner = self._parse_logical_predicate(not_match.group(1).strip())
+            return CompoundPredicate(operator="NOT", conditions=[inner])
         
         # Check for agg_exists() aggregation (Agg∃ = max)
         agg_exists_match = re.match(r'^agg_exists\s*\(\s*(.+)\s*\)$', pred_str, re.DOTALL)

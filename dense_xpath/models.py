@@ -45,8 +45,9 @@ class CompoundPredicate:
     
     Paper Formalization - Score(u, ψ):
     - ATOM: Atomic predicate Atom(u, φ) - local node content scoring
-    - AND: Conjunction ψ₁ ∧ ψ₂ - Score(u, ψ₁) · Score(u, ψ₂)
+    - AND: Conjunction ψ₁ ∧ ψ₂ - min{Score(u, ψ₁), Score(u, ψ₂)}
     - OR: Disjunction ψ₁ ∨ ψ₂ - max{Score(u, ψ₁), Score(u, ψ₂)}
+    - NOT: Negation ¬ψ - 1 - Score(u, ψ)
     - AGG_EXISTS: Existential aggregation Agg∃ - max over children
     - AGG_PREV: Prevalence aggregation Aggprev - average over children
     
@@ -54,7 +55,7 @@ class CompoundPredicate:
     - atom() evaluates the node's OWN content (local)
     - agg_exists()/agg_prev() aggregate scores from CHILDREN (hierarchical)
     """
-    operator: str  # "ATOM", "AND", "OR", "AGG_EXISTS", "AGG_PREV"
+    operator: str  # "ATOM", "AND", "OR", "NOT", "AGG_EXISTS", "AGG_PREV"
     conditions: List[Union[AtomicPredicate, 'CompoundPredicate']] = field(default_factory=list)
     child_predicate: Optional['CompoundPredicate'] = None  # For AGG_EXISTS/AGG_PREV
     child_type: Optional[str] = None  # Target child node type for hierarchical predicates
@@ -66,6 +67,8 @@ class CompoundPredicate:
             return " AND ".join(str(c) for c in self.conditions)
         elif self.operator == "OR":
             return " OR ".join(str(c) for c in self.conditions)
+        elif self.operator == "NOT":
+            return f"not({self.conditions[0]})" if self.conditions else "not()"
         elif self.operator == "AGG_EXISTS":
             if self.child_type:
                 return f"agg_exists({self.child_type}[{self.child_predicate}])"
@@ -105,6 +108,14 @@ class CompoundPredicate:
                     values.extend(cond.get_all_atomic_values())
                 elif isinstance(cond, AtomicPredicate):
                     values.append(cond.value)
+        elif self.operator == "NOT":
+            # Recurse into the negated predicate
+            if self.conditions:
+                for cond in self.conditions:
+                    if isinstance(cond, CompoundPredicate):
+                        values.extend(cond.get_all_atomic_values())
+                    elif isinstance(cond, AtomicPredicate):
+                        values.append(cond.value)
         elif self.operator in ("AGG_EXISTS", "AGG_PREV"):
             if self.child_predicate:
                 values.extend(self.child_predicate.get_all_atomic_values())

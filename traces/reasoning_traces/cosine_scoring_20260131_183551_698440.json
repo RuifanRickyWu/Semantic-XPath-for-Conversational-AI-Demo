@@ -1,0 +1,125 @@
+{
+  "timestamp": "20260131_183551_698440",
+  "method": "cosine",
+  "model": "sentence-transformers/msmarco-distilbert-base-tas-b",
+  "embedding_dim": 768,
+  "predicate_template": "{predicate}",
+  "predicate": "gallery",
+  "query_text": "gallery",
+  "nodes": [
+    {
+      "id": "13333855904_main",
+      "type": "POI",
+      "name": "St. Lawrence Market",
+      "description": "name: St. Lawrence Market | time_block: 9:00 AM - 10:30 AM | description: Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery. |",
+      "text_for_embedding": "POI: St. Lawrence Market - name: St. Lawrence Market | time_block: 9:00 AM - 10:30 AM | description: Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery. | travel_method: Walk | expected_cost: CAD 10-15 | highlights: Fresh produce, Specialty foods, Local artisans",
+      "score": 0.6366747617721558
+    },
+    {
+      "id": "13333855024_main",
+      "type": "POI",
+      "name": "CN Tower",
+      "description": "name: CN Tower | time_block: 11:00 AM - 12:30 PM | description: Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck. | travel_method: Walk | expected_cost:",
+      "text_for_embedding": "POI: CN Tower - name: CN Tower | time_block: 11:00 AM - 12:30 PM | description: Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck. | travel_method: Walk | expected_cost: CAD 43 | highlights: Glass floor, 360 Restaurant, EdgeWalk",
+      "score": 0.6569675207138062
+    },
+    {
+      "id": "13163065152_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "name: Art Gallery of Ontario | time_block: 2:30 PM - 4:00 PM | description: Explore Canadian, European, and contemporary art in a Frank Gehry-designed building. | travel_method: Walk | expected_cost: ",
+      "text_for_embedding": "POI: Art Gallery of Ontario - name: Art Gallery of Ontario | time_block: 2:30 PM - 4:00 PM | description: Explore Canadian, European, and contemporary art in a Frank Gehry-designed building. | travel_method: Walk | expected_cost: CAD 25 | highlights: Group of Seven, Modern architecture",
+      "score": 0.7573508024215698
+    },
+    {
+      "id": "13333716480_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "name: Royal Ontario Museum | time_block: 11:00 AM - 1:00 PM | description: World-renowned museum showcasing art, culture, and natural history. | travel_method: Walk | expected_cost: CAD 23 | highlight",
+      "text_for_embedding": "POI: Royal Ontario Museum - name: Royal Ontario Museum | time_block: 11:00 AM - 1:00 PM | description: World-renowned museum showcasing art, culture, and natural history. | travel_method: Walk | expected_cost: CAD 23 | highlights: Dinosaurs, Chinese architecture, Bloor Street design",
+      "score": 0.7241543531417847
+    },
+    {
+      "id": "13333716000_main",
+      "type": "POI",
+      "name": "Casa Loma",
+      "description": "name: Casa Loma | time_block: 3:00 PM - 5:00 PM | description: Historic castle featuring secret passages, gardens, and panoramic views. | travel_method: Public Transit | expected_cost: CAD 30 | highli",
+      "text_for_embedding": "POI: Casa Loma - name: Casa Loma | time_block: 3:00 PM - 5:00 PM | description: Historic castle featuring secret passages, gardens, and panoramic views. | travel_method: Public Transit | expected_cost: CAD 30 | highlights: Castle architecture, City viewpoints",
+      "score": 0.6944791078567505
+    },
+    {
+      "id": "13333887072_main",
+      "type": "POI",
+      "name": "Rivoli",
+      "description": "name: Rivoli | time_block: 8:00 PM - 10:00 PM | description: Live music venue showcasing jazz, indie, and emerging artists. | travel_method: Walk | expected_cost: CAD 10-20 | highlights: Historic venu",
+      "text_for_embedding": "POI: Rivoli - name: Rivoli | time_block: 8:00 PM - 10:00 PM | description: Live music venue showcasing jazz, indie, and emerging artists. | travel_method: Walk | expected_cost: CAD 10-20 | highlights: Historic venue, Diverse genres",
+      "score": 0.6846624612808228
+    },
+    {
+      "id": "13333872528_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "name: Toronto Islands | time_block: 11:00 AM - 2:00 PM | description: Ferry ride to scenic islands with beaches, bike trails, and gardens. | travel_method: Walk & Ferry | expected_cost: CAD 8.50 | hig",
+      "text_for_embedding": "POI: Toronto Islands - name: Toronto Islands | time_block: 11:00 AM - 2:00 PM | description: Ferry ride to scenic islands with beaches, bike trails, and gardens. | travel_method: Walk & Ferry | expected_cost: CAD 8.50 | highlights: Waterfront views, Centre Island",
+      "score": 0.6518924236297607
+    },
+    {
+      "id": "13333870768_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "name: Distillery District | time_block: 4:00 PM - 5:30 PM | description: Historic pedestrian village with cobblestone streets and artisan shops. | travel_method: Walk | expected_cost: Free | highlight",
+      "text_for_embedding": "POI: Distillery District - name: Distillery District | time_block: 4:00 PM - 5:30 PM | description: Historic pedestrian village with cobblestone streets and artisan shops. | travel_method: Walk | expected_cost: Free | highlights: Historic architecture, Artisan boutiques",
+      "score": 0.6640464663505554
+    }
+  ],
+  "results": [
+    {
+      "node_id": "13333855904_main",
+      "node_type": "POI",
+      "score": 0.6366747617721558,
+      "reasoning": "Cosine similarity: 0.6367"
+    },
+    {
+      "node_id": "13333855024_main",
+      "node_type": "POI",
+      "score": 0.6569675207138062,
+      "reasoning": "Cosine similarity: 0.6570"
+    },
+    {
+      "node_id": "13163065152_main",
+      "node_type": "POI",
+      "score": 0.7573508024215698,
+      "reasoning": "Cosine similarity: 0.7574"
+    },
+    {
+      "node_id": "13333716480_main",
+      "node_type": "POI",
+      "score": 0.7241543531417847,
+      "reasoning": "Cosine similarity: 0.7242"
+    },
+    {
+      "node_id": "13333716000_main",
+      "node_type": "POI",
+      "score": 0.6944791078567505,
+      "reasoning": "Cosine similarity: 0.6945"
+    },
+    {
+      "node_id": "13333887072_main",
+      "node_type": "POI",
+      "score": 0.6846624612808228,
+      "reasoning": "Cosine similarity: 0.6847"
+    },
+    {
+      "node_id": "13333872528_main",
+      "node_type": "POI",
+      "score": 0.6518924236297607,
+      "reasoning": "Cosine similarity: 0.6519"
+    },
+    {
+      "node_id": "13333870768_main",
+      "node_type": "POI",
+      "score": 0.6640464663505554,
+      "reasoning": "Cosine similarity: 0.6640"
+    }
+  ]
+}

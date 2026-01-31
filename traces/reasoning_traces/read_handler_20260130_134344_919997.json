@@ -1,0 +1,34 @@
+{
+  "user_query": "I want to visit a friend outside of the city. i need to find a day where i have no work or flights",
+  "candidates_count": 10,
+  "selected_count": 2,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "8"
+        }
+      },
+      "reasoning": "Day 9 has no work or flights, only leisure activities like shopping and dining."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "7"
+        }
+      },
+      "reasoning": "Day 8 is a leisure day with a trip to Niagara Falls and dining, no work or flights."
+    }
+  ],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [\n    {\"id\": \"9\", \"reasoning\": \"Day 9 has no work or flights, only leisure activities like shopping and dining.\"},\n    {\"id\": \"8\", \"reasoning\": \"Day 8 is a leisure day with a trip to Niagara Falls and dining, no work or flights.\"}\n  ],\n  \"reasoning\": \"Days 9 and 8 are the only days without any work-related activities or flights, making them suitable for visiting a friend outside the city.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1462,
+    "completion_tokens": 113,
+    "total_tokens": 1575
+  },
+  "processing_time_ms": 3149.871791999999
+}

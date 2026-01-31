@@ -1,0 +1,27 @@
+{
+  "timestamp": "20260131_183405_842043",
+  "method": "cosine",
+  "model": "sentence-transformers/msmarco-distilbert-base-tas-b",
+  "embedding_dim": 768,
+  "predicate_template": "{predicate}",
+  "predicate": "museum",
+  "query_text": "museum",
+  "nodes": [
+    {
+      "id": "5310844816_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "name: Royal Ontario Museum | time_block: 11:00 AM - 1:00 PM | description: World-renowned museum showcasing art, culture, and natural history. | travel_method: Walk | expected_cost: CAD 23 | highlight",
+      "text_for_embedding": "POI: Royal Ontario Museum - name: Royal Ontario Museum | time_block: 11:00 AM - 1:00 PM | description: World-renowned museum showcasing art, culture, and natural history. | travel_method: Walk | expected_cost: CAD 23 | highlights: Dinosaurs, Chinese architecture, Bloor Street design",
+      "score": 0.7345327138900757
+    }
+  ],
+  "results": [
+    {
+      "node_id": "5310844816_main",
+      "node_type": "POI",
+      "score": 0.7345327138900757,
+      "reasoning": "Cosine similarity: 0.7345"
+    }
+  ]
+}

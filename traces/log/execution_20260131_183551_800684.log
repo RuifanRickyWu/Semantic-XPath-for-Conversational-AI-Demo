@@ -1,0 +1,101 @@
+Query: /Root/Itinerary_Version/Itinerary/Day[not(agg_exists(Restaurant[atom(content =~ "upscale")]))]
+Data File: travel_memory_3day.xml
+Execution Time: 387.41ms
+============================================================
+
+Execution Log:
+----------------------------------------
+[20260131_183551_800684] Executing query: /Root/Itinerary_Version/Itinerary/Day[not(agg_exists(Restaurant[atom(content =~ "upscale")]))]
+Data file: travel_memory_3day.xml
+Parsed steps: [Root, Itinerary_Version, Itinerary, Day[not(agg_exists(Restaurant[atom(content =~ "upscale")]))]]
+
+--- Step 1: Root ---
+Matched Root root
+
+--- Step 2: Itinerary_Version ---
+Found 1 Itinerary_Version nodes across 1 parent(s)
+After step: 1 nodes remaining
+
+--- Step 3: Itinerary ---
+Found 1 Itinerary nodes across 1 parent(s)
+After step: 1 nodes remaining
+
+--- Step 4: Day[not(agg_exists(Restaurant[atom(content =~ "upscale")]))] ---
+Found 3 Day nodes across 1 parent(s)
+Applying semantic predicate: not(agg_exists(Restaurant[atom(content =~ "upscale")]))
+Scoring predicate: not(agg_exists(Restaurant[atom(content =~ "upscale")])) (atomic values: ['upscale'])
+  Collected 10 descriptions for 1 unique semantic value(s)
+  Made 1 scorer call(s) for 10 total descriptions
+  Node 0 (Day 1): score = 0.2727
+  Node 1 (Day 2): score = 0.2906
+  Node 2 (Day 3): score = 0.3086
+After step: 3 nodes remaining
+
+=== Score Fusion ===
+  Root > Itinerary_Version 1 > Itinerary > Day 1: product=0.2727 → score=0.2727
+  Root > Itinerary_Version 1 > Itinerary > Day 2: product=0.2906 → score=0.2906
+  Root > Itinerary_Version 1 > Itinerary > Day 3: product=0.3086 → score=0.3086
+
+=== Final Filtering (threshold=0.0, top_k=10) ===
+  Filtered: 3 → 3 nodes
+
+Final result: 3 nodes (sorted by score)
+⏱️  Query execution time: 387.41ms
+
+============================================================
+Score Fusion Summary:
+----------------------------------------
+
+Root > Itinerary_Version 1 > Itinerary > Day 1 (Day):
+  Step 3: not(agg_exists(Restaurant[atom(content =~ "upscale")]))
+    score=0.2727
+  Accumulated product: 0.2727
+  Final score: 0.2727
+
+Root > Itinerary_Version 1 > Itinerary > Day 2 (Day):
+  Step 3: not(agg_exists(Restaurant[atom(content =~ "upscale")]))
+    score=0.2906
+  Accumulated product: 0.2906
+  Final score: 0.2906
+
+Root > Itinerary_Version 1 > Itinerary > Day 3 (Day):
+  Step 3: not(agg_exists(Restaurant[atom(content =~ "upscale")]))
+    score=0.3086
+  Accumulated product: 0.3086
+  Final score: 0.3086
+
+============================================================
+Final Filtering:
+----------------------------------------
+Before: 3 nodes
+Threshold: 0.0
+Top-K: 10
+After: 3 nodes
+
+============================================================
+Matched Nodes: 3
+----------------------------------------
+
+1. Root > Itinerary_Version 1 > Itinerary > Day 3 (score: 0.3086)
+{
+  "type": "Day",
+  "attributes": {
+    "index": "3"
+  }
+}
+
+2. Root > Itinerary_Version 1 > Itinerary > Day 2 (score: 0.2906)
+{
+  "type": "Day",
+  "attributes": {
+    "index": "2"
+  }
+}
+
+3. Root > Itinerary_Version 1 > Itinerary > Day 1 (score: 0.2727)
+{
+  "type": "Day",
+  "attributes": {
+    "index": "1"
+  }
+}

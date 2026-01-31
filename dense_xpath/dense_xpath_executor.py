@@ -187,7 +187,7 @@ class DenseXPathExecutor:
             node_type: The node type being filtered
             execution_log: Log for recording validation
         """
-        valid_operators = ("ATOM", "AGG_EXISTS", "AGG_PREV", "AND", "OR")
+        valid_operators = ("ATOM", "AGG_EXISTS", "AGG_PREV", "AND", "OR", "NOT")
         if predicate.operator not in valid_operators:
             raise ValueError(
                 f"Invalid predicate operator '{predicate.operator}' on '{node_type}'. "

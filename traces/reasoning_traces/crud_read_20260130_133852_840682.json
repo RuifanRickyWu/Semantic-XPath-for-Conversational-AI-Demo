@@ -1,0 +1,67 @@
+{
+  "timestamp": "20260130_133852_840682",
+  "operation": "READ",
+  "user_query": "I'm putting together my expense report. Can you show me all the restaurants I've booked that are expensive or upscale?",
+  "full_query": null,
+  "xpath_query": null,
+  "success": true,
+  "intent": null,
+  "reasoning_trace": null,
+  "operation_data": {
+    "candidates_count": 10,
+    "selected_count": 3,
+    "selected_nodes": [
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Buca Yorkville",
+        "time_block": "5:30 PM - 7:00 PM",
+        "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Handmade pasta",
+          "Elegant ambiance"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Buca Yorkville",
+        "reasoning": "Buca Yorkville is described as upscale with an expected cost of CAD 50-70, fitting the criteria for expensive or upscale restaurants."
+      },
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Cluny Bistro",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "French-inspired bistro serving classic and modern dishes.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Elegant decor",
+          "French pastries"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Cluny Bistro",
+        "reasoning": "Cluny Bistro is described as having elegant decor and an expected cost of CAD 50-70, fitting the criteria for expensive or upscale restaurants."
+      },
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "DaiLo",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-60",
+        "highlights": [
+          "Fusion menu",
+          "Trendy vibe"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > DaiLo",
+        "reasoning": "DaiLo offers modern fusion cuisine with a trendy vibe and an expected cost of CAD 50-60, fitting the criteria for expensive or upscale restaurants."
+      }
+    ]
+  },
+  "tree_version": null,
+  "summary": {
+    "operation": "READ",
+    "success": true,
+    "affected_count": 0
+  }
+}

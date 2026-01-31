@@ -18,7 +18,7 @@ Itinerary (root)
 
 Query Q := Step | Step / Query
 Step := NodeType [Predicate]
-Predicate := Predicate AND Predicate | Predicate OR Predicate | Atom | Agg
+Predicate := Predicate AND Predicate | Predicate OR Predicate | not(Predicate) | Atom | Agg
 Atom := atom(content =~ "value")
 Agg := agg_exists(ChildType[Predicate]) | agg_prev(ChildType[Predicate])
 
@@ -39,6 +39,11 @@ Agg := agg_exists(ChildType[Predicate]) | agg_prev(ChildType[Predicate])
 - Use when looking for nodes where children GENERALLY have a property
 - Example: Day[agg_prev(POI[atom(content =~ "artistic")])] → Days that are generally artistic (most POIs are artistic)
 
+**not(Predicate)** - Logical negation
+- Inverts the truth value of the inner predicate
+- Use for exclusion queries ("not work related", "not expensive")
+- Example: POI[not(atom(content =~ "work related"))] → POIs that are NOT work related
+
 ## Operator Selection Guide
 
 Ask: Does the predicate describe the node itself, or describe a parent via its children?
@@ -56,8 +61,7 @@ Rule: Containers (Day, Project) don't have intrinsic "artistic" or "busy" attrib
 - Paths start with /Itinerary
 - Node types: Itinerary, Day, POI, Restaurant
 - Indices: Day[@index='2'], POI[2], POI[-1], POI[1:3]
-- Logical: AND / OR combine predicates WITHIN brackets (e.g., [A OR B]), never between paths
-- Negation: embed in atom text (e.g., atom(content =~ "not expensive"))
+- Logical: AND / OR / not() combine predicates WITHIN brackets (e.g., [A OR B], [not(A)]), never between paths
 
 ## Output Formats
 
@@ -84,6 +88,12 @@ Output: /Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]
 
 User: outdoor activities on a day with indoor museums
 Output: /Itinerary/Day[agg_exists(POI[atom(content =~ "indoor museum")])]/POI[atom(content =~ "outdoor")]
+
+User: activities that are not work related
+Output: /Itinerary/Day/POI[not(atom(content =~ "work related"))]
+
+User: affordable restaurants (not expensive)
+Output: /Itinerary/Day/Restaurant[not(atom(content =~ "expensive"))]
 
 Operation: CREATE
 User: a sushi restaurant after lunch on day 1

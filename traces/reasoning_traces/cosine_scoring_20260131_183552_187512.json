@@ -1,0 +1,153 @@
+{
+  "timestamp": "20260131_183552_187512",
+  "method": "cosine",
+  "model": "sentence-transformers/msmarco-distilbert-base-tas-b",
+  "embedding_dim": 768,
+  "predicate_template": "{predicate}",
+  "predicate": "upscale",
+  "query_text": "upscale",
+  "nodes": [
+    {
+      "id": "13333855664_main",
+      "type": "Restaurant",
+      "name": "Queen Street Warehouse",
+      "description": "name: Queen Street Warehouse | time_block: 1:00 PM - 2:00 PM | description: Budget-friendly comfort food in a lively setting with a diverse menu. | travel_method: Walk | expected_cost: CAD 10-15 | hig",
+      "text_for_embedding": "Restaurant: Queen Street Warehouse - name: Queen Street Warehouse | time_block: 1:00 PM - 2:00 PM | description: Budget-friendly comfort food in a lively setting with a diverse menu. | travel_method: Walk | expected_cost: CAD 10-15 | highlights: Funky decor, Vibrant atmosphere",
+      "score": 0.7091839909553528
+    },
+    {
+      "id": "13163159776_main",
+      "type": "Restaurant",
+      "name": "Buca Yorkville",
+      "description": "name: Buca Yorkville | time_block: 5:30 PM - 7:00 PM | description: Upscale Italian dining featuring traditional dishes with a modern twist. | travel_method: Public Transit | expected_cost: CAD 50-70 ",
+      "text_for_embedding": "Restaurant: Buca Yorkville - name: Buca Yorkville | time_block: 5:30 PM - 7:00 PM | description: Upscale Italian dining featuring traditional dishes with a modern twist. | travel_method: Public Transit | expected_cost: CAD 50-70 | highlights: Handmade pasta, Elegant ambiance",
+      "score": 0.7272936701774597
+    },
+    {
+      "id": "13163160496_main",
+      "type": "Restaurant",
+      "name": "The Rex Hotel Jazz & Blues Bar",
+      "description": "name: The Rex Hotel Jazz & Blues Bar | time_block: 8:00 PM - 10:30 PM | description: Live jazz performances in a cozy, iconic Toronto venue. | travel_method: Walk | expected_cost: CAD 15 + drinks | hi",
+      "text_for_embedding": "Restaurant: The Rex Hotel Jazz & Blues Bar - name: The Rex Hotel Jazz & Blues Bar | time_block: 8:00 PM - 10:30 PM | description: Live jazz performances in a cozy, iconic Toronto venue. | travel_method: Walk | expected_cost: CAD 15 + drinks | highlights: Live jazz, Intimate atmosphere",
+      "score": 0.6758496761322021
+    },
+    {
+      "id": "13333716880_main",
+      "type": "Restaurant",
+      "name": "Pow Wow Cafe",
+      "description": "name: Pow Wow Cafe | time_block: 9:00 AM - 10:30 AM | description: Indigenous-inspired brunch featuring bannock tacos in Kensington Market. | travel_method: Public Transit | expected_cost: CAD 15-20 |",
+      "text_for_embedding": "Restaurant: Pow Wow Cafe - name: Pow Wow Cafe | time_block: 9:00 AM - 10:30 AM | description: Indigenous-inspired brunch featuring bannock tacos in Kensington Market. | travel_method: Public Transit | expected_cost: CAD 15-20 | highlights: Indigenous cuisine, Bohemian neighborhood",
+      "score": 0.7093530893325806
+    },
+    {
+      "id": "13333713280_main",
+      "type": "Restaurant",
+      "name": "Annona Restaurant",
+      "description": "name: Annona Restaurant | time_block: 1:30 PM - 2:30 PM | description: Sophisticated international cuisine in a bright, modern setting. | travel_method: Walk | expected_cost: CAD 30-40 | highlights: P",
+      "text_for_embedding": "Restaurant: Annona Restaurant - name: Annona Restaurant | time_block: 1:30 PM - 2:30 PM | description: Sophisticated international cuisine in a bright, modern setting. | travel_method: Walk | expected_cost: CAD 30-40 | highlights: Patio seating, Refined dishes",
+      "score": 0.7024437785148621
+    },
+    {
+      "id": "13333885712_main",
+      "type": "Restaurant",
+      "name": "DaiLo",
+      "description": "name: DaiLo | time_block: 6:00 PM - 7:30 PM | description: Modern Asian-Canadian fusion cuisine with creative flavors. | travel_method: Public Transit | expected_cost: CAD 50-60 | highlights: Fusion m",
+      "text_for_embedding": "Restaurant: DaiLo - name: DaiLo | time_block: 6:00 PM - 7:30 PM | description: Modern Asian-Canadian fusion cuisine with creative flavors. | travel_method: Public Transit | expected_cost: CAD 50-60 | highlights: Fusion menu, Trendy vibe",
+      "score": 0.6889278888702393
+    },
+    {
+      "id": "13333888272_main",
+      "type": "Restaurant",
+      "name": "Beauty Barbecue & Smokehouse",
+      "description": "name: Beauty Barbecue & Smokehouse | time_block: 9:00 AM - 10:30 AM | description: Hearty breakfast featuring smoked meats and classic comfort food. | travel_method: Walk | expected_cost: CAD 15-25 | ",
+      "text_for_embedding": "Restaurant: Beauty Barbecue & Smokehouse - name: Beauty Barbecue & Smokehouse | time_block: 9:00 AM - 10:30 AM | description: Hearty breakfast featuring smoked meats and classic comfort food. | travel_method: Walk | expected_cost: CAD 15-25 | highlights: Smoked meats, Casual atmosphere",
+      "score": 0.6905704140663147
+    },
+    {
+      "id": "13333871648_main",
+      "type": "Restaurant",
+      "name": "Amsterdam BrewHouse",
+      "description": "name: Amsterdam BrewHouse | time_block: 2:30 PM - 3:30 PM | description: Lakeside pub offering local craft beers and hearty meals. | travel_method: Walk | expected_cost: CAD 25-35 | highlights: Craft ",
+      "text_for_embedding": "Restaurant: Amsterdam BrewHouse - name: Amsterdam BrewHouse | time_block: 2:30 PM - 3:30 PM | description: Lakeside pub offering local craft beers and hearty meals. | travel_method: Walk | expected_cost: CAD 25-35 | highlights: Craft beer, Lake views",
+      "score": 0.6660658121109009
+    },
+    {
+      "id": "13333869728_main",
+      "type": "Restaurant",
+      "name": "Cluny Bistro",
+      "description": "name: Cluny Bistro | time_block: 6:00 PM - 7:30 PM | description: French-inspired bistro serving classic and modern dishes. | travel_method: Walk | expected_cost: CAD 50-70 | highlights: Elegant decor",
+      "text_for_embedding": "Restaurant: Cluny Bistro - name: Cluny Bistro | time_block: 6:00 PM - 7:30 PM | description: French-inspired bistro serving classic and modern dishes. | travel_method: Walk | expected_cost: CAD 50-70 | highlights: Elegant decor, French pastries",
+      "score": 0.6901588439941406
+    },
+    {
+      "id": "13333868928_main",
+      "type": "Restaurant",
+      "name": "Jazz Bistro",
+      "description": "name: Jazz Bistro | time_block: 8:00 PM - 10:30 PM | description: Renowned jazz club with intimate setting and excellent acoustics. | travel_method: Public Transit | expected_cost: CAD 15 + drinks | h",
+      "text_for_embedding": "Restaurant: Jazz Bistro - name: Jazz Bistro | time_block: 8:00 PM - 10:30 PM | description: Renowned jazz club with intimate setting and excellent acoustics. | travel_method: Public Transit | expected_cost: CAD 15 + drinks | highlights: Live jazz, Classic red piano",
+      "score": 0.6914135813713074
+    }
+  ],
+  "results": [
+    {
+      "node_id": "13333855664_main",
+      "node_type": "Restaurant",
+      "score": 0.7091839909553528,
+      "reasoning": "Cosine similarity: 0.7092"
+    },
+    {
+      "node_id": "13163159776_main",
+      "node_type": "Restaurant",
+      "score": 0.7272936701774597,
+      "reasoning": "Cosine similarity: 0.7273"
+    },
+    {
+      "node_id": "13163160496_main",
+      "node_type": "Restaurant",
+      "score": 0.6758496761322021,
+      "reasoning": "Cosine similarity: 0.6758"
+    },
+    {
+      "node_id": "13333716880_main",
+      "node_type": "Restaurant",
+      "score": 0.7093530893325806,
+      "reasoning": "Cosine similarity: 0.7094"
+    },
+    {
+      "node_id": "13333713280_main",
+      "node_type": "Restaurant",
+      "score": 0.7024437785148621,
+      "reasoning": "Cosine similarity: 0.7024"
+    },
+    {
+      "node_id": "13333885712_main",
+      "node_type": "Restaurant",
+      "score": 0.6889278888702393,
+      "reasoning": "Cosine similarity: 0.6889"
+    },
+    {
+      "node_id": "13333888272_main",
+      "node_type": "Restaurant",
+      "score": 0.6905704140663147,
+      "reasoning": "Cosine similarity: 0.6906"
+    },
+    {
+      "node_id": "13333871648_main",
+      "node_type": "Restaurant",
+      "score": 0.6660658121109009,
+      "reasoning": "Cosine similarity: 0.6661"
+    },
+    {
+      "node_id": "13333869728_main",
+      "node_type": "Restaurant",
+      "score": 0.6901588439941406,
+      "reasoning": "Cosine similarity: 0.6902"
+    },
+    {
+      "node_id": "13333868928_main",
+      "node_type": "Restaurant",
+      "score": 0.6914135813713074,
+      "reasoning": "Cosine similarity: 0.6914"
+    }
+  ]
+}

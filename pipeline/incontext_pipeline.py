@@ -44,21 +44,46 @@ def load_config() -> dict:
 
 
 @dataclass
+class NodeDiff:
+    """Represents a change to a single node (POI or Restaurant)."""
+    change_type: str  # "created", "deleted", "modified"
+    node_type: str    # "POI" or "Restaurant"
+    day: str          # Day index
+    name: str         # Node name
+    old_data: Optional[Dict[str, Any]] = None  # Full node data before
+    new_data: Optional[Dict[str, Any]] = None  # Full node data after
+    changed_fields: Optional[Dict[str, Dict[str, str]]] = None  # For modifications
+    
+    def to_dict(self) -> Dict[str, Any]:
+        result = {
+            "change_type": self.change_type,
+            "node_type": self.node_type,
+            "day": self.day,
+            "name": self.name
+        }
+        if self.old_data:
+            result["old_data"] = self.old_data
+        if self.new_data:
+            result["new_data"] = self.new_data
+        if self.changed_fields:
+            result["changed_fields"] = self.changed_fields
+        return result
+
+
+@dataclass
 class DiffResult:
-    """Result of comparing two XML trees."""
+    """Result of comparing two XML trees at the node level."""
     summary: str
-    additions: List[str]
-    deletions: List[str]
-    modifications: List[str]
-    unified_diff: str
+    created_nodes: List[NodeDiff]
+    deleted_nodes: List[NodeDiff]
+    modified_nodes: List[NodeDiff]
     
     def to_dict(self) -> Dict[str, Any]:
         return {
             "summary": self.summary,
-            "additions": self.additions,
-            "deletions": self.deletions,
-            "modifications": self.modifications,
-            "unified_diff": self.unified_diff
+            "created_nodes": [n.to_dict() for n in self.created_nodes],
+            "deleted_nodes": [n.to_dict() for n in self.deleted_nodes],
+            "modified_nodes": [n.to_dict() for n in self.modified_nodes]
         }
 
 
@@ -294,103 +319,143 @@ class IncontextPipeline:
     
     def _calculate_diff(self, original_xml: str, modified_xml: str) -> DiffResult:
         """
-        Calculate the difference between original and modified XML.
+        Calculate the difference between original and modified XML at the node level.
         
-        Uses difflib for unified diff and simple heuristics for 
-        categorizing changes as additions, deletions, or modifications.
+        Compares POI and Restaurant nodes, not individual lines.
         """
-        # Normalize XML for comparison (format consistently)
-        original_lines = self._normalize_xml(original_xml).splitlines(keepends=True)
-        modified_lines = self._normalize_xml(modified_xml).splitlines(keepends=True)
+        # Extract nodes from both trees
+        original_nodes = self._extract_nodes(original_xml)
+        modified_nodes = self._extract_nodes(modified_xml)
         
-        # Generate unified diff
-        diff = list(difflib.unified_diff(
-            original_lines, 
-            modified_lines,
-            fromfile='original',
-            tofile='modified',
-            lineterm=''
-        ))
-        unified_diff = "".join(diff)
+        created_nodes = []
+        deleted_nodes = []
+        modified_nodes_list = []
         
-        # Categorize changes
-        additions = []
-        deletions = []
-        modifications = []
+        # Build lookup by (day, node_type, name)
+        original_lookup = {(n['day'], n['type'], n['name']): n for n in original_nodes}
+        modified_lookup = {(n['day'], n['type'], n['name']): n for n in modified_nodes}
         
-        i = 0
-        while i < len(diff):
-            line = diff[i]
-            if line.startswith('-') and not line.startswith('---'):
-                # Check if this is a modification (paired with +)
-                if i + 1 < len(diff) and diff[i + 1].startswith('+') and not diff[i + 1].startswith('+++'):
-                    # This is a modification
-                    old_content = line[1:].strip()
-                    new_content = diff[i + 1][1:].strip()
-                    if old_content and new_content:
-                        modifications.append(f"{old_content} → {new_content}")
-                    i += 2
-                    continue
-                else:
-                    # Pure deletion
-                    content = line[1:].strip()
-                    if content and not content.startswith('<?'):
-                        deletions.append(content)
-            elif line.startswith('+') and not line.startswith('+++'):
-                # Pure addition
-                content = line[1:].strip()
-                if content and not content.startswith('<?'):
-                    additions.append(content)
-            i += 1
+        # Find deleted nodes (in original but not in modified)
+        for key, node in original_lookup.items():
+            if key not in modified_lookup:
+                deleted_nodes.append(NodeDiff(
+                    change_type="deleted",
+                    node_type=node['type'],
+                    day=node['day'],
+                    name=node['name'],
+                    old_data=node['data']
+                ))
+        
+        # Find created and modified nodes
+        for key, node in modified_lookup.items():
+            if key not in original_lookup:
+                # New node
+                created_nodes.append(NodeDiff(
+                    change_type="created",
+                    node_type=node['type'],
+                    day=node['day'],
+                    name=node['name'],
+                    new_data=node['data']
+                ))
+            else:
+                # Check for modifications
+                old_node = original_lookup[key]
+                changed_fields = {}
+                
+                for field in set(node['data'].keys()) | set(old_node['data'].keys()):
+                    old_val = old_node['data'].get(field)
+                    new_val = node['data'].get(field)
+                    if old_val != new_val:
+                        changed_fields[field] = {
+                            "from": old_val,
+                            "to": new_val
+                        }
+                
+                if changed_fields:
+                    modified_nodes_list.append(NodeDiff(
+                        change_type="modified",
+                        node_type=node['type'],
+                        day=node['day'],
+                        name=node['name'],
+                        old_data=old_node['data'],
+                        new_data=node['data'],
+                        changed_fields=changed_fields
+                    ))
         
         # Generate summary
         summary_parts = []
-        if additions:
-            summary_parts.append(f"{len(additions)} addition(s)")
-        if deletions:
-            summary_parts.append(f"{len(deletions)} deletion(s)")
-        if modifications:
-            summary_parts.append(f"{len(modifications)} modification(s)")
+        if created_nodes:
+            summary_parts.append(f"{len(created_nodes)} node(s) created")
+        if deleted_nodes:
+            summary_parts.append(f"{len(deleted_nodes)} node(s) deleted")
+        if modified_nodes_list:
+            summary_parts.append(f"{len(modified_nodes_list)} node(s) modified")
         summary = ", ".join(summary_parts) if summary_parts else "No changes detected"
         
         return DiffResult(
             summary=summary,
-            additions=additions[:10],  # Limit to avoid huge outputs
-            deletions=deletions[:10],
-            modifications=modifications[:10],
-            unified_diff=unified_diff
+            created_nodes=created_nodes,
+            deleted_nodes=deleted_nodes,
+            modified_nodes=modified_nodes_list
         )
     
-    def _normalize_xml(self, xml_string: str) -> str:
-        """Normalize XML string for consistent comparison."""
+    def _extract_nodes(self, xml_string: str) -> List[Dict[str, Any]]:
+        """Extract POI and Restaurant nodes from XML string."""
+        nodes = []
+        
         try:
-            # Parse and re-serialize for consistent formatting
-            root = ET.fromstring(f"<wrapper>{xml_string}</wrapper>")
-            # Use a simple indent approach
-            self._indent_element(root)
-            result = ET.tostring(root, encoding="unicode")
-            # Remove wrapper
-            result = result.replace("<wrapper>", "").replace("</wrapper>", "")
-            return result.strip()
-        except ET.ParseError:
-            # If parsing fails, just normalize whitespace
-            return re.sub(r'\s+', ' ', xml_string).strip()
+            # Wrap in a root if needed
+            if not xml_string.strip().startswith('<'):
+                return nodes
+            
+            # Try to parse - handle both full tree and just Days
+            try:
+                root = ET.fromstring(f"<wrapper>{xml_string}</wrapper>")
+            except ET.ParseError:
+                return nodes
+            
+            # Find all Day elements
+            for day_elem in root.iter('Day'):
+                day_index = day_elem.get('index', '?')
+                
+                # Extract POIs
+                for poi in day_elem.findall('POI'):
+                    node_data = self._element_to_dict(poi)
+                    nodes.append({
+                        'type': 'POI',
+                        'day': day_index,
+                        'name': node_data.get('name', 'Unknown'),
+                        'data': node_data
+                    })
+                
+                # Extract Restaurants
+                for restaurant in day_elem.findall('Restaurant'):
+                    node_data = self._element_to_dict(restaurant)
+                    nodes.append({
+                        'type': 'Restaurant',
+                        'day': day_index,
+                        'name': node_data.get('name', 'Unknown'),
+                        'data': node_data
+                    })
+        
+        except Exception:
+            pass
+        
+        return nodes
     
-    def _indent_element(self, elem: ET.Element, level: int = 0):
-        """Add indentation to XML element for pretty printing."""
-        indent = "\n" + "  " * level
-        if len(elem):
-            if not elem.text or not elem.text.strip():
-                elem.text = indent + "  "
-            if not elem.tail or not elem.tail.strip():
-                elem.tail = indent
-            for child in elem:
-                self._indent_element(child, level + 1)
-            if not child.tail or not child.tail.strip():
-                child.tail = indent
-        else:
-            if level and (not elem.tail or not elem.tail.strip()):
-                elem.tail = indent
+    def _element_to_dict(self, elem: ET.Element) -> Dict[str, Any]:
+        """Convert an XML element to a dictionary."""
+        result = {}
+        
+        for child in elem:
+            if child.tag == 'highlights':
+                result['highlights'] = [h.text.strip() for h in child if h.text]
+            elif len(child) == 0:
+                result[child.tag] = child.text.strip() if child.text else ''
+            else:
+                result[child.tag] = self._element_to_dict(child)
+        
+        return result
     
     def _update_stats(self, operation: str, usage: TokenUsage):
         """Update session statistics."""

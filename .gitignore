@@ -2,3 +2,5 @@
 .idea
 *.pyc
 *.ipynb
+.env
+experiment_results/

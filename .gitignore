@@ -5,3 +5,5 @@
 .env
 experiment_results/
 test_notebook.ipynb
+*.log
+*.json

@@ -328,6 +328,7 @@ class ExecutionResult:
     scoring_traces: List[Dict[str, Any]] = field(default_factory=list)
     traversal_steps: List[TraversalStep] = field(default_factory=list)
     execution_time_ms: float = 0.0  # Total query execution time in milliseconds
+    token_usage: Optional[Dict[str, int]] = None  # Aggregated token usage
     data_file: str = ""  # Name of the data file used
     
     # Detailed scoring and fusion traces

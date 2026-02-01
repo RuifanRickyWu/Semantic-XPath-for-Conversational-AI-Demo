@@ -27,6 +27,7 @@ class BatchScoringResult:
     predicate: str
     results: List[ScoringResult]
     metadata: Dict[str, Any] = None
+    token_usage: Dict[str, int] = None
     
     def __post_init__(self):
         if self.metadata is None:

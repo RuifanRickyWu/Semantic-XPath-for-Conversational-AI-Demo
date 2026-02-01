@@ -90,12 +90,14 @@ Output JSON array with objects containing: id, score, reasoning"""
         
         # Call LLM
         try:
-            response = self.client.complete(
+            result = self.client.complete_with_usage(
                 user_prompt,
                 system_prompt=self.system_prompt,
                 temperature=0.1,
                 max_tokens=2048
             )
+            
+            response = result.content
             
             # Parse response
             results = self._parse_response(response, nodes, predicate)
@@ -107,7 +109,8 @@ Output JSON array with objects containing: id, score, reasoning"""
             return BatchScoringResult(
                 predicate=predicate,
                 results=results,
-                metadata={"raw_response": response}
+                metadata={"raw_response": response},
+                token_usage=result.usage.to_dict()
             )
             
         except Exception as e:

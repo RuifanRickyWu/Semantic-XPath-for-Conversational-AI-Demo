@@ -405,6 +405,14 @@ class DenseXPathExecutor:
         execution_log.append(f"\nFinal result: {len(matched_nodes)} nodes (sorted by score)")
         execution_log.append(f"⏱️  Query execution time: {execution_time_ms:.2f}ms")
         
+        # Calculate aggregated token usage
+        total_token_usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+        for trace in scoring_traces:
+            if "token_usage" in trace and trace["token_usage"]:
+                usage = trace["token_usage"]
+                for k in total_token_usage:
+                    total_token_usage[k] += usage.get(k, 0)
+        
         result = ExecutionResult(
             query=query,
             matched_nodes=matched_nodes,
@@ -414,7 +422,8 @@ class DenseXPathExecutor:
             execution_time_ms=execution_time_ms,
             data_file=self._memory_path.name,
             score_fusion_trace=score_fusion_trace,
-            final_filtering_trace=final_filtering_trace
+            final_filtering_trace=final_filtering_trace,
+            token_usage=total_token_usage if total_token_usage["total_tokens"] > 0 else None
         )
         
         # Save traces

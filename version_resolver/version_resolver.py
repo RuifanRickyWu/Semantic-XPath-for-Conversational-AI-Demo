@@ -17,7 +17,7 @@ import re
 import logging
 from pathlib import Path
 from enum import Enum
-from typing import Optional
+from typing import Optional, Dict
 from dataclasses import dataclass
 import sys
 
@@ -54,6 +54,7 @@ class ResolvedVersion:
     index: Optional[int]
     crud_operation: CRUDOperation
     raw_response: str
+    token_usage: Optional[Dict[str, int]] = None
     
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
@@ -62,7 +63,8 @@ class ResolvedVersion:
             "semantic_query": self.semantic_query,
             "index": self.index,
             "crud_operation": self.crud_operation.value,
-            "raw_response": self.raw_response
+            "raw_response": self.raw_response,
+            "token_usage": self.token_usage
         }
     
     def get_version_selector_string(self) -> str:
@@ -146,20 +148,22 @@ class VersionResolver:
         """
         prompt = f"User: {user_query}"
         
-        response = self.client.complete(
+        result = self.client.complete_with_usage(
             prompt,
             system_prompt=self.system_prompt,
             temperature=0.1,
             max_tokens=256
         )
         
-        raw_response = response.strip()
+        raw_response = result.content.strip()
         
         # Clean up response
         if raw_response.lower().startswith("output:"):
             raw_response = raw_response[7:].strip()
         
-        return self._parse_response(raw_response)
+        resolved_version = self._parse_response(raw_response)
+        resolved_version.token_usage = result.usage.to_dict()
+        return resolved_version
     
     def _parse_response(self, response: str) -> ResolvedVersion:
         """

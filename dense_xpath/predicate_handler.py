@@ -511,6 +511,9 @@ class PredicateHandler:
             "total_descriptions_scored": 0
         }
         
+        # Track total token usage
+        total_token_usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+
         for semantic_value, tasks in scoring_tasks.items():
             if not tasks:
                 continue
@@ -519,6 +522,11 @@ class PredicateHandler:
             
             desc_dicts = [task[2] for task in tasks]
             batch_result = self.scorer.score_batch(desc_dicts, semantic_value)
+            
+            # Accumulate token usage if present
+            if hasattr(batch_result, "token_usage") and batch_result.token_usage:
+                for k in total_token_usage:
+                    total_token_usage[k] += batch_result.token_usage.get(k, 0)
             
             call_time_ms = (time.perf_counter() - start_time) * 1000
             
@@ -537,7 +545,10 @@ class PredicateHandler:
             batch_stats["total_scorer_calls"] += 1
             batch_stats["total_descriptions_scored"] += len(tasks)
         
+        # Store accumulated token usage in trace
         trace["batch_scoring"] = batch_stats
+        trace["token_usage"] = total_token_usage if total_token_usage["total_tokens"] > 0 else None
+        
         return batch_stats
     
     # =========================================================================

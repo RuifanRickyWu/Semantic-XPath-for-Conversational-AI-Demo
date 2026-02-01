@@ -228,8 +228,7 @@ class CRUDExecutor:
         # Stage 1: Version Resolution (LLM Call 1)
         timer.start("version_resolution")
         version_result = self.version_resolver.resolve(user_query)
-        # TODO: Add token tracking to version_resolver
-        timer.stop(token_usage=None)  # Token tracking to be added to VersionResolver
+        timer.stop(token_usage=version_result.token_usage)
         
         logger.info(f"Version resolved: {version_result.get_version_selector_string()}, {version_result.crud_operation.value}")
         print(f"\n🔍 Version: {version_result.get_version_selector_string()}")
@@ -260,8 +259,7 @@ class CRUDExecutor:
             user_query, 
             version_result.crud_operation
         )
-        # TODO: Add token tracking to query_generator
-        timer.stop(token_usage=None)  # Token tracking to be added to XPathQueryGenerator
+        timer.stop(token_usage=parsed_query.token_usage)
         
         logger.info(f"Generated XPath: {parsed_query.xpath}")
         print(f"🛤️  XPath: {parsed_query.xpath}")
@@ -270,7 +268,7 @@ class CRUDExecutor:
         timer.start("xpath_execution")
         xpath_query = self._build_version_xpath(parsed_query.xpath, target_version)
         execution_result = self.executor.execute(xpath_query)
-        timer.stop()
+        timer.stop(token_usage=execution_result.token_usage)
         
         # Get retrieved nodes as dicts
         retrieved_nodes = [m.to_dict() for m in execution_result.matched_nodes]
@@ -310,7 +308,8 @@ class CRUDExecutor:
             "xpath_execution": {
                 "query": execution_result.query,
                 "matched_count": len(execution_result.matched_nodes),
-                "execution_time_ms": execution_result.execution_time_ms
+                "execution_time_ms": execution_result.execution_time_ms,
+                "token_usage": execution_result.token_usage
             },
             "handler_result": handler_result.to_dict(),
             "timing": timer.to_dict()

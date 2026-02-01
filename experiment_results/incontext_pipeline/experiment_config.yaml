@@ -2,7 +2,7 @@ name: "incontext_pipeline"
 
 # Pipelines to run for each query
 pipelines:
-  - incontext
+  - semantic_xpath
 
 # Queries to run
 queries:

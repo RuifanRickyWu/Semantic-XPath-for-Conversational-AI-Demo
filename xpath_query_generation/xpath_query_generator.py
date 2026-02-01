@@ -52,13 +52,15 @@ class ParsedQuery:
     full_query: str
     create_info: Optional[Tuple[str, str, str]] = None  # (parent_path, node_type, description)
     update_info: Optional[Tuple[str, Dict[str, Any]]] = None  # (node_path, changes)
-    
+    token_usage: Optional[Dict[str, int]] = None
+
     def to_dict(self) -> Dict[str, Any]:
         """Serialize to dictionary."""
         result = {
             "operation": self.operation.value,
             "xpath": self.xpath,
-            "full_query": self.full_query
+            "full_query": self.full_query,
+            "token_usage": self.token_usage
         }
         if self.create_info:
             result["create_info"] = {
@@ -173,7 +175,7 @@ class XPathQueryGenerator:
         
         return prompt
     
-    def generate(self, user_request: str, operation: CRUDOperation = None) -> str:
+    def generate(self, user_request: str, operation: CRUDOperation = None) -> Tuple[str, Optional[Dict[str, int]]]:
         """
         Convert a user request into a semantic XPath query.
         
@@ -182,7 +184,7 @@ class XPathQueryGenerator:
             operation: Pre-determined CRUD operation (from VersionResolver)
             
         Returns:
-            XPath query string (path only, no operation prefix)
+            Tuple of (XPath query string, token_usage dict)
         """
         # Build prompt with operation hint if provided
         if operation:
@@ -190,12 +192,14 @@ class XPathQueryGenerator:
         else:
             prompt = f"User: {user_request}"
         
-        response = self.client.complete(
+        result = self.client.complete_with_usage(
             prompt,
             system_prompt=self.system_prompt,
             temperature=0.1,
             max_tokens=512
         )
+        
+        response = result.content
         
         # Clean up the response - extract just the query
         query = response.strip()
@@ -210,7 +214,7 @@ class XPathQueryGenerator:
             query = "\n".join(lines[1:-1] if lines[-1].startswith("```") else lines[1:])
             query = query.strip()
         
-        return query
+        return query, result.usage.to_dict()
     
     def generate_and_parse(
         self, 
@@ -226,14 +230,16 @@ class XPathQueryGenerator:
                       If None, will try to infer from the query output.
             
         Returns:
-            ParsedQuery with operation type and parsed components
+            ParsedQuery with operation type, parsed components, and token usage
         """
-        xpath_query = self.generate(user_request, operation)
+        xpath_query, token_usage = self.generate(user_request, operation)
         
         # Use provided operation or default to READ
         final_operation = operation if operation else CRUDOperation.READ
         
-        return self._parse_xpath(xpath_query, final_operation)
+        parsed_query = self._parse_xpath(xpath_query, final_operation)
+        parsed_query.token_usage = token_usage
+        return parsed_query
     
     def _parse_xpath(self, xpath: str, operation: CRUDOperation) -> ParsedQuery:
         """

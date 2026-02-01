@@ -1,0 +1,125 @@
+{
+  "query_index": 7,
+  "query": "I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.",
+  "operation": "DELETE",
+  "success": true,
+  "execution_time_ms": 8846.39,
+  "token_usage": {
+    "prompt_tokens": 3386,
+    "completion_tokens": 151,
+    "total_tokens": 3537
+  },
+  "changes": [
+    {
+      "path": "Root > Itinerary_Version 3 > Itinerary > Day 10 > CN Tower EdgeWalk",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 3 > Itinerary > Day 10 > CN Tower EdgeWalk"
+      },
+      "new_node": null,
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260201_162307_188743",
+    "user_query": "I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.",
+    "operation": "DELETE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Delete",
+      "raw_response": "at([-1]), DELETE",
+      "token_usage": {
+        "prompt_tokens": 465,
+        "completion_tokens": 5,
+        "total_tokens": 470
+      }
+    },
+    "parsed_query": {
+      "operation": "Delete",
+      "xpath": "/Itinerary/Day/POI[atom(content =~ \"CN Tower\")]",
+      "full_query": "Delete(/Itinerary/Day/POI[atom(content =~ \"CN Tower\")])",
+      "token_usage": {
+        "prompt_tokens": 1195,
+        "completion_tokens": 16,
+        "total_tokens": 1211
+      }
+    },
+    "version_used": "3",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='3']/Itinerary/Day/POI[atom(content =~ \"CN Tower\")]",
+      "matched_count": 10,
+      "execution_time_ms": 5199.137800023891,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "DELETE",
+      "processing_time_ms": 2625.4101999802515,
+      "output": {
+        "nodes_to_delete": [
+          "Root > Itinerary_Version 3 > Itinerary > Day 10 > CN Tower EdgeWalk"
+        ],
+        "reasoning": "The user requested to remove any activities related to the CN Tower. The CN Tower EdgeWalk is the only activity directly associated with the CN Tower among the candidates. Other nodes do not mention the CN Tower and are unrelated to the user's request."
+      },
+      "token_usage": {
+        "prompt_tokens": 1726,
+        "completion_tokens": 130,
+        "total_tokens": 1856
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 539.58,
+          "token_usage": {
+            "prompt_tokens": 465,
+            "completion_tokens": 5,
+            "total_tokens": 470
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 464.79,
+          "token_usage": {
+            "prompt_tokens": 1195,
+            "completion_tokens": 16,
+            "total_tokens": 1211
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 5206.23
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 2631.25,
+          "token_usage": {
+            "prompt_tokens": 1726,
+            "completion_tokens": 130,
+            "total_tokens": 1856
+          }
+        }
+      ],
+      "total_time_ms": 8841.87,
+      "total_tokens": {
+        "prompt_tokens": 3386,
+        "completion_tokens": 151,
+        "total_tokens": 3537
+      },
+      "pipeline_total_ms": 8844.936799956486
+    },
+    "deleted_count": 1,
+    "deleted_paths": [
+      "Root > Itinerary_Version 3 > Itinerary > Day 10 > CN Tower EdgeWalk"
+    ],
+    "total_time_ms": 8844.936799956486
+  }
+}

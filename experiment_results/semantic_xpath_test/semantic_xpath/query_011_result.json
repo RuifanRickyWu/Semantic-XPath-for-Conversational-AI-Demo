@@ -1,0 +1,169 @@
+{
+  "query_index": 10,
+  "query": "I just noticed Day 2 has no breakfastâ€”my first meeting is at 9am and I'll be starving. Add a quick hotel breakfast before the meeting.",
+  "operation": "CREATE",
+  "success": true,
+  "execution_time_ms": 3890.97,
+  "token_usage": {
+    "prompt_tokens": 2947,
+    "completion_tokens": 188,
+    "total_tokens": 3135
+  },
+  "changes": [
+    {
+      "path": "Itinerary > Day 2/Restaurant",
+      "change_type": "created",
+      "old_node": null,
+      "new_node": {
+        "node_type": "Restaurant",
+        "fields": {
+          "name": "Hotel Breakfast Buffet",
+          "time_block": "7:30 AM - 8:30 AM",
+          "description": "Quick breakfast at the hotel buffet to start the day before the meeting.",
+          "travel_method": "Walk",
+          "expected_cost": "CAD 15-20",
+          "highlights": [
+            "Convenient location",
+            "Variety of options"
+          ]
+        }
+      },
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260201_162328_561737",
+    "user_query": "I just noticed Day 2 has no breakfastâ€”my first meeting is at 9am and I'll be starving. Add a quick hotel breakfast before the meeting.",
+    "operation": "CREATE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Create",
+      "raw_response": "at([-1]), CREATE",
+      "token_usage": {
+        "prompt_tokens": 472,
+        "completion_tokens": 5,
+        "total_tokens": 477
+      }
+    },
+    "parsed_query": {
+      "operation": "Create",
+      "xpath": "/Itinerary/Day[@index='2']",
+      "full_query": "Create(/Itinerary/Day[@index='2'], Restaurant, quick hotel breakfast before 9am meeting)",
+      "token_usage": {
+        "prompt_tokens": 1202,
+        "completion_tokens": 20,
+        "total_tokens": 1222
+      },
+      "create_info": {
+        "parent_path": "/Itinerary/Day[@index='2']",
+        "node_type": "Restaurant",
+        "description": "quick hotel breakfast before 9am meeting"
+      }
+    },
+    "version_used": "6",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='6']/Itinerary/Day[@index='2']",
+      "matched_count": 1,
+      "execution_time_ms": 0.40140002965927124,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "CREATE",
+      "processing_time_ms": 2531.1938000377268,
+      "output": {
+        "parent_path": "Itinerary > Day 2",
+        "position": 0,
+        "node_type": "Restaurant",
+        "fields": {
+          "name": "Hotel Breakfast Buffet",
+          "time_block": "7:30 AM - 8:30 AM",
+          "description": "Quick breakfast at the hotel buffet to start the day before the meeting.",
+          "travel_method": "Walk",
+          "expected_cost": "CAD 15-20",
+          "highlights": [
+            "Convenient location",
+            "Variety of options"
+          ]
+        },
+        "reasoning": "Position 0 places the breakfast before the 9AM meeting. Scheduled from 7:30-8:30AM to allow time to eat and walk to the meeting."
+      },
+      "token_usage": {
+        "prompt_tokens": 1273,
+        "completion_tokens": 163,
+        "total_tokens": 1436
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 399.39,
+          "token_usage": {
+            "prompt_tokens": 472,
+            "completion_tokens": 5,
+            "total_tokens": 477
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.03
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 944.52,
+          "token_usage": {
+            "prompt_tokens": 1202,
+            "completion_tokens": 20,
+            "total_tokens": 1222
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 3.17
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 2538.49,
+          "token_usage": {
+            "prompt_tokens": 1273,
+            "completion_tokens": 163,
+            "total_tokens": 1436
+          }
+        }
+      ],
+      "total_time_ms": 3885.59,
+      "total_tokens": {
+        "prompt_tokens": 2947,
+        "completion_tokens": 188,
+        "total_tokens": 3135
+      },
+      "pipeline_total_ms": 3889.3412000034004
+    },
+    "created_path": "Itinerary > Day 2/Restaurant",
+    "insertion_point": {
+      "parent_path": "Itinerary > Day 2",
+      "position": 0,
+      "reasoning": "Position 0 places the breakfast before the 9AM meeting. Scheduled from 7:30-8:30AM to allow time to eat and walk to the meeting."
+    },
+    "content_result": {
+      "success": true,
+      "node_type": "Restaurant",
+      "fields": {
+        "name": "Hotel Breakfast Buffet",
+        "time_block": "7:30 AM - 8:30 AM",
+        "description": "Quick breakfast at the hotel buffet to start the day before the meeting.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15-20",
+        "highlights": [
+          "Convenient location",
+          "Variety of options"
+        ]
+      }
+    },
+    "total_time_ms": 3889.3412000034004
+  }
+}

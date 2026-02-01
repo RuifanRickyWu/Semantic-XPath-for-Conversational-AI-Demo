@@ -1,0 +1,140 @@
+{
+  "query_index": 0,
+  "query": "My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.",
+  "operation": "READ",
+  "success": true,
+  "execution_time_ms": 27106.42,
+  "token_usage": {
+    "prompt_tokens": 3810,
+    "completion_tokens": 161,
+    "total_tokens": 3971
+  },
+  "selected_nodes": [
+    {
+      "type": "Day",
+      "attributes": {
+        "index": "9"
+      },
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+      "reasoning": "Day 9 has no work commitments or flights and includes leisure activities like brunch, shopping, and dinner."
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260201_162154_998617",
+    "user_query": "My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.",
+    "operation": "READ",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Read",
+      "raw_response": "at([-1]), READ",
+      "token_usage": {
+        "prompt_tokens": 465,
+        "completion_tokens": 5,
+        "total_tokens": 470
+      }
+    },
+    "parsed_query": {
+      "operation": "Read",
+      "xpath": "/Itinerary/Day[not(agg_exists(POI[atom(content =~ \"work\")])) AND not(agg_exists(POI[atom(content =~ \"flight\")]))]",
+      "full_query": "Read(/Itinerary/Day[not(agg_exists(POI[atom(content =~ \"work\")])) AND not(agg_exists(POI[atom(content =~ \"flight\")]))])",
+      "token_usage": {
+        "prompt_tokens": 1195,
+        "completion_tokens": 38,
+        "total_tokens": 1233
+      }
+    },
+    "version_used": "1",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[not(agg_exists(POI[atom(content =~ \"work\")])) AND not(agg_exists(POI[atom(content =~ \"flight\")]))]",
+      "matched_count": 4,
+      "execution_time_ms": 19042.681099963374,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "READ",
+      "processing_time_ms": 4053.7196999648586,
+      "output": {
+        "selected_nodes": [
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+            "node_data": {
+              "type": "Day",
+              "attributes": {
+                "index": "9"
+              }
+            },
+            "reasoning": "Day 9 has no work commitments or flights and includes leisure activities like brunch, shopping, and dinner."
+          }
+        ]
+      },
+      "token_usage": {
+        "prompt_tokens": 2150,
+        "completion_tokens": 118,
+        "total_tokens": 2268
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 1942.6,
+          "token_usage": {
+            "prompt_tokens": 465,
+            "completion_tokens": 5,
+            "total_tokens": 470
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 26.58
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 2030.87,
+          "token_usage": {
+            "prompt_tokens": 1195,
+            "completion_tokens": 38,
+            "total_tokens": 1233
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 19048.01
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 4054.44,
+          "token_usage": {
+            "prompt_tokens": 2150,
+            "completion_tokens": 118,
+            "total_tokens": 2268
+          }
+        }
+      ],
+      "total_time_ms": 27102.49,
+      "total_tokens": {
+        "prompt_tokens": 3810,
+        "completion_tokens": 161,
+        "total_tokens": 3971
+      },
+      "pipeline_total_ms": 27105.443000094965
+    },
+    "candidates_count": 4,
+    "selected_count": 1,
+    "selected_nodes": [
+      {
+        "type": "Day",
+        "attributes": {
+          "index": "9"
+        },
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+        "reasoning": "Day 9 has no work commitments or flights and includes leisure activities like brunch, shopping, and dinner."
+      }
+    ],
+    "total_time_ms": 27105.443000094965
+  }
+}

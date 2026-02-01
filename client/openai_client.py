@@ -1,15 +1,26 @@
+import os
 import yaml
 from pathlib import Path
 from typing import Tuple, Dict, Any
 from dataclasses import dataclass
 from openai import OpenAI
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
 def load_config() -> dict:
-    """Load configuration from config.yaml"""
+    """Load configuration from config.yaml with env var substitution."""
     config_path = Path(__file__).parent.parent / "config.yaml"
     with open(config_path, "r") as f:
-        return yaml.safe_load(f)
+        # Read file content
+        content = f.read()
+        
+    # Expand environment variables using os.path.expandvars
+    # This handles ${VAR} syntax
+    expanded_content = os.path.expandvars(content)
+    
+    return yaml.safe_load(expanded_content)
 
 
 @dataclass

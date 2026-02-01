@@ -269,17 +269,80 @@ class BaseHandler(ABC):
                             display_value += "..."
                         lines.append(f"    {field_name}: {display_value}")
             
-            # Children subtree
+            # Full subtree with all fields
             if children:
-                lines.append(f"    Children ({len(children)}):")
-                for child in children:
-                    child_type = child.get("type", "?")
-                    child_name = child.get("name", child.get("title", ""))
-                    lines.append(f"      - {child_type}: {child_name}")
+                lines.append(f"    Subtree ({len(children)} children):")
+                subtree_lines = self._format_subtree(children, indent=3)
+                lines.extend(subtree_lines)
             
             lines.append("")
         
         return "\n".join(lines)
+    
+    def _format_subtree(
+        self,
+        children: List[Dict[str, Any]],
+        indent: int = 2,
+        max_depth: int = 3
+    ) -> List[str]:
+        """
+        Recursively format a subtree with all fields and nested children.
+        
+        Args:
+            children: List of child node dictionaries (may contain nested 'children')
+            indent: Current indentation level (number of 2-space units)
+            max_depth: Maximum recursion depth to prevent excessive output
+            
+        Returns:
+            List of formatted lines
+        """
+        if max_depth <= 0:
+            return []
+        
+        lines = []
+        prefix = "  " * indent
+        
+        for child in children:
+            child_type = child.get("type", "?")
+            child_name = child.get("name", child.get("title", ""))
+            
+            # Node header with type and name
+            if child_name:
+                lines.append(f"{prefix}{child_type}: {child_name}")
+            else:
+                lines.append(f"{prefix}{child_type}")
+            
+            # Important fields (excluding type, children, attributes)
+            field_prefix = prefix + "  "
+            for field_name, field_value in child.items():
+                if field_name in ("type", "children", "attributes", "name", "title"):
+                    continue
+                if field_value:
+                    if isinstance(field_value, list):
+                        # Truncate long lists
+                        display_items = field_value[:5]
+                        display_value = ", ".join(str(v) for v in display_items)
+                        if len(field_value) > 5:
+                            display_value += f"... (+{len(field_value) - 5} more)"
+                        lines.append(f"{field_prefix}{field_name}: {display_value}")
+                    else:
+                        # Truncate long values
+                        display_value = str(field_value)[:150]
+                        if len(str(field_value)) > 150:
+                            display_value += "..."
+                        lines.append(f"{field_prefix}{field_name}: {display_value}")
+            
+            # Recursively format nested children
+            nested_children = child.get("children", [])
+            if nested_children:
+                nested_lines = self._format_subtree(
+                    nested_children,
+                    indent=indent + 1,
+                    max_depth=max_depth - 1
+                )
+                lines.extend(nested_lines)
+        
+        return lines
     
     def _make_llm_call(
         self,

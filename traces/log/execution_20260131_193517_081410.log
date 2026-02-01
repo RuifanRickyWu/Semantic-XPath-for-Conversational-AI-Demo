@@ -1,11 +1,11 @@
 Query: /Root/Itinerary_Version[@number='1']/Itinerary/Day[not(agg_exists(POI[atom(content =~ "work")])) AND not(agg_exists(POI[atom(content =~ "flight")]))]
 Data File: travel_toronto_10day.xml
-Execution Time: 8829.61ms
+Execution Time: 7509.69ms
 ============================================================
 
 Execution Log:
 ----------------------------------------
-[20260131_183717_990048] Executing query: /Root/Itinerary_Version[@number='1']/Itinerary/Day[not(agg_exists(POI[atom(content =~ "work")])) AND not(agg_exists(POI[atom(content =~ "flight")]))]
+[20260131_193517_081410] Executing query: /Root/Itinerary_Version[@number='1']/Itinerary/Day[not(agg_exists(POI[atom(content =~ "work")])) AND not(agg_exists(POI[atom(content =~ "flight")]))]
 Data file: travel_toronto_10day.xml
 Parsed steps: [Root, Itinerary_Version[1], Itinerary, Day[not(agg_exists(POI[atom(content =~ "work")])) AND not(agg_exists(POI[atom(content =~ "flight")]))]]
 
@@ -56,7 +56,7 @@ After step: 10 nodes remaining
   Filtered: 10 → 4 nodes
 
 Final result: 4 nodes (sorted by score)
-⏱️  Query execution time: 8829.61ms
+⏱️  Query execution time: 7509.69ms
 
 ============================================================
 Score Fusion Summary:

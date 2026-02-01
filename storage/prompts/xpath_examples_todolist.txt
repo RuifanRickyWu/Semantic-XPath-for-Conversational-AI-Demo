@@ -1,0 +1,43 @@
+## Examples
+
+User: urgent tasks
+Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "urgent")]
+
+User: all tasks in the frontend project
+Output: /TodoList/Version[-1]/Project[atom(content =~ "frontend")]/Task
+
+User: projects with incomplete tasks
+Output: /TodoList/Version[-1]/Project[agg_exists(Task[atom(content =~ "incomplete")])]
+
+User: blocked projects
+Output: /TodoList/Version[-1]/Project[agg_exists(Task[atom(content =~ "blocked")])]
+
+User: projects that are mostly complete
+Output: /TodoList/Version[-1]/Project[agg_prev(Task[atom(content =~ "complete")])]
+
+User: high priority tasks in projects with bugs
+Output: /TodoList/Version[-1]/Project[agg_exists(Task[atom(content =~ "bug")])]/Task[atom(content =~ "high priority")]
+
+User: high priority tasks in an urgent project
+Output: /TodoList/Version[-1]/Project[agg_prev(Task[atom(content =~ "urgent")])]/Task[atom(content =~ "high priority")]
+
+User: tasks that are not blocked
+Output: /TodoList/Version[-1]/Project/Task[not(atom(content =~ "blocked"))]
+
+User: incomplete tasks (not done)
+Output: /TodoList/Version[-1]/Project/Task[not(atom(content =~ "complete"))]
+
+User: in version 2, show projects
+Output: /TodoList/Version[2]/Project
+
+Operation: CREATE
+User: add a new task for implementing login
+Output: /TodoList/Version[-1]/Project[atom(content =~ "frontend")], Task, implement login page
+
+Operation: UPDATE
+User: mark the login task as completed
+Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "login")], status: completed
+
+Operation: DELETE
+User: delete all completed tasks
+Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "completed")]

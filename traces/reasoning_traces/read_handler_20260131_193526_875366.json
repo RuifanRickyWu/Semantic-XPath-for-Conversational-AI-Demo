@@ -1,0 +1,44 @@
+{
+  "user_query": "My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.",
+  "candidates_count": 4,
+  "selected_count": 3,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "9"
+        }
+      },
+      "reasoning": "Day 9 has no work commitments or flights, and includes leisure activities like brunch, shopping, and dinner."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "7"
+        }
+      },
+      "reasoning": "Day 7 is a leisure day with no work commitments or flights, featuring museum visits, dining, and a walking tour."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "6"
+        }
+      },
+      "reasoning": "Day 6 is a leisure day with no work commitments or flights, offering outdoor activities and dining options."
+    }
+  ],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [\n    {\"id\": \"1\", \"reasoning\": \"Day 9 has no work commitments or flights, and includes leisure activities like brunch, shopping, and dinner.\"},\n    {\"id\": \"3\", \"reasoning\": \"Day 7 is a leisure day with no work commitments or flights, featuring museum visits, dining, and a walking tour.\"},\n    {\"id\": \"4\", \"reasoning\": \"Day 6 is a leisure day with no work commitments or flights, offering outdoor activities and dining options.\"}\n  ],\n  \"reasoning\": \"The user is looking for a day without work commitments or flights. Days 6, 7, and 9 fit this criteria as they are filled with leisure activities and dining, with no mention of work or flights. Day 8 is excluded because it involves a full-day trip to Niagara Falls, which may not align with the user's preference for staying closer to Mississauga or downtown.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 2150,
+    "completion_tokens": 205,
+    "total_tokens": 2355
+  },
+  "processing_time_ms": 2282.5001660000003
+}

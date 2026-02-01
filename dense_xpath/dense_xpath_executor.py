@@ -392,9 +392,9 @@ class DenseXPathExecutor:
             ]
         )
         
-        # Convert to result format
+        # Convert to result format with full subtree
         matched_nodes = [
-            NodeUtils.node_to_matched(item.node, item.path, item.score) 
+            self._node_utils.node_to_matched(item.node, item.path, item.score) 
             for item in current_items
         ]
         

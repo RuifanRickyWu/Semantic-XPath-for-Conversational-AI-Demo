@@ -1,0 +1,48 @@
+## Grammar
+
+Query Q := Step | Step / Query
+Step := NodeType [Predicate]
+Predicate := Predicate AND Predicate | Predicate OR Predicate | not(Predicate) | Atom | Agg
+Atom := atom(content =~ "value")
+Agg := agg_exists(ChildType[Predicate]) | agg_prev(ChildType[Predicate])
+
+## Operators
+
+**atom(content =~ "value")** - Semantic match on the node's own content
+- Evaluates whether the node's attributes/description match the value
+- Use when predicate describes the node directly
+- Example: Node[atom(content =~ "keyword")] → Nodes matching keyword
+
+**agg_exists(ChildType[...])** - Existential aggregation over children
+- Returns true if ANY child of the specified type satisfies the inner predicate
+- Use when predicate describes a parent by what it CONTAINS
+- Example: Parent[agg_exists(Child[atom(content =~ "property")])] → Parents containing children with property
+
+**agg_prev(ChildType[...])** - Prevalence aggregation over children
+- Returns a score based on what PROPORTION of children satisfy the predicate
+- Use when looking for nodes where children GENERALLY have a property
+- Example: Parent[agg_prev(Child[atom(content =~ "property")])] → Parents where most children have property
+
+**not(Predicate)** - Logical negation
+- Inverts the truth value of the inner predicate
+- Use for exclusion queries ("not X", "without Y")
+- Example: Node[not(atom(content =~ "excluded"))] → Nodes that are NOT excluded
+
+## Operator Selection Guide
+
+Ask: Does the predicate describe the node itself, or describe a parent via its children?
+
+| Pattern | Operator | Reasoning |
+|---------|----------|-----------|
+| Direct attribute/description | atom() | Describes the node directly |
+| "with X", "containing X" | agg_exists() | Parent contains at least one matching child |
+| "generally X", "mostly X" | agg_prev() | Parent where most children have the property |
+| "not X", "without X" | not() | Negation of inner predicate |
+
+Rule: Container nodes don't have intrinsic descriptive attributes - they derive these from their children. Use aggregation for container queries.
+
+## Output Formats
+
+- READ/DELETE: /path/to/nodes
+- CREATE: /parent/path, NodeType, description
+- UPDATE: /node/path, field: new_value

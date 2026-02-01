@@ -428,15 +428,47 @@ class NodeUtils:
         
         return children
     
-    @classmethod
     def node_to_matched(
+        self, 
+        node: ET.Element, 
+        tree_path: str, 
+        score: float = 1.0
+    ) -> MatchedNode:
+        """
+        Convert an XML node to a MatchedNode with tree context, full subtree, and score.
+        
+        Uses schema-aware field extraction and recursive subtree collection
+        to provide complete node information to downstream handlers.
+        
+        Args:
+            node: XML element to convert
+            tree_path: Full path in tree (e.g., "Root > Day 1 > POI")
+            score: Semantic matching score
+            
+        Returns:
+            MatchedNode with node data and full recursive subtree
+        """
+        node_data = self.node_to_dict_schema_aware(node)
+        children = self.get_full_subtree(node)
+        
+        return MatchedNode(
+            node_data=node_data,
+            tree_path=tree_path,
+            children=children,
+            score=score
+        )
+    
+    @classmethod
+    def node_to_matched_basic(
         cls, 
         node: ET.Element, 
         tree_path: str, 
         score: float = 1.0
     ) -> MatchedNode:
         """
-        Convert an XML node to a MatchedNode with tree context, children, and score.
+        Convert an XML node to a MatchedNode with direct children only (legacy).
+        
+        Use node_to_matched() instance method for full subtree support.
         """
         node_data = cls.node_to_dict(node)
         children = cls.get_all_children(node)
@@ -492,4 +524,4 @@ get_node_name = NodeUtils.get_node_name
 get_subtree_descriptions = NodeUtils.get_subtree_descriptions
 node_to_dict = NodeUtils.node_to_dict
 get_all_children = NodeUtils.get_all_children
-node_to_matched = NodeUtils.node_to_matched
+node_to_matched_basic = NodeUtils.node_to_matched_basic  # Legacy: use NodeUtils instance for full subtree

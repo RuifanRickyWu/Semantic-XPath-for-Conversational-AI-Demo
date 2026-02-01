@@ -121,7 +121,7 @@ Determine the best insertion point and generate complete content for the new nod
             )
     
     def _format_context_nodes(self, nodes: List[Dict[str, Any]]) -> str:
-        """Format context nodes with children for placement context."""
+        """Format context nodes with full subtree for placement context."""
         if not nodes:
             return "No context nodes available."
         
@@ -143,15 +143,11 @@ Determine the best insertion point and generate complete content for the new nod
                     value = str(node_data[field_name])[:100]
                     lines.append(f"    {field_name}: {value}")
             
-            # Children with time info
+            # Full subtree with all fields for placement context
             if children:
-                lines.append(f"    Children ({len(children)}):")
-                for j, child in enumerate(children):
-                    child_type = child.get("type", "?")
-                    child_name = child.get("name", child.get("title", ""))
-                    child_time = child.get("time_block", "")
-                    time_str = f" ({child_time})" if child_time else ""
-                    lines.append(f"      [{j}] {child_type}: {child_name}{time_str}")
+                lines.append(f"    Subtree ({len(children)} children):")
+                subtree_lines = self._format_subtree(children, indent=3)
+                lines.extend(subtree_lines)
             
             lines.append("")
         

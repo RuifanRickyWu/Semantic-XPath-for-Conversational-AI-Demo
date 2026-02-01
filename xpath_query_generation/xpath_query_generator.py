@@ -21,7 +21,10 @@ from enum import Enum
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from client import get_client
-from dense_xpath.schema_loader import get_schema_info
+from dense_xpath.schema_loader import get_schema_info, get_schema_summary_for_prompt
+
+# Prompts directory
+_PROMPTS_DIR = Path(__file__).parent.parent / "storage" / "prompts"
 
 
 class CRUDOperation(Enum):
@@ -101,10 +104,9 @@ class XPathQueryGenerator:
         self._client = client
         self._system_prompt = None  # Lazy load
         
-        # Get schema info to determine prompt path
-        schema_info = get_schema_info(schema_name)
-        self._prompt_path = Path(schema_info["prompt_file"])
-        self._schema_name = schema_info["schema_name"]
+        # Get schema info for dynamic prompt composition
+        self._schema_info = get_schema_info(schema_name)
+        self._schema_name = self._schema_info["schema_name"]
     
     @property
     def client(self):
@@ -120,11 +122,56 @@ class XPathQueryGenerator:
     
     @property
     def system_prompt(self) -> str:
-        """Lazy load the system prompt from file."""
+        """Lazy load and compose the system prompt from template and components."""
         if self._system_prompt is None:
-            with open(self._prompt_path, "r") as f:
-                self._system_prompt = f.read()
+            self._system_prompt = self._compose_prompt()
         return self._system_prompt
+    
+    def _compose_prompt(self) -> str:
+        """
+        Compose the system prompt dynamically from template and components.
+        
+        Loads:
+        1. Master template (xpath_query_generator.txt)
+        2. Grammar file (xpath_grammar.txt)
+        3. Scenario-specific examples
+        4. Schema structure (generated from schema)
+        5. Syntax rules (from schema config)
+        
+        Returns:
+            Fully composed system prompt string
+        """
+        # Load master template
+        template_path = _PROMPTS_DIR / "xpath_query_generator.txt"
+        with open(template_path, "r") as f:
+            template = f.read()
+        
+        # Load grammar file
+        grammar_path = _PROMPTS_DIR / "xpath_grammar.txt"
+        with open(grammar_path, "r") as f:
+            grammar = f.read()
+        
+        # Load scenario-specific examples
+        examples_path = Path(self._schema_info["examples_file"])
+        with open(examples_path, "r") as f:
+            examples = f.read()
+        
+        # Generate schema structure from schema definition
+        schema_structure = get_schema_summary_for_prompt(self._schema_name)
+        
+        # Get syntax rules from schema config
+        syntax_rules = self._schema_info.get("syntax_rules", "").strip()
+        
+        # Substitute placeholders
+        prompt = template.format(
+            schema_name=self._schema_name,
+            schema_structure=schema_structure,
+            grammar=grammar,
+            syntax_rules=syntax_rules,
+            examples=examples
+        )
+        
+        return prompt
     
     def generate(self, user_request: str, operation: CRUDOperation = None) -> str:
         """

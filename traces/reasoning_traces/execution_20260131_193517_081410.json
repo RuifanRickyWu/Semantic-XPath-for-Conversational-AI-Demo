@@ -1,8 +1,8 @@
 {
-  "timestamp": "20260131_183717_990048",
+  "timestamp": "20260131_193517_081410",
   "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[not(agg_exists(POI[atom(content =~ \"work\")])) AND not(agg_exists(POI[atom(content =~ \"flight\")]))]",
   "data_file": "travel_toronto_10day.xml",
-  "execution_time_ms": 8829.6135,
+  "execution_time_ms": 7509.693584000001,
   "traversal_steps": [
     {
       "step_index": 0,
@@ -561,12 +561,12 @@
               {
                 "value": "work",
                 "num_descriptions": 21,
-                "call_time_ms": 8004.59
+                "call_time_ms": 6676.67
               },
               {
                 "value": "flight",
                 "num_descriptions": 21,
-                "call_time_ms": 820.71
+                "call_time_ms": 827.99
               }
             ],
             "total_scorer_calls": 2,
@@ -859,12 +859,12 @@
           {
             "value": "work",
             "num_descriptions": 21,
-            "call_time_ms": 8004.59
+            "call_time_ms": 6676.67
           },
           {
             "value": "flight",
             "num_descriptions": 21,
-            "call_time_ms": 820.71
+            "call_time_ms": 827.99
           }
         ],
         "total_scorer_calls": 2,
@@ -1374,6 +1374,7 @@
       "children": [
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Lady Marmalade",
           "time_block": "9:00 AM - 10:30 AM",
           "description": "Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.",
@@ -1386,6 +1387,7 @@
         },
         {
           "type": "POI",
+          "attributes": {},
           "name": "Eaton Centre Shopping",
           "time_block": "11:00 AM - 1:30 PM",
           "description": "Major downtown shopping mall with hundreds of stores. Indoor shopping for souvenirs, clothing, and gifts. Climate-controlled and convenient.",
@@ -1399,6 +1401,7 @@
         },
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Urban Eatery Food Court",
           "time_block": "1:30 PM - 2:15 PM",
           "description": "Food court in Eaton Centre with diverse quick options. Fast and convenient but generic mall food.",
@@ -1411,6 +1414,7 @@
         },
         {
           "type": "POI",
+          "attributes": {},
           "name": "Queen Street West Boutiques",
           "time_block": "3:00 PM - 5:00 PM",
           "description": "Eclectic shopping district with independent boutiques, vintage stores, and Canadian designers. Outdoor walking and browsing experience.",
@@ -1424,6 +1428,7 @@
         },
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Bar Isabel",
           "time_block": "7:30 PM - 9:30 PM",
           "description": "Spanish tapas bar with lively atmosphere. Great for sharing plates and celebrating. Intimate and buzzy.",
@@ -1448,6 +1453,7 @@
       "children": [
         {
           "type": "POI",
+          "attributes": {},
           "name": "Niagara Falls Day Trip",
           "time_block": "8:00 AM - 6:00 PM",
           "description": "Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.",
@@ -1462,6 +1468,7 @@
         },
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Elements on the Falls",
           "time_block": "1:00 PM - 2:00 PM",
           "description": "Dining with direct view of Niagara Falls. Tourist location but unbeatable views. Part of the day trip package.",
@@ -1474,6 +1481,7 @@
         },
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Antler Kitchen",
           "time_block": "8:00 PM - 9:30 PM",
           "description": "Canadian game meat restaurant featuring locally sourced venison, bison, and seasonal ingredients. Unique dining experience with rustic atmosphere.",
@@ -1498,6 +1506,7 @@
       "children": [
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Fran's Restaurant",
           "time_block": "8:30 AM - 9:30 AM",
           "description": "Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.",
@@ -1510,6 +1519,7 @@
         },
         {
           "type": "POI",
+          "attributes": {},
           "name": "Royal Ontario Museum",
           "time_block": "10:00 AM - 12:30 PM",
           "description": "World-renowned museum showcasing art, culture, and natural history. Indoor cultural experience with dinosaurs, gems, and world cultures exhibits.",
@@ -1523,6 +1533,7 @@
         },
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Eataly Toronto",
           "time_block": "12:30 PM - 1:30 PM",
           "description": "Italian marketplace and restaurant in Manulife Centre. Indoor dining with fresh pasta, pizza, and espresso. Great for rainy day lunch.",
@@ -1535,6 +1546,7 @@
         },
         {
           "type": "POI",
+          "attributes": {},
           "name": "Distillery District Walk",
           "time_block": "3:00 PM - 5:00 PM",
           "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
@@ -1548,6 +1560,7 @@
         },
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Cluny Bistro",
           "time_block": "7:00 PM - 9:00 PM",
           "description": "French-inspired bistro in the Distillery District. Romantic and intimate atmosphere with classic dishes and excellent wine list.",
@@ -1572,6 +1585,7 @@
       "children": [
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Sunset Grill",
           "time_block": "9:00 AM - 10:00 AM",
           "description": "Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.",
@@ -1584,6 +1598,7 @@
         },
         {
           "type": "POI",
+          "attributes": {},
           "name": "Toronto Islands Ferry and Bike Ride",
           "time_block": "10:30 AM - 1:30 PM",
           "description": "Ferry ride to Toronto Islands followed by bike rental and exploration. Outdoor nature activity with beaches, gardens, and stunning skyline views. Perfect for families and kids.",
@@ -1598,6 +1613,7 @@
         },
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "Island Cafe Picnic Lunch",
           "time_block": "1:30 PM - 2:30 PM",
           "description": "Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.",
@@ -1610,6 +1626,7 @@
         },
         {
           "type": "POI",
+          "attributes": {},
           "name": "Ripley's Aquarium",
           "time_block": "3:30 PM - 5:30 PM",
           "description": "World-class aquarium with underwater tunnel and interactive exhibits. Indoor family attraction perfect for kids. Sharks, jellyfish, and touch tanks.",
@@ -1623,6 +1640,7 @@
         },
         {
           "type": "Restaurant",
+          "attributes": {},
           "name": "The Keg Steakhouse",
           "time_block": "7:00 PM - 8:30 PM",
           "description": "Classic steakhouse with something for everyone. Family-friendly atmosphere with reliable menu. Good for groups.",
@@ -1640,7 +1658,7 @@
     "total_steps": 6,
     "total_scoring_calls": 1,
     "matched_count": 4,
-    "execution_time_ms": 8829.6135,
+    "execution_time_ms": 7509.693584000001,
     "has_score_fusion": true,
     "num_nodes_before_filter": 10,
     "num_nodes_after_filter": 4

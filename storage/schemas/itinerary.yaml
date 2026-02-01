@@ -74,8 +74,15 @@ data_files:
 # Default data file to use
 default_data: "travel_memory_3day"
 
-# Associated prompt file for XPath query generation
-prompt_file: "prompts/xpath_query_generator_itinerary.txt"
+# XPath query generation prompt components
+examples_file: "prompts/xpath_examples_itinerary.txt"
+
+# Syntax rules specific to this schema
+syntax_rules: |
+  - Paths start with /Itinerary
+  - Node types: Itinerary, Day, POI, Restaurant
+  - Indices: Day[@index='2'], POI[2], POI[-1], POI[1:3]
+  - Logical: AND / OR / not() combine predicates WITHIN brackets (e.g., [A OR B], [not(A)]), never between paths
 
 # Associated prompt file for version resolution (new 2-stage approach)
 version_resolver_prompt: "prompts/version_resolver.txt"

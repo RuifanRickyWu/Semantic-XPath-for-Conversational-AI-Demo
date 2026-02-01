@@ -1,0 +1,37 @@
+## Examples
+
+User: museums
+Output: /Itinerary/Day/POI[atom(content =~ "museum")]
+
+User: restaurants on day 2
+Output: /Itinerary/Day[@index='2']/Restaurant
+
+User: museums in an artistic day
+Output: /Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+
+User: days with jazz activities
+Output: /Itinerary/Day[agg_exists(POI[atom(content =~ "jazz")])]
+
+User: days that are generally artistic
+Output: /Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]
+
+User: outdoor activities on a day with indoor museums
+Output: /Itinerary/Day[agg_exists(POI[atom(content =~ "indoor museum")])]/POI[atom(content =~ "outdoor")]
+
+User: activities that are not work related
+Output: /Itinerary/Day/POI[not(atom(content =~ "work related"))]
+
+User: affordable restaurants (not expensive)
+Output: /Itinerary/Day/Restaurant[not(atom(content =~ "expensive"))]
+
+Operation: CREATE
+User: a sushi restaurant after lunch on day 1
+Output: /Itinerary/Day[@index='1'], Restaurant, sushi restaurant after lunch
+
+Operation: UPDATE
+User: change the CN Tower visit to 2pm
+Output: /Itinerary/Day/POI[atom(content =~ "CN Tower")], time_block: 2:00 PM
+
+Operation: DELETE
+User: remove all expensive POIs
+Output: /Itinerary/Day/POI[atom(content =~ "expensive")]

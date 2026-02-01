@@ -130,6 +130,7 @@ Analyze each node and determine which ones should be updated. For each update, p
             node_data = node.get("node", {})
             node_type = node_data.get("type", "Unknown")
             score = node.get("score", 0.0)
+            children = node.get("children", [])
             
             # Node header
             lines.append(f"[{node_id}] Path: {tree_path}")
@@ -145,6 +146,12 @@ Analyze each node and determine which ones should be updated. For each update, p
                         lines.append(f"    {field_name}: {', '.join(str(v) for v in field_value)}")
                     else:
                         lines.append(f"    {field_name}: {field_value}")
+            
+            # Full subtree with all fields
+            if children:
+                lines.append(f"    Subtree ({len(children)} children):")
+                subtree_lines = self._format_subtree(children, indent=3)
+                lines.extend(subtree_lines)
             
             lines.append("")
         

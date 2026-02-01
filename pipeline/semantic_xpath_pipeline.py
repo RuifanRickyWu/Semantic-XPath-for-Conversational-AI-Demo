@@ -56,7 +56,8 @@ class SemanticXPathPipeline:
         self, 
         top_k: int = None, 
         score_threshold: float = None,
-        scoring_method: str = None
+        scoring_method: str = None,
+        tree_path: Path = None
     ):
         """
         Initialize the pipeline.
@@ -68,11 +69,13 @@ class SemanticXPathPipeline:
                    If None, uses value from config.yaml.
             scoring_method: Scoring method ("llm" or "entailment").
                    If None, uses value from config.yaml.
+            tree_path: Optional path to the XML tree. Overrides config default.
         """
         self.executor = CRUDExecutor(
             scoring_method=scoring_method,
             top_k=top_k,
-            score_threshold=score_threshold
+            score_threshold=score_threshold,
+            tree_path=tree_path
         )
         self.trace_writer = TraceWriter()
         

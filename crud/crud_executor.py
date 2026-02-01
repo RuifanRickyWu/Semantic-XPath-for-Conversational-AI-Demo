@@ -157,7 +157,8 @@ class CRUDExecutor:
         self,
         scoring_method: str = None,
         top_k: int = None,
-        score_threshold: float = None
+        score_threshold: float = None,
+        tree_path: Path = None
     ):
         """
         Initialize the CRUD executor.
@@ -166,9 +167,16 @@ class CRUDExecutor:
             scoring_method: Scoring method for semantic XPath
             top_k: Number of top results to consider
             score_threshold: Minimum score threshold
+            tree_path: Optional path to the XML tree override
         """
+        # Determine base directory
+        if tree_path:
+            base_dir = Path(tree_path).parent
+        else:
+            base_dir = RESULT_DIR
+            
         # Ensure result directory exists
-        RESULT_DIR.mkdir(parents=True, exist_ok=True)
+        base_dir.mkdir(parents=True, exist_ok=True)
         
         # Initialize query processing components (unchanged)
         self.version_resolver = VersionResolver()
@@ -178,7 +186,8 @@ class CRUDExecutor:
         self.executor = DenseXPathExecutor(
             scoring_method=scoring_method,
             top_k=top_k,
-            score_threshold=score_threshold
+            score_threshold=score_threshold,
+            tree_path=tree_path
         )
         
         # Initialize downstream handlers (NEW)
@@ -189,7 +198,7 @@ class CRUDExecutor:
         self.create_handler = CreateHandler(schema=schema)
         
         # Tree modification components (unchanged)
-        self.version_manager = VersionManager(base_directory=RESULT_DIR)
+        self.version_manager = VersionManager(base_directory=base_dir)
         
         # Store reference to tree for modifications
         self._tree = None

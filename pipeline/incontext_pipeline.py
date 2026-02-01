@@ -92,6 +92,7 @@ class PipelineResult:
     token_usage: Optional[TokenUsage] = None
     execution_time_ms: float = 0.0
     error: Optional[str] = None
+    new_version: Optional[int] = None
     
     def to_dict(self) -> Dict[str, Any]:
         output = {
@@ -102,6 +103,8 @@ class PipelineResult:
             "result": self.result_xml,
             "execution_time_ms": round(self.execution_time_ms, 2)
         }
+        if self.new_version:
+            output["new_version"] = self.new_version
         if self.diff:
             output["diff"] = self.diff.to_dict()
         if self.token_usage:
@@ -119,6 +122,7 @@ class IncontextPipeline:
     1. Sends the entire XML tree to the LLM
     2. Lets the LLM identify CRUD intent and process accordingly
     3. Calculates diff locally for modification operations
+    4. Persists changes as new versions in the XML tree
     
     Trade-offs vs. Semantic XPath Pipeline:
     - Simpler architecture (single LLM call)
@@ -126,7 +130,7 @@ class IncontextPipeline:
     - More direct LLM reasoning over full context
     """
     
-    def __init__(self):
+    def __init__(self, tree_path: Path = None):
         """Initialize the pipeline."""
         self.config = load_config()
         self.client = OpenAIClient(self.config)
@@ -139,13 +143,27 @@ class IncontextPipeline:
         # Load paths
         base_path = Path(__file__).parent.parent
         self.prompts_path = base_path / "storage" / "prompts"
-        self.memory_path = base_path / "storage" / "memory"
+        
+        # Determine tree path and base directory for VersionManager
+        if tree_path:
+            self.tree_path = Path(tree_path)
+            vm_base_dir = self.tree_path.parent
+        else:
+            self.memory_path = base_path / "storage" / "memory"
+            self.tree_path = None  # Will be resolved via _get_tree_path()
+            vm_base_dir = self.memory_path / "travel"
+        
+        # Initialize Version Manager
+        # Lazy import to avoid circular dependencies if any
+        from tree_modification.version_manager import VersionManager
+        self.version_manager = VersionManager(base_directory=vm_base_dir)
         
         # Load the system prompt
         self.system_prompt = self._load_prompt()
         
-        # Load tree based on config
-        self.tree_path = self._get_tree_path()
+        # Load tree based on config if not provided
+        if self.tree_path is None:
+            self.tree_path = self._get_tree_path()
         self.tree = None
         self.original_xml = None
         
@@ -156,6 +174,7 @@ class IncontextPipeline:
             "creates": 0,
             "updates": 0,
             "deletes": 0,
+            "versions_created": 0,
             "total_prompt_tokens": 0,
             "total_completion_tokens": 0
         }
@@ -197,6 +216,11 @@ class IncontextPipeline:
         # Find all versions and get the latest
         versions = root.findall(".//Itinerary_Version")
         if not versions:
+            # Check for legacy "Version" tag
+            versions = root.findall(".//Version")
+
+        if not versions:
+            # No versions? Fallback to raw xml (likely wrong structure but best effort)
             return self.original_xml
         
         # Sort by version number
@@ -205,6 +229,24 @@ class IncontextPipeline:
         # Serialize the version for the prompt
         return ET.tostring(latest, encoding="unicode")
     
+    def _parse_content_nodes(self, xml_string: str) -> List[ET.Element]:
+        """
+        Parse XML string into a list of Element nodes.
+        Used for parsing the LLM's 'result' output which contains children of Itinerary.
+        """
+        nodes = []
+        try:
+            # Wrap in a root if needed
+            if not xml_string.strip().startswith('<'):
+                return nodes
+            
+            # Use 'Itinerary' wrapper to match structure
+            root = ET.fromstring(f"<Itinerary>{xml_string}</Itinerary>")
+            nodes = list(root)
+        except ET.ParseError:
+            pass
+        return nodes
+
     def process_request(self, user_request: str) -> PipelineResult:
         """
         Process a user request as a CRUD operation.
@@ -220,13 +262,12 @@ class IncontextPipeline:
         # Load/refresh the tree
         self.tree, self.original_xml = self._load_tree()
         
-        # Get the full tree XML to include in the prompt
-        tree_xml = self._get_latest_version_xml()
+        # Get the latest version XML for diff calculation
+        latest_version_xml = self._get_latest_version_xml()
         
-        # Build the user message with tree context
+        # Build the user message with FULL tree context (all versions)
         user_message = f"""## XML Tree
-
-{tree_xml}
+{self.original_xml}
 
 ## User Request
 
@@ -273,11 +314,45 @@ class IncontextPipeline:
         
         # Calculate diff for CUD operations
         diff_result = None
+        new_version_num = None
+        
         if operation in ("CREATE", "UPDATE", "DELETE"):
-            diff_result = self._calculate_diff(tree_xml, result_xml)
+            diff_result = self._calculate_diff(latest_version_xml, result_xml)
+            
+            # Persist changes: Create a new version
+            try:
+                # 1. Parse the result XML into elements
+                new_content = self._parse_content_nodes(result_xml)
+                
+                if new_content:
+                    # 2. Get the source version
+                    source_version = self.version_manager.get_version_by_number(self.tree, version_used)
+                    if not source_version:
+                        # Fallback to latest if specified version not found
+                        source_version = self.version_manager.get_latest_version(self.tree)
+                    
+                    if source_version:
+                        # 3. Create the new version
+                        new_version_elem = self.version_manager.create_new_version(
+                            tree=self.tree,
+                            source_version=source_version,
+                            patch_info=reasoning,
+                            conversation_history=user_request,
+                            modified_content=new_content
+                        )
+                        new_version_num = int(new_version_elem.get("number"))
+                        
+                        # 4. Save the tree
+                        self.version_manager.save_tree(
+                            tree=self.tree, 
+                            original_path=self.tree_path
+                        )
+            except Exception as e:
+                # Log error but don't fail the pipeline result completely, just mark error
+                parsed["error"] = f"Failed to persist version: {e}"
         
         # Update session stats
-        self._update_stats(operation, result.usage)
+        self._update_stats(operation, result.usage, new_version_num)
         
         execution_time_ms = (time.perf_counter() - start_time) * 1000
         
@@ -289,7 +364,9 @@ class IncontextPipeline:
             result_xml=result_xml,
             diff=diff_result,
             token_usage=result.usage,
-            execution_time_ms=execution_time_ms
+            execution_time_ms=execution_time_ms,
+            new_version=new_version_num,
+            error=parsed.get("error")
         )
     
     def _parse_response(self, response: str) -> Dict[str, Any]:
@@ -450,7 +527,7 @@ class IncontextPipeline:
         
         return result
     
-    def _update_stats(self, operation: str, usage: TokenUsage):
+    def _update_stats(self, operation: str, usage: TokenUsage, new_version: int = None):
         """Update session statistics."""
         self.session_stats["operations"] += 1
         
@@ -458,6 +535,9 @@ class IncontextPipeline:
         if op_key in self.session_stats:
             self.session_stats[op_key] += 1
         
+        if new_version:
+            self.session_stats["versions_created"] += 1
+            
         self.session_stats["total_prompt_tokens"] += usage.prompt_tokens
         self.session_stats["total_completion_tokens"] += usage.completion_tokens
     
@@ -469,7 +549,10 @@ class IncontextPipeline:
         lines.append(f"\n{status_icon} {result.operation} Operation {'Succeeded' if result.success else 'Failed'}")
         lines.append("=" * 60)
         
-        lines.append(f"📌 Version: {result.version_used}")
+        lines.append(f"📌 Version Used: {result.version_used}")
+        if result.new_version:
+            lines.append(f"🆕 New Version: {result.new_version}")
+            
         lines.append(f"⏱️  Time: {result.execution_time_ms:.1f}ms")
         
         if result.token_usage:
@@ -481,20 +564,23 @@ class IncontextPipeline:
         if result.diff:
             lines.append(f"\n📊 Changes: {result.diff.summary}")
             
-            if result.diff.additions:
-                lines.append("\n➕ Additions:")
-                for add in result.diff.additions[:5]:
-                    lines.append(f"   {add[:80]}{'...' if len(add) > 80 else ''}")
+            if result.diff.created_nodes:
+                lines.append("\n➕ Created:")
+                for node in result.diff.created_nodes[:5]:
+                    lines.append(f"   {node.node_type}: {node.name} (Day {node.day})")
             
-            if result.diff.deletions:
-                lines.append("\n➖ Deletions:")
-                for delete in result.diff.deletions[:5]:
-                    lines.append(f"   {delete[:80]}{'...' if len(delete) > 80 else ''}")
+            if result.diff.deleted_nodes:
+                lines.append("\n➖ Deleted:")
+                for node in result.diff.deleted_nodes[:5]:
+                    lines.append(f"   {node.node_type}: {node.name} (Day {node.day})")
             
-            if result.diff.modifications:
-                lines.append("\n✏️  Modifications:")
-                for mod in result.diff.modifications[:5]:
-                    lines.append(f"   {mod[:80]}{'...' if len(mod) > 80 else ''}")
+            if result.diff.modified_nodes:
+                lines.append("\n✏️  Modified:")
+                for node in result.diff.modified_nodes[:5]:
+                    lines.append(f"   {node.node_type}: {node.name} (Day {node.day})")
+                    if node.changed_fields:
+                        for field, change in node.changed_fields.items():
+                            lines.append(f"     {field}: {change['from']} -> {change['to']}")
         
         # Show result preview
         if result.operation == "READ":
@@ -566,6 +652,7 @@ class IncontextPipeline:
         print(f"  - Creates: {self.session_stats['creates']}")
         print(f"  - Updates: {self.session_stats['updates']}")
         print(f"  - Deletes: {self.session_stats['deletes']}")
+        print(f"  Versions Created: {self.session_stats['versions_created']}")
         print(f"  Total Tokens: {self.session_stats['total_prompt_tokens'] + self.session_stats['total_completion_tokens']}")
         print(f"    - Prompt:     {self.session_stats['total_prompt_tokens']}")
         print(f"    - Completion: {self.session_stats['total_completion_tokens']}")
@@ -577,6 +664,7 @@ class IncontextPipeline:
         print("📊 Session Summary:")
         print("-" * 40)
         print(f"  Operations: {self.session_stats['operations']}")
+        print(f"  Versions Created: {self.session_stats['versions_created']}")
         print(f"  Total Tokens: {self.session_stats['total_prompt_tokens'] + self.session_stats['total_completion_tokens']}")
         print("=" * 60)
 

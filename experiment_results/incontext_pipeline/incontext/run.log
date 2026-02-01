@@ -1,14 +1,14 @@
-2026-02-01 13:02:24,824 - INFO - Starting pipeline: incontext
-2026-02-01 13:02:24,824 - INFO - Total queries: 3
-2026-02-01 13:02:25,253 - INFO - Running query 1: My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.
-2026-02-01 13:02:31,298 - INFO -   Operation: READ, Success: True, Time: 6044.8ms
-2026-02-01 13:02:31,298 - INFO -   Tokens: 7099
-2026-02-01 13:02:31,299 - INFO - Running query 2: It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.
-2026-02-01 13:03:12,197 - INFO -   Operation: DELETE, Success: True, Time: 40897.6ms
-2026-02-01 13:03:12,197 - INFO -   Tokens: 12109
-2026-02-01 13:03:12,199 - INFO - Running query 3: I completely forgot about souvenirs. Add a stop at Hudson's Bay on the morning of my flight out.
-2026-02-01 13:03:49,636 - INFO -   Operation: CREATE, Success: True, Time: 37435.8ms
-2026-02-01 13:03:49,636 - INFO -   Tokens: 12362
-2026-02-01 13:03:49,637 - INFO - Pipeline complete: 3/3 succeeded
-2026-02-01 13:03:49,637 - INFO - Total time: 84383.8ms
-2026-02-01 13:03:49,637 - INFO - Total tokens: 31570
+2026-02-01 13:22:53,396 - INFO - Starting pipeline: incontext
+2026-02-01 13:22:53,396 - INFO - Total queries: 3
+2026-02-01 13:22:53,815 - INFO - Running query 1: My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.
+2026-02-01 13:22:59,414 - INFO -   Operation: READ, Success: True, Time: 5598.1ms
+2026-02-01 13:22:59,414 - INFO -   Tokens: 7103
+2026-02-01 13:22:59,415 - INFO - Running query 2: It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.
+2026-02-01 13:23:36,743 - INFO -   Operation: DELETE, Success: True, Time: 37327.6ms
+2026-02-01 13:23:36,743 - INFO -   Tokens: 11956
+2026-02-01 13:23:36,745 - INFO - Running query 3: I completely forgot about souvenirs. Add a stop at Hudson's Bay on the morning of my flight out.
+2026-02-01 13:24:09,979 - INFO -   Operation: CREATE, Success: True, Time: 33233.2ms
+2026-02-01 13:24:09,979 - INFO -   Tokens: 12363
+2026-02-01 13:24:09,980 - INFO - Pipeline complete: 3/3 succeeded
+2026-02-01 13:24:09,980 - INFO - Total time: 76165.0ms
+2026-02-01 13:24:09,980 - INFO - Total tokens: 31422

@@ -141,10 +141,28 @@ class ExperimentRunner:
     def _get_pipeline(self, name: str):
         """Get or create a pipeline instance."""
         if name not in self._pipeline_instances:
+            # Setup isolated environment for this pipeline
+            pipeline_dir = self.experiment_dir / name
+            pipeline_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Get source data path
+            from dense_xpath.schema_loader import get_data_path
+            source_path = get_data_path()
+            
+            # Define target path for this pipeline's memory
+            # Use a subdirectory 'memory' to keep it organized
+            memory_dir = pipeline_dir / "memory"
+            memory_dir.mkdir(exist_ok=True)
+            target_path = memory_dir / source_path.name
+            
+            # Copy source to target if it doesn't exist (initialize from source)
+            if not target_path.exists():
+                shutil.copy2(source_path, target_path)
+            
             if name == "semantic_xpath":
-                self._pipeline_instances[name] = SemanticXPathPipeline()
+                self._pipeline_instances[name] = SemanticXPathPipeline(tree_path=target_path)
             elif name == "incontext":
-                self._pipeline_instances[name] = IncontextPipeline()
+                self._pipeline_instances[name] = IncontextPipeline(tree_path=target_path)
             else:
                 raise ValueError(f"Unknown pipeline: {name}")
         

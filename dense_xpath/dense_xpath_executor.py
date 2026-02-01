@@ -85,7 +85,8 @@ class DenseXPathExecutor:
         score_threshold: float = None,
         config: dict = None,
         data_name: str = None,
-        schema_name: str = None
+        schema_name: str = None,
+        tree_path: Path = None
     ):
         """
         Initialize the executor.
@@ -100,6 +101,7 @@ class DenseXPathExecutor:
             data_name: Name of the data file to use (e.g., "travel_memory_5day").
                       If None, uses active_data from config.yaml or schema's default.
             schema_name: Name of the schema to use. If None, uses active_schema from config.
+            tree_path: Direct path to XML tree file. Overrides data_name/schema resolution.
         """
         if config is None:
             config = load_config()
@@ -115,8 +117,11 @@ class DenseXPathExecutor:
         self.schema_name = schema_name
         self.data_name = data_name
         
-        # Resolve data file path using schema loader
-        self._memory_path = get_data_path(data_name=data_name, schema_name=schema_name)
+        # Resolve data file path using schema loader or override
+        if tree_path:
+            self._memory_path = Path(tree_path)
+        else:
+            self._memory_path = get_data_path(data_name=data_name, schema_name=schema_name)
         
         # Load schema for reference
         self._schema = load_schema(schema_name)

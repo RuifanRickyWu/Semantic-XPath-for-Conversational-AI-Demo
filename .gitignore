@@ -4,3 +4,4 @@
 *.ipynb
 .env
 experiment_results/
+test_notebook.ipynb

@@ -13,14 +13,25 @@ def load_config() -> dict:
     """Load configuration from config.yaml with env var substitution."""
     config_path = Path(__file__).parent.parent / "config.yaml"
     with open(config_path, "r") as f:
-        # Read file content
-        content = f.read()
+        config = yaml.safe_load(f)
         
-    # Expand environment variables using os.path.expandvars
-    # This handles ${VAR} syntax
-    expanded_content = os.path.expandvars(content)
+    key = config.get("openai", {}).get("api_key")
     
-    return yaml.safe_load(expanded_content)
+    # Manually substitute API key if it contains the placeholder
+    if key and "${OPENAI_API_KEY}" in key:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            # Try to find .env file explicitly if not found
+            env_path = Path(__file__).parent.parent / ".env"
+            load_dotenv(dotenv_path=env_path)
+            api_key = os.getenv("OPENAI_API_KEY")
+            
+        if api_key:
+            config["openai"]["api_key"] = api_key
+        else:
+            print("Warning: OPENAI_API_KEY not found in environment or .env file")
+            
+    return config
 
 
 @dataclass

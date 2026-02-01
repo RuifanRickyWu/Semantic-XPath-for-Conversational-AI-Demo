@@ -33,14 +33,7 @@ import sys
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from client.openai_client import OpenAIClient, TokenUsage, CompletionResult
-
-
-def load_config() -> dict:
-    """Load configuration from config.yaml"""
-    config_path = Path(__file__).parent.parent / "config.yaml"
-    with open(config_path, "r") as f:
-        return yaml.safe_load(f)
+from client.openai_client import OpenAIClient, TokenUsage, CompletionResult, load_config
 
 
 @dataclass

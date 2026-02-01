@@ -1,0 +1,15 @@
+name: "incontext_pipeline"
+
+# Pipelines to run for each query
+pipelines:
+  - incontext
+
+# Queries to run
+queries:
+  - "My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights."
+  # - "The weather forecast shows heavy rain on Day 7. I want to check which activities are outdoors that I might need to reschedule."
+  # - "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?"
+  # - "I'm putting together my expense report. Can you show me all the restaurants I've booked that are really expensive"
+  # - "I've been stuck in meetings most of the week. Which days have nature activities where I can actually get outside and see some green space?"
+  - "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements."
+  - "I completely forgot about souvenirs. Add a stop at Hudson's Bay on the morning of my flight out."

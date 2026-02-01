@@ -1,0 +1,15 @@
+{
+  "experiment_name": "incontext_pipeline",
+  "start_time": "2026-02-01T13:22:53.395822",
+  "total_queries": 3,
+  "pipelines": {
+    "incontext": {
+      "total_queries": 3,
+      "success_count": 3,
+      "total_time_ms": 76165.02,
+      "total_tokens": 31422,
+      "avg_time_per_query_ms": 25388.34
+    }
+  },
+  "end_time": "2026-02-01T13:24:09.980415"
+}

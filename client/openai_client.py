@@ -1,15 +1,37 @@
+import os
 import yaml
 from pathlib import Path
 from typing import Tuple, Dict, Any
 from dataclasses import dataclass
 from openai import OpenAI
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
 def load_config() -> dict:
-    """Load configuration from config.yaml"""
+    """Load configuration from config.yaml with env var substitution."""
     config_path = Path(__file__).parent.parent / "config.yaml"
     with open(config_path, "r") as f:
-        return yaml.safe_load(f)
+        config = yaml.safe_load(f)
+        
+    key = config.get("openai", {}).get("api_key")
+    
+    # Manually substitute API key if it contains the placeholder
+    if key and "${OPENAI_API_KEY}" in key:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            # Try to find .env file explicitly if not found
+            env_path = Path(__file__).parent.parent / ".env"
+            load_dotenv(dotenv_path=env_path)
+            api_key = os.getenv("OPENAI_API_KEY")
+            
+        if api_key:
+            config["openai"]["api_key"] = api_key
+        else:
+            print("Warning: OPENAI_API_KEY not found in environment or .env file")
+            
+    return config
 
 
 @dataclass

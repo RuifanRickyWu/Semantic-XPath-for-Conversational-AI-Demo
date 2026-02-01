@@ -7,7 +7,7 @@ active_data: "travel_toronto_10day" # Options: travel_memory_3day, travel_memory
 # within the tree itself, enabling full history tracking and version-based queries.
 
 openai:
-  api_key: "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"
+  api_key:
   model: "gpt-4o"
   temperature: 0.7
   max_tokens: 4096
@@ -17,6 +17,11 @@ xpath_executor:
   score_threshold: 0.01
   # Scoring method: "llm", "entailment", or "cosine"
   scoring_method: "entailment"
+
+# In-context pipeline settings (single LLM call with full tree)
+incontext_pipeline:
+  temperature: 0.3
+  max_tokens: 16384
 
 entailment:
   model: "facebook/bart-large-mnli"

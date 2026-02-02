@@ -112,10 +112,11 @@ class PredicateHandler:
     def _get_hierarchical_children(
         self, 
         node: ET.Element, 
-        child_type: Optional[str] = None
+        child_type: Optional[str] = None,
+        axis: str = "child"
     ) -> List[ET.Element]:
         """
-        Get hierarchical children of a node (filtering out XML sub-elements).
+        Get hierarchical children or descendants of a node.
         
         Uses schema's 'children' field to distinguish structural children
         from the node's own fields (like name, description, etc.).
@@ -123,21 +124,44 @@ class PredicateHandler:
         Args:
             node: XML element
             child_type: Optional specific child type to filter for
+            axis: "child" for direct children, "desc" for all descendants
             
         Returns:
-            List of child elements that are recognized as structural children
+            List of child/descendant elements that are recognized as structural
         """
-        if child_type:
-            return list(node.findall(child_type))
-        
-        # Use schema's children definition for this node type
-        allowed_children = self._get_allowed_children(node.tag)
-        
-        if allowed_children:
-            return [child for child in node if child.tag in allowed_children]
+        if axis == "desc":
+            # Descendant axis: find all descendants of the specified type
+            if child_type:
+                # Get all descendants of the specified type (excluding self)
+                return [n for n in node.iter(child_type) if n is not node]
+            else:
+                # Get all descendants (excluding self)
+                # Filter to only include allowed children types recursively
+                allowed_children = self._get_allowed_children(node.tag)
+                if allowed_children:
+                    result = []
+                    for n in node.iter():
+                        if n is not node and n.tag in self._get_all_structural_types():
+                            result.append(n)
+                    return result
+                return list(node.iter())[1:]  # All descendants except self
         else:
-            # Leaf node or no children defined - return empty
-            return []
+            # Child axis (default): direct children only
+            if child_type:
+                return list(node.findall(child_type))
+            
+            # Use schema's children definition for this node type
+            allowed_children = self._get_allowed_children(node.tag)
+            
+            if allowed_children:
+                return [child for child in node if child.tag in allowed_children]
+            else:
+                # Leaf node or no children defined - return empty
+                return []
+    
+    def _get_all_structural_types(self) -> set:
+        """Get all node types defined in the schema."""
+        return set(self._node_configs.keys())
     
     def _recursive_subtree_score(
         self,
@@ -360,10 +384,13 @@ class PredicateHandler:
                         self._collect_tasks_for_node(node, cond, tasks)
         
         elif predicate.operator in ("AGG_EXISTS", "AGG_PREV"):
-            # Hierarchical: collect from children AND their entire subtrees
+            # Hierarchical: collect from children/descendants AND their entire subtrees
             # for recursive bottom-up aggregation
             if predicate.child_predicate:
-                children = self._get_hierarchical_children(node, predicate.child_type)
+                child_axis = getattr(predicate, 'child_axis', 'child')
+                children = self._get_hierarchical_children(
+                    node, predicate.child_type, axis=child_axis
+                )
                 for child in children:
                     # Collect for child AND all its descendants (recursive subtree)
                     self._collect_subtree_tasks(child, predicate.child_predicate, tasks)
@@ -756,16 +783,20 @@ class PredicateHandler:
         if not predicate.child_predicate:
             return 0
         
-        # Sφ(u) - evidence nodes (children of specified type)
-        children = self._get_hierarchical_children(node, predicate.child_type)
+        # Sφ(u) - evidence nodes (children/descendants of specified type)
+        child_axis = getattr(predicate, 'child_axis', 'child')
+        children = self._get_hierarchical_children(
+            node, predicate.child_type, axis=child_axis
+        )
         
         if not children:
             # Empty evidence set - return neutral
             trace_steps.append({
                 "type": "agg_exists",
                 "child_type": predicate.child_type or "*",
+                "child_axis": child_axis,
                 "num_children": 0,
-                "note": "Sφ(u) is empty - no children found",
+                "note": "Sφ(u) is empty - no children/descendants found",
                 "result": 0
             })
             return 0
@@ -788,6 +819,7 @@ class PredicateHandler:
             "type": "agg_exists_recursive",
             "formula": "Agg∃(A) = max(recursive_subtree_scores)",
             "child_type": predicate.child_type or "*",
+            "child_axis": child_axis,
             "num_children": len(children),
             "child_results": [{"score": s, "subtree_size": sz} for s, sz in child_results],
             "result": result
@@ -816,16 +848,20 @@ class PredicateHandler:
         if not predicate.child_predicate:
             return 0
         
-        # Sφ(u) - evidence nodes (children of specified type)
-        children = self._get_hierarchical_children(node, predicate.child_type)
+        # Sφ(u) - evidence nodes (children/descendants of specified type)
+        child_axis = getattr(predicate, 'child_axis', 'child')
+        children = self._get_hierarchical_children(
+            node, predicate.child_type, axis=child_axis
+        )
         
         if not children:
             # Empty evidence set - return neutral
             trace_steps.append({
                 "type": "agg_prev",
                 "child_type": predicate.child_type or "*",
+                "child_axis": child_axis,
                 "num_children": 0,
-                "note": "Sφ(u) is empty - no children found",
+                "note": "Sφ(u) is empty - no children/descendants found",
                 "result": 0
             })
             return 0
@@ -850,6 +886,7 @@ class PredicateHandler:
             "type": "agg_prev_weighted",
             "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
             "child_type": predicate.child_type or "*",
+            "child_axis": child_axis,
             "num_children": len(children),
             "child_results": [{"score": s, "subtree_size": sz} for s, sz in child_results],
             "weighted_sum": weighted_sum,

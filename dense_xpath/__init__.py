@@ -13,10 +13,10 @@ Implements the Semantic XPath framework with:
 - Detailed reasoning traces
 
 Query Syntax:
-- /Day[@index='2'] - XPath-style attribute index
-- /POI[sem(content =~ "museum")] - local semantic match
-- /Day[exist(POI[sem(content =~ "museum")])] - existential over children
-- /Day[mass(POI[sem(content =~ "artistic")])] - prevalence over children
+- /Day[2] - Positional index (bracket notation)
+- /POI[atom(content =~ "museum")] - local semantic match
+- /Day[agg_exists(POI[atom(content =~ "museum")])] - existential over children
+- /Day[agg_prev(POI[atom(content =~ "artistic")])] - prevalence over children
 
 Modules:
 - models: Data classes for query representation and results

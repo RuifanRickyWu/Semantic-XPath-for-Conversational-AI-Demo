@@ -1,14 +1,21 @@
 """
 Query Parser - Parses Semantic XPath query strings into structured QueryStep objects.
 
-Paper Formalization Syntax:
-- Index: /Day[@index='2'] - XPath-style attribute index
-- Atomic: /POI[atom(content =~ "museum")] - local node scoring (Atom(u, φ))
-- Existential: /Day[agg_exists(POI[atom(...)])] - Agg∃ aggregation (max over children)
-- Prevalence: /Day[agg_prev(POI[atom(...)])] - Aggprev aggregation (avg over children)
-- Conjunction: atom(X) AND atom(Y) - ψ₁ ∧ ψ₂ (min of scores)
-- Disjunction: atom(X) OR atom(Y) - ψ₁ ∨ ψ₂ (max of scores)
-- Negation: not(atom(X)) - ¬ψ (1 - score)
+Grammar:
+    Query Q := Step | Step / Query | (Query)[GlobalIndex]
+    Step := Axis NodeType Index [Predicate]
+    Axis := none | desc ::
+    Index := none | [i] | [-i] | [i:j]
+    Predicate := Predicate AND Predicate | Predicate OR Predicate | not(Predicate) | Atom | Agg
+    Atom := atom(content =~ "value")
+    Agg := agg_exists(Axis ChildType [Predicate]) | agg_prev(Axis ChildType [Predicate])
+
+Examples:
+- Index: /Day[2], /POI[-1], /POI[0:2] - bracket notation
+- Atomic: /POI[atom(content =~ "museum")] - local node scoring
+- Existential: /Day[agg_exists(POI[atom(...)])] - Agg∃ aggregation
+- Prevalence: /Day[agg_prev(POI[atom(...)])] - Aggprev aggregation
+- Logical: atom(X) AND atom(Y), atom(X) OR atom(Y), not(atom(X))
 - Global index: (/Itinerary/Day/POI)[5] or (/Itinerary/Day/POI)[1:3]
 """
 
@@ -25,11 +32,12 @@ class QueryParser:
     Paper Formalization - Query Q = s₁/s₂/.../sₘ where each step sᵢ = (axisᵢ, κᵢ, ψᵢ)
     
     Supports:
+    - Axis selection: desc::POI (descendants) or none (default: children)
     - Type matching: /Itinerary/Day/POI (κ - node type)
-    - Attribute index: Day[@index='2'] (ι - positional constraint)
-    - Positional index: POI[2], POI[-1], POI[1:3]
+    - Positional index: POI[2], POI[-1], POI[1:3] (ι - positional constraint)
     - Atomic predicates: POI[atom(content =~ "museum")] (Atom(u, φ))
     - Hierarchical predicates: Day[agg_exists(POI[atom(...)])], Day[agg_prev(POI[atom(...)])]
+    - Hierarchical with axis: Day[agg_exists(desc::SubTask[atom(...)])]
     - Logical operators: atom(X) AND atom(Y), atom(X) OR atom(Y), not(atom(X)) (ψ₁ ∧ ψ₂, ψ₁ ∨ ψ₂, ¬ψ)
     - Global indexing: (/Itinerary/Day/POI)[5]
     """
@@ -119,16 +127,22 @@ class QueryParser:
     
     def _parse_step(self, step_str: str) -> Optional[QueryStep]:
         """
-        Parse a single step like 'Day[@index='2']' or 'POI[sem(content =~ "museum")]'.
+        Parse a single step like 'Day[2]', 'POI[atom(content =~ "museum")]',
+        or 'desc::POI[...]' with axis prefix.
+        
+        Syntax: [axis::]NodeType[index][predicate]
+        - axis: none (default: children) or "desc" (descendants)
+        - index: [i], [-i], [i:j] bracket notation
         """
-        # Extract node type (everything before first [)
+        # Parse optional axis prefix: child::NodeType or desc::NodeType
         # Support underscores in node types like Itinerary_Version
-        match = re.match(r'^([A-Za-z][A-Za-z0-9_]*)', step_str)
-        if not match:
+        axis_match = re.match(r'^(?:(child|desc)::)?([A-Za-z][A-Za-z0-9_]*)', step_str)
+        if not axis_match:
             return None
         
-        node_type = match.group(1)
-        remaining = step_str[len(node_type):]
+        axis = axis_match.group(1) or "child"
+        node_type = axis_match.group(2)
+        remaining = step_str[axis_match.end():]
         
         predicate = None
         predicate_str = None
@@ -138,13 +152,6 @@ class QueryParser:
         brackets = self._extract_brackets(remaining)
         
         for bracket_content in brackets:
-            # Check for attribute index: @index='2'
-            attr_index_match = re.match(r'^@(\w+)\s*=\s*[\'"](\d+)[\'"]$', bracket_content)
-            if attr_index_match:
-                idx = int(attr_index_match.group(2))
-                index = IndexRange(start=idx)
-                continue
-            
             # Check for predicates (atom, agg_exists, agg_prev, not, AND, OR)
             # Use _parse_logical_predicate which handles all combinations
             if any(kw in bracket_content for kw in ['atom(', 'agg_exists(', 'agg_prev(', 'not(']):
@@ -152,7 +159,7 @@ class QueryParser:
                 predicate_str = bracket_content
                 continue
             
-            # Try to parse as numeric index or range
+            # Try to parse as numeric index or range: [i], [-i], [i:j]
             parsed_index = self._parse_index(bracket_content)
             if parsed_index:
                 index = parsed_index
@@ -161,6 +168,7 @@ class QueryParser:
             node_type=node_type,
             predicate=predicate,
             index=index,
+            axis=axis,
             predicate_str=predicate_str
         )
     
@@ -174,31 +182,40 @@ class QueryParser:
         - AGG_PREV uses Aggprev(A) = (1/|A|)∑A
         
         Formats:
-        - agg_exists(POI[atom(content =~ "museum")]) - with child type (Sφ(u) = children of type)
+        - agg_exists(POI[atom(content =~ "museum")]) - child axis (default)
+        - agg_exists(desc::POI[atom(content =~ "museum")]) - descendant axis
         - agg_exists(atom(content =~ "museum")) - without child type (all children)
         """
-        # Try to match ChildType[predicate] pattern
-        child_type_match = re.match(r'^(\w+)\s*\[\s*(.+)\s*\]$', inner, re.DOTALL)
+        # Try to match [axis::]ChildType[predicate] pattern
+        # Supports: POI[...], child::POI[...], desc::POI[...]
+        child_type_match = re.match(
+            r'^(?:(child|desc)::)?(\w+)\s*\[\s*(.+)\s*\]$', 
+            inner, 
+            re.DOTALL
+        )
         
         if child_type_match:
-            child_type = child_type_match.group(1)
-            inner_pred_str = child_type_match.group(2).strip()
+            child_axis = child_type_match.group(1) or "child"
+            child_type = child_type_match.group(2)
+            inner_pred_str = child_type_match.group(3).strip()
             child_predicate = self._parse_logical_predicate(inner_pred_str)
             
             return CompoundPredicate(
                 operator=operator,
                 conditions=[],
                 child_predicate=child_predicate,
-                child_type=child_type
+                child_type=child_type,
+                child_axis=child_axis
             )
         else:
-            # No child type - parse inner directly
+            # No child type - parse inner directly (uses default child axis)
             child_predicate = self._parse_logical_predicate(inner)
             return CompoundPredicate(
                 operator=operator,
                 conditions=[],
                 child_predicate=child_predicate,
-                child_type=None
+                child_type=None,
+                child_axis="child"
             )
     
     def _parse_logical_predicate(self, pred_str: str) -> CompoundPredicate:

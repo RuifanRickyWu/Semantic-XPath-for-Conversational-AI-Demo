@@ -115,22 +115,27 @@ class IndexHandler:
         index: IndexRange,
         execution_log: List[str]
     ) -> List[ET.Element]:
-        """Apply single index (1-based, or -1 for last)."""
+        """Apply single index (1-based positive, or negative from end)."""
         idx_val = index.start
+        n = len(nodes)
         
         if idx_val > 0:
-            idx = idx_val - 1  # Convert to 0-based
-        elif idx_val == -1:
-            idx = len(nodes) - 1
+            # Positive: 1-based (1 = first element)
+            idx = idx_val - 1
+        elif idx_val < 0:
+            # Negative: from end (-1 = last, -2 = second from last)
+            idx = n + idx_val
         else:
-            idx = idx_val  # Handle other negative indices if needed
+            # Zero index is invalid in 1-based system
+            execution_log.append(f"Invalid index 0 (indices are 1-based)")
+            return []
         
-        if 0 <= idx < len(nodes):
+        if 0 <= idx < n:
             execution_log.append(f"Selected node at index {idx_val} (0-based: {idx})")
             return [nodes[idx]]
         else:
             execution_log.append(
-                f"Index {idx_val} out of range (have {len(nodes)} nodes)"
+                f"Index {idx_val} out of range (have {n} nodes)"
             )
             return []
 

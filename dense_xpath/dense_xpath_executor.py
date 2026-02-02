@@ -477,22 +477,41 @@ class DenseXPathExecutor:
         execution_log: List[str]
     ) -> List[NodeItem]:
         """
-        Apply type matching to get children of specified type.
+        Apply type matching to get children or descendants of specified type.
         
-        Each parent node's children are assigned a unique parent_group_id,
+        Axis semantics:
+        - child (default): Match only direct children using findall()
+        - desc: Match all descendants at any depth using iter()
+        
+        Each parent node's matches are assigned a unique parent_group_id,
         enabling local indexing like Day/POI[2] to select the 2nd POI
         within EACH Day rather than the global 2nd POI.
         """
         next_items = []
+        axis = getattr(step, 'axis', 'child')  # Default to child for backward compatibility
+        
         for group_id, item in enumerate(current_items):
-            children = list(item.node.findall(step.node_type))
-            for child in children:
+            if axis == "desc":
+                # Descendant axis: find all descendants of this type at any depth
+                # iter() returns self first, so we skip if it matches the type
+                matches = [
+                    n for n in item.node.iter(step.node_type) 
+                    if n is not item.node
+                ]
+            else:
+                # Child axis (default): find only direct children
+                matches = list(item.node.findall(step.node_type))
+            
+            for child in matches:
                 child_name = self._node_utils.get_name(child)
                 child_path = f"{item.path} > {child_name}"
-                # Children inherit group_id from their parent's position
+                # Matches inherit group_id from their parent's position
                 next_items.append(NodeItem(child, child_path, item.score, group_id))
         
-        execution_log.append(f"Found {len(next_items)} {step.node_type} nodes across {len(current_items)} parent(s)")
+        axis_desc = "descendants" if axis == "desc" else "children"
+        execution_log.append(
+            f"Found {len(next_items)} {step.node_type} {axis_desc} across {len(current_items)} parent(s)"
+        )
         return next_items
     
     def _apply_predicate_step(

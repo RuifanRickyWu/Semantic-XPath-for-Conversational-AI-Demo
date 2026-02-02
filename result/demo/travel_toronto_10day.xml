@@ -518,10 +518,21 @@
     </Itinerary>
   </Itinerary_Version>
   <Itinerary_Version number="2">
-    <patch_info>Deleted: Root &gt; Itinerary_Version 1 &gt; Itinerary &gt; Day 7 &gt; Distillery District Walk</patch_info>
-    <conversation_history>It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.</conversation_history>
+    <patch_info>Created: Itinerary &gt; Day 1/Restaurant</patch_info>
+    <conversation_history>add a sushi place in first day</conversation_history>
     <Itinerary>
       <Day index="1">
+        <Restaurant>
+          <name>Sushi Kaji</name>
+          <time_block>12:00 PM - 1:30 PM</time_block>
+          <description>Renowned sushi restaurant offering an authentic Japanese dining experience.</description>
+          <travel_method>Subway</travel_method>
+          <expected_cost>CAD 50-70</expected_cost>
+          <highlights>
+            <highlight>Omakase menu</highlight>
+            <highlight>Fresh seafood</highlight>
+          </highlights>
+        </Restaurant>
         <POI>
           <name>YYZ Airport Arrival</name>
           <time_block>2:00 PM - 3:00 PM</time_block>
@@ -854,6 +865,18 @@
             <highlight>Italian cuisine</highlight>
           </highlights>
         </Restaurant>
+        <POI>
+          <name>Distillery District Walk</name>
+          <time_block>3:00 PM - 5:00 PM</time_block>
+          <description>Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.</description>
+          <travel_method>Public Transit</travel_method>
+          <expected_cost>Free</expected_cost>
+          <highlights>
+            <highlight>Outdoor walking tour</highlight>
+            <highlight>Historic architecture</highlight>
+            <highlight>Artisan shops</highlight>
+          </highlights>
+        </POI>
         <Restaurant>
           <name>Cluny Bistro</name>
           <time_block>7:00 PM - 9:00 PM</time_block>
@@ -1023,8 +1046,8 @@
     </Itinerary>
   </Itinerary_Version>
   <Itinerary_Version number="3">
-    <patch_info>Created: Itinerary &gt; Day 10/POI</patch_info>
-    <conversation_history>I completely forgot about souvenirs. Add a stop at Hudson's Bay on the morning of my flight out.</conversation_history>
+    <patch_info>Deleted: Root &gt; Itinerary_Version 2 &gt; Itinerary &gt; Day 1 &gt; Sushi Kaji</patch_info>
+    <conversation_history>delete the sushi place in index 1 day</conversation_history>
     <Itinerary>
       <Day index="1">
         <POI>
@@ -1359,6 +1382,18 @@
             <highlight>Italian cuisine</highlight>
           </highlights>
         </Restaurant>
+        <POI>
+          <name>Distillery District Walk</name>
+          <time_block>3:00 PM - 5:00 PM</time_block>
+          <description>Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.</description>
+          <travel_method>Public Transit</travel_method>
+          <expected_cost>Free</expected_cost>
+          <highlights>
+            <highlight>Outdoor walking tour</highlight>
+            <highlight>Historic architecture</highlight>
+            <highlight>Artisan shops</highlight>
+          </highlights>
+        </POI>
         <Restaurant>
           <name>Cluny Bistro</name>
           <time_block>7:00 PM - 9:00 PM</time_block>
@@ -1479,17 +1514,6 @@
             <highlight>Checkout morning</highlight>
           </highlights>
         </Restaurant>
-        <POI>
-          <name>Hudson's Bay Souvenir Shopping</name>
-          <time_block>9:00 AM - 10:00 AM</time_block>
-          <description>Stop at Hudson's Bay for last-minute souvenir shopping before heading to the airport.</description>
-          <travel_method>Walk</travel_method>
-          <expected_cost>Variable</expected_cost>
-          <highlights>
-            <highlight>Souvenir shopping</highlight>
-            <highlight>Last-minute gifts</highlight>
-          </highlights>
-        </POI>
         <POI>
           <name>CN Tower EdgeWalk</name>
           <time_block>10:00 AM - 12:00 PM</time_block>

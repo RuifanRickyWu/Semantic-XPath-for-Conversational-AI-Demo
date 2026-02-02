@@ -3,6 +3,7 @@
 Query Q := Step | Step / Query | (Query)[GlobalIndex]
 Step := Axis NodeType Index [Predicate]
 Axis := none | desc ::
+NodeType := Name | "." (wildcard for all children)
 Index := none | [i] | [-i] | [i:j]
 Predicate := Predicate AND Predicate | Predicate OR Predicate | not(Predicate) | Atom | Agg
 Atom := atom(content =~ "value")
@@ -24,12 +25,17 @@ Agg := agg_exists(Axis ChildType [Predicate]) | agg_prev(Axis ChildType [Predica
 - If target is deeper than one level, use `desc::`
 - Example: If schema is `Project → Task → SubTask`, to get SubTasks from Project, use `desc::SubTask`
 
+**. (wildcard)** - Match all structured children regardless of type
+- `/Parent/.` - matches all direct children of Parent
+- Use when you want to select everything under a node
+- Example: `/Itinerary/Day[1]/.` returns all POIs, Restaurants, etc. under Day 1
+
 ## Index Syntax
 
 **Local Index** - Positional selection within each parent group
-- `NodeType[i]` - Select node at 0-based index i (e.g., POI[2] = 3rd POI in each Day)
+- `NodeType[i]` - Select node at 1-based index i (e.g., POI[2] = 2nd POI in each Day)
 - `NodeType[-i]` - Select node at negative index from end (e.g., POI[-1] = last POI in each Day)
-- `NodeType[i:j]` - Select contiguous range of nodes (e.g., POI[0:2] = first 3 POIs in each Day)
+- `NodeType[i:j]` - Select contiguous range from i to j inclusive (e.g., POI[1:2] = first 2 POIs in each Day)
 - `none` - No index, retain all candidate nodes (default)
 
 **Global Index** - Positional selection on entire query result

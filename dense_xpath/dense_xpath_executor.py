@@ -482,6 +482,7 @@ class DenseXPathExecutor:
         Axis semantics:
         - child (default): Match only direct children using findall()
         - desc: Match all descendants at any depth using iter()
+        - "." (wildcard): Match all structured children regardless of type
         
         Each parent node's matches are assigned a unique parent_group_id,
         enabling local indexing like Day/POI[2] to select the 2nd POI
@@ -491,7 +492,13 @@ class DenseXPathExecutor:
         axis = getattr(step, 'axis', 'child')  # Default to child for backward compatibility
         
         for group_id, item in enumerate(current_items):
-            if axis == "desc":
+            if step.node_type == ".":
+                # Wildcard: get all structured children regardless of type
+                matches = [
+                    child for child in item.node
+                    if NodeUtils._is_structured_node(child)
+                ]
+            elif axis == "desc":
                 # Descendant axis: find all descendants of this type at any depth
                 # iter() returns self first, so we skip if it matches the type
                 matches = [
@@ -508,10 +515,16 @@ class DenseXPathExecutor:
                 # Matches inherit group_id from their parent's position
                 next_items.append(NodeItem(child, child_path, item.score, group_id))
         
-        axis_desc = "descendants" if axis == "desc" else "children"
-        execution_log.append(
-            f"Found {len(next_items)} {step.node_type} {axis_desc} across {len(current_items)} parent(s)"
-        )
+        # Build log message based on match type
+        if step.node_type == ".":
+            execution_log.append(
+                f"Found {len(next_items)} children (wildcard) across {len(current_items)} parent(s)"
+            )
+        else:
+            axis_desc = "descendants" if axis == "desc" else "children"
+            execution_log.append(
+                f"Found {len(next_items)} {step.node_type} {axis_desc} across {len(current_items)} parent(s)"
+            )
         return next_items
     
     def _apply_predicate_step(

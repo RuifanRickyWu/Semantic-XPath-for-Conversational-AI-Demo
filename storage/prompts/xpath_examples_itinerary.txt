@@ -69,6 +69,16 @@ Output: (/Itinerary/desc::POI)[1:5]
 User: all museums in the itinerary
 Output: /Itinerary/desc::POI[atom(content =~ "museum")]
 
+### Wildcard Queries (select all children)
+User: everything planned on day 1
+Output: /Itinerary/Day[1]/.
+
+User: all items on the last day
+Output: /Itinerary/Day[-1]/.
+
+User: the first 3 items across all days
+Output: (/Itinerary/Day/.)[1:3]
+
 ### Combined Index and Predicate
 User: the first outdoor activity each day
 Output: /Itinerary/Day/POI[atom(content =~ "outdoor")][1]

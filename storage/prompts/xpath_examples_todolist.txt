@@ -84,6 +84,16 @@ Output: (/TodoList/Version[-1]/desc::SubTask)[1:10]
 User: all bug-related subtasks
 Output: /TodoList/Version[-1]/desc::SubTask[atom(content =~ "bug")]
 
+### Wildcard Queries (select all children)
+User: everything in the first project
+Output: /TodoList/Version[-1]/Project[1]/.
+
+User: all items in the last project
+Output: /TodoList/Version[-1]/Project[-1]/.
+
+User: the first 5 items across all projects
+Output: (/TodoList/Version[-1]/Project/.)[1:5]
+
 ### Combined Index and Predicate
 User: the first urgent task in each project
 Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "urgent")][1]

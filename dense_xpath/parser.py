@@ -136,7 +136,8 @@ class QueryParser:
         """
         # Parse optional axis prefix: child::NodeType or desc::NodeType
         # Support underscores in node types like Itinerary_Version
-        axis_match = re.match(r'^(?:(child|desc)::)?([A-Za-z][A-Za-z0-9_]*)', step_str)
+        # Also support "." as wildcard to match all children
+        axis_match = re.match(r'^(?:(child|desc)::)?([A-Za-z][A-Za-z0-9_]*|\.)', step_str)
         if not axis_match:
             return None
         

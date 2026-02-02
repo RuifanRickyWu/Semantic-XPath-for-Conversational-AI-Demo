@@ -2,15 +2,17 @@
 End-to-End Tests for Semantic XPath Grammar.
 
 Tests the full pipeline: parsing → indexing → predicate evaluation → results.
-Uses travel/itinerary schema with 15 diverse queries covering all grammar features:
+Uses travel/itinerary schema with 17 diverse queries covering all grammar features:
 - Predicates: atom(), not(), AND, OR, agg_exists(), agg_prev()
 - Index: local ([i], [-i], [i:j]), global ((path)[i])
 - Axis: none (default), desc (descendants)
+- Wildcard: "." (select all children)
 
 Grammar Reference:
     Query Q := Step | Step / Query | (Query)[GlobalIndex]
     Step := Axis NodeType Index [Predicate]
     Axis := none | desc ::
+    NodeType := Name | "." (wildcard)
     Index := none | [i] | [-i] | [i:j]
     Predicate := Predicate AND Predicate | Predicate OR Predicate | not(Predicate) | Atom | Agg
     Atom := atom(content =~ "value")
@@ -47,7 +49,7 @@ def executor():
 # End-to-End Test Queries
 # =============================================================================
 
-# 15 queries testing different grammar features
+# 17 queries testing different grammar features
 E2E_QUERIES = [
     # 1. Basic atom() - Find museums
     pytest.param(
@@ -153,6 +155,20 @@ E2E_QUERIES = [
         "Day", 1, 2,
         id="Q15_complex_combined_outdoor_days"
     ),
+    
+    # 16. Wildcard selector - Get all children of Day 1
+    pytest.param(
+        '/Root/Itinerary_Version/Itinerary/Day[1]/.',
+        None, 1, None,  # expected_type=None means any type (wildcard)
+        id="Q16_wildcard_all_children_day1"
+    ),
+    
+    # 17. Wildcard with global index - First 3 items overall
+    pytest.param(
+        '(/Root/Itinerary_Version/Itinerary/Day/.)[1:3]',
+        None, 1, 3,
+        id="Q17_wildcard_global_index"
+    ),
 ]
 
 
@@ -167,11 +183,13 @@ def test_e2e_query(executor, query, expected_type, min_results, max_results):
     num_results = len(result.matched_nodes)
     
     # Print results for visibility
+    type_desc = expected_type if expected_type else "item"  # Handle wildcard (None)
     print(f"\nQuery: {query}")
-    print(f"Results: {num_results} {expected_type}(s) found")
+    print(f"Results: {num_results} {type_desc}(s) found")
     for i, node in enumerate(result.matched_nodes[:5], 1):
         name_val = node.node_data.get('name', 'N/A')
-        print(f"  {i}. {name_val} (score: {node.score:.4f})")
+        node_type = node.node_data.get('type', 'N/A')
+        print(f"  {i}. [{node_type}] {name_val} (score: {node.score:.4f})")
     
     # Assertions
     assert num_results >= min_results, f"Expected at least {min_results} results, got {num_results}"

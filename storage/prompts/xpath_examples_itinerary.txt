@@ -1,44 +1,38 @@
 ## Examples
 
 ### Basic Queries
-User: museums
+User: find all museum visits in the current itinerary
 Output: /Itinerary/Day/POI[atom(content =~ "museum")]
 
-User: restaurants on day 2
+User: show me all restaurants that are scheduled on day 2
 Output: /Itinerary/Day[2]/Restaurant
 
-### Aggregation Queries
-User: museums in an artistic day
-Output: /Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+User: check what activities are planned on the final day of the trip
+Output: /Itinerary/Day[-1]/POI
 
-User: days with jazz activities
+### Aggregation Queries
+User: which days include at least one jazz-related activity?
 Output: /Itinerary/Day[agg_exists(POI[atom(content =~ "jazz")])]
 
-User: days that are generally artistic
-Output: /Itinerary/Day[agg_prev(POI[atom(content =~ "artistic")])]
-
-User: outdoor activities on a day with indoor museums
-Output: /Itinerary/Day[agg_exists(POI[atom(content =~ "indoor museum")])]/POI[atom(content =~ "outdoor")]
+User: look for days that contain an affordable museum or gallery so I can adjust the plan
+Output: /Itinerary/Day[agg_exists(POI[(atom(content =~ "museum") OR atom(content =~ "gallery")) AND not(atom(content =~ "expensive"))])]
 
 ### Negation Queries
-User: activities that are not work related
-Output: /Itinerary/Day/POI[not(atom(content =~ "work related"))]
+User: identify activities that are work-related so I can remove them
+Output: /Itinerary/Day/POI[atom(content =~ "work related")]
 
-User: affordable restaurants (not expensive)
-Output: /Itinerary/Day/Restaurant[not(atom(content =~ "expensive"))]
+User: find scenic places like parks or lakes that are not crowded
+Output: /Itinerary/Day/POI[(atom(content =~ "park") OR atom(content =~ "lake")) AND not(atom(content =~ "crowded"))]
 
 ### Local Index Queries (per-parent selection)
-User: the first activity of each day
-Output: /Itinerary/Day/POI[1]
+User: review everything currently planned under day 1
+Output: /Itinerary/Day[1]/.
 
-User: the last restaurant each day
-Output: /Itinerary/Day/Restaurant[-1]
+User: give me all POIs planned from day 2 through day 4 so I can review them
+Output: /Itinerary/Day[2:4]/POI
 
 User: the first two POIs on day 3
 Output: /Itinerary/Day[3]/POI[1:2]
-
-User: the second activity each day
-Output: /Itinerary/Day/POI[2]
 
 User: the last two activities on each day
 Output: /Itinerary/Day/POI[-2:]
@@ -88,12 +82,19 @@ Output: (/Itinerary/Day/POI[atom(content =~ "museum")])[2]
 
 ### CRUD Operations
 Operation: CREATE
-User: a sushi restaurant after lunch on day 1
-Output: /Itinerary/Day[1], Restaurant, sushi restaurant after lunch
+User: add a sushi restaurant for lunch on day 1
+Output: /Itinerary/Day[1]
+Reason: The query retrieves the Day-1 node as the insertion scope. The terms "sushi" and "lunch" describe properties of the restaurant to be created and therefore do not participate in retrieval.
+
+Operation: CREATE
+User: add a business meeting before dinner on day 1
+Output: /Itinerary/Day[1]
+Reason: The query retrieves the Day-1 node as the insertion scope. The phrase "before dinner" specifies a relative ordering constraint that is resolved during insertion and scheduling, not during retrieval.
 
 Operation: UPDATE
-User: change the CN Tower visit to 2pm
-Output: /Itinerary/Day/POI[atom(content =~ "CN Tower")], time_block: 2:00 PM
+User: change the dinner reservation time to 8pm on day 1
+Output: /Itinerary/Day[1]/POI[atom(content =~ "dinner")]
+Reason: The query retrieves the existing dinner POI on Day 1 as the target node to be modified. The new time (8pm) is applied during the update step and does not affect retrieval.
 
 Operation: DELETE
 User: remove all expensive POIs

@@ -1,0 +1,12 @@
+====================
+Time Guidelines
+====================
+| Meal | Time Range |
+|------|------------|
+| Breakfast | 7:00 AM - 10:00 AM |
+| Lunch | 11:30 AM - 2:00 PM |
+| Afternoon | 2:00 PM - 5:00 PM |
+| Dinner | 5:30 PM - 9:00 PM |
+| Evening | 8:00 PM - 11:00 PM |
+
+Placement hints: "start of day" → 0, "after lunch" → after 12-2PM items, "end of day" → -1

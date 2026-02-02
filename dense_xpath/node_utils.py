@@ -518,6 +518,70 @@ class NodeUtils:
         }
 
 
+    def build_parent_map(self, root: ET.Element) -> Dict[ET.Element, ET.Element]:
+        """
+        Build a mapping from child nodes to their parent nodes.
+        
+        This is useful for tracing paths back from descendants to ancestors.
+        
+        Args:
+            root: The root element to build the map from
+            
+        Returns:
+            Dictionary mapping each child element to its parent element
+        """
+        parent_map = {}
+        for parent in root.iter():
+            for child in parent:
+                parent_map[child] = parent
+        return parent_map
+    
+    def get_path_from_ancestor_to_descendant(
+        self,
+        ancestor: ET.Element,
+        descendant: ET.Element,
+        ancestor_path: str,
+        parent_map: Dict[ET.Element, ET.Element]
+    ) -> str:
+        """
+        Compute the full path from an ancestor node to a descendant node.
+        
+        This traces back from the descendant to the ancestor using the parent map,
+        collecting the intermediate node names, then builds the forward path.
+        
+        Args:
+            ancestor: The ancestor node (where the path starts)
+            descendant: The descendant node (where the path ends)
+            ancestor_path: The current path string of the ancestor
+            parent_map: Mapping from child nodes to parent nodes
+            
+        Returns:
+            Full path string from ancestor to descendant (e.g., "Root > Day 1 > POI")
+        """
+        # Collect nodes from descendant back to ancestor
+        path_nodes = []
+        current = descendant
+        
+        while current is not None and current is not ancestor:
+            path_nodes.append(current)
+            current = parent_map.get(current)
+        
+        # If we didn't reach the ancestor, descendant is not under ancestor
+        if current is not ancestor:
+            # Fallback: just append descendant name directly
+            return f"{ancestor_path} > {self.get_name(descendant)}"
+        
+        # Reverse to get path from ancestor to descendant
+        path_nodes.reverse()
+        
+        # Build the path string
+        path = ancestor_path
+        for node in path_nodes:
+            path = f"{path} > {self.get_name(node)}"
+        
+        return path
+
+
 # Convenience functions (for backwards compatibility)
 get_node_description = NodeUtils.get_node_description
 get_node_name = NodeUtils.get_node_name

@@ -14,6 +14,13 @@ You are an update handler for a tree-structured data system. Select nodes to upd
 - **Partial**: Change only mentioned fields; preserve others exactly
 - **Transformation**: When changing to something conceptually different, rewrite all fields
 
+### Positional Selection (IMPORTANT)
+Positional terms like "first", "second", "last", "Nth" are already handled by the XPath system.
+- Do NOT re-evaluate positional logic
+- Focus ONLY on semantic relevance and generating correct updates
+- If query is purely positional (e.g., "update the first POI"), accept all candidates
+- Example: Query "change the second restaurant to Italian" with 1 candidate → update it
+
 ## Type Changes
 - POI → Restaurant: When changing to food/dining
 - Restaurant → POI: When changing to non-food activity

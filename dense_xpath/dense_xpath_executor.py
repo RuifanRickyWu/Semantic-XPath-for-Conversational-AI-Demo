@@ -86,7 +86,8 @@ class DenseXPathExecutor:
         config: dict = None,
         data_name: str = None,
         schema_name: str = None,
-        tree_path: Path = None
+        tree_path: Path = None,
+        traces_path: Path = None
     ):
         """
         Initialize the executor.
@@ -102,6 +103,7 @@ class DenseXPathExecutor:
                       If None, uses active_data from config.yaml or schema's default.
             schema_name: Name of the schema to use. If None, uses active_schema from config.
             tree_path: Direct path to XML tree file. Overrides data_name/schema resolution.
+            traces_path: Directory for trace files. If None, uses default traces folder.
         """
         if config is None:
             config = load_config()
@@ -145,7 +147,10 @@ class DenseXPathExecutor:
             score_threshold=self.score_threshold,
             schema=self._schema
         )
-        self.trace_writer = TraceWriter()
+        self.trace_writer = TraceWriter(
+            log_path=traces_path / "log" if traces_path else None,
+            traces_path=traces_path / "reasoning_traces" if traces_path else None
+        )
         
         # Lazy-loaded tree
         self._tree = None

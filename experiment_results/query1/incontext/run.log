@@ -1,0 +1,8 @@
+2026-02-02 11:42:17,977 - INFO - Starting pipeline: incontext
+2026-02-02 11:42:17,977 - INFO - Total queries: 1
+2026-02-02 11:42:18,401 - INFO - Running query 1: My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.
+2026-02-02 11:42:26,331 - INFO -   Operation: READ, Success: True, Time: 7930.0ms
+2026-02-02 11:42:26,331 - INFO -   Tokens: 7188
+2026-02-02 11:42:26,332 - INFO - Pipeline complete: 1/1 succeeded
+2026-02-02 11:42:26,332 - INFO - Total time: 7931.0ms
+2026-02-02 11:42:26,332 - INFO - Total tokens: 7188

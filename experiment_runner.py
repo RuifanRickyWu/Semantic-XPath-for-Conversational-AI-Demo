@@ -160,7 +160,10 @@ class ExperimentRunner:
                 shutil.copy2(source_path, target_path)
             
             if name == "semantic_xpath":
-                self._pipeline_instances[name] = SemanticXPathPipeline(tree_path=target_path)
+                self._pipeline_instances[name] = SemanticXPathPipeline(
+                    tree_path=target_path,
+                    traces_path=pipeline_dir / "traces"
+                )
             elif name == "incontext":
                 self._pipeline_instances[name] = IncontextPipeline(tree_path=target_path)
             else:

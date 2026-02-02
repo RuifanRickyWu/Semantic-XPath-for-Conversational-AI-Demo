@@ -1,0 +1,7 @@
+2026-02-02 11:41:50,421 - INFO - Starting pipeline: semantic_xpath
+2026-02-02 11:41:50,421 - INFO - Total queries: 1
+2026-02-02 11:41:50,453 - INFO - Running query 1: My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.
+2026-02-02 11:42:17,975 - INFO -   Operation: READ, Success: True, Time: 27521.4ms
+2026-02-02 11:42:17,976 - INFO - Pipeline complete: 1/1 succeeded
+2026-02-02 11:42:17,976 - INFO - Total time: 27522.8ms
+2026-02-02 11:42:17,976 - INFO - Total tokens: 3974

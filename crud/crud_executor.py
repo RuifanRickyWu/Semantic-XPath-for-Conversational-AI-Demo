@@ -158,7 +158,8 @@ class CRUDExecutor:
         scoring_method: str = None,
         top_k: int = None,
         score_threshold: float = None,
-        tree_path: Path = None
+        tree_path: Path = None,
+        traces_path: Path = None
     ):
         """
         Initialize the CRUD executor.
@@ -168,6 +169,7 @@ class CRUDExecutor:
             top_k: Number of top results to consider
             score_threshold: Minimum score threshold
             tree_path: Optional path to the XML tree override
+            traces_path: Optional directory for trace files
         """
         # Determine base directory
         if tree_path:
@@ -187,7 +189,8 @@ class CRUDExecutor:
             scoring_method=scoring_method,
             top_k=top_k,
             score_threshold=score_threshold,
-            tree_path=tree_path
+            tree_path=tree_path,
+            traces_path=traces_path
         )
         
         # Initialize downstream handlers (NEW)

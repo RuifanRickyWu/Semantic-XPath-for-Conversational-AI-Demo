@@ -360,9 +360,9 @@ Each operation displays a full query showing the operation type, version selecto
 
 ```
 Read(/Itinerary/Version[-1]/Day/POI[atom(content =~ "museum")])
-Delete(/Itinerary/Version[-1]/Day[@index='2']/POI[atom(content =~ "cafe")])
+Delete(/Itinerary/Version[-1]/Day[2]/POI[atom(content =~ "cafe")])
 Update(/Itinerary/Version[-1]/Day/POI[atom(content =~ "CN Tower")], time_block: 2:00 PM)
-Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, sushi restaurant for lunch)
+Create(/Itinerary/Version[-1]/Day[1], Restaurant, sushi restaurant for lunch)
 
 # Compound queries with semantic version selection
 Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], type: chinese food)
@@ -433,7 +433,7 @@ result = pipeline.process_request("in the version that deleted museums, update t
 
 # Create operation
 result = pipeline.process_request("add a sushi restaurant after lunch on day 1")
-# Displays: Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, sushi restaurant after lunch)
+# Displays: Create(/Itinerary/Version[-1]/Day[1], Restaurant, sushi restaurant after lunch)
 # Creates: Version 5 in the tree
 
 # View version history
@@ -649,7 +649,7 @@ This ensures:
 
 ```xpath
 /Itinerary/Day/POI                     # All POIs in all Days
-/Itinerary/Day[@index='2']/POI         # POIs in Day 2 (attribute index)
+/Itinerary/Day[2]/POI                  # POIs in Day 2 (positional index)
 /Itinerary/Day/POI[2]                  # 2nd POI in EACH Day (local)
 (/Itinerary/Day/POI)[2]                # 2nd POI overall (global)
 ```
@@ -658,7 +658,7 @@ This ensures:
 
 | Syntax | Meaning |
 |--------|---------|
-| `[@index='2']` | Attribute-based index |
+| `[2]` | Select node at index 2 |
 | `[2]` | 2nd element |
 | `[-1]` | Last element |
 | `[1:3]` | Elements 1, 2, 3 |
@@ -1000,7 +1000,7 @@ LLM-VM/
 | Operation | Natural Language Example | Full Query |
 |-----------|-------------------------|------------|
 | **Read** | "find museums" | `Read(/Itinerary/Version[-1]/Day/POI[atom(...)])` |
-| **Create** | "add a cafe on day 1" | `Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, ...)` |
+| **Create** | "add a cafe on day 1" | `Create(/Itinerary/Version[-1]/Day[1], Restaurant, ...)` |
 | **Update** | "change CN Tower to 2pm" | `Update(/Itinerary/Version[-1]/Day/POI[atom(...)], time_block: 2:00 PM)` |
 | **Compound** | "in version that deleted museum, update first POI" | `Update(/Itinerary/Version[atom(content =~ "delete museum")]/Day/POI[1], ...)` |
 | **Delete** | "remove all museums" | `Delete(/Itinerary/Version[-1]/Day/POI[atom(...)])` |

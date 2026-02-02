@@ -38,7 +38,7 @@ Start from any level in the hierarchy.
 Select nodes by their index attribute using XPath attribute syntax.
 
 ```xpath
-/Itinerary/Day[@index='2']/POI
+/Itinerary/Day[2]/POI
 ```
 **Result**: All POIs in Day 2.
 
@@ -176,7 +176,7 @@ P(match) = 1 - ∏(1 - p_i)
 
 ### 5.1 Path + Index + Predicate
 ```xpath
-/Itinerary/Day[@index='1']/POI[sem(content =~ "morning activity")]
+/Itinerary/Day[1]/POI[sem(content =~ "morning activity")]
 ```
 
 ### 5.2 Nested Aggregations with Logic
@@ -201,7 +201,7 @@ P(match) = 1 - ∏(1 - p_i)
 | Overall character from children | `mass()` | "artistic day" → `Day[mass(POI[sem(...)])]` |
 | Multiple conditions, all required | `AND` | "outdoor AND historic" |
 | Alternative conditions | `OR` | "museum OR gallery" |
-| Specific index | `[@index='N']` | "day 2" → `Day[@index='2']` |
+| Specific index | `[N]` | "day 2" → `Day[2]` |
 
 ---
 
@@ -219,7 +219,7 @@ P(match) = 1 - ∏(1 - p_i)
 /Itinerary/Day[mass(POI[sem(content =~ "artistic")])]
 
 # Day 2 restaurants
-/Itinerary/Day[@index='2']/Restaurant
+/Itinerary/Day[2]/Restaurant
 
 # Days with both museums and Italian food
 /Itinerary/Day[exist(POI[sem(content =~ "museum")]) AND exist(Restaurant[sem(content =~ "italian")])]

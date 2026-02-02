@@ -1,11 +1,13 @@
 ## Examples
 
+### Basic Queries
 User: urgent tasks
 Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "urgent")]
 
 User: all tasks in the frontend project
 Output: /TodoList/Version[-1]/Project[atom(content =~ "frontend")]/Task
 
+### Aggregation Queries
 User: projects with incomplete tasks
 Output: /TodoList/Version[-1]/Project[agg_exists(Task[atom(content =~ "incomplete")])]
 
@@ -21,15 +23,85 @@ Output: /TodoList/Version[-1]/Project[agg_exists(Task[atom(content =~ "bug")])]/
 User: high priority tasks in an urgent project
 Output: /TodoList/Version[-1]/Project[agg_prev(Task[atom(content =~ "urgent")])]/Task[atom(content =~ "high priority")]
 
+### Negation Queries
 User: tasks that are not blocked
 Output: /TodoList/Version[-1]/Project/Task[not(atom(content =~ "blocked"))]
 
 User: incomplete tasks (not done)
 Output: /TodoList/Version[-1]/Project/Task[not(atom(content =~ "complete"))]
 
+### Local Index Queries (per-parent selection)
 User: in version 2, show projects
 Output: /TodoList/Version[2]/Project
 
+User: the first task in each project
+Output: /TodoList/Version[-1]/Project/Task[1]
+
+User: the last task in each project
+Output: /TodoList/Version[-1]/Project/Task[-1]
+
+User: the first two tasks in each project
+Output: /TodoList/Version[-1]/Project/Task[1:2]
+
+User: the second project in the latest version
+Output: /TodoList/Version[-1]/Project[2]
+
+User: the first 3 projects
+Output: /TodoList/Version[-1]/Project[1:3]
+
+### Global Index Queries (overall result selection)
+User: the first 5 tasks across all projects
+Output: (/TodoList/Version[-1]/Project/Task)[1:5]
+
+User: the 3rd task overall
+Output: (/TodoList/Version[-1]/Project/Task)[3]
+
+User: the last task in the entire todolist
+Output: (/TodoList/Version[-1]/Project/Task)[-1]
+
+User: the last 3 urgent tasks
+Output: (/TodoList/Version[-1]/Project/Task[atom(content =~ "urgent")])[-3:]
+
+### Descendant Axis Queries (schema: Version → Project → Task → SubTask)
+User: all subtasks in the latest version
+Output: /TodoList/Version[-1]/desc::SubTask
+
+User: all tasks across all projects
+Output: /TodoList/Version[-1]/desc::Task
+
+User: projects with urgent subtasks
+Output: /TodoList/Version[-1]/Project[agg_exists(desc::SubTask[atom(content =~ "urgent")])]
+
+User: projects where most subtasks are completed
+Output: /TodoList/Version[-1]/Project[agg_prev(desc::SubTask[atom(content =~ "completed")])]
+
+User: tasks with blocking subtasks
+Output: /TodoList/Version[-1]/Project/Task[agg_exists(SubTask[atom(content =~ "blocking")])]
+
+User: the first 10 subtasks overall
+Output: (/TodoList/Version[-1]/desc::SubTask)[1:10]
+
+User: all bug-related subtasks
+Output: /TodoList/Version[-1]/desc::SubTask[atom(content =~ "bug")]
+
+### Wildcard Queries (select all children)
+User: everything in the first project
+Output: /TodoList/Version[-1]/Project[1]/.
+
+User: all items in the last project
+Output: /TodoList/Version[-1]/Project[-1]/.
+
+User: the first 5 items across all projects
+Output: (/TodoList/Version[-1]/Project/.)[1:5]
+
+### Combined Index and Predicate
+User: the first urgent task in each project
+Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "urgent")][1]
+
+User: the second bug-related task overall
+Output: (/TodoList/Version[-1]/Project/Task[atom(content =~ "bug")])[2]
+
+### CRUD Operations
 Operation: CREATE
 User: add a new task for implementing login
 Output: /TodoList/Version[-1]/Project[atom(content =~ "frontend")], Task, implement login page
@@ -41,3 +113,7 @@ Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "login")], status: co
 Operation: DELETE
 User: delete all completed tasks
 Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "completed")]
+
+Operation: DELETE
+User: remove the first task in the backend project
+Output: /TodoList/Version[-1]/Project[atom(content =~ "backend")]/Task[1]

@@ -187,7 +187,7 @@ For each returned node `u`, the final score is the **product** of all predicate 
 ### Find Museums in the Second Day
 
 ```xpath
-/Itinerary/Day[@index='2']/POI[atom(content =~ "museum")]
+/Itinerary/Day[2]/POI[atom(content =~ "museum")]
 ```
 
 ### Find Museums and Art Galleries

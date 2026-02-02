@@ -48,13 +48,13 @@ We use a travel itinerary represented as a hierarchical XML document:
 #### Standard XPath
 
 ```xpath
-/Itinerary/Day[@index='2']/POI[contains(name, 'Museum')]
+/Itinerary/Day[2]/POI[contains(name, 'Museum')]
 ```
 
 #### Semantic XPath
 
 ```xpath
-/Itinerary/Day[@index = '2']/POI[sem(name, 'Museum')]
+/Itinerary/Day[2]/POI[sem(name, 'Museum')]
 ```
 
 - Structural navigation is identical to XPath.

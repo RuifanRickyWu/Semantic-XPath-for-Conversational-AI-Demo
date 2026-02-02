@@ -157,7 +157,7 @@ def get_schema_summary_for_prompt(schema_name: Optional[str] = None) -> str:
     
     Shows the tree hierarchy with node types and their available fields.
     This helps the LLM understand what information is available at each node
-    without knowing the specific values.
+    and determine when to use child vs desc axis.
     
     Args:
         schema_name: Name of the schema. If None, uses active_schema from config.
@@ -167,8 +167,17 @@ def get_schema_summary_for_prompt(schema_name: Optional[str] = None) -> str:
     """
     schema = load_schema(schema_name)
     nodes = schema.get("nodes", {})
+    hierarchy = schema.get("hierarchy", "")
     
-    lines = ["Schema Structure:"]
+    lines = []
+    
+    # Include hierarchy visualization if available (helps with axis selection)
+    if hierarchy:
+        lines.append("Tree Hierarchy (use desc:: axis to skip intermediate levels):")
+        lines.append(hierarchy.strip())
+        lines.append("")
+    
+    lines.append("Node Definitions:")
     lines.append("")
     
     for node_name, node_config in nodes.items():
@@ -192,9 +201,9 @@ def get_schema_summary_for_prompt(schema_name: Optional[str] = None) -> str:
         if fields:
             lines.append(f"  Fields: {', '.join(fields)}")
         
-        # Children
+        # Children - crucial for axis selection
         if children:
-            lines.append(f"  Children: {', '.join(children)}")
+            lines.append(f"  Direct children: {', '.join(children)}")
         
         lines.append("")
     

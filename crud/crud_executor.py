@@ -622,17 +622,41 @@ class CRUDExecutor:
     # =========================================================================
     
     def _build_version_xpath(self, xpath: str, version: ET.Element) -> str:
-        """Build an xpath query that targets the specific version."""
-        version_number = version.get("number", "1")
+        """Build an xpath query that targets the specific version.
         
+        Handles both regular paths and global index queries:
+        - Regular: /Itinerary/Day/POI -> /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI
+        - Global: (/Itinerary/Day/POI)[1] -> (/Root/Itinerary_Version[@number='1']/Itinerary/Day/POI)[1]
+        """
+        import re
+        
+        version_number = version.get("number", "1")
+        version_prefix = f"/Root/Itinerary_Version[@number='{version_number}']/Itinerary"
+        
+        # Handle global index queries: (/path)[index] -> (/version_prefix/path)[index]
+        # Pattern matches (/...)[N] or (/...)[N:M] or (/...)[-N:] etc.
+        global_index_match = re.match(r'^\((.+)\)(\[.+\])$', xpath)
+        if global_index_match:
+            inner_path = global_index_match.group(1)
+            global_index = global_index_match.group(2)
+            
+            # Transform the inner path
+            if inner_path.startswith("/Itinerary"):
+                inner_path = inner_path[len("/Itinerary"):]
+            elif not inner_path.startswith("/"):
+                inner_path = "/" + inner_path
+                
+            return f"({version_prefix}{inner_path}){global_index}"
+        
+        # Regular queries
         if xpath.startswith("/Itinerary"):
             remaining = xpath[len("/Itinerary"):]
-            return f"/Root/Itinerary_Version[@number='{version_number}']/Itinerary{remaining}"
+            return f"{version_prefix}{remaining}"
         
         if not xpath.startswith("/"):
             xpath = "/" + xpath
         
-        return f"/Root/Itinerary_Version[@number='{version_number}']/Itinerary{xpath}"
+        return f"{version_prefix}{xpath}"
     
     def _copy_version_content(self, version: ET.Element) -> List[ET.Element]:
         """Create a deep copy of the content nodes from a version."""

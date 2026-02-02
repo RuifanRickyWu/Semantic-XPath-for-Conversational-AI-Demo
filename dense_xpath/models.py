@@ -48,17 +48,22 @@ class CompoundPredicate:
     - AND: Conjunction ψ₁ ∧ ψ₂ - min{Score(u, ψ₁), Score(u, ψ₂)}
     - OR: Disjunction ψ₁ ∨ ψ₂ - max{Score(u, ψ₁), Score(u, ψ₂)}
     - NOT: Negation ¬ψ - 1 - Score(u, ψ)
-    - AGG_EXISTS: Existential aggregation Agg∃ - max over children
-    - AGG_PREV: Prevalence aggregation Aggprev - average over children
+    - AGG_EXISTS: Existential aggregation Agg∃ - max over children/descendants
+    - AGG_PREV: Prevalence aggregation Aggprev - average over children/descendants
     
     Key semantic distinction:
     - atom() evaluates the node's OWN content (local)
-    - agg_exists()/agg_prev() aggregate scores from CHILDREN (hierarchical)
+    - agg_exists()/agg_prev() aggregate scores from CHILDREN or DESCENDANTS (hierarchical)
+    
+    Axis support (for AGG_EXISTS/AGG_PREV):
+    - child_axis="child" (default): aggregate over direct children only
+    - child_axis="desc": aggregate over all descendants at any depth
     """
     operator: str  # "ATOM", "AND", "OR", "NOT", "AGG_EXISTS", "AGG_PREV"
     conditions: List[Union[AtomicPredicate, 'CompoundPredicate']] = field(default_factory=list)
     child_predicate: Optional['CompoundPredicate'] = None  # For AGG_EXISTS/AGG_PREV
     child_type: Optional[str] = None  # Target child node type for hierarchical predicates
+    child_axis: str = "child"  # Axis for hierarchical predicates: "child" | "desc"
     
     def __repr__(self):
         if self.operator == "ATOM":
@@ -70,12 +75,14 @@ class CompoundPredicate:
         elif self.operator == "NOT":
             return f"not({self.conditions[0]})" if self.conditions else "not()"
         elif self.operator == "AGG_EXISTS":
+            axis_prefix = f"{self.child_axis}::" if self.child_axis != "child" else ""
             if self.child_type:
-                return f"agg_exists({self.child_type}[{self.child_predicate}])"
+                return f"agg_exists({axis_prefix}{self.child_type}[{self.child_predicate}])"
             return f"agg_exists({self.child_predicate})"
         elif self.operator == "AGG_PREV":
+            axis_prefix = f"{self.child_axis}::" if self.child_axis != "child" else ""
             if self.child_type:
-                return f"agg_prev({self.child_type}[{self.child_predicate}])"
+                return f"agg_prev({axis_prefix}{self.child_type}[{self.child_predicate}])"
             return f"agg_prev({self.child_predicate})"
         return f"{self.operator}({self.conditions})"
     
@@ -90,6 +97,8 @@ class CompoundPredicate:
             result["child_predicate"] = self.child_predicate.to_dict()
         if self.child_type:
             result["child_type"] = self.child_type
+        if self.child_axis != "child":
+            result["child_axis"] = self.child_axis
         return result
     
     def get_all_atomic_values(self) -> List[str]:
@@ -187,19 +196,27 @@ class QueryStep:
     Represents a single step in an XPath query.
     
     Each step consists of:
+    - axis: The traversal axis ("child" for direct children, "desc" for all descendants)
     - node_type: The target node type to match
     - predicate: Optional compound predicate for semantic filtering
     - index: Optional positional index or range
+    
+    Axis semantics:
+    - child (default): Match only direct children of the current node
+    - desc: Match all descendants at any depth (uses XML iter())
     """
     node_type: str  # e.g., "Itinerary", "Day", "POI", "Restaurant"
     predicate: Optional[CompoundPredicate] = None  # Compound predicate AST
     index: Optional[IndexRange] = None  # positional index or range
+    axis: str = "child"  # Traversal axis: "child" | "desc"
     
     # Legacy support: simple string predicate (converted to CompoundPredicate)
     predicate_str: Optional[str] = None  # Original predicate string for display
     
     def __repr__(self):
-        parts = [self.node_type]
+        # Show axis prefix only if not the default "child"
+        axis_prefix = f"{self.axis}::" if self.axis != "child" else ""
+        parts = [f"{axis_prefix}{self.node_type}"]
         if self.predicate:
             parts.append(f'[{self.predicate}]')
         elif self.predicate_str:

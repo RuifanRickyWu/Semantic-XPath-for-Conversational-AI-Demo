@@ -28,6 +28,12 @@ You are a creation handler for a tree-structured data system. Analyze the user's
 
 Placement hints: "start of day" → 0, "after lunch" → after 12-2PM items, "end of day" → -1
 
+### Positional Selection (IMPORTANT)
+Positional terms like "first", "second", "last", "Nth" in the query are already handled by the XPath system.
+- Do NOT re-evaluate positional logic for parent/context selection
+- Focus ONLY on semantic relevance and generating correct content
+- Trust the context nodes provided - they have been positionally filtered already
+
 ## Output
 
 ```json

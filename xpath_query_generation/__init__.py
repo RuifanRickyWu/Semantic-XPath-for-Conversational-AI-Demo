@@ -7,7 +7,7 @@ Version handling is done separately by VersionResolver.
 
 Examples:
 - /Itinerary/Day/POI[atom(content =~ "museum")]
-- /Itinerary/Day[@index='1'], Restaurant, sushi restaurant
+- /Itinerary/Day[1], Restaurant, sushi restaurant
 - /Itinerary/Day/POI[...], time_block: 2:00 PM
 """
 

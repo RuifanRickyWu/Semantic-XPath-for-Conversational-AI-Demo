@@ -5,7 +5,7 @@ Intent classification is now integrated into the XPath Query Generator,
 which outputs CRUD-prefixed queries in a single LLM call:
 - Read(/Itinerary/Version[-1]/Day/POI[...])
 - Delete(/Itinerary/Version[-1]/Day/POI[...])
-- Create(/Itinerary/Version[-1]/Day[@index='1'], Restaurant, ...)
+- Create(/Itinerary/Version[-1]/Day[1], Restaurant, ...)
 - Update(/Itinerary/Version[-1]/Day/POI[...], field: value)
 
 The base classes are kept for backward compatibility but the IntentClassifier

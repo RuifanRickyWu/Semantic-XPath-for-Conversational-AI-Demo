@@ -1,10 +1,51 @@
 ## Grammar
 
-Query Q := Step | Step / Query
-Step := NodeType [Predicate]
+Query Q := Step | Step / Query | (Query)[GlobalIndex]
+Step := Axis NodeType Index [Predicate]
+Axis := none | desc ::
+NodeType := Name | "." (wildcard for all children)
+Index := none | [i] | [-i] | [i:j]
 Predicate := Predicate AND Predicate | Predicate OR Predicate | not(Predicate) | Atom | Agg
 Atom := atom(content =~ "value")
-Agg := agg_exists(ChildType[Predicate]) | agg_prev(ChildType[Predicate])
+Agg := agg_exists(Axis ChildType [Predicate]) | agg_prev(Axis ChildType [Predicate])
+
+## Axis Syntax
+
+**none (default)** - Match only direct children
+- `NodeType` - matches direct children only (no axis prefix needed)
+- Use when target is an immediate child in the schema hierarchy
+
+**desc ::** - Match all descendants at any depth
+- `desc::NodeType` - matches all descendants of this type
+- Use when target is NOT a direct child (multiple levels deep)
+- Use to skip intermediate container nodes
+
+**When to use `desc` axis:**
+- Check the schema hierarchy to see if target is a direct child
+- If target is deeper than one level, use `desc::`
+- Example: If schema is `Project → Task → SubTask`, to get SubTasks from Project, use `desc::SubTask`
+
+**. (wildcard)** - Match all structured children regardless of type
+- `/Parent/.` - matches all direct children of Parent
+- Use when you want to select everything under a node
+- Example: `/Itinerary/Day[1]/.` returns all POIs, Restaurants, etc. under Day 1
+
+## Index Syntax
+
+**Local Index** - Positional selection within each parent group
+- `NodeType[i]` - Select node at 1-based index i (e.g., POI[2] = 2nd POI in each Day)
+- `NodeType[-i]` - Select node at negative index from end (e.g., POI[-1] = last POI in each Day)
+- `NodeType[i:j]` - Select contiguous range from i to j inclusive (e.g., POI[1:2] = first 2 POIs in each Day)
+- `none` - No index, retain all candidate nodes (default)
+
+**Global Index** - Positional selection on entire query result
+- `(/path)[N]` - Nth result overall (e.g., (/Itinerary/Day/POI)[5] = 5th POI across all Days)
+- `(/path)[N:M]` - Range from N to M overall
+- `(/path)[-N:]` - Last N results overall
+
+**Key Distinction:**
+- Local: `Day/POI[2]` returns the 2nd POI from EACH Day
+- Global: `(/Itinerary/Day/POI)[2]` returns only the 2nd POI across ALL Days
 
 ## Operators
 
@@ -13,15 +54,19 @@ Agg := agg_exists(ChildType[Predicate]) | agg_prev(ChildType[Predicate])
 - Use when predicate describes the node directly
 - Example: Node[atom(content =~ "keyword")] → Nodes matching keyword
 
-**agg_exists(ChildType[...])** - Existential aggregation over children
-- Returns true if ANY child of the specified type satisfies the inner predicate
+**agg_exists([Axis::]ChildType[...])** - Existential aggregation over children/descendants
+- Returns true if ANY child/descendant of the specified type satisfies the predicate
 - Use when predicate describes a parent by what it CONTAINS
-- Example: Parent[agg_exists(Child[atom(content =~ "property")])] → Parents containing children with property
+- With `desc::`: aggregates over ALL descendants, not just direct children
+- Example: Parent[agg_exists(Child[atom(...)])] → Parents containing matching children
+- Example: Parent[agg_exists(desc::Leaf[atom(...)])] → Parents containing matching descendants
 
-**agg_prev(ChildType[...])** - Prevalence aggregation over children
-- Returns a score based on what PROPORTION of children satisfy the predicate
+**agg_prev([Axis::]ChildType[...])** - Prevalence aggregation over children/descendants
+- Returns a score based on what PROPORTION of children/descendants satisfy the predicate
 - Use when looking for nodes where children GENERALLY have a property
-- Example: Parent[agg_prev(Child[atom(content =~ "property")])] → Parents where most children have property
+- With `desc::`: calculates prevalence across ALL descendants
+- Example: Parent[agg_prev(Child[atom(...)])] → Parents where most children match
+- Example: Parent[agg_prev(desc::Leaf[atom(...)])] → Parents where most descendants match
 
 **not(Predicate)** - Logical negation
 - Inverts the truth value of the inner predicate
@@ -30,7 +75,7 @@ Agg := agg_exists(ChildType[Predicate]) | agg_prev(ChildType[Predicate])
 
 ## Operator Selection Guide
 
-Ask: Does the predicate describe the node itself, or describe a parent via its children?
+Ask: Does the predicate describe the node itself, or describe a parent via its children/descendants?
 
 | Pattern | Operator | Reasoning |
 |---------|----------|-----------|
@@ -38,6 +83,7 @@ Ask: Does the predicate describe the node itself, or describe a parent via its c
 | "with X", "containing X" | agg_exists() | Parent contains at least one matching child |
 | "generally X", "mostly X" | agg_prev() | Parent where most children have the property |
 | "not X", "without X" | not() | Negation of inner predicate |
+| Target is deeply nested | Use desc:: axis | Skip intermediate containers |
 
 Rule: Container nodes don't have intrinsic descriptive attributes - they derive these from their children. Use aggregation for container queries.
 

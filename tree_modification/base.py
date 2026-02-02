@@ -83,8 +83,8 @@ def path_to_xpath(tree_path: str) -> str:
     Convert a tree path string to an XPath-like query.
     
     Examples:
-        "Itinerary > Day 1 > POI 2" -> "/Itinerary/Day[@index='1']/POI[2]"
-        "Itinerary > Day 3 > Restaurant 1" -> "/Itinerary/Day[@index='3']/Restaurant[1]"
+        "Itinerary > Day 1 > POI 2" -> "/Itinerary/Day[1]/POI[2]"
+        "Itinerary > Day 3 > Restaurant 1" -> "/Itinerary/Day[3]/Restaurant[1]"
     
     Args:
         tree_path: Human-readable tree path
@@ -101,11 +101,8 @@ def path_to_xpath(tree_path: str) -> str:
         if len(words) == 2 and words[1].isdigit():
             node_type = words[0]
             index = words[1]
-            
-            if node_type == "Day":
-                xpath_parts.append(f"Day[@index='{index}']")
-            else:
-                xpath_parts.append(f"{node_type}[{index}]")
+            # Use bracket notation for all node types including Day
+            xpath_parts.append(f"{node_type}[{index}]")
         else:
             xpath_parts.append(part)
     

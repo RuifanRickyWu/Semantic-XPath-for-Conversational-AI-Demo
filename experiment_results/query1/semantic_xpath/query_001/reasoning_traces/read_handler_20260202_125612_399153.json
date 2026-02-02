@@ -1,0 +1,13 @@
+{
+  "user_query": "My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.",
+  "candidates_count": 4,
+  "selected_count": 0,
+  "selected_nodes": [],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [],\n  \"reasoning\": \"None of the candidate nodes match the user's query for a day without work commitments or flights. All nodes describe itineraries with planned activities and meals, which imply commitments. The query suggests a need for a free day, possibly to visit a friend in Mississauga, which is not covered by any of the provided itineraries.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 2244,
+    "completion_tokens": 83,
+    "total_tokens": 2327
+  },
+  "processing_time_ms": 3093.074099975638
+}

@@ -1,0 +1,5 @@
+2026-02-02 12:56:12,841 - INFO - Query: My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.
+2026-02-02 12:56:12,841 - INFO - Running query 1: My college friend lives in Mississauga, about an hour from downtown. I need a day without any work commitments or flights.
+2026-02-02 12:56:26,852 - INFO -   Operation: READ, Success: True, Time: 14010.7ms
+2026-02-02 12:56:26,852 - INFO -   Tokens: 7189
+2026-02-02 12:56:26,852 - INFO - Result: READ, Success: True

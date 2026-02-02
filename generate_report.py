@@ -180,21 +180,34 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
         "|---|---|---|---|---|---|---|"
     ]
 
-    # Find all unique query indices across pipelines to order them
-    query_files = set()
+    # Find all unique query folders across pipelines to order them
+    query_folders = set()
     for pipeline in pipelines:
         pipeline_dir = base_dir / pipeline
         if pipeline_dir.exists():
+            # New structure: query_XXX/result.json
+            folders = glob.glob(str(pipeline_dir / "query_*"))
+            for folder in folders:
+                if Path(folder).is_dir():
+                    query_folders.add(Path(folder).name)
+            # Also check for legacy flat structure: query_XXX_result.json
             files = glob.glob(str(pipeline_dir / "query_*_result.json"))
-            query_files.update([Path(f).name for f in files])
+            for f in files:
+                # Extract query number and convert to folder name format
+                query_num = Path(f).name.split('_')[1]
+                query_folders.add(f"query_{query_num}")
     
-    sorted_files = sorted(list(query_files))
+    sorted_folders = sorted(list(query_folders))
 
-    for file_name in sorted_files:
-        query_id = file_name.split('_')[1]
+    for folder_name in sorted_folders:
+        query_id = folder_name.split('_')[1]
         
         for pipeline in pipelines:
-            file_path = base_dir / pipeline / file_name
+            # Try new structure first: query_XXX/result.json
+            file_path = base_dir / pipeline / folder_name / "result.json"
+            if not file_path.exists():
+                # Fall back to legacy structure: query_XXX_result.json
+                file_path = base_dir / pipeline / f"{folder_name}_result.json"
             if not file_path.exists():
                 continue
             
@@ -239,24 +252,32 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
     output_lines.append("")
     output_lines.append("## Detailed Results")
     
-    for file_name in sorted_files:
-        query_id = file_name.split('_')[1]
+    for folder_name in sorted_folders:
+        query_id = folder_name.split('_')[1]
         output_lines.append(f"### Query {query_id}")
         
         # Get query text from first available pipeline
         query_text = ""
         for pipeline in pipelines:
-             file_path = base_dir / pipeline / file_name
-             if file_path.exists():
-                 data = load_result_json(file_path)
-                 query_text = data.get("query", "")
-                 break
+            # Try new structure first
+            file_path = base_dir / pipeline / folder_name / "result.json"
+            if not file_path.exists():
+                # Fall back to legacy structure
+                file_path = base_dir / pipeline / f"{folder_name}_result.json"
+            if file_path.exists():
+                data = load_result_json(file_path)
+                query_text = data.get("query", "")
+                break
         
         output_lines.append(f"**Query:** {query_text}")
         output_lines.append("")
         
         for pipeline in pipelines:
-            file_path = base_dir / pipeline / file_name
+            # Try new structure first
+            file_path = base_dir / pipeline / folder_name / "result.json"
+            if not file_path.exists():
+                # Fall back to legacy structure
+                file_path = base_dir / pipeline / f"{folder_name}_result.json"
             if not file_path.exists():
                 continue
                 

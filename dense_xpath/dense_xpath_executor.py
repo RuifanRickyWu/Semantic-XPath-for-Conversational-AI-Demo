@@ -153,7 +153,6 @@ class DenseXPathExecutor:
             schema=self._schema
         )
         self.trace_writer = TraceWriter(
-            log_path=traces_path / "log" if traces_path else None,
             traces_path=traces_path / "reasoning_traces" if traces_path else None
         )
         

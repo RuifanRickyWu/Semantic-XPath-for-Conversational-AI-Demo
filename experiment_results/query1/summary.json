@@ -1,22 +1,22 @@
 {
   "experiment_name": "query1",
-  "start_time": "2026-02-02T11:41:50.420636",
+  "start_time": "2026-02-02T12:55:57.615460",
   "total_queries": 1,
   "pipelines": {
     "semantic_xpath": {
       "total_queries": 1,
       "success_count": 1,
-      "total_time_ms": 27522.78,
-      "total_tokens": 3974,
-      "avg_time_per_query_ms": 27522.78
+      "total_time_ms": 14688.13,
+      "total_tokens": 5364,
+      "avg_time_per_query_ms": 14688.13
     },
     "incontext": {
       "total_queries": 1,
       "success_count": 1,
-      "total_time_ms": 7931.02,
-      "total_tokens": 7188,
-      "avg_time_per_query_ms": 7931.02
+      "total_time_ms": 14013.86,
+      "total_tokens": 7189,
+      "avg_time_per_query_ms": 14013.86
     }
   },
-  "end_time": "2026-02-02T11:42:26.333398"
+  "end_time": "2026-02-02T12:56:26.854753"
 }

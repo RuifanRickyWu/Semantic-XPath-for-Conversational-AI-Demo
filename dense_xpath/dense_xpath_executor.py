@@ -323,13 +323,6 @@ class DenseXPathExecutor:
             current_items = next_items
             execution_log.append(f"After step: {len(current_items)} nodes remaining")
         
-        # Apply global index if present (before final scoring)
-        if global_index is not None and current_items:
-            current_items, global_step = self._apply_global_index(
-                current_items, global_index, len(steps), execution_log
-            )
-            traversal_steps.append(global_step)
-        
         # =====================================================================
         # Final Score Computation: Score Fusion (Product)
         # =====================================================================
@@ -365,17 +358,39 @@ class DenseXPathExecutor:
         score_fusion_trace = ScoreFusionTrace(per_node_traces=fusion_traces)
         
         # =====================================================================
-        # Deferred Filtering: TopK and Threshold
+        # Threshold Filtering (before global index)
         # =====================================================================
-        execution_log.append(f"\n=== Final Filtering (threshold={self.score_threshold}, top_k={self.top_k}) ===")
+        execution_log.append(f"\n=== Threshold Filtering (threshold={self.score_threshold}) ===")
         
-        before_count = len(current_items)
+        before_threshold_count = len(current_items)
         
-        # Apply threshold filter
+        # Apply threshold filter first
         current_items = [item for item in current_items if item.score >= self.score_threshold]
         
         # Sort by score descending
         current_items.sort(key=lambda x: x.score, reverse=True)
+        
+        execution_log.append(
+            f"  Filtered: {before_threshold_count} → {len(current_items)} nodes"
+        )
+        
+        # =====================================================================
+        # Apply global index AFTER threshold filtering
+        # =====================================================================
+        # This ensures that e.g. "first museum" selects from nodes that actually
+        # match "museum" (pass threshold), not the first node in document order.
+        if global_index is not None and current_items:
+            current_items, global_step = self._apply_global_index(
+                current_items, global_index, len(steps), execution_log
+            )
+            traversal_steps.append(global_step)
+        
+        # =====================================================================
+        # Final top_k limit
+        # =====================================================================
+        execution_log.append(f"\n=== Final Filtering (top_k={self.top_k}) ===")
+        
+        before_count = len(current_items)
         
         # Apply top_k limit
         current_items = current_items[:self.top_k]
@@ -383,11 +398,11 @@ class DenseXPathExecutor:
         after_count = len(current_items)
         
         execution_log.append(
-            f"  Filtered: {before_count} → {after_count} nodes"
+            f"  After top_k: {before_count} → {after_count} nodes"
         )
         
         final_filtering_trace = FinalFilteringTrace(
-            before_filter_count=before_count,
+            before_filter_count=before_threshold_count,
             threshold=self.score_threshold,
             top_k=self.top_k,
             after_filter_count=after_count,

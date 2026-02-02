@@ -1481,13 +1481,14 @@
         </Restaurant>
         <POI>
           <name>Hudson's Bay Souvenir Shopping</name>
-          <time_block>9:00 AM - 10:00 AM</time_block>
-          <description>Stop at Hudson's Bay for last-minute souvenir shopping before heading to the airport.</description>
+          <time_block>8:30 AM - 9:30 AM</time_block>
+          <description>Stop at Hudson's Bay to pick up souvenirs before heading to the airport. Convenient location with a variety of Canadian-themed gifts.</description>
           <travel_method>Walk</travel_method>
           <expected_cost>Variable</expected_cost>
           <highlights>
             <highlight>Souvenir shopping</highlight>
-            <highlight>Last-minute gifts</highlight>
+            <highlight>Canadian gifts</highlight>
+            <highlight>Convenient location</highlight>
           </highlights>
         </POI>
         <POI>

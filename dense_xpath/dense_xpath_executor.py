@@ -129,10 +129,15 @@ class DenseXPathExecutor:
         self._schema = load_schema(schema_name)
         
         # Initialize scorer
+        scorer_traces_path = traces_path / "reasoning_traces" if traces_path else None
         if scorer is not None:
             self.scorer = scorer
         else:
-            self.scorer = get_scorer(method=self.scoring_method, config=config)
+            self.scorer = get_scorer(
+                method=self.scoring_method, 
+                config=config,
+                traces_path=scorer_traces_path
+            )
         
         # Initialize components
         self.parser = QueryParser()

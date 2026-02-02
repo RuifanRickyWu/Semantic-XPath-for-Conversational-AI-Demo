@@ -28,13 +28,14 @@ class EntailmentPredicateScorer(PredicateScorer):
     node descriptions and semantic predicates.
     """
     
-    TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
+    DEFAULT_TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
     
     def __init__(
         self, 
         client: BartNLIClient = None, 
         hypothesis_template: str = "This is related to {predicate}.",
-        save_traces: bool = True
+        save_traces: bool = True,
+        traces_path: Path = None
     ):
         """
         Initialize the entailment scorer.
@@ -44,13 +45,15 @@ class EntailmentPredicateScorer(PredicateScorer):
             hypothesis_template: Template for constructing hypothesis from predicate.
                                  Use {predicate} as placeholder.
             save_traces: Whether to save reasoning traces to disk.
+            traces_path: Optional custom path for trace files.
         """
         self._client = client
         self.hypothesis_template = hypothesis_template
         self.save_traces = save_traces
+        self.traces_path = traces_path or self.DEFAULT_TRACES_PATH
         
         # Ensure traces directory exists
-        self.TRACES_PATH.mkdir(parents=True, exist_ok=True)
+        self.traces_path.mkdir(parents=True, exist_ok=True)
     
     @property
     def client(self) -> BartNLIClient:
@@ -160,7 +163,7 @@ class EntailmentPredicateScorer(PredicateScorer):
     ):
         """Save reasoning trace to disk."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-        trace_file = self.TRACES_PATH / f"entailment_scoring_{timestamp}.json"
+        trace_file = self.traces_path / f"entailment_scoring_{timestamp}.json"
         
         trace_data = {
             "timestamp": timestamp,

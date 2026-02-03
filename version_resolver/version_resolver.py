@@ -132,7 +132,7 @@ class VersionResolver:
     def system_prompt(self) -> str:
         """Lazy load the system prompt from file."""
         if self._system_prompt is None:
-            with open(self._prompt_path, "r") as f:
+            with open(self._prompt_path, "r", encoding="utf-8") as f:
                 self._system_prompt = f.read()
         return self._system_prompt
     

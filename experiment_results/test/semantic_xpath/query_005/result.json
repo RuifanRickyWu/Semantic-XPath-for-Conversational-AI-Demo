@@ -3,28 +3,28 @@
   "query": "I've been stuck in meetings most of the week. Which days have nature activities where I can actually get outside?",
   "operation": "READ",
   "success": true,
-  "execution_time_ms": 11279.42,
+  "execution_time_ms": 21722.01,
   "token_usage": {
-    "prompt_tokens": 5514,
-    "completion_tokens": 204,
-    "total_tokens": 5718
+    "prompt_tokens": 7385,
+    "completion_tokens": 1831,
+    "total_tokens": 9216
   },
   "selected_nodes": [
-    {
-      "type": "Day",
-      "attributes": {
-        "index": "8"
-      },
-      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
-      "reasoning": "Day 8 includes a full-day outdoor excursion to Niagara Falls, which is a nature activity."
-    },
     {
       "type": "Day",
       "attributes": {
         "index": "6"
       },
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
-      "reasoning": "Day 6 includes a ferry ride and bike ride on Toronto Islands, which is an outdoor nature activity."
+      "reasoning": "Day 6 includes the 'Toronto Islands Ferry and Bike Ride', which is an outdoor nature activity, matching the user's request for nature activities."
+    },
+    {
+      "type": "Day",
+      "attributes": {
+        "index": "8"
+      },
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+      "reasoning": "Day 8 features a 'Niagara Falls Day Trip', which is an outdoor scenic adventure, directly aligning with the user's interest in nature activities."
     },
     {
       "type": "Day",
@@ -32,19 +32,11 @@
         "index": "1"
       },
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
-      "reasoning": "Day 1 includes a Harbourfront Stroll, which is an outdoor activity with lake views."
-    },
-    {
-      "type": "Day",
-      "attributes": {
-        "index": "7"
-      },
-      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
-      "reasoning": "Day 7 includes a Distillery District Walk, which is an outdoor walking experience."
+      "reasoning": "Day 1 includes a 'Harbourfront Stroll', which is an outdoor activity with fresh air and lake views, fitting the user's desire to get outside."
     }
   ],
   "raw_result": {
-    "timestamp": "20260202_181126_108724",
+    "timestamp": "20260202_184007_802105",
     "user_query": "I've been stuck in meetings most of the week. Which days have nature activities where I can actually get outside?",
     "operation": "READ",
     "success": true,
@@ -55,44 +47,38 @@
       "crud_operation": "Read",
       "raw_response": "at([-1]), READ",
       "token_usage": {
-        "prompt_tokens": 461,
+        "prompt_tokens": 629,
         "completion_tokens": 5,
-        "total_tokens": 466
+        "total_tokens": 634
       }
     },
     "parsed_query": {
       "operation": "Read",
-      "xpath": "/Itinerary/Day[agg_exists(POI[atom(content =~ \"nature\")])]",
-      "full_query": "Read(/Itinerary/Day[agg_exists(POI[atom(content =~ \"nature\")])])",
+      "xpath": "/Itinerary/Day[\nagg_exists(desc :: POI [\natom(content =~ \"nature\")\n])\n]",
+      "full_query": "Read(/Itinerary/Day[\nagg_exists(desc :: POI [\natom(content =~ \"nature\")\n])\n])",
       "token_usage": {
-        "prompt_tokens": 2525,
-        "completion_tokens": 19,
-        "total_tokens": 2544
+        "prompt_tokens": 1103,
+        "completion_tokens": 21,
+        "total_tokens": 1124
       }
     },
     "version_used": "1",
     "xpath_execution": {
-      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[agg_exists(POI[atom(content =~ \"nature\")])]",
-      "matched_count": 5,
-      "execution_time_ms": 5795.120999915525,
-      "token_usage": null
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[\nagg_exists(desc :: POI [\natom(content =~ \"nature\")\n])\n]",
+      "matched_count": 3,
+      "execution_time_ms": 16697.463699965738,
+      "token_usage": {
+        "prompt_tokens": 4133,
+        "completion_tokens": 1597,
+        "total_tokens": 5730
+      }
     },
     "handler_result": {
       "success": true,
       "operation": "READ",
-      "processing_time_ms": 3395.2226999681443,
+      "processing_time_ms": 3372.7603999432176,
       "output": {
         "selected_nodes": [
-          {
-            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
-            "node_data": {
-              "type": "Day",
-              "attributes": {
-                "index": "8"
-              }
-            },
-            "reasoning": "Day 8 includes a full-day outdoor excursion to Niagara Falls, which is a nature activity."
-          },
           {
             "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
             "node_data": {
@@ -101,7 +87,17 @@
                 "index": "6"
               }
             },
-            "reasoning": "Day 6 includes a ferry ride and bike ride on Toronto Islands, which is an outdoor nature activity."
+            "reasoning": "Day 6 includes the 'Toronto Islands Ferry and Bike Ride', which is an outdoor nature activity, matching the user's request for nature activities."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+            "node_data": {
+              "type": "Day",
+              "attributes": {
+                "index": "8"
+              }
+            },
+            "reasoning": "Day 8 features a 'Niagara Falls Day Trip', which is an outdoor scenic adventure, directly aligning with the user's interest in nature activities."
           },
           {
             "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
@@ -111,35 +107,25 @@
                 "index": "1"
               }
             },
-            "reasoning": "Day 1 includes a Harbourfront Stroll, which is an outdoor activity with lake views."
-          },
-          {
-            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
-            "node_data": {
-              "type": "Day",
-              "attributes": {
-                "index": "7"
-              }
-            },
-            "reasoning": "Day 7 includes a Distillery District Walk, which is an outdoor walking experience."
+            "reasoning": "Day 1 includes a 'Harbourfront Stroll', which is an outdoor activity with fresh air and lake views, fitting the user's desire to get outside."
           }
         ]
       },
       "token_usage": {
-        "prompt_tokens": 2528,
-        "completion_tokens": 180,
-        "total_tokens": 2708
+        "prompt_tokens": 1520,
+        "completion_tokens": 208,
+        "total_tokens": 1728
       }
     },
     "timing": {
       "stages": [
         {
           "name": "version_resolution",
-          "time_ms": 1557.7,
+          "time_ms": 896.84,
           "token_usage": {
-            "prompt_tokens": 461,
+            "prompt_tokens": 629,
             "completion_tokens": 5,
-            "total_tokens": 466
+            "total_tokens": 634
           }
         },
         {
@@ -148,53 +134,58 @@
         },
         {
           "name": "query_generation",
-          "time_ms": 521.21,
+          "time_ms": 745.07,
           "token_usage": {
-            "prompt_tokens": 2525,
-            "completion_tokens": 19,
-            "total_tokens": 2544
+            "prompt_tokens": 1103,
+            "completion_tokens": 21,
+            "total_tokens": 1124
           }
         },
         {
           "name": "xpath_execution",
-          "time_ms": 5800.54
+          "time_ms": 16702.21,
+          "token_usage": {
+            "prompt_tokens": 4133,
+            "completion_tokens": 1597,
+            "total_tokens": 5730
+          }
         },
         {
           "name": "downstream_task",
-          "time_ms": 3395.83,
+          "time_ms": 3373.63,
           "token_usage": {
-            "prompt_tokens": 2528,
-            "completion_tokens": 180,
-            "total_tokens": 2708
+            "prompt_tokens": 1520,
+            "completion_tokens": 208,
+            "total_tokens": 1728
           }
         }
       ],
-      "total_time_ms": 11275.29,
+      "total_time_ms": 21717.76,
       "total_tokens": {
-        "prompt_tokens": 5514,
-        "completion_tokens": 204,
-        "total_tokens": 5718
+        "prompt_tokens": 7385,
+        "completion_tokens": 1831,
+        "total_tokens": 9216
       },
-      "pipeline_total_ms": 11278.461499954574
+      "pipeline_total_ms": 21720.775100053288
     },
-    "candidates_count": 5,
-    "selected_count": 4,
+    "candidates_count": 3,
+    "selected_count": 3,
     "selected_nodes": [
-      {
-        "type": "Day",
-        "attributes": {
-          "index": "8"
-        },
-        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
-        "reasoning": "Day 8 includes a full-day outdoor excursion to Niagara Falls, which is a nature activity."
-      },
       {
         "type": "Day",
         "attributes": {
           "index": "6"
         },
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
-        "reasoning": "Day 6 includes a ferry ride and bike ride on Toronto Islands, which is an outdoor nature activity."
+        "reasoning": "Day 6 includes the 'Toronto Islands Ferry and Bike Ride', which is an outdoor nature activity, matching the user's request for nature activities."
+      },
+      {
+        "type": "Day",
+        "attributes": {
+          "index": "8"
+        },
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+        "reasoning": "Day 8 features a 'Niagara Falls Day Trip', which is an outdoor scenic adventure, directly aligning with the user's interest in nature activities."
       },
       {
         "type": "Day",
@@ -202,17 +193,9 @@
           "index": "1"
         },
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
-        "reasoning": "Day 1 includes a Harbourfront Stroll, which is an outdoor activity with lake views."
-      },
-      {
-        "type": "Day",
-        "attributes": {
-          "index": "7"
-        },
-        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
-        "reasoning": "Day 7 includes a Distillery District Walk, which is an outdoor walking experience."
+        "reasoning": "Day 1 includes a 'Harbourfront Stroll', which is an outdoor activity with fresh air and lake views, fitting the user's desire to get outside."
       }
     ],
-    "total_time_ms": 11278.461499954574
+    "total_time_ms": 21720.775100053288
   }
 }

@@ -1,4 +1,4 @@
-name: "incontext_test"
+name: "test"
 
 # Pipelines to run for each query
 pipelines:

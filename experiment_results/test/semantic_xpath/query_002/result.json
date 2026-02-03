@@ -3,11 +3,11 @@
   "query": "The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?",
   "operation": "READ",
   "success": true,
-  "execution_time_ms": 3395.7,
+  "execution_time_ms": 3783.39,
   "token_usage": {
-    "prompt_tokens": 3897,
-    "completion_tokens": 101,
-    "total_tokens": 3998
+    "prompt_tokens": 3004,
+    "completion_tokens": 241,
+    "total_tokens": 3245
   },
   "selected_nodes": [
     {
@@ -24,11 +24,11 @@
         "Artisan shops"
       ],
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
-      "reasoning": "Distillery District Walk is an outdoor activity, which may be affected by heavy rain."
+      "reasoning": "The Distillery District Walk is an outdoor activity, as it involves walking through a historic pedestrian village with cobblestone streets. This matches the user's query about outdoor activities that might need rescheduling due to heavy rain."
     }
   ],
   "raw_result": {
-    "timestamp": "20260202_181108_805915",
+    "timestamp": "20260202_183933_837150",
     "user_query": "The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?",
     "operation": "READ",
     "success": true,
@@ -39,9 +39,9 @@
       "crud_operation": "Read",
       "raw_response": "at([-1]), READ",
       "token_usage": {
-        "prompt_tokens": 462,
+        "prompt_tokens": 630,
         "completion_tokens": 5,
-        "total_tokens": 467
+        "total_tokens": 635
       }
     },
     "parsed_query": {
@@ -49,22 +49,26 @@
       "xpath": "/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")]",
       "full_query": "Read(/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")])",
       "token_usage": {
-        "prompt_tokens": 2526,
+        "prompt_tokens": 1104,
         "completion_tokens": 18,
-        "total_tokens": 2544
+        "total_tokens": 1122
       }
     },
     "version_used": "1",
     "xpath_execution": {
       "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")]",
-      "matched_count": 2,
-      "execution_time_ms": 592.469000024721,
-      "token_usage": null
+      "matched_count": 1,
+      "execution_time_ms": 1373.4595999121666,
+      "token_usage": {
+        "prompt_tokens": 644,
+        "completion_tokens": 87,
+        "total_tokens": 731
+      }
     },
     "handler_result": {
       "success": true,
       "operation": "READ",
-      "processing_time_ms": 1587.731200037524,
+      "processing_time_ms": 1512.0842999313027,
       "output": {
         "selected_nodes": [
           {
@@ -83,63 +87,68 @@
                 "Artisan shops"
               ]
             },
-            "reasoning": "Distillery District Walk is an outdoor activity, which may be affected by heavy rain."
+            "reasoning": "The Distillery District Walk is an outdoor activity, as it involves walking through a historic pedestrian village with cobblestone streets. This matches the user's query about outdoor activities that might need rescheduling due to heavy rain."
           }
         ]
       },
       "token_usage": {
-        "prompt_tokens": 909,
-        "completion_tokens": 78,
-        "total_tokens": 987
+        "prompt_tokens": 626,
+        "completion_tokens": 131,
+        "total_tokens": 757
       }
     },
     "timing": {
       "stages": [
         {
           "name": "version_resolution",
-          "time_ms": 508.32,
+          "time_ms": 339.95,
           "token_usage": {
-            "prompt_tokens": 462,
+            "prompt_tokens": 630,
             "completion_tokens": 5,
-            "total_tokens": 467
+            "total_tokens": 635
           }
         },
         {
           "name": "version_lookup",
-          "time_ms": 0.01
+          "time_ms": 0.02
         },
         {
           "name": "query_generation",
-          "time_ms": 699.38,
+          "time_ms": 550.92,
           "token_usage": {
-            "prompt_tokens": 2526,
+            "prompt_tokens": 1104,
             "completion_tokens": 18,
-            "total_tokens": 2544
+            "total_tokens": 1122
           }
         },
         {
           "name": "xpath_execution",
-          "time_ms": 594.83
+          "time_ms": 1375.55,
+          "token_usage": {
+            "prompt_tokens": 644,
+            "completion_tokens": 87,
+            "total_tokens": 731
+          }
         },
         {
           "name": "downstream_task",
-          "time_ms": 1588.73,
+          "time_ms": 1513.21,
           "token_usage": {
-            "prompt_tokens": 909,
-            "completion_tokens": 78,
-            "total_tokens": 987
+            "prompt_tokens": 626,
+            "completion_tokens": 131,
+            "total_tokens": 757
           }
         }
       ],
-      "total_time_ms": 3391.28,
+      "total_time_ms": 3779.65,
       "total_tokens": {
-        "prompt_tokens": 3897,
-        "completion_tokens": 101,
-        "total_tokens": 3998
+        "prompt_tokens": 3004,
+        "completion_tokens": 241,
+        "total_tokens": 3245
       },
-      "pipeline_total_ms": 3394.2800000077114
+      "pipeline_total_ms": 3782.329799956642
     },
-    "candidates_count": 2,
+    "candidates_count": 1,
     "selected_count": 1,
     "selected_nodes": [
       {
@@ -156,9 +165,9 @@
           "Artisan shops"
         ],
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
-        "reasoning": "Distillery District Walk is an outdoor activity, which may be affected by heavy rain."
+        "reasoning": "The Distillery District Walk is an outdoor activity, as it involves walking through a historic pedestrian village with cobblestone streets. This matches the user's query about outdoor activities that might need rescheduling due to heavy rain."
       }
     ],
-    "total_time_ms": 3394.2800000077114
+    "total_time_ms": 3782.329799956642
   }
 }

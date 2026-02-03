@@ -3,11 +3,11 @@
   "query": "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?",
   "operation": "READ",
   "success": true,
-  "execution_time_ms": 3371.74,
+  "execution_time_ms": 11240.87,
   "token_usage": {
-    "prompt_tokens": 3950,
-    "completion_tokens": 147,
-    "total_tokens": 4097
+    "prompt_tokens": 3196,
+    "completion_tokens": 276,
+    "total_tokens": 3472
   },
   "selected_nodes": [
     {
@@ -24,7 +24,7 @@
         "Marine life"
       ],
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
-      "reasoning": "Ripley's Aquarium is a kid-friendly indoor attraction with interactive exhibits and marine life, making it fun for a 10-year-old."
+      "reasoning": "Ripley's Aquarium is explicitly described as a kid-friendly family activity with interactive exhibits and marine life, making it suitable for a 10-year-old."
     },
     {
       "type": "POI",
@@ -41,11 +41,11 @@
         "Beach access"
       ],
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
-      "reasoning": "Toronto Islands Ferry and Bike Ride is a kid-friendly outdoor activity with bike riding and beach access, suitable for a 10-year-old."
+      "reasoning": "The Toronto Islands Ferry and Bike Ride is described as a perfect family activity with outdoor nature, bike riding, and beach access, which are enjoyable for kids."
     }
   ],
   "raw_result": {
-    "timestamp": "20260202_181112_205600",
+    "timestamp": "20260202_183937_623925",
     "user_query": "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?",
     "operation": "READ",
     "success": true,
@@ -56,32 +56,36 @@
       "crud_operation": "Read",
       "raw_response": "at([-1]), READ",
       "token_usage": {
-        "prompt_tokens": 472,
+        "prompt_tokens": 640,
         "completion_tokens": 5,
-        "total_tokens": 477
+        "total_tokens": 645
       }
     },
     "parsed_query": {
       "operation": "Read",
-      "xpath": "/Itinerary/Day[6]/POI[atom(content =~ \"fun for a kid\")]",
-      "full_query": "Read(/Itinerary/Day[6]/POI[atom(content =~ \"fun for a kid\")])",
+      "xpath": "/Itinerary/Day[6]/POI[atom(content =~ \"kid\")]",
+      "full_query": "Read(/Itinerary/Day[6]/POI[atom(content =~ \"kid\")])",
       "token_usage": {
-        "prompt_tokens": 2536,
-        "completion_tokens": 20,
-        "total_tokens": 2556
+        "prompt_tokens": 1114,
+        "completion_tokens": 17,
+        "total_tokens": 1131
       }
     },
     "version_used": "1",
     "xpath_execution": {
-      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[6]/POI[atom(content =~ \"fun for a kid\")]",
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[6]/POI[atom(content =~ \"kid\")]",
       "matched_count": 2,
-      "execution_time_ms": 674.6555999852717,
-      "token_usage": null
+      "execution_time_ms": 2647.278600023128,
+      "token_usage": {
+        "prompt_tokens": 666,
+        "completion_tokens": 106,
+        "total_tokens": 772
+      }
     },
     "handler_result": {
       "success": true,
       "operation": "READ",
-      "processing_time_ms": 1329.1395000414923,
+      "processing_time_ms": 7549.407000071369,
       "output": {
         "selected_nodes": [
           {
@@ -100,7 +104,7 @@
                 "Marine life"
               ]
             },
-            "reasoning": "Ripley's Aquarium is a kid-friendly indoor attraction with interactive exhibits and marine life, making it fun for a 10-year-old."
+            "reasoning": "Ripley's Aquarium is explicitly described as a kid-friendly family activity with interactive exhibits and marine life, making it suitable for a 10-year-old."
           },
           {
             "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
@@ -119,61 +123,66 @@
                 "Beach access"
               ]
             },
-            "reasoning": "Toronto Islands Ferry and Bike Ride is a kid-friendly outdoor activity with bike riding and beach access, suitable for a 10-year-old."
+            "reasoning": "The Toronto Islands Ferry and Bike Ride is described as a perfect family activity with outdoor nature, bike riding, and beach access, which are enjoyable for kids."
           }
         ]
       },
       "token_usage": {
-        "prompt_tokens": 942,
-        "completion_tokens": 122,
-        "total_tokens": 1064
+        "prompt_tokens": 776,
+        "completion_tokens": 148,
+        "total_tokens": 924
       }
     },
     "timing": {
       "stages": [
         {
           "name": "version_resolution",
-          "time_ms": 545.83,
+          "time_ms": 549.63,
           "token_usage": {
-            "prompt_tokens": 472,
+            "prompt_tokens": 640,
             "completion_tokens": 5,
-            "total_tokens": 477
+            "total_tokens": 645
           }
         },
         {
           "name": "version_lookup",
-          "time_ms": 0.06
+          "time_ms": 0.01
         },
         {
           "name": "query_generation",
-          "time_ms": 815.18,
+          "time_ms": 486.28,
           "token_usage": {
-            "prompt_tokens": 2536,
-            "completion_tokens": 20,
-            "total_tokens": 2556
+            "prompt_tokens": 1114,
+            "completion_tokens": 17,
+            "total_tokens": 1131
           }
         },
         {
           "name": "xpath_execution",
-          "time_ms": 676.81
+          "time_ms": 2649.81,
+          "token_usage": {
+            "prompt_tokens": 666,
+            "completion_tokens": 106,
+            "total_tokens": 772
+          }
         },
         {
           "name": "downstream_task",
-          "time_ms": 1330.34,
+          "time_ms": 7550.98,
           "token_usage": {
-            "prompt_tokens": 942,
-            "completion_tokens": 122,
-            "total_tokens": 1064
+            "prompt_tokens": 776,
+            "completion_tokens": 148,
+            "total_tokens": 924
           }
         }
       ],
-      "total_time_ms": 3368.21,
+      "total_time_ms": 11236.71,
       "total_tokens": {
-        "prompt_tokens": 3950,
-        "completion_tokens": 147,
-        "total_tokens": 4097
+        "prompt_tokens": 3196,
+        "completion_tokens": 276,
+        "total_tokens": 3472
       },
-      "pipeline_total_ms": 3371.0726000135764
+      "pipeline_total_ms": 11239.62400003802
     },
     "candidates_count": 2,
     "selected_count": 2,
@@ -192,7 +201,7 @@
           "Marine life"
         ],
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
-        "reasoning": "Ripley's Aquarium is a kid-friendly indoor attraction with interactive exhibits and marine life, making it fun for a 10-year-old."
+        "reasoning": "Ripley's Aquarium is explicitly described as a kid-friendly family activity with interactive exhibits and marine life, making it suitable for a 10-year-old."
       },
       {
         "type": "POI",
@@ -209,9 +218,9 @@
           "Beach access"
         ],
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
-        "reasoning": "Toronto Islands Ferry and Bike Ride is a kid-friendly outdoor activity with bike riding and beach access, suitable for a 10-year-old."
+        "reasoning": "The Toronto Islands Ferry and Bike Ride is described as a perfect family activity with outdoor nature, bike riding, and beach access, which are enjoyable for kids."
       }
     ],
-    "total_time_ms": 3371.0726000135764
+    "total_time_ms": 11239.62400003802
   }
 }

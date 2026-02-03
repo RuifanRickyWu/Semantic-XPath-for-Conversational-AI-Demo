@@ -1,15 +1,5 @@
-2026-02-02 16:06:11,566 - INFO - Query: Bad news. my friend who was going to host me at Niagara just tested positive for COVID. I need to cancel the  Niagara Falls trip.
-2026-02-02 16:06:11,566 - INFO - Running query 4: Bad news. my friend who was going to host me at Niagara just tested positive for COVID. I need to cancel the  Niagara Falls trip.
-2026-02-02 16:06:39,939 - INFO -   Operation: DELETE, Success: True, Time: 28368.0ms
-2026-02-02 16:06:39,939 - INFO -   Tokens: 19904
-2026-02-02 16:06:39,939 - INFO - Result: DELETE, Success: True
-2026-02-02 17:53:35,581 - INFO - Query: Bad news. my friend who was going to host me at Niagara just tested positive for COVID. I need to cancel the  Niagara Falls trip.
-2026-02-02 17:53:35,581 - INFO - Running query 4: Bad news. my friend who was going to host me at Niagara just tested positive for COVID. I need to cancel the  Niagara Falls trip.
-2026-02-02 17:54:03,293 - INFO -   Operation: DELETE, Success: True, Time: 27701.2ms
-2026-02-02 17:54:03,294 - INFO -   Tokens: 8692
-2026-02-02 17:54:03,294 - INFO - Result: DELETE, Success: True
-2026-02-02 18:13:42,851 - INFO - Query: I'm putting together my expense report. What are the most expensive restaurants I've booked?
-2026-02-02 18:13:42,851 - INFO - Running query 4: I'm putting together my expense report. What are the most expensive restaurants I've booked?
-2026-02-02 18:13:45,694 - INFO -   Operation: READ, Success: True, Time: 2837.5ms
-2026-02-02 18:13:45,694 - INFO -   Tokens: 4903
-2026-02-02 18:13:45,694 - INFO - Result: READ, Success: True
+2026-02-02 18:42:57,944 - INFO - Query: I'm putting together my expense report. What are the most expensive restaurants I've booked?
+2026-02-02 18:42:57,944 - INFO - Running query 4: I'm putting together my expense report. What are the most expensive restaurants I've booked?
+2026-02-02 18:43:01,393 - INFO -   Operation: READ, Success: True, Time: 3446.5ms
+2026-02-02 18:43:01,394 - INFO -   Tokens: 6898
+2026-02-02 18:43:01,394 - INFO - Result: READ, Success: True

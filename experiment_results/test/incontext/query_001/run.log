@@ -1,15 +1,5 @@
-2026-02-02 16:04:35,782 - INFO - Query: My college friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights.
-2026-02-02 16:04:35,782 - INFO - Running query 1: My college friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights.
-2026-02-02 16:04:49,809 - INFO -   Operation: READ, Success: True, Time: 14030.5ms
-2026-02-02 16:04:49,809 - INFO -   Tokens: 7880
-2026-02-02 16:04:49,809 - INFO - Result: READ, Success: True
-2026-02-02 17:52:20,492 - INFO - Query: My college friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights.
-2026-02-02 17:52:20,492 - INFO - Running query 1: My college friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights.
-2026-02-02 17:52:39,339 - INFO -   Operation: READ, Success: True, Time: 18847.4ms
-2026-02-02 17:52:39,340 - INFO -   Tokens: 6385
-2026-02-02 17:52:39,340 - INFO - Result: READ, Success: True
-2026-02-02 18:13:20,557 - INFO - Query: My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?
-2026-02-02 18:13:20,557 - INFO - Running query 1: My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?
-2026-02-02 18:13:37,476 - INFO -   Operation: READ, Success: True, Time: 16916.6ms
-2026-02-02 18:13:37,476 - INFO -   Tokens: 5783
-2026-02-02 18:13:37,476 - INFO - Result: READ, Success: True
+2026-02-02 18:42:40,651 - INFO - Query: My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?
+2026-02-02 18:42:40,651 - INFO - Running query 1: My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?
+2026-02-02 18:42:52,444 - INFO -   Operation: READ, Success: True, Time: 11792.4ms
+2026-02-02 18:42:52,444 - INFO -   Tokens: 7845
+2026-02-02 18:42:52,444 - INFO - Result: READ, Success: True

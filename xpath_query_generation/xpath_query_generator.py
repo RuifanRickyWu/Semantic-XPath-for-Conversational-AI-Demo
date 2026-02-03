@@ -145,17 +145,17 @@ class XPathQueryGenerator:
         """
         # Load master template
         template_path = _PROMPTS_DIR / "xpath_query_generator.txt"
-        with open(template_path, "r") as f:
+        with open(template_path, "r", encoding="utf-8") as f:
             template = f.read()
         
         # Load grammar file
         grammar_path = _PROMPTS_DIR / "xpath_grammar.txt"
-        with open(grammar_path, "r") as f:
+        with open(grammar_path, "r", encoding="utf-8") as f:
             grammar = f.read()
         
         # Load scenario-specific examples
         examples_path = Path(self._schema_info["examples_file"])
-        with open(examples_path, "r") as f:
+        with open(examples_path, "r", encoding="utf-8") as f:
             examples = f.read()
         
         # Generate schema structure from schema definition

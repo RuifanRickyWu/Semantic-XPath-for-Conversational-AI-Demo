@@ -1,0 +1,68 @@
+{
+  "user_query": "I'm putting together my expense report. What are the most expensive restaurants I've booked?",
+  "candidates_count": 7,
+  "selected_count": 3,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Alo Restaurant",
+        "time_block": "7:00 PM - 9:30 PM",
+        "description": "Three Michelin-starred French tasting menu. Extremely expensive and exclusive fine dining. Intimate 8-course experience with wine pairings. Very formal and upscale.",
+        "travel_method": "Taxi",
+        "expected_cost": "CAD 300-400",
+        "highlights": [
+          "Expensive Michelin dining",
+          "Upscale French cuisine",
+          "Formal atmosphere"
+        ]
+      },
+      "reasoning": "Alo Restaurant is described as extremely expensive with an expected cost of CAD 300-400, making it one of the most expensive options."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Kaiseki Kaji",
+        "time_block": "8:00 PM - 10:00 PM",
+        "description": "Exquisite Japanese kaiseki dining experience. Very expensive omakase with seasonal courses. Intimate and formal setting.",
+        "travel_method": "Taxi",
+        "expected_cost": "CAD 250-350",
+        "highlights": [
+          "Expensive Japanese dining",
+          "Upscale omakase",
+          "Formal atmosphere"
+        ]
+      },
+      "reasoning": "Kaiseki Kaji is noted as very expensive with an expected cost of CAD 250-350, qualifying it as one of the most expensive restaurants."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Canoe Restaurant",
+        "time_block": "7:30 PM - 9:00 PM",
+        "description": "Upscale Canadian cuisine on the 54th floor of TD Tower. Expensive fine dining with panoramic city views. Elegant and formal atmosphere.",
+        "travel_method": "Taxi",
+        "expected_cost": "CAD 150-200",
+        "highlights": [
+          "Expensive fine dining",
+          "City skyline views",
+          "Upscale atmosphere"
+        ]
+      },
+      "reasoning": "Canoe Restaurant is described as expensive with an expected cost of CAD 150-200, making it a relevant option for the expense report."
+    }
+  ],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Alo Restaurant is described as extremely expensive with an expected cost of CAD 300-400, making it one of the most expensive options.\"\n    },\n    {\n      \"id\": \"3\",\n      \"reasoning\": \"Kaiseki Kaji is noted as very expensive with an expected cost of CAD 250-350, qualifying it as one of the most expensive restaurants.\"\n    },\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Canoe Restaurant is described as expensive with an expected cost of CAD 150-200, making it a relevant option for the expense report.\"\n    }\n  ],\n  \"reasoning\": \"The user is interested in the most expensive restaurants booked. Nodes 1, 2, and 3 are selected because they have the highest expected costs, with Alo Restaurant and Kaiseki Kaji being particularly notable for their high prices. Canoe Restaurant, while less expensive than the other two, still falls into the expensive category and is relevant to the user's query.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1338,
+    "completion_tokens": 232,
+    "total_tokens": 1570
+  },
+  "processing_time_ms": 3731.3500000163913
+}

@@ -58,7 +58,7 @@ class LLMPredicateScorer(PredicateScorer):
     def system_prompt(self) -> str:
         """Lazy load the system prompt from file."""
         if self._system_prompt is None:
-            with open(self.PROMPT_PATH, "r") as f:
+            with open(self.PROMPT_PATH, "r", encoding="utf-8") as f:
                 self._system_prompt = f.read()
         return self._system_prompt
     

@@ -1,15 +1,5 @@
-2026-02-02 16:04:49,809 - INFO - Query: I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.
-2026-02-02 16:04:49,809 - INFO - Running query 2: I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.
-2026-02-02 16:05:25,734 - INFO -   Operation: DELETE, Success: True, Time: 35917.8ms
-2026-02-02 16:05:25,734 - INFO -   Tokens: 11380
-2026-02-02 16:05:25,735 - INFO - Result: DELETE, Success: True
-2026-02-02 17:52:39,342 - INFO - Query: I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.
-2026-02-02 17:52:39,342 - INFO - Running query 2: I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.
-2026-02-02 17:53:07,955 - INFO -   Operation: DELETE, Success: True, Time: 28616.9ms
-2026-02-02 17:53:07,955 - INFO -   Tokens: 9206
-2026-02-02 17:53:07,955 - INFO - Result: DELETE, Success: True
-2026-02-02 18:13:37,478 - INFO - Query: The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?
-2026-02-02 18:13:37,478 - INFO - Running query 2: The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?
-2026-02-02 18:13:39,603 - INFO -   Operation: READ, Success: True, Time: 2119.8ms
-2026-02-02 18:13:39,603 - INFO -   Tokens: 4799
-2026-02-02 18:13:39,604 - INFO - Result: READ, Success: True
+2026-02-02 18:42:52,444 - INFO - Query: The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?
+2026-02-02 18:42:52,444 - INFO - Running query 2: The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?
+2026-02-02 18:42:55,006 - INFO -   Operation: READ, Success: True, Time: 2560.0ms
+2026-02-02 18:42:55,006 - INFO -   Tokens: 6602
+2026-02-02 18:42:55,006 - INFO - Result: READ, Success: True

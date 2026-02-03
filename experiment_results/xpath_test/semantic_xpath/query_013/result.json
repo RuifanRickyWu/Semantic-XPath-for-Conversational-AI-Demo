@@ -1,0 +1,169 @@
+{
+  "query_index": 12,
+  "query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+  "operation": "CREATE",
+  "success": true,
+  "execution_time_ms": 7761.7,
+  "token_usage": {
+    "prompt_tokens": 5555,
+    "completion_tokens": 228,
+    "total_tokens": 5783
+  },
+  "changes": [
+    {
+      "path": "Root > Itinerary_Version 7 > Itinerary > Day 3/POI",
+      "change_type": "created",
+      "old_node": null,
+      "new_node": {
+        "node_type": "POI",
+        "fields": {
+          "name": "Coffee Break at Cafe near AGO",
+          "time_block": "11:00 AM - 11:45 AM",
+          "description": "Relaxing coffee break at a nearby cafe before visiting the Art Gallery of Ontario. Perfect for unwinding after the morning presentation.",
+          "travel_method": "Walk",
+          "expected_cost": "CAD 10-15",
+          "highlights": [
+            "Proximity to AGO",
+            "Relaxing atmosphere",
+            "Quality coffee"
+          ]
+        }
+      },
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_200039_272215",
+    "user_query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+    "task_query": "add a coffee break between the workshop and AGO at the cafe near the gallery",
+    "operation": "CREATE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Create",
+      "raw_response": "at([-1]), CREATE  \ntask: add a coffee break between the workshop and AGO at the cafe near the gallery",
+      "task_query": "add a coffee break between the workshop and AGO at the cafe near the gallery",
+      "token_usage": {
+        "prompt_tokens": 1001,
+        "completion_tokens": 23,
+        "total_tokens": 1024
+      }
+    },
+    "parsed_query": {
+      "operation": "Create",
+      "xpath": "/Itinerary/Day",
+      "full_query": "Create(/Itinerary/Day)",
+      "token_usage": {
+        "prompt_tokens": 2050,
+        "completion_tokens": 5,
+        "total_tokens": 2055
+      }
+    },
+    "version_used": "7",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[7]/Itinerary/Day",
+      "matched_count": 5,
+      "execution_time_ms": 0.511299935169518,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "CREATE",
+      "processing_time_ms": 4938.007800024934,
+      "output": {
+        "parent_path": "Root > Itinerary_Version 7 > Itinerary > Day 3",
+        "position": 2,
+        "node_type": "POI",
+        "fields": {
+          "name": "Coffee Break at Cafe near AGO",
+          "time_block": "11:00 AM - 11:45 AM",
+          "description": "Relaxing coffee break at a nearby cafe before visiting the Art Gallery of Ontario. Perfect for unwinding after the morning presentation.",
+          "travel_method": "Walk",
+          "expected_cost": "CAD 10-15",
+          "highlights": [
+            "Proximity to AGO",
+            "Relaxing atmosphere",
+            "Quality coffee"
+          ]
+        },
+        "reasoning": "The coffee break is scheduled between the end of the Stakeholder Presentation at 11:00 AM and the start of the AGO visit at 12:00 PM. Position 2 places it directly between these two activities."
+      },
+      "token_usage": {
+        "prompt_tokens": 2504,
+        "completion_tokens": 200,
+        "total_tokens": 2704
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 916.99,
+          "token_usage": {
+            "prompt_tokens": 1001,
+            "completion_tokens": 23,
+            "total_tokens": 1024
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 1892.8,
+          "token_usage": {
+            "prompt_tokens": 2050,
+            "completion_tokens": 5,
+            "total_tokens": 2055
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 2.26
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 4945.7,
+          "token_usage": {
+            "prompt_tokens": 2504,
+            "completion_tokens": 200,
+            "total_tokens": 2704
+          }
+        }
+      ],
+      "total_time_ms": 7757.76,
+      "total_tokens": {
+        "prompt_tokens": 5555,
+        "completion_tokens": 228,
+        "total_tokens": 5783
+      },
+      "pipeline_total_ms": 7760.972999967635
+    },
+    "created_path": "Root > Itinerary_Version 7 > Itinerary > Day 3/POI",
+    "insertion_point": {
+      "parent_path": "Root > Itinerary_Version 7 > Itinerary > Day 3",
+      "position": 2,
+      "reasoning": "The coffee break is scheduled between the end of the Stakeholder Presentation at 11:00 AM and the start of the AGO visit at 12:00 PM. Position 2 places it directly between these two activities."
+    },
+    "content_result": {
+      "success": true,
+      "node_type": "POI",
+      "fields": {
+        "name": "Coffee Break at Cafe near AGO",
+        "time_block": "11:00 AM - 11:45 AM",
+        "description": "Relaxing coffee break at a nearby cafe before visiting the Art Gallery of Ontario. Perfect for unwinding after the morning presentation.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 10-15",
+        "highlights": [
+          "Proximity to AGO",
+          "Relaxing atmosphere",
+          "Quality coffee"
+        ]
+      }
+    },
+    "total_time_ms": 7760.972999967635
+  }
+}

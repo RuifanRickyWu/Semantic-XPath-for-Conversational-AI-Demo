@@ -65,6 +65,12 @@ class CompletionResult:
 class OpenAIClient:
     """OpenAI API client wrapper"""
     
+    # Models that use max_completion_tokens instead of max_tokens
+    NEW_API_MODELS = ["gpt-5", "o1", "o3"]
+    
+    # Models that don't support custom temperature (only default=1)
+    NO_TEMPERATURE_MODELS = ["gpt-5-mini", "gpt-5-nano", "o1-mini", "o1-preview", "o3-mini"]
+    
     def __init__(self, config: dict = None):
         if config is None:
             config = load_config()
@@ -75,24 +81,55 @@ class OpenAIClient:
         self.temperature = self.config.get("temperature", 0.7)
         self.max_tokens = self.config.get("max_tokens", 4096)
     
+    def _uses_new_api(self, model: str) -> bool:
+        """Check if model uses the new API with max_completion_tokens."""
+        model_lower = model.lower()
+        return any(model_lower.startswith(prefix) for prefix in self.NEW_API_MODELS)
+    
+    def _supports_temperature(self, model: str) -> bool:
+        """Check if model supports custom temperature setting."""
+        model_lower = model.lower()
+        return not any(model_lower.startswith(prefix) for prefix in self.NO_TEMPERATURE_MODELS)
+    
+    def _build_completion_kwargs(self, model: str, temperature: float, max_tokens: int) -> dict:
+        """Build kwargs for completion API, handling model-specific parameters."""
+        kwargs = {"model": model}
+        
+        # Only add temperature if the model supports it
+        if self._supports_temperature(model):
+            kwargs["temperature"] = temperature
+        
+        # Use appropriate token limit parameter based on model
+        if self._uses_new_api(model):
+            kwargs["max_completion_tokens"] = max_tokens
+        else:
+            kwargs["max_tokens"] = max_tokens
+        
+        return kwargs
+    
     def chat(self, messages: list[dict], **kwargs) -> str:
         """Send a chat completion request"""
-        response = self.client.chat.completions.create(
-            model=kwargs.get("model", self.model),
-            messages=messages,
-            temperature=kwargs.get("temperature", self.temperature),
-            max_tokens=kwargs.get("max_tokens", self.max_tokens),
-        )
-        return response.choices[0].message.content
+        model = kwargs.get("model", self.model)
+        temperature = kwargs.get("temperature", self.temperature)
+        max_tokens = kwargs.get("max_tokens", self.max_tokens)
+        
+        completion_kwargs = self._build_completion_kwargs(model, temperature, max_tokens)
+        completion_kwargs["messages"] = messages
+        
+        response = self.client.chat.completions.create(**completion_kwargs)
+        content = response.choices[0].message.content
+        return content if content is not None else ""
     
     def chat_with_usage(self, messages: list[dict], **kwargs) -> CompletionResult:
         """Send a chat completion request and return response with token usage."""
-        response = self.client.chat.completions.create(
-            model=kwargs.get("model", self.model),
-            messages=messages,
-            temperature=kwargs.get("temperature", self.temperature),
-            max_tokens=kwargs.get("max_tokens", self.max_tokens),
-        )
+        model = kwargs.get("model", self.model)
+        temperature = kwargs.get("temperature", self.temperature)
+        max_tokens = kwargs.get("max_tokens", self.max_tokens)
+        
+        completion_kwargs = self._build_completion_kwargs(model, temperature, max_tokens)
+        completion_kwargs["messages"] = messages
+        
+        response = self.client.chat.completions.create(**completion_kwargs)
         
         usage = TokenUsage(
             prompt_tokens=response.usage.prompt_tokens,
@@ -100,8 +137,13 @@ class OpenAIClient:
             total_tokens=response.usage.total_tokens
         )
         
+        # Handle None content (can happen with reasoning models)
+        content = response.choices[0].message.content
+        if content is None:
+            content = ""
+        
         return CompletionResult(
-            content=response.choices[0].message.content,
+            content=content,
             usage=usage
         )
     

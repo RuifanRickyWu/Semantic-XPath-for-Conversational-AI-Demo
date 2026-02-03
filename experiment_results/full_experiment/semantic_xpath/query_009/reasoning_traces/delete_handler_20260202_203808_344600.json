@@ -1,0 +1,15 @@
+{
+  "user_query": "Bad news. my friend who was going to host me at Niagara just tested positive for COVID. I need to cancel the Niagara Falls trip.",
+  "candidates_count": 5,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 4 > Itinerary > Day 8 > Niagara Falls Day Trip"
+  ],
+  "reasoning": "The user explicitly requested to cancel the Niagara Falls trip. The 'Niagara Falls Day Trip' on Day 8 is the only node that matches this request, as it is a full-day excursion to Niagara Falls. Other nodes do not relate to Niagara Falls and are therefore not relevant to the deletion request.",
+  "raw_response": "```json\n{\n  \"nodes_to_delete\": [\n    {\n      \"id\": \"1\",\n      \"path\": \"Root > Itinerary_Version 4 > Itinerary > Day 8 > Niagara Falls Day Trip\",\n      \"reasoning\": \"The node 'Niagara Falls Day Trip' on Day 8 directly matches the user's request to cancel the Niagara Falls trip due to a change in plans.\"\n    }\n  ],\n  \"reasoning\": \"The user explicitly requested to cancel the Niagara Falls trip. The 'Niagara Falls Day Trip' on Day 8 is the only node that matches this request, as it is a full-day excursion to Niagara Falls. Other nodes do not relate to Niagara Falls and are therefore not relevant to the deletion request.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1409,
+    "completion_tokens": 156,
+    "total_tokens": 1565
+  },
+  "processing_time_ms": 1967.0251000206918
+}

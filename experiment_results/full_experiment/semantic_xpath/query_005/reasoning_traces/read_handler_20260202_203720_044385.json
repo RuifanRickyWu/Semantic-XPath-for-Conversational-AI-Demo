@@ -1,0 +1,54 @@
+{
+  "user_query": "I've been stuck in meetings most of the week. Which days have nature activities where I can actually get outside?",
+  "candidates_count": 5,
+  "selected_count": 4,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "8"
+        }
+      },
+      "reasoning": "Day 8 includes a full-day outdoor excursion to Niagara Falls, which is a nature activity."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "6"
+        }
+      },
+      "reasoning": "Day 6 includes a ferry ride and bike ride on Toronto Islands, which is an outdoor nature activity."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "1"
+        }
+      },
+      "reasoning": "Day 1 includes a Harbourfront Stroll, which is an outdoor activity with lake views and fresh air."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "7"
+        }
+      },
+      "reasoning": "Day 7 includes a Distillery District Walk, which is an outdoor walking experience."
+    }
+  ],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Day 8 includes a full-day outdoor excursion to Niagara Falls, which is a nature activity.\"\n    },\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Day 6 includes a ferry ride and bike ride on Toronto Islands, which is an outdoor nature activity.\"\n    },\n    {\n      \"id\": \"4\",\n      \"reasoning\": \"Day 1 includes a Harbourfront Stroll, which is an outdoor activity with lake views and fresh air.\"\n    },\n    {\n      \"id\": \"3\",\n      \"reasoning\": \"Day 7 includes a Distillery District Walk, which is an outdoor walking experience.\"\n    }\n  ],\n  \"reasoning\": \"Days 8, 6, 1, and 7 all include outdoor activities that allow the user to get outside and enjoy nature or outdoor environments. Day 8 features a nature-focused trip to Niagara Falls, Day 6 includes outdoor activities on Toronto Islands, Day 1 offers a relaxing outdoor stroll along the Harbourfront, and Day 7 includes an outdoor walk in the Distillery District.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 2573,
+    "completion_tokens": 247,
+    "total_tokens": 2820
+  },
+  "processing_time_ms": 4830.726700020023
+}

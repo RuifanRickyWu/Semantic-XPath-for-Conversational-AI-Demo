@@ -1,0 +1,13 @@
+{
+  "user_query": "I'm putting together my expense report. What are the most expensive restaurants I've booked?",
+  "candidates_count": 1,
+  "selected_count": 0,
+  "selected_nodes": [],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [],\n  \"reasoning\": \"None match because the only candidate is a breakfast with a low expected cost (CAD 15), which does not qualify as an expensive restaurant booking.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 820,
+    "completion_tokens": 47,
+    "total_tokens": 867
+  },
+  "processing_time_ms": 1181.4313000068069
+}

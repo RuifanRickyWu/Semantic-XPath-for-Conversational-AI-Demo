@@ -632,13 +632,17 @@ class CRUDExecutor:
         """Build an xpath query that targets the specific version.
         
         Handles both regular paths and global index queries:
-        - Regular: /Itinerary/Day/POI -> /Root/Itinerary_Version[@number='1']/Itinerary/Day/POI
-        - Global: (/Itinerary/Day/POI)[1] -> (/Root/Itinerary_Version[@number='1']/Itinerary/Day/POI)[1]
+        - Regular: /Itinerary/Day/POI -> /Root/Itinerary_Version[1]/Itinerary/Day/POI
+        - Global: (/Itinerary/Day/POI)[1] -> (/Root/Itinerary_Version[1]/Itinerary/Day/POI)[1]
+        
+        Note: Uses positional index [N] instead of attribute predicate [@number='N']
+        because the semantic XPath parser doesn't support attribute predicates.
         """
         import re
         
         version_number = version.get("number", "1")
-        version_prefix = f"/Root/Itinerary_Version[@number='{version_number}']/Itinerary"
+        # Use positional index syntax which the parser understands
+        version_prefix = f"/Root/Itinerary_Version[{version_number}]/Itinerary"
         
         # Handle global index queries: (/path)[index] -> (/version_prefix/path)[index]
         # Pattern matches (/...)[N] or (/...)[N:M] or (/...)[-N:] etc.

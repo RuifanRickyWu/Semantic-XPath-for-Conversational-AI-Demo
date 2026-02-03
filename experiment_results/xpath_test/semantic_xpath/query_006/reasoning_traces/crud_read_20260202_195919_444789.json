@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260202_195919_444789",
+  "operation": "READ",
+  "user_query": "Where do i go for breakfast on a shopping day?",
+  "full_query": null,
+  "xpath_query": null,
+  "success": true,
+  "intent": null,
+  "reasoning_trace": null,
+  "operation_data": {
+    "candidates_count": 5,
+    "selected_count": 0,
+    "selected_nodes": []
+  },
+  "tree_version": null,
+  "summary": {
+    "operation": "READ",
+    "success": true,
+    "affected_count": 0
+  }
+}

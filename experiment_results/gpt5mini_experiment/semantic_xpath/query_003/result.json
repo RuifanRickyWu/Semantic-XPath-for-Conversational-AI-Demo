@@ -1,0 +1,8 @@
+{
+  "query_index": 2,
+  "query": "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?",
+  "operation": "ERROR",
+  "success": false,
+  "execution_time_ms": 4251.96,
+  "error": "Error code: 400 - {'error': {'message': 'Could not finish the message because max_tokens or model output limit was reached. Please try again with higher max_tokens.', 'type': 'invalid_request_error', 'param': None, 'code': None}}"
+}

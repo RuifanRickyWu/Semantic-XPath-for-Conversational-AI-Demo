@@ -1,0 +1,34 @@
+{
+  "user_query": "My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?",
+  "candidates_count": 5,
+  "selected_count": 2,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "9"
+        }
+      },
+      "reasoning": "Day 9 (candidate 1) includes only restaurants and shopping POIs (brunch, Eaton Centre, boutiques, evening dinner). No flights or work-related items are present."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "8"
+        }
+      },
+      "reasoning": "Day 8 (candidate 4) is a leisure Niagara Falls day trip with meals; it contains no flights or work commitments."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Day 9 (candidate 1) includes only restaurants and shopping POIs (brunch, Eaton Centre, boutiques, evening dinner). No flights or work-related items are present.\"\n    },\n    {\n      \"id\": \"4\",\n      \"reasoning\": \"Day 8 (candidate 4) is a leisure Niagara Falls day trip with meals; it contains no flights or work commitments.\"\n    }\n  ],\n  \"reasoning\": \"Day 9 and Day 8 have only leisure activities (meals, shopping, sightseeing) and no work-related POIs or any flights. Excluded Day 5 (client check-in call, email catch-up, networking), Day 1 (arrival flight), and Day 10 (departure flight).\"\n}",
+  "token_usage": {
+    "prompt_tokens": 2535,
+    "completion_tokens": 695,
+    "total_tokens": 3230
+  },
+  "processing_time_ms": 14171.56469996553
+}

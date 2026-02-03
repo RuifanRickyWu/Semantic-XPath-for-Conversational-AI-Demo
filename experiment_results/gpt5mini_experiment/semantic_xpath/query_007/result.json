@@ -1,0 +1,166 @@
+{
+  "query_index": 6,
+  "query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+  "operation": "READ",
+  "success": true,
+  "execution_time_ms": 20735.3,
+  "token_usage": {
+    "prompt_tokens": 4330,
+    "completion_tokens": 905,
+    "total_tokens": 5235
+  },
+  "selected_nodes": [
+    {
+      "type": "POI",
+      "attributes": {},
+      "name": "Distillery District Walk",
+      "time_block": "3:00 PM - 5:00 PM",
+      "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+      "travel_method": "Public Transit",
+      "expected_cost": "Free",
+      "highlights": [
+        "Outdoor walking tour",
+        "Historic architecture",
+        "Artisan shops"
+      ],
+      "tree_path": "Root > Itinerary_Version 2 > Itinerary > Day 7 > Distillery District Walk",
+      "reasoning": "Explicit outdoor walking POI — description and highlights state 'outdoor walking experience' and 'cobblestone streets', so this is an outdoor activity to cancel."
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260203_120607_560339",
+    "user_query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+    "task_query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+    "operation": "READ",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Read",
+      "raw_response": "",
+      "task_query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+      "token_usage": {
+        "prompt_tokens": 985,
+        "completion_tokens": 256,
+        "total_tokens": 1241
+      }
+    },
+    "parsed_query": {
+      "operation": "Read",
+      "xpath": "/Itinerary/Day[7]/.[atom(content =~ \"outdoor\")]",
+      "full_query": "Read(/Itinerary/Day[7]/.[atom(content =~ \"outdoor\")])",
+      "token_usage": {
+        "prompt_tokens": 2056,
+        "completion_tokens": 345,
+        "total_tokens": 2401
+      }
+    },
+    "version_used": "2",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[2]/Itinerary/Day[7]/.[atom(content =~ \"outdoor\")]",
+      "matched_count": 5,
+      "execution_time_ms": 1312.5513000413775,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "READ",
+      "processing_time_ms": 6739.171399967745,
+      "output": {
+        "selected_nodes": [
+          {
+            "tree_path": "Root > Itinerary_Version 2 > Itinerary > Day 7 > Distillery District Walk",
+            "node_data": {
+              "type": "POI",
+              "attributes": {},
+              "name": "Distillery District Walk",
+              "time_block": "3:00 PM - 5:00 PM",
+              "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+              "travel_method": "Public Transit",
+              "expected_cost": "Free",
+              "highlights": [
+                "Outdoor walking tour",
+                "Historic architecture",
+                "Artisan shops"
+              ]
+            },
+            "reasoning": "Explicit outdoor walking POI — description and highlights state 'outdoor walking experience' and 'cobblestone streets', so this is an outdoor activity to cancel."
+          }
+        ]
+      },
+      "token_usage": {
+        "prompt_tokens": 1289,
+        "completion_tokens": 304,
+        "total_tokens": 1593
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 6343.49,
+          "token_usage": {
+            "prompt_tokens": 985,
+            "completion_tokens": 256,
+            "total_tokens": 1241
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 6329.92,
+          "token_usage": {
+            "prompt_tokens": 2056,
+            "completion_tokens": 345,
+            "total_tokens": 2401
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 1315.34
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 6740.36,
+          "token_usage": {
+            "prompt_tokens": 1289,
+            "completion_tokens": 304,
+            "total_tokens": 1593
+          }
+        }
+      ],
+      "total_time_ms": 20729.12,
+      "total_tokens": {
+        "prompt_tokens": 4330,
+        "completion_tokens": 905,
+        "total_tokens": 5235
+      },
+      "pipeline_total_ms": 20733.743499964476
+    },
+    "candidates_count": 5,
+    "selected_count": 1,
+    "selected_nodes": [
+      {
+        "type": "POI",
+        "attributes": {},
+        "name": "Distillery District Walk",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+        "travel_method": "Public Transit",
+        "expected_cost": "Free",
+        "highlights": [
+          "Outdoor walking tour",
+          "Historic architecture",
+          "Artisan shops"
+        ],
+        "tree_path": "Root > Itinerary_Version 2 > Itinerary > Day 7 > Distillery District Walk",
+        "reasoning": "Explicit outdoor walking POI — description and highlights state 'outdoor walking experience' and 'cobblestone streets', so this is an outdoor activity to cancel."
+      }
+    ],
+    "total_time_ms": 20733.743499964476
+  }
+}

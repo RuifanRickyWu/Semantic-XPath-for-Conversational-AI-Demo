@@ -1,0 +1,32 @@
+{
+  "user_query": "The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?",
+  "candidates_count": 2,
+  "selected_count": 1,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Distillery District Walk",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+        "travel_method": "Public Transit",
+        "expected_cost": "Free",
+        "highlights": [
+          "Outdoor walking tour",
+          "Historic architecture",
+          "Artisan shops"
+        ]
+      },
+      "reasoning": "Explicitly an outdoor walking experience (cobblestone streets, outdoor walking tour, highlights list includes 'Outdoor walking tour') scheduled on Day 7 and therefore likely affected by heavy rain."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Explicitly an outdoor walking experience (cobblestone streets, outdoor walking tour, highlights list includes 'Outdoor walking tour') scheduled on Day 7 and therefore likely affected by heavy rain.\"\n    }\n  ],\n  \"reasoning\": \"Selected the Distillery District Walk because it is an outdoor activity on Day 7. Excluded the Royal Ontario Museum because it is an indoor activity and would not need rescheduling due to rain.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 953,
+    "completion_tokens": 183,
+    "total_tokens": 1136
+  },
+  "processing_time_ms": 4679.861400043592
+}

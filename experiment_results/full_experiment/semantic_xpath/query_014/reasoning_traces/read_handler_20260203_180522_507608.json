@@ -1,0 +1,24 @@
+{
+  "user_query": "I'd like to end the first day with some live music. Add Pj O'Brien's to the end of Day 1.",
+  "candidates_count": 1,
+  "selected_count": 1,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 7 > Itinerary > Day 1",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "1"
+        }
+      },
+      "reasoning": "This node is Day 1 (index 1) — the user asked to add Pj O'Brien's to the end of Day 1, so this is the correct day node to update (append a live-music POI after the existing evening restaurant)."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"This node is Day 1 (index 1) — the user asked to add Pj O'Brien's to the end of Day 1, so this is the correct day node to update (append a live-music POI after the existing evening restaurant).\"\n    }\n  ],\n  \"reasoning\": \"Selected the Day 1 node because the request is to add a live-music venue to the end of the first day's itinerary. No other candidate nodes were provided.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1009,
+    "completion_tokens": 449,
+    "total_tokens": 1458
+  },
+  "processing_time_ms": 8100.220499909483
+}

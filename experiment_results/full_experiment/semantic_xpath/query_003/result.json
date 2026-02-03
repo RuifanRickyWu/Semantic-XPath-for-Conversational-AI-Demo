@@ -3,11 +3,11 @@
   "query": "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?",
   "operation": "READ",
   "success": true,
-  "execution_time_ms": 4320.09,
+  "execution_time_ms": 31448.85,
   "token_usage": {
-    "prompt_tokens": 4036,
-    "completion_tokens": 196,
-    "total_tokens": 4232
+    "prompt_tokens": 4382,
+    "completion_tokens": 2042,
+    "total_tokens": 6424
   },
   "selected_nodes": [
     {
@@ -24,7 +24,7 @@
         "Marine life"
       ],
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
-      "reasoning": "Ripley's Aquarium is described as a kid-friendly family activity with interactive exhibits and marine life, which would be fun for a 10-year-old."
+      "reasoning": "Ripley's Aquarium is explicitly described as an indoor family attraction perfect for kids with interactive exhibits, touch tanks, and marine life — clearly a fun activity for a 10-year-old."
     },
     {
       "type": "POI",
@@ -41,13 +41,28 @@
         "Beach access"
       ],
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
-      "reasoning": "The Toronto Islands Ferry and Bike Ride is highlighted as a kid-friendly family activity with outdoor nature, bike riding, and beach access, making it suitable for a 10-year-old."
+      "reasoning": "Toronto Islands Ferry and Bike Ride is labeled as perfect for families and kids, offering a ferry ride, bike riding, beaches and outdoor exploration — suitable and engaging for a child."
+    },
+    {
+      "type": "Restaurant",
+      "attributes": {},
+      "name": "Island Cafe Picnic Lunch",
+      "time_block": "1:30 PM - 2:30 PM",
+      "description": "Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 25",
+      "highlights": [
+        "Casual outdoor lunch",
+        "Family friendly"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+      "reasoning": "Island Cafe Picnic Lunch is a casual, outdoor picnic on Centre Island and noted as family friendly — a relaxed, kid-friendly activity option during the islands visit."
     }
   ],
   "raw_result": {
-    "timestamp": "20260202_203655_376591",
+    "timestamp": "20260203_180008_857005",
     "user_query": "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?",
-    "task_query": "find activities on Day 6 that would be fun for a 10-year-old kid",
+    "task_query": "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?",
     "operation": "READ",
     "success": true,
     "version_resolution": {
@@ -55,35 +70,35 @@
       "semantic_query": null,
       "index": -1,
       "crud_operation": "Read",
-      "raw_response": "at([-1]), READ  \ntask: find activities on Day 6 that would be fun for a 10-year-old kid",
-      "task_query": "find activities on Day 6 that would be fun for a 10-year-old kid",
+      "raw_response": "",
+      "task_query": "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?",
       "token_usage": {
-        "prompt_tokens": 997,
-        "completion_tokens": 25,
-        "total_tokens": 1022
+        "prompt_tokens": 996,
+        "completion_tokens": 256,
+        "total_tokens": 1252
       }
     },
     "parsed_query": {
       "operation": "Read",
-      "xpath": "/Itinerary/Day[6]/POI[atom(content =~ \"fun for a 10-year-old kid\")]",
-      "full_query": "Read(/Itinerary/Day[6]/POI[atom(content =~ \"fun for a 10-year-old kid\")])",
+      "xpath": "/Itinerary/Day[6]/.[(atom(content =~ \"kid\") OR atom(content =~ \"child\") OR atom(content =~ \"children\") OR atom(content =~ \"family\") OR atom(content =~ \"kids\") OR atom(content =~ \"kid-friendly\") OR atom(content =~ \"child-friendly\") OR atom(content =~ \"playground\") OR atom(content =~ \"zoo\") OR atom(content =~ \"aquarium\") OR atom(content =~ \"interactive\") OR atom(content =~ \"hands-on\") OR atom(content =~ \"museum\") OR atom(content =~ \"theme park\") OR atom(content =~ \"arcade\"))]",
+      "full_query": "Read(/Itinerary/Day[6]/.[(atom(content =~ \"kid\") OR atom(content =~ \"child\") OR atom(content =~ \"children\") OR atom(content =~ \"family\") OR atom(content =~ \"kids\") OR atom(content =~ \"kid-friendly\") OR atom(content =~ \"child-friendly\") OR atom(content =~ \"playground\") OR atom(content =~ \"zoo\") OR atom(content =~ \"aquarium\") OR atom(content =~ \"interactive\") OR atom(content =~ \"hands-on\") OR atom(content =~ \"museum\") OR atom(content =~ \"theme park\") OR atom(content =~ \"arcade\"))])",
       "token_usage": {
-        "prompt_tokens": 2052,
-        "completion_tokens": 24,
-        "total_tokens": 2076
+        "prompt_tokens": 2067,
+        "completion_tokens": 836,
+        "total_tokens": 2903
       }
     },
     "version_used": "1",
     "xpath_execution": {
-      "query": "/Root/Itinerary_Version[1]/Itinerary/Day[6]/POI[atom(content =~ \"fun for a 10-year-old kid\")]",
-      "matched_count": 2,
-      "execution_time_ms": 857.261500088498,
+      "query": "/Root/Itinerary_Version[1]/Itinerary/Day[6]/.[(atom(content =~ \"kid\") OR atom(content =~ \"child\") OR atom(content =~ \"children\") OR atom(content =~ \"family\") OR atom(content =~ \"kids\") OR atom(content =~ \"kid-friendly\") OR atom(content =~ \"child-friendly\") OR atom(content =~ \"playground\") OR atom(content =~ \"zoo\") OR atom(content =~ \"aquarium\") OR atom(content =~ \"interactive\") OR atom(content =~ \"hands-on\") OR atom(content =~ \"museum\") OR atom(content =~ \"theme park\") OR atom(content =~ \"arcade\"))]",
+      "matched_count": 5,
+      "execution_time_ms": 3171.516300062649,
       "token_usage": null
     },
     "handler_result": {
       "success": true,
       "operation": "READ",
-      "processing_time_ms": 2220.011799945496,
+      "processing_time_ms": 12062.005599960685,
       "output": {
         "selected_nodes": [
           {
@@ -102,7 +117,7 @@
                 "Marine life"
               ]
             },
-            "reasoning": "Ripley's Aquarium is described as a kid-friendly family activity with interactive exhibits and marine life, which would be fun for a 10-year-old."
+            "reasoning": "Ripley's Aquarium is explicitly described as an indoor family attraction perfect for kids with interactive exhibits, touch tanks, and marine life — clearly a fun activity for a 10-year-old."
           },
           {
             "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
@@ -121,25 +136,42 @@
                 "Beach access"
               ]
             },
-            "reasoning": "The Toronto Islands Ferry and Bike Ride is highlighted as a kid-friendly family activity with outdoor nature, bike riding, and beach access, making it suitable for a 10-year-old."
+            "reasoning": "Toronto Islands Ferry and Bike Ride is labeled as perfect for families and kids, offering a ferry ride, bike riding, beaches and outdoor exploration — suitable and engaging for a child."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+            "node_data": {
+              "type": "Restaurant",
+              "attributes": {},
+              "name": "Island Cafe Picnic Lunch",
+              "time_block": "1:30 PM - 2:30 PM",
+              "description": "Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.",
+              "travel_method": "Walk",
+              "expected_cost": "CAD 25",
+              "highlights": [
+                "Casual outdoor lunch",
+                "Family friendly"
+              ]
+            },
+            "reasoning": "Island Cafe Picnic Lunch is a casual, outdoor picnic on Centre Island and noted as family friendly — a relaxed, kid-friendly activity option during the islands visit."
           }
         ]
       },
       "token_usage": {
-        "prompt_tokens": 987,
-        "completion_tokens": 147,
-        "total_tokens": 1134
+        "prompt_tokens": 1319,
+        "completion_tokens": 950,
+        "total_tokens": 2269
       }
     },
     "timing": {
       "stages": [
         {
           "name": "version_resolution",
-          "time_ms": 803.63,
+          "time_ms": 4236.7,
           "token_usage": {
-            "prompt_tokens": 997,
-            "completion_tokens": 25,
-            "total_tokens": 1022
+            "prompt_tokens": 996,
+            "completion_tokens": 256,
+            "total_tokens": 1252
           }
         },
         {
@@ -148,37 +180,37 @@
         },
         {
           "name": "query_generation",
-          "time_ms": 431.26,
+          "time_ms": 11971.04,
           "token_usage": {
-            "prompt_tokens": 2052,
-            "completion_tokens": 24,
-            "total_tokens": 2076
+            "prompt_tokens": 2067,
+            "completion_tokens": 836,
+            "total_tokens": 2903
           }
         },
         {
           "name": "xpath_execution",
-          "time_ms": 861.01
+          "time_ms": 3174.54
         },
         {
           "name": "downstream_task",
-          "time_ms": 2220.64,
+          "time_ms": 12062.7,
           "token_usage": {
-            "prompt_tokens": 987,
-            "completion_tokens": 147,
-            "total_tokens": 1134
+            "prompt_tokens": 1319,
+            "completion_tokens": 950,
+            "total_tokens": 2269
           }
         }
       ],
-      "total_time_ms": 4316.55,
+      "total_time_ms": 31445.0,
       "total_tokens": {
-        "prompt_tokens": 4036,
-        "completion_tokens": 196,
-        "total_tokens": 4232
+        "prompt_tokens": 4382,
+        "completion_tokens": 2042,
+        "total_tokens": 6424
       },
-      "pipeline_total_ms": 4319.261400029063
+      "pipeline_total_ms": 31448.097600019537
     },
-    "candidates_count": 2,
-    "selected_count": 2,
+    "candidates_count": 5,
+    "selected_count": 3,
     "selected_nodes": [
       {
         "type": "POI",
@@ -194,7 +226,7 @@
           "Marine life"
         ],
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
-        "reasoning": "Ripley's Aquarium is described as a kid-friendly family activity with interactive exhibits and marine life, which would be fun for a 10-year-old."
+        "reasoning": "Ripley's Aquarium is explicitly described as an indoor family attraction perfect for kids with interactive exhibits, touch tanks, and marine life — clearly a fun activity for a 10-year-old."
       },
       {
         "type": "POI",
@@ -211,9 +243,24 @@
           "Beach access"
         ],
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
-        "reasoning": "The Toronto Islands Ferry and Bike Ride is highlighted as a kid-friendly family activity with outdoor nature, bike riding, and beach access, making it suitable for a 10-year-old."
+        "reasoning": "Toronto Islands Ferry and Bike Ride is labeled as perfect for families and kids, offering a ferry ride, bike riding, beaches and outdoor exploration — suitable and engaging for a child."
+      },
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Island Cafe Picnic Lunch",
+        "time_block": "1:30 PM - 2:30 PM",
+        "description": "Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Casual outdoor lunch",
+          "Family friendly"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+        "reasoning": "Island Cafe Picnic Lunch is a casual, outdoor picnic on Centre Island and noted as family friendly — a relaxed, kid-friendly activity option during the islands visit."
       }
     ],
-    "total_time_ms": 4319.261400029063
+    "total_time_ms": 31448.097600019537
   }
 }

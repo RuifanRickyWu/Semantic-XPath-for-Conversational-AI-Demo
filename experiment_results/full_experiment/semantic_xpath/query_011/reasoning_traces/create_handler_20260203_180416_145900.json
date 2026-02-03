@@ -1,0 +1,30 @@
+{
+  "user_query": "I just noticed Day 2 has no breakfast, my first meeting is at 9am and I'll be starving. Add a quick hotel breakfast before the meeting.",
+  "context_nodes_count": 1,
+  "create_info": {},
+  "result": {
+    "parent_path": "Root > Itinerary_Version 6 > Itinerary > Day 2",
+    "position": 0,
+    "node_type": "POI",
+    "fields": {
+      "name": "Quick Hotel Breakfast",
+      "time_block": "8:00 AM - 8:30 AM",
+      "description": "Grab a quick hotel breakfast — coffee, pastries, fruit, and light hot options — ideal for fueling up before the morning meeting.",
+      "travel_method": "Walk",
+      "expected_cost": "Included (hotel) / CAD 5-10 for extras",
+      "highlights": [
+        "Quick continental options",
+        "Coffee to-go",
+        "Grab-and-go available"
+      ]
+    },
+    "reasoning": "Insert at position 0 so breakfast occurs before the 9:00 AM Client Kickoff Meeting; 8:00-8:30 AM allows time to eat and walk to the meeting."
+  },
+  "raw_response": "{\n  \"parent_path\": \"Root > Itinerary_Version 6 > Itinerary > Day 2\",\n  \"position\": 0,\n  \"node_type\": \"POI\",\n  \"fields\": {\n    \"name\": \"Quick Hotel Breakfast\",\n    \"time_block\": \"8:00 AM - 8:30 AM\",\n    \"description\": \"Grab a quick hotel breakfast — coffee, pastries, fruit, and light hot options — ideal for fueling up before the morning meeting.\",\n    \"travel_method\": \"Walk\",\n    \"expected_cost\": \"Included (hotel) / CAD 5-10 for extras\",\n    \"highlights\": [\"Quick continental options\", \"Coffee to-go\", \"Grab-and-go available\"]\n  },\n  \"reasoning\": \"Insert at position 0 so breakfast occurs before the 9:00 AM Client Kickoff Meeting; 8:00-8:30 AM allows time to eat and walk to the meeting.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1526,
+    "completion_tokens": 782,
+    "total_tokens": 2308
+  },
+  "processing_time_ms": 10138.116999994963
+}

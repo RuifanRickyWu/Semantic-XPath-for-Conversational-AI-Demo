@@ -1,0 +1,32 @@
+{
+  "user_query": "The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?",
+  "candidates_count": 5,
+  "selected_count": 1,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+      "node_data": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Distillery District Walk",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+        "travel_method": "Public Transit",
+        "expected_cost": "Free",
+        "highlights": [
+          "Outdoor walking tour",
+          "Historic architecture",
+          "Artisan shops"
+        ]
+      },
+      "reasoning": "Explicitly described as an outdoor walking experience through cobblestone streets and a pedestrian village — likely to be impacted by heavy rain and may need rescheduling or moving indoors."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Explicitly described as an outdoor walking experience through cobblestone streets and a pedestrian village — likely to be impacted by heavy rain and may need rescheduling or moving indoors.\"\n    }\n  ],\n  \"reasoning\": \"Only the Distillery District Walk is explicitly outdoor. The Royal Ontario Museum, Eataly Toronto, Cluny Bistro, and Fran's Restaurant are indoor activities (museum or indoor dining) and therefore not likely to need rescheduling due to rain.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1290,
+    "completion_tokens": 381,
+    "total_tokens": 1671
+  },
+  "processing_time_ms": 11124.850799911655
+}

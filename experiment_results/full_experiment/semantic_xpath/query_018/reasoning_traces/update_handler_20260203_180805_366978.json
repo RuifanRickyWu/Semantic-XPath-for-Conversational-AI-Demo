@@ -1,0 +1,51 @@
+{
+  "user_query": "I had a long day so am going to sleep in tomorrow. Change my Leslieville brunch to a dedicated sleep in time block",
+  "candidates_count": 5,
+  "updates_count": 1,
+  "updates": [
+    {
+      "tree_path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade",
+      "changes": {
+        "highlights": {
+          "from": [
+            "Trendy brunch",
+            "Creative dishes"
+          ],
+          "to": [
+            "Sleep in",
+            "Relax",
+            "No plans"
+          ]
+        },
+        "name": {
+          "from": "Lady Marmalade",
+          "to": "Sleep In"
+        },
+        "expected_cost": {
+          "from": "CAD 25-35",
+          "to": "N/A"
+        },
+        "description": {
+          "from": "Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.",
+          "to": "Dedicated sleep-in / rest block in place of the Leslieville brunch. No activities planned — take extra rest at your accommodation."
+        },
+        "travel_method": {
+          "from": "Taxi",
+          "to": "Stay at accommodation"
+        },
+        "type": {
+          "from": "Restaurant",
+          "to": "POI"
+        }
+      },
+      "reasoning": "Replaced the Leslieville brunch (Lady Marmalade) with a dedicated sleep-in POI per the user's request. Kept the original time block."
+    }
+  ],
+  "raw_response": "{\n  \"updates\": [\n    {\n      \"id\": \"1\",\n      \"path\": \"Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade\",\n      \"fields\": {\n        \"name\": \"Sleep In\",\n        \"time_block\": \"9:00 AM - 10:30 AM\",\n        \"description\": \"Dedicated sleep-in / rest block in place of the Leslieville brunch. No activities planned — take extra rest at your accommodation.\",\n        \"travel_method\": \"Stay at accommodation\",\n        \"expected_cost\": \"N/A\",\n        \"highlights\": [\"Sleep in\", \"Relax\", \"No plans\"]\n      },\n      \"new_type\": \"POI\",\n      \"reasoning\": \"Replaced the Leslieville brunch (Lady Marmalade) with a dedicated sleep-in POI per the user's request. Kept the original time block.\"\n    }\n  ],\n  \"reasoning\": \"User asked to change the Leslieville brunch to a dedicated sleep-in time block. Candidate 1 (Lady Marmalade) clearly matches (score 0.977), so it was transformed from a Restaurant to a POI named 'Sleep In' and fields were updated accordingly. Other candidates do not reference Leslieville and were not changed.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 2345,
+    "completion_tokens": 1549,
+    "total_tokens": 3894
+  },
+  "processing_time_ms": 23014.006900019012
+}

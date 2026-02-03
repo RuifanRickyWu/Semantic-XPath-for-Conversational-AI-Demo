@@ -1,0 +1,61 @@
+{
+  "timestamp": "20260203_180729_467914",
+  "operation": "UPDATE",
+  "user_query": "I had a long day so am going to sleep in tomorrow. Change my Leslieville brunch to a dedicated sleep in time block",
+  "full_query": null,
+  "xpath_query": null,
+  "success": true,
+  "intent": null,
+  "reasoning_trace": null,
+  "operation_data": {
+    "updated_count": 1,
+    "updated_paths": [
+      "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade"
+    ],
+    "update_results": [
+      {
+        "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade",
+        "changes": {
+          "highlights": {
+            "from": [
+              "Trendy brunch",
+              "Creative dishes"
+            ],
+            "to": [
+              "Sleep in",
+              "Relax",
+              "No plans"
+            ]
+          },
+          "name": {
+            "from": "Lady Marmalade",
+            "to": "Sleep In"
+          },
+          "expected_cost": {
+            "from": "CAD 25-35",
+            "to": "N/A"
+          },
+          "description": {
+            "from": "Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.",
+            "to": "Dedicated sleep-in / rest block in place of the Leslieville brunch. No activities planned — take extra rest at your accommodation."
+          },
+          "travel_method": {
+            "from": "Taxi",
+            "to": "Stay at accommodation"
+          },
+          "type": {
+            "from": "Restaurant",
+            "to": "POI"
+          }
+        },
+        "success": true
+      }
+    ]
+  },
+  "tree_version": null,
+  "summary": {
+    "operation": "UPDATE",
+    "success": true,
+    "affected_count": 1
+  }
+}

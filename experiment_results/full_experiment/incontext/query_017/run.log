@@ -1,0 +1,5 @@
+2026-02-03 18:26:17,141 - INFO - Query: Some work events got cancelled. On Day 2, change any work related events to Personal Day.
+2026-02-03 18:26:17,142 - INFO - Running query 17: Some work events got cancelled. On Day 2, change any work related events to Personal Day.
+2026-02-03 18:27:41,902 - INFO -   Operation: UPDATE, Success: True, Time: 84753.4ms
+2026-02-03 18:27:41,902 - INFO -   Tokens: 12856
+2026-02-03 18:27:41,902 - INFO - Result: UPDATE, Success: True

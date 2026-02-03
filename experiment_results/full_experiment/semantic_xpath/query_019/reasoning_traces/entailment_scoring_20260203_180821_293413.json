@@ -1,0 +1,54 @@
+{
+  "timestamp": "20260203_180821_293413",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "(atom(content =~ \"departure\") OR atom(content =~ \"flight\"))",
+  "hypothesis": "This is related to (atom(content =~ \"departure\") OR atom(content =~ \"flight\")).",
+  "nodes": [
+    {
+      "id": "2181454973504_main",
+      "type": "POI",
+      "name": "Airport Snack Stop",
+      "description": "name: Airport Snack Stop | time_block: 4:00 PM - 4:30 PM | description: Generic airport food and coffee before boarding. Forgettable but necessary. Nothing special about airport dining. | travel_metho",
+      "premise": "POI: Airport Snack Stop - name: Airport Snack Stop | time_block: 4:00 PM - 4:30 PM | description: Generic airport food and coffee before boarding. Forgettable but necessary. Nothing special about airport dining. | travel_method: Walk | expected_cost: CAD 20 | highlights: Generic airport food, Forgettable quick bite",
+      "score": 0.8615722060203552
+    },
+    {
+      "id": "2181454974304_main",
+      "type": "POI",
+      "name": "YYZ Food Court - Budget Dinner",
+      "description": "name: YYZ Food Court - Budget Dinner | time_block: 5:00 PM - 5:30 PM | description: Quick, inexpensive dinner at the airport food court with multiple fast-casual vendors — good for a filling meal befo",
+      "premise": "POI: YYZ Food Court - Budget Dinner - name: YYZ Food Court - Budget Dinner | time_block: 5:00 PM - 5:30 PM | description: Quick, inexpensive dinner at the airport food court with multiple fast-casual vendors — good for a filling meal before departure. | travel_method: Walk | expected_cost: CAD 15-25 | highlights: Budget-friendly, Multiple vendor choices, Fast service for tight schedules",
+      "score": 0.8868036866188049
+    },
+    {
+      "id": "2181454975184_main",
+      "type": "POI",
+      "name": "YYZ Departure",
+      "description": "name: YYZ Departure | time_block: 6:00 PM | description: Flight departure from Toronto Pearson International Airport. End of trip. | travel_method: Flight | expected_cost: Included | highlights: Depar",
+      "premise": "POI: YYZ Departure - name: YYZ Departure | time_block: 6:00 PM | description: Flight departure from Toronto Pearson International Airport. End of trip. | travel_method: Flight | expected_cost: Included | highlights: Departure flight, End of trip",
+      "score": 0.948434054851532
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2181454973504_main",
+      "node_type": "POI",
+      "score": 0.8615722060203552,
+      "reasoning": "Entailment score: 0.8616"
+    },
+    {
+      "node_id": "2181454974304_main",
+      "node_type": "POI",
+      "score": 0.8868036866188049,
+      "reasoning": "Entailment score: 0.8868"
+    },
+    {
+      "node_id": "2181454975184_main",
+      "node_type": "POI",
+      "score": 0.948434054851532,
+      "reasoning": "Entailment score: 0.9484"
+    }
+  ]
+}

@@ -18,6 +18,28 @@
 | 012 | The workshop on Day 3 ends at 11am and then I have nothing until the AGO at n... | READ | `/Itinerary/Day[3]` | 5,516 (4,207 / 1,309) | 25.49 |
 | 013 | I completely forgot about souvenirs. Add a stop at Roots or the Hudson's Bay ... | CREATE | `/Itinerary/Day[10]` | 6,308 (4,715 / 1,593) | 29.23 |
 
+### Stage Breakdown (12 queries)
+
+| Stage | Time (s) | Time % | Prompt | Completion | Total Tokens |
+|-------|----------|--------|--------|------------|--------------|
+| version_resolution | 66.7s | 18.6% | 11,878 | 2,597 | 14,475 |
+| version_lookup | 0.1s | 0.0% | 0 | 0 | 0 |
+| query_generation | 80.7s | 22.5% | 24,618 | 4,211 | 28,829 |
+| xpath_execution | 56.1s | 15.6% | 0 | 0 | 0 |
+| downstream_task | 155.4s | 43.3% | 20,527 | 8,673 | 29,200 |
+| **TOTAL** | **358.9s** | **100%** | **57,023** | **15,481** | **72,504** |
+
+**Averages per query:**
+
+| Stage | Avg Time | Avg Tokens |
+|-------|----------|------------|
+| version_resolution | 5.56s | 1,206 |
+| version_lookup | 0.01s | 0 |
+| query_generation | 6.72s | 2,402 |
+| xpath_execution | 4.67s | 0 |
+| downstream_task | 12.95s | 2,433 |
+| **TOTAL** | **29.91s** | **6,042** |
+
 ## Summary: incontext
 
 | Query | NL Request | Operation | Tokens | Time (s) |
@@ -250,7 +272,10 @@
 
 **Selected Nodes:**
 
-**Node Error Parsing XML Node**
+**results**
+  - Day: Index 1
+  - Day: Index 6
+  - Day: Index 8
 
 ### Query 006
 **Query:** I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.

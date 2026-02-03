@@ -3,11 +3,11 @@
   "query": "My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?",
   "operation": "READ",
   "success": true,
-  "execution_time_ms": 13798.54,
+  "execution_time_ms": 63733.24,
   "token_usage": {
-    "prompt_tokens": 5567,
-    "completion_tokens": 178,
-    "total_tokens": 5745
+    "prompt_tokens": 5605,
+    "completion_tokens": 1658,
+    "total_tokens": 7263
   },
   "selected_nodes": [
     {
@@ -16,7 +16,7 @@
         "index": "9"
       },
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
-      "reasoning": "Day 9 has no work commitments or flights, only leisure activities like dining and shopping."
+      "reasoning": "Day 9's entries are leisure activities (brunch, shopping, dinner). No flights or work-related commitments are listed."
     },
     {
       "type": "Day",
@@ -24,13 +24,29 @@
         "index": "8"
       },
       "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
-      "reasoning": "Day 8 is a leisure day with a trip to Niagara Falls and no work commitments or flights."
+      "reasoning": "Day 8 is a Niagara Falls day trip and evening dinner—a full-day leisure excursion with no flights or work commitments."
+    },
+    {
+      "type": "Day",
+      "attributes": {
+        "index": "7"
+      },
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+      "reasoning": "Day 7 lists museum visits, walks, and meals (leisure/cultural activities) with no flights or work-related items."
+    },
+    {
+      "type": "Day",
+      "attributes": {
+        "index": "6"
+      },
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+      "reasoning": "Day 6 contains island/family activities and meals (leisure) and does not include any flights or work commitments."
     }
   ],
   "raw_result": {
-    "timestamp": "20260202_203637_011093",
+    "timestamp": "20260203_175835_680758",
     "user_query": "My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?",
-    "task_query": "find days without any work commitments or flights",
+    "task_query": "What days are without any work commitments or flights?",
     "operation": "READ",
     "success": true,
     "version_resolution": {
@@ -38,35 +54,35 @@
       "semantic_query": null,
       "index": -1,
       "crud_operation": "Read",
-      "raw_response": "at([-1]), READ\ntask: find days without any work commitments or flights",
-      "task_query": "find days without any work commitments or flights",
+      "raw_response": "at([-1]), READ\ntask: What days are without any work commitments or flights?",
+      "task_query": "What days are without any work commitments or flights?",
       "token_usage": {
-        "prompt_tokens": 988,
-        "completion_tokens": 16,
-        "total_tokens": 1004
+        "prompt_tokens": 987,
+        "completion_tokens": 91,
+        "total_tokens": 1078
       }
     },
     "parsed_query": {
       "operation": "Read",
-      "xpath": "/Itinerary/Day[not(agg_exists(POI[(atom(content =~ \"work\") OR atom(content =~ \"flight\"))]))]",
-      "full_query": "Read(/Itinerary/Day[not(agg_exists(POI[(atom(content =~ \"work\") OR atom(content =~ \"flight\"))]))])",
+      "xpath": "/Itinerary/Day[not(agg_exists(desc::.[atom(content =~ \"work\") OR atom(content =~ \"flight\")]))]",
+      "full_query": "Read(/Itinerary/Day[not(agg_exists(desc::.[atom(content =~ \"work\") OR atom(content =~ \"flight\")]))])",
       "token_usage": {
-        "prompt_tokens": 2043,
-        "completion_tokens": 29,
-        "total_tokens": 2072
+        "prompt_tokens": 2044,
+        "completion_tokens": 806,
+        "total_tokens": 2850
       }
     },
     "version_used": "1",
     "xpath_execution": {
-      "query": "/Root/Itinerary_Version[1]/Itinerary/Day[not(agg_exists(POI[(atom(content =~ \"work\") OR atom(content =~ \"flight\"))]))]",
+      "query": "/Root/Itinerary_Version[1]/Itinerary/Day[not(agg_exists(desc::.[atom(content =~ \"work\") OR atom(content =~ \"flight\")]))]",
       "matched_count": 5,
-      "execution_time_ms": 8246.350800036453,
+      "execution_time_ms": 28917.321699904278,
       "token_usage": null
     },
     "handler_result": {
       "success": true,
       "operation": "READ",
-      "processing_time_ms": 2940.2226000092924,
+      "processing_time_ms": 12056.787199922837,
       "output": {
         "selected_nodes": [
           {
@@ -77,7 +93,7 @@
                 "index": "9"
               }
             },
-            "reasoning": "Day 9 has no work commitments or flights, only leisure activities like dining and shopping."
+            "reasoning": "Day 9's entries are leisure activities (brunch, shopping, dinner). No flights or work-related commitments are listed."
           },
           {
             "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
@@ -87,64 +103,84 @@
                 "index": "8"
               }
             },
-            "reasoning": "Day 8 is a leisure day with a trip to Niagara Falls and no work commitments or flights."
+            "reasoning": "Day 8 is a Niagara Falls day trip and evening dinner—a full-day leisure excursion with no flights or work commitments."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+            "node_data": {
+              "type": "Day",
+              "attributes": {
+                "index": "7"
+              }
+            },
+            "reasoning": "Day 7 lists museum visits, walks, and meals (leisure/cultural activities) with no flights or work-related items."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+            "node_data": {
+              "type": "Day",
+              "attributes": {
+                "index": "6"
+              }
+            },
+            "reasoning": "Day 6 contains island/family activities and meals (leisure) and does not include any flights or work commitments."
           }
         ]
       },
       "token_usage": {
-        "prompt_tokens": 2536,
-        "completion_tokens": 133,
-        "total_tokens": 2669
+        "prompt_tokens": 2574,
+        "completion_tokens": 761,
+        "total_tokens": 3335
       }
     },
     "timing": {
       "stages": [
         {
           "name": "version_resolution",
-          "time_ms": 1321.65,
+          "time_ms": 5899.33,
           "token_usage": {
-            "prompt_tokens": 988,
-            "completion_tokens": 16,
-            "total_tokens": 1004
+            "prompt_tokens": 987,
+            "completion_tokens": 91,
+            "total_tokens": 1078
           }
         },
         {
           "name": "version_lookup",
-          "time_ms": 89.24
+          "time_ms": 87.12
         },
         {
           "name": "query_generation",
-          "time_ms": 1192.79,
+          "time_ms": 16761.52,
           "token_usage": {
-            "prompt_tokens": 2043,
-            "completion_tokens": 29,
-            "total_tokens": 2072
+            "prompt_tokens": 2044,
+            "completion_tokens": 806,
+            "total_tokens": 2850
           }
         },
         {
           "name": "xpath_execution",
-          "time_ms": 8250.22
+          "time_ms": 28923.12
         },
         {
           "name": "downstream_task",
-          "time_ms": 2940.91,
+          "time_ms": 12057.74,
           "token_usage": {
-            "prompt_tokens": 2536,
-            "completion_tokens": 133,
-            "total_tokens": 2669
+            "prompt_tokens": 2574,
+            "completion_tokens": 761,
+            "total_tokens": 3335
           }
         }
       ],
-      "total_time_ms": 13794.82,
+      "total_time_ms": 63728.83,
       "total_tokens": {
-        "prompt_tokens": 5567,
-        "completion_tokens": 178,
-        "total_tokens": 5745
+        "prompt_tokens": 5605,
+        "completion_tokens": 1658,
+        "total_tokens": 7263
       },
-      "pipeline_total_ms": 13797.80890000984
+      "pipeline_total_ms": 63732.35750000458
     },
     "candidates_count": 5,
-    "selected_count": 2,
+    "selected_count": 4,
     "selected_nodes": [
       {
         "type": "Day",
@@ -152,7 +188,7 @@
           "index": "9"
         },
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
-        "reasoning": "Day 9 has no work commitments or flights, only leisure activities like dining and shopping."
+        "reasoning": "Day 9's entries are leisure activities (brunch, shopping, dinner). No flights or work-related commitments are listed."
       },
       {
         "type": "Day",
@@ -160,9 +196,25 @@
           "index": "8"
         },
         "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
-        "reasoning": "Day 8 is a leisure day with a trip to Niagara Falls and no work commitments or flights."
+        "reasoning": "Day 8 is a Niagara Falls day trip and evening dinner—a full-day leisure excursion with no flights or work commitments."
+      },
+      {
+        "type": "Day",
+        "attributes": {
+          "index": "7"
+        },
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+        "reasoning": "Day 7 lists museum visits, walks, and meals (leisure/cultural activities) with no flights or work-related items."
+      },
+      {
+        "type": "Day",
+        "attributes": {
+          "index": "6"
+        },
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+        "reasoning": "Day 6 contains island/family activities and meals (leisure) and does not include any flights or work commitments."
       }
     ],
-    "total_time_ms": 13797.80890000984
+    "total_time_ms": 63732.35750000458
   }
 }

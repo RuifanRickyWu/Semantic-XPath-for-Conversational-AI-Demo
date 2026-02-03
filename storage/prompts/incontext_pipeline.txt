@@ -62,6 +62,8 @@ Output valid JSON only:
 
 **For READ operations:**
 - Return ONLY the matching XML nodes (not the full tree)
+- If the query asks about DAYS (e.g., "which days have..."), return the matching Day nodes with their content
+- If the query asks about specific items (e.g., "show me museums"), return just those items
 - Wrap in a <results> tag if multiple matches
 
 **For CREATE/UPDATE/DELETE operations:**
@@ -71,7 +73,7 @@ Output valid JSON only:
 
 ## Examples
 
-### READ Example
+### READ Example 1 (Query asks about items)
 User: "Show me museums"
 
 ```json
@@ -80,6 +82,18 @@ User: "Show me museums"
   "version_used": 1,
   "reasoning": "Found 2 POIs that are museums",
   "result": "<POI>\n  <name>Art Gallery of Ontario</name>\n  ...\n</POI>\n<POI>\n  <name>Royal Ontario Museum</name>\n  ...\n</POI>"
+}
+```
+
+### READ Example 2 (Query asks about days)
+User: "Which days have outdoor activities?"
+
+```json
+{
+  "operation": "READ",
+  "version_used": 1,
+  "reasoning": "Found 3 days with outdoor activities: Day 1, Day 6, Day 8",
+  "result": "<Day index=\"1\">\n  <POI>\n    <name>Harbourfront Stroll</name>\n    ...\n  </POI>\n</Day>\n<Day index=\"6\">\n  <POI>\n    <name>Toronto Islands</name>\n    ...\n  </POI>\n</Day>\n<Day index=\"8\">\n  <POI>\n    <name>Niagara Falls</name>\n    ...\n  </POI>\n</Day>"
 }
 ```
 

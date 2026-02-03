@@ -68,6 +68,18 @@ def format_scoring_table(execution_trace: Dict[str, Any]) -> List[str]:
     # 2. Extract key metadata
     predicate = scoring_result.get("predicate", "N/A")
     threshold = scoring_result.get("config", {}).get("score_threshold", 0.0)
+    top_k = scoring_result.get("config", {}).get("top_k", 10)
+    
+    # Get the list of nodes that actually made it through top-k filtering
+    final_filtering = execution_trace.get("final_filtering", {})
+    filtered_nodes = final_filtering.get("filtered_nodes", [])
+    filtered_node_paths = set()
+    for fn in filtered_nodes:
+        # Extract just the node name from path (e.g., "Day 5" from "Root > Itinerary_Version 1 > Itinerary > Day 5")
+        path = fn.get("path", "")
+        if " > " in path:
+            node_name = path.split(" > ")[-1]
+            filtered_node_paths.add(node_name)
     
     semantic_values = []
     if "batch_scoring" in scoring_result and "semantic_values" in scoring_result["batch_scoring"]:
@@ -128,7 +140,7 @@ def format_scoring_table(execution_trace: Dict[str, Any]) -> List[str]:
     separator = "|---| " + " | ".join(["---"] * len(conditions_header)) + " |---|---|"
     
     lines.append(f"**Predicate:** `{predicate}`")
-    lines.append(f"**Threshold:** `{threshold}`")
+    lines.append(f"**Threshold:** `{threshold}` | **Top-K:** `{top_k}`")
     lines.append("")
     lines.append(header)
     lines.append(separator)
@@ -162,15 +174,21 @@ def format_scoring_table(execution_trace: Dict[str, Any]) -> List[str]:
             
         final_score_str = f"{final_score:.4f}"
         
-        # Determine Result Status
-        passed = final_score >= threshold
-        if passed:
-            status = "✅ Pass"
+        # Determine Result Status based on whether node made it to final candidates
+        # A node is a candidate if it's in the filtered_nodes list (passed threshold AND top-k)
+        is_candidate = name in filtered_node_paths
+        passed_threshold = final_score >= threshold
+        
+        if is_candidate:
+            status = "✅ Candidate"
+        elif passed_threshold:
+            # Passed threshold but didn't make top-k cut
+            status = "⚪ Above Threshold"
         else:
-            # Try to identify WHY it failed
+            # Failed threshold
             status = "❌ Filtered Out"
             
-            # If we have breakdown, find the bottleneck
+            # Try to identify WHY it failed
             if column_type == "child" and scores_to_display:
                  min_val = min(scores_to_display)
                  if abs(min_val - final_score) < 1e-6:
@@ -329,10 +347,6 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
     output_lines = [
         f"# Experiment Report: {experiment_name}",
         "",
-        "## Summary",
-        "",
-        "| Query ID | Pipeline | Operation | XPath / Logic | Result | Tokens (Total) | Time (s) |",
-        "|---|---|---|---|---|---|---|"
     ]
 
     # Find all unique query folders across pipelines to order them
@@ -354,10 +368,23 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
     
     sorted_folders = sorted(list(query_folders))
 
-    for folder_name in sorted_folders:
-        query_id = folder_name.split('_')[1]
+    # Generate separate summary table for each pipeline
+    for pipeline in pipelines:
+        output_lines.append(f"## Summary: {pipeline}")
+        output_lines.append("")
         
-        for pipeline in pipelines:
+        # Different columns based on pipeline type
+        if pipeline == "semantic_xpath":
+            output_lines.append("| Query | NL Request | Operation | XPath Query | Tokens | Time (s) |")
+            output_lines.append("|---|---|---|---|---|---|")
+        else:
+            # incontext pipeline - no XPath column
+            output_lines.append("| Query | NL Request | Operation | Tokens | Time (s) |")
+            output_lines.append("|---|---|---|---|---|")
+        
+        for folder_name in sorted_folders:
+            query_id = folder_name.split('_')[1]
+            
             # Try new structure first: query_XXX/result.json
             file_path = base_dir / pipeline / folder_name / "result.json"
             if not file_path.exists():
@@ -381,27 +408,25 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
                     "operation": "?"
                 }
             
-            # Format row
-            query_preview = data.get("query", "")[:50].replace("\n", " ") + "..." if len(data.get("query", "")) > 50 else data.get("query", "")
-            if "|" in query_preview:
-                query_preview = query_preview.replace("|", r"\|")
-            
-            xpath_code = f"`{info['xpath']}`" if info['xpath'] != "N/A" else "Full Tree"
-            if len(xpath_code) > 60:
-                 xpath_code = xpath_code[:50] + "...`"
-
-            result_str = info['result']
-            if len(result_str) > 50:
-                result_str = result_str[:47] + "..."
+            # NL Request - escape pipe characters and truncate if very long
+            nl_request = data.get("query", "").replace("\n", " ").replace("|", "\\|")
+            if len(nl_request) > 80:
+                nl_request = nl_request[:77] + "..."
             
             token_str = format_token_usage(info['token_usage'])
             time_str = f"{info['time_ms'] / 1000:.2f}"
             
-            row = f"| {query_id} | {pipeline} | {info['operation']} | {xpath_code} | {result_str} | {token_str} | {time_str} |"
-            output_lines.append(row)
+            if pipeline == "semantic_xpath":
+                # Show full XPath query (escape pipes)
+                xpath_query = info['xpath'].replace("|", "\\|") if info['xpath'] else "N/A"
+                row = f"| {query_id} | {nl_request} | {info['operation']} | `{xpath_query}` | {token_str} | {time_str} |"
+            else:
+                # Incontext - no XPath column
+                row = f"| {query_id} | {nl_request} | {info['operation']} | {token_str} | {time_str} |"
             
-            # Add a row for the full query text if desired, or keep it compact. 
-            # For now, let's just keep the table row.
+            output_lines.append(row)
+        
+        output_lines.append("")
 
     # Detailed sections (Optional)
     output_lines.append("")
@@ -444,8 +469,9 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
 
             output_lines.append(f"#### {pipeline}")
             output_lines.append(f"- **Operation:** {info['operation']}")
-            output_lines.append(f"- **Logic/XPath:** `{info['xpath']}`")
-            output_lines.append(f"- **Result:** {info['result']}")
+            # Only show XPath for semantic_xpath pipeline
+            if pipeline == "semantic_xpath" and info['xpath']:
+                output_lines.append(f"- **XPath:** `{info['xpath']}`")
             output_lines.append(f"- **Time:** {info['time_ms'] / 1000:.2f}s")
             output_lines.append(f"- **Tokens:** {format_token_usage(info['token_usage'])}")
             if "error" in data:
@@ -512,7 +538,12 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
                                  sub_nodes = []
                                  keys_to_remove = []
                                  
+                                 # Keys to skip entirely (don't add as sub-nodes)
+                                 skip_keys = {"highlights", "description", "type", "name", "indent"}
+                                 
                                  for key, val in node_data.items():
+                                     if key in skip_keys:
+                                         continue
                                      if isinstance(val, list):
                                          # Check if list of dicts (complex objects)
                                          if val and isinstance(val[0], dict):
@@ -521,6 +552,8 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
                                                 item["type"] = key  # Use tag as type
                                                 item["indent"] = True
                                                 sub_nodes.append(item)
+                                            keys_to_remove.append(key)
+                                         elif not val:  # Empty list
                                             keys_to_remove.append(key)
                                      elif isinstance(val, dict):
                                          # complex child
@@ -544,45 +577,71 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
                 output_lines.append("**Selected Nodes:**")
                 output_lines.append("")
                 
-                for idx, node in enumerate(nodes_to_display):
-                    indent = node.get("indent", False)
-                    prefix_num = f"{idx + 1}."
+                # Different display format based on pipeline
+                if pipeline == "semantic_xpath":
+                    # Use a clean table format for semantic_xpath results
+                    output_lines.append("| # | Node | Reasoning |")
+                    output_lines.append("|---|------|-----------|")
                     
-                    type_str = node.get('type', 'Node')
-                    name_str = node.get('name', 'Unknown')
+                    for idx, node in enumerate(nodes_to_display):
+                        type_str = node.get('type', 'Node')
+                        
+                        # Build node identifier
+                        if "index" in node:
+                            node_id = f"{type_str} {node['index']}"
+                        elif node.get('name') and node.get('name') != "Unknown":
+                            node_id = f"{type_str}: {node['name']}"
+                        elif "tree_path" in node:
+                            # Extract last part of path
+                            path_parts = node["tree_path"].split(" > ")
+                            node_id = path_parts[-1] if path_parts else type_str
+                        else:
+                            node_id = type_str
+                        
+                        # Get reasoning, escape pipe characters
+                        reasoning = node.get('reasoning', '-')
+                        if reasoning:
+                            reasoning = reasoning.replace("|", "\\|").replace("\n", " ")
+                            if len(reasoning) > 150:
+                                reasoning = reasoning[:147] + "..."
+                        else:
+                            reasoning = "-"
+                        
+                        output_lines.append(f"| {idx + 1} | {node_id} | {reasoning} |")
                     
-                    # Construct Identity
-                    identity = ""
-                    if name_str and name_str != "Unknown":
-                        identity = name_str
-                    elif "index" in node:
-                        identity = f"Index: {node['index']}"
-                    
-                    # Construct Details (everything else)
-                    details = []
-                    # Common keys to show first
-                    priority_keys = ["time_block", "cost", "expected_cost", "travel_method"]
-                    for k in priority_keys:
-                        if k in node and node[k]:
-                            details.append(f"{node[k]}")
-                    
-                    # Add other short keys
-                    for k, v in node.items():
-                        ignore_keys = ["name", "type", "indent", "node_type", "xml", "highlights", "description", "index", "id"]
-                        if k not in ignore_keys and k not in priority_keys:
-                             val_str = str(v)
-                             if len(val_str) < 30: # Only show short values
-                                 details.append(f"{val_str}")
-                    
-                    details_str = f" ({', '.join(details)})" if details else ""
-                    
-                    # Format
-                    if indent:
-                         display_line = f"{prefix_num}   - **{type_str}** -> {identity}{details_str}"
-                    else:
-                         display_line = f"{prefix_num} **{type_str}** -> {identity}{details_str}"
-                    
-                    output_lines.append(display_line)
+                else:
+                    # Incontext pipeline - hierarchical format
+                    for node in nodes_to_display:
+                        indent = node.get("indent", False)
+                        prefix = "  - " if indent else "**"
+                        suffix = "**" if not indent else ""
+                        
+                        type_str = node.get('type', 'Node')
+                        name_str = node.get('name', '')
+                        
+                        # Build identity
+                        if name_str and name_str != "Unknown":
+                            identity = name_str
+                        elif "index" in node:
+                            identity = f"Index {node['index']}"
+                        else:
+                            identity = ""
+                        
+                        # Build compact details (filter empty values)
+                        details = []
+                        priority_keys = ["time_block", "expected_cost", "travel_method"]
+                        for k in priority_keys:
+                            val = node.get(k)
+                            if val and str(val).strip():
+                                details.append(str(val))
+                        
+                        details_str = f" ({', '.join(details)})" if details else ""
+                        
+                        if indent:
+                            output_lines.append(f"  - {type_str}: {identity}{details_str}")
+                        else:
+                            node_display = f"{type_str} {identity}" if identity else type_str
+                            output_lines.append(f"**{node_display}**{details_str}")
                 
                 output_lines.append("")
             

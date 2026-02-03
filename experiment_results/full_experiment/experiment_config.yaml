@@ -2,7 +2,7 @@ name: "full_experiment"
 
 # Pipelines to run for each query
 pipelines:
-  - semantic_xpath
+  # - semantic_xpath
   - incontext
 
 incontext_config:

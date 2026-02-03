@@ -117,7 +117,8 @@ class OpenAIClient:
         completion_kwargs["messages"] = messages
         
         response = self.client.chat.completions.create(**completion_kwargs)
-        return response.choices[0].message.content
+        content = response.choices[0].message.content
+        return content if content is not None else ""
     
     def chat_with_usage(self, messages: list[dict], **kwargs) -> CompletionResult:
         """Send a chat completion request and return response with token usage."""
@@ -136,8 +137,13 @@ class OpenAIClient:
             total_tokens=response.usage.total_tokens
         )
         
+        # Handle None content (can happen with reasoning models)
+        content = response.choices[0].message.content
+        if content is None:
+            content = ""
+        
         return CompletionResult(
-            content=response.choices[0].message.content,
+            content=content,
             usage=usage
         )
     

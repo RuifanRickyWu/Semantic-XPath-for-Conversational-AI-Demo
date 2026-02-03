@@ -1,0 +1,217 @@
+{
+  "query_index": 5,
+  "query": "Where do i go for breakfast on a shopping day?",
+  "operation": "READ",
+  "success": true,
+  "execution_time_ms": 36426.53,
+  "token_usage": {
+    "prompt_tokens": 9418,
+    "completion_tokens": 2516,
+    "total_tokens": 11934
+  },
+  "selected_nodes": [
+    {
+      "type": "Restaurant",
+      "attributes": {},
+      "name": "Sunset Grill",
+      "time_block": "9:00 AM - 10:00 AM",
+      "description": "Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 20-30",
+      "highlights": [
+        "Family breakfast",
+        "Kid-friendly menu"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+      "reasoning": "Sunset Grill is a breakfast restaurant with a family-friendly atmosphere and quick service, making it suitable for a shopping day."
+    },
+    {
+      "type": "Restaurant",
+      "attributes": {},
+      "name": "Fran's Restaurant",
+      "time_block": "8:30 AM - 9:30 AM",
+      "description": "Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 20",
+      "highlights": [
+        "Classic diner",
+        "Toronto institution"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+      "reasoning": "Fran's Restaurant offers breakfast all day in a casual setting, which is convenient for a shopping day."
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_184029_526634",
+    "user_query": "Where do i go for breakfast on a shopping day?",
+    "operation": "READ",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Read",
+      "raw_response": "at([-1]), READ",
+      "token_usage": {
+        "prompt_tokens": 618,
+        "completion_tokens": 5,
+        "total_tokens": 623
+      }
+    },
+    "parsed_query": {
+      "operation": "Read",
+      "xpath": "/Itinerary/Day[\nagg_exists(desc :: POI [atom(content =~ \"shopping\")])\n]/Restaurant[atom(content =~ \"breakfast\")]",
+      "full_query": "Read(/Itinerary/Day[\nagg_exists(desc :: POI [atom(content =~ \"shopping\")])\n]/Restaurant[atom(content =~ \"breakfast\")])",
+      "token_usage": {
+        "prompt_tokens": 1092,
+        "completion_tokens": 30,
+        "total_tokens": 1122
+      }
+    },
+    "version_used": "1",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[\nagg_exists(desc :: POI [atom(content =~ \"shopping\")])\n]/Restaurant[atom(content =~ \"breakfast\")]",
+      "matched_count": 7,
+      "execution_time_ms": 30740.829399903305,
+      "token_usage": {
+        "prompt_tokens": 6455,
+        "completion_tokens": 2282,
+        "total_tokens": 8737
+      }
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "READ",
+      "processing_time_ms": 4199.950399925001,
+      "output": {
+        "selected_nodes": [
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+            "node_data": {
+              "type": "Restaurant",
+              "attributes": {},
+              "name": "Sunset Grill",
+              "time_block": "9:00 AM - 10:00 AM",
+              "description": "Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.",
+              "travel_method": "Walk",
+              "expected_cost": "CAD 20-30",
+              "highlights": [
+                "Family breakfast",
+                "Kid-friendly menu"
+              ]
+            },
+            "reasoning": "Sunset Grill is a breakfast restaurant with a family-friendly atmosphere and quick service, making it suitable for a shopping day."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+            "node_data": {
+              "type": "Restaurant",
+              "attributes": {},
+              "name": "Fran's Restaurant",
+              "time_block": "8:30 AM - 9:30 AM",
+              "description": "Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.",
+              "travel_method": "Walk",
+              "expected_cost": "CAD 20",
+              "highlights": [
+                "Classic diner",
+                "Toronto institution"
+              ]
+            },
+            "reasoning": "Fran's Restaurant offers breakfast all day in a casual setting, which is convenient for a shopping day."
+          }
+        ]
+      },
+      "token_usage": {
+        "prompt_tokens": 1253,
+        "completion_tokens": 199,
+        "total_tokens": 1452
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 386.29,
+          "token_usage": {
+            "prompt_tokens": 618,
+            "completion_tokens": 5,
+            "total_tokens": 623
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 1086.12,
+          "token_usage": {
+            "prompt_tokens": 1092,
+            "completion_tokens": 30,
+            "total_tokens": 1122
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 30749.32,
+          "token_usage": {
+            "prompt_tokens": 6455,
+            "completion_tokens": 2282,
+            "total_tokens": 8737
+          }
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 4200.75,
+          "token_usage": {
+            "prompt_tokens": 1253,
+            "completion_tokens": 199,
+            "total_tokens": 1452
+          }
+        }
+      ],
+      "total_time_ms": 36422.48,
+      "total_tokens": {
+        "prompt_tokens": 9418,
+        "completion_tokens": 2516,
+        "total_tokens": 11934
+      },
+      "pipeline_total_ms": 36425.61509995721
+    },
+    "candidates_count": 7,
+    "selected_count": 2,
+    "selected_nodes": [
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Sunset Grill",
+        "time_block": "9:00 AM - 10:00 AM",
+        "description": "Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 20-30",
+        "highlights": [
+          "Family breakfast",
+          "Kid-friendly menu"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+        "reasoning": "Sunset Grill is a breakfast restaurant with a family-friendly atmosphere and quick service, making it suitable for a shopping day."
+      },
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Fran's Restaurant",
+        "time_block": "8:30 AM - 9:30 AM",
+        "description": "Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 20",
+        "highlights": [
+          "Classic diner",
+          "Toronto institution"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+        "reasoning": "Fran's Restaurant offers breakfast all day in a casual setting, which is convenient for a shopping day."
+      }
+    ],
+    "total_time_ms": 36425.61509995721
+  }
+}

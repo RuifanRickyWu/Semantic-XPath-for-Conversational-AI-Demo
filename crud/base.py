@@ -167,13 +167,14 @@ class BaseHandler(ABC):
     """
     
     PROMPTS_PATH = Path(__file__).parent.parent / "storage" / "prompts"
-    TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
+    DEFAULT_TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
     
     def __init__(
         self,
         client=None,
         schema: Optional[Dict[str, Any]] = None,
         save_traces: bool = True,
+        traces_path: Path = None,
         use_dynamic_prompts: bool = True
     ):
         """
@@ -183,6 +184,7 @@ class BaseHandler(ABC):
             client: Optional OpenAI client
             schema: Optional schema dict for node type information
             save_traces: Whether to save reasoning traces
+            traces_path: Optional custom path for trace files
             use_dynamic_prompts: Whether to use dynamic prompt loading with domain knowledge
         """
         self._client = client
@@ -190,10 +192,11 @@ class BaseHandler(ABC):
         self.save_traces = save_traces
         self.use_dynamic_prompts = use_dynamic_prompts
         self._system_prompt = None
+        self.traces_path = traces_path or self.DEFAULT_TRACES_PATH
         self._prompt_loader = None
         
         # Ensure traces directory exists
-        self.TRACES_PATH.mkdir(parents=True, exist_ok=True)
+        self.traces_path.mkdir(parents=True, exist_ok=True)
     
     @property
     def client(self):
@@ -231,7 +234,7 @@ class BaseHandler(ABC):
             else:
                 # Legacy: load from single file
                 prompt_path = self.PROMPTS_PATH / self.prompt_file
-                with open(prompt_path, "r") as f:
+                with open(prompt_path, "r", encoding="utf-8") as f:
                     self._system_prompt = f.read()
         return self._system_prompt
     
@@ -398,7 +401,7 @@ class BaseHandler(ABC):
             
         from datetime import datetime
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-        trace_file = self.TRACES_PATH / f"{prefix}_{timestamp}.json"
+        trace_file = self.traces_path / f"{prefix}_{timestamp}.json"
         
         import json
         with open(trace_file, "w", encoding="utf-8") as f:

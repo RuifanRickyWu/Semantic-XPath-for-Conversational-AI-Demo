@@ -14,9 +14,9 @@ openai:
 
 xpath_executor:
   top_k: 10
-  score_threshold: 0.01
+  score_threshold: 0.5
   # Scoring method: "llm", "entailment", or "cosine"
-  scoring_method: "entailment"
+  scoring_method: "llm"
 
 # In-context pipeline settings (single LLM call with full tree)
 incontext_pipeline:

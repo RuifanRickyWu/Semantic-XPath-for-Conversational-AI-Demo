@@ -1,0 +1,22 @@
+{
+  "experiment_name": "test",
+  "start_time": "2026-02-02T18:38:58.730100",
+  "total_queries": 14,
+  "pipelines": {
+    "semantic_xpath": {
+      "total_queries": 14,
+      "success_count": 12,
+      "total_time_ms": 221455.96,
+      "total_tokens": 100648,
+      "avg_time_per_query_ms": 15818.28
+    },
+    "incontext": {
+      "total_queries": 14,
+      "success_count": 14,
+      "total_time_ms": 308861.82,
+      "total_tokens": 117004,
+      "avg_time_per_query_ms": 22061.56
+    }
+  },
+  "end_time": "2026-02-02T18:47:49.514312"
+}

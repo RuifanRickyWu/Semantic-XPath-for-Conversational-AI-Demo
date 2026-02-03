@@ -29,13 +29,14 @@ class CosinePredicateScorer(PredicateScorer):
     between node descriptions and semantic predicates.
     """
     
-    TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
+    DEFAULT_TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
     
     def __init__(
         self, 
         client: TASBClient = None, 
         predicate_template: str = "{predicate}",
-        save_traces: bool = True
+        save_traces: bool = True,
+        traces_path: Path = None
     ):
         """
         Initialize the cosine scorer.
@@ -46,13 +47,15 @@ class CosinePredicateScorer(PredicateScorer):
                                Use {predicate} as placeholder.
                                E.g., "related to {predicate}" or just "{predicate}"
             save_traces: Whether to save reasoning traces to disk.
+            traces_path: Optional custom path for trace files.
         """
         self._client = client
         self.predicate_template = predicate_template
         self.save_traces = save_traces
+        self.traces_path = traces_path or self.DEFAULT_TRACES_PATH
         
         # Ensure traces directory exists
-        self.TRACES_PATH.mkdir(parents=True, exist_ok=True)
+        self.traces_path.mkdir(parents=True, exist_ok=True)
     
     @property
     def client(self) -> TASBClient:
@@ -175,7 +178,7 @@ class CosinePredicateScorer(PredicateScorer):
     ):
         """Save reasoning trace to disk."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-        trace_file = self.TRACES_PATH / f"cosine_scoring_{timestamp}.json"
+        trace_file = self.traces_path / f"cosine_scoring_{timestamp}.json"
         
         trace_data = {
             "timestamp": timestamp,

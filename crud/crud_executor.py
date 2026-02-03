@@ -158,7 +158,8 @@ class CRUDExecutor:
         scoring_method: str = None,
         top_k: int = None,
         score_threshold: float = None,
-        tree_path: Path = None
+        tree_path: Path = None,
+        traces_path: Path = None
     ):
         """
         Initialize the CRUD executor.
@@ -168,6 +169,7 @@ class CRUDExecutor:
             top_k: Number of top results to consider
             score_threshold: Minimum score threshold
             tree_path: Optional path to the XML tree override
+            traces_path: Optional directory for trace files
         """
         # Determine base directory
         if tree_path:
@@ -187,15 +189,17 @@ class CRUDExecutor:
             scoring_method=scoring_method,
             top_k=top_k,
             score_threshold=score_threshold,
-            tree_path=tree_path
+            tree_path=tree_path,
+            traces_path=traces_path
         )
         
         # Initialize downstream handlers (NEW)
         schema = self.executor._schema
-        self.read_handler = ReadHandler(schema=schema)
-        self.delete_handler = DeleteHandler(schema=schema)
-        self.update_handler = UpdateHandler(schema=schema)
-        self.create_handler = CreateHandler(schema=schema)
+        handler_traces_path = traces_path / "reasoning_traces" if traces_path else None
+        self.read_handler = ReadHandler(schema=schema, traces_path=handler_traces_path)
+        self.delete_handler = DeleteHandler(schema=schema, traces_path=handler_traces_path)
+        self.update_handler = UpdateHandler(schema=schema, traces_path=handler_traces_path)
+        self.create_handler = CreateHandler(schema=schema, traces_path=handler_traces_path)
         
         # Tree modification components (unchanged)
         self.version_manager = VersionManager(base_directory=base_dir)

@@ -160,9 +160,16 @@ class ExperimentRunner:
                 shutil.copy2(source_path, target_path)
             
             if name == "semantic_xpath":
-                self._pipeline_instances[name] = SemanticXPathPipeline(tree_path=target_path)
+                self._pipeline_instances[name] = SemanticXPathPipeline(
+                    tree_path=target_path
+                )
             elif name == "incontext":
-                self._pipeline_instances[name] = IncontextPipeline(tree_path=target_path)
+                # Get the config block
+                pipeline_config = self.config.get("incontext_config", {})
+                self._pipeline_instances[name] = IncontextPipeline(
+                    tree_path=target_path,
+                    config_override=pipeline_config
+                )
             else:
                 raise ValueError(f"Unknown pipeline: {name}")
         
@@ -452,10 +459,16 @@ class ExperimentRunner:
                 error=str(e)
             )
     
+    def _get_query_folder(self, pipeline_name: str, query_index: int) -> Path:
+        """Get or create the folder for a specific query."""
+        query_folder = self.experiment_dir / pipeline_name / f"query_{query_index + 1:03d}"
+        query_folder.mkdir(parents=True, exist_ok=True)
+        return query_folder
+    
     def _save_result(self, result: QueryResult, pipeline_name: str):
-        """Save a query result to file."""
-        filename = f"query_{result.query_index + 1:03d}_result.json"
-        filepath = self.experiment_dir / pipeline_name / filename
+        """Save a query result to file in the query folder."""
+        query_folder = self._get_query_folder(pipeline_name, result.query_index)
+        filepath = query_folder / "result.json"
         
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(result.to_dict(), f, indent=2, ensure_ascii=False)
@@ -502,10 +515,30 @@ class ExperimentRunner:
             for i, query in enumerate(self.queries):
                 print(f"  [{i+1}/{len(self.queries)}] {query[:50]}...")
                 
+                # Setup per-query folder and tracing
+                query_folder = self._get_query_folder(pipeline_name, i)
+                
+                # Set traces path for this query (semantic_xpath only)
+                if pipeline_name == "semantic_xpath" and hasattr(pipeline, 'set_traces_path'):
+                    pipeline.set_traces_path(query_folder)
+                
+                # Create per-query logger
+                query_log_path = query_folder / "run.log"
+                query_handler = logging.FileHandler(query_log_path, encoding="utf-8")
+                query_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+                query_logger = logging.getLogger(f"{pipeline_name}_query_{i}")
+                query_logger.handlers = []  # Clear any existing handlers
+                query_logger.addHandler(query_handler)
+                query_logger.setLevel(logging.DEBUG)
+                query_logger.info(f"Query: {query}")
+                
                 if pipeline_name == "semantic_xpath":
-                    result = self._run_query_semantic_xpath(pipeline, query, i, logger)
+                    result = self._run_query_semantic_xpath(pipeline, query, i, query_logger)
                 else:  # incontext
-                    result = self._run_query_incontext(pipeline, query, i, logger)
+                    result = self._run_query_incontext(pipeline, query, i, query_logger)
+                
+                query_logger.info(f"Result: {result.operation}, Success: {result.success}")
+                query_handler.close()
                 
                 results.append(result)
                 

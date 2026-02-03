@@ -14,7 +14,7 @@ def load_config() -> dict:
         return yaml.safe_load(f)
 
 
-def get_scorer(method: str = None, config: dict = None) -> PredicateScorer:
+def get_scorer(method: str = None, config: dict = None, traces_path: Path = None) -> PredicateScorer:
     """
     Factory function to create the appropriate scorer based on config.
     
@@ -22,6 +22,7 @@ def get_scorer(method: str = None, config: dict = None) -> PredicateScorer:
         method: Scoring method ("llm", "entailment", or "cosine"). 
                 If None, uses value from config.yaml.
         config: Optional config dict. If not provided, loads from config.yaml.
+        traces_path: Optional custom path for trace files.
     
     Returns:
         PredicateScorer instance
@@ -40,17 +41,23 @@ def get_scorer(method: str = None, config: dict = None) -> PredicateScorer:
             "hypothesis_template", 
             "This is related to {predicate}."
         )
-        return EntailmentPredicateScorer(hypothesis_template=hypothesis_template)
+        return EntailmentPredicateScorer(
+            hypothesis_template=hypothesis_template,
+            traces_path=traces_path
+        )
     elif method == "cosine":
         cosine_config = config.get("cosine", {})
         predicate_template = cosine_config.get(
             "predicate_template",
             "{predicate}"
         )
-        return CosinePredicateScorer(predicate_template=predicate_template)
+        return CosinePredicateScorer(
+            predicate_template=predicate_template,
+            traces_path=traces_path
+        )
     else:
         # Default to LLM
-        return LLMPredicateScorer()
+        return LLMPredicateScorer(traces_path=traces_path)
 
 
 __all__ = [

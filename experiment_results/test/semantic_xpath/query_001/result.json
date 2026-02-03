@@ -1,0 +1,120 @@
+{
+  "query_index": 0,
+  "query": "My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?",
+  "operation": "READ",
+  "success": true,
+  "execution_time_ms": 35055.01,
+  "token_usage": {
+    "prompt_tokens": 12071,
+    "completion_tokens": 3335,
+    "total_tokens": 15406
+  },
+  "selected_nodes": [],
+  "raw_result": {
+    "timestamp": "20260202_183858_778019",
+    "user_query": "My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?",
+    "operation": "READ",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Read",
+      "raw_response": "at([-1]), READ",
+      "token_usage": {
+        "prompt_tokens": 631,
+        "completion_tokens": 5,
+        "total_tokens": 636
+      }
+    },
+    "parsed_query": {
+      "operation": "Read",
+      "xpath": "/Itinerary/Day[\nnot(agg_exists(desc :: POI [atom(content =~ \"work\") OR atom(content =~ \"flight\")]))\n]",
+      "full_query": "Read(/Itinerary/Day[\nnot(agg_exists(desc :: POI [atom(content =~ \"work\") OR atom(content =~ \"flight\")]))\n])",
+      "token_usage": {
+        "prompt_tokens": 1105,
+        "completion_tokens": 30,
+        "total_tokens": 1135
+      }
+    },
+    "version_used": "1",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[\nnot(agg_exists(desc :: POI [atom(content =~ \"work\") OR atom(content =~ \"flight\")]))\n]",
+      "matched_count": 4,
+      "execution_time_ms": 30155.036400072277,
+      "token_usage": {
+        "prompt_tokens": 8259,
+        "completion_tokens": 3225,
+        "total_tokens": 11484
+      }
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "READ",
+      "processing_time_ms": 2504.582699970342,
+      "output": {
+        "selected_nodes": []
+      },
+      "token_usage": {
+        "prompt_tokens": 2076,
+        "completion_tokens": 75,
+        "total_tokens": 2151
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 1114.39,
+          "token_usage": {
+            "prompt_tokens": 631,
+            "completion_tokens": 5,
+            "total_tokens": 636
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 2.57
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 1269.96,
+          "token_usage": {
+            "prompt_tokens": 1105,
+            "completion_tokens": 30,
+            "total_tokens": 1135
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 30159.31,
+          "token_usage": {
+            "prompt_tokens": 8259,
+            "completion_tokens": 3225,
+            "total_tokens": 11484
+          }
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 2505.35,
+          "token_usage": {
+            "prompt_tokens": 2076,
+            "completion_tokens": 75,
+            "total_tokens": 2151
+          }
+        }
+      ],
+      "total_time_ms": 35051.58,
+      "total_tokens": {
+        "prompt_tokens": 12071,
+        "completion_tokens": 3335,
+        "total_tokens": 15406
+      },
+      "pipeline_total_ms": 35054.19369996525
+    },
+    "candidates_count": 4,
+    "selected_count": 0,
+    "selected_nodes": [],
+    "total_time_ms": 35054.19369996525
+  }
+}

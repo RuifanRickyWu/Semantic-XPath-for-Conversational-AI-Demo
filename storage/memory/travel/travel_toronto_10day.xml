@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Root>
   <Itinerary_Version number="1">
-    <patch_info></patch_info>
-    <conversation_history></conversation_history>
+    <patch_info />
+    <conversation_history />
     <Itinerary>
-      <!-- DAY 1: ARRIVAL (Relaxed, Recovery) -->
       <Day index="1">
         <POI>
           <name>YYZ Airport Arrival</name>
@@ -42,10 +41,7 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 2: FULL WORK DAY (Corporate, Stressful) -->
       <Day index="2">
-        <!-- NOTE: No breakfast planned - C1 query should add one -->
         <POI>
           <name>Client Kickoff Meeting</name>
           <time_block>9:00 AM - 12:00 PM</time_block>
@@ -83,8 +79,6 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 3: WORK + CULTURE (Transitional) -->
       <Day index="3">
         <Restaurant>
           <name>Hotel Continental Breakfast</name>
@@ -143,8 +137,6 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 4: HEAVY WORK DAY -->
       <Day index="4">
         <Restaurant>
           <name>Quick Grab Coffee</name>
@@ -192,8 +184,6 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 5: FLEX WORK DAY (Light work, could cancel) -->
       <Day index="5">
         <Restaurant>
           <name>Mildred's Temple Kitchen</name>
@@ -252,8 +242,6 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 6: FAMILY DAY (Kid-Friendly, Vacation) -->
       <Day index="6">
         <Restaurant>
           <name>Sunset Grill</name>
@@ -314,8 +302,6 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 7: CULTURAL DAY (Indoor/Outdoor Mix - Rain Risk) -->
       <Day index="7">
         <Restaurant>
           <name>Fran's Restaurant</name>
@@ -375,8 +361,6 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 8: ADVENTURE DAY (Niagara Trip or Local Backup) -->
       <Day index="8">
         <POI>
           <name>Niagara Falls Day Trip</name>
@@ -414,8 +398,6 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 9: SHOPPING DAY -->
       <Day index="9">
         <Restaurant>
           <name>Lady Marmalade</name>
@@ -475,8 +457,6 @@
           </highlights>
         </Restaurant>
       </Day>
-
-      <!-- DAY 10: DEPARTURE DAY -->
       <Day index="10">
         <Restaurant>
           <name>Hotel Quick Checkout Breakfast</name>

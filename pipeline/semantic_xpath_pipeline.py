@@ -57,7 +57,8 @@ class SemanticXPathPipeline:
         top_k: int = None, 
         score_threshold: float = None,
         scoring_method: str = None,
-        tree_path: Path = None
+        tree_path: Path = None,
+        traces_path: Path = None
     ):
         """
         Initialize the pipeline.
@@ -70,14 +71,19 @@ class SemanticXPathPipeline:
             scoring_method: Scoring method ("llm" or "entailment").
                    If None, uses value from config.yaml.
             tree_path: Optional path to the XML tree. Overrides config default.
+            traces_path: Optional path for trace files. If None, uses default traces folder.
         """
+        self._traces_path = traces_path
         self.executor = CRUDExecutor(
             scoring_method=scoring_method,
             top_k=top_k,
             score_threshold=score_threshold,
-            tree_path=tree_path
+            tree_path=tree_path,
+            traces_path=traces_path
         )
-        self.trace_writer = TraceWriter()
+        self.trace_writer = TraceWriter(
+            traces_path=traces_path / "reasoning_traces" if traces_path else None
+        )
         
         # Session statistics
         self.session_stats = {
@@ -90,6 +96,38 @@ class SemanticXPathPipeline:
             "failures": 0,
             "versions_created": 0
         }
+    
+    def set_traces_path(self, traces_path: Path):
+        """
+        Update the traces path for all components.
+        
+        Used to redirect traces to per-query folders during experiments.
+        
+        Args:
+            traces_path: New directory for trace files
+        """
+        self._traces_path = traces_path
+        reasoning_traces_path = traces_path / "reasoning_traces" if traces_path else None
+        
+        # Update trace writer
+        self.trace_writer = TraceWriter(traces_path=reasoning_traces_path)
+        
+        # Update executor's trace writer  
+        self.executor.executor.trace_writer = TraceWriter(traces_path=reasoning_traces_path)
+        
+        # Update scorer's traces path
+        if hasattr(self.executor.executor.scorer, 'traces_path'):
+            self.executor.executor.scorer.traces_path = reasoning_traces_path
+            if reasoning_traces_path:
+                reasoning_traces_path.mkdir(parents=True, exist_ok=True)
+        
+        # Update handlers' traces paths
+        for handler in [self.executor.read_handler, self.executor.delete_handler, 
+                       self.executor.update_handler, self.executor.create_handler]:
+            if hasattr(handler, 'traces_path'):
+                handler.traces_path = reasoning_traces_path
+                if reasoning_traces_path:
+                    reasoning_traces_path.mkdir(parents=True, exist_ok=True)
     
     def process_request(self, user_request: str) -> Dict[str, Any]:
         """

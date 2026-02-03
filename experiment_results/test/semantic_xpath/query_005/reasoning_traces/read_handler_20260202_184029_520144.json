@@ -1,0 +1,44 @@
+{
+  "user_query": "I've been stuck in meetings most of the week. Which days have nature activities where I can actually get outside?",
+  "candidates_count": 3,
+  "selected_count": 3,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "6"
+        }
+      },
+      "reasoning": "Day 6 includes the 'Toronto Islands Ferry and Bike Ride', which is an outdoor nature activity, matching the user's request for nature activities."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "8"
+        }
+      },
+      "reasoning": "Day 8 features a 'Niagara Falls Day Trip', which is an outdoor scenic adventure, directly aligning with the user's interest in nature activities."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "1"
+        }
+      },
+      "reasoning": "Day 1 includes a 'Harbourfront Stroll', which is an outdoor activity with fresh air and lake views, fitting the user's desire to get outside."
+    }
+  ],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Day 6 includes the 'Toronto Islands Ferry and Bike Ride', which is an outdoor nature activity, matching the user's request for nature activities.\"\n    },\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Day 8 features a 'Niagara Falls Day Trip', which is an outdoor scenic adventure, directly aligning with the user's interest in nature activities.\"\n    },\n    {\n      \"id\": \"3\",\n      \"reasoning\": \"Day 1 includes a 'Harbourfront Stroll', which is an outdoor activity with fresh air and lake views, fitting the user's desire to get outside.\"\n    }\n  ],\n  \"reasoning\": \"The user is looking for days with nature activities to spend time outside. Day 6, Day 8, and Day 1 all include outdoor activities that allow the user to enjoy nature and fresh air, which directly satisfies the user's request.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1520,
+    "completion_tokens": 208,
+    "total_tokens": 1728
+  },
+  "processing_time_ms": 3372.7603999432176
+}

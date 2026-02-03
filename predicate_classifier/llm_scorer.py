@@ -28,22 +28,24 @@ class LLMPredicateScorer(PredicateScorer):
     """
     
     PROMPT_PATH = Path(__file__).parent.parent / "storage" / "prompts" / "predicate_scorer.txt"
-    TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
+    DEFAULT_TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
     
-    def __init__(self, client=None, save_traces: bool = True):
+    def __init__(self, client=None, save_traces: bool = True, traces_path: Path = None):
         """
         Initialize the LLM scorer.
         
         Args:
             client: Optional OpenAI client. If not provided, one will be created.
             save_traces: Whether to save reasoning traces to disk.
+            traces_path: Optional custom path for trace files.
         """
         self._client = client
         self._system_prompt = None
         self.save_traces = save_traces
+        self.traces_path = traces_path or self.DEFAULT_TRACES_PATH
         
         # Ensure traces directory exists
-        self.TRACES_PATH.mkdir(parents=True, exist_ok=True)
+        self.traces_path.mkdir(parents=True, exist_ok=True)
     
     @property
     def client(self):
@@ -56,7 +58,7 @@ class LLMPredicateScorer(PredicateScorer):
     def system_prompt(self) -> str:
         """Lazy load the system prompt from file."""
         if self._system_prompt is None:
-            with open(self.PROMPT_PATH, "r") as f:
+            with open(self.PROMPT_PATH, "r", encoding="utf-8") as f:
                 self._system_prompt = f.read()
         return self._system_prompt
     
@@ -215,7 +217,7 @@ Output JSON array with objects containing: id, score, reasoning"""
     ):
         """Save reasoning trace to disk."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-        trace_file = self.TRACES_PATH / f"scoring_{timestamp}.json"
+        trace_file = self.traces_path / f"scoring_{timestamp}.json"
         
         trace_data = {
             "timestamp": timestamp,

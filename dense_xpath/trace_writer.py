@@ -23,94 +23,37 @@ logger = logging.getLogger(__name__)
 
 class TraceWriter:
     """
-    Writes execution logs and detailed reasoning traces to files.
+    Writes detailed reasoning traces to files.
     
-    Produces two outputs per query:
-    1. Human-readable text log (.log)
-    2. Detailed JSON trace for analysis (.json)
+    Produces JSON trace files for analysis.
     """
     
     def __init__(
         self,
-        log_path: Path = None,
         traces_path: Path = None
     ):
         """
         Initialize the trace writer.
         
         Args:
-            log_path: Directory for text log files
             traces_path: Directory for JSON trace files
         """
         base_path = Path(__file__).parent.parent
         
-        self.log_path = log_path or base_path / "traces" / "log"
         self.traces_path = traces_path or base_path / "traces" / "reasoning_traces"
         
-        # Ensure directories exist
-        self.log_path.mkdir(parents=True, exist_ok=True)
+        # Ensure directory exists
         self.traces_path.mkdir(parents=True, exist_ok=True)
     
     def save_traces(self, timestamp: str, result: ExecutionResult):
         """
-        Save execution log and reasoning traces to files.
+        Save reasoning traces to file.
         
         Args:
             timestamp: Timestamp string for file naming
             result: ExecutionResult containing all trace data
         """
-        self._save_text_log(timestamp, result)
         self._save_json_trace(timestamp, result)
-    
-    def _save_text_log(self, timestamp: str, result: ExecutionResult):
-        """Save human-readable text log."""
-        log_file = self.log_path / f"execution_{timestamp}.log"
-        
-        with open(log_file, "w", encoding="utf-8") as f:
-            f.write(f"Query: {result.query}\n")
-            f.write(f"Data File: {result.data_file}\n")
-            f.write(f"Execution Time: {result.execution_time_ms:.2f}ms\n")
-            f.write("=" * 60 + "\n\n")
-            
-            # Execution log
-            f.write("Execution Log:\n")
-            f.write("-" * 40 + "\n")
-            for line in result.execution_log:
-                f.write(line + "\n")
-            
-            # Score Fusion Summary
-            if result.score_fusion_trace:
-                f.write("\n" + "=" * 60 + "\n")
-                f.write("Score Fusion Summary:\n")
-                f.write("-" * 40 + "\n")
-                for node_trace in result.score_fusion_trace.per_node_traces:
-                    f.write(f"\n{node_trace.node_path} ({node_trace.node_type}):\n")
-                    for contrib in node_trace.step_contributions:
-                        f.write(f"  Step {contrib.step_index}: {contrib.predicate_str}\n")
-                        f.write(f"    score={contrib.score:.4f}\n")
-                    f.write(f"  Accumulated product: {node_trace.accumulated_product:.4f}\n")
-                    f.write(f"  Final score: {node_trace.final_score:.4f}\n")
-            
-            # Final Filtering Summary
-            if result.final_filtering_trace:
-                f.write("\n" + "=" * 60 + "\n")
-                f.write("Final Filtering:\n")
-                f.write("-" * 40 + "\n")
-                fft = result.final_filtering_trace
-                f.write(f"Before: {fft.before_filter_count} nodes\n")
-                f.write(f"Threshold: {fft.threshold}\n")
-                f.write(f"Top-K: {fft.top_k}\n")
-                f.write(f"After: {fft.after_filter_count} nodes\n")
-            
-            # Matched Nodes
-            f.write("\n" + "=" * 60 + "\n")
-            f.write(f"Matched Nodes: {len(result.matched_nodes)}\n")
-            f.write("-" * 40 + "\n")
-            for i, matched in enumerate(result.matched_nodes, 1):
-                f.write(f"\n{i}. {matched.tree_path} (score: {matched.score:.4f})\n")
-                f.write(json.dumps(matched.node_data, indent=2, ensure_ascii=False) + "\n")
-        
-        logger.debug(f"Saved execution log to {log_file}")
     
     def _save_json_trace(self, timestamp: str, result: ExecutionResult):
         """
@@ -213,157 +156,13 @@ class TraceWriter:
     
     def save_crud_traces(self, timestamp: str, result: Dict[str, Any]):
         """
-        Save CRUD operation traces to files.
+        Save CRUD operation traces to file.
         
         Args:
             timestamp: Timestamp string for file naming
             result: CRUD operation result dictionary
         """
-        self._save_crud_text_log(timestamp, result)
         self._save_crud_json_trace(timestamp, result)
-    
-    def _save_crud_text_log(self, timestamp: str, result: Dict[str, Any]):
-        """Save human-readable CRUD operation log."""
-        operation = result.get("operation", "UNKNOWN")
-        log_file = self.log_path / f"crud_{operation.lower()}_{timestamp}.log"
-        
-        with open(log_file, "w", encoding="utf-8") as f:
-            f.write(f"CRUD Operation: {operation}\n")
-            f.write(f"User Query: {result.get('user_query', '')}\n")
-            f.write(f"Full Query: {result.get('full_query', '')}\n")
-            f.write(f"Timestamp: {result.get('timestamp', timestamp)}\n")
-            f.write(f"Success: {result.get('success', False)}\n")
-            f.write("=" * 60 + "\n\n")
-            
-            # Intent Classification
-            intent = result.get("intent", {})
-            if intent:
-                f.write("Intent Classification:\n")
-                f.write("-" * 40 + "\n")
-                f.write(f"  Type: {intent.get('intent', 'UNKNOWN')}\n")
-                f.write(f"  XPath Hint: {intent.get('xpath_hint', '')}\n")
-                f.write(f"  Confidence: {intent.get('confidence', 0.0):.2f}\n")
-                if intent.get("operation_details"):
-                    f.write(f"  Details: {json.dumps(intent['operation_details'], indent=4)}\n")
-                f.write("\n")
-            
-            # XPath Query
-            f.write(f"XPath Query: {result.get('xpath_query', '')}\n\n")
-            
-            # Operation-specific sections
-            if operation == "READ":
-                self._write_read_log(f, result)
-            elif operation == "DELETE":
-                self._write_delete_log(f, result)
-            elif operation == "UPDATE":
-                self._write_update_log(f, result)
-            elif operation == "CREATE":
-                self._write_create_log(f, result)
-            
-            # Tree Version Info
-            tree_version = result.get("tree_version")
-            if tree_version:
-                f.write("\n" + "=" * 60 + "\n")
-                f.write("Tree Version:\n")
-                f.write("-" * 40 + "\n")
-                f.write(f"  Version: {tree_version.get('version', 'N/A')}\n")
-                f.write(f"  Path: {tree_version.get('path', 'N/A')}\n")
-                f.write(f"  Operation: {tree_version.get('operation', 'N/A')}\n")
-        
-        logger.debug(f"Saved CRUD log to {log_file}")
-    
-    def _write_read_log(self, f, result: Dict[str, Any]):
-        """Write READ operation specific log sections."""
-        f.write("=== READ Operation Results ===\n")
-        f.write(f"Candidates: {result.get('candidates_count', 0)}\n")
-        f.write(f"Selected: {result.get('selected_count', 0)}\n\n")
-        
-        selected = result.get("selected_nodes", [])
-        if selected:
-            f.write("Selected Nodes:\n")
-            f.write("-" * 40 + "\n")
-            for i, node in enumerate(selected, 1):
-                # Use tree_path as primary display name, fallback to type/name
-                tree_path = node.get('tree_path', '')
-                node_type = node.get('type', '?')
-                
-                # For container nodes (Day), extract display name from tree_path or attributes
-                if tree_path:
-                    # Extract last part of path (e.g., "Day 2" from "Itinerary > Version 1 > Day 2")
-                    display_name = tree_path.split(' > ')[-1] if ' > ' in tree_path else tree_path
-                elif node.get('attributes', {}).get('index'):
-                    display_name = f"{node_type} {node['attributes']['index']}"
-                else:
-                    display_name = node.get('name', 'Unknown')
-                
-                f.write(f"\n{i}. {display_name}\n")
-                f.write(f"   Path: {tree_path}\n")
-                
-                if node.get("description"):
-                    f.write(f"   Description: {node['description'][:100]}...\n")
-                
-                # Print children subtree
-                children = node.get('children', [])
-                if children:
-                    f.write(f"   Children ({len(children)}):\n")
-                    for child in children:
-                        child_type = child.get('type', '?')
-                        child_name = child.get('name', '')
-                        child_desc = child.get('description', '')
-                        f.write(f"      - {child_type}: {child_name}\n")
-                        if child_desc:
-                            f.write(f"        {child_desc[:80]}...\n")
-    
-    def _write_delete_log(self, f, result: Dict[str, Any]):
-        """Write DELETE operation specific log sections."""
-        f.write("=== DELETE Operation Results ===\n")
-        f.write(f"Deleted: {result.get('deleted_count', 0)} node(s)\n\n")
-        
-        deleted_paths = result.get("deleted_paths", [])
-        if deleted_paths:
-            f.write("Deleted Paths:\n")
-            for path in deleted_paths:
-                f.write(f"  - {path}\n")
-    
-    def _write_update_log(self, f, result: Dict[str, Any]):
-        """Write UPDATE operation specific log sections."""
-        f.write("=== UPDATE Operation Results ===\n")
-        f.write(f"Updated: {result.get('updated_count', 0)} node(s)\n\n")
-        
-        update_results = result.get("update_results", [])
-        for i, update in enumerate(update_results, 1):
-            f.write(f"\n{i}. {update.get('path', 'Unknown')}\n")
-            f.write(f"   Success: {update.get('success', False)}\n")
-            changes = update.get("changes", {})
-            if changes:
-                f.write("   Changes:\n")
-                for field, change_info in changes.get("changes", {}).items():
-                    f.write(f"     {field}: {change_info.get('from', '?')} -> {change_info.get('to', '?')}\n")
-    
-    def _write_create_log(self, f, result: Dict[str, Any]):
-        """Write CREATE operation specific log sections."""
-        f.write("=== CREATE Operation Results ===\n")
-        f.write(f"Created Path: {result.get('created_path', 'None')}\n\n")
-        
-        # Insertion point
-        insertion = result.get("insertion_point", {})
-        if insertion:
-            f.write("Insertion Point:\n")
-            f.write(f"  Parent: {insertion.get('parent_path', 'Unknown')}\n")
-            f.write(f"  Position: {insertion.get('position', -1)}\n")
-            f.write(f"  Reasoning: {insertion.get('reasoning', '')}\n\n")
-        
-        # Generated content
-        content = result.get("content_result", {})
-        if content and content.get("success"):
-            f.write("Generated Content:\n")
-            f.write(f"  Node Type: {content.get('node_type', '?')}\n")
-            fields = content.get("fields", {})
-            for field, value in fields.items():
-                if isinstance(value, list):
-                    f.write(f"  {field}: {', '.join(str(v) for v in value)}\n")
-                else:
-                    f.write(f"  {field}: {value}\n")
     
     def _save_crud_json_trace(self, timestamp: str, result: Dict[str, Any]):
         """

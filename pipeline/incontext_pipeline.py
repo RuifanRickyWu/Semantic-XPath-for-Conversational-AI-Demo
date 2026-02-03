@@ -130,7 +130,7 @@ class IncontextPipeline:
     - More direct LLM reasoning over full context
     """
     
-    def __init__(self, tree_path: Path = None):
+    def __init__(self, tree_path: Path = None, config_override: Dict[str, Any] = None):
         """Initialize the pipeline."""
         self.config = load_config()
         self.client = OpenAIClient(self.config)
@@ -139,6 +139,10 @@ class IncontextPipeline:
         pipeline_config = self.config.get("incontext_pipeline", {})
         self.temperature = pipeline_config.get("temperature", 0.3)
         self.max_tokens = pipeline_config.get("max_tokens", 16384)
+        
+        # Override config if provided
+        self.config_override = config_override or {}
+        self.input_mode = self.config_override.get("input_mode", "full")
         
         # Load paths
         base_path = Path(__file__).parent.parent
@@ -265,9 +269,18 @@ class IncontextPipeline:
         # Get the latest version XML for diff calculation
         latest_version_xml = self._get_latest_version_xml()
         
-        # Build the user message with FULL tree context (all versions)
+        # Determine context based on input_mode
+        if self.input_mode == "latest":
+            xml_context = latest_version_xml
+            # Add a wrapper if needed to make it look like a tree root, or just pass the Version element
+            # The system expects "conversational history tree". Passing one version is a valid (short) history.
+        else:
+            # Default: Full tree (all versions)
+            xml_context = self.original_xml
+        
+        # Build the user message
         user_message = f"""## XML Tree
-{self.original_xml}
+{xml_context}
 
 ## User Request
 

@@ -21,7 +21,6 @@ Your Tasks
 {positional_selection}
 {position_rules}
 {node_fields}
-{time_guidelines}
 ====================
 Output Format
 ====================

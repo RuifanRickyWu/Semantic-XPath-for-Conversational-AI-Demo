@@ -23,7 +23,6 @@ Deletion Guidelines
   - time or other distinguishing details (if specified).
 - Exclude candidates that only partially or ambiguously match.
 {positional_selection}
-{time_guidelines}
 ====================
 Output Format
 ====================

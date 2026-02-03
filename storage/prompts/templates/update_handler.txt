@@ -33,7 +33,6 @@ Selection Criteria (CRITICAL)
 - Semantic scores are too low to confidently identify the target
 {positional_selection}
 {node_fields}
-{time_guidelines}
 {update_rules}
 ====================
 Field Preservation Rules

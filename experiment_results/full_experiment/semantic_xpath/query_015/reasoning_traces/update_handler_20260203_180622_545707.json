@@ -1,0 +1,104 @@
+{
+  "user_query": "I just checked my spending and I'm way over budget. Replace all expensive dinners with a cheap eats placeholder and set cost to $10",
+  "candidates_count": 5,
+  "updates_count": 3,
+  "updates": [
+    {
+      "tree_path": "Root > Itinerary_Version 7 > Itinerary > Day 2 > Alo Restaurant",
+      "changes": {
+        "highlights": {
+          "from": [
+            "Expensive Michelin dining",
+            "Upscale French cuisine",
+            "Formal atmosphere"
+          ],
+          "to": [
+            "Budget-friendly",
+            "Casual dining",
+            "Quick service"
+          ]
+        },
+        "name": {
+          "from": "Alo Restaurant",
+          "to": "Cheap Eats Placeholder"
+        },
+        "expected_cost": {
+          "from": "CAD 300-400",
+          "to": "$10"
+        },
+        "description": {
+          "from": "Three Michelin-starred French tasting menu. Extremely expensive and exclusive fine dining. Intimate 8-course experience with wine pairings. Very formal and upscale.",
+          "to": "Budget-friendly casual dinner placeholder to replace an expensive meal."
+        }
+      },
+      "reasoning": "Replaced expensive fine-dining Alo (original expected_cost: CAD 300-400) with a cheap eats placeholder and set cost to $10."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 7 > Itinerary > Day 5 > Kaiseki Kaji",
+      "changes": {
+        "highlights": {
+          "from": [
+            "Expensive Japanese dining",
+            "Upscale omakase",
+            "Formal atmosphere"
+          ],
+          "to": [
+            "Budget-friendly",
+            "Casual dining",
+            "Quick service"
+          ]
+        },
+        "name": {
+          "from": "Kaiseki Kaji",
+          "to": "Cheap Eats Placeholder"
+        },
+        "expected_cost": {
+          "from": "CAD 250-350",
+          "to": "$10"
+        },
+        "description": {
+          "from": "Exquisite Japanese kaiseki dining experience. Very expensive omakase with seasonal courses. Intimate and formal setting.",
+          "to": "Budget-friendly casual dinner placeholder to replace an expensive meal."
+        }
+      },
+      "reasoning": "Replaced expensive Kaiseki Kaji (original expected_cost: CAD 250-350) with a cheap eats placeholder and set cost to $10."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 7 > Itinerary > Day 1 > Canoe Restaurant",
+      "changes": {
+        "highlights": {
+          "from": [
+            "Expensive fine dining",
+            "City skyline views",
+            "Upscale atmosphere"
+          ],
+          "to": [
+            "Budget-friendly",
+            "Casual dining",
+            "Quick service"
+          ]
+        },
+        "name": {
+          "from": "Canoe Restaurant",
+          "to": "Cheap Eats Placeholder"
+        },
+        "expected_cost": {
+          "from": "CAD 150-200",
+          "to": "$10"
+        },
+        "description": {
+          "from": "Upscale Canadian cuisine on the 54th floor of TD Tower. Expensive fine dining with panoramic city views. Elegant and formal atmosphere.",
+          "to": "Budget-friendly casual dinner placeholder to replace an expensive meal."
+        }
+      },
+      "reasoning": "Replaced expensive Canoe Restaurant (original expected_cost: CAD 150-200) with a cheap eats placeholder and set cost to $10."
+    }
+  ],
+  "raw_response": "{\n  \"updates\": [\n    {\n      \"id\": \"1\",\n      \"path\": \"Root > Itinerary_Version 7 > Itinerary > Day 2 > Alo Restaurant\",\n      \"fields\": {\n        \"name\": \"Cheap Eats Placeholder\",\n        \"time_block\": \"7:00 PM - 9:30 PM\",\n        \"description\": \"Budget-friendly casual dinner placeholder to replace an expensive meal.\",\n        \"travel_method\": \"Taxi\",\n        \"expected_cost\": \"$10\",\n        \"highlights\": [\"Budget-friendly\", \"Casual dining\", \"Quick service\"]\n      },\n      \"new_type\": null,\n      \"reasoning\": \"Replaced expensive fine-dining Alo (original expected_cost: CAD 300-400) with a cheap eats placeholder and set cost to $10.\"\n    },\n    {\n      \"id\": \"2\",\n      \"path\": \"Root > Itinerary_Version 7 > Itinerary > Day 5 > Kaiseki Kaji\",\n      \"fields\": {\n        \"name\": \"Cheap Eats Placeholder\",\n        \"time_block\": \"8:00 PM - 10:00 PM\",\n        \"description\": \"Budget-friendly casual dinner placeholder to replace an expensive meal.\",\n        \"travel_method\": \"Taxi\",\n        \"expected_cost\": \"$10\",\n        \"highlights\": [\"Budget-friendly\", \"Casual dining\", \"Quick service\"]\n      },\n      \"new_type\": null,\n      \"reasoning\": \"Replaced expensive Kaiseki Kaji (original expected_cost: CAD 250-350) with a cheap eats placeholder and set cost to $10.\"\n    },\n    {\n      \"id\": \"3\",\n      \"path\": \"Root > Itinerary_Version 7 > Itinerary > Day 1 > Canoe Restaurant\",\n      \"fields\": {\n        \"name\": \"Cheap Eats Placeholder\",\n        \"time_block\": \"7:30 PM - 9:00 PM\",\n        \"description\": \"Budget-friendly casual dinner placeholder to replace an expensive meal.\",\n        \"travel_method\": \"Taxi\",\n        \"expected_cost\": \"$10\",\n        \"highlights\": [\"Budget-friendly\", \"Casual dining\", \"Quick service\"]\n      },\n      \"new_type\": null,\n      \"reasoning\": \"Replaced expensive Canoe Restaurant (original expected_cost: CAD 150-200) with a cheap eats placeholder and set cost to $10.\"\n    }\n  ],\n  \"reasoning\": \"Updated the three clearly high-cost dinners (Alo, Kaiseki Kaji, Canoe) to cheap-eats placeholders with expected_cost set to $10. Antler Kitchen and Lee Restaurant were not changed because their original expected_cost values (CAD 80-100 and CAD 80-120) are borderline and the request to replace \\\"all expensive dinners\\\" is being interpreted conservatively to target the clearly high-cost entries.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 2402,
+    "completion_tokens": 1810,
+    "total_tokens": 4212
+  },
+  "processing_time_ms": 28604.72669999581
+}

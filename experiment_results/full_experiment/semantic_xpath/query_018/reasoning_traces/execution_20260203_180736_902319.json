@@ -1,0 +1,2499 @@
+{
+  "timestamp": "20260203_180736_902319",
+  "query": "/Root/Itinerary_Version[10]/Itinerary/desc::Restaurant[(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))]",
+  "data_file": "travel_toronto_10day.xml",
+  "execution_time_ms": 5449.08559997566,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Root",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Root",
+          "path": "Root"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[10]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 10,
+      "nodes_before": [
+        {
+          "path": "Root",
+          "name": "Root",
+          "type": "Root",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 2",
+          "name": "Itinerary_Version 2",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 3",
+          "name": "Itinerary_Version 3",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 4",
+          "name": "Itinerary_Version 4",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 5",
+          "name": "Itinerary_Version 5",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 6",
+          "name": "Itinerary_Version 6",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 7",
+          "name": "Itinerary_Version 7",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 8",
+          "name": "Itinerary_Version 8",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 9",
+          "name": "Itinerary_Version 9",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10",
+          "name": "Itinerary_Version 10",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Itinerary_Version",
+        "found_count": 10
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[10]",
+      "action": "positional_index",
+      "nodes_before_count": 10,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 2",
+          "name": "Itinerary_Version 2",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 3",
+          "name": "Itinerary_Version 3",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 4",
+          "name": "Itinerary_Version 4",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 5",
+          "name": "Itinerary_Version 5",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 6",
+          "name": "Itinerary_Version 6",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 7",
+          "name": "Itinerary_Version 7",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 8",
+          "name": "Itinerary_Version 8",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 9",
+          "name": "Itinerary_Version 9",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10",
+          "name": "Itinerary_Version 10",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 10",
+          "name": "Itinerary_Version 10",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "index": {
+          "start": 10,
+          "type": "single"
+        },
+        "selected_count": 1,
+        "groups_processed": 1,
+        "group_details": [
+          {
+            "group_id": 0,
+            "group_size": 10,
+            "selected_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Itinerary",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 10",
+          "name": "Itinerary_Version 10",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Itinerary",
+        "found_count": 1
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "desc::Restaurant[atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 20,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 1 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 2 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Restaurant",
+        "found_count": 20
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "desc::Restaurant[atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 20,
+      "nodes_after_count": 20,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 1 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 2 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 1 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 0.04129903391003609
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 2 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 0.051029324531555176
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 0.4992085099220276
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 0.32090887427330017
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 0.20690226554870605
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 0.19806358218193054
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 0.27786538004875183
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 0.814647912979126
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Cheap Eats Placeholder",
+          "name": "Cheap Eats Placeholder",
+          "type": "Restaurant",
+          "score": 0.04785726219415665
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 0.8235424757003784
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 0.2569521367549896
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 0.4403896629810333
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 0.699921727180481
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 0.30898261070251465
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 0.27809789776802063
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 0.19783711433410645
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 0.9772688746452332
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 0.4376284182071686
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 0.10810060799121857
+        },
+        {
+          "path": "Root > Itinerary_Version 10 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 0.5163614153862
+        }
+      ],
+      "details": {
+        "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+        "predicate_type": "ATOM",
+        "scoring_result": {
+          "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+          "predicate_ast": {
+            "operator": "ATOM",
+            "conditions": [
+              {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              }
+            ]
+          },
+          "config": {
+            "top_k": 5,
+            "score_threshold": 0.05
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "Cheap Eats Placeholder",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.04129903391003609,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.04129903391003609
+            },
+            {
+              "node_idx": 1,
+              "node_name": "Cheap Eats Placeholder",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.051029324531555176,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.051029324531555176
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Hotel Continental Breakfast",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.4992085099220276,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.4992085099220276
+            },
+            {
+              "node_idx": 3,
+              "node_name": "FRANK Restaurant at AGO",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.32090887427330017,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.32090887427330017
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Pai Northern Thai",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.20690226554870605,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.20690226554870605
+            },
+            {
+              "node_idx": 5,
+              "node_name": "Quick Grab Coffee",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.19806358218193054,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.19806358218193054
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Lee Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.27786538004875183,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.27786538004875183
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Mildred's Temple Kitchen",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.814647912979126,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.814647912979126
+            },
+            {
+              "node_idx": 8,
+              "node_name": "Cheap Eats Placeholder",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.04785726219415665,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.04785726219415665
+            },
+            {
+              "node_idx": 9,
+              "node_name": "Sunset Grill",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.8235424757003784,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.8235424757003784
+            },
+            {
+              "node_idx": 10,
+              "node_name": "Island Cafe Picnic Lunch",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.2569521367549896,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.2569521367549896
+            },
+            {
+              "node_idx": 11,
+              "node_name": "The Keg Steakhouse",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.4403896629810333,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.4403896629810333
+            },
+            {
+              "node_idx": 12,
+              "node_name": "Fran's Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.699921727180481,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.699921727180481
+            },
+            {
+              "node_idx": 13,
+              "node_name": "Eataly Toronto",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.30898261070251465,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.30898261070251465
+            },
+            {
+              "node_idx": 14,
+              "node_name": "Cluny Bistro",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.27809789776802063,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.27809789776802063
+            },
+            {
+              "node_idx": 15,
+              "node_name": "Antler Kitchen",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.19783711433410645,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.19783711433410645
+            },
+            {
+              "node_idx": 16,
+              "node_name": "Lady Marmalade",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.9772688746452332,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9772688746452332
+            },
+            {
+              "node_idx": 17,
+              "node_name": "Urban Eatery Food Court",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.4376284182071686,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.4376284182071686
+            },
+            {
+              "node_idx": 18,
+              "node_name": "Bar Isabel",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.10810060799121857,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.10810060799121857
+            },
+            {
+              "node_idx": 19,
+              "node_name": "Hotel Quick Checkout Breakfast",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                  },
+                  "score": 0.5163614153862,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.5163614153862
+            }
+          ],
+          "batch_scoring": {
+            "semantic_values": [
+              "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+            ],
+            "per_value_stats": [
+              {
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))",
+                "num_descriptions": 20,
+                "call_time_ms": 5445.72
+              }
+            ],
+            "total_scorer_calls": 1,
+            "total_descriptions_scored": 20
+          },
+          "token_usage": null,
+          "ranking": [
+            {
+              "idx": 16,
+              "score": 0.9772688746452332,
+              "name": "Lady Marmalade"
+            },
+            {
+              "idx": 9,
+              "score": 0.8235424757003784,
+              "name": "Sunset Grill"
+            },
+            {
+              "idx": 7,
+              "score": 0.814647912979126,
+              "name": "Mildred's Temple Kitchen"
+            },
+            {
+              "idx": 12,
+              "score": 0.699921727180481,
+              "name": "Fran's Restaurant"
+            },
+            {
+              "idx": 19,
+              "score": 0.5163614153862,
+              "name": "Hotel Quick Checkout Breakfast"
+            },
+            {
+              "idx": 2,
+              "score": 0.4992085099220276,
+              "name": "Hotel Continental Breakfast"
+            },
+            {
+              "idx": 11,
+              "score": 0.4403896629810333,
+              "name": "The Keg Steakhouse"
+            },
+            {
+              "idx": 17,
+              "score": 0.4376284182071686,
+              "name": "Urban Eatery Food Court"
+            },
+            {
+              "idx": 3,
+              "score": 0.32090887427330017,
+              "name": "FRANK Restaurant at AGO"
+            },
+            {
+              "idx": 13,
+              "score": 0.30898261070251465,
+              "name": "Eataly Toronto"
+            },
+            {
+              "idx": 14,
+              "score": 0.27809789776802063,
+              "name": "Cluny Bistro"
+            },
+            {
+              "idx": 6,
+              "score": 0.27786538004875183,
+              "name": "Lee Restaurant"
+            },
+            {
+              "idx": 10,
+              "score": 0.2569521367549896,
+              "name": "Island Cafe Picnic Lunch"
+            },
+            {
+              "idx": 4,
+              "score": 0.20690226554870605,
+              "name": "Pai Northern Thai"
+            },
+            {
+              "idx": 5,
+              "score": 0.19806358218193054,
+              "name": "Quick Grab Coffee"
+            },
+            {
+              "idx": 15,
+              "score": 0.19783711433410645,
+              "name": "Antler Kitchen"
+            },
+            {
+              "idx": 18,
+              "score": 0.10810060799121857,
+              "name": "Bar Isabel"
+            },
+            {
+              "idx": 1,
+              "score": 0.051029324531555176,
+              "name": "Cheap Eats Placeholder"
+            },
+            {
+              "idx": 8,
+              "score": 0.04785726219415665,
+              "name": "Cheap Eats Placeholder"
+            },
+            {
+              "idx": 0,
+              "score": 0.04129903391003609,
+              "name": "Cheap Eats Placeholder"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+      "predicate_ast": {
+        "operator": "ATOM",
+        "conditions": [
+          {
+            "type": "atom",
+            "field": "content",
+            "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+          }
+        ]
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "Cheap Eats Placeholder",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.04129903391003609,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.04129903391003609
+        },
+        {
+          "node_idx": 1,
+          "node_name": "Cheap Eats Placeholder",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.051029324531555176,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.051029324531555176
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Hotel Continental Breakfast",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.4992085099220276,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.4992085099220276
+        },
+        {
+          "node_idx": 3,
+          "node_name": "FRANK Restaurant at AGO",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.32090887427330017,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.32090887427330017
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Pai Northern Thai",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.20690226554870605,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.20690226554870605
+        },
+        {
+          "node_idx": 5,
+          "node_name": "Quick Grab Coffee",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.19806358218193054,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.19806358218193054
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Lee Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.27786538004875183,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.27786538004875183
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Mildred's Temple Kitchen",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.814647912979126,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.814647912979126
+        },
+        {
+          "node_idx": 8,
+          "node_name": "Cheap Eats Placeholder",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.04785726219415665,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.04785726219415665
+        },
+        {
+          "node_idx": 9,
+          "node_name": "Sunset Grill",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.8235424757003784,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.8235424757003784
+        },
+        {
+          "node_idx": 10,
+          "node_name": "Island Cafe Picnic Lunch",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.2569521367549896,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.2569521367549896
+        },
+        {
+          "node_idx": 11,
+          "node_name": "The Keg Steakhouse",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.4403896629810333,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.4403896629810333
+        },
+        {
+          "node_idx": 12,
+          "node_name": "Fran's Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.699921727180481,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.699921727180481
+        },
+        {
+          "node_idx": 13,
+          "node_name": "Eataly Toronto",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.30898261070251465,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.30898261070251465
+        },
+        {
+          "node_idx": 14,
+          "node_name": "Cluny Bistro",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.27809789776802063,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.27809789776802063
+        },
+        {
+          "node_idx": 15,
+          "node_name": "Antler Kitchen",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.19783711433410645,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.19783711433410645
+        },
+        {
+          "node_idx": 16,
+          "node_name": "Lady Marmalade",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.9772688746452332,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9772688746452332
+        },
+        {
+          "node_idx": 17,
+          "node_name": "Urban Eatery Food Court",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.4376284182071686,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.4376284182071686
+        },
+        {
+          "node_idx": 18,
+          "node_name": "Bar Isabel",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.10810060799121857,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.10810060799121857
+        },
+        {
+          "node_idx": 19,
+          "node_name": "Hotel Quick Checkout Breakfast",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+              },
+              "score": 0.5163614153862,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.5163614153862
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+        ],
+        "per_value_stats": [
+          {
+            "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))",
+            "num_descriptions": 20,
+            "call_time_ms": 5445.72
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 20
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 16,
+          "score": 0.9772688746452332,
+          "name": "Lady Marmalade"
+        },
+        {
+          "idx": 9,
+          "score": 0.8235424757003784,
+          "name": "Sunset Grill"
+        },
+        {
+          "idx": 7,
+          "score": 0.814647912979126,
+          "name": "Mildred's Temple Kitchen"
+        },
+        {
+          "idx": 12,
+          "score": 0.699921727180481,
+          "name": "Fran's Restaurant"
+        },
+        {
+          "idx": 19,
+          "score": 0.5163614153862,
+          "name": "Hotel Quick Checkout Breakfast"
+        },
+        {
+          "idx": 2,
+          "score": 0.4992085099220276,
+          "name": "Hotel Continental Breakfast"
+        },
+        {
+          "idx": 11,
+          "score": 0.4403896629810333,
+          "name": "The Keg Steakhouse"
+        },
+        {
+          "idx": 17,
+          "score": 0.4376284182071686,
+          "name": "Urban Eatery Food Court"
+        },
+        {
+          "idx": 3,
+          "score": 0.32090887427330017,
+          "name": "FRANK Restaurant at AGO"
+        },
+        {
+          "idx": 13,
+          "score": 0.30898261070251465,
+          "name": "Eataly Toronto"
+        },
+        {
+          "idx": 14,
+          "score": 0.27809789776802063,
+          "name": "Cluny Bistro"
+        },
+        {
+          "idx": 6,
+          "score": 0.27786538004875183,
+          "name": "Lee Restaurant"
+        },
+        {
+          "idx": 10,
+          "score": 0.2569521367549896,
+          "name": "Island Cafe Picnic Lunch"
+        },
+        {
+          "idx": 4,
+          "score": 0.20690226554870605,
+          "name": "Pai Northern Thai"
+        },
+        {
+          "idx": 5,
+          "score": 0.19806358218193054,
+          "name": "Quick Grab Coffee"
+        },
+        {
+          "idx": 15,
+          "score": 0.19783711433410645,
+          "name": "Antler Kitchen"
+        },
+        {
+          "idx": 18,
+          "score": 0.10810060799121857,
+          "name": "Bar Isabel"
+        },
+        {
+          "idx": 1,
+          "score": 0.051029324531555176,
+          "name": "Cheap Eats Placeholder"
+        },
+        {
+          "idx": 8,
+          "score": 0.04785726219415665,
+          "name": "Cheap Eats Placeholder"
+        },
+        {
+          "idx": 0,
+          "score": 0.04129903391003609,
+          "name": "Cheap Eats Placeholder"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+        "predicate_ast": {
+          "operator": "ATOM",
+          "conditions": [
+            {
+              "type": "atom",
+              "field": "content",
+              "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+            }
+          ]
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "Cheap Eats Placeholder",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.04129903391003609,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.04129903391003609
+          },
+          {
+            "node_idx": 1,
+            "node_name": "Cheap Eats Placeholder",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.051029324531555176,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.051029324531555176
+          },
+          {
+            "node_idx": 2,
+            "node_name": "Hotel Continental Breakfast",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.4992085099220276,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.4992085099220276
+          },
+          {
+            "node_idx": 3,
+            "node_name": "FRANK Restaurant at AGO",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.32090887427330017,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.32090887427330017
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Pai Northern Thai",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.20690226554870605,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.20690226554870605
+          },
+          {
+            "node_idx": 5,
+            "node_name": "Quick Grab Coffee",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.19806358218193054,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.19806358218193054
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Lee Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.27786538004875183,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.27786538004875183
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Mildred's Temple Kitchen",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.814647912979126,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.814647912979126
+          },
+          {
+            "node_idx": 8,
+            "node_name": "Cheap Eats Placeholder",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.04785726219415665,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.04785726219415665
+          },
+          {
+            "node_idx": 9,
+            "node_name": "Sunset Grill",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.8235424757003784,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.8235424757003784
+          },
+          {
+            "node_idx": 10,
+            "node_name": "Island Cafe Picnic Lunch",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.2569521367549896,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.2569521367549896
+          },
+          {
+            "node_idx": 11,
+            "node_name": "The Keg Steakhouse",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.4403896629810333,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.4403896629810333
+          },
+          {
+            "node_idx": 12,
+            "node_name": "Fran's Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.699921727180481,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.699921727180481
+          },
+          {
+            "node_idx": 13,
+            "node_name": "Eataly Toronto",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.30898261070251465,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.30898261070251465
+          },
+          {
+            "node_idx": 14,
+            "node_name": "Cluny Bistro",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.27809789776802063,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.27809789776802063
+          },
+          {
+            "node_idx": 15,
+            "node_name": "Antler Kitchen",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.19783711433410645,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.19783711433410645
+          },
+          {
+            "node_idx": 16,
+            "node_name": "Lady Marmalade",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.9772688746452332,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9772688746452332
+          },
+          {
+            "node_idx": 17,
+            "node_name": "Urban Eatery Food Court",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.4376284182071686,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.4376284182071686
+          },
+          {
+            "node_idx": 18,
+            "node_name": "Bar Isabel",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.10810060799121857,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.10810060799121857
+          },
+          {
+            "node_idx": 19,
+            "node_name": "Hotel Quick Checkout Breakfast",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))"
+                },
+                "score": 0.5163614153862,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.5163614153862
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 16,
+            "score": 0.9772688746452332,
+            "name": "Lady Marmalade"
+          },
+          {
+            "idx": 9,
+            "score": 0.8235424757003784,
+            "name": "Sunset Grill"
+          },
+          {
+            "idx": 7,
+            "score": 0.814647912979126,
+            "name": "Mildred's Temple Kitchen"
+          },
+          {
+            "idx": 12,
+            "score": 0.699921727180481,
+            "name": "Fran's Restaurant"
+          },
+          {
+            "idx": 19,
+            "score": 0.5163614153862,
+            "name": "Hotel Quick Checkout Breakfast"
+          },
+          {
+            "idx": 2,
+            "score": 0.4992085099220276,
+            "name": "Hotel Continental Breakfast"
+          },
+          {
+            "idx": 11,
+            "score": 0.4403896629810333,
+            "name": "The Keg Steakhouse"
+          },
+          {
+            "idx": 17,
+            "score": 0.4376284182071686,
+            "name": "Urban Eatery Food Court"
+          },
+          {
+            "idx": 3,
+            "score": 0.32090887427330017,
+            "name": "FRANK Restaurant at AGO"
+          },
+          {
+            "idx": 13,
+            "score": 0.30898261070251465,
+            "name": "Eataly Toronto"
+          },
+          {
+            "idx": 14,
+            "score": 0.27809789776802063,
+            "name": "Cluny Bistro"
+          },
+          {
+            "idx": 6,
+            "score": 0.27786538004875183,
+            "name": "Lee Restaurant"
+          },
+          {
+            "idx": 10,
+            "score": 0.2569521367549896,
+            "name": "Island Cafe Picnic Lunch"
+          },
+          {
+            "idx": 4,
+            "score": 0.20690226554870605,
+            "name": "Pai Northern Thai"
+          },
+          {
+            "idx": 5,
+            "score": 0.19806358218193054,
+            "name": "Quick Grab Coffee"
+          },
+          {
+            "idx": 15,
+            "score": 0.19783711433410645,
+            "name": "Antler Kitchen"
+          },
+          {
+            "idx": 18,
+            "score": 0.10810060799121857,
+            "name": "Bar Isabel"
+          },
+          {
+            "idx": 1,
+            "score": 0.051029324531555176,
+            "name": "Cheap Eats Placeholder"
+          },
+          {
+            "idx": 8,
+            "score": 0.04785726219415665,
+            "name": "Cheap Eats Placeholder"
+          },
+          {
+            "idx": 0,
+            "score": 0.04129903391003609,
+            "name": "Cheap Eats Placeholder"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 1 > Cheap Eats Placeholder",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.04129903391003609
+            }
+          ],
+          "accumulated_product": 0.04129903391003609,
+          "final_score": 0.04129903391003609
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 2 > Cheap Eats Placeholder",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.051029324531555176
+            }
+          ],
+          "accumulated_product": 0.051029324531555176,
+          "final_score": 0.051029324531555176
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.4992085099220276
+            }
+          ],
+          "accumulated_product": 0.4992085099220276,
+          "final_score": 0.4992085099220276
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.32090887427330017
+            }
+          ],
+          "accumulated_product": 0.32090887427330017,
+          "final_score": 0.32090887427330017
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 3 > Pai Northern Thai",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.20690226554870605
+            }
+          ],
+          "accumulated_product": 0.20690226554870605,
+          "final_score": 0.20690226554870605
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 4 > Quick Grab Coffee",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.19806358218193054
+            }
+          ],
+          "accumulated_product": 0.19806358218193054,
+          "final_score": 0.19806358218193054
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 4 > Lee Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.27786538004875183
+            }
+          ],
+          "accumulated_product": 0.27786538004875183,
+          "final_score": 0.27786538004875183
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.814647912979126
+            }
+          ],
+          "accumulated_product": 0.814647912979126,
+          "final_score": 0.814647912979126
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Cheap Eats Placeholder",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.04785726219415665
+            }
+          ],
+          "accumulated_product": 0.04785726219415665,
+          "final_score": 0.04785726219415665
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Sunset Grill",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.8235424757003784
+            }
+          ],
+          "accumulated_product": 0.8235424757003784,
+          "final_score": 0.8235424757003784
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.2569521367549896
+            }
+          ],
+          "accumulated_product": 0.2569521367549896,
+          "final_score": 0.2569521367549896
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > The Keg Steakhouse",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.4403896629810333
+            }
+          ],
+          "accumulated_product": 0.4403896629810333,
+          "final_score": 0.4403896629810333
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Fran's Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.699921727180481
+            }
+          ],
+          "accumulated_product": 0.699921727180481,
+          "final_score": 0.699921727180481
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Eataly Toronto",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.30898261070251465
+            }
+          ],
+          "accumulated_product": 0.30898261070251465,
+          "final_score": 0.30898261070251465
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Cluny Bistro",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.27809789776802063
+            }
+          ],
+          "accumulated_product": 0.27809789776802063,
+          "final_score": 0.27809789776802063
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 8 > Antler Kitchen",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.19783711433410645
+            }
+          ],
+          "accumulated_product": 0.19783711433410645,
+          "final_score": 0.19783711433410645
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.9772688746452332
+            }
+          ],
+          "accumulated_product": 0.9772688746452332,
+          "final_score": 0.9772688746452332
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.4376284182071686
+            }
+          ],
+          "accumulated_product": 0.4376284182071686,
+          "final_score": 0.4376284182071686
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Bar Isabel",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.10810060799121857
+            }
+          ],
+          "accumulated_product": 0.10810060799121857,
+          "final_score": 0.10810060799121857
+        },
+        {
+          "node_path": "Root > Itinerary_Version 10 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "atom(content =~ \"(atom(content =~ \"Leslieville\") AND atom(content =~ \"brunch\"))\")",
+              "score": 0.5163614153862
+            }
+          ],
+          "accumulated_product": 0.5163614153862,
+          "final_score": 0.5163614153862
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 20,
+    "threshold": 0.05,
+    "top_k": 5,
+    "after_filter_count": 5,
+    "filtered_nodes": [
+      {
+        "path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade",
+        "score": 0.9772688746452332,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Sunset Grill",
+        "score": 0.8235424757003784,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+        "score": 0.814647912979126,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Fran's Restaurant",
+        "score": 0.699921727180481,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Root > Itinerary_Version 10 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+        "score": 0.5163614153862,
+        "type": "Restaurant"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 10 > Itinerary > Day 9 > Lady Marmalade",
+      "score": 0.9772688746452332,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Lady Marmalade",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.",
+        "travel_method": "Taxi",
+        "expected_cost": "CAD 25-35",
+        "highlights": [
+          "Trendy brunch",
+          "Creative dishes"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 10 > Itinerary > Day 6 > Sunset Grill",
+      "score": 0.8235424757003784,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Sunset Grill",
+        "time_block": "9:00 AM - 10:00 AM",
+        "description": "Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 20-30",
+        "highlights": [
+          "Family breakfast",
+          "Kid-friendly menu"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 10 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+      "score": 0.814647912979126,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Mildred's Temple Kitchen",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.",
+        "travel_method": "Taxi",
+        "expected_cost": "CAD 30-40",
+        "highlights": [
+          "Brunch favorite",
+          "Fluffy pancakes"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 10 > Itinerary > Day 7 > Fran's Restaurant",
+      "score": 0.699921727180481,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Fran's Restaurant",
+        "time_block": "8:30 AM - 9:30 AM",
+        "description": "Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 20",
+        "highlights": [
+          "Classic diner",
+          "Toronto institution"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 10 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+      "score": 0.5163614153862,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Hotel Quick Checkout Breakfast",
+        "time_block": "7:30 AM - 8:15 AM",
+        "description": "Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15",
+        "highlights": [
+          "Quick breakfast",
+          "Checkout morning"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 6,
+    "total_scoring_calls": 1,
+    "matched_count": 5,
+    "execution_time_ms": 5449.08559997566,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 20,
+    "num_nodes_after_filter": 5
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "user_query": "I'd rather do the ROM than the AGO. Change the activity on Day 3 to the ROM.",
+  "candidates_count": 2,
+  "updates_count": 1,
+  "updates": [
+    {
+      "tree_path": "Root > Itinerary_Version 8 > Itinerary > Day 3 > Art Gallery of Ontario",
+      "changes": {
+        "highlights": {
+          "from": [
+            "Indoor museum",
+            "Cultural experience",
+            "Art gallery"
+          ],
+          "to": [
+            "Dinosaur and natural history exhibits",
+            "Canadian and world cultures galleries",
+            "Rotating special exhibitions"
+          ]
+        },
+        "name": {
+          "from": "Art Gallery of Ontario",
+          "to": "Royal Ontario Museum (ROM)"
+        },
+        "expected_cost": {
+          "from": "CAD 25",
+          "to": "CAD 23"
+        },
+        "description": {
+          "from": "World-class art museum with Canadian and international collections. Indoor cultural experience in Frank Gehry-designed building. Quiet and contemplative atmosphere.",
+          "to": "One of Canada's largest museums featuring extensive collections in natural history, world cultures, and archaeology, with rotating special exhibitions and immersive galleries."
+        }
+      },
+      "reasoning": "Replaced Art Gallery of Ontario with the Royal Ontario Museum per user request. Preserved the original time_block and travel_method; updated name, description, expected_cost, and highlights to reflect the ROM."
+    }
+  ],
+  "raw_response": "{\n  \"updates\": [\n    {\n      \"id\": \"2\",\n      \"path\": \"Root > Itinerary_Version 8 > Itinerary > Day 3 > Art Gallery of Ontario\",\n      \"fields\": {\n        \"name\": \"Royal Ontario Museum (ROM)\",\n        \"time_block\": \"12:00 PM - 2:00 PM\",\n        \"description\": \"One of Canada's largest museums featuring extensive collections in natural history, world cultures, and archaeology, with rotating special exhibitions and immersive galleries.\",\n        \"travel_method\": \"Walk\",\n        \"expected_cost\": \"CAD 23\",\n        \"highlights\": [\"Dinosaur and natural history exhibits\", \"Canadian and world cultures galleries\", \"Rotating special exhibitions\"]\n      },\n      \"new_type\": null,\n      \"reasoning\": \"Replaced Art Gallery of Ontario with the Royal Ontario Museum per user request. Preserved the original time_block and travel_method; updated name, description, expected_cost, and highlights to reflect the ROM.\"\n    }\n  ],\n  \"reasoning\": \"Candidate 2 (Art Gallery of Ontario) exactly matches the Day 3 activity to be changed to the ROM (semantic score 1.00). Candidate 1 is a separate morning work session and was not targeted, so only candidate 2 was updated.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 2017,
+    "completion_tokens": 1492,
+    "total_tokens": 3509
+  },
+  "processing_time_ms": 22798.967999988236
+}

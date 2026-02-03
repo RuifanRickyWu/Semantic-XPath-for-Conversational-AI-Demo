@@ -45,6 +45,114 @@ def format_node_details(node: Dict[str, Any], indent: str = "") -> List[str]:
     return lines
 
 
+def format_stage_breakdown(base_dir: Path, pipeline: str) -> List[str]:
+    """Format stage-by-stage timing and token breakdown for a pipeline."""
+    lines = []
+    pipeline_dir = base_dir / pipeline
+    
+    if not pipeline_dir.exists():
+        return lines
+    
+    # Collect stage data from all result.json files
+    all_stages = {}
+    query_count = 0
+    
+    result_files = sorted(glob.glob(str(pipeline_dir / "query_*" / "result.json")))
+    
+    for result_file in result_files:
+        try:
+            with open(result_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            raw_result = data.get("raw_result", {})
+            timing = raw_result.get("timing", {})
+            stages = timing.get("stages", [])
+            
+            if not stages:
+                continue
+            
+            query_count += 1
+            
+            for stage in stages:
+                name = stage.get("name", "unknown")
+                time_ms = stage.get("time_ms", 0)
+                token_usage = stage.get("token_usage", {})
+                
+                if name not in all_stages:
+                    all_stages[name] = {
+                        "total_time_ms": 0,
+                        "total_prompt_tokens": 0,
+                        "total_completion_tokens": 0,
+                        "total_tokens": 0,
+                        "count": 0
+                    }
+                
+                all_stages[name]["total_time_ms"] += time_ms
+                all_stages[name]["count"] += 1
+                if token_usage:
+                    all_stages[name]["total_prompt_tokens"] += token_usage.get("prompt_tokens", 0)
+                    all_stages[name]["total_completion_tokens"] += token_usage.get("completion_tokens", 0)
+                    all_stages[name]["total_tokens"] += token_usage.get("total_tokens", 0)
+        except Exception:
+            continue
+    
+    if not all_stages or query_count == 0:
+        return lines
+    
+    # Calculate totals
+    total_time = sum(s["total_time_ms"] for s in all_stages.values())
+    total_tokens = sum(s["total_tokens"] for s in all_stages.values())
+    
+    # Stage order
+    stage_order = ["version_resolution", "version_lookup", "query_generation", "xpath_execution", "downstream_task"]
+    
+    lines.append(f"### Stage Breakdown ({query_count} queries)")
+    lines.append("")
+    lines.append("| Stage | Time (s) | Time % | Prompt | Completion | Total Tokens |")
+    lines.append("|-------|----------|--------|--------|------------|--------------|")
+    
+    for stage_name in stage_order:
+        if stage_name not in all_stages:
+            continue
+        stage = all_stages[stage_name]
+        time_s = stage["total_time_ms"] / 1000
+        time_pct = (stage["total_time_ms"] / total_time * 100) if total_time > 0 else 0
+        prompt = stage["total_prompt_tokens"]
+        completion = stage["total_completion_tokens"]
+        tokens = stage["total_tokens"]
+        
+        lines.append(f"| {stage_name} | {time_s:.1f}s | {time_pct:.1f}% | {prompt:,} | {completion:,} | {tokens:,} |")
+    
+    # Total row
+    total_prompt = sum(s["total_prompt_tokens"] for s in all_stages.values())
+    total_completion = sum(s["total_completion_tokens"] for s in all_stages.values())
+    lines.append(f"| **TOTAL** | **{total_time/1000:.1f}s** | **100%** | **{total_prompt:,}** | **{total_completion:,}** | **{total_tokens:,}** |")
+    lines.append("")
+    
+    # Averages per query
+    lines.append("**Averages per query:**")
+    lines.append("")
+    lines.append("| Stage | Avg Time | Avg Tokens |")
+    lines.append("|-------|----------|------------|")
+    
+    for stage_name in stage_order:
+        if stage_name not in all_stages:
+            continue
+        stage = all_stages[stage_name]
+        count = stage["count"]
+        if count == 0:
+            continue
+        avg_time = stage["total_time_ms"] / count / 1000
+        avg_tokens = stage["total_tokens"] / count
+        
+        lines.append(f"| {stage_name} | {avg_time:.2f}s | {avg_tokens:,.0f} |")
+    
+    lines.append(f"| **TOTAL** | **{total_time/query_count/1000:.2f}s** | **{total_tokens/query_count:,.0f}** |")
+    lines.append("")
+    
+    return lines
+
+
 def format_scoring_table(execution_trace: Dict[str, Any]) -> List[str]:
     """Format scoring details as a markdown table."""
     lines = []
@@ -427,6 +535,11 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
             output_lines.append(row)
         
         output_lines.append("")
+        
+        # Add stage breakdown for semantic_xpath pipeline
+        if pipeline == "semantic_xpath":
+            stage_lines = format_stage_breakdown(base_dir, pipeline)
+            output_lines.extend(stage_lines)
 
     # Detailed sections (Optional)
     output_lines.append("")
@@ -494,6 +607,9 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
                              xml_content = node["xml"]
                              if xml_content.startswith("```"):
                                  xml_content = xml_content.split("\n", 1)[1].rsplit("\n", 1)[0]
+                             
+                             # Fix escaped quotes that may come from JSON serialization
+                             xml_content = xml_content.replace('\\"', '"').replace("\\'", "'")
                              
                              root = ET.fromstring(f"<wrapper>{xml_content}</wrapper>")
                              

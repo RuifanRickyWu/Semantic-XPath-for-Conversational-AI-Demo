@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from pipeline.semantic_xpath_pipeline import SemanticXPathPipeline
 from pipeline.incontext_pipeline import IncontextPipeline
+from generate_report import generate_markdown_report
 
 
 @dataclass
@@ -602,6 +603,10 @@ def main():
     for pipeline, stats in summary["pipelines"].items():
         print(f"  {pipeline}: {stats['success_count']}/{stats['total_queries']} succeeded, "
               f"{stats['total_tokens']} tokens, {stats['total_time_ms']:.0f}ms")
+    
+    # Generate markdown report
+    print("\nGenerating report...")
+    generate_markdown_report(runner.config["name"], runner.pipelines)
 
 
 if __name__ == "__main__":

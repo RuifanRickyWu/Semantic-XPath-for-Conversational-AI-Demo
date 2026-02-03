@@ -1,0 +1,257 @@
+{
+  "query_index": 16,
+  "query": "Some work events got cancelled. On Day 2, change any work related events to Personal Day.",
+  "operation": "UPDATE",
+  "success": true,
+  "execution_time_ms": 33912.8,
+  "token_usage": {
+    "prompt_tokens": 5278,
+    "completion_tokens": 2158,
+    "total_tokens": 7436
+  },
+  "changes": [
+    {
+      "path": "Root > Itinerary_Version 9 > Itinerary > Day 2 > Client Kickoff Meeting",
+      "change_type": "updated",
+      "old_node": null,
+      "new_node": null,
+      "field_changes": {}
+    },
+    {
+      "path": "Root > Itinerary_Version 9 > Itinerary > Day 2 > Strategy Workshop",
+      "change_type": "updated",
+      "old_node": null,
+      "new_node": null,
+      "field_changes": {}
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260203_180655_552481",
+    "user_query": "Some work events got cancelled. On Day 2, change any work related events to Personal Day.",
+    "task_query": "On Day 2, change any work related events to Personal Day",
+    "operation": "UPDATE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Update",
+      "raw_response": "at([-1]), UPDATE\ntask: On Day 2, change any work related events to Personal Day",
+      "task_query": "On Day 2, change any work related events to Personal Day",
+      "token_usage": {
+        "prompt_tokens": 983,
+        "completion_tokens": 158,
+        "total_tokens": 1141
+      }
+    },
+    "parsed_query": {
+      "operation": "Update",
+      "xpath": "/Itinerary/Day[2]/.[atom(content =~ \"work related\")]",
+      "full_query": "Update(/Itinerary/Day[2]/.[atom(content =~ \"work related\")])",
+      "token_usage": {
+        "prompt_tokens": 2047,
+        "completion_tokens": 345,
+        "total_tokens": 2392
+      }
+    },
+    "version_used": "9",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[9]/Itinerary/Day[2]/.[atom(content =~ \"work related\")]",
+      "matched_count": 4,
+      "execution_time_ms": 1211.3348999992013,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "UPDATE",
+      "processing_time_ms": 24468.01549999509,
+      "output": {
+        "updates": [
+          {
+            "tree_path": "Root > Itinerary_Version 9 > Itinerary > Day 2 > Client Kickoff Meeting",
+            "changes": {
+              "highlights": {
+                "from": [
+                  "Work meeting",
+                  "Client presentation",
+                  "Corporate formal"
+                ],
+                "to": [
+                  "Free morning",
+                  "Relax",
+                  "Explore cafes",
+                  "Flexible"
+                ]
+              },
+              "name": {
+                "from": "Client Kickoff Meeting",
+                "to": "Personal Day — Morning"
+              },
+              "expected_cost": {
+                "from": "Work",
+                "to": "Personal"
+              },
+              "description": {
+                "from": "Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.",
+                "to": "Work events cancelled. Morning reserved as personal time — relax, explore nearby cafes, or rest."
+              }
+            },
+            "reasoning": "Transformed the work meeting into a Personal Day morning slot: updated name, description, expected_cost, and highlights to reflect personal time while preserving time and travel_method."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 9 > Itinerary > Day 2 > Strategy Workshop",
+            "changes": {
+              "highlights": {
+                "from": [
+                  "Work session",
+                  "Team collaboration",
+                  "Meeting room"
+                ],
+                "to": [
+                  "Free afternoon",
+                  "Sightseeing",
+                  "Rest",
+                  "Flexible"
+                ]
+              },
+              "name": {
+                "from": "Strategy Workshop",
+                "to": "Personal Day — Afternoon"
+              },
+              "expected_cost": {
+                "from": "Work",
+                "to": "Personal"
+              },
+              "description": {
+                "from": "Intensive afternoon workshop session with the team. Long work hours in conference room. Mentally draining but productive.",
+                "to": "Work events cancelled. Afternoon reserved as personal time — free for sightseeing, resting, or personal activities."
+              }
+            },
+            "reasoning": "Transformed the work workshop into a Personal Day afternoon slot: updated name, description, expected_cost, and highlights to reflect personal time while preserving time and travel_method."
+          }
+        ]
+      },
+      "token_usage": {
+        "prompt_tokens": 2248,
+        "completion_tokens": 1655,
+        "total_tokens": 3903
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 2971.43,
+          "token_usage": {
+            "prompt_tokens": 983,
+            "completion_tokens": 158,
+            "total_tokens": 1141
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.02
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 5234.69,
+          "token_usage": {
+            "prompt_tokens": 2047,
+            "completion_tokens": 345,
+            "total_tokens": 2392
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 1214.5
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 24486.84,
+          "token_usage": {
+            "prompt_tokens": 2248,
+            "completion_tokens": 1655,
+            "total_tokens": 3903
+          }
+        }
+      ],
+      "total_time_ms": 33907.48,
+      "total_tokens": {
+        "prompt_tokens": 5278,
+        "completion_tokens": 2158,
+        "total_tokens": 7436
+      },
+      "pipeline_total_ms": 33911.93589998875
+    },
+    "updated_count": 2,
+    "updated_paths": [
+      "Root > Itinerary_Version 9 > Itinerary > Day 2 > Client Kickoff Meeting",
+      "Root > Itinerary_Version 9 > Itinerary > Day 2 > Strategy Workshop"
+    ],
+    "update_results": [
+      {
+        "path": "Root > Itinerary_Version 9 > Itinerary > Day 2 > Client Kickoff Meeting",
+        "changes": {
+          "highlights": {
+            "from": [
+              "Work meeting",
+              "Client presentation",
+              "Corporate formal"
+            ],
+            "to": [
+              "Free morning",
+              "Relax",
+              "Explore cafes",
+              "Flexible"
+            ]
+          },
+          "name": {
+            "from": "Client Kickoff Meeting",
+            "to": "Personal Day — Morning"
+          },
+          "expected_cost": {
+            "from": "Work",
+            "to": "Personal"
+          },
+          "description": {
+            "from": "Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.",
+            "to": "Work events cancelled. Morning reserved as personal time — relax, explore nearby cafes, or rest."
+          }
+        },
+        "success": true
+      },
+      {
+        "path": "Root > Itinerary_Version 9 > Itinerary > Day 2 > Strategy Workshop",
+        "changes": {
+          "highlights": {
+            "from": [
+              "Work session",
+              "Team collaboration",
+              "Meeting room"
+            ],
+            "to": [
+              "Free afternoon",
+              "Sightseeing",
+              "Rest",
+              "Flexible"
+            ]
+          },
+          "name": {
+            "from": "Strategy Workshop",
+            "to": "Personal Day — Afternoon"
+          },
+          "expected_cost": {
+            "from": "Work",
+            "to": "Personal"
+          },
+          "description": {
+            "from": "Intensive afternoon workshop session with the team. Long work hours in conference room. Mentally draining but productive.",
+            "to": "Work events cancelled. Afternoon reserved as personal time — free for sightseeing, resting, or personal activities."
+          }
+        },
+        "success": true
+      }
+    ],
+    "total_time_ms": 33911.93589998875
+  }
+}

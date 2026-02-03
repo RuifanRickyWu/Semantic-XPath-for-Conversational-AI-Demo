@@ -86,12 +86,10 @@ User: add a sushi restaurant for lunch on day 1
 Output: /Itinerary/Day[1]
 Reason: The query retrieves the Day-1 node as the insertion scope. The terms "sushi" and "lunch" describe properties of the restaurant to be created and therefore do not participate in retrieval.
 
-Operation: CREATE
 User: add a business meeting before dinner on day 1
 Output: /Itinerary/Day[1]
 Reason: The query retrieves the Day-1 node as the insertion scope. The phrase "before dinner" specifies a relative ordering constraint that is resolved during insertion and scheduling, not during retrieval.
 
-Operation: UPDATE
 User: change the dinner reservation time to 8pm on day 1
 Output: /Itinerary/Day[1]/POI[atom(content =~ "dinner")]
 Reason: The query retrieves the existing dinner POI on Day 1 as the target node to be modified. The new time (8pm) is applied during the update step and does not affect retrieval.

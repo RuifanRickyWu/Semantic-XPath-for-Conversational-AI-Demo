@@ -4,7 +4,7 @@ Prompt Loader - Dynamic prompt composition with domain-specific knowledge.
 Composes prompts from:
 - Base templates (schema-agnostic structure)
 - Shared snippets (positional selection rules, position rules)
-- Domain-specific content (node fields, time guidelines, examples)
+- Domain-specific content (node fields, update rules, examples)
 """
 
 import logging
@@ -31,7 +31,6 @@ class PromptLoader:
         └── domains/             # Domain-specific content
             ├── itinerary/
             │   ├── node_fields.txt
-            │   ├── time_guidelines.txt
             │   ├── update_rules.txt
             │   └── examples/
             │       ├── create_examples.txt
@@ -147,7 +146,6 @@ class PromptLoader:
         
         # Load domain-specific content
         node_fields = self._load_domain_file("node_fields")
-        time_guidelines = self._load_domain_file("time_guidelines")
         update_rules = self._load_domain_file("update_rules")
         examples = self._load_domain_examples(operation)
         
@@ -157,7 +155,6 @@ class PromptLoader:
             positional_selection=positional_selection,
             position_rules=position_rules,
             node_fields=node_fields,
-            time_guidelines=time_guidelines,
             update_rules=update_rules,
             examples=examples,
         )
@@ -198,7 +195,6 @@ class PromptLoader:
         domain_path = cls.DOMAINS_PATH / domain
         files = {
             "node_fields": (domain_path / "node_fields.txt").exists(),
-            "time_guidelines": (domain_path / "time_guidelines.txt").exists(),
             "update_rules": (domain_path / "update_rules.txt").exists(),
             "create_examples": (domain_path / "examples" / "create_examples.txt").exists(),
             "read_examples": (domain_path / "examples" / "read_examples.txt").exists(),

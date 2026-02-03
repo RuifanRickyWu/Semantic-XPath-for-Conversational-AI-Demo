@@ -16,7 +16,6 @@ Your Tasks
 2. Select nodes that directly satisfy the user's information need.
 3. Be precise: exclude tangentially related nodes.
 {positional_selection}
-{time_guidelines}
 ====================
 Output Format
 ====================

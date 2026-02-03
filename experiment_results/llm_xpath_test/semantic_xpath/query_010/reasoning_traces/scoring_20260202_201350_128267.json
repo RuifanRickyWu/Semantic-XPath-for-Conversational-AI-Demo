@@ -1,0 +1,45 @@
+{
+  "timestamp": "20260202_201350_128267",
+  "predicate": "work related",
+  "nodes": [
+    {
+      "id": "1762555717616_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting"
+    },
+    {
+      "id": "1762555718416_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task"
+    },
+    {
+      "id": "1762555719216_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing"
+    }
+  ],
+  "raw_response": "```json\n[\n  {\n    \"id\": \"1762555717616_main\",\n    \"score\": 0.9,\n    \"reasoning\": \"Strong match as it involves a work-related activity, specifically a client check-in call.\"\n  },\n  {\n    \"id\": \"1762555718416_main\",\n    \"score\": 0.8,\n    \"reasoning\": \"Strong match because it involves catching up on work emails, which is a work-related task.\"\n  },\n  {\n    \"id\": \"1762555719216_main\",\n    \"score\": 0.7,\n    \"reasoning\": \"Moderate to strong match as it involves networking, which is work-related but in a social setting.\"\n  }\n]\n```",
+  "results": [
+    {
+      "node_id": "1762555717616_main",
+      "node_type": "POI",
+      "score": 0.9,
+      "reasoning": "Strong match as it involves a work-related activity, specifically a client check-in call."
+    },
+    {
+      "node_id": "1762555718416_main",
+      "node_type": "POI",
+      "score": 0.8,
+      "reasoning": "Strong match because it involves catching up on work emails, which is a work-related task."
+    },
+    {
+      "node_id": "1762555719216_main",
+      "node_type": "POI",
+      "score": 0.7,
+      "reasoning": "Moderate to strong match as it involves networking, which is work-related but in a social setting."
+    }
+  ]
+}

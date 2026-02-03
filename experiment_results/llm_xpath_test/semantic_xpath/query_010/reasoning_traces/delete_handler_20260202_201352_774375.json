@@ -1,0 +1,17 @@
+{
+  "user_query": "I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.",
+  "candidates_count": 3,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 5 > Itinerary > Day 5 > Client Check-in Call",
+    "Root > Itinerary_Version 5 > Itinerary > Day 5 > Email Catch-up Block",
+    "Root > Itinerary_Version 5 > Itinerary > Day 5 > Networking Drinks"
+  ],
+  "reasoning": "All three nodes are work-related activities on Day 5, which aligns with the user's request to cancel every work-related activity on that day.",
+  "raw_response": "```json\n{\n  \"nodes_to_delete\": [\n    {\n      \"id\": \"1\",\n      \"path\": \"Root > Itinerary_Version 5 > Itinerary > Day 5 > Client Check-in Call\",\n      \"reasoning\": \"This is a work-related activity scheduled on Day 5, matching the user's intent to cancel work activities.\"\n    },\n    {\n      \"id\": \"2\",\n      \"path\": \"Root > Itinerary_Version 5 > Itinerary > Day 5 > Email Catch-up Block\",\n      \"reasoning\": \"This is a work-related activity scheduled on Day 5, matching the user's intent to cancel work activities.\"\n    },\n    {\n      \"id\": \"3\",\n      \"path\": \"Root > Itinerary_Version 5 > Itinerary > Day 5 > Networking Drinks\",\n      \"reasoning\": \"This is a work-adjacent activity scheduled on Day 5, matching the user's intent to cancel work-related activities.\"\n    }\n  ],\n  \"reasoning\": \"All three nodes are work-related activities on Day 5, which aligns with the user's request to cancel every work-related activity on that day.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1158,
+    "completion_tokens": 242,
+    "total_tokens": 1400
+  },
+  "processing_time_ms": 2643.1184000102803
+}

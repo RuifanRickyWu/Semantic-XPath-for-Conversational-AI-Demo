@@ -1,0 +1,125 @@
+{
+  "query_index": 10,
+  "query": "I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.",
+  "operation": "DELETE",
+  "success": true,
+  "execution_time_ms": 8429.38,
+  "token_usage": {
+    "prompt_tokens": 4242,
+    "completion_tokens": 288,
+    "total_tokens": 4530
+  },
+  "changes": [
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block"
+      },
+      "new_node": null,
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_181258_366833",
+    "user_query": "I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.",
+    "operation": "DELETE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Delete",
+      "raw_response": "at([-1]), DELETE",
+      "token_usage": {
+        "prompt_tokens": 469,
+        "completion_tokens": 5,
+        "total_tokens": 474
+      }
+    },
+    "parsed_query": {
+      "operation": "Delete",
+      "xpath": "/Itinerary/Day[5]/POI[atom(content =~ \"work related\")]",
+      "full_query": "Delete(/Itinerary/Day[5]/POI[atom(content =~ \"work related\")])",
+      "token_usage": {
+        "prompt_tokens": 2533,
+        "completion_tokens": 18,
+        "total_tokens": 2551
+      }
+    },
+    "version_used": "5",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='5']/Itinerary/Day[5]/POI[atom(content =~ \"work related\")]",
+      "matched_count": 5,
+      "execution_time_ms": 3322.0241999952123,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "DELETE",
+      "processing_time_ms": 3530.787599971518,
+      "output": {
+        "nodes_to_delete": [
+          "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block"
+        ],
+        "reasoning": "All candidates are work-related activities scheduled on Day 5, which the user wants to skip."
+      },
+      "token_usage": {
+        "prompt_tokens": 1240,
+        "completion_tokens": 265,
+        "total_tokens": 1505
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 700.59,
+          "token_usage": {
+            "prompt_tokens": 469,
+            "completion_tokens": 5,
+            "total_tokens": 474
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 857.42,
+          "token_usage": {
+            "prompt_tokens": 2533,
+            "completion_tokens": 18,
+            "total_tokens": 2551
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 3329.58
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 3538.3,
+          "token_usage": {
+            "prompt_tokens": 1240,
+            "completion_tokens": 265,
+            "total_tokens": 1505
+          }
+        }
+      ],
+      "total_time_ms": 8425.89,
+      "total_tokens": {
+        "prompt_tokens": 4242,
+        "completion_tokens": 288,
+        "total_tokens": 4530
+      },
+      "pipeline_total_ms": 8428.795300074853
+    },
+    "deleted_count": 1,
+    "deleted_paths": [
+      "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block"
+    ],
+    "total_time_ms": 8428.795300074853
+  }
+}

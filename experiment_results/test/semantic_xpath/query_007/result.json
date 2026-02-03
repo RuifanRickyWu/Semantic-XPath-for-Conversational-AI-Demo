@@ -1,0 +1,147 @@
+{
+  "query_index": 6,
+  "query": "I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.",
+  "operation": "DELETE",
+  "success": true,
+  "execution_time_ms": 14536.04,
+  "token_usage": {
+    "prompt_tokens": 4284,
+    "completion_tokens": 315,
+    "total_tokens": 4599
+  },
+  "changes": [
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant"
+      },
+      "new_node": null,
+      "field_changes": null
+    },
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji"
+      },
+      "new_node": null,
+      "field_changes": null
+    },
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+      },
+      "new_node": null,
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_181152_939998",
+    "user_query": "I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.",
+    "operation": "DELETE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Delete",
+      "raw_response": "at([-1]), DELETE",
+      "token_usage": {
+        "prompt_tokens": 464,
+        "completion_tokens": 5,
+        "total_tokens": 469
+      }
+    },
+    "parsed_query": {
+      "operation": "Delete",
+      "xpath": "/Itinerary/Day/Restaurant[atom(content =~ \"expensive dinner\")]",
+      "full_query": "Delete(/Itinerary/Day/Restaurant[atom(content =~ \"expensive dinner\")])",
+      "token_usage": {
+        "prompt_tokens": 2528,
+        "completion_tokens": 16,
+        "total_tokens": 2544
+      }
+    },
+    "version_used": "1",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day/Restaurant[atom(content =~ \"expensive dinner\")]",
+      "matched_count": 5,
+      "execution_time_ms": 6369.022200000472,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "DELETE",
+      "processing_time_ms": 7086.212299996987,
+      "output": {
+        "nodes_to_delete": [
+          "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+        ],
+        "reasoning": "The user requested to cut expensive dinners. Alo Restaurant, Kaiseki Kaji, and Canoe Restaurant all have high expected costs and are scheduled during dinner time, making them suitable candidates for deletion. Lee Restaurant and Antler Kitchen, while dinners, have lower costs and do not fit the 'expensive' criterion as strongly."
+      },
+      "token_usage": {
+        "prompt_tokens": 1292,
+        "completion_tokens": 294,
+        "total_tokens": 1586
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 477.06,
+          "token_usage": {
+            "prompt_tokens": 464,
+            "completion_tokens": 5,
+            "total_tokens": 469
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.02
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 588.24,
+          "token_usage": {
+            "prompt_tokens": 2528,
+            "completion_tokens": 16,
+            "total_tokens": 2544
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 6374.73
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 7091.89,
+          "token_usage": {
+            "prompt_tokens": 1292,
+            "completion_tokens": 294,
+            "total_tokens": 1586
+          }
+        }
+      ],
+      "total_time_ms": 14531.95,
+      "total_tokens": {
+        "prompt_tokens": 4284,
+        "completion_tokens": 315,
+        "total_tokens": 4599
+      },
+      "pipeline_total_ms": 14534.972900059074
+    },
+    "deleted_count": 3,
+    "deleted_paths": [
+      "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+      "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+      "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+    ],
+    "total_time_ms": 14534.972900059074
+  }
+}

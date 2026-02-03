@@ -1,0 +1,4 @@
+2026-02-02 14:41:37,616 - INFO - Query: I'm putting together my expense report. Can you show me all the restaurants I've booked that are really expensive
+2026-02-02 14:41:37,616 - INFO - Running query 4: I'm putting together my expense report. Can you show me all the restaurants I've booked that are really expensive
+2026-02-02 14:41:53,872 - INFO -   Operation: READ, Success: True, Time: 16255.2ms
+2026-02-02 14:41:53,872 - INFO - Result: READ, Success: True

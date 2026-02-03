@@ -1,0 +1,54 @@
+{
+  "user_query": "I've been stuck in meetings most of the week. Which days have nature activities where I can actually get outside and see some green space?",
+  "candidates_count": 10,
+  "selected_count": 4,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "8"
+        }
+      },
+      "reasoning": "Day 8 includes a Niagara Falls Day Trip, which is an outdoor scenic adventure and nature activity."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "6"
+        }
+      },
+      "reasoning": "Day 6 features a Toronto Islands Ferry and Bike Ride, which is an outdoor nature activity with beaches and gardens."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "1"
+        }
+      },
+      "reasoning": "Day 1 includes a Harbourfront Stroll, which is an outdoor activity with lake views and fresh air."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+      "node_data": {
+        "type": "Day",
+        "attributes": {
+          "index": "7"
+        }
+      },
+      "reasoning": "Day 7 includes a Distillery District Walk, which is an outdoor walking experience through a historic area."
+    }
+  ],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [\n    {\"id\": \"1\", \"reasoning\": \"Day 8 includes a Niagara Falls Day Trip, which is an outdoor scenic adventure and nature activity.\"},\n    {\"id\": \"2\", \"reasoning\": \"Day 6 features a Toronto Islands Ferry and Bike Ride, which is an outdoor nature activity with beaches and gardens.\"},\n    {\"id\": \"4\", \"reasoning\": \"Day 1 includes a Harbourfront Stroll, which is an outdoor activity with lake views and fresh air.\"},\n    {\"id\": \"3\", \"reasoning\": \"Day 7 includes a Distillery District Walk, which is an outdoor walking experience through a historic area.\"}\n  ],\n  \"reasoning\": \"Selected days with activities that involve being outdoors and experiencing nature or green spaces. Excluded days focused on indoor activities or work-related events.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 4378,
+    "completion_tokens": 185,
+    "total_tokens": 4563
+  },
+  "processing_time_ms": 3223.4476000303403
+}

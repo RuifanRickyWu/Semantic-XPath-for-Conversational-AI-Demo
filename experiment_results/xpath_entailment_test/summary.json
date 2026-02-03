@@ -1,0 +1,15 @@
+{
+  "experiment_name": "xpath_entailment_test",
+  "start_time": "2026-02-02T14:14:51.667883",
+  "total_queries": 15,
+  "pipelines": {
+    "semantic_xpath": {
+      "total_queries": 15,
+      "success_count": 13,
+      "total_time_ms": 160905.65,
+      "total_tokens": 84864,
+      "avg_time_per_query_ms": 10727.04
+    }
+  },
+  "end_time": "2026-02-02T14:17:32.610257"
+}

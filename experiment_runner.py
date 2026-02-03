@@ -164,7 +164,12 @@ class ExperimentRunner:
                     tree_path=target_path
                 )
             elif name == "incontext":
-                self._pipeline_instances[name] = IncontextPipeline(tree_path=target_path)
+                # Get the config block
+                pipeline_config = self.config.get("incontext_config", {})
+                self._pipeline_instances[name] = IncontextPipeline(
+                    tree_path=target_path,
+                    config_override=pipeline_config
+                )
             else:
                 raise ValueError(f"Unknown pipeline: {name}")
         

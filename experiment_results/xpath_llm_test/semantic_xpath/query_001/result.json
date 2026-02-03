@@ -1,0 +1,201 @@
+{
+  "query_index": 0,
+  "query": "My college friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights.",
+  "operation": "READ",
+  "success": true,
+  "execution_time_ms": 29776.85,
+  "token_usage": {
+    "prompt_tokens": 10181,
+    "completion_tokens": 1763,
+    "total_tokens": 11944
+  },
+  "selected_nodes": [
+    {
+      "type": "Day",
+      "attributes": {
+        "index": "6"
+      },
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+      "reasoning": "Day 6 has no work commitments or flights."
+    },
+    {
+      "type": "Day",
+      "attributes": {
+        "index": "7"
+      },
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+      "reasoning": "Day 7 has no work commitments or flights."
+    },
+    {
+      "type": "Day",
+      "attributes": {
+        "index": "9"
+      },
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+      "reasoning": "Day 9 has no work commitments or flights."
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_144056_847921",
+    "user_query": "My college friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights.",
+    "operation": "READ",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Read",
+      "raw_response": "at([-1]), READ",
+      "token_usage": {
+        "prompt_tokens": 464,
+        "completion_tokens": 5,
+        "total_tokens": 469
+      }
+    },
+    "parsed_query": {
+      "operation": "Read",
+      "xpath": "/Itinerary/Day[not(agg_exists(POI[atom(content =~ \"work commitment\")])) AND not(agg_exists(POI[atom(content =~ \"flight\")]))]",
+      "full_query": "Read(/Itinerary/Day[not(agg_exists(POI[atom(content =~ \"work commitment\")])) AND not(agg_exists(POI[atom(content =~ \"flight\")]))])",
+      "token_usage": {
+        "prompt_tokens": 2528,
+        "completion_tokens": 39,
+        "total_tokens": 2567
+      }
+    },
+    "version_used": "1",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[not(agg_exists(POI[atom(content =~ \"work commitment\")])) AND not(agg_exists(POI[atom(content =~ \"flight\")]))]",
+      "matched_count": 5,
+      "execution_time_ms": 22283.30640005879,
+      "token_usage": {
+        "prompt_tokens": 4533,
+        "completion_tokens": 1565,
+        "total_tokens": 6098
+      }
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "READ",
+      "processing_time_ms": 3708.267500041984,
+      "output": {
+        "selected_nodes": [
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+            "node_data": {
+              "type": "Day",
+              "attributes": {
+                "index": "6"
+              }
+            },
+            "reasoning": "Day 6 has no work commitments or flights."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+            "node_data": {
+              "type": "Day",
+              "attributes": {
+                "index": "7"
+              }
+            },
+            "reasoning": "Day 7 has no work commitments or flights."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+            "node_data": {
+              "type": "Day",
+              "attributes": {
+                "index": "9"
+              }
+            },
+            "reasoning": "Day 9 has no work commitments or flights."
+          }
+        ]
+      },
+      "token_usage": {
+        "prompt_tokens": 2656,
+        "completion_tokens": 154,
+        "total_tokens": 2810
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 2211.75,
+          "token_usage": {
+            "prompt_tokens": 464,
+            "completion_tokens": 5,
+            "total_tokens": 469
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 3.94
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 1560.51,
+          "token_usage": {
+            "prompt_tokens": 2528,
+            "completion_tokens": 39,
+            "total_tokens": 2567
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 22287.33,
+          "token_usage": {
+            "prompt_tokens": 4533,
+            "completion_tokens": 1565,
+            "total_tokens": 6098
+          }
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 3709.3,
+          "token_usage": {
+            "prompt_tokens": 2656,
+            "completion_tokens": 154,
+            "total_tokens": 2810
+          }
+        }
+      ],
+      "total_time_ms": 29772.83,
+      "total_tokens": {
+        "prompt_tokens": 10181,
+        "completion_tokens": 1763,
+        "total_tokens": 11944
+      },
+      "pipeline_total_ms": 29776.088600046933
+    },
+    "candidates_count": 5,
+    "selected_count": 3,
+    "selected_nodes": [
+      {
+        "type": "Day",
+        "attributes": {
+          "index": "6"
+        },
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+        "reasoning": "Day 6 has no work commitments or flights."
+      },
+      {
+        "type": "Day",
+        "attributes": {
+          "index": "7"
+        },
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+        "reasoning": "Day 7 has no work commitments or flights."
+      },
+      {
+        "type": "Day",
+        "attributes": {
+          "index": "9"
+        },
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+        "reasoning": "Day 9 has no work commitments or flights."
+      }
+    ],
+    "total_time_ms": 29776.088600046933
+  }
+}

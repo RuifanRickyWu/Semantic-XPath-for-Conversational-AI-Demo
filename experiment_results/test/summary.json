@@ -1,0 +1,22 @@
+{
+  "experiment_name": "incontext_test",
+  "start_time": "2026-02-02T18:10:42.622633",
+  "total_queries": 14,
+  "pipelines": {
+    "semantic_xpath": {
+      "total_queries": 14,
+      "success_count": 14,
+      "total_time_ms": 157456.58,
+      "total_tokens": 67024,
+      "avg_time_per_query_ms": 11246.9
+    },
+    "incontext": {
+      "total_queries": 14,
+      "success_count": 14,
+      "total_time_ms": 245881.68,
+      "total_tokens": 96017,
+      "avg_time_per_query_ms": 17562.98
+    }
+  },
+  "end_time": "2026-02-02T18:17:26.440549"
+}

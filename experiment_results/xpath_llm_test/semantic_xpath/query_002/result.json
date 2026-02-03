@@ -1,0 +1,173 @@
+{
+  "query_index": 1,
+  "query": "The weather forecast shows heavy rain on Day 7. I want to check which activities are outdoors that I might need to reschedule.",
+  "operation": "READ",
+  "success": true,
+  "execution_time_ms": 4975.42,
+  "token_usage": {
+    "prompt_tokens": 4436,
+    "completion_tokens": 223,
+    "total_tokens": 4659
+  },
+  "selected_nodes": [
+    {
+      "type": "POI",
+      "attributes": {},
+      "name": "Distillery District Walk",
+      "time_block": "3:00 PM - 5:00 PM",
+      "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+      "travel_method": "Public Transit",
+      "expected_cost": "Free",
+      "highlights": [
+        "Outdoor walking tour",
+        "Historic architecture",
+        "Artisan shops"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+      "reasoning": "Distillery District Walk is an outdoor activity, as it involves walking through an outdoor historic pedestrian village."
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_144126_628174",
+    "user_query": "The weather forecast shows heavy rain on Day 7. I want to check which activities are outdoors that I might need to reschedule.",
+    "operation": "READ",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Read",
+      "raw_response": "at([-1]), READ",
+      "token_usage": {
+        "prompt_tokens": 466,
+        "completion_tokens": 5,
+        "total_tokens": 471
+      }
+    },
+    "parsed_query": {
+      "operation": "Read",
+      "xpath": "/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")]",
+      "full_query": "Read(/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")])",
+      "token_usage": {
+        "prompt_tokens": 2530,
+        "completion_tokens": 18,
+        "total_tokens": 2548
+      }
+    },
+    "version_used": "1",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")]",
+      "matched_count": 1,
+      "execution_time_ms": 1742.2537000384182,
+      "token_usage": {
+        "prompt_tokens": 644,
+        "completion_tokens": 100,
+        "total_tokens": 744
+      }
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "READ",
+      "processing_time_ms": 1864.2358999932185,
+      "output": {
+        "selected_nodes": [
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+            "node_data": {
+              "type": "POI",
+              "attributes": {},
+              "name": "Distillery District Walk",
+              "time_block": "3:00 PM - 5:00 PM",
+              "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+              "travel_method": "Public Transit",
+              "expected_cost": "Free",
+              "highlights": [
+                "Outdoor walking tour",
+                "Historic architecture",
+                "Artisan shops"
+              ]
+            },
+            "reasoning": "Distillery District Walk is an outdoor activity, as it involves walking through an outdoor historic pedestrian village."
+          }
+        ]
+      },
+      "token_usage": {
+        "prompt_tokens": 796,
+        "completion_tokens": 100,
+        "total_tokens": 896
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 776.84,
+          "token_usage": {
+            "prompt_tokens": 466,
+            "completion_tokens": 5,
+            "total_tokens": 471
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.03
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 585.58,
+          "token_usage": {
+            "prompt_tokens": 2530,
+            "completion_tokens": 18,
+            "total_tokens": 2548
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 1744.01,
+          "token_usage": {
+            "prompt_tokens": 644,
+            "completion_tokens": 100,
+            "total_tokens": 744
+          }
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 1864.98,
+          "token_usage": {
+            "prompt_tokens": 796,
+            "completion_tokens": 100,
+            "total_tokens": 896
+          }
+        }
+      ],
+      "total_time_ms": 4971.43,
+      "total_tokens": {
+        "prompt_tokens": 4436,
+        "completion_tokens": 223,
+        "total_tokens": 4659
+      },
+      "pipeline_total_ms": 4974.490299937315
+    },
+    "candidates_count": 1,
+    "selected_count": 1,
+    "selected_nodes": [
+      {
+        "type": "POI",
+        "attributes": {},
+        "name": "Distillery District Walk",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+        "travel_method": "Public Transit",
+        "expected_cost": "Free",
+        "highlights": [
+          "Outdoor walking tour",
+          "Historic architecture",
+          "Artisan shops"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+        "reasoning": "Distillery District Walk is an outdoor activity, as it involves walking through an outdoor historic pedestrian village."
+      }
+    ],
+    "total_time_ms": 4974.490299937315
+  }
+}

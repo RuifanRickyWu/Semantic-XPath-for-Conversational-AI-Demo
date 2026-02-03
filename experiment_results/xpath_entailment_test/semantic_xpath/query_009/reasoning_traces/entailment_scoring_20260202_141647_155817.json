@@ -1,0 +1,572 @@
+{
+  "timestamp": "20260202_141647_155817",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "POI[atom(content =~ \"Niagara Falls\")]",
+  "hypothesis": "This is related to POI[atom(content =~ \"Niagara Falls\")].",
+  "nodes": [
+    {
+      "id": "2674392678784_main",
+      "type": "Day",
+      "name": "Day 1",
+      "description": "POI: YYZ Airport Arrival - Flight lands at Toronto Pearson International Airport. Long journey from overseas, feeling tired and jet-lagged.; POI: Harbourfront Stroll - Easy, relaxing walk along the wa",
+      "premise": "Day: Day 1 - POI: YYZ Airport Arrival - Flight lands at Toronto Pearson International Airport. Long journey from overseas, feeling tired and jet-lagged.; POI: Harbourfront Stroll - Easy, relaxing walk along the waterfront. Low-energy activity perfect for recovering from travel_method. Beautiful lake views and fresh air.; Restaurant: Canoe Restaurant - Upscale Canadian cuisine on the 54th floor of TD Tower. Expensive fine dining with panoramic city views. Elegant and formal atmosphere.",
+      "score": 0.29955974221229553
+    },
+    {
+      "id": "2674392681424_main",
+      "type": "Day",
+      "name": "Day 2",
+      "description": "POI: Client Kickoff Meeting - Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.; POI: Strategy Wor",
+      "premise": "Day: Day 2 - POI: Client Kickoff Meeting - Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.; POI: Strategy Workshop - Intensive afternoon workshop session with the team. Long work hours in conference room. Mentally draining but productive.; Restaurant: Alo Restaurant - Three Michelin-starred French tasting menu. Extremely expensive and exclusive fine dining. Intimate 8-course experience with wine pairings. Very formal and upscale.",
+      "score": 0.5470795035362244
+    },
+    {
+      "id": "2674392684144_main",
+      "type": "Day",
+      "name": "Day 3",
+      "description": "Restaurant: Hotel Continental Breakfast - Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.; POI: Stakeholder Presentation - Morning work session pre",
+      "premise": "Day: Day 3 - Restaurant: Hotel Continental Breakfast - Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.; POI: Stakeholder Presentation - Morning work session presenting quarterly results to stakeholders. High-pressure meeting requiring focus and preparation.; POI: Art Gallery of Ontario - World-class art museum with Canadian and international collections. Indoor cultural experience in Frank Gehry-designed building. Quiet and contemplative atmosphere.; Restaurant: FRANK Restaurant at AGO - Modern Canadian cuisine inside the Art Gallery. Artistic setting with creative seasonal menu.; Restaurant: Pai Northern Thai - Popular Thai restaurant known for authentic northern Thai cuisine. Lively atmosphere with bold flavors. Asian food option.",
+      "score": 0.37960776686668396
+    },
+    {
+      "id": "2674392688304_main",
+      "type": "Day",
+      "name": "Day 4",
+      "description": "Restaurant: Quick Grab Coffee - Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day.; POI: Full-Day Workshop - Intensive all-day work workshop with the entire team. Exhaust",
+      "premise": "Day: Day 4 - Restaurant: Quick Grab Coffee - Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day.; POI: Full-Day Workshop - Intensive all-day work workshop with the entire team. Exhausting but productive session covering project roadmap and deliverables.; POI: Bloor Street Shopping - Optional shopping trip along Bloor-Yorkville luxury district. High-end boutiques and designer stores.; Restaurant: Lee Restaurant - Susur Lee's flagship Asian fusion restaurant. Creative dishes blending East and West. Trendy atmosphere with innovative cuisine.",
+      "score": 0.3591679036617279
+    },
+    {
+      "id": "2674392691664_main",
+      "type": "Day",
+      "name": "Day 5",
+      "description": "Restaurant: Mildred's Temple Kitchen - Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.; POI: Client Check-in Call - Remote video call with client",
+      "premise": "Day: Day 5 - Restaurant: Mildred's Temple Kitchen - Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.; POI: Client Check-in Call - Remote video call with client to discuss project status. Light work commitment from hotel room.; POI: Email Catch-up Block - Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox.; POI: Networking Drinks - Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity.; Restaurant: Kaiseki Kaji - Exquisite Japanese kaiseki dining experience. Very expensive omakase with seasonal courses. Intimate and formal setting.",
+      "score": 0.4790038764476776
+    },
+    {
+      "id": "2674392745040_main",
+      "type": "Day",
+      "name": "Day 6",
+      "description": "Restaurant: Sunset Grill - Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.; POI: Toronto Islands Ferry and Bike Ride - Ferry ride to Toronto Isl",
+      "premise": "Day: Day 6 - Restaurant: Sunset Grill - Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.; POI: Toronto Islands Ferry and Bike Ride - Ferry ride to Toronto Islands followed by bike rental and exploration. Outdoor nature activity with beaches, gardens, and stunning skyline views. Perfect for families and kids.; Restaurant: Island Cafe Picnic Lunch - Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.; POI: Ripley's Aquarium - World-class aquarium with underwater tunnel and interactive exhibits. Indoor family attraction perfect for kids. Sharks, jellyfish, and touch tanks.; Restaurant: The Keg Steakhouse - Classic steakhouse with something for everyone. Family-friendly atmosphere with reliable menu. Good for groups.",
+      "score": 0.32719212770462036
+    },
+    {
+      "id": "2674392748960_main",
+      "type": "Day",
+      "name": "Day 7",
+      "description": "Restaurant: Fran's Restaurant - Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.; POI: Royal Ontario Museum - World-renowned museum showcasing art, cultu",
+      "premise": "Day: Day 7 - Restaurant: Fran's Restaurant - Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.; POI: Royal Ontario Museum - World-renowned museum showcasing art, culture, and natural history. Indoor cultural experience with dinosaurs, gems, and world cultures exhibits.; Restaurant: Eataly Toronto - Italian marketplace and restaurant in Manulife Centre. Indoor dining with fresh pasta, pizza, and espresso. Great for rainy day lunch.; POI: Distillery District Walk - Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.; Restaurant: Cluny Bistro - French-inspired bistro in the Distillery District. Romantic and intimate atmosphere with classic dishes and excellent wine list.",
+      "score": 0.1601390391588211
+    },
+    {
+      "id": "2674392753200_main",
+      "type": "Day",
+      "name": "Day 8",
+      "description": "POI: Niagara Falls Day Trip - Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.;",
+      "premise": "Day: Day 8 - POI: Niagara Falls Day Trip - Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.; Restaurant: Elements on the Falls - Dining with direct view of Niagara Falls. Tourist location but unbeatable views. Part of the day trip package.; Restaurant: Antler Kitchen - Canadian game meat restaurant featuring locally sourced venison, bison, and seasonal ingredients. Unique dining experience with rustic atmosphere.",
+      "score": 0.9776601791381836
+    },
+    {
+      "id": "2674392755840_main",
+      "type": "Day",
+      "name": "Day 9",
+      "description": "Restaurant: Lady Marmalade - Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.; POI: Eaton Centre Shopping - Major downtown shopping ma",
+      "premise": "Day: Day 9 - Restaurant: Lady Marmalade - Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.; POI: Eaton Centre Shopping - Major downtown shopping mall with hundreds of stores. Indoor shopping for souvenirs, clothing, and gifts. Climate-controlled and convenient.; Restaurant: Urban Eatery Food Court - Food court in Eaton Centre with diverse quick options. Fast and convenient but generic mall food.; POI: Queen Street West Boutiques - Eclectic shopping district with independent boutiques, vintage stores, and Canadian designers. Outdoor walking and browsing experience.; Restaurant: Bar Isabel - Spanish tapas bar with lively atmosphere. Great for sharing plates and celebrating. Intimate and buzzy.",
+      "score": 0.25124773383140564
+    },
+    {
+      "id": "2674392760080_main",
+      "type": "Day",
+      "name": "Day 10",
+      "description": "Restaurant: Hotel Quick Checkout Breakfast - Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.; POI: CN Tower EdgeWalk - Thrilling hands-free walk arou",
+      "premise": "Day: Day 10 - Restaurant: Hotel Quick Checkout Breakfast - Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.; POI: CN Tower EdgeWalk - Thrilling hands-free walk around the outside of CN Tower at 356 meters. Unique bucket-list experience with stunning views. Memorable and unforgettable adventure.; Restaurant: 360 Restaurant at CN Tower - Revolving restaurant atop CN Tower with panoramic views. Special occasion dining with Canadian cuisine. Memorable farewell lunch.; POI: Airport Snack Stop - Generic airport food and coffee before boarding. Forgettable but necessary. Nothing special about airport dining.; POI: YYZ Departure - Flight departure from Toronto Pearson International Airport. End of trip.",
+      "score": 0.3708718419075012
+    },
+    {
+      "id": "2674401531904_main",
+      "type": "Day",
+      "name": "Day 1",
+      "description": "POI: YYZ Airport Arrival - Flight lands at Toronto Pearson International Airport. Long journey from overseas, feeling tired and jet-lagged.; POI: Harbourfront Stroll - Easy, relaxing walk along the wa",
+      "premise": "Day: Day 1 - POI: YYZ Airport Arrival - Flight lands at Toronto Pearson International Airport. Long journey from overseas, feeling tired and jet-lagged.; POI: Harbourfront Stroll - Easy, relaxing walk along the waterfront. Low-energy activity perfect for recovering from travel_method. Beautiful lake views and fresh air.",
+      "score": 0.16661641001701355
+    },
+    {
+      "id": "2674401501216_main",
+      "type": "Day",
+      "name": "Day 2",
+      "description": "POI: Client Kickoff Meeting - Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.; POI: Strategy Wor",
+      "premise": "Day: Day 2 - POI: Client Kickoff Meeting - Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.; POI: Strategy Workshop - Intensive afternoon workshop session with the team. Long work hours in conference room. Mentally draining but productive.",
+      "score": 0.41690394282341003
+    },
+    {
+      "id": "2674401399552_main",
+      "type": "Day",
+      "name": "Day 3",
+      "description": "Restaurant: Hotel Continental Breakfast - Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.; POI: Stakeholder Presentation - Morning work session pre",
+      "premise": "Day: Day 3 - Restaurant: Hotel Continental Breakfast - Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.; POI: Stakeholder Presentation - Morning work session presenting quarterly results to stakeholders. High-pressure meeting requiring focus and preparation.; POI: Art Gallery of Ontario - World-class art museum with Canadian and international collections. Indoor cultural experience in Frank Gehry-designed building. Quiet and contemplative atmosphere.; Restaurant: FRANK Restaurant at AGO - Modern Canadian cuisine inside the Art Gallery. Artistic setting with creative seasonal menu.; Restaurant: Pai Northern Thai - Popular Thai restaurant known for authentic northern Thai cuisine. Lively atmosphere with bold flavors. Asian food option.",
+      "score": 0.37960776686668396
+    },
+    {
+      "id": "2674401406272_main",
+      "type": "Day",
+      "name": "Day 4",
+      "description": "Restaurant: Quick Grab Coffee - Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day.; POI: Full-Day Workshop - Intensive all-day work workshop with the entire team. Exhaust",
+      "premise": "Day: Day 4 - Restaurant: Quick Grab Coffee - Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day.; POI: Full-Day Workshop - Intensive all-day work workshop with the entire team. Exhausting but productive session covering project roadmap and deliverables.; POI: Bloor Street Shopping - Optional shopping trip along Bloor-Yorkville luxury district. High-end boutiques and designer stores.; Restaurant: Lee Restaurant - Susur Lee's flagship Asian fusion restaurant. Creative dishes blending East and West. Trendy atmosphere with innovative cuisine.",
+      "score": 0.3591679036617279
+    },
+    {
+      "id": "2674401402992_main",
+      "type": "Day",
+      "name": "Day 5",
+      "description": "Restaurant: Mildred's Temple Kitchen - Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.; POI: Client Check-in Call - Remote video call with client",
+      "premise": "Day: Day 5 - Restaurant: Mildred's Temple Kitchen - Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.; POI: Client Check-in Call - Remote video call with client to discuss project status. Light work commitment from hotel room.; POI: Email Catch-up Block - Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox.; POI: Networking Drinks - Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity.",
+      "score": 0.2645972669124603
+    },
+    {
+      "id": "2674401406912_main",
+      "type": "Day",
+      "name": "Day 6",
+      "description": "Restaurant: Sunset Grill - Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.; POI: Toronto Islands Ferry and Bike Ride - Ferry ride to Toronto Isl",
+      "premise": "Day: Day 6 - Restaurant: Sunset Grill - Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.; POI: Toronto Islands Ferry and Bike Ride - Ferry ride to Toronto Islands followed by bike rental and exploration. Outdoor nature activity with beaches, gardens, and stunning skyline views. Perfect for families and kids.; Restaurant: Island Cafe Picnic Lunch - Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.; POI: Ripley's Aquarium - World-class aquarium with underwater tunnel and interactive exhibits. Indoor family attraction perfect for kids. Sharks, jellyfish, and touch tanks.; Restaurant: The Keg Steakhouse - Classic steakhouse with something for everyone. Family-friendly atmosphere with reliable menu. Good for groups.",
+      "score": 0.32719212770462036
+    },
+    {
+      "id": "2674398894400_main",
+      "type": "Day",
+      "name": "Day 7",
+      "description": "Restaurant: Fran's Restaurant - Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.; POI: Royal Ontario Museum - World-renowned museum showcasing art, cultu",
+      "premise": "Day: Day 7 - Restaurant: Fran's Restaurant - Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.; POI: Royal Ontario Museum - World-renowned museum showcasing art, culture, and natural history. Indoor cultural experience with dinosaurs, gems, and world cultures exhibits.; Restaurant: Eataly Toronto - Italian marketplace and restaurant in Manulife Centre. Indoor dining with fresh pasta, pizza, and espresso. Great for rainy day lunch.; POI: Distillery District Walk - Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.; Restaurant: Cluny Bistro - French-inspired bistro in the Distillery District. Romantic and intimate atmosphere with classic dishes and excellent wine list.",
+      "score": 0.1601390391588211
+    },
+    {
+      "id": "2674401839360_main",
+      "type": "Day",
+      "name": "Day 8",
+      "description": "POI: Niagara Falls Day Trip - Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.;",
+      "premise": "Day: Day 8 - POI: Niagara Falls Day Trip - Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.; Restaurant: Elements on the Falls - Dining with direct view of Niagara Falls. Tourist location but unbeatable views. Part of the day trip package.; Restaurant: Antler Kitchen - Canadian game meat restaurant featuring locally sourced venison, bison, and seasonal ingredients. Unique dining experience with rustic atmosphere.",
+      "score": 0.9776601791381836
+    },
+    {
+      "id": "2674401842000_main",
+      "type": "Day",
+      "name": "Day 9",
+      "description": "Restaurant: Lady Marmalade - Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.; POI: Eaton Centre Shopping - Major downtown shopping ma",
+      "premise": "Day: Day 9 - Restaurant: Lady Marmalade - Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.; POI: Eaton Centre Shopping - Major downtown shopping mall with hundreds of stores. Indoor shopping for souvenirs, clothing, and gifts. Climate-controlled and convenient.; Restaurant: Urban Eatery Food Court - Food court in Eaton Centre with diverse quick options. Fast and convenient but generic mall food.; POI: Queen Street West Boutiques - Eclectic shopping district with independent boutiques, vintage stores, and Canadian designers. Outdoor walking and browsing experience.; Restaurant: Bar Isabel - Spanish tapas bar with lively atmosphere. Great for sharing plates and celebrating. Intimate and buzzy.",
+      "score": 0.25124773383140564
+    },
+    {
+      "id": "2674401846240_main",
+      "type": "Day",
+      "name": "Day 10",
+      "description": "Restaurant: Hotel Quick Checkout Breakfast - Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.; POI: CN Tower EdgeWalk - Thrilling hands-free walk arou",
+      "premise": "Day: Day 10 - Restaurant: Hotel Quick Checkout Breakfast - Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.; POI: CN Tower EdgeWalk - Thrilling hands-free walk around the outside of CN Tower at 356 meters. Unique bucket-list experience with stunning views. Memorable and unforgettable adventure.; Restaurant: 360 Restaurant at CN Tower - Revolving restaurant atop CN Tower with panoramic views. Special occasion dining with Canadian cuisine. Memorable farewell lunch.; POI: Airport Snack Stop - Generic airport food and coffee before boarding. Forgettable but necessary. Nothing special about airport dining.; POI: YYZ Departure - Flight departure from Toronto Pearson International Airport. End of trip.",
+      "score": 0.3708718419075012
+    },
+    {
+      "id": "2674401506816_main",
+      "type": "Day",
+      "name": "Day 1",
+      "description": "POI: YYZ Airport Arrival - Flight lands at Toronto Pearson International Airport. Long journey from overseas, feeling tired and jet-lagged.; POI: Harbourfront Stroll - Easy, relaxing walk along the wa",
+      "premise": "Day: Day 1 - POI: YYZ Airport Arrival - Flight lands at Toronto Pearson International Airport. Long journey from overseas, feeling tired and jet-lagged.; POI: Harbourfront Stroll - Easy, relaxing walk along the waterfront. Low-energy activity perfect for recovering from travel_method. Beautiful lake views and fresh air.",
+      "score": 0.16661641001701355
+    },
+    {
+      "id": "2674392636592_main",
+      "type": "Day",
+      "name": "Day 2",
+      "description": "POI: Client Kickoff Meeting - Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.; POI: Strategy Wor",
+      "premise": "Day: Day 2 - POI: Client Kickoff Meeting - Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.; POI: Strategy Workshop - Intensive afternoon workshop session with the team. Long work hours in conference room. Mentally draining but productive.",
+      "score": 0.41690394282341003
+    },
+    {
+      "id": "2674392634592_main",
+      "type": "Day",
+      "name": "Day 3",
+      "description": "Restaurant: Hotel Continental Breakfast - Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.; POI: Stakeholder Presentation - Morning work session pre",
+      "premise": "Day: Day 3 - Restaurant: Hotel Continental Breakfast - Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.; POI: Stakeholder Presentation - Morning work session presenting quarterly results to stakeholders. High-pressure meeting requiring focus and preparation.; POI: Art Gallery of Ontario - World-class art museum with Canadian and international collections. Indoor cultural experience in Frank Gehry-designed building. Quiet and contemplative atmosphere.; Restaurant: FRANK Restaurant at AGO - Modern Canadian cuisine inside the Art Gallery. Artistic setting with creative seasonal menu.; Restaurant: Pai Northern Thai - Popular Thai restaurant known for authentic northern Thai cuisine. Lively atmosphere with bold flavors. Asian food option.",
+      "score": 0.37960776686668396
+    },
+    {
+      "id": "2674392596400_main",
+      "type": "Day",
+      "name": "Day 4",
+      "description": "Restaurant: Quick Grab Coffee - Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day.; POI: Full-Day Workshop - Intensive all-day work workshop with the entire team. Exhaust",
+      "premise": "Day: Day 4 - Restaurant: Quick Grab Coffee - Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day.; POI: Full-Day Workshop - Intensive all-day work workshop with the entire team. Exhausting but productive session covering project roadmap and deliverables.; POI: Bloor Street Shopping - Optional shopping trip along Bloor-Yorkville luxury district. High-end boutiques and designer stores.; Restaurant: Lee Restaurant - Susur Lee's flagship Asian fusion restaurant. Creative dishes blending East and West. Trendy atmosphere with innovative cuisine.",
+      "score": 0.3591679036617279
+    },
+    {
+      "id": "2674392592080_main",
+      "type": "Day",
+      "name": "Day 5",
+      "description": "Restaurant: Mildred's Temple Kitchen - Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.; POI: Client Check-in Call - Remote video call with client",
+      "premise": "Day: Day 5 - Restaurant: Mildred's Temple Kitchen - Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.; POI: Client Check-in Call - Remote video call with client to discuss project status. Light work commitment from hotel room.; POI: Email Catch-up Block - Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox.; POI: Networking Drinks - Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity.",
+      "score": 0.2645972669124603
+    },
+    {
+      "id": "2674392587920_main",
+      "type": "Day",
+      "name": "Day 6",
+      "description": "Restaurant: Sunset Grill - Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.; POI: Toronto Islands Ferry and Bike Ride - Ferry ride to Toronto Isl",
+      "premise": "Day: Day 6 - Restaurant: Sunset Grill - Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.; POI: Toronto Islands Ferry and Bike Ride - Ferry ride to Toronto Islands followed by bike rental and exploration. Outdoor nature activity with beaches, gardens, and stunning skyline views. Perfect for families and kids.; Restaurant: Island Cafe Picnic Lunch - Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.; POI: Ripley's Aquarium - World-class aquarium with underwater tunnel and interactive exhibits. Indoor family attraction perfect for kids. Sharks, jellyfish, and touch tanks.; Restaurant: The Keg Steakhouse - Classic steakhouse with something for everyone. Family-friendly atmosphere with reliable menu. Good for groups.",
+      "score": 0.32719212770462036
+    },
+    {
+      "id": "2674392582240_main",
+      "type": "Day",
+      "name": "Day 7",
+      "description": "Restaurant: Fran's Restaurant - Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.; POI: Royal Ontario Museum - World-renowned museum showcasing art, cultu",
+      "premise": "Day: Day 7 - Restaurant: Fran's Restaurant - Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.; POI: Royal Ontario Museum - World-renowned museum showcasing art, culture, and natural history. Indoor cultural experience with dinosaurs, gems, and world cultures exhibits.; Restaurant: Eataly Toronto - Italian marketplace and restaurant in Manulife Centre. Indoor dining with fresh pasta, pizza, and espresso. Great for rainy day lunch.; Restaurant: Cluny Bistro - French-inspired bistro in the Distillery District. Romantic and intimate atmosphere with classic dishes and excellent wine list.",
+      "score": 0.20847171545028687
+    },
+    {
+      "id": "2674392447184_main",
+      "type": "Day",
+      "name": "Day 8",
+      "description": "POI: Niagara Falls Day Trip - Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.;",
+      "premise": "Day: Day 8 - POI: Niagara Falls Day Trip - Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.; Restaurant: Elements on the Falls - Dining with direct view of Niagara Falls. Tourist location but unbeatable views. Part of the day trip package.; Restaurant: Antler Kitchen - Canadian game meat restaurant featuring locally sourced venison, bison, and seasonal ingredients. Unique dining experience with rustic atmosphere.",
+      "score": 0.9776601791381836
+    },
+    {
+      "id": "2674392443664_main",
+      "type": "Day",
+      "name": "Day 9",
+      "description": "Restaurant: Lady Marmalade - Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.; POI: Eaton Centre Shopping - Major downtown shopping ma",
+      "premise": "Day: Day 9 - Restaurant: Lady Marmalade - Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.; POI: Eaton Centre Shopping - Major downtown shopping mall with hundreds of stores. Indoor shopping for souvenirs, clothing, and gifts. Climate-controlled and convenient.; Restaurant: Urban Eatery Food Court - Food court in Eaton Centre with diverse quick options. Fast and convenient but generic mall food.; POI: Queen Street West Boutiques - Eclectic shopping district with independent boutiques, vintage stores, and Canadian designers. Outdoor walking and browsing experience.; Restaurant: Bar Isabel - Spanish tapas bar with lively atmosphere. Great for sharing plates and celebrating. Intimate and buzzy.",
+      "score": 0.25124773383140564
+    },
+    {
+      "id": "2674401526544_main",
+      "type": "Day",
+      "name": "Day 10",
+      "description": "Restaurant: Hotel Quick Checkout Breakfast - Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.; POI: CN Tower EdgeWalk - Thrilling hands-free walk arou",
+      "premise": "Day: Day 10 - Restaurant: Hotel Quick Checkout Breakfast - Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.; POI: CN Tower EdgeWalk - Thrilling hands-free walk around the outside of CN Tower at 356 meters. Unique bucket-list experience with stunning views. Memorable and unforgettable adventure.; Restaurant: 360 Restaurant at CN Tower - Revolving restaurant atop CN Tower with panoramic views. Special occasion dining with Canadian cuisine. Memorable farewell lunch.; POI: Airport Snack Stop - Generic airport food and coffee before boarding. Forgettable but necessary. Nothing special about airport dining.; POI: YYZ Departure - Flight departure from Toronto Pearson International Airport. End of trip.",
+      "score": 0.3708718419075012
+    },
+    {
+      "id": "2674401505536_main",
+      "type": "Day",
+      "name": "Day 1",
+      "description": "POI: YYZ Airport Arrival - Flight lands at Toronto Pearson International Airport. Long journey from overseas, feeling tired and jet-lagged.; POI: Harbourfront Stroll - Easy, relaxing walk along the wa",
+      "premise": "Day: Day 1 - POI: YYZ Airport Arrival - Flight lands at Toronto Pearson International Airport. Long journey from overseas, feeling tired and jet-lagged.; POI: Harbourfront Stroll - Easy, relaxing walk along the waterfront. Low-energy activity perfect for recovering from travel_method. Beautiful lake views and fresh air.",
+      "score": 0.16661641001701355
+    },
+    {
+      "id": "2674401872048_main",
+      "type": "Day",
+      "name": "Day 2",
+      "description": "POI: Client Kickoff Meeting - Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.; POI: Strategy Wor",
+      "premise": "Day: Day 2 - POI: Client Kickoff Meeting - Formal business meeting at TD Tower with key stakeholders. High-pressure work presentation and strategy discussion. Professional corporate environment.; POI: Strategy Workshop - Intensive afternoon workshop session with the team. Long work hours in conference room. Mentally draining but productive.",
+      "score": 0.41690394282341003
+    },
+    {
+      "id": "2674401873888_main",
+      "type": "Day",
+      "name": "Day 3",
+      "description": "Restaurant: Hotel Continental Breakfast - Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.; POI: Stakeholder Presentation - Morning work session pre",
+      "premise": "Day: Day 3 - Restaurant: Hotel Continental Breakfast - Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.; POI: Stakeholder Presentation - Morning work session presenting quarterly results to stakeholders. High-pressure meeting requiring focus and preparation.; POI: Art Gallery of Ontario - World-class art museum with Canadian and international collections. Indoor cultural experience in Frank Gehry-designed building. Quiet and contemplative atmosphere.; Restaurant: FRANK Restaurant at AGO - Modern Canadian cuisine inside the Art Gallery. Artistic setting with creative seasonal menu.; Restaurant: Pai Northern Thai - Popular Thai restaurant known for authentic northern Thai cuisine. Lively atmosphere with bold flavors. Asian food option.",
+      "score": 0.37960776686668396
+    },
+    {
+      "id": "2674401878048_main",
+      "type": "Day",
+      "name": "Day 4",
+      "description": "Restaurant: Quick Grab Coffee - Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day.; POI: Full-Day Workshop - Intensive all-day work workshop with the entire team. Exhaust",
+      "premise": "Day: Day 4 - Restaurant: Quick Grab Coffee - Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day.; POI: Full-Day Workshop - Intensive all-day work workshop with the entire team. Exhausting but productive session covering project roadmap and deliverables.; POI: Bloor Street Shopping - Optional shopping trip along Bloor-Yorkville luxury district. High-end boutiques and designer stores.; Restaurant: Lee Restaurant - Susur Lee's flagship Asian fusion restaurant. Creative dishes blending East and West. Trendy atmosphere with innovative cuisine.",
+      "score": 0.3591679036617279
+    },
+    {
+      "id": "2674401881408_main",
+      "type": "Day",
+      "name": "Day 5",
+      "description": "Restaurant: Mildred's Temple Kitchen - Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.; POI: Client Check-in Call - Remote video call with client",
+      "premise": "Day: Day 5 - Restaurant: Mildred's Temple Kitchen - Popular brunch spot in Liberty Village. Famous for pancakes and weekend atmosphere. Trendy and casual.; POI: Client Check-in Call - Remote video call with client to discuss project status. Light work commitment from hotel room.; POI: Email Catch-up Block - Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox.; POI: Networking Drinks - Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity.",
+      "score": 0.2645972669124603
+    },
+    {
+      "id": "2674401884688_main",
+      "type": "Day",
+      "name": "Day 6",
+      "description": "Restaurant: Sunset Grill - Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.; POI: Toronto Islands Ferry and Bike Ride - Ferry ride to Toronto Isl",
+      "premise": "Day: Day 6 - Restaurant: Sunset Grill - Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.; POI: Toronto Islands Ferry and Bike Ride - Ferry ride to Toronto Islands followed by bike rental and exploration. Outdoor nature activity with beaches, gardens, and stunning skyline views. Perfect for families and kids.; Restaurant: Island Cafe Picnic Lunch - Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.; POI: Ripley's Aquarium - World-class aquarium with underwater tunnel and interactive exhibits. Indoor family attraction perfect for kids. Sharks, jellyfish, and touch tanks.; Restaurant: The Keg Steakhouse - Classic steakhouse with something for everyone. Family-friendly atmosphere with reliable menu. Good for groups.",
+      "score": 0.32719212770462036
+    },
+    {
+      "id": "2674401970992_main",
+      "type": "Day",
+      "name": "Day 7",
+      "description": "Restaurant: Fran's Restaurant - Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.; POI: Royal Ontario Museum - World-renowned museum showcasing art, cultu",
+      "premise": "Day: Day 7 - Restaurant: Fran's Restaurant - Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.; POI: Royal Ontario Museum - World-renowned museum showcasing art, culture, and natural history. Indoor cultural experience with dinosaurs, gems, and world cultures exhibits.; Restaurant: Eataly Toronto - Italian marketplace and restaurant in Manulife Centre. Indoor dining with fresh pasta, pizza, and espresso. Great for rainy day lunch.; Restaurant: Cluny Bistro - French-inspired bistro in the Distillery District. Romantic and intimate atmosphere with classic dishes and excellent wine list.",
+      "score": 0.20847171545028687
+    },
+    {
+      "id": "2674401973872_main",
+      "type": "Day",
+      "name": "Day 8",
+      "description": "POI: Niagara Falls Day Trip - Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.;",
+      "premise": "Day: Day 8 - POI: Niagara Falls Day Trip - Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.; Restaurant: Elements on the Falls - Dining with direct view of Niagara Falls. Tourist location but unbeatable views. Part of the day trip package.; Restaurant: Antler Kitchen - Canadian game meat restaurant featuring locally sourced venison, bison, and seasonal ingredients. Unique dining experience with rustic atmosphere.",
+      "score": 0.9776601791381836
+    },
+    {
+      "id": "2674401976512_main",
+      "type": "Day",
+      "name": "Day 9",
+      "description": "Restaurant: Lady Marmalade - Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.; POI: Eaton Centre Shopping - Major downtown shopping ma",
+      "premise": "Day: Day 9 - Restaurant: Lady Marmalade - Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.; POI: Eaton Centre Shopping - Major downtown shopping mall with hundreds of stores. Indoor shopping for souvenirs, clothing, and gifts. Climate-controlled and convenient.; Restaurant: Urban Eatery Food Court - Food court in Eaton Centre with diverse quick options. Fast and convenient but generic mall food.; POI: Queen Street West Boutiques - Eclectic shopping district with independent boutiques, vintage stores, and Canadian designers. Outdoor walking and browsing experience.; Restaurant: Bar Isabel - Spanish tapas bar with lively atmosphere. Great for sharing plates and celebrating. Intimate and buzzy.",
+      "score": 0.25124773383140564
+    },
+    {
+      "id": "2674401980752_main",
+      "type": "Day",
+      "name": "Day 10",
+      "description": "Restaurant: Hotel Quick Checkout Breakfast - Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.; Restaurant: 360 Restaurant at CN Tower - Revolving rest",
+      "premise": "Day: Day 10 - Restaurant: Hotel Quick Checkout Breakfast - Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.; Restaurant: 360 Restaurant at CN Tower - Revolving restaurant atop CN Tower with panoramic views. Special occasion dining with Canadian cuisine. Memorable farewell lunch.; POI: Airport Snack Stop - Generic airport food and coffee before boarding. Forgettable but necessary. Nothing special about airport dining.; POI: YYZ Departure - Flight departure from Toronto Pearson International Airport. End of trip.",
+      "score": 0.44379711151123047
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2674392678784_main",
+      "node_type": "Day",
+      "score": 0.29955974221229553,
+      "reasoning": "Entailment score: 0.2996"
+    },
+    {
+      "node_id": "2674392681424_main",
+      "node_type": "Day",
+      "score": 0.5470795035362244,
+      "reasoning": "Entailment score: 0.5471"
+    },
+    {
+      "node_id": "2674392684144_main",
+      "node_type": "Day",
+      "score": 0.37960776686668396,
+      "reasoning": "Entailment score: 0.3796"
+    },
+    {
+      "node_id": "2674392688304_main",
+      "node_type": "Day",
+      "score": 0.3591679036617279,
+      "reasoning": "Entailment score: 0.3592"
+    },
+    {
+      "node_id": "2674392691664_main",
+      "node_type": "Day",
+      "score": 0.4790038764476776,
+      "reasoning": "Entailment score: 0.4790"
+    },
+    {
+      "node_id": "2674392745040_main",
+      "node_type": "Day",
+      "score": 0.32719212770462036,
+      "reasoning": "Entailment score: 0.3272"
+    },
+    {
+      "node_id": "2674392748960_main",
+      "node_type": "Day",
+      "score": 0.1601390391588211,
+      "reasoning": "Entailment score: 0.1601"
+    },
+    {
+      "node_id": "2674392753200_main",
+      "node_type": "Day",
+      "score": 0.9776601791381836,
+      "reasoning": "Entailment score: 0.9777"
+    },
+    {
+      "node_id": "2674392755840_main",
+      "node_type": "Day",
+      "score": 0.25124773383140564,
+      "reasoning": "Entailment score: 0.2512"
+    },
+    {
+      "node_id": "2674392760080_main",
+      "node_type": "Day",
+      "score": 0.3708718419075012,
+      "reasoning": "Entailment score: 0.3709"
+    },
+    {
+      "node_id": "2674401531904_main",
+      "node_type": "Day",
+      "score": 0.16661641001701355,
+      "reasoning": "Entailment score: 0.1666"
+    },
+    {
+      "node_id": "2674401501216_main",
+      "node_type": "Day",
+      "score": 0.41690394282341003,
+      "reasoning": "Entailment score: 0.4169"
+    },
+    {
+      "node_id": "2674401399552_main",
+      "node_type": "Day",
+      "score": 0.37960776686668396,
+      "reasoning": "Entailment score: 0.3796"
+    },
+    {
+      "node_id": "2674401406272_main",
+      "node_type": "Day",
+      "score": 0.3591679036617279,
+      "reasoning": "Entailment score: 0.3592"
+    },
+    {
+      "node_id": "2674401402992_main",
+      "node_type": "Day",
+      "score": 0.2645972669124603,
+      "reasoning": "Entailment score: 0.2646"
+    },
+    {
+      "node_id": "2674401406912_main",
+      "node_type": "Day",
+      "score": 0.32719212770462036,
+      "reasoning": "Entailment score: 0.3272"
+    },
+    {
+      "node_id": "2674398894400_main",
+      "node_type": "Day",
+      "score": 0.1601390391588211,
+      "reasoning": "Entailment score: 0.1601"
+    },
+    {
+      "node_id": "2674401839360_main",
+      "node_type": "Day",
+      "score": 0.9776601791381836,
+      "reasoning": "Entailment score: 0.9777"
+    },
+    {
+      "node_id": "2674401842000_main",
+      "node_type": "Day",
+      "score": 0.25124773383140564,
+      "reasoning": "Entailment score: 0.2512"
+    },
+    {
+      "node_id": "2674401846240_main",
+      "node_type": "Day",
+      "score": 0.3708718419075012,
+      "reasoning": "Entailment score: 0.3709"
+    },
+    {
+      "node_id": "2674401506816_main",
+      "node_type": "Day",
+      "score": 0.16661641001701355,
+      "reasoning": "Entailment score: 0.1666"
+    },
+    {
+      "node_id": "2674392636592_main",
+      "node_type": "Day",
+      "score": 0.41690394282341003,
+      "reasoning": "Entailment score: 0.4169"
+    },
+    {
+      "node_id": "2674392634592_main",
+      "node_type": "Day",
+      "score": 0.37960776686668396,
+      "reasoning": "Entailment score: 0.3796"
+    },
+    {
+      "node_id": "2674392596400_main",
+      "node_type": "Day",
+      "score": 0.3591679036617279,
+      "reasoning": "Entailment score: 0.3592"
+    },
+    {
+      "node_id": "2674392592080_main",
+      "node_type": "Day",
+      "score": 0.2645972669124603,
+      "reasoning": "Entailment score: 0.2646"
+    },
+    {
+      "node_id": "2674392587920_main",
+      "node_type": "Day",
+      "score": 0.32719212770462036,
+      "reasoning": "Entailment score: 0.3272"
+    },
+    {
+      "node_id": "2674392582240_main",
+      "node_type": "Day",
+      "score": 0.20847171545028687,
+      "reasoning": "Entailment score: 0.2085"
+    },
+    {
+      "node_id": "2674392447184_main",
+      "node_type": "Day",
+      "score": 0.9776601791381836,
+      "reasoning": "Entailment score: 0.9777"
+    },
+    {
+      "node_id": "2674392443664_main",
+      "node_type": "Day",
+      "score": 0.25124773383140564,
+      "reasoning": "Entailment score: 0.2512"
+    },
+    {
+      "node_id": "2674401526544_main",
+      "node_type": "Day",
+      "score": 0.3708718419075012,
+      "reasoning": "Entailment score: 0.3709"
+    },
+    {
+      "node_id": "2674401505536_main",
+      "node_type": "Day",
+      "score": 0.16661641001701355,
+      "reasoning": "Entailment score: 0.1666"
+    },
+    {
+      "node_id": "2674401872048_main",
+      "node_type": "Day",
+      "score": 0.41690394282341003,
+      "reasoning": "Entailment score: 0.4169"
+    },
+    {
+      "node_id": "2674401873888_main",
+      "node_type": "Day",
+      "score": 0.37960776686668396,
+      "reasoning": "Entailment score: 0.3796"
+    },
+    {
+      "node_id": "2674401878048_main",
+      "node_type": "Day",
+      "score": 0.3591679036617279,
+      "reasoning": "Entailment score: 0.3592"
+    },
+    {
+      "node_id": "2674401881408_main",
+      "node_type": "Day",
+      "score": 0.2645972669124603,
+      "reasoning": "Entailment score: 0.2646"
+    },
+    {
+      "node_id": "2674401884688_main",
+      "node_type": "Day",
+      "score": 0.32719212770462036,
+      "reasoning": "Entailment score: 0.3272"
+    },
+    {
+      "node_id": "2674401970992_main",
+      "node_type": "Day",
+      "score": 0.20847171545028687,
+      "reasoning": "Entailment score: 0.2085"
+    },
+    {
+      "node_id": "2674401973872_main",
+      "node_type": "Day",
+      "score": 0.9776601791381836,
+      "reasoning": "Entailment score: 0.9777"
+    },
+    {
+      "node_id": "2674401976512_main",
+      "node_type": "Day",
+      "score": 0.25124773383140564,
+      "reasoning": "Entailment score: 0.2512"
+    },
+    {
+      "node_id": "2674401980752_main",
+      "node_type": "Day",
+      "score": 0.44379711151123047,
+      "reasoning": "Entailment score: 0.4438"
+    }
+  ]
+}

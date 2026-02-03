@@ -1,0 +1,153 @@
+{
+  "timestamp": "20260202_144317_574913",
+  "predicate": "work related",
+  "nodes": [
+    {
+      "id": "2014186502112_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting"
+    },
+    {
+      "id": "2014186502912_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task"
+    },
+    {
+      "id": "2014186503712_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing"
+    },
+    {
+      "id": "2014186993952_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting"
+    },
+    {
+      "id": "2014186994752_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task"
+    },
+    {
+      "id": "2014186995552_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing"
+    },
+    {
+      "id": "2014186254752_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting"
+    },
+    {
+      "id": "2014186253712_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task"
+    },
+    {
+      "id": "2014186252592_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing"
+    },
+    {
+      "id": "2014187087296_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting"
+    },
+    {
+      "id": "2014187088096_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task"
+    },
+    {
+      "id": "2014187088896_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing"
+    }
+  ],
+  "raw_response": "[\n  {\n    \"id\": \"2014186502112_main\",\n    \"score\": 1.0,\n    \"reasoning\": \"Directly related to work as it involves a client check-in call to discuss project status.\"\n  },\n  {\n    \"id\": \"2014186502912_main\",\n    \"score\": 1.0,\n    \"reasoning\": \"Directly related to work as it involves catching up on work emails.\"\n  },\n  {\n    \"id\": \"2014186503712_main\",\n    \"score\": 0.8,\n    \"reasoning\": \"Strongly related to work as it involves networking, which is work-adjacent.\"\n  },\n  {\n    \"id\": \"2014186993952_main\",\n    \"score\": 1.0,\n    \"reasoning\": \"Directly related to work as it involves a client check-in call to discuss project status.\"\n  },\n  {\n    \"id\": \"2014186994752_main\",\n    \"score\": 1.0,\n    \"reasoning\": \"Directly related to work as it involves catching up on work emails.\"\n  },\n  {\n    \"id\": \"2014186995552_main\",\n    \"score\": 0.8,\n    \"reasoning\": \"Strongly related to work as it involves networking, which is work-adjacent.\"\n  },\n  {\n    \"id\": \"2014186254752_main\",\n    \"score\": 1.0,\n    \"reasoning\": \"Directly related to work as it involves a client check-in call to discuss project status.\"\n  },\n  {\n    \"id\": \"2014186253712_main\",\n    \"score\": 1.0,\n    \"reasoning\": \"Directly related to work as it involves catching up on work emails.\"\n  },\n  {\n    \"id\": \"2014186252592_main\",\n    \"score\": 0.8,\n    \"reasoning\": \"Strongly related to work as it involves networking, which is work-adjacent.\"\n  },\n  {\n    \"id\": \"2014187087296_main\",\n    \"score\": 1.0,\n    \"reasoning\": \"Directly related to work as it involves a client check-in call to discuss project status.\"\n  },\n  {\n    \"id\": \"2014187088096_main\",\n    \"score\": 1.0,\n    \"reasoning\": \"Directly related to work as it involves catching up on work emails.\"\n  },\n  {\n    \"id\": \"2014187088896_main\",\n    \"score\": 0.8,\n    \"reasoning\": \"Strongly related to work as it involves networking, which is work-adjacent.\"\n  }\n]",
+  "results": [
+    {
+      "node_id": "2014186502112_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Directly related to work as it involves a client check-in call to discuss project status."
+    },
+    {
+      "node_id": "2014186502912_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Directly related to work as it involves catching up on work emails."
+    },
+    {
+      "node_id": "2014186503712_main",
+      "node_type": "POI",
+      "score": 0.8,
+      "reasoning": "Strongly related to work as it involves networking, which is work-adjacent."
+    },
+    {
+      "node_id": "2014186993952_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Directly related to work as it involves a client check-in call to discuss project status."
+    },
+    {
+      "node_id": "2014186994752_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Directly related to work as it involves catching up on work emails."
+    },
+    {
+      "node_id": "2014186995552_main",
+      "node_type": "POI",
+      "score": 0.8,
+      "reasoning": "Strongly related to work as it involves networking, which is work-adjacent."
+    },
+    {
+      "node_id": "2014186254752_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Directly related to work as it involves a client check-in call to discuss project status."
+    },
+    {
+      "node_id": "2014186253712_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Directly related to work as it involves catching up on work emails."
+    },
+    {
+      "node_id": "2014186252592_main",
+      "node_type": "POI",
+      "score": 0.8,
+      "reasoning": "Strongly related to work as it involves networking, which is work-adjacent."
+    },
+    {
+      "node_id": "2014187087296_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Directly related to work as it involves a client check-in call to discuss project status."
+    },
+    {
+      "node_id": "2014187088096_main",
+      "node_type": "POI",
+      "score": 1.0,
+      "reasoning": "Directly related to work as it involves catching up on work emails."
+    },
+    {
+      "node_id": "2014187088896_main",
+      "node_type": "POI",
+      "score": 0.8,
+      "reasoning": "Strongly related to work as it involves networking, which is work-adjacent."
+    }
+  ]
+}

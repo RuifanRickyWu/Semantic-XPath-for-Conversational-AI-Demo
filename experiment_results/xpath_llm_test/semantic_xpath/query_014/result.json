@@ -1,0 +1,172 @@
+{
+  "query_index": 13,
+  "query": "My partner is arriving on Day 6 and she's vegetarian. Add a plant-based restaurant for dinner that nightâ€”I've heard Planta is good.",
+  "operation": "CREATE",
+  "success": true,
+  "execution_time_ms": 5386.41,
+  "token_usage": {
+    "prompt_tokens": 7102,
+    "completion_tokens": 230,
+    "total_tokens": 7332
+  },
+  "changes": [
+    {
+      "path": "Itinerary > Day 6/Restaurant",
+      "change_type": "created",
+      "old_node": null,
+      "new_node": {
+        "node_type": "Restaurant",
+        "fields": {
+          "name": "Planta",
+          "time_block": "7:00 PM - 8:30 PM",
+          "description": "A chic plant-based restaurant offering innovative vegetarian and vegan dishes. Known for its creative menu and stylish ambiance.",
+          "travel_method": "Walk",
+          "expected_cost": "CAD 50-70",
+          "highlights": [
+            "Plant-based menu",
+            "Vegan options",
+            "Stylish ambiance"
+          ]
+        }
+      },
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_144336_546934",
+    "user_query": "My partner is arriving on Day 6 and she's vegetarian. Add a plant-based restaurant for dinner that nightâ€”I've heard Planta is good.",
+    "operation": "CREATE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Create",
+      "raw_response": "at([-1]), CREATE",
+      "token_usage": {
+        "prompt_tokens": 468,
+        "completion_tokens": 5,
+        "total_tokens": 473
+      }
+    },
+    "parsed_query": {
+      "operation": "Create",
+      "xpath": "/Itinerary/Day[6]",
+      "full_query": "Create(/Itinerary/Day[6], Restaurant, Planta plant-based restaurant for dinner)",
+      "token_usage": {
+        "prompt_tokens": 2532,
+        "completion_tokens": 16,
+        "total_tokens": 2548
+      },
+      "create_info": {
+        "parent_path": "/Itinerary/Day[6]",
+        "node_type": "Restaurant",
+        "description": "Planta plant-based restaurant for dinner"
+      }
+    },
+    "version_used": "7",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='7']/Itinerary/Day[6]",
+      "matched_count": 7,
+      "execution_time_ms": 0.6154999136924744,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "CREATE",
+      "processing_time_ms": 3285.7531000627205,
+      "output": {
+        "parent_path": "Itinerary > Day 6",
+        "position": -1,
+        "node_type": "Restaurant",
+        "fields": {
+          "name": "Planta",
+          "time_block": "7:00 PM - 8:30 PM",
+          "description": "A chic plant-based restaurant offering innovative vegetarian and vegan dishes. Known for its creative menu and stylish ambiance.",
+          "travel_method": "Walk",
+          "expected_cost": "CAD 50-70",
+          "highlights": [
+            "Plant-based menu",
+            "Vegan options",
+            "Stylish ambiance"
+          ]
+        },
+        "reasoning": "The user requested a plant-based restaurant for dinner on Day 6. The existing dinner slot is occupied by The Keg Steakhouse from 7:00 PM to 8:30 PM. To accommodate the user's preference for a vegetarian-friendly option, Planta is added at the same time block, replacing the steakhouse as the final activity of the day."
+      },
+      "token_usage": {
+        "prompt_tokens": 4102,
+        "completion_tokens": 209,
+        "total_tokens": 4311
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 660.89,
+          "token_usage": {
+            "prompt_tokens": 468,
+            "completion_tokens": 5,
+            "total_tokens": 473
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 1425.28,
+          "token_usage": {
+            "prompt_tokens": 2532,
+            "completion_tokens": 16,
+            "total_tokens": 2548
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 4.58
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 3292.66,
+          "token_usage": {
+            "prompt_tokens": 4102,
+            "completion_tokens": 209,
+            "total_tokens": 4311
+          }
+        }
+      ],
+      "total_time_ms": 5383.41,
+      "total_tokens": {
+        "prompt_tokens": 7102,
+        "completion_tokens": 230,
+        "total_tokens": 7332
+      },
+      "pipeline_total_ms": 5385.746099986136
+    },
+    "created_path": "Itinerary > Day 6/Restaurant",
+    "insertion_point": {
+      "parent_path": "Itinerary > Day 6",
+      "position": -1,
+      "reasoning": "The user requested a plant-based restaurant for dinner on Day 6. The existing dinner slot is occupied by The Keg Steakhouse from 7:00 PM to 8:30 PM. To accommodate the user's preference for a vegetarian-friendly option, Planta is added at the same time block, replacing the steakhouse as the final activity of the day."
+    },
+    "content_result": {
+      "success": true,
+      "node_type": "Restaurant",
+      "fields": {
+        "name": "Planta",
+        "time_block": "7:00 PM - 8:30 PM",
+        "description": "A chic plant-based restaurant offering innovative vegetarian and vegan dishes. Known for its creative menu and stylish ambiance.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Plant-based menu",
+          "Vegan options",
+          "Stylish ambiance"
+        ]
+      }
+    },
+    "total_time_ms": 5385.746099986136
+  }
+}

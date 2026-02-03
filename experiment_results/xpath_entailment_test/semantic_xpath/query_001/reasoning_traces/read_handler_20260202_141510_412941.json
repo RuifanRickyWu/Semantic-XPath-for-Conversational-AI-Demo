@@ -1,0 +1,13 @@
+{
+  "user_query": "My college friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights.",
+  "candidates_count": 4,
+  "selected_count": 0,
+  "selected_nodes": [],
+  "raw_response": "```json\n{\n  \"selected_nodes\": [],\n  \"reasoning\": \"None of the candidate nodes explicitly mention work commitments or flights. Each day in the itinerary includes activities and meals, indicating that there are planned commitments on those days. Therefore, none of the days can be confirmed as being without any work commitments or flights based on the provided information.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 2243,
+    "completion_tokens": 73,
+    "total_tokens": 2316
+  },
+  "processing_time_ms": 3162.0556000852957
+}

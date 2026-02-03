@@ -1,0 +1,24 @@
+{
+  "user_query": "I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.",
+  "candidates_count": 10,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+    "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+    "Root > Itinerary_Version 2 > Itinerary > Day 5 > Client Check-in Call",
+    "Root > Itinerary_Version 2 > Itinerary > Day 5 > Email Catch-up Block",
+    "Root > Itinerary_Version 3 > Itinerary > Day 5 > Client Check-in Call",
+    "Root > Itinerary_Version 3 > Itinerary > Day 5 > Email Catch-up Block",
+    "Root > Itinerary_Version 4 > Itinerary > Day 5 > Client Check-in Call",
+    "Root > Itinerary_Version 4 > Itinerary > Day 5 > Email Catch-up Block",
+    "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+    "Root > Itinerary_Version 2 > Itinerary > Day 5 > Networking Drinks"
+  ],
+  "reasoning": "All listed activities are work-related and occur on Day 5, matching the user's request to cancel all work-related activities for that day.",
+  "raw_response": "```json\n{\n  \"nodes_to_delete\": [\n    {\"id\": \"1\", \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call\", \"reasoning\": \"Work-related activity on Day 5\"},\n    {\"id\": \"2\", \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block\", \"reasoning\": \"Work-related activity on Day 5\"},\n    {\"id\": \"3\", \"path\": \"Root > Itinerary_Version 2 > Itinerary > Day 5 > Client Check-in Call\", \"reasoning\": \"Work-related activity on Day 5\"},\n    {\"id\": \"4\", \"path\": \"Root > Itinerary_Version 2 > Itinerary > Day 5 > Email Catch-up Block\", \"reasoning\": \"Work-related activity on Day 5\"},\n    {\"id\": \"5\", \"path\": \"Root > Itinerary_Version 3 > Itinerary > Day 5 > Client Check-in Call\", \"reasoning\": \"Work-related activity on Day 5\"},\n    {\"id\": \"6\", \"path\": \"Root > Itinerary_Version 3 > Itinerary > Day 5 > Email Catch-up Block\", \"reasoning\": \"Work-related activity on Day 5\"},\n    {\"id\": \"7\", \"path\": \"Root > Itinerary_Version 4 > Itinerary > Day 5 > Client Check-in Call\", \"reasoning\": \"Work-related activity on Day 5\"},\n    {\"id\": \"8\", \"path\": \"Root > Itinerary_Version 4 > Itinerary > Day 5 > Email Catch-up Block\", \"reasoning\": \"Work-related activity on Day 5\"},\n    {\"id\": \"9\", \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks\", \"reasoning\": \"Work-related networking activity on Day 5\"},\n    {\"id\": \"10\", \"path\": \"Root > Itinerary_Version 2 > Itinerary > Day 5 > Networking Drinks\", \"reasoning\": \"Work-related networking activity on Day 5\"}\n  ],\n  \"reasoning\": \"All listed activities are work-related and occur on Day 5, matching the user's request to cancel all work-related activities for that day.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1769,
+    "completion_tokens": 496,
+    "total_tokens": 2265
+  },
+  "processing_time_ms": 3914.6144000114873
+}

@@ -1,0 +1,349 @@
+{
+  "query_index": 5,
+  "query": "Where do i go for breakfast on a shopping day?",
+  "operation": "READ",
+  "success": true,
+  "execution_time_ms": 15542.94,
+  "token_usage": {
+    "prompt_tokens": 4162,
+    "completion_tokens": 233,
+    "total_tokens": 4395
+  },
+  "selected_nodes": [
+    {
+      "type": "Restaurant",
+      "attributes": {},
+      "name": "Hotel Continental Breakfast",
+      "time_block": "7:30 AM - 8:30 AM",
+      "description": "Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 25",
+      "highlights": [
+        "Quick and convenient",
+        "Basic options"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+      "reasoning": "Hotel Continental Breakfast is available during breakfast hours and is convenient for a shopping day."
+    },
+    {
+      "type": "Restaurant",
+      "attributes": {},
+      "name": "Sunset Grill",
+      "time_block": "9:00 AM - 10:00 AM",
+      "description": "Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 20-30",
+      "highlights": [
+        "Family breakfast",
+        "Kid-friendly menu"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+      "reasoning": "Sunset Grill offers breakfast during the appropriate time and is suitable for a shopping day."
+    },
+    {
+      "type": "Restaurant",
+      "attributes": {},
+      "name": "Fran's Restaurant",
+      "time_block": "8:30 AM - 9:30 AM",
+      "description": "Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 20",
+      "highlights": [
+        "Classic diner",
+        "Toronto institution"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+      "reasoning": "Fran's Restaurant serves breakfast during breakfast hours and is a classic diner, fitting for a shopping day."
+    },
+    {
+      "type": "Restaurant",
+      "attributes": {},
+      "name": "Lady Marmalade",
+      "time_block": "9:00 AM - 10:30 AM",
+      "description": "Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.",
+      "travel_method": "Taxi",
+      "expected_cost": "CAD 25-35",
+      "highlights": [
+        "Trendy brunch",
+        "Creative dishes"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+      "reasoning": "Lady Marmalade serves breakfast during breakfast hours and offers creative dishes, which could be appealing on a shopping day."
+    },
+    {
+      "type": "Restaurant",
+      "attributes": {},
+      "name": "Hotel Quick Checkout Breakfast",
+      "time_block": "7:30 AM - 8:15 AM",
+      "description": "Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 15",
+      "highlights": [
+        "Quick breakfast",
+        "Checkout morning"
+      ],
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+      "reasoning": "Hotel Quick Checkout Breakfast is available during breakfast hours and is quick, which is convenient for a shopping day."
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_181137_391982",
+    "user_query": "Where do i go for breakfast on a shopping day?",
+    "operation": "READ",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Read",
+      "raw_response": "at([-1]), READ",
+      "token_usage": {
+        "prompt_tokens": 450,
+        "completion_tokens": 5,
+        "total_tokens": 455
+      }
+    },
+    "parsed_query": {
+      "operation": "Read",
+      "xpath": "/Itinerary/Day[agg_exists(POI[atom(content =~ \"shopping\")])]/Restaurant[atom(content =~ \"breakfast\")]",
+      "full_query": "Read(/Itinerary/Day[agg_exists(POI[atom(content =~ \"shopping\")])]/Restaurant[atom(content =~ \"breakfast\")])",
+      "token_usage": {
+        "prompt_tokens": 2514,
+        "completion_tokens": 29,
+        "total_tokens": 2543
+      }
+    },
+    "version_used": "1",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='1']/Itinerary/Day[agg_exists(POI[atom(content =~ \"shopping\")])]/Restaurant[atom(content =~ \"breakfast\")]",
+      "matched_count": 5,
+      "execution_time_ms": 11892.021000036038,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "READ",
+      "processing_time_ms": 2505.9211999177933,
+      "output": {
+        "selected_nodes": [
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+            "node_data": {
+              "type": "Restaurant",
+              "attributes": {},
+              "name": "Hotel Continental Breakfast",
+              "time_block": "7:30 AM - 8:30 AM",
+              "description": "Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.",
+              "travel_method": "Walk",
+              "expected_cost": "CAD 25",
+              "highlights": [
+                "Quick and convenient",
+                "Basic options"
+              ]
+            },
+            "reasoning": "Hotel Continental Breakfast is available during breakfast hours and is convenient for a shopping day."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+            "node_data": {
+              "type": "Restaurant",
+              "attributes": {},
+              "name": "Sunset Grill",
+              "time_block": "9:00 AM - 10:00 AM",
+              "description": "Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.",
+              "travel_method": "Walk",
+              "expected_cost": "CAD 20-30",
+              "highlights": [
+                "Family breakfast",
+                "Kid-friendly menu"
+              ]
+            },
+            "reasoning": "Sunset Grill offers breakfast during the appropriate time and is suitable for a shopping day."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+            "node_data": {
+              "type": "Restaurant",
+              "attributes": {},
+              "name": "Fran's Restaurant",
+              "time_block": "8:30 AM - 9:30 AM",
+              "description": "Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.",
+              "travel_method": "Walk",
+              "expected_cost": "CAD 20",
+              "highlights": [
+                "Classic diner",
+                "Toronto institution"
+              ]
+            },
+            "reasoning": "Fran's Restaurant serves breakfast during breakfast hours and is a classic diner, fitting for a shopping day."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+            "node_data": {
+              "type": "Restaurant",
+              "attributes": {},
+              "name": "Lady Marmalade",
+              "time_block": "9:00 AM - 10:30 AM",
+              "description": "Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.",
+              "travel_method": "Taxi",
+              "expected_cost": "CAD 25-35",
+              "highlights": [
+                "Trendy brunch",
+                "Creative dishes"
+              ]
+            },
+            "reasoning": "Lady Marmalade serves breakfast during breakfast hours and offers creative dishes, which could be appealing on a shopping day."
+          },
+          {
+            "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+            "node_data": {
+              "type": "Restaurant",
+              "attributes": {},
+              "name": "Hotel Quick Checkout Breakfast",
+              "time_block": "7:30 AM - 8:15 AM",
+              "description": "Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.",
+              "travel_method": "Walk",
+              "expected_cost": "CAD 15",
+              "highlights": [
+                "Quick breakfast",
+                "Checkout morning"
+              ]
+            },
+            "reasoning": "Hotel Quick Checkout Breakfast is available during breakfast hours and is quick, which is convenient for a shopping day."
+          }
+        ]
+      },
+      "token_usage": {
+        "prompt_tokens": 1198,
+        "completion_tokens": 199,
+        "total_tokens": 1397
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 519.35,
+          "token_usage": {
+            "prompt_tokens": 450,
+            "completion_tokens": 5,
+            "total_tokens": 455
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 606.71,
+          "token_usage": {
+            "prompt_tokens": 2514,
+            "completion_tokens": 29,
+            "total_tokens": 2543
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 11906.08
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 2506.8,
+          "token_usage": {
+            "prompt_tokens": 1198,
+            "completion_tokens": 199,
+            "total_tokens": 1397
+          }
+        }
+      ],
+      "total_time_ms": 15538.96,
+      "total_tokens": {
+        "prompt_tokens": 4162,
+        "completion_tokens": 233,
+        "total_tokens": 4395
+      },
+      "pipeline_total_ms": 15541.780299972743
+    },
+    "candidates_count": 5,
+    "selected_count": 5,
+    "selected_nodes": [
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Hotel Continental Breakfast",
+        "time_block": "7:30 AM - 8:30 AM",
+        "description": "Quick breakfast at the hotel restaurant. Simple continental options, nothing special but convenient.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Quick and convenient",
+          "Basic options"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+        "reasoning": "Hotel Continental Breakfast is available during breakfast hours and is convenient for a shopping day."
+      },
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Sunset Grill",
+        "time_block": "9:00 AM - 10:00 AM",
+        "description": "Family-friendly breakfast chain with classic options. Good for kids with simple menu and quick service.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 20-30",
+        "highlights": [
+          "Family breakfast",
+          "Kid-friendly menu"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+        "reasoning": "Sunset Grill offers breakfast during the appropriate time and is suitable for a shopping day."
+      },
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Fran's Restaurant",
+        "time_block": "8:30 AM - 9:30 AM",
+        "description": "Classic Toronto diner serving breakfast all day. Casual and unpretentious with hearty portions.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 20",
+        "highlights": [
+          "Classic diner",
+          "Toronto institution"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+        "reasoning": "Fran's Restaurant serves breakfast during breakfast hours and is a classic diner, fitting for a shopping day."
+      },
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Lady Marmalade",
+        "time_block": "9:00 AM - 10:30 AM",
+        "description": "Popular brunch spot in Leslieville known for creative breakfast dishes and great coffee. Trendy neighborhood vibe.",
+        "travel_method": "Taxi",
+        "expected_cost": "CAD 25-35",
+        "highlights": [
+          "Trendy brunch",
+          "Creative dishes"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+        "reasoning": "Lady Marmalade serves breakfast during breakfast hours and offers creative dishes, which could be appealing on a shopping day."
+      },
+      {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Hotel Quick Checkout Breakfast",
+        "time_block": "7:30 AM - 8:15 AM",
+        "description": "Fast breakfast before checkout. Simple pastries and coffee from hotel lobby. Rushed but necessary.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15",
+        "highlights": [
+          "Quick breakfast",
+          "Checkout morning"
+        ],
+        "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+        "reasoning": "Hotel Quick Checkout Breakfast is available during breakfast hours and is quick, which is convenient for a shopping day."
+      }
+    ],
+    "total_time_ms": 15541.780299972743
+  }
+}

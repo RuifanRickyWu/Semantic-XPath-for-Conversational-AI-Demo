@@ -1,0 +1,17 @@
+{
+  "user_query": "I just checked my spending and I'm way over budget. I need to cut the expensive dinners from the itinerary and find cheaper alternatives later.",
+  "candidates_count": 10,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+    "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+    "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+  ],
+  "reasoning": "Nodes 1, 2, and 3 are all dinner reservations with high costs, matching the user's request to cut expensive dinners. Other candidates either do not fall within dinner time or are not considered expensive.",
+  "raw_response": "```json\n{\n  \"nodes_to_delete\": [\n    {\n      \"id\": \"1\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji\",\n      \"reasoning\": \"8:00 PM - 10:00 PM is within dinner time, and the cost of CAD 250-350 qualifies as expensive.\"\n    },\n    {\n      \"id\": \"2\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant\",\n      \"reasoning\": \"7:00 PM - 9:30 PM is within dinner time, and the cost of CAD 300-400 qualifies as expensive.\"\n    },\n    {\n      \"id\": \"3\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant\",\n      \"reasoning\": \"7:30 PM - 9:00 PM is within dinner time, and the cost of CAD 150-200 qualifies as expensive.\"\n    }\n  ],\n  \"reasoning\": \"Nodes 1, 2, and 3 are all dinner reservations with high costs, matching the user's request to cut expensive dinners. Other candidates either do not fall within dinner time or are not considered expensive.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1867,
+    "completion_tokens": 273,
+    "total_tokens": 2140
+  },
+  "processing_time_ms": 4761.0290000448
+}

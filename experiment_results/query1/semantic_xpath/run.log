@@ -1,5 +1,0 @@
-2026-02-02 12:55:57,616 - INFO - Starting pipeline: semantic_xpath
-2026-02-02 12:55:57,616 - INFO - Total queries: 1
-2026-02-02 12:56:12,404 - INFO - Pipeline complete: 1/1 succeeded
-2026-02-02 12:56:12,404 - INFO - Total time: 14688.1ms
-2026-02-02 12:56:12,404 - INFO - Total tokens: 5364

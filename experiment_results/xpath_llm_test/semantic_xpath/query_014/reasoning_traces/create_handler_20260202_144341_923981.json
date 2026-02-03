@@ -1,0 +1,34 @@
+{
+  "user_query": "My partner is arriving on Day 6 and she's vegetarian. Add a plant-based restaurant for dinner that nightâ€”I've heard Planta is good.",
+  "context_nodes_count": 7,
+  "create_info": {
+    "parent_path": "/Itinerary/Day[6]",
+    "node_type": "Restaurant",
+    "description": "Planta plant-based restaurant for dinner"
+  },
+  "result": {
+    "parent_path": "Itinerary > Day 6",
+    "position": -1,
+    "node_type": "Restaurant",
+    "fields": {
+      "name": "Planta",
+      "time_block": "7:00 PM - 8:30 PM",
+      "description": "A chic plant-based restaurant offering innovative vegetarian and vegan dishes. Known for its creative menu and stylish ambiance.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 50-70",
+      "highlights": [
+        "Plant-based menu",
+        "Vegan options",
+        "Stylish ambiance"
+      ]
+    },
+    "reasoning": "The user requested a plant-based restaurant for dinner on Day 6. The existing dinner slot is occupied by The Keg Steakhouse from 7:00 PM to 8:30 PM. To accommodate the user's preference for a vegetarian-friendly option, Planta is added at the same time block, replacing the steakhouse as the final activity of the day."
+  },
+  "raw_response": "```json\n{\n  \"parent_path\": \"Itinerary > Day 6\",\n  \"position\": -1,\n  \"node_type\": \"Restaurant\",\n  \"fields\": {\n    \"name\": \"Planta\",\n    \"time_block\": \"7:00 PM - 8:30 PM\",\n    \"description\": \"A chic plant-based restaurant offering innovative vegetarian and vegan dishes. Known for its creative menu and stylish ambiance.\",\n    \"travel_method\": \"Walk\",\n    \"expected_cost\": \"CAD 50-70\",\n    \"highlights\": [\"Plant-based menu\", \"Vegan options\", \"Stylish ambiance\"]\n  },\n  \"reasoning\": \"The user requested a plant-based restaurant for dinner on Day 6. The existing dinner slot is occupied by The Keg Steakhouse from 7:00 PM to 8:30 PM. To accommodate the user's preference for a vegetarian-friendly option, Planta is added at the same time block, replacing the steakhouse as the final activity of the day.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 4102,
+    "completion_tokens": 209,
+    "total_tokens": 4311
+  },
+  "processing_time_ms": 3285.7531000627205
+}

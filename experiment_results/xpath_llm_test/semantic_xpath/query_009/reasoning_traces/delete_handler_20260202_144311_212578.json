@@ -1,0 +1,17 @@
+{
+  "user_query": "Bad news. my friend who was going to host me at Niagara just tested positive for COVID. I need to cancel the whole Niagara Falls day trip.",
+  "candidates_count": 3,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 8",
+    "Root > Itinerary_Version 2 > Itinerary > Day 8",
+    "Root > Itinerary_Version 3 > Itinerary > Day 8"
+  ],
+  "reasoning": "All candidate nodes represent the Niagara Falls day trip on Day 8, which the user wants to cancel due to a change in plans. Each node includes the full itinerary for that day, which aligns with the user's request to cancel the entire day trip.",
+  "raw_response": "```json\n{\n  \"nodes_to_delete\": [\n    {\"id\": \"1\", \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 8\", \"reasoning\": \"Entire day trip to Niagara Falls on Day 8 matches the request to cancel the Niagara Falls day trip.\"},\n    {\"id\": \"2\", \"path\": \"Root > Itinerary_Version 2 > Itinerary > Day 8\", \"reasoning\": \"Entire day trip to Niagara Falls on Day 8 matches the request to cancel the Niagara Falls day trip.\"},\n    {\"id\": \"3\", \"path\": \"Root > Itinerary_Version 3 > Itinerary > Day 8\", \"reasoning\": \"Entire day trip to Niagara Falls on Day 8 matches the request to cancel the Niagara Falls day trip.\"}\n  ],\n  \"reasoning\": \"All candidate nodes represent the Niagara Falls day trip on Day 8, which the user wants to cancel due to a change in plans. Each node includes the full itinerary for that day, which aligns with the user's request to cancel the entire day trip.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1556,
+    "completion_tokens": 233,
+    "total_tokens": 1789
+  },
+  "processing_time_ms": 2363.732700003311
+}

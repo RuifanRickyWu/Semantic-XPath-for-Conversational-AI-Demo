@@ -1,0 +1,111 @@
+{
+  "query_index": 7,
+  "query": "I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.",
+  "operation": "DELETE",
+  "success": false,
+  "execution_time_ms": 19751.66,
+  "token_usage": {
+    "prompt_tokens": 8772,
+    "completion_tokens": 2069,
+    "total_tokens": 10841
+  },
+  "raw_result": {
+    "timestamp": "20260202_144238_798613",
+    "user_query": "I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.",
+    "operation": "DELETE",
+    "success": false,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Delete",
+      "raw_response": "at([-1]), DELETE",
+      "token_usage": {
+        "prompt_tokens": 465,
+        "completion_tokens": 5,
+        "total_tokens": 470
+      }
+    },
+    "parsed_query": {
+      "operation": "Delete",
+      "xpath": "/Itinerary/Day/POI[atom(content =~ \"CN Tower\")]",
+      "full_query": "Delete(/Itinerary/Day/POI[atom(content =~ \"CN Tower\")])",
+      "token_usage": {
+        "prompt_tokens": 2529,
+        "completion_tokens": 16,
+        "total_tokens": 2545
+      }
+    },
+    "version_used": "3",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='3']/Itinerary/Day/POI[atom(content =~ \"CN Tower\")]",
+      "matched_count": 0,
+      "execution_time_ms": 18808.116799918935,
+      "token_usage": {
+        "prompt_tokens": 5778,
+        "completion_tokens": 2048,
+        "total_tokens": 7826
+      }
+    },
+    "handler_result": {
+      "success": false,
+      "operation": "DELETE",
+      "processing_time_ms": 0.0,
+      "output": {
+        "nodes_to_delete": [],
+        "reasoning": "No candidates to delete"
+      },
+      "error": "No nodes selected for deletion"
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 418.58,
+          "token_usage": {
+            "prompt_tokens": 465,
+            "completion_tokens": 5,
+            "total_tokens": 470
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 508.12,
+          "token_usage": {
+            "prompt_tokens": 2529,
+            "completion_tokens": 16,
+            "total_tokens": 2545
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 18821.06,
+          "token_usage": {
+            "prompt_tokens": 5778,
+            "completion_tokens": 2048,
+            "total_tokens": 7826
+          }
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 0.03
+        }
+      ],
+      "total_time_ms": 19747.81,
+      "total_tokens": {
+        "prompt_tokens": 8772,
+        "completion_tokens": 2069,
+        "total_tokens": 10841
+      },
+      "pipeline_total_ms": 19750.749800004996
+    },
+    "deleted_count": 0,
+    "deleted_paths": [],
+    "error": "No nodes selected for deletion",
+    "total_time_ms": 19750.749800004996
+  }
+}

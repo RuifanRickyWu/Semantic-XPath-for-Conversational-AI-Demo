@@ -1,0 +1,16 @@
+{
+  "user_query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+  "candidates_count": 2,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+    "Root > Itinerary_Version 2 > Itinerary > Day 7 > Distillery District Walk"
+  ],
+  "reasoning": "Both nodes represent the same outdoor activity on Day 7, which matches the user's request to cancel outdoor activities due to expected rain.",
+  "raw_response": "```json\n{\n  \"nodes_to_delete\": [\n    {\n      \"id\": \"1\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk\",\n      \"reasoning\": \"Outdoor activity on Day 7, matches request to cancel due to rain.\"\n    },\n    {\n      \"id\": \"2\",\n      \"path\": \"Root > Itinerary_Version 2 > Itinerary > Day 7 > Distillery District Walk\",\n      \"reasoning\": \"Outdoor activity on Day 7, matches request to cancel due to rain.\"\n    }\n  ],\n  \"reasoning\": \"Both nodes represent the same outdoor activity on Day 7, which matches the user's request to cancel outdoor activities due to expected rain.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 923,
+    "completion_tokens": 163,
+    "total_tokens": 1086
+  },
+  "processing_time_ms": 2068.9856000244617
+}

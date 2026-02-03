@@ -1,0 +1,125 @@
+{
+  "query_index": 6,
+  "query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+  "operation": "DELETE",
+  "success": true,
+  "execution_time_ms": 6626.12,
+  "token_usage": {
+    "prompt_tokens": 4143,
+    "completion_tokens": 199,
+    "total_tokens": 4342
+  },
+  "changes": [
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk"
+      },
+      "new_node": null,
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_141556_207619",
+    "user_query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+    "operation": "DELETE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Delete",
+      "raw_response": "at([-1]), DELETE",
+      "token_usage": {
+        "prompt_tokens": 461,
+        "completion_tokens": 5,
+        "total_tokens": 466
+      }
+    },
+    "parsed_query": {
+      "operation": "Delete",
+      "xpath": "/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")]",
+      "full_query": "Delete(/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")])",
+      "token_usage": {
+        "prompt_tokens": 2525,
+        "completion_tokens": 18,
+        "total_tokens": 2543
+      }
+    },
+    "version_used": "2",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='2']/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")]",
+      "matched_count": 4,
+      "execution_time_ms": 1021.9021999510005,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "DELETE",
+      "processing_time_ms": 3819.7379999328405,
+      "output": {
+        "nodes_to_delete": [
+          "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk"
+        ],
+        "reasoning": "Both instances of 'Distillery District Walk' are outdoor activities on Day 7, which matches the user's request to cancel outdoor activities due to rain. The 'Royal Ontario Museum' is an indoor activity and does not match the criteria for deletion."
+      },
+      "token_usage": {
+        "prompt_tokens": 1157,
+        "completion_tokens": 176,
+        "total_tokens": 1333
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 434.27,
+          "token_usage": {
+            "prompt_tokens": 461,
+            "completion_tokens": 5,
+            "total_tokens": 466
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 1337.5,
+          "token_usage": {
+            "prompt_tokens": 2525,
+            "completion_tokens": 18,
+            "total_tokens": 2543
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 1026.0
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 3824.39,
+          "token_usage": {
+            "prompt_tokens": 1157,
+            "completion_tokens": 176,
+            "total_tokens": 1333
+          }
+        }
+      ],
+      "total_time_ms": 6622.17,
+      "total_tokens": {
+        "prompt_tokens": 4143,
+        "completion_tokens": 199,
+        "total_tokens": 4342
+      },
+      "pipeline_total_ms": 6625.116500072181
+    },
+    "deleted_count": 1,
+    "deleted_paths": [
+      "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk"
+    ],
+    "total_time_ms": 6625.116500072181
+  }
+}

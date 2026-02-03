@@ -1,0 +1,16 @@
+{
+  "user_query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+  "candidates_count": 4,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+    "Root > Itinerary_Version 2 > Itinerary > Day 7 > Distillery District Walk"
+  ],
+  "reasoning": "Both instances of 'Distillery District Walk' are outdoor activities on Day 7, which matches the user's request to cancel outdoor activities due to rain. The 'Royal Ontario Museum' is an indoor activity and does not match the criteria for deletion.",
+  "raw_response": "```json\n{\n  \"nodes_to_delete\": [\n    {\"id\": \"1\", \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk\", \"reasoning\": \"Outdoor activity on Day 7, matches request to cancel due to rain.\"},\n    {\"id\": \"2\", \"path\": \"Root > Itinerary_Version 2 > Itinerary > Day 7 > Distillery District Walk\", \"reasoning\": \"Outdoor activity on Day 7, matches request to cancel due to rain.\"}\n  ],\n  \"reasoning\": \"Both instances of 'Distillery District Walk' are outdoor activities on Day 7, which matches the user's request to cancel outdoor activities due to rain. The 'Royal Ontario Museum' is an indoor activity and does not match the criteria for deletion.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 1157,
+    "completion_tokens": 176,
+    "total_tokens": 1333
+  },
+  "processing_time_ms": 3819.7379999328405
+}

@@ -1,5 +1,0 @@
-2026-02-02 12:56:12,405 - INFO - Starting pipeline: incontext
-2026-02-02 12:56:12,405 - INFO - Total queries: 1
-2026-02-02 12:56:26,853 - INFO - Pipeline complete: 1/1 succeeded
-2026-02-02 12:56:26,854 - INFO - Total time: 14013.9ms
-2026-02-02 12:56:26,854 - INFO - Total tokens: 7189

@@ -1,0 +1,34 @@
+{
+  "user_query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+  "context_nodes_count": 7,
+  "create_info": {
+    "parent_path": "/Itinerary/Day[3]",
+    "node_type": "POI",
+    "description": "coffee break near the gallery between workshop ending at 11am and AGO at noon"
+  },
+  "result": {
+    "parent_path": "Itinerary > Day 3",
+    "position": 2,
+    "node_type": "POI",
+    "fields": {
+      "name": "AGO Coffee Break",
+      "time_block": "11:00 AM - 11:45 AM",
+      "description": "Relaxing coffee break at a nearby cafe before visiting the Art Gallery of Ontario.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 10-15",
+      "highlights": [
+        "Proximity to AGO",
+        "Relaxing atmosphere",
+        "Quality coffee"
+      ]
+    },
+    "reasoning": "The coffee break is scheduled between the workshop ending at 11 AM and the AGO visit starting at 12 PM. Position 2 places it right after the workshop and before the AGO visit."
+  },
+  "raw_response": "```json\n{\n  \"parent_path\": \"Itinerary > Day 3\",\n  \"position\": 2,\n  \"node_type\": \"POI\",\n  \"fields\": {\n    \"name\": \"AGO Coffee Break\",\n    \"time_block\": \"11:00 AM - 11:45 AM\",\n    \"description\": \"Relaxing coffee break at a nearby cafe before visiting the Art Gallery of Ontario.\",\n    \"travel_method\": \"Walk\",\n    \"expected_cost\": \"CAD 10-15\",\n    \"highlights\": [\"Proximity to AGO\", \"Relaxing atmosphere\", \"Quality coffee\"]\n  },\n  \"reasoning\": \"The coffee break is scheduled between the workshop ending at 11 AM and the AGO visit starting at 12 PM. Position 2 places it right after the workshop and before the AGO visit.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 3883,
+    "completion_tokens": 173,
+    "total_tokens": 4056
+  },
+  "processing_time_ms": 3807.50979995355
+}

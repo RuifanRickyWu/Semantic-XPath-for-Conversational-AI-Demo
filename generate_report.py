@@ -45,6 +45,161 @@ def format_node_details(node: Dict[str, Any], indent: str = "") -> List[str]:
     return lines
 
 
+def format_scoring_table(execution_trace: Dict[str, Any]) -> List[str]:
+    """Format scoring details as a markdown table."""
+    lines = []
+    
+    # 1. Find the scoring result (try robust paths)
+    scoring_result = None
+    
+    # Path A: explicit scoring_traces list (execution report)
+    if "scoring_traces" in execution_trace and execution_trace["scoring_traces"]:
+        scoring_result = execution_trace["scoring_traces"][0]
+    
+    # Path B: traversal steps
+    elif "traversal_steps" in execution_trace:
+        steps = execution_trace["traversal_steps"]
+        if steps and "details" in steps[-1] and "scoring_result" in steps[-1]["details"]:
+            scoring_result = steps[-1]["details"]["scoring_result"]
+            
+    if not scoring_result:
+        return lines
+
+    # 2. Extract key metadata
+    predicate = scoring_result.get("predicate", "N/A")
+    threshold = scoring_result.get("config", {}).get("score_threshold", 0.0)
+    
+    semantic_values = []
+    if "batch_scoring" in scoring_result and "semantic_values" in scoring_result["batch_scoring"]:
+        semantic_values = scoring_result["batch_scoring"]["semantic_values"]
+    
+    # 3. Build Table Header
+    # Columns: Node Name | C1 (Value1) | C2 (Value2) | ... | Final Score | Result
+    
+    # Fallback if no node scores
+    node_scores = scoring_result.get("node_scores", [])
+    if not node_scores:
+        return lines
+        
+    first_node = node_scores[0]
+    
+    # Analyze scoring structure of the first node to determine columns
+    # Common patterns:
+    # 1. AND/OR node: has 'child_scores' list (e.g. [score_a, score_b])
+    # 2. NOT node: has 'inner_score' (single value)
+    
+    scoring_steps = first_node.get("scoring_steps", [])
+    child_scores_count = 0
+    column_type = "child" # or "inner" or "atomic" or "result_only"
+    
+    if scoring_steps:
+        first_step = scoring_steps[0] # The top-level composition
+        if "child_scores" in first_step:
+            child_scores_count = len(first_step["child_scores"])
+            column_type = "child"
+        elif "inner_score" in first_step:
+            child_scores_count = 1
+            column_type = "inner"
+        elif "score" in first_step:
+            child_scores_count = 1
+            column_type = "atomic"
+        elif "result" in first_step:
+            child_scores_count = 1
+            column_type = "result_only"
+    
+    # Try to map to semantic values if available
+    conditions_header = []
+    if semantic_values and len(semantic_values) == child_scores_count:
+        for i, val in enumerate(semantic_values):
+            conditions_header.append(f"C{i+1} ({val})")
+    else:
+        # Generic headers if no semantic map or mismatch
+        for i in range(child_scores_count):
+            if column_type == "inner":
+                conditions_header.append("Inner Score")
+            elif column_type == "atomic":
+                conditions_header.append("Pred Score")
+            elif column_type == "result_only":
+                conditions_header.append("Agg Score")
+            else:
+                conditions_header.append(f"C{i+1}")
+        
+    header = "| Node | " + " | ".join(conditions_header) + " | Final Score | Result |"
+    separator = "|---| " + " | ".join(["---"] * len(conditions_header)) + " |---|---|"
+    
+    lines.append(f"**Predicate:** `{predicate}`")
+    lines.append(f"**Threshold:** `{threshold}`")
+    lines.append("")
+    lines.append(header)
+    lines.append(separator)
+    
+    # 4. detailed rows
+    # Sort by node index to keep original order (Day 1, Day 2...)
+    sorted_nodes = sorted(node_scores, key=lambda x: x.get("node_idx", 0))
+    
+    for node in sorted_nodes:
+        name = node.get("node_name", "Unknown")
+        final_score = node.get("final_score", 0.0)
+        
+        # Get intermediate scores
+        scores_to_display = []
+        if "scoring_steps" in node and node["scoring_steps"]:
+             step = node["scoring_steps"][0]
+             if column_type == "child":
+                 scores_to_display = step.get("child_scores", [])
+             elif column_type == "inner":
+                 scores_to_display = [step.get("inner_score", 0.0)]
+             elif column_type == "atomic":
+                 scores_to_display = [step.get("score", 0.0)]
+             elif column_type == "result_only":
+                 scores_to_display = [step.get("result", 0.0)]
+        
+        # Format scores
+        scores_str = [f"{s:.4f}" for s in scores_to_display]
+        # Padding if missing
+        while len(scores_str) < len(conditions_header):
+            scores_str.append("-")
+            
+        final_score_str = f"{final_score:.4f}"
+        
+        # Determine Result Status
+        passed = final_score >= threshold
+        if passed:
+            status = "✅ Pass"
+        else:
+            # Try to identify WHY it failed
+            status = "❌ Filtered Out"
+            
+            # If we have breakdown, find the bottleneck
+            if column_type == "child" and scores_to_display:
+                 min_val = min(scores_to_display)
+                 if abs(min_val - final_score) < 1e-6:
+                     # Find which index caused failure
+                     for i, s in enumerate(scores_to_display):
+                         if s == min_val:
+                             if i < len(semantic_values):
+                                 status += f" ({semantic_values[i]})"
+                             else:
+                                 status += f" (C{i+1})"
+                             break
+            elif column_type == "inner":
+                 # For NOT(X), if final score is low, it means inner score was high
+                 # so it was filtered out because of specific content
+                 if scores_to_display[0] > (1.0 - threshold):
+                      status += " (Matches constraint)"
+            elif column_type == "atomic":
+                 # Simple atomic fail
+                 pass 
+            elif column_type == "result_only":
+                 pass
+
+        row = f"| {name} | " + " | ".join(scores_str) + f" | {final_score_str} | {status} |"
+        lines.append(row)
+
+    lines.append("")
+    return lines
+
+
 def extract_semantic_xpath_data(data: Dict[str, Any]) -> Dict[str, Any]:
     raw = data.get("raw_result", {})
     
@@ -301,12 +456,135 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
             operation = data.get("operation", "")
             
             if operation == "READ" and "selected_nodes" in data and data["selected_nodes"]:
+                
+                # Check if nodes need parsing (incontext pipeline returns raw XML)
+                nodes_to_display = []
+                for node in data["selected_nodes"]:
+                    if "xml" in node and len(node) == 1:
+                         # Parse the XML content
+                         import xml.etree.ElementTree as ET
+                         try:
+                             # Wrap in wrapper to allow multiple roots
+                             xml_content = node["xml"]
+                             if xml_content.startswith("```"):
+                                 xml_content = xml_content.split("\n", 1)[1].rsplit("\n", 1)[0]
+                             
+                             root = ET.fromstring(f"<wrapper>{xml_content}</wrapper>")
+                             
+                             def generic_element_to_dict(elem):
+                                 """Recursively convert XML element to dict."""
+                                 data = {}
+                                 # Attributes
+                                 data.update(elem.attrib)
+                                 
+                                 # Children
+                                 child_counts = {}
+                                 for child in elem:
+                                     child_counts[child.tag] = child_counts.get(child.tag, 0) + 1
+                                 
+                                 for child in elem:
+                                     # Check if this child tag appears multiple times (structurally a list)
+                                     is_list_item = child_counts[child.tag] > 1
+                                     
+                                     child_val = None
+                                     if len(child) == 0:
+                                         child_val = child.text.strip() if child.text else ""
+                                     else:
+                                         child_val = generic_element_to_dict(child)
+                                     
+                                     if is_list_item:
+                                         if child.tag not in data:
+                                             data[child.tag] = []
+                                         if isinstance(data[child.tag], list):
+                                             data[child.tag].append(child_val)
+                                         else:
+                                              data[child.tag] = [data[child.tag], child_val]
+                                     else:
+                                         data[child.tag] = child_val
+                                 return data
+
+                             for child in root:
+                                 # Top level nodes (e.g. Day, or POI)
+                                 node_data = generic_element_to_dict(child)
+                                 node_data["type"] = child.tag
+                                 
+                                 # If it has sub-children that look like nodes, extract them for better display
+                                 sub_nodes = []
+                                 keys_to_remove = []
+                                 
+                                 for key, val in node_data.items():
+                                     if isinstance(val, list):
+                                         # Check if list of dicts (complex objects)
+                                         if val and isinstance(val[0], dict):
+                                            # Treat as sub-nodes to display indented
+                                            for item in val:
+                                                item["type"] = key  # Use tag as type
+                                                item["indent"] = True
+                                                sub_nodes.append(item)
+                                            keys_to_remove.append(key)
+                                     elif isinstance(val, dict):
+                                         # complex child
+                                         val["type"] = key
+                                         val["indent"] = True
+                                         sub_nodes.append(val)
+                                         keys_to_remove.append(key)
+                                 
+                                 # Remove the moved keys so they don't duplicate
+                                 for k in keys_to_remove:
+                                     del node_data[k]
+                                     
+                                 nodes_to_display.append(node_data)
+                                 nodes_to_display.extend(sub_nodes)
+
+                         except Exception as e:
+                             nodes_to_display.append({"name": "Error Parsing XML Node", "description": str(e)})
+                    else:
+                        nodes_to_display.append(node)
+
                 output_lines.append("**Selected Nodes:**")
                 output_lines.append("")
-                for idx, node in enumerate(data["selected_nodes"]):
-                    output_lines.append(f"**{idx + 1}. {node.get('name', node.get('type', 'Node'))}**")
-                    output_lines.extend(format_node_details(node))
-                    output_lines.append("")
+                
+                for idx, node in enumerate(nodes_to_display):
+                    indent = node.get("indent", False)
+                    prefix_num = f"{idx + 1}."
+                    
+                    type_str = node.get('type', 'Node')
+                    name_str = node.get('name', 'Unknown')
+                    
+                    # Construct Identity
+                    identity = ""
+                    if name_str and name_str != "Unknown":
+                        identity = name_str
+                    elif "index" in node:
+                        identity = f"Index: {node['index']}"
+                    
+                    # Construct Details (everything else)
+                    details = []
+                    # Common keys to show first
+                    priority_keys = ["time_block", "cost", "expected_cost", "travel_method"]
+                    for k in priority_keys:
+                        if k in node and node[k]:
+                            details.append(f"{node[k]}")
+                    
+                    # Add other short keys
+                    for k, v in node.items():
+                        ignore_keys = ["name", "type", "indent", "node_type", "xml", "highlights", "description", "index", "id"]
+                        if k not in ignore_keys and k not in priority_keys:
+                             val_str = str(v)
+                             if len(val_str) < 30: # Only show short values
+                                 details.append(f"{val_str}")
+                    
+                    details_str = f" ({', '.join(details)})" if details else ""
+                    
+                    # Format
+                    if indent:
+                         display_line = f"{prefix_num}   - **{type_str}** -> {identity}{details_str}"
+                    else:
+                         display_line = f"{prefix_num} **{type_str}** -> {identity}{details_str}"
+                    
+                    output_lines.append(display_line)
+                
+                output_lines.append("")
             
             elif operation == "DELETE" and "changes" in data and data["changes"]:
                 output_lines.append("**Deleted Nodes:**")
@@ -330,13 +608,34 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
                         output_lines.append("")
 
             # Special section for XPath execution details
-            if pipeline == "semantic_xpath" and "xpath_execution" in data:
-                output_lines.append("<details>")
-                output_lines.append("<summary>Execution Details</summary>")
-                output_lines.append("")
-                output_lines.append(f"- Matched Nodes: {data['xpath_execution'].get('matched_count', 0)}")
-                output_lines.append(f"- Execution Time: {data['xpath_execution'].get('execution_time_ms', 0)}ms")
-                output_lines.append("</details>")
+            if pipeline == "semantic_xpath":
+                # Look for execution trace file to get scoring details
+                # It should be in query_XXX/reasoning_traces/execution_*.json
+                
+                # Check current directory structure first
+                trace_dir = base_dir / pipeline / folder_name / "reasoning_traces"
+                execution_trace = None
+                
+                if trace_dir.exists():
+                    trace_files = glob.glob(str(trace_dir / "execution_*.json"))
+                    if trace_files:
+                        # Sort by name (timestamp) and take the last one
+                        trace_files.sort()
+                        execution_trace = load_result_json(Path(trace_files[-1]))
+                
+                if execution_trace:
+                     scoring_table = format_scoring_table(execution_trace)
+                     if scoring_table:
+                         output_lines.append("**Scoring Analysis:**")
+                         output_lines.append("")
+                         output_lines.extend(scoring_table)
+                if "xpath_execution" in data:
+                    output_lines.append("<details>")
+                    output_lines.append("<summary>Execution Details</summary>")
+                    output_lines.append("")
+                    output_lines.append(f"- Matched Nodes: {data['xpath_execution'].get('matched_count', 0)}")
+                    output_lines.append(f"- Execution Time: {data['xpath_execution'].get('execution_time_ms', 0)}ms")
+                    output_lines.append("</details>")
                 output_lines.append("")
 
     report_path = base_dir / "report.md"

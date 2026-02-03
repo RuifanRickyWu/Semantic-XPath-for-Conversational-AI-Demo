@@ -13,8 +13,8 @@ openai:
   max_tokens: 4096
 
 xpath_executor:
-  top_k: 10
-  score_threshold: 0.01
+  top_k: 5
+  score_threshold: 0.1
   # Scoring method: "llm", "entailment", or "cosine"
   scoring_method: "entailment"
 

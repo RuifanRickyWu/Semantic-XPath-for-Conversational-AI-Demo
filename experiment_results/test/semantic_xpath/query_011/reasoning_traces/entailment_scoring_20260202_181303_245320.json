@@ -1,0 +1,222 @@
+{
+  "timestamp": "20260202_181303_245320",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "work related",
+  "hypothesis": "This is related to work related.",
+  "nodes": [
+    {
+      "id": "2114474539536_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expe",
+      "premise": "POI: Client Check-in Call - name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting",
+      "score": 0.999859094619751
+    },
+    {
+      "id": "2114474540336_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method:",
+      "premise": "POI: Email Catch-up Block - name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task",
+      "score": 0.9998646974563599
+    },
+    {
+      "id": "2114474590352_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_co",
+      "premise": "POI: Networking Drinks - name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing",
+      "score": 0.9995591044425964
+    },
+    {
+      "id": "2114483611232_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expe",
+      "premise": "POI: Client Check-in Call - name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting",
+      "score": 0.999859094619751
+    },
+    {
+      "id": "2114483612032_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method:",
+      "premise": "POI: Email Catch-up Block - name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task",
+      "score": 0.9998646974563599
+    },
+    {
+      "id": "2114483612832_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_co",
+      "premise": "POI: Networking Drinks - name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing",
+      "score": 0.9995591044425964
+    },
+    {
+      "id": "2114474288416_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expe",
+      "premise": "POI: Client Check-in Call - name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting",
+      "score": 0.999859094619751
+    },
+    {
+      "id": "2114474287216_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method:",
+      "premise": "POI: Email Catch-up Block - name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task",
+      "score": 0.9998646974563599
+    },
+    {
+      "id": "2114474286176_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_co",
+      "premise": "POI: Networking Drinks - name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing",
+      "score": 0.9995591044425964
+    },
+    {
+      "id": "2114483418144_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expe",
+      "premise": "POI: Client Check-in Call - name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting",
+      "score": 0.999859094619751
+    },
+    {
+      "id": "2114483418944_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method:",
+      "premise": "POI: Email Catch-up Block - name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task",
+      "score": 0.9998646974563599
+    },
+    {
+      "id": "2114483419744_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_co",
+      "premise": "POI: Networking Drinks - name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing",
+      "score": 0.9995591044425964
+    },
+    {
+      "id": "2114483844848_main",
+      "type": "POI",
+      "name": "Client Check-in Call",
+      "description": "name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expe",
+      "premise": "POI: Client Check-in Call - name: Client Check-in Call | time_block: 11:00 AM - 12:00 PM | description: Remote video call with client to discuss project status. Light work commitment from hotel room. | travel_method: None | expected_cost: Work | highlights: Work call, Remote meeting",
+      "score": 0.999859094619751
+    },
+    {
+      "id": "2114483845648_main",
+      "type": "POI",
+      "name": "Email Catch-up Block",
+      "description": "name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method:",
+      "premise": "POI: Email Catch-up Block - name: Email Catch-up Block | time_block: 2:00 PM - 3:00 PM | description: Dedicated time_block to respond to accumulated work emails. Optional but recommended to stay on top of inbox. | travel_method: None | expected_cost: Work | highlights: Work admin, Optional task",
+      "score": 0.9998646974563599
+    },
+    {
+      "id": "2114483846448_main",
+      "type": "POI",
+      "name": "Networking Drinks",
+      "description": "name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_co",
+      "premise": "POI: Networking Drinks - name: Networking Drinks | time_block: 6:00 PM - 7:30 PM | description: Casual drinks with industry contacts at a downtown bar. Work-adjacent networking opportunity. | travel_method: Walk | expected_cost: CAD 40-60 | highlights: Work networking, Professional socializing",
+      "score": 0.9995591044425964
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2114474539536_main",
+      "node_type": "POI",
+      "score": 0.999859094619751,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114474540336_main",
+      "node_type": "POI",
+      "score": 0.9998646974563599,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114474590352_main",
+      "node_type": "POI",
+      "score": 0.9995591044425964,
+      "reasoning": "Entailment score: 0.9996"
+    },
+    {
+      "node_id": "2114483611232_main",
+      "node_type": "POI",
+      "score": 0.999859094619751,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114483612032_main",
+      "node_type": "POI",
+      "score": 0.9998646974563599,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114483612832_main",
+      "node_type": "POI",
+      "score": 0.9995591044425964,
+      "reasoning": "Entailment score: 0.9996"
+    },
+    {
+      "node_id": "2114474288416_main",
+      "node_type": "POI",
+      "score": 0.999859094619751,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114474287216_main",
+      "node_type": "POI",
+      "score": 0.9998646974563599,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114474286176_main",
+      "node_type": "POI",
+      "score": 0.9995591044425964,
+      "reasoning": "Entailment score: 0.9996"
+    },
+    {
+      "node_id": "2114483418144_main",
+      "node_type": "POI",
+      "score": 0.999859094619751,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114483418944_main",
+      "node_type": "POI",
+      "score": 0.9998646974563599,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114483419744_main",
+      "node_type": "POI",
+      "score": 0.9995591044425964,
+      "reasoning": "Entailment score: 0.9996"
+    },
+    {
+      "node_id": "2114483844848_main",
+      "node_type": "POI",
+      "score": 0.999859094619751,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114483845648_main",
+      "node_type": "POI",
+      "score": 0.9998646974563599,
+      "reasoning": "Entailment score: 0.9999"
+    },
+    {
+      "node_id": "2114483846448_main",
+      "node_type": "POI",
+      "score": 0.9995591044425964,
+      "reasoning": "Entailment score: 0.9996"
+    }
+  ]
+}

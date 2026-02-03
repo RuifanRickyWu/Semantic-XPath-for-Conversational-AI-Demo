@@ -1,0 +1,34 @@
+{
+  "user_query": "I just noticed Day 2 has no breakfastâ€”my first meeting is at 9am and I'll be starving. Add a quick hotel breakfast before the meeting.",
+  "context_nodes_count": 6,
+  "create_info": {
+    "parent_path": "/Itinerary/Day[2]",
+    "node_type": "Restaurant",
+    "description": "quick hotel breakfast before the meeting"
+  },
+  "result": {
+    "parent_path": "Itinerary > Day 2",
+    "position": 0,
+    "node_type": "Restaurant",
+    "fields": {
+      "name": "Hotel Breakfast Buffet",
+      "time_block": "7:30 AM - 8:30 AM",
+      "description": "Quick and convenient breakfast at the hotel buffet before heading to the meeting.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 15-25",
+      "highlights": [
+        "Convenient location",
+        "Variety of options",
+        "Quick service"
+      ]
+    },
+    "reasoning": "Position 0 places the breakfast before the 9AM meeting, ensuring the user has time to eat before their first engagement of the day."
+  },
+  "raw_response": "```json\n{\n  \"parent_path\": \"Itinerary > Day 2\",\n  \"position\": 0,\n  \"node_type\": \"Restaurant\",\n  \"fields\": {\n    \"name\": \"Hotel Breakfast Buffet\",\n    \"time_block\": \"7:30 AM - 8:30 AM\",\n    \"description\": \"Quick and convenient breakfast at the hotel buffet before heading to the meeting.\",\n    \"travel_method\": \"Walk\",\n    \"expected_cost\": \"CAD 15-25\",\n    \"highlights\": [\"Convenient location\", \"Variety of options\", \"Quick service\"]\n  },\n  \"reasoning\": \"Position 0 places the breakfast before the 9AM meeting, ensuring the user has time to eat before their first engagement of the day.\"\n}\n```",
+  "token_usage": {
+    "prompt_tokens": 2320,
+    "completion_tokens": 160,
+    "total_tokens": 2480
+  },
+  "processing_time_ms": 3921.254300046712
+}

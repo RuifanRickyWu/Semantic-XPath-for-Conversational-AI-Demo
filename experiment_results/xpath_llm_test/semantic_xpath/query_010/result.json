@@ -1,0 +1,156 @@
+{
+  "query_index": 9,
+  "query": "I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.",
+  "operation": "DELETE",
+  "success": true,
+  "execution_time_ms": 10285.4,
+  "token_usage": {
+    "prompt_tokens": 6178,
+    "completion_tokens": 1089,
+    "total_tokens": 7267
+  },
+  "changes": [
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call"
+      },
+      "new_node": null,
+      "field_changes": null
+    },
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block"
+      },
+      "new_node": null,
+      "field_changes": null
+    },
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks"
+      },
+      "new_node": null,
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260202_144311_223545",
+    "user_query": "I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.",
+    "operation": "DELETE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Delete",
+      "raw_response": "at([-1]), DELETE",
+      "token_usage": {
+        "prompt_tokens": 469,
+        "completion_tokens": 5,
+        "total_tokens": 474
+      }
+    },
+    "parsed_query": {
+      "operation": "Delete",
+      "xpath": "/Itinerary/Day[5]/POI[atom(content =~ \"work related\")]",
+      "full_query": "Delete(/Itinerary/Day[5]/POI[atom(content =~ \"work related\")])",
+      "token_usage": {
+        "prompt_tokens": 2533,
+        "completion_tokens": 18,
+        "total_tokens": 2551
+      }
+    },
+    "version_used": "4",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[@number='4']/Itinerary/Day[5]/POI[atom(content =~ \"work related\")]",
+      "matched_count": 10,
+      "execution_time_ms": 4975.51429993473,
+      "token_usage": {
+        "prompt_tokens": 1407,
+        "completion_tokens": 570,
+        "total_tokens": 1977
+      }
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "DELETE",
+      "processing_time_ms": 3914.6144000114873,
+      "output": {
+        "nodes_to_delete": [
+          "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks"
+        ],
+        "reasoning": "All listed activities are work-related and occur on Day 5, matching the user's request to cancel all work-related activities for that day."
+      },
+      "token_usage": {
+        "prompt_tokens": 1769,
+        "completion_tokens": 496,
+        "total_tokens": 2265
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 501.37,
+          "token_usage": {
+            "prompt_tokens": 469,
+            "completion_tokens": 5,
+            "total_tokens": 474
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 875.54,
+          "token_usage": {
+            "prompt_tokens": 2533,
+            "completion_tokens": 18,
+            "total_tokens": 2551
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 4984.8,
+          "token_usage": {
+            "prompt_tokens": 1407,
+            "completion_tokens": 570,
+            "total_tokens": 1977
+          }
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 3920.14,
+          "token_usage": {
+            "prompt_tokens": 1769,
+            "completion_tokens": 496,
+            "total_tokens": 2265
+          }
+        }
+      ],
+      "total_time_ms": 10281.85,
+      "total_tokens": {
+        "prompt_tokens": 6178,
+        "completion_tokens": 1089,
+        "total_tokens": 7267
+      },
+      "pipeline_total_ms": 10284.677800023928
+    },
+    "deleted_count": 3,
+    "deleted_paths": [
+      "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+      "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+      "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks"
+    ],
+    "total_time_ms": 10284.677800023928
+  }
+}

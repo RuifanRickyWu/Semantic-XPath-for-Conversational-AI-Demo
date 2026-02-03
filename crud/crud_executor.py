@@ -267,9 +267,15 @@ class CRUDExecutor:
         print(f"📁 Target version: {version_number}")
         
         # Stage 2: XPath Generation (LLM Call 2)
+        # Use task_query (version-stripped query) for xpath generation
+        # This prevents the xpath generator from trying to handle version selection
+        task_query = version_result.task_query or user_query
+        if task_query != user_query:
+            print(f"📝 Task query: {task_query}")
+        
         timer.start("query_generation")
         parsed_query = self.query_generator.generate_and_parse(
-            user_query, 
+            task_query, 
             version_result.crud_operation
         )
         timer.stop(token_usage=parsed_query.token_usage)
@@ -313,6 +319,7 @@ class CRUDExecutor:
         result = {
             "timestamp": timestamp,
             "user_query": user_query,
+            "task_query": task_query,  # Version-stripped query used for xpath generation
             "operation": handler_result.operation,
             "success": handler_result.success,
             "version_resolution": version_result.to_dict(),

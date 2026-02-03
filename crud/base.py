@@ -17,6 +17,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from client import get_client, TokenUsage, CompletionResult
+from .prompt_loader import PromptLoader
 
 
 logger = logging.getLogger(__name__)
@@ -173,7 +174,8 @@ class BaseHandler(ABC):
         client=None,
         schema: Optional[Dict[str, Any]] = None,
         save_traces: bool = True,
-        traces_path: Path = None
+        traces_path: Path = None,
+        use_dynamic_prompts: bool = True
     ):
         """
         Initialize the handler.
@@ -183,12 +185,15 @@ class BaseHandler(ABC):
             schema: Optional schema dict for node type information
             save_traces: Whether to save reasoning traces
             traces_path: Optional custom path for trace files
+            use_dynamic_prompts: Whether to use dynamic prompt loading with domain knowledge
         """
         self._client = client
         self.schema = schema or {}
         self.save_traces = save_traces
+        self.use_dynamic_prompts = use_dynamic_prompts
         self._system_prompt = None
         self.traces_path = traces_path or self.DEFAULT_TRACES_PATH
+        self._prompt_loader = None
         
         # Ensure traces directory exists
         self.traces_path.mkdir(parents=True, exist_ok=True)
@@ -201,6 +206,13 @@ class BaseHandler(ABC):
         return self._client
     
     @property
+    def prompt_loader(self) -> PromptLoader:
+        """Lazy load the prompt loader."""
+        if self._prompt_loader is None:
+            self._prompt_loader = PromptLoader(schema=self.schema)
+        return self._prompt_loader
+    
+    @property
     @abstractmethod
     def prompt_file(self) -> str:
         """Name of the prompt file for this handler."""
@@ -208,11 +220,22 @@ class BaseHandler(ABC):
     
     @property
     def system_prompt(self) -> str:
-        """Lazy load the system prompt from file."""
+        """
+        Lazy load the system prompt.
+        
+        Uses dynamic prompt composition if use_dynamic_prompts is True,
+        otherwise falls back to legacy single-file prompts.
+        """
         if self._system_prompt is None:
-            prompt_path = self.PROMPTS_PATH / self.prompt_file
-            with open(prompt_path, "r", encoding="utf-8") as f:
-                self._system_prompt = f.read()
+            if self.use_dynamic_prompts:
+                # Use new dynamic prompt loading
+                handler_type = self.prompt_file.replace(".txt", "")
+                self._system_prompt = self.prompt_loader.load_prompt(handler_type)
+            else:
+                # Legacy: load from single file
+                prompt_path = self.PROMPTS_PATH / self.prompt_file
+                with open(prompt_path, "r", encoding="utf-8") as f:
+                    self._system_prompt = f.read()
         return self._system_prompt
     
     @abstractmethod

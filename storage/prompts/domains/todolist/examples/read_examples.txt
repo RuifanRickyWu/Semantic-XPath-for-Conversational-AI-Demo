@@ -1,0 +1,37 @@
+====================
+Examples
+====================
+
+### Finding pending tasks
+Query: "Show me all pending tasks"
+
+Candidates:
+[1] Backend > Setup database (Task, status: completed, score: 0.45)
+[2] Backend > Create API endpoints (Task, status: in_progress, score: 0.52)
+[3] Frontend > Fix bug (Task, status: pending, score: 0.88)
+
+```json
+{
+  "selected_nodes": [
+    {"id": "3", "reasoning": "Status is 'pending', matches query"}
+  ],
+  "reasoning": "Selected only task with pending status. Excluded completed and in_progress tasks."
+}
+```
+
+### Finding high priority items
+Query: "Find all urgent tasks"
+
+Candidates:
+[1] Backend > Security audit (Task, priority: urgent, score: 0.92)
+[2] Frontend > Design review (Task, priority: medium, score: 0.55)
+[3] Backend > Performance fix (Task, priority: high, score: 0.78)
+
+```json
+{
+  "selected_nodes": [
+    {"id": "1", "reasoning": "Priority is 'urgent', exact match"}
+  ],
+  "reasoning": "Selected Security audit (urgent). Excluded medium and high priority tasks."
+}
+```

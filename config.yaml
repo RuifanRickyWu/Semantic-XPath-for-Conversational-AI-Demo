@@ -1,7 +1,7 @@
 # Schema configuration
 # Choose which schema and data file to use
 active_schema: "itinerary" #Can choose between itinerary and todolist, session_recommendation
-active_data: "travel_toronto_10day" # Options: travel_memory_3day, travel_memory_5day, travel_memory_10day_themed
+active_data: "travel_memory_3day" # Options: travel_memory_3day, travel_memory_5day, travel_memory_10day_themed
 
 # Note: The system now uses in-tree versioning - all operations create new Version nodes
 # within the tree itself, enabling full history tracking and version-based queries.

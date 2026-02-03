@@ -48,12 +48,14 @@ class ResolvedVersion:
         index: Numeric index (-1 for latest, or specific number)
         crud_operation: The CRUD operation type
         raw_response: Raw LLM response for debugging
+        task_query: The task-relevant portion of the query (without version selection language)
     """
     selector_type: VersionSelector
     semantic_query: Optional[str]
     index: Optional[int]
     crud_operation: CRUDOperation
     raw_response: str
+    task_query: Optional[str] = None
     token_usage: Optional[Dict[str, int]] = None
     
     def to_dict(self) -> dict:
@@ -64,6 +66,7 @@ class ResolvedVersion:
             "index": self.index,
             "crud_operation": self.crud_operation.value,
             "raw_response": self.raw_response,
+            "task_query": self.task_query,
             "token_usage": self.token_usage
         }
     
@@ -91,7 +94,7 @@ class VersionResolver:
     2. XPath Generation - generates the tree traversal query
     """
     
-    # Pattern to parse LLM response
+    # Pattern to parse LLM response (first line: version selector and operation)
     RESPONSE_PATTERN = re.compile(
         r'(at|before)\s*\(\s*'
         r'(?:'
@@ -103,6 +106,9 @@ class VersionResolver:
         r'(READ|CREATE|UPDATE|DELETE)',
         re.IGNORECASE
     )
+    
+    # Pattern to parse task query (second line)
+    TASK_PATTERN = re.compile(r'task:\s*(.+)', re.IGNORECASE)
     
     def __init__(self, client=None, schema_name: Optional[str] = None):
         """
@@ -144,13 +150,14 @@ class VersionResolver:
             user_query: Natural language query from the user
             
         Returns:
-            ResolvedVersion with selector type, semantic query or index, and CRUD operation
+            ResolvedVersion with selector type, semantic query or index, CRUD operation,
+            and task_query (the portion of the query relevant to xpath generation)
         """
         prompt = f"User: {user_query}"
         
         result = self.client.complete_with_usage(
             prompt,
-            system_prompt=self.system_prompt,
+            system_prompt=self.system_prompt.format(schema_name=self._schema_name),
             temperature=0.1,
             max_tokens=256
         )
@@ -161,25 +168,35 @@ class VersionResolver:
         if raw_response.lower().startswith("output:"):
             raw_response = raw_response[7:].strip()
         
-        resolved_version = self._parse_response(raw_response)
+        resolved_version = self._parse_response(raw_response, user_query)
         resolved_version.token_usage = result.usage.to_dict()
         return resolved_version
     
-    def _parse_response(self, response: str) -> ResolvedVersion:
+    def _parse_response(self, response: str, original_query: str) -> ResolvedVersion:
         """
         Parse the LLM response into a ResolvedVersion.
         
-        Expected format: at([-1]), READ
-                        at(sem(content ~= "museum")), DELETE
-                        before(sem(content ~= "delete museum")), READ
+        Expected format: 
+            at([-1]), READ
+            task: find museums
+            
+            OR
+            
+            before(sem(content ~= "delete museum")), UPDATE
+            task: update the museums to chinese
         
         Args:
             response: Raw LLM response
+            original_query: Original user query (used as fallback for task_query)
             
         Returns:
             ResolvedVersion object
         """
         match = self.RESPONSE_PATTERN.search(response)
+        
+        # Extract task query
+        task_match = self.TASK_PATTERN.search(response)
+        task_query = task_match.group(1).strip() if task_match else original_query
         
         if match:
             selector_str = match.group(1).lower()
@@ -206,7 +223,8 @@ class VersionResolver:
                 semantic_query=semantic_query,
                 index=index,
                 crud_operation=crud_operation,
-                raw_response=response
+                raw_response=response,
+                task_query=task_query
             )
         
         # Fallback: default to latest version and try to infer CRUD from keywords
@@ -217,7 +235,8 @@ class VersionResolver:
             semantic_query=None,
             index=-1,
             crud_operation=crud_operation,
-            raw_response=response
+            raw_response=response,
+            task_query=task_query
         )
     
     def _infer_crud_from_text(self, text: str) -> CRUDOperation:

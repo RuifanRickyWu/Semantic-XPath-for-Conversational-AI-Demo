@@ -332,13 +332,6 @@ class DenseXPathExecutor:
             current_items = next_items
             execution_log.append(f"After step: {len(current_items)} nodes remaining")
         
-        # Apply global index if present (before final scoring)
-        if global_index is not None and current_items:
-            current_items, global_step = self._apply_global_index(
-                current_items, global_index, len(steps), execution_log
-            )
-            traversal_steps.append(global_step)
-        
         # =====================================================================
         # Final Score Computation: Score Fusion (Product)
         # =====================================================================
@@ -374,17 +367,39 @@ class DenseXPathExecutor:
         score_fusion_trace = ScoreFusionTrace(per_node_traces=fusion_traces)
         
         # =====================================================================
-        # Deferred Filtering: TopK and Threshold
+        # Threshold Filtering (before global index)
         # =====================================================================
-        execution_log.append(f"\n=== Final Filtering (threshold={self.score_threshold}, top_k={self.top_k}) ===")
+        execution_log.append(f"\n=== Threshold Filtering (threshold={self.score_threshold}) ===")
         
-        before_count = len(current_items)
+        before_threshold_count = len(current_items)
         
-        # Apply threshold filter
+        # Apply threshold filter first
         current_items = [item for item in current_items if item.score >= self.score_threshold]
         
         # Sort by score descending
         current_items.sort(key=lambda x: x.score, reverse=True)
+        
+        execution_log.append(
+            f"  Filtered: {before_threshold_count} → {len(current_items)} nodes"
+        )
+        
+        # =====================================================================
+        # Apply global index AFTER threshold filtering
+        # =====================================================================
+        # This ensures that e.g. "first museum" selects from nodes that actually
+        # match "museum" (pass threshold), not the first node in document order.
+        if global_index is not None and current_items:
+            current_items, global_step = self._apply_global_index(
+                current_items, global_index, len(steps), execution_log
+            )
+            traversal_steps.append(global_step)
+        
+        # =====================================================================
+        # Final top_k limit
+        # =====================================================================
+        execution_log.append(f"\n=== Final Filtering (top_k={self.top_k}) ===")
+        
+        before_count = len(current_items)
         
         # Apply top_k limit
         current_items = current_items[:self.top_k]
@@ -392,11 +407,11 @@ class DenseXPathExecutor:
         after_count = len(current_items)
         
         execution_log.append(
-            f"  Filtered: {before_count} → {after_count} nodes"
+            f"  After top_k: {before_count} → {after_count} nodes"
         )
         
         final_filtering_trace = FinalFilteringTrace(
-            before_filter_count=before_count,
+            before_filter_count=before_threshold_count,
             threshold=self.score_threshold,
             top_k=self.top_k,
             after_filter_count=after_count,
@@ -496,9 +511,17 @@ class DenseXPathExecutor:
         Each parent node's matches are assigned a unique parent_group_id,
         enabling local indexing like Day/POI[2] to select the 2nd POI
         within EACH Day rather than the global 2nd POI.
+        
+        For descendant axis (desc::), the full path through intermediate nodes
+        is computed to ensure tree operations can find the correct location.
         """
         next_items = []
         axis = getattr(step, 'axis', 'child')  # Default to child for backward compatibility
+        
+        # For descendant axis, build parent map to trace full paths
+        parent_map = None
+        if axis == "desc":
+            parent_map = self._node_utils.build_parent_map(self.root)
         
         for group_id, item in enumerate(current_items):
             if step.node_type == ".":
@@ -507,6 +530,11 @@ class DenseXPathExecutor:
                     child for child in item.node
                     if NodeUtils._is_structured_node(child)
                 ]
+                for child in matches:
+                    child_name = self._node_utils.get_name(child)
+                    child_path = f"{item.path} > {child_name}"
+                    next_items.append(NodeItem(child, child_path, item.score, group_id))
+                    
             elif axis == "desc":
                 # Descendant axis: find all descendants of this type at any depth
                 # iter() returns self first, so we skip if it matches the type
@@ -514,15 +542,19 @@ class DenseXPathExecutor:
                     n for n in item.node.iter(step.node_type) 
                     if n is not item.node
                 ]
+                for child in matches:
+                    # Use full path tracing through intermediate nodes
+                    child_path = self._node_utils.get_path_from_ancestor_to_descendant(
+                        item.node, child, item.path, parent_map
+                    )
+                    next_items.append(NodeItem(child, child_path, item.score, group_id))
             else:
                 # Child axis (default): find only direct children
                 matches = list(item.node.findall(step.node_type))
-            
-            for child in matches:
-                child_name = self._node_utils.get_name(child)
-                child_path = f"{item.path} > {child_name}"
-                # Matches inherit group_id from their parent's position
-                next_items.append(NodeItem(child, child_path, item.score, group_id))
+                for child in matches:
+                    child_name = self._node_utils.get_name(child)
+                    child_path = f"{item.path} > {child_name}"
+                    next_items.append(NodeItem(child, child_path, item.score, group_id))
         
         # Build log message based on match type
         if step.node_type == ".":

@@ -1,0 +1,4 @@
+2026-02-03 12:04:02,988 - INFO - Query: My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?
+2026-02-03 12:04:02,988 - INFO - Running query 3: My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?
+2026-02-03 12:04:07,232 - ERROR -   Error: Error code: 400 - {'error': {'message': 'Could not finish the message because max_tokens or model output limit was reached. Please try again with higher max_tokens.', 'type': 'invalid_request_error', 'param': None, 'code': None}}
+2026-02-03 12:04:07,240 - INFO - Result: ERROR, Success: False

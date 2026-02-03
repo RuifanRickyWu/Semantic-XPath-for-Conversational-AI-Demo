@@ -1,0 +1,138 @@
+{
+  "query_index": 5,
+  "query": "I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.",
+  "operation": "DELETE",
+  "success": true,
+  "execution_time_ms": 47020.83,
+  "token_usage": {
+    "prompt_tokens": 5154,
+    "completion_tokens": 2121,
+    "total_tokens": 7275
+  },
+  "changes": [
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant"
+      },
+      "new_node": null,
+      "field_changes": null
+    },
+    {
+      "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+      "change_type": "deleted",
+      "old_node": {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+      },
+      "new_node": null,
+      "field_changes": null
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260203_120520_534221",
+    "user_query": "I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.",
+    "task_query": "remove the expensive dinners from the itinerary",
+    "operation": "DELETE",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Delete",
+      "raw_response": "at([-1]), DELETE\ntask: remove the expensive dinners from the itinerary",
+      "task_query": "remove the expensive dinners from the itinerary",
+      "token_usage": {
+        "prompt_tokens": 988,
+        "completion_tokens": 152,
+        "total_tokens": 1140
+      }
+    },
+    "parsed_query": {
+      "operation": "Delete",
+      "xpath": "/Itinerary/desc::.[atom(content =~ \"dinner\") AND atom(content =~ \"expensive\")]",
+      "full_query": "Delete(/Itinerary/desc::.[atom(content =~ \"dinner\") AND atom(content =~ \"expensive\")])",
+      "token_usage": {
+        "prompt_tokens": 2041,
+        "completion_tokens": 606,
+        "total_tokens": 2647
+      }
+    },
+    "version_used": "1",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[1]/Itinerary/desc::.[atom(content =~ \"dinner\") AND atom(content =~ \"expensive\")]",
+      "matched_count": 4,
+      "execution_time_ms": 8513.97560001351,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "DELETE",
+      "processing_time_ms": 22837.32080005575,
+      "output": {
+        "nodes_to_delete": [
+          "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+        ],
+        "reasoning": "Removed the two clearly high-cost evening dinners (Alo on Day 2 and Canoe on Day 1). Excluded other restaurants: Antler Kitchen (Day 8) is moderate-priced (CAD 80-100) and less clearly 'expensive', Elements on the Falls is a midday lunch, and The Keg (Day 6) is mid-range/family-friendly (CAD 60-80), so they were not removed to avoid over-deleting."
+      },
+      "token_usage": {
+        "prompt_tokens": 2125,
+        "completion_tokens": 1363,
+        "total_tokens": 3488
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 6238.07,
+          "token_usage": {
+            "prompt_tokens": 988,
+            "completion_tokens": 152,
+            "total_tokens": 1140
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 9406.08,
+          "token_usage": {
+            "prompt_tokens": 2041,
+            "completion_tokens": 606,
+            "total_tokens": 2647
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 8518.03
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 22853.05,
+          "token_usage": {
+            "prompt_tokens": 2125,
+            "completion_tokens": 1363,
+            "total_tokens": 3488
+          }
+        }
+      ],
+      "total_time_ms": 47015.24,
+      "total_tokens": {
+        "prompt_tokens": 5154,
+        "completion_tokens": 2121,
+        "total_tokens": 7275
+      },
+      "pipeline_total_ms": 47019.49289999902
+    },
+    "deleted_count": 2,
+    "deleted_paths": [
+      "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+      "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+    ],
+    "total_time_ms": 47019.49289999902
+  }
+}

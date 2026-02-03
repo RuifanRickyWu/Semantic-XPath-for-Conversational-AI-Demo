@@ -1,0 +1,16 @@
+{
+  "user_query": "I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.",
+  "candidates_count": 4,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+    "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+  ],
+  "reasoning": "Removed the two clearly high-cost evening dinners (Alo on Day 2 and Canoe on Day 1). Excluded other restaurants: Antler Kitchen (Day 8) is moderate-priced (CAD 80-100) and less clearly 'expensive', Elements on the Falls is a midday lunch, and The Keg (Day 6) is mid-range/family-friendly (CAD 60-80), so they were not removed to avoid over-deleting.",
+  "raw_response": "{\n  \"nodes_to_delete\": [\n    {\n      \"id\": \"Day2:Alo Restaurant\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant\",\n      \"reasoning\": \"Evening dinner (7:00 PM) listed as extremely expensive (CAD 300-400, Michelin tasting) — matches 'expensive dinners'.\"\n    },\n    {\n      \"id\": \"Day1:Canoe Restaurant\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant\",\n      \"reasoning\": \"Evening dinner (7:30 PM) marked as upscale/expensive (CAD 150-200) — fits user's request to cut expensive dinners.\"\n    }\n  ],\n  \"reasoning\": \"Removed the two clearly high-cost evening dinners (Alo on Day 2 and Canoe on Day 1). Excluded other restaurants: Antler Kitchen (Day 8) is moderate-priced (CAD 80-100) and less clearly 'expensive', Elements on the Falls is a midday lunch, and The Keg (Day 6) is mid-range/family-friendly (CAD 60-80), so they were not removed to avoid over-deleting.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 2125,
+    "completion_tokens": 1363,
+    "total_tokens": 3488
+  },
+  "processing_time_ms": 22837.32080005575
+}

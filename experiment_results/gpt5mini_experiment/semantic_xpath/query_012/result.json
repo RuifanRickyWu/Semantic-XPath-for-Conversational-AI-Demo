@@ -1,0 +1,142 @@
+{
+  "query_index": 11,
+  "query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+  "operation": "READ",
+  "success": true,
+  "execution_time_ms": 25488.86,
+  "token_usage": {
+    "prompt_tokens": 4207,
+    "completion_tokens": 1309,
+    "total_tokens": 5516
+  },
+  "selected_nodes": [
+    {
+      "type": "Day",
+      "attributes": {
+        "index": "3"
+      },
+      "tree_path": "Root > Itinerary_Version 5 > Itinerary > Day 3",
+      "reasoning": "Day 3 contains the Stakeholder Presentation (9:00 AM–11:00 AM) and the Art Gallery of Ontario POI at 12:00 PM, so this is the correct place to insert a coffee break between 11:00 AM and noon. There is no existing mid-morning cafe entry on this day, and the AGO POI notes proximity to a gallery cafe."
+    }
+  ],
+  "raw_result": {
+    "timestamp": "20260203_120810_129837",
+    "user_query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+    "task_query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+    "operation": "READ",
+    "success": true,
+    "version_resolution": {
+      "selector_type": "at",
+      "semantic_query": null,
+      "index": -1,
+      "crud_operation": "Read",
+      "raw_response": "",
+      "task_query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+      "token_usage": {
+        "prompt_tokens": 1000,
+        "completion_tokens": 256,
+        "total_tokens": 1256
+      }
+    },
+    "parsed_query": {
+      "operation": "Read",
+      "xpath": "/Itinerary/Day[3]",
+      "full_query": "Read(/Itinerary/Day[3])",
+      "token_usage": {
+        "prompt_tokens": 2071,
+        "completion_tokens": 273,
+        "total_tokens": 2344
+      }
+    },
+    "version_used": "5",
+    "xpath_execution": {
+      "query": "/Root/Itinerary_Version[5]/Itinerary/Day[3]",
+      "matched_count": 1,
+      "execution_time_ms": 0.2383999526500702,
+      "token_usage": null
+    },
+    "handler_result": {
+      "success": true,
+      "operation": "READ",
+      "processing_time_ms": 13470.799300004728,
+      "output": {
+        "selected_nodes": [
+          {
+            "tree_path": "Root > Itinerary_Version 5 > Itinerary > Day 3",
+            "node_data": {
+              "type": "Day",
+              "attributes": {
+                "index": "3"
+              }
+            },
+            "reasoning": "Day 3 contains the Stakeholder Presentation (9:00 AM–11:00 AM) and the Art Gallery of Ontario POI at 12:00 PM, so this is the correct place to insert a coffee break between 11:00 AM and noon. There is no existing mid-morning cafe entry on this day, and the AGO POI notes proximity to a gallery cafe."
+          }
+        ]
+      },
+      "token_usage": {
+        "prompt_tokens": 1136,
+        "completion_tokens": 780,
+        "total_tokens": 1916
+      }
+    },
+    "timing": {
+      "stages": [
+        {
+          "name": "version_resolution",
+          "time_ms": 5940.19,
+          "token_usage": {
+            "prompt_tokens": 1000,
+            "completion_tokens": 256,
+            "total_tokens": 1256
+          }
+        },
+        {
+          "name": "version_lookup",
+          "time_ms": 0.01
+        },
+        {
+          "name": "query_generation",
+          "time_ms": 6070.94,
+          "token_usage": {
+            "prompt_tokens": 2071,
+            "completion_tokens": 273,
+            "total_tokens": 2344
+          }
+        },
+        {
+          "name": "xpath_execution",
+          "time_ms": 1.68
+        },
+        {
+          "name": "downstream_task",
+          "time_ms": 13471.83,
+          "token_usage": {
+            "prompt_tokens": 1136,
+            "completion_tokens": 780,
+            "total_tokens": 1916
+          }
+        }
+      ],
+      "total_time_ms": 25484.65,
+      "total_tokens": {
+        "prompt_tokens": 4207,
+        "completion_tokens": 1309,
+        "total_tokens": 5516
+      },
+      "pipeline_total_ms": 25487.82060004305
+    },
+    "candidates_count": 1,
+    "selected_count": 1,
+    "selected_nodes": [
+      {
+        "type": "Day",
+        "attributes": {
+          "index": "3"
+        },
+        "tree_path": "Root > Itinerary_Version 5 > Itinerary > Day 3",
+        "reasoning": "Day 3 contains the Stakeholder Presentation (9:00 AM–11:00 AM) and the Art Gallery of Ontario POI at 12:00 PM, so this is the correct place to insert a coffee break between 11:00 AM and noon. There is no existing mid-morning cafe entry on this day, and the AGO POI notes proximity to a gallery cafe."
+      }
+    ],
+    "total_time_ms": 25487.82060004305
+  }
+}

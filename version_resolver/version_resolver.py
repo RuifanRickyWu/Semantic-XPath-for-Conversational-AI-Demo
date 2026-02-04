@@ -159,7 +159,7 @@ class VersionResolver:
             prompt,
             system_prompt=self.system_prompt.format(schema_name=self._schema_name),
             temperature=0.1,
-            max_tokens=256
+            max_tokens=1024
         )
         
         raw_response = result.content.strip()

@@ -1,0 +1,4 @@
+2026-02-03 23:34:44,746 - INFO - Query: Identify days where no restaurant is described as expensive or formal.
+2026-02-03 23:34:44,746 - INFO - Running query 9: Identify days where no restaurant is described as expensive or formal.
+2026-02-03 23:35:19,278 - INFO -   Operation: READ, Success: True, Time: 34532.0ms
+2026-02-03 23:35:19,278 - INFO - Result: READ, Success: True

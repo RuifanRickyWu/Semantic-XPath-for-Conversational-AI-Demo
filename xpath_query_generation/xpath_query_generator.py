@@ -192,7 +192,7 @@ class XPathQueryGenerator:
             prompt,
             system_prompt=self.system_prompt,
             temperature=0.1,
-            max_tokens=512
+            max_tokens=2048
         )
         
         response = result.content

@@ -45,6 +45,183 @@ def format_node_details(node: Dict[str, Any], indent: str = "") -> List[str]:
     return lines
 
 
+
+def format_incontext_stats(base_dir: Path, pipeline: str) -> List[str]:
+    """Format simple stats table for incontext pipeline."""
+    lines = []
+    pipeline_dir = base_dir / pipeline
+    
+    if not pipeline_dir.exists():
+        return lines
+    
+    query_count = 0
+    total_time_ms = 0
+    total_tokens = 0
+    
+    # Try both new folder structure and legacy flat structure
+    result_files = sorted(glob.glob(str(pipeline_dir / "query_*" / "result.json")))
+    if not result_files:
+        result_files = sorted(glob.glob(str(pipeline_dir / "query_*_result.json")))
+
+    for result_file in result_files:
+        try:
+            with open(result_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            # Extract top-level stats
+            # Fallback to 0 if missing
+            t_ms = data.get("execution_time_ms", 0)
+            
+            usage = data.get("token_usage", {})
+            tokens = usage.get("total_tokens", 0)
+            
+            # Simple validation: if 0, try raw_result
+            if t_ms == 0:
+                t_ms = data.get("raw_result", {}).get("execution_time_ms", 0)
+            if tokens == 0:
+                tokens = data.get("raw_result", {}).get("token_usage", {}).get("total_tokens", 0)
+            
+            total_time_ms += t_ms
+            total_tokens += tokens
+            query_count += 1
+            
+        except Exception:
+            continue
+            
+    if query_count == 0:
+        return lines
+
+    avg_time_s = (total_time_ms / query_count) / 1000
+    avg_tokens = total_tokens / query_count
+    total_time_s = total_time_ms / 1000
+    
+    lines.append(f"### Performance Summary ({query_count} queries)")
+    lines.append("")
+    lines.append("| Metric | Total | Average per Query |")
+    lines.append("|---|---|---|")
+    lines.append(f"| Time | {total_time_s:.2f}s | {avg_time_s:.2f}s |")
+    lines.append(f"| Tokens | {total_tokens:,.0f} | {avg_tokens:,.0f} |")
+    lines.append("")
+    
+    return lines
+
+
+def format_stage_breakdown(base_dir: Path, pipeline: str) -> List[str]:
+    """Format stage-by-stage timing and token breakdown for a pipeline."""
+    lines = []
+    pipeline_dir = base_dir / pipeline
+    
+    if not pipeline_dir.exists():
+        return lines
+    
+    # Collect stage data from all result.json files
+    all_stages = {}
+    query_count = 0
+    
+    result_files = sorted(glob.glob(str(pipeline_dir / "query_*" / "result.json")))
+    
+    for result_file in result_files:
+        try:
+            with open(result_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            raw_result = data.get("raw_result", {})
+            timing = raw_result.get("timing", {})
+            stages = timing.get("stages", [])
+            
+            # Fallback for pipelines without detailed stages (e.g. incontext)
+            if not stages and "execution_time_ms" in data:
+                 stages = [{
+                     "name": "pipeline_execution",
+                     "time_ms": data.get("execution_time_ms", 0),
+                     "token_usage": data.get("token_usage", {})
+                 }]
+
+            if not stages:
+                continue
+            
+            query_count += 1
+            
+            for stage in stages:
+                name = stage.get("name", "unknown")
+                time_ms = stage.get("time_ms", 0)
+                token_usage = stage.get("token_usage", {})
+                
+                if name not in all_stages:
+                    all_stages[name] = {
+                        "total_time_ms": 0,
+                        "total_prompt_tokens": 0,
+                        "total_completion_tokens": 0,
+                        "total_tokens": 0,
+                        "count": 0
+                    }
+                
+                all_stages[name]["total_time_ms"] += time_ms
+                all_stages[name]["count"] += 1
+                if token_usage:
+                    all_stages[name]["total_prompt_tokens"] += token_usage.get("prompt_tokens", 0)
+                    all_stages[name]["total_completion_tokens"] += token_usage.get("completion_tokens", 0)
+                    all_stages[name]["total_tokens"] += token_usage.get("total_tokens", 0)
+        except Exception:
+            continue
+    
+    if not all_stages or query_count == 0:
+        return lines
+    
+    # Calculate totals
+    total_time = sum(s["total_time_ms"] for s in all_stages.values())
+    total_tokens = sum(s["total_tokens"] for s in all_stages.values())
+    
+    # Stage order
+    stage_order = ["version_resolution", "version_lookup", "query_generation", "xpath_execution", "downstream_task", "pipeline_execution"]
+    
+    lines.append(f"### Stage Breakdown ({query_count} queries)")
+    lines.append("")
+    lines.append("| Stage | Time (s) | Time % | Prompt | Completion | Total Tokens |")
+    lines.append("|-------|----------|--------|--------|------------|--------------|")
+    
+    for stage_name in stage_order:
+        if stage_name not in all_stages:
+            continue
+        stage = all_stages[stage_name]
+        time_s = stage["total_time_ms"] / 1000
+        time_pct = (stage["total_time_ms"] / total_time * 100) if total_time > 0 else 0
+        prompt = stage["total_prompt_tokens"]
+        completion = stage["total_completion_tokens"]
+        tokens = stage["total_tokens"]
+        
+        lines.append(f"| {stage_name} | {time_s:.1f}s | {time_pct:.1f}% | {prompt:,} | {completion:,} | {tokens:,} |")
+    
+    # Total row
+    total_prompt = sum(s["total_prompt_tokens"] for s in all_stages.values())
+    total_completion = sum(s["total_completion_tokens"] for s in all_stages.values())
+    lines.append(f"| **TOTAL** | **{total_time/1000:.1f}s** | **100%** | **{total_prompt:,}** | **{total_completion:,}** | **{total_tokens:,}** |")
+    lines.append("")
+    
+    # Averages per query
+    lines.append("**Averages per query:**")
+    lines.append("")
+    lines.append("| Stage | Avg Time | Avg Tokens |")
+    lines.append("|-------|----------|------------|")
+    
+    for stage_name in stage_order:
+        if stage_name not in all_stages:
+            continue
+        stage = all_stages[stage_name]
+        stage_count = stage["count"]
+        if stage_count == 0:
+            continue
+        avg_time = stage["total_time_ms"] / stage_count / 1000
+        avg_tokens = stage["total_tokens"] / stage_count
+        
+        lines.append(f"| {stage_name} | {avg_time:.2f}s | {avg_tokens:,.0f} |")
+    
+    lines.append(f"| **TOTAL** | **{total_time/query_count/1000:.2f}s** | **{total_tokens/query_count:,.0f}** |")
+    lines.append("")
+    
+    return lines
+
+
 def format_scoring_table(execution_trace: Dict[str, Any]) -> List[str]:
     """Format scoring details as a markdown table."""
     lines = []
@@ -88,56 +265,118 @@ def format_scoring_table(execution_trace: Dict[str, Any]) -> List[str]:
     # 3. Build Table Header
     # Columns: Node Name | C1 (Value1) | C2 (Value2) | ... | Final Score | Result
     
-    # Fallback if no node scores
     node_scores = scoring_result.get("node_scores", [])
     if not node_scores:
         return lines
         
+    # Analyze scoring structure to determine columns
+    # We want to drill down to find atomic predicates if possible
     first_node = node_scores[0]
     
-    # Analyze scoring structure of the first node to determine columns
-    # Common patterns:
-    # 1. AND/OR node: has 'child_scores' list (e.g. [score_a, score_b])
-    # 2. NOT node: has 'inner_score' (single value)
+    first_node = node_scores[0]
     
-    scoring_steps = first_node.get("scoring_steps", [])
-    child_scores_count = 0
-    column_type = "child" # or "inner" or "atomic" or "result_only"
-    
-    if scoring_steps:
-        first_step = scoring_steps[0] # The top-level composition
-        if "child_scores" in first_step:
-            child_scores_count = len(first_step["child_scores"])
-            column_type = "child"
-        elif "inner_score" in first_step:
-            child_scores_count = 1
-            column_type = "inner"
-        elif "score" in first_step:
-            child_scores_count = 1
-            column_type = "atomic"
-        elif "result" in first_step:
-            child_scores_count = 1
-            column_type = "result_only"
-    
-    # Try to map to semantic values if available
-    conditions_header = []
-    if semantic_values and len(semantic_values) == child_scores_count:
-        for i, val in enumerate(semantic_values):
-            conditions_header.append(f"C{i+1} ({val})")
-    else:
-        # Generic headers if no semantic map or mismatch
-        for i in range(child_scores_count):
-            if column_type == "inner":
-                conditions_header.append("Inner Score")
-            elif column_type == "atomic":
-                conditions_header.append("Pred Score")
-            elif column_type == "result_only":
-                conditions_header.append("Agg Score")
-            else:
-                conditions_header.append(f"C{i+1}")
+    # helper: recursively find atomic predicates in trace structure
+    def find_atomic_columns(step, context=""):
+        cols = []
+        step_type = step.get("type", "")
         
-    header = "| Node | " + " | ".join(conditions_header) + " | Final Score | Result |"
-    separator = "|---| " + " | ".join(["---"] * len(conditions_header)) + " |---|---|"
+        if step_type == "atom":
+            # Found one!
+            val = step.get("condition", {}).get("value", "unknown")
+            if context:
+                return [f"{val} ({context})"]
+            return [val]
+            
+        elif step_type == "not":
+            inner = step.get("inner_trace", [])
+            if inner:
+                return find_atomic_columns(inner[0], context)
+            
+        elif step_type == "agg_exists_recursive":
+            # Update context with child type if available
+            new_context = context
+            if "child_type" in step:
+                # Use strict type (ROI, Restaurant) or keep existing if nested
+                new_context = step["child_type"]
+            
+            # Check the trace of the best match
+            best_match = step.get("best_match_details")
+            if best_match and "trace" in best_match and best_match["trace"]:
+                return find_atomic_columns(best_match["trace"][0], new_context)
+            # If no best match details (e.g. empty set), we might still want to know what columns *would* be there
+            # But without a trace we can't be sure of the structure. 
+            # Fallback: check child_results if any exist (they might have traces)
+            # For now, if we can't find structure, we return empty.
+                
+        elif step_type in ("or", "and"):
+            # Check inner traces for children
+            inner_traces = step.get("inner_traces", [])
+            for trace in inner_traces:
+                if trace:
+                    cols.extend(find_atomic_columns(trace[0], context))
+            # If no inner traces but child scores exist (old trace format)
+            if not cols and "child_scores" in step:
+                 return [f"C{i+1}" for i in range(len(step["child_scores"]))]
+                 
+        return cols
+
+    # helper: extract scores for those columns
+    def extract_atomic_scores(step):
+        scores = []
+        step_type = step.get("type", "")
+        
+        if step_type == "atom":
+            return [step.get("score", 0.0)]
+            
+        elif step_type == "not":
+            inner = step.get("inner_trace", [])
+            if inner:
+                return extract_atomic_scores(inner[0])
+            
+        elif step_type == "agg_exists_recursive":
+            best_match = step.get("best_match_details")
+            if best_match and "trace" in best_match and best_match["trace"]:
+                return extract_atomic_scores(best_match["trace"][0])
+            # If no trace (e.g. no children found), we need to pad with 0.0s 
+            # BUT we don't know how many columns are missing.
+            # This is tricky. simpler to return empty and let the row padder handle it with 0.0s
+            # provided the column discovery found the columns from a "full" node.
+                
+        elif step_type in ("or", "and"):
+            inner_traces = step.get("inner_traces", [])
+            for trace in inner_traces:
+                if trace:
+                    scores.extend(extract_atomic_scores(trace[0]))
+                else:
+                    scores.append(0.0) # We might insert just one 0.0, but if that branch had multiple cols, alignment breaks. 
+                    # Ideally we need the schema of columns to pad correctly.
+                    # For now, let's assume 1-to-1 or that alignment drifts are acceptable/fixable by context.
+            if not scores and "child_scores" in step:
+                return step.get("child_scores", [])
+                
+        return scores
+
+    # Attempt to find columns from first node's trace
+    data_columns = []
+    # Find a node that has a "full" trace (meaning it found children) to determine column structure
+    # If the first node has empty children (no POIs), it won't reveal the "POI: work" column structure.
+    # So scan nodes until we find a good representative.
+    for node in node_scores:
+        if node.get("scoring_steps"):
+            cols = find_atomic_columns(node["scoring_steps"][0])
+            if len(cols) > len(data_columns):
+                 data_columns = cols
+    
+    # If discovery still empty (e.g. all empty), fall back
+    if not data_columns:
+        if semantic_values:
+            data_columns = semantic_values
+        else:
+            data_columns = ["Score"]
+
+    header_cols = [f"{c[:25]}..." if len(c) > 25 else c for c in data_columns]
+    header = "| Node | " + " | ".join(header_cols) + " | Final Score | Result |"
+    separator = "|---| " + " | ".join(["---"] * len(header_cols)) + " |---|---|"
     
     lines.append(f"**Predicate:** `{predicate}`")
     lines.append(f"**Threshold:** `{threshold}` | **Top-K:** `{top_k}`")
@@ -146,70 +385,38 @@ def format_scoring_table(execution_trace: Dict[str, Any]) -> List[str]:
     lines.append(separator)
     
     # 4. detailed rows
-    # Sort by node index to keep original order (Day 1, Day 2...)
     sorted_nodes = sorted(node_scores, key=lambda x: x.get("node_idx", 0))
     
     for node in sorted_nodes:
         name = node.get("node_name", "Unknown")
         final_score = node.get("final_score", 0.0)
         
-        # Get intermediate scores
         scores_to_display = []
-        if "scoring_steps" in node and node["scoring_steps"]:
-             step = node["scoring_steps"][0]
-             if column_type == "child":
-                 scores_to_display = step.get("child_scores", [])
-             elif column_type == "inner":
-                 scores_to_display = [step.get("inner_score", 0.0)]
-             elif column_type == "atomic":
-                 scores_to_display = [step.get("score", 0.0)]
-             elif column_type == "result_only":
-                 scores_to_display = [step.get("result", 0.0)]
+        if node.get("scoring_steps"):
+            scores_to_display = extract_atomic_scores(node["scoring_steps"][0])
         
-        # Format scores
+        # Padding
+        while len(scores_to_display) < len(data_columns):
+            scores_to_display.append(0.0)
+            
         scores_str = [f"{s:.4f}" for s in scores_to_display]
-        # Padding if missing
-        while len(scores_str) < len(conditions_header):
-            scores_str.append("-")
             
         final_score_str = f"{final_score:.4f}"
         
-        # Determine Result Status based on whether node made it to final candidates
-        # A node is a candidate if it's in the filtered_nodes list (passed threshold AND top-k)
+        # Result Status
         is_candidate = name in filtered_node_paths
         passed_threshold = final_score >= threshold
         
+        status = "❌ Filtered Out"
         if is_candidate:
             status = "✅ Candidate"
         elif passed_threshold:
-            # Passed threshold but didn't make top-k cut
-            status = "⚪ Above Threshold"
+             status = "⚪ Above Threshold"
         else:
-            # Failed threshold
-            status = "❌ Filtered Out"
-            
-            # Try to identify WHY it failed
-            if column_type == "child" and scores_to_display:
-                 min_val = min(scores_to_display)
-                 if abs(min_val - final_score) < 1e-6:
-                     # Find which index caused failure
-                     for i, s in enumerate(scores_to_display):
-                         if s == min_val:
-                             if i < len(semantic_values):
-                                 status += f" ({semantic_values[i]})"
-                             else:
-                                 status += f" (C{i+1})"
-                             break
-            elif column_type == "inner":
-                 # For NOT(X), if final score is low, it means inner score was high
-                 # so it was filtered out because of specific content
-                 if scores_to_display[0] > (1.0 - threshold):
-                      status += " (Matches constraint)"
-            elif column_type == "atomic":
-                 # Simple atomic fail
-                 pass 
-            elif column_type == "result_only":
-                 pass
+             # Try to explain generic failure
+             if len(scores_to_display) == 1 and scores_to_display[0] > 0.8:
+                 # Likely a NOT constraint match
+                 status += " (Matches constraint)"
 
         row = f"| {name} | " + " | ".join(scores_str) + f" | {final_score_str} | {status} |"
         lines.append(row)
@@ -427,6 +634,16 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
             output_lines.append(row)
         
         output_lines.append("")
+        
+        output_lines.append("")
+        
+        # Add stats table (pipeline specific)
+        if pipeline == "semantic_xpath":
+            stage_lines = format_stage_breakdown(base_dir, pipeline)
+            output_lines.extend(stage_lines)
+        elif pipeline == "incontext":
+            stats_lines = format_incontext_stats(base_dir, pipeline)
+            output_lines.extend(stats_lines)
 
     # Detailed sections (Optional)
     output_lines.append("")
@@ -494,6 +711,9 @@ def generate_markdown_report(experiment_name: str, pipelines: List[str]):
                              xml_content = node["xml"]
                              if xml_content.startswith("```"):
                                  xml_content = xml_content.split("\n", 1)[1].rsplit("\n", 1)[0]
+                             
+                             # Fix escaped quotes that may come from JSON serialization
+                             xml_content = xml_content.replace('\\"', '"').replace("\\'", "'")
                              
                              root = ET.fromstring(f"<wrapper>{xml_content}</wrapper>")
                              

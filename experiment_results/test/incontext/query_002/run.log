@@ -1,5 +1,0 @@
-2026-02-02 18:42:52,444 - INFO - Query: The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?
-2026-02-02 18:42:52,444 - INFO - Running query 2: The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?
-2026-02-02 18:42:55,006 - INFO -   Operation: READ, Success: True, Time: 2560.0ms
-2026-02-02 18:42:55,006 - INFO -   Tokens: 6602
-2026-02-02 18:42:55,006 - INFO - Result: READ, Success: True

@@ -15,24 +15,18 @@ Generate a single Semantic XPath query that retrieves the substructure of the
 conversational history that best satisfies the user request, subject to the
 given schema and syntax rules.
 
-## Schema
-
-{schema_structure}
-
-{grammar}
-
-## Syntax Rules
-
-{syntax_rules}
-
-{examples}
-
 ## Output Format
 
 - Output exactly one valid Semantic XPath query.
 - Output ONLY the XPath path (no operation prefix).
-- Do NOT include version selectors.
 - Do NOT include explanations, comments, or additional text.
-- Never use OR to join multiple paths; output exactly ONE query per request.
+- Output exactly ONE query per request.
 
-Now convert the following user request into a Semantic XPath query.
+## Schema
+{schema_structure}
+
+## Grammar
+{grammar}
+
+## Examples
+{examples}

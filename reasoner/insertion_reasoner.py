@@ -14,7 +14,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from client import get_client
+from client import get_default_client
 from .base import InsertionPoint
 
 
@@ -51,7 +51,7 @@ class InsertionReasoner:
     def client(self):
         """Lazy load the OpenAI client."""
         if self._client is None:
-            self._client = get_client()
+            self._client = get_default_client()
         return self._client
     
     @property

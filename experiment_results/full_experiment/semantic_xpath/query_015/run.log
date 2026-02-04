@@ -1,4 +1,0 @@
-2026-02-03 18:05:22,530 - INFO - Query: I just checked my spending and I'm way over budget. Replace all expensive dinners with a cheap eats placeholder and set cost to $10
-2026-02-03 18:05:22,530 - INFO - Running query 15: I just checked my spending and I'm way over budget. Replace all expensive dinners with a cheap eats placeholder and set cost to $10
-2026-02-03 18:06:22,573 - INFO -   Operation: UPDATE, Success: True, Time: 60043.2ms
-2026-02-03 18:06:22,573 - INFO - Result: UPDATE, Success: True

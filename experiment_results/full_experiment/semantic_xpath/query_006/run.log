@@ -1,4 +1,0 @@
-2026-02-03 18:01:40,695 - INFO - Query: It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.
-2026-02-03 18:01:40,695 - INFO - Running query 6: It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.
-2026-02-03 18:01:59,445 - INFO -   Operation: DELETE, Success: True, Time: 18751.4ms
-2026-02-03 18:01:59,445 - INFO - Result: DELETE, Success: True

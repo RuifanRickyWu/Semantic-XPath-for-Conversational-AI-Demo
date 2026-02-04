@@ -1,0 +1,4 @@
+2026-02-03 23:35:44,822 - INFO - Query: Find restaurants serving French or Japanese cuisine.
+2026-02-03 23:35:44,822 - INFO - Running query 11: Find restaurants serving French or Japanese cuisine.
+2026-02-03 23:36:08,545 - INFO -   Operation: READ, Success: True, Time: 23723.8ms
+2026-02-03 23:36:08,546 - INFO - Result: READ, Success: True

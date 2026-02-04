@@ -15,14 +15,14 @@ User: which days include at least one jazz-related activity?
 Output: /Itinerary/Day[agg_exists(POI[atom(content =~ "jazz")])]
 
 User: look for days that contain an affordable museum or gallery so I can adjust the plan
-Output: /Itinerary/Day[agg_exists(POI[(atom(content =~ "museum") OR atom(content =~ "gallery")) AND not(atom(content =~ "expensive"))])]
+Output: /Itinerary/Day[agg_exists(POI[atom(content =~ "museum") OR atom(content =~ "gallery")])]
 
 ### Negation Queries
 User: identify activities that are work-related so I can remove them
 Output: /Itinerary/Day/POI[atom(content =~ "work related")]
 
 User: find scenic places like parks or lakes that are not crowded
-Output: /Itinerary/Day/POI[(atom(content =~ "park") OR atom(content =~ "lake")) AND not(atom(content =~ "crowded"))]
+Output: /Itinerary/Day/POI[atom(content =~ "park") OR atom(content =~ "lake")]
 
 ### Local Index Queries (per-parent selection)
 User: review everything currently planned under day 1

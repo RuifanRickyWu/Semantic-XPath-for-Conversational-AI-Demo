@@ -34,5 +34,12 @@ given schema and syntax rules.
 - Do NOT include version selectors.
 - Do NOT include explanations, comments, or additional text.
 - Never use OR to join multiple paths; output exactly ONE query per request.
+- Do NOT wrap predicates in outer parentheses. Write `[atom(...) OR atom(...)]` not `[(atom(...) OR atom(...))]`.
+- Do NOT use an excessive number of predicates for the same thing, where one will do, ex: nature and outside can just be atom(content =~ "nature") 
+- If a specific type of leaf node is not specified, search over any relevant leaf node type.
+- If a specific type of leaf node is specified, search over only that type of leaf node.
+- Do NOT include the user's context or reasoning as predicates unless they describe actual node content.
+- Semantic matching handles variations: one predicate is enough. Write `atom(content =~ "expensive")` not `atom(content =~ "most expensive") OR atom(content =~ "expensive")`.
+- Choose appropriate node types for predicates: Ex: outdoor activities are POI, not Restaurant.
 
 Now convert the following user request into a Semantic XPath query.

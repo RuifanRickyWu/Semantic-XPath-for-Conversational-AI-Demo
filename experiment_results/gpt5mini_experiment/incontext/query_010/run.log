@@ -1,5 +1,0 @@
-2026-02-03 12:19:12,993 - INFO - Query: I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.
-2026-02-03 12:19:12,993 - INFO - Running query 10: I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.
-2026-02-03 12:21:07,692 - INFO -   Operation: DELETE, Success: True, Time: 114696.4ms
-2026-02-03 12:21:07,692 - INFO -   Tokens: 10681
-2026-02-03 12:21:07,692 - INFO - Result: DELETE, Success: True

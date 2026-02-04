@@ -1,5 +1,0 @@
-2026-02-03 12:12:34,265 - INFO - Query: I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.
-2026-02-03 12:12:34,265 - INFO - Running query 6: I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.
-2026-02-03 12:14:24,061 - INFO -   Operation: DELETE, Success: True, Time: 109787.9ms
-2026-02-03 12:14:24,061 - INFO -   Tokens: 13590
-2026-02-03 12:14:24,061 - INFO - Result: DELETE, Success: True

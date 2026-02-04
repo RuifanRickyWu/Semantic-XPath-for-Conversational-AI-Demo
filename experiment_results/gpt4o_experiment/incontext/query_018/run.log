@@ -1,0 +1,5 @@
+2026-02-03 21:02:17,029 - INFO - Query: I had a long day so am going to sleep in tomorrow. Change my Leslieville brunch to a dedicated sleep in time block
+2026-02-03 21:02:17,029 - INFO - Running query 18: I had a long day so am going to sleep in tomorrow. Change my Leslieville brunch to a dedicated sleep in time block
+2026-02-03 21:03:16,113 - INFO -   Operation: UPDATE, Success: True, Time: 59076.1ms
+2026-02-03 21:03:16,114 - INFO -   Tokens: 11141
+2026-02-03 21:03:16,114 - INFO - Result: UPDATE, Success: True

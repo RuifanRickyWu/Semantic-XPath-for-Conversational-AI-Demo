@@ -1,4 +1,0 @@
-2026-02-03 18:00:40,307 - INFO - Query: I'm putting together my expense report. What are the most expensive restaurants I've booked?
-2026-02-03 18:00:40,307 - INFO - Running query 4: I'm putting together my expense report. What are the most expensive restaurants I've booked?
-2026-02-03 18:01:05,792 - INFO -   Operation: READ, Success: True, Time: 25481.6ms
-2026-02-03 18:01:05,792 - INFO - Result: READ, Success: True

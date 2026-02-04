@@ -1,5 +1,0 @@
-2026-02-03 18:12:02,830 - INFO - Query: I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.
-2026-02-03 18:12:02,830 - INFO - Running query 7: I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.
-2026-02-03 18:13:28,268 - INFO -   Operation: DELETE, Success: True, Time: 85433.0ms
-2026-02-03 18:13:28,268 - INFO -   Tokens: 12922
-2026-02-03 18:13:28,268 - INFO - Result: DELETE, Success: True

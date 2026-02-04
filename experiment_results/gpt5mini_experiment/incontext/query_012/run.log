@@ -1,5 +1,0 @@
-2026-02-03 12:22:31,805 - INFO - Query: The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.
-2026-02-03 12:22:31,805 - INFO - Running query 12: The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.
-2026-02-03 12:24:06,770 - INFO -   Operation: CREATE, Success: True, Time: 94961.9ms
-2026-02-03 12:24:06,770 - INFO -   Tokens: 10832
-2026-02-03 12:24:06,770 - INFO - Result: CREATE, Success: True

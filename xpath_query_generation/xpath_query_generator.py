@@ -20,7 +20,7 @@ from enum import Enum
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from client import get_client
+from client import get_default_client
 from dense_xpath.schema_loader import get_schema_info, get_schema_summary_for_prompt
 
 # Prompts directory
@@ -114,7 +114,7 @@ class XPathQueryGenerator:
     def client(self):
         """Lazy load the OpenAI client."""
         if self._client is None:
-            self._client = get_client()
+            self._client = get_default_client()
         return self._client
     
     @property
@@ -161,15 +161,11 @@ class XPathQueryGenerator:
         # Generate schema structure from schema definition
         schema_structure = get_schema_summary_for_prompt(self._schema_name)
         
-        # Get syntax rules from schema config
-        syntax_rules = self._schema_info.get("syntax_rules", "").strip()
-        
         # Substitute placeholders
         prompt = template.format(
             schema_name=self._schema_name,
             schema_structure=schema_structure,
             grammar=grammar,
-            syntax_rules=syntax_rules,
             examples=examples
         )
         

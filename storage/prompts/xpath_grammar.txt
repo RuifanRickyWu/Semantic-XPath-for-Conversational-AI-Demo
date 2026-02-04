@@ -32,7 +32,7 @@ Index operator:
 Local predicate operator:
 - `atom(content =~ "value")`:
   evaluates whether the node’s local textual content (attributes or description)
-  semantically matches `"value"`.
+  semantically matches `"value"`. keep a single atom(content =~ "value") and let "value" represent the semantic concept, including its close paraphrases and synonyms implicitly.
 Aggregation predicate operator:
 - `agg_exists(evidence_node_predicate)`:
   evaluates whether ANY evidence node satisfies the inner predicate.
@@ -44,5 +44,5 @@ Evidence node predicate:
   that can be evaluated from node-local information.
 Composite predicate operators:
 - `Predicate AND Predicate`: conjunction (both must be satisfied).
-- `Predicate OR Predicate`: disjunction (at least one must be satisfied).
+- `Predicate OR Predicate`: disjunction (at least one must be satisfied). Use OR only when the user request explicitly describes multiple distinct intents/categories, not for synonym expansion.
 - `not(Predicate)`: negation.

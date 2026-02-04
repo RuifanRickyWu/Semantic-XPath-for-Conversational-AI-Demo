@@ -6,11 +6,19 @@ active_data: "travel_toronto_10day" # Options: travel_memory_3day, travel_memory
 # Note: The system now uses in-tree versioning - all operations create new Version nodes
 # within the tree itself, enabling full history tracking and version-based queries.
 
+# LLM Client configuration
+# Model options: "gpt-4o", "gpt-5", "gpt-5-mini", "o1", "o3-mini", etc.
 openai:
   api_key: "${OPENAI_API_KEY}"
   model: "gpt-5-mini"
-  temperature: 0
   max_tokens: 16384
+  
+  # For GPT-4 series: temperature controls creativity (0-1)
+  temperature: 0
+  
+  # For GPT-5/o1/o3 series: reasoning_effort controls reasoning depth
+  # Options: none (fastest), low, medium (default), high, xhigh (deepest)
+  reasoning_effort: "low"
 
 xpath_executor:
   top_k: 5

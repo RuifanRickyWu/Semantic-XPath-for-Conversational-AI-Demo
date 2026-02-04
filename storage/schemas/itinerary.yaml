@@ -1,38 +1,21 @@
 # Itinerary Tree Schema
-# Defines the structure for travel itinerary trees with versioning
+# Defines the structure for travel itinerary trees
 
 name: "itinerary"
-description: "Travel itinerary with versioning, days, POIs and restaurants"
+description: "Travel itinerary with days, POIs and restaurants"
 
 # Tree hierarchy (for documentation and LLM prompt generation)
 hierarchy: |
-  Root (root node)
-  └── Itinerary_Version (container, indexed by @number)
-      ├── patch_info: describes changes made in this version
-      ├── conversation_history: user's natural language request
-      └── Itinerary (container)
-          └── Day (container, indexed by @index)
-              ├── POI (leaf)
-              └── Restaurant (leaf)
+  Itinerary (root)
+  └── Day (container, indexed by @index)
+      ├── POI (leaf)
+      └── Restaurant (leaf)
 
 # Node type definitions with fields
 nodes:
-  Root:
+  Itinerary:
     type: root
     fields: []
-    children: ["Itinerary_Version"]
-
-  Itinerary_Version:
-    type: container
-    index_attr: "number"  # Uses <Itinerary_Version number="1"> for identification
-    fields:
-      - patch_info
-      - conversation_history
-    children: ["Itinerary"]
-
-  Itinerary:
-    type: container
-    fields: []  # Container node - no direct content fields
     children: ["Day"]
 
   Day:
@@ -76,13 +59,3 @@ default_data: "travel_memory_3day"
 
 # XPath query generation prompt components
 examples_file: "prompts/xpath_examples_itinerary.txt"
-
-# Syntax rules specific to this schema
-syntax_rules: |
-  - Paths start with /Itinerary
-  - Node types: Itinerary, Day, POI, Restaurant
-  - Indices: Day[2], POI[2], POI[-1], POI[1:3] (bracket notation for all node types)
-  - Logical: AND / OR / not() combine predicates WITHIN brackets (e.g., [A OR B], [not(A)]), never between paths
-
-# Associated prompt file for version resolution (new 2-stage approach)
-version_resolver_prompt: "prompts/version_resolver.txt"

@@ -23,7 +23,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from client import get_client
+from client import get_default_client
 from dense_xpath.schema_loader import get_schema_info
 from xpath_query_generation import CRUDOperation
 
@@ -131,7 +131,7 @@ class VersionResolver:
     def client(self):
         """Lazy load the OpenAI client."""
         if self._client is None:
-            self._client = get_client()
+            self._client = get_default_client()
         return self._client
     
     @property

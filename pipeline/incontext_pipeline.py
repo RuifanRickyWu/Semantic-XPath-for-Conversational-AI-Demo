@@ -33,7 +33,8 @@ import sys
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from client.openai_client import OpenAIClient, TokenUsage, CompletionResult, load_config
+from client import get_default_client, TokenUsage, CompletionResult
+from client.openai_client import load_config
 
 
 @dataclass
@@ -133,7 +134,7 @@ class IncontextPipeline:
     def __init__(self, tree_path: Path = None, config_override: Dict[str, Any] = None):
         """Initialize the pipeline."""
         self.config = load_config()
-        self.client = OpenAIClient(self.config)
+        self.client = get_default_client()
         
         # Load pipeline-specific LLM settings
         pipeline_config = self.config.get("incontext_pipeline", {})

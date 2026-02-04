@@ -1,13 +1,28 @@
+"""
+OpenAI Client - Unified client for OpenAI models.
+
+Supports:
+- GPT-4 series: Uses temperature for creativity control
+- GPT-5 series: Uses reasoning_effort for reasoning depth control
+- o1/o3 series: Uses reasoning_effort for reasoning depth control
+
+Configuration is loaded from config.yaml:
+- model: "gpt-4o", "gpt-5", "gpt-5-mini", etc.
+- temperature: 0-1 (for GPT-4 series)
+- reasoning_effort: none/low/medium/high/xhigh (for GPT-5/o1/o3 series)
+"""
+
 import os
 import yaml
 from pathlib import Path
-from typing import Tuple, Dict, Any
+from typing import Dict, Any
 from dataclasses import dataclass
 from openai import OpenAI
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+
 
 def load_config() -> dict:
     """Load configuration from config.yaml with env var substitution."""
@@ -63,13 +78,25 @@ class CompletionResult:
 
 
 class OpenAIClient:
-    """OpenAI API client wrapper"""
+    """
+    Unified OpenAI API client.
+    
+    Automatically handles model-specific parameters:
+    - GPT-4 series: temperature for creativity control
+    - GPT-5/o1/o3 series: reasoning_effort for reasoning depth
+    """
     
     # Models that use max_completion_tokens instead of max_tokens
     NEW_API_MODELS = ["gpt-5", "o1", "o3"]
     
-    # Models that don't support custom temperature (only default=1)
-    NO_TEMPERATURE_MODELS = ["gpt-5-mini", "gpt-5-nano", "o1-mini", "o1-preview", "o3-mini"]
+    # Models that don't support custom temperature (reasoning models)
+    NO_TEMPERATURE_MODELS = ["gpt-5", "o1", "o3"]
+    
+    # Models that support reasoning effort parameter
+    REASONING_MODELS = ["gpt-5", "o1", "o3"]
+    
+    # Valid reasoning effort values
+    VALID_REASONING_EFFORTS = ["none", "low", "medium", "high", "xhigh"]
     
     def __init__(self, config: dict = None):
         if config is None:
@@ -77,27 +104,38 @@ class OpenAIClient:
         
         self.config = config["openai"]
         self.client = OpenAI(api_key=self.config["api_key"])
-        self.model = self.config.get("model", "gpt-4")
-        self.temperature = self.config.get("temperature", 0.7)
+        self.model = self.config.get("model", "gpt-4o")
         self.max_tokens = self.config.get("max_tokens", 4096)
+        
+        # Model-specific defaults
+        if self._is_reasoning_model(self.model):
+            # GPT-5/o1/o3: use reasoning_effort, ignore temperature
+            self.reasoning_effort = self.config.get("reasoning_effort", "medium")
+            self.temperature = None
+        else:
+            # GPT-4: use temperature, no reasoning_effort
+            self.temperature = self.config.get("temperature", 0.7)
+            self.reasoning_effort = None
+    
+    def _is_reasoning_model(self, model: str) -> bool:
+        """Check if model is a reasoning model (GPT-5/o1/o3)."""
+        model_lower = model.lower()
+        return any(model_lower.startswith(prefix) for prefix in self.REASONING_MODELS)
     
     def _uses_new_api(self, model: str) -> bool:
         """Check if model uses the new API with max_completion_tokens."""
         model_lower = model.lower()
         return any(model_lower.startswith(prefix) for prefix in self.NEW_API_MODELS)
     
-    def _supports_temperature(self, model: str) -> bool:
-        """Check if model supports custom temperature setting."""
-        model_lower = model.lower()
-        return not any(model_lower.startswith(prefix) for prefix in self.NO_TEMPERATURE_MODELS)
-    
-    def _build_completion_kwargs(self, model: str, temperature: float, max_tokens: int) -> dict:
+    def _build_completion_kwargs(
+        self, 
+        model: str, 
+        max_tokens: int,
+        temperature: float = None,
+        reasoning_effort: str = None
+    ) -> dict:
         """Build kwargs for completion API, handling model-specific parameters."""
         kwargs = {"model": model}
-        
-        # Only add temperature if the model supports it
-        if self._supports_temperature(model):
-            kwargs["temperature"] = temperature
         
         # Use appropriate token limit parameter based on model
         if self._uses_new_api(model):
@@ -105,31 +143,64 @@ class OpenAIClient:
         else:
             kwargs["max_tokens"] = max_tokens
         
+        # Model-specific parameters
+        if self._is_reasoning_model(model):
+            # Reasoning models: use reasoning_effort (top-level parameter)
+            if reasoning_effort and reasoning_effort in self.VALID_REASONING_EFFORTS:
+                kwargs["reasoning_effort"] = reasoning_effort
+        else:
+            # Traditional models: use temperature
+            if temperature is not None:
+                kwargs["temperature"] = temperature
+        
         return kwargs
     
     def chat(self, messages: list[dict], **kwargs) -> str:
-        """Send a chat completion request"""
+        """Send a chat completion request."""
         model = kwargs.get("model", self.model)
-        temperature = kwargs.get("temperature", self.temperature)
         max_tokens = kwargs.get("max_tokens", self.max_tokens)
+        temperature = kwargs.get("temperature", self.temperature)
+        reasoning_effort = kwargs.get("reasoning_effort", self.reasoning_effort)
         
-        completion_kwargs = self._build_completion_kwargs(model, temperature, max_tokens)
+        completion_kwargs = self._build_completion_kwargs(
+            model, max_tokens, temperature, reasoning_effort
+        )
         completion_kwargs["messages"] = messages
         
-        response = self.client.chat.completions.create(**completion_kwargs)
+        try:
+            response = self.client.chat.completions.create(**completion_kwargs)
+        except TypeError as e:
+            if "reasoning_effort" in str(e):
+                # Library doesn't support reasoning_effort yet, retry without it
+                completion_kwargs.pop("reasoning_effort", None)
+                response = self.client.chat.completions.create(**completion_kwargs)
+            else:
+                raise
+        
         content = response.choices[0].message.content
         return content if content is not None else ""
     
     def chat_with_usage(self, messages: list[dict], **kwargs) -> CompletionResult:
         """Send a chat completion request and return response with token usage."""
         model = kwargs.get("model", self.model)
-        temperature = kwargs.get("temperature", self.temperature)
         max_tokens = kwargs.get("max_tokens", self.max_tokens)
+        temperature = kwargs.get("temperature", self.temperature)
+        reasoning_effort = kwargs.get("reasoning_effort", self.reasoning_effort)
         
-        completion_kwargs = self._build_completion_kwargs(model, temperature, max_tokens)
+        completion_kwargs = self._build_completion_kwargs(
+            model, max_tokens, temperature, reasoning_effort
+        )
         completion_kwargs["messages"] = messages
         
-        response = self.client.chat.completions.create(**completion_kwargs)
+        try:
+            response = self.client.chat.completions.create(**completion_kwargs)
+        except TypeError as e:
+            if "reasoning_effort" in str(e):
+                # Library doesn't support reasoning_effort yet, retry without it
+                completion_kwargs.pop("reasoning_effort", None)
+                response = self.client.chat.completions.create(**completion_kwargs)
+            else:
+                raise
         
         usage = TokenUsage(
             prompt_tokens=response.usage.prompt_tokens,
@@ -142,13 +213,10 @@ class OpenAIClient:
         if content is None:
             content = ""
         
-        return CompletionResult(
-            content=content,
-            usage=usage
-        )
+        return CompletionResult(content=content, usage=usage)
     
     def complete(self, prompt: str, system_prompt: str = None, **kwargs) -> str:
-        """Simple completion with optional system prompt"""
+        """Simple completion with optional system prompt."""
         messages = []
         if system_prompt:
             messages.append({"role": "system", "content": system_prompt})
@@ -164,15 +232,21 @@ class OpenAIClient:
         return self.chat_with_usage(messages, **kwargs)
 
 
-# Convenience function to get a client instance
 def get_client() -> OpenAIClient:
-    """Get an OpenAI client instance"""
+    """Get an OpenAI client instance based on config.yaml settings."""
     return OpenAIClient()
 
 
 if __name__ == "__main__":
     # Quick test
     client = get_client()
+    print(f"Model: {client.model}")
+    print(f"Reasoning model: {client._is_reasoning_model(client.model)}")
+    if client.reasoning_effort:
+        print(f"Reasoning effort: {client.reasoning_effort}")
+    if client.temperature is not None:
+        print(f"Temperature: {client.temperature}")
+    
     response = client.complete("Say hello in one word.")
     print(f"Response: {response}")
 

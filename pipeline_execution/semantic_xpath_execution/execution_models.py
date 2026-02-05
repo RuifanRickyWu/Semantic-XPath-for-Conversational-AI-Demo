@@ -132,6 +132,99 @@ class FinalFilteringTrace:
 
 
 @dataclass
+class ParsedQueryAST:
+    """Parsed AST representation for tracing and debugging."""
+    steps: List[Dict[str, Any]] = field(default_factory=list)
+    global_index: Optional[Dict[str, Any]] = None
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "steps": self.steps,
+            "global_index": self.global_index,
+        }
+    
+    def to_tree_string(self, indent: int = 2) -> str:
+        """Generate a human-readable tree representation of the AST."""
+        lines = ["Query AST:"]
+        for i, step in enumerate(self.steps):
+            prefix = "├── " if i < len(self.steps) - 1 else "└── "
+            axis = step.get("axis", "child")
+            axis_str = f"{axis}::" if axis != "child" else ""
+            node_type = step.get("node_type", "?")
+            lines.append(f"{prefix}Step {i}: {axis_str}{node_type}")
+            
+            # Index
+            if step.get("index"):
+                idx = step["index"]
+                idx_str = f"[{idx.get('start', '?')}"
+                if idx.get("to_end"):
+                    idx_str += ":]"
+                elif idx.get("end"):
+                    idx_str += f":{idx['end']}]"
+                else:
+                    idx_str += "]"
+                lines.append(f"    │   index: {idx_str}")
+            
+            # Predicate AST
+            if step.get("predicate_ast"):
+                lines.append(f"    │   predicate:")
+                pred_lines = _format_predicate_ast(step["predicate_ast"], depth=2)
+                lines.extend(pred_lines)
+        
+        if self.global_index:
+            lines.append(f"Global Index: [{self.global_index.get('start', '?')}]")
+        
+        return "\n".join(lines)
+
+
+def _format_predicate_ast(pred: Dict[str, Any], depth: int = 0) -> List[str]:
+    """Recursively format a predicate AST node as tree lines."""
+    indent = "    " * depth + "│   "
+    lines = []
+    
+    pred_type = pred.get("type") or pred.get("operator", "unknown")
+    
+    if pred_type == "atom":
+        lines.append(f"{indent}└── ATOM({pred.get('field', 'content')} =~ \"{pred.get('value', '')}\")")
+    
+    elif pred_type == "AND":
+        lines.append(f"{indent}└── AND")
+        for i, cond in enumerate(pred.get("conditions", [])):
+            lines.extend(_format_predicate_ast(cond, depth + 1))
+    
+    elif pred_type == "OR":
+        lines.append(f"{indent}└── OR")
+        for cond in pred.get("conditions", []):
+            lines.extend(_format_predicate_ast(cond, depth + 1))
+    
+    elif pred_type == "NOT":
+        lines.append(f"{indent}└── NOT")
+        if pred.get("condition"):
+            lines.extend(_format_predicate_ast(pred["condition"], depth + 1))
+    
+    elif pred_type == "AGG_EXISTS":
+        child_type = pred.get("child_type", "*")
+        axis = pred.get("child_axis", "child")
+        axis_str = f"{axis}::" if axis != "child" else ""
+        lines.append(f"{indent}└── AGG_EXISTS({axis_str}{child_type})")
+        if pred.get("child_predicate"):
+            lines.extend(_format_predicate_ast(pred["child_predicate"], depth + 1))
+    
+    elif pred_type == "AGG_PREV":
+        child_type = pred.get("child_type", "*")
+        axis = pred.get("child_axis", "child")
+        axis_str = f"{axis}::" if axis != "child" else ""
+        lines.append(f"{indent}└── AGG_PREV({axis_str}{child_type})")
+        if pred.get("child_predicate"):
+            lines.extend(_format_predicate_ast(pred["child_predicate"], depth + 1))
+    
+    else:
+        lines.append(f"{indent}└── {pred_type}: {pred}")
+    
+    return lines
+
+
+@dataclass
 class ExecutionResult:
     """Result of executing an XPath query."""
     query: str
@@ -144,3 +237,4 @@ class ExecutionResult:
     data_file: str = ""
     score_fusion_trace: Optional[ScoreFusionTrace] = None
     final_filtering_trace: Optional[FinalFilteringTrace] = None
+    parsed_ast: Optional[ParsedQueryAST] = None

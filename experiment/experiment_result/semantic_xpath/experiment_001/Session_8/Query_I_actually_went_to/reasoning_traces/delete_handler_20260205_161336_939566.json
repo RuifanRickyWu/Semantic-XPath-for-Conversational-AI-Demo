@@ -1,0 +1,16 @@
+{
+  "user_query": "I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.",
+  "candidates_count": 5,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+    "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower"
+  ],
+  "reasoning": "Both CN Tower-related items are on Day 10 (EdgeWalk POI and 360 Restaurant). No other candidates reference the CN Tower, so only those two nodes match the user's request to remove any CN Tower activities.",
+  "raw_response": "{\n  \"nodes_to_delete\": [\n    {\n      \"id\": \"Day10_CN_Tower_EdgeWalk\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk\",\n      \"reasoning\": \"Direct CN Tower activity (EdgeWalk) on Day 10 matching 'CN Tower activities' to remove.\"\n    },\n    {\n      \"id\": \"Day10_360_Restaurant_at_CN_Tower\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower\",\n      \"reasoning\": \"Restaurant explicitly located at CN Tower on Day 10; counts as a CN Tower activity to remove.\"\n    }\n  ],\n  \"reasoning\": \"Both CN Tower-related items are on Day 10 (EdgeWalk POI and 360 Restaurant). No other candidates reference the CN Tower, so only those two nodes match the user's request to remove any CN Tower activities.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 2655,
+    "completion_tokens": 472,
+    "total_tokens": 3127
+  },
+  "processing_time_ms": 7503.913124999997
+}

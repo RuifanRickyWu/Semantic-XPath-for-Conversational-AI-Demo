@@ -40,7 +40,8 @@ from pipeline_execution.semantic_xpath_parsing.parsing_models import IndexRange,
 from pipeline_execution.semantic_xpath_parsing.predicate_ast import PredicateNode, AtomPredicate
 from .execution_models import (
     MatchedNode, TraversalStep, ExecutionResult, NodeItem,
-    StepContribution, NodeFusionTrace, ScoreFusionTrace, FinalFilteringTrace
+    StepContribution, NodeFusionTrace, ScoreFusionTrace, FinalFilteringTrace,
+    ParsedQueryAST
 )
 from pipeline_execution.semantic_xpath_util.node_utils import NodeUtils
 from .index_handler import IndexHandler
@@ -226,6 +227,9 @@ class DenseXPathExecutor:
         # Parse the query
         steps, global_index = self.parser.parse(query)
         
+        # Build AST representation for tracing
+        parsed_ast = self._build_parsed_ast(steps, global_index)
+        
         if global_index is not None:
             if global_index.is_range:
                 execution_log.append(f"Global index range detected: [{global_index.start}:{global_index.end}]")
@@ -233,6 +237,10 @@ class DenseXPathExecutor:
                 execution_log.append(f"Global index detected: {global_index.start}")
         
         execution_log.append(f"Parsed steps: {steps}")
+        
+        # Add AST tree visualization to log
+        execution_log.append("")
+        execution_log.append(parsed_ast.to_tree_string())
         
         # =====================================================================
         # Score Fusion: Track accumulated product per node
@@ -436,7 +444,8 @@ class DenseXPathExecutor:
             data_file=self._memory_path.name,
             score_fusion_trace=score_fusion_trace,
             final_filtering_trace=final_filtering_trace,
-            token_usage=total_token_usage if total_token_usage["total_tokens"] > 0 else None
+            token_usage=total_token_usage if total_token_usage["total_tokens"] > 0 else None,
+            parsed_ast=parsed_ast
         )
         
         # Save traces
@@ -716,3 +725,38 @@ class DenseXPathExecutor:
         )
         
         return next_items, traversal_step
+    
+    def _build_parsed_ast(
+        self,
+        steps: List[QueryStep],
+        global_index: Optional[IndexRange]
+    ) -> ParsedQueryAST:
+        """
+        Build a ParsedQueryAST object from parsed query steps.
+        
+        Converts QueryStep objects and their predicate AST nodes into
+        serializable dictionaries for logging and tracing.
+        """
+        ast_steps = []
+        for step in steps:
+            step_dict = {
+                "node_type": step.node_type,
+                "axis": step.axis,
+            }
+            
+            # Add index if present
+            if step.index:
+                step_dict["index"] = step.index.to_dict()
+            
+            # Add predicate AST if present
+            if step.predicate:
+                step_dict["predicate_str"] = str(step.predicate)
+                step_dict["predicate_ast"] = step.predicate.to_dict()
+            elif step.predicate_str:
+                step_dict["predicate_str"] = step.predicate_str
+            
+            ast_steps.append(step_dict)
+        
+        global_idx_dict = global_index.to_dict() if global_index else None
+        
+        return ParsedQueryAST(steps=ast_steps, global_index=global_idx_dict)

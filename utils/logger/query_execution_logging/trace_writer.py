@@ -101,11 +101,25 @@ class TraceWriter:
         if result.final_filtering_trace:
             final_filtering = result.final_filtering_trace.to_dict()
         
+        # Build parsed AST if available
+        parsed_ast = None
+        parsed_ast_tree = None
+        if result.parsed_ast:
+            parsed_ast = result.parsed_ast.to_dict()
+            parsed_ast_tree = result.parsed_ast.to_tree_string()
+        
         trace_data = {
             "timestamp": timestamp,
             "query": result.query,
             "data_file": result.data_file,
             "execution_time_ms": result.execution_time_ms,
+            
+            # Parsed AST (NEW: for debugging and visualization)
+            "parsed_ast": parsed_ast,
+            "parsed_ast_tree": parsed_ast_tree,
+            
+            # Execution log (human-readable steps)
+            "execution_log": result.execution_log,
             
             # Stepwise traversal
             "traversal_steps": [step.to_dict() for step in result.traversal_steps],

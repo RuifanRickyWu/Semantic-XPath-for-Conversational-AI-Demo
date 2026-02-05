@@ -2,10 +2,10 @@
 Semantic XPath Experiment Runner - Execute queries across sessions with detailed tracking.
 
 Usage:
-    python -m experiment_infra.semantic_xpath.semantic_xpath_experiment_runner --config experiment.yaml
+    python -m experiment.experiment_infra.semantic_xpath.semantic_xpath_experiment_runner --config experiment.yaml
 
 Output Structure:
-    semantic_xpath_result/{experiment_name}/
+    experiment/experiment_result/semantic_xpath/{experiment_name}/
     ├── Experiment_Log.json
     ├── Cost_Summary.json           # NEW: Token costs and latency breakdown
     ├── experiment_config.yaml
@@ -26,7 +26,7 @@ import shutil
 import re
 import time
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from datetime import datetime
 import sys
 
@@ -34,7 +34,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from pipeline.semantic_xpath_pipeline import SemanticXPathPipeline
-from utils.log_formatter import LogFormatter
+from utils.logger.log_formatter import LogFormatter
 
 
 # Project root directory
@@ -87,7 +87,7 @@ class ExperimentRunner:
         self.model = app_config.get("openai", {}).get("model", "gpt-4o")
         
         # Setup output directory
-        self.base_output_dir = PROJECT_ROOT / "semantic_xpath_result"
+        self.base_output_dir = PROJECT_ROOT / "experiment" / "experiment_result" / "semantic_xpath"
         self.experiment_dir = None  # Set during run()
         
         # Track results for experiment log

@@ -2,12 +2,12 @@
 In-Context Experiment Runner - Execute in-context evaluation experiments.
 
 Usage:
-    python experiment_infra/in_context/in_context_runner.py --config experiment.yaml
+    python experiment/experiment_infra/in_context/in_context_runner.py --config experiment.yaml
     # or
-    python -m experiment_infra.in_context.in_context_runner --config experiment.yaml
+    python -m experiment.experiment_infra.in_context.in_context_runner --config experiment.yaml
 
 Output Structure:
-    in_context_result/{experiment_name}/
+    experiment/experiment_result/in_context/{experiment_name}/
     ├── Experiment_Log.json
     ├── Cost_Summary.json           # Token costs and latency tracking
     ├── experiment_config.yaml
@@ -92,7 +92,7 @@ class InContextRunner:
             self.model = "gpt-4o"  # Default fallback
         
         # Setup output directory
-        self.base_output_dir = PROJECT_ROOT / "in_context_result"
+        self.base_output_dir = PROJECT_ROOT / "experiment" / "experiment_result" / "in_context"
         self.experiment_dir = None  # Set during run()
         
         # Pipeline instance

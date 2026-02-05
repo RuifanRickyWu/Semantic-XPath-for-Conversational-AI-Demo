@@ -11,10 +11,8 @@ autonomously decides which version to operate on based on the query.
 import json
 import re
 import time
-import copy
 from pathlib import Path
 from typing import Dict, Any, Optional, Tuple, List
-from datetime import datetime
 from dataclasses import dataclass
 import xml.etree.ElementTree as ET
 import sys
@@ -23,7 +21,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from client import get_default_client
-from tree_modification import VersionManager
+from utils.tree_modification import VersionManager
 
 
 # Project root directory

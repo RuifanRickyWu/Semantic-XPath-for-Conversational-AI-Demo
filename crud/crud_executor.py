@@ -32,7 +32,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from version_resolver import VersionResolver, VersionSelector, ResolvedVersion
 from xpath_query_generation import XPathQueryGenerator, CRUDOperation, ParsedQuery
 from dense_xpath import DenseXPathExecutor
-from tree_modification import VersionManager
+from utils.tree_modification import VersionManager
 
 from .read_handler import ReadHandler
 from .delete_handler import DeleteHandler

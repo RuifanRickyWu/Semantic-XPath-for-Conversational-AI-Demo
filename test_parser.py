@@ -1,5 +1,5 @@
 """Test parser for OR expression issue."""
-from dense_xpath.parser import get_parser
+from pipeline_execution.semantic_xpath_execution import get_parser
 
 p = get_parser()
 

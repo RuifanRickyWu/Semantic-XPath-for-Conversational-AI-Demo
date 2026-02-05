@@ -22,7 +22,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from client import get_default_client
-from dense_xpath.schema_loader import get_schema_info
+from pipeline_execution.semantic_xpath_execution import get_schema_info
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import CRUDOperation
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import VersionSelector
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import ResolvedVersion

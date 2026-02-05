@@ -22,8 +22,8 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from client import OpenAIClient, get_client
-from dense_xpath.llm_based.llm_classifier import LLMClassifier
-from dense_xpath.llm_based.ram import SubtreeRAM
+from pipeline_execution.semantic_xpath_execution import LLMClassifier
+from pipeline_execution.semantic_xpath_execution import SubtreeRAM
 
 
 @dataclass

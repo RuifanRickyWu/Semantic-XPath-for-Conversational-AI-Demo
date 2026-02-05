@@ -24,7 +24,7 @@ class LLMPredicateClassifier(PredicateClassifier):
     LLM-based predicate classifier that processes nodes in batches.
     """
     
-    PROMPT_PATH = Path(__file__).parent.parent / "storage" / "prompts" / "predicate_classifier.txt"
+    PROMPT_PATH = Path(__file__).parent.parent / "storage" / "prompts" / "predicate_scorer.txt"
 
     def __init__(self, client=None):
         """

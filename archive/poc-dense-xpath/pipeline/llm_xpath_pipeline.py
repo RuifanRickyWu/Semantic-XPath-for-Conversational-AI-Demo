@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from client import OpenAIClient, get_client
 from query_generation import XPathQueryGenerator
-from dense_xpath.llm_based import DenseXPathLLM, MatchResult
+from pipeline_execution.semantic_xpath_execution import DenseXPathLLM, MatchResult
 
 
 class LLMXPathPipeline:

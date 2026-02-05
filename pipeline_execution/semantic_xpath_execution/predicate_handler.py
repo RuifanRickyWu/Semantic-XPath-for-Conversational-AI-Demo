@@ -42,7 +42,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from predicate_classifier import PredicateScorer
+from predicate_scorer import PredicateScorer
 from .node_utils import NodeUtils
 from .models import CompoundPredicate, AtomicPredicate
 

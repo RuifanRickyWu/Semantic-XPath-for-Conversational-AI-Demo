@@ -312,7 +312,7 @@ class ExperimentRunner:
         print(f"{'='*60}")
         
         # Get source tree path
-        from dense_xpath.schema_loader import get_data_path
+        from pipeline_execution.semantic_xpath_execution import get_data_path
         source_tree = get_data_path()
         
         # Copy tree to session directory

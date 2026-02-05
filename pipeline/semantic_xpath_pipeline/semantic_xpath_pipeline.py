@@ -16,15 +16,14 @@ Supports:
 
 import time
 from pathlib import Path
-from typing import Dict, Any, Optional
-from datetime import datetime
+from typing import Dict, Any
 import sys
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from pipeline_execution.pipeline_orchestrator.semantic_xpath_orchestrator import SemanticXPathOrchestrator
-from dense_xpath.trace_writer import TraceWriter
+from pipeline_execution.pipeline_orchestrator.pipeline_orchestrator import SemanticXPathOrchestrator
+from pipeline_execution.semantic_xpath_execution import TraceWriter
 from pipeline.semantic_xpath_pipeline.semantic_xpath_data_model import SessionStatistics
 
 

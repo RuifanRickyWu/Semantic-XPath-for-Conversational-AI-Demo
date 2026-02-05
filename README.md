@@ -868,7 +868,7 @@ result = pipeline.process_request("delete all the museums")
 print(pipeline.format_result(result))
 
 # Direct XPath execution (read-only)
-from dense_xpath import DenseXPathExecutor
+from pipeline_execution.semantic_xpath_execution import DenseXPathExecutor
 
 executor = DenseXPathExecutor(
     schema_name="itinerary",

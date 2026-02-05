@@ -580,12 +580,3 @@ class NodeUtils:
             path = f"{path} > {self.get_name(node)}"
         
         return path
-
-
-# Convenience functions (for backwards compatibility)
-get_node_description = NodeUtils.get_node_description
-get_node_name = NodeUtils.get_node_name
-get_subtree_descriptions = NodeUtils.get_subtree_descriptions
-node_to_dict = NodeUtils.node_to_dict
-get_all_children = NodeUtils.get_all_children
-node_to_matched_basic = NodeUtils.node_to_matched_basic  # Legacy: use NodeUtils instance for full subtree

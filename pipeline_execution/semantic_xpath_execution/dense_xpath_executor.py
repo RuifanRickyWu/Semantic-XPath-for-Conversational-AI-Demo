@@ -37,7 +37,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from predicate_classifier import PredicateScorer, get_scorer
+from predicate_scorer import PredicateScorer, get_scorer
 
 from .models import (
     IndexRange, QueryStep, MatchedNode, TraversalStep, ExecutionResult, NodeItem,

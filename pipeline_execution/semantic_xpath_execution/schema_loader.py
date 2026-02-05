@@ -10,7 +10,7 @@ from typing import Dict, Any, Optional
 
 
 # Base directories
-_BASE_DIR = Path(__file__).parent.parent
+_BASE_DIR = Path(__file__).parent.parent.parent
 _SCHEMA_DIR = _BASE_DIR / "storage" / "schemas"
 _STORAGE_DIR = _BASE_DIR / "storage"
 

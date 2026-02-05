@@ -13,9 +13,7 @@ This generator focuses purely on:
 import re
 from pathlib import Path
 import sys
-from typing import Optional, Tuple, Dict, Any
-from dataclasses import dataclass
-from enum import Enum
+from typing import Optional, Tuple, Dict
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -23,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from client import get_default_client
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import CRUDOperation
 from pipeline_execution.query_generation.semantic_xpath_query_generator.semantic_xpath_query_generator_model import ParsedQuery
-from dense_xpath.schema_loader import get_schema_info, get_schema_summary_for_prompt
+from pipeline_execution.semantic_xpath_execution import get_schema_info, get_schema_summary_for_prompt
 
 # Prompts directory
 _PROMPTS_DIR = Path(__file__).parent.parent.parent.parent / "storage" / "prompts"

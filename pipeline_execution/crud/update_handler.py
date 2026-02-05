@@ -3,6 +3,8 @@ Update Handler - Downstream task handler for UPDATE operations.
 
 Uses a single LLM call to perform relevance reasoning and generate
 updated content for matching nodes.
+
+Also handles tree modifications when provided with version content.
 """
 
 import json
@@ -17,18 +19,24 @@ from pipeline_execution.crud.base import (
     UpdateResult,
     UpdateItem
 )
+from pipeline_execution.crud.tree_modification_mixin import (
+    TreeModificationMixin,
+    ModificationResult
+)
 
 
 logger = logging.getLogger(__name__)
 
 
-class UpdateHandler(BaseHandler):
+class UpdateHandler(BaseHandler, TreeModificationMixin):
     """
     Handler for UPDATE operations.
     
     Takes retrieved nodes and uses a single LLM call to:
     1. Reason about which nodes should be updated
     2. Generate updated content for each selected node
+    
+    Also supports applying updates to version content via the mixin.
     """
     
     @property
@@ -119,6 +127,49 @@ Analyze each node and determine which ones should be updated. For each update, p
                 error=str(e),
                 processing_time_ms=processing_time
             )
+    
+    def apply_to_content(
+        self,
+        handler_result: HandlerResult,
+        version_content: List[ET.Element],
+        version: ET.Element = None
+    ) -> ModificationResult:
+        """
+        Apply updates to version content.
+        
+        Args:
+            handler_result: Result from process() containing updates
+            version_content: Copy of version content to modify
+            version: Optional version element for path adjustment
+            
+        Returns:
+            ModificationResult with modified content
+        """
+        if not handler_result.success or not handler_result.output:
+            return ModificationResult(
+                success=False,
+                error=handler_result.error or "Handler processing failed"
+            )
+        
+        update_result = handler_result.output
+        updates = update_result.updates
+        
+        if not updates:
+            return ModificationResult(
+                success=False,
+                error="No nodes selected for update"
+            )
+        
+        # Convert UpdateItem list to the format expected by apply_updates
+        update_dicts = [
+            {
+                "tree_path": item.tree_path,
+                "updated_content": item.updated_content
+            }
+            for item in updates
+        ]
+        
+        return self.apply_updates(version_content, update_dicts, version)
     
     def _format_nodes_with_content(self, nodes: List[Dict[str, Any]]) -> str:
         """Format nodes with full content for update context."""

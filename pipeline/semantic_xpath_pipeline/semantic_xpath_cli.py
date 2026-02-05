@@ -140,7 +140,7 @@ class SemanticXPathCLI:
                     continue
                 
                 if user_input.lower() == "reload":
-                    self.pipeline.executor.reload_tree()
+                    self.pipeline.orchestrator.reload_tree()
                     print("✅ Tree reloaded from original file")
                     continue
                 
@@ -238,8 +238,8 @@ class SemanticXPathCLI:
         print("\n📜 Version History:")
         print("-" * 50)
         
-        history = self.pipeline.executor.version_manager.get_version_history(
-            self.pipeline.executor.tree
+        history = self.pipeline.orchestrator.version_manager.get_version_history(
+            self.pipeline.orchestrator.tree
         )
         
         if not history:

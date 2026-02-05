@@ -3,6 +3,8 @@ Create Handler - Downstream task handler for CREATE operations.
 
 Uses a single LLM call to determine insertion point and generate
 new node content based on context.
+
+Also handles tree modifications when provided with version content.
 """
 
 import json
@@ -16,18 +18,24 @@ from pipeline_execution.crud.base import (
     HandlerResult,
     CreateResult
 )
+from pipeline_execution.crud.tree_modification_mixin import (
+    TreeModificationMixin,
+    ModificationResult
+)
 
 
 logger = logging.getLogger(__name__)
 
 
-class CreateHandler(BaseHandler):
+class CreateHandler(BaseHandler, TreeModificationMixin):
     """
     Handler for CREATE operations.
     
     Takes retrieved context nodes and uses a single LLM call to:
     1. Determine the best insertion point (parent path and position)
     2. Generate complete content for the new node
+    
+    Also supports applying insertions to version content via the mixin.
     """
     
     @property
@@ -118,6 +126,45 @@ Determine the best insertion point and generate complete content for the new nod
                 error=str(e),
                 processing_time_ms=processing_time
             )
+    
+    def apply_to_content(
+        self,
+        handler_result: HandlerResult,
+        version_content: List[ET.Element],
+        version: ET.Element = None
+    ) -> ModificationResult:
+        """
+        Apply creation to version content.
+        
+        Args:
+            handler_result: Result from process() containing create info
+            version_content: Copy of version content to modify
+            version: Optional version element for path adjustment
+            
+        Returns:
+            ModificationResult with modified content
+        """
+        if not handler_result.success or not handler_result.output:
+            return ModificationResult(
+                success=False,
+                error=handler_result.error or "Handler processing failed"
+            )
+        
+        create_result = handler_result.output
+        
+        if not create_result.created_content:
+            return ModificationResult(
+                success=False,
+                error="Content generation failed"
+            )
+        
+        return self.apply_insertion(
+            version_content,
+            create_result.parent_path,
+            create_result.created_content,
+            create_result.position,
+            version
+        )
     
     def _format_context_nodes(self, nodes: List[Dict[str, Any]]) -> str:
         """Format context nodes with full subtree for placement context."""

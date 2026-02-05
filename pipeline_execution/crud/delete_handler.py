@@ -3,30 +3,39 @@ Delete Handler - Downstream task handler for DELETE operations.
 
 Uses a single LLM call to perform relevance reasoning and determine
 which nodes should be deleted based on the user's request.
+
+Also handles tree modifications when provided with version content.
 """
 
 import json
 import time
 import logging
 from typing import List, Dict, Any, Optional
+import xml.etree.ElementTree as ET
 
 from pipeline_execution.crud.base import (
     BaseHandler,
     HandlerResult,
     DeleteResult
 )
+from pipeline_execution.crud.tree_modification_mixin import (
+    TreeModificationMixin,
+    ModificationResult
+)
 
 
 logger = logging.getLogger(__name__)
 
 
-class DeleteHandler(BaseHandler):
+class DeleteHandler(BaseHandler, TreeModificationMixin):
     """
     Handler for DELETE operations.
     
     Takes retrieved nodes and uses a single LLM call to:
     1. Reason about which nodes match the deletion criteria
     2. Return the list of node paths to delete
+    
+    Also supports applying deletions to version content via the mixin.
     """
     
     @property
@@ -110,6 +119,40 @@ Analyze each node and determine which ones should be deleted based on the user's
                 error=str(e),
                 processing_time_ms=processing_time
             )
+    
+    def apply_to_content(
+        self,
+        handler_result: HandlerResult,
+        version_content: List[ET.Element],
+        version: ET.Element = None
+    ) -> ModificationResult:
+        """
+        Apply deletions to version content.
+        
+        Args:
+            handler_result: Result from process() containing nodes to delete
+            version_content: Copy of version content to modify
+            version: Optional version element for path adjustment
+            
+        Returns:
+            ModificationResult with modified content
+        """
+        if not handler_result.success or not handler_result.output:
+            return ModificationResult(
+                success=False,
+                error=handler_result.error or "Handler processing failed"
+            )
+        
+        delete_result = handler_result.output
+        nodes_to_delete = delete_result.nodes_to_delete
+        
+        if not nodes_to_delete:
+            return ModificationResult(
+                success=False,
+                error="No nodes selected for deletion"
+            )
+        
+        return self.apply_deletions(version_content, nodes_to_delete, version)
     
     def _parse_response(
         self,

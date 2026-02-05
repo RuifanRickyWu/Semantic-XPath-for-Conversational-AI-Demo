@@ -11,19 +11,17 @@ Coordinates:
 - Version resolution from in-tree versioning
 - Semantic XPath query execution
 - CRUD-specific handlers (Read, Delete, Update, Create)
-- Tree modifications (for Create, Update, Delete)
 - In-tree version management
 
+Tree modifications are delegated to the CRUD handlers.
 Includes stage-by-stage timing and token usage tracking.
 """
 
 import logging
 import copy
-import time
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 from datetime import datetime
-from dataclasses import dataclass, field
 import xml.etree.ElementTree as ET
 import sys
 
@@ -34,8 +32,10 @@ from pipeline_execution.query_generation.version_crud_resolver.version_selector_
 from pipeline_execution.query_generation.semantic_xpath_query_generator.xpath_query_generator import XPathQueryGenerator
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import CRUDOperation
 from pipeline_execution.query_generation.semantic_xpath_query_generator.semantic_xpath_query_generator_model import ParsedQuery
+from pipeline_execution.pipeline_orchestrator.orchestrator_models import PipelineTimer
 from dense_xpath import DenseXPathExecutor
-from utils.tree_modification import VersionManager
+from utils.tree_modification import VersionManager, copy_version_content
+from utils.logger.query_orchestrator_logging import PipelineSummaryLogger
 
 from pipeline_execution.crud.read_handler import ReadHandler
 from pipeline_execution.crud.delete_handler import DeleteHandler
@@ -45,97 +45,6 @@ from pipeline_execution.crud.base import HandlerResult
 
 
 logger = logging.getLogger(__name__)
-
-
-@dataclass
-class StageResult:
-    """Result from a pipeline stage."""
-    name: str
-    time_ms: float
-    token_usage: Optional[Dict[str, int]] = None
-    
-    def to_dict(self) -> Dict[str, Any]:
-        result = {
-            "name": self.name,
-            "time_ms": round(self.time_ms, 2)
-        }
-        if self.token_usage:
-            result["token_usage"] = self.token_usage
-        return result
-
-
-@dataclass
-class PipelineTimer:
-    """Tracks timing and token usage across pipeline stages."""
-    stages: List[StageResult] = field(default_factory=list)
-    _current_start: Optional[float] = None
-    _current_name: Optional[str] = None
-    
-    def start(self, stage_name: str):
-        """Start timing a stage."""
-        self._current_name = stage_name
-        self._current_start = time.perf_counter()
-    
-    def stop(self, token_usage: Optional[Dict[str, int]] = None):
-        """Stop timing the current stage and record it."""
-        if self._current_start is not None and self._current_name is not None:
-            elapsed_ms = (time.perf_counter() - self._current_start) * 1000
-            self.stages.append(StageResult(
-                name=self._current_name,
-                time_ms=elapsed_ms,
-                token_usage=token_usage
-            ))
-            self._current_start = None
-            self._current_name = None
-    
-    def to_dict(self) -> Dict[str, Any]:
-        """Return timing and token summary."""
-        total_ms = sum(s.time_ms for s in self.stages)
-        total_tokens = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
-        
-        for s in self.stages:
-            if s.token_usage:
-                total_tokens["prompt_tokens"] += s.token_usage.get("prompt_tokens", 0)
-                total_tokens["completion_tokens"] += s.token_usage.get("completion_tokens", 0)
-                total_tokens["total_tokens"] += s.token_usage.get("total_tokens", 0)
-        
-        return {
-            "stages": [s.to_dict() for s in self.stages],
-            "total_time_ms": round(total_ms, 2),
-            "total_tokens": total_tokens if total_tokens["total_tokens"] > 0 else None
-        }
-    
-    def print_summary(self):
-        """Print a formatted timing and token summary."""
-        print("\n" + "=" * 70)
-        print("PIPELINE EXECUTION SUMMARY")
-        print("=" * 70)
-        
-        total = sum(s.time_ms for s in self.stages)
-        total_prompt = 0
-        total_completion = 0
-        
-        for stage in self.stages:
-            pct = (stage.time_ms / total * 100) if total > 0 else 0
-            bar_len = int(pct / 5)
-            bar = "█" * bar_len + "░" * (20 - bar_len)
-            
-            # Format tokens if available
-            token_str = ""
-            if stage.token_usage:
-                prompt = stage.token_usage.get("prompt_tokens", 0)
-                completion = stage.token_usage.get("completion_tokens", 0)
-                total_prompt += prompt
-                total_completion += completion
-                token_str = f" [{prompt}+{completion} tokens]"
-            
-            print(f"  {stage.name:<30} {stage.time_ms:>8.1f}ms  {bar} {pct:>5.1f}%{token_str}")
-        
-        print("-" * 70)
-        print(f"  {'TOTAL':<30} {total:>8.1f}ms")
-        if total_prompt > 0 or total_completion > 0:
-            print(f"  {'TOKENS':<30} {total_prompt} prompt + {total_completion} completion = {total_prompt + total_completion} total")
-        print("=" * 70)
 
 
 class SemanticXPathOrchestrator:
@@ -342,7 +251,7 @@ class SemanticXPathOrchestrator:
             result["error"] = handler_result.error
         
         # Print timing summary
-        timer.print_summary()
+        PipelineSummaryLogger.print_summary(timer)
         
         return result
     
@@ -465,39 +374,32 @@ class SemanticXPathOrchestrator:
         if not handler_result.success or not handler_result.output:
             return handler_result
         
-        delete_result = handler_result.output
-        nodes_to_delete = delete_result.nodes_to_delete
-        
-        if not nodes_to_delete:
+        if not handler_result.output.nodes_to_delete:
             handler_result.success = False
             handler_result.error = "No nodes selected for deletion"
             return handler_result
         
-        # Apply tree modifications
-        new_version_content = self._copy_version_content(target_version)
-        deleted_paths = []
+        # Apply tree modifications via handler
+        version_content = copy_version_content(target_version)
+        mod_result = self.delete_handler.apply_to_content(
+            handler_result, version_content, target_version
+        )
         
-        for tree_path in nodes_to_delete:
-            relative_path = self._adjust_path_for_version(tree_path, target_version)
-            if self._delete_from_content(new_version_content, relative_path):
-                deleted_paths.append(tree_path)
+        if not mod_result.success:
+            handler_result.success = False
+            handler_result.error = mod_result.error
+            return handler_result
         
         # Create new version
-        if deleted_paths:
-            patch_info = f"Deleted: {', '.join(deleted_paths)}"
-            self.version_manager.create_new_version(
-                self.tree,
-                target_version,
-                patch_info=patch_info,
-                conversation_history=user_query,
-                modified_content=new_version_content
-            )
-            
-            self.version_manager.save_tree(self.tree, self.executor.memory_path)
-            self._sync_executor_tree()
+        self._create_new_version(
+            target_version,
+            mod_result.modified_content,
+            mod_result.patch_info,
+            user_query
+        )
         
         # Update result with actual deletions
-        handler_result.output.nodes_to_delete = deleted_paths
+        handler_result.output.nodes_to_delete = mod_result.affected_paths
         return handler_result
     
     def _execute_update(
@@ -521,36 +423,29 @@ class SemanticXPathOrchestrator:
         if not handler_result.success or not handler_result.output:
             return handler_result
         
-        update_result = handler_result.output
-        updates = update_result.updates
-        
-        if not updates:
+        if not handler_result.output.updates:
             handler_result.success = False
             handler_result.error = "No nodes selected for update"
             return handler_result
         
-        # Apply tree modifications
-        new_version_content = self._copy_version_content(target_version)
-        updated_paths = []
+        # Apply tree modifications via handler
+        version_content = copy_version_content(target_version)
+        mod_result = self.update_handler.apply_to_content(
+            handler_result, version_content, target_version
+        )
         
-        for update_item in updates:
-            relative_path = self._adjust_path_for_version(update_item.tree_path, target_version)
-            if self._replace_in_content(new_version_content, relative_path, update_item.updated_content):
-                updated_paths.append(update_item.tree_path)
+        if not mod_result.success:
+            handler_result.success = False
+            handler_result.error = mod_result.error
+            return handler_result
         
         # Create new version
-        if updated_paths:
-            patch_info = f"Updated: {', '.join(updated_paths)}"
-            self.version_manager.create_new_version(
-                self.tree,
-                target_version,
-                patch_info=patch_info,
-                conversation_history=user_query,
-                modified_content=new_version_content
-            )
-            
-            self.version_manager.save_tree(self.tree, self.executor.memory_path)
-            self._sync_executor_tree()
+        self._create_new_version(
+            target_version,
+            mod_result.modified_content,
+            mod_result.patch_info,
+            user_query
+        )
         
         return handler_result
     
@@ -585,49 +480,60 @@ class SemanticXPathOrchestrator:
         if not handler_result.success or not handler_result.output:
             return handler_result
         
-        create_result = handler_result.output
-        
-        if not create_result.created_content:
+        if not handler_result.output.created_content:
             handler_result.success = False
             handler_result.error = "Content generation failed"
             return handler_result
         
-        # Apply tree modification
-        new_version_content = self._copy_version_content(target_version)
-        relative_parent_path = self._adjust_path_for_version(create_result.parent_path, target_version)
-        
-        insert_success = self._insert_in_content(
-            new_version_content,
-            relative_parent_path,
-            create_result.created_content,
-            create_result.position
+        # Apply tree modification via handler
+        version_content = copy_version_content(target_version)
+        mod_result = self.create_handler.apply_to_content(
+            handler_result, version_content, target_version
         )
         
-        if not insert_success:
+        if not mod_result.success:
             handler_result.success = False
-            handler_result.error = f"Failed to insert at {create_result.parent_path}"
+            handler_result.error = mod_result.error
             return handler_result
         
         # Create new version
-        created_path = f"{create_result.parent_path}/{create_result.node_type}"
-        patch_info = f"Created: {created_path}"
+        self._create_new_version(
+            target_version,
+            mod_result.modified_content,
+            mod_result.patch_info,
+            user_query
+        )
+        
+        return handler_result
+    
+    def _create_new_version(
+        self,
+        source_version: ET.Element,
+        modified_content: List[ET.Element],
+        patch_info: str,
+        user_query: str
+    ):
+        """
+        Create a new version and save the tree.
+        
+        Args:
+            source_version: The source version element
+            modified_content: The modified content elements
+            patch_info: Description of changes
+            user_query: The user's original request
+        """
         self.version_manager.create_new_version(
             self.tree,
-            target_version,
+            source_version,
             patch_info=patch_info,
             conversation_history=user_query,
-            modified_content=new_version_content
+            modified_content=modified_content
         )
         
         self.version_manager.save_tree(self.tree, self.executor.memory_path)
         self._sync_executor_tree()
-        
-        return handler_result
-    
-    # =========================================================================
-    # Tree manipulation utilities (unchanged from original)
-    # =========================================================================
-    
+
+
     def _build_version_xpath(self, xpath: str, version: ET.Element) -> str:
         """Build an xpath query that targets the specific version.
         
@@ -668,198 +574,6 @@ class SemanticXPathOrchestrator:
             xpath = "/" + xpath
         
         return f"{version_prefix}{xpath}"
-    
-    def _copy_version_content(self, version: ET.Element) -> List[ET.Element]:
-        """Create a deep copy of the content nodes from a version."""
-        itinerary = version.find("Itinerary")
-        if itinerary is not None:
-            return [copy.deepcopy(child) for child in itinerary]
-        
-        return [
-            copy.deepcopy(child) 
-            for child in version 
-            if child.tag not in ("patch_info", "conversation_history", "Itinerary")
-        ]
-    
-    def _adjust_path_for_version(self, tree_path: str, version: ET.Element) -> str:
-        """Adjust a tree path to be relative to version content."""
-        parts = [p.strip() for p in tree_path.split(">")]
-        
-        result_parts = []
-        for part in parts:
-            if part == "Root":
-                continue
-            if part.startswith("Itinerary_Version"):
-                continue
-            if part == "Itinerary":
-                continue
-            result_parts.append(part)
-        
-        return " > ".join(result_parts)
-    
-    def _find_node_in_content(
-        self, 
-        content: List[ET.Element], 
-        relative_path: str
-    ) -> Optional[ET.Element]:
-        """Find a node within the content list by relative path."""
-        if not relative_path:
-            return None
-        
-        parts = [p.strip() for p in relative_path.split(">")]
-        
-        first_part = parts[0]
-        current = self._find_element_by_part(content, first_part)
-        
-        if current is None:
-            return None
-        
-        for part in parts[1:]:
-            children = list(current)
-            current = self._find_element_by_part(children, part)
-            if current is None:
-                return None
-        
-        return current
-    
-    def _find_element_by_part(
-        self,
-        elements: List[ET.Element],
-        part: str
-    ) -> Optional[ET.Element]:
-        """Find an element in a list by a path part."""
-        words = part.split()
-        
-        # Case 1: Indexed notation like "Day 1" or "POI 2"
-        if len(words) == 2 and words[1].isdigit():
-            node_type = words[0]
-            index = int(words[1])
-            
-            for elem in elements:
-                if elem.tag == node_type:
-                    elem_index = elem.get("index") or elem.get("number")
-                    if elem_index == str(index):
-                        return elem
-            
-            matching = [e for e in elements if e.tag == node_type]
-            if 0 < index <= len(matching):
-                return matching[index - 1]
-            
-            return None
-        
-        # Case 2: Try direct tag match
-        for elem in elements:
-            if elem.tag == part:
-                return elem
-        
-        # Case 3: Try name-based match
-        for elem in elements:
-            name_elem = elem.find("name")
-            if name_elem is not None and name_elem.text and name_elem.text.strip() == part:
-                return elem
-            
-            title_elem = elem.find("title")
-            if title_elem is not None and title_elem.text and title_elem.text.strip() == part:
-                return elem
-        
-        return None
-    
-    def _delete_from_content(
-        self, 
-        content: List[ET.Element], 
-        relative_path: str
-    ) -> bool:
-        """Delete a node from the content list."""
-        if not relative_path:
-            return False
-        
-        parts = [p.strip() for p in relative_path.split(">")]
-        
-        if len(parts) == 1:
-            old_elem = self._find_element_by_part(content, parts[0])
-            if old_elem is not None:
-                content.remove(old_elem)
-                return True
-            return False
-        
-        parent_path = " > ".join(parts[:-1])
-        parent = self._find_node_in_content(content, parent_path)
-        
-        if parent is None:
-            return False
-        
-        child_part = parts[-1]
-        old_child = self._find_element_by_part(list(parent), child_part)
-        
-        if old_child is not None:
-            parent.remove(old_child)
-            return True
-        
-        return False
-    
-    def _replace_in_content(
-        self,
-        content: List[ET.Element],
-        relative_path: str,
-        new_element: ET.Element
-    ) -> bool:
-        """Replace a node in the content list."""
-        if not relative_path:
-            return False
-        
-        parts = [p.strip() for p in relative_path.split(">")]
-        
-        if len(parts) == 1:
-            old_elem = self._find_element_by_part(content, parts[0])
-            if old_elem is not None:
-                idx = content.index(old_elem)
-                content[idx] = new_element
-                return True
-            return False
-        
-        parent_path = " > ".join(parts[:-1])
-        parent = self._find_node_in_content(content, parent_path)
-        
-        if parent is None:
-            return False
-        
-        child_part = parts[-1]
-        old_child = self._find_element_by_part(list(parent), child_part)
-        
-        if old_child is not None:
-            idx = list(parent).index(old_child)
-            parent.remove(old_child)
-            parent.insert(idx, new_element)
-            return True
-        
-        return False
-    
-    def _insert_in_content(
-        self,
-        content: List[ET.Element],
-        relative_parent_path: str,
-        new_element: ET.Element,
-        position: int = -1
-    ) -> bool:
-        """Insert a new node into the content."""
-        if not relative_parent_path:
-            if position < 0:
-                content.append(new_element)
-            else:
-                content.insert(position, new_element)
-            return True
-        
-        parent = self._find_node_in_content(content, relative_parent_path)
-        
-        if parent is None:
-            return False
-        
-        if position < 0:
-            parent.append(new_element)
-        else:
-            parent.insert(position, new_element)
-        
-        return True
     
     def reload_tree(self):
         """Reload the tree from the original file."""

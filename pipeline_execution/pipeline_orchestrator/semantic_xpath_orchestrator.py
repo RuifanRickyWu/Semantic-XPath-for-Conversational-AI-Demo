@@ -1,5 +1,5 @@
 """
-CRUD Executor - Orchestrates the full CRUD pipeline with 2-stage query processing.
+Semantic XPath Orchestrator - Orchestrates the full CRUD pipeline with 2-stage query processing.
 
 Pipeline Stages:
 1. Version Resolution (LLM Call 1): Determines version selector and CRUD operation
@@ -29,22 +29,22 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from version_resolver import VersionResolver, VersionSelector, ResolvedVersion
-from xpath_query_generation import XPathQueryGenerator, CRUDOperation, ParsedQuery
+from pipeline_execution.query_generation.version_crud_resolver.version_resolver import VersionResolver
+from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import VersionSelector, ResolvedVersion
+from pipeline_execution.query_generation.semantic_xpath_query_generator.xpath_query_generator import XPathQueryGenerator
+from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import CRUDOperation
+from pipeline_execution.query_generation.semantic_xpath_query_generator.semantic_xpath_query_generator_model import ParsedQuery
 from dense_xpath import DenseXPathExecutor
 from utils.tree_modification import VersionManager
 
-from .read_handler import ReadHandler
-from .delete_handler import DeleteHandler
-from .update_handler import UpdateHandler
-from .create_handler import CreateHandler
-from .base import HandlerResult
+from pipeline_execution.crud.read_handler import ReadHandler
+from pipeline_execution.crud.delete_handler import DeleteHandler
+from pipeline_execution.crud.update_handler import UpdateHandler
+from pipeline_execution.crud.create_handler import CreateHandler
+from pipeline_execution.crud.base import HandlerResult
 
 
 logger = logging.getLogger(__name__)
-
-# Result directory for saved trees
-RESULT_DIR = Path(__file__).parent.parent / "result" / "demo"
 
 
 @dataclass
@@ -138,9 +138,9 @@ class PipelineTimer:
         print("=" * 70)
 
 
-class CRUDExecutor:
+class SemanticXPathOrchestrator:
     """
-    Main executor for CRUD operations with 3-stage LLM processing.
+    Main orchestrator for CRUD operations with 3-stage LLM processing.
     
     Pipeline:
     1. Version Resolution (LLM) - determines version selector and CRUD operation
@@ -168,23 +168,14 @@ class CRUDExecutor:
             scoring_method: Scoring method for semantic XPath
             top_k: Number of top results to consider
             score_threshold: Minimum score threshold
-            tree_path: Optional path to the XML tree override
+            tree_path: Optional path to XML tree (uses config default if not provided)
             traces_path: Optional directory for trace files
         """
-        # Determine base directory
-        if tree_path:
-            base_dir = Path(tree_path).parent
-        else:
-            base_dir = RESULT_DIR
-
-        # Ensure result directory exists
-        base_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Initialize query processing components (unchanged)
+        # Initialize query processing components
         self.version_resolver = VersionResolver()
         self.query_generator = XPathQueryGenerator()
         
-        # Initialize execution components
+        # Initialize execution components (handles tree path resolution from config)
         self.executor = DenseXPathExecutor(
             scoring_method=scoring_method,
             top_k=top_k,
@@ -193,7 +184,11 @@ class CRUDExecutor:
             traces_path=traces_path
         )
         
-        # Initialize downstream handlers (NEW)
+        # Get base directory from executor's resolved tree path
+        base_dir = self.executor.memory_path.parent
+        base_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Initialize downstream handlers
         schema = self.executor._schema
         handler_traces_path = traces_path / "reasoning_traces" if traces_path else None
         self.read_handler = ReadHandler(schema=schema, traces_path=handler_traces_path)
@@ -201,7 +196,7 @@ class CRUDExecutor:
         self.update_handler = UpdateHandler(schema=schema, traces_path=handler_traces_path)
         self.create_handler = CreateHandler(schema=schema, traces_path=handler_traces_path)
         
-        # Tree modification components (unchanged)
+        # Tree modification components
         self.version_manager = VersionManager(base_directory=base_dir)
         
         # Store reference to tree for modifications

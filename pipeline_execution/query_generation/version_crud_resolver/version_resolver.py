@@ -16,17 +16,16 @@ Query Syntax Output:
 import re
 import logging
 from pathlib import Path
-from typing import Optional, Dict
-from dataclasses import dataclass
+from typing import Optional
 import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from client import get_default_client
 from dense_xpath.schema_loader import get_schema_info
-from xpath_query_generation import CRUDOperation
-from version_resolver.version_selector_model import VersionSelector
-from version_resolver.version_selector_model import ResolvedVersion
+from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import CRUDOperation
+from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import VersionSelector
+from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import ResolvedVersion
 
 
 logger = logging.getLogger(__name__)
@@ -71,7 +70,7 @@ class VersionResolver:
         # Get schema info to determine prompt path
         schema_info = get_schema_info(schema_name)
         prompt_file = schema_info.get("version_resolver_prompt", "prompts/version_resolver.txt")
-        self._prompt_path = Path(__file__).parent.parent / "storage" / prompt_file
+        self._prompt_path = Path(__file__).parent.parent.parent.parent / "storage" / prompt_file
         self._schema_name = schema_info["schema_name"]
     
     @property

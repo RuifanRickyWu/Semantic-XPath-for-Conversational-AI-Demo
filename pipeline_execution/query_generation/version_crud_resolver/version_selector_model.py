@@ -1,15 +1,19 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional, Dict
-from xpath_query_generation import CRUDOperation
 
 class VersionSelector(Enum):
     """Version selector type."""
     AT = "at"        # Specific version: "in the version of xxx"
     BEFORE = "before"  # Version before: "rollback", "the version before"
 
+class CRUDOperation(Enum):
+    """CRUD operation types."""
+    READ = "Read"
+    CREATE = "Create"
+    UPDATE = "Update"
+    DELETE = "Delete"
 
-@dataclass
 @dataclass
 class ResolvedVersion:
     """

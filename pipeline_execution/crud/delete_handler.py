@@ -1,39 +1,37 @@
 """
-Read Handler - Downstream task handler for READ operations.
+Delete Handler - Downstream task handler for DELETE operations.
 
-Uses a single LLM call to perform relevance reasoning and select
-the final nodes that match the user's query.
+Uses a single LLM call to perform relevance reasoning and determine
+which nodes should be deleted based on the user's request.
 """
 
 import json
 import time
 import logging
 from typing import List, Dict, Any, Optional
-from pathlib import Path
 
-from .base import (
+from pipeline_execution.crud.base import (
     BaseHandler,
     HandlerResult,
-    ReadResult,
-    SelectedNode
+    DeleteResult
 )
 
 
 logger = logging.getLogger(__name__)
 
 
-class ReadHandler(BaseHandler):
+class DeleteHandler(BaseHandler):
     """
-    Handler for READ operations.
+    Handler for DELETE operations.
     
     Takes retrieved nodes and uses a single LLM call to:
-    1. Reason about which nodes are relevant to the user's query
-    2. Return the selected nodes with reasoning
+    1. Reason about which nodes match the deletion criteria
+    2. Return the list of node paths to delete
     """
     
     @property
     def prompt_file(self) -> str:
-        return "read_handler.txt"
+        return "delete_handler.txt"
     
     def process(
         self,
@@ -42,23 +40,23 @@ class ReadHandler(BaseHandler):
         operation_context: Optional[Dict[str, Any]] = None
     ) -> HandlerResult:
         """
-        Process READ operation with a single LLM call.
+        Process DELETE operation with a single LLM call.
         
         Args:
             user_query: The original user query
             retrieved_nodes: Nodes retrieved from semantic XPath execution
-            operation_context: Additional context (not used for READ)
+            operation_context: Additional context (not used for DELETE)
             
         Returns:
-            HandlerResult with ReadResult containing selected nodes
+            HandlerResult with DeleteResult containing nodes to delete
         """
         start_time = time.perf_counter()
         
         if not retrieved_nodes:
             return HandlerResult(
                 success=True,
-                operation="READ",
-                output=ReadResult(selected_nodes=[]),
+                operation="DELETE",
+                output=DeleteResult(nodes_to_delete=[], reasoning="No candidates to delete"),
                 processing_time_ms=0.0
             )
         
@@ -70,7 +68,7 @@ class ReadHandler(BaseHandler):
 Candidate Nodes:
 {nodes_text}
 
-Analyze each node and determine which ones are relevant to the user's query.
+Analyze each node and determine which ones should be deleted based on the user's request.
 """
         
         try:
@@ -78,7 +76,7 @@ Analyze each node and determine which ones are relevant to the user's query.
             result = self._make_llm_call(prompt)
             
             # Parse response
-            selected_nodes = self._parse_response(result.content, retrieved_nodes)
+            nodes_to_delete, reasoning = self._parse_response(result.content, retrieved_nodes)
             
             processing_time = (time.perf_counter() - start_time) * 1000
             
@@ -87,28 +85,28 @@ Analyze each node and determine which ones are relevant to the user's query.
                 self._save_trace({
                     "user_query": user_query,
                     "candidates_count": len(retrieved_nodes),
-                    "selected_count": len(selected_nodes),
-                    "selected_nodes": [n.to_dict() for n in selected_nodes],
+                    "nodes_to_delete": nodes_to_delete,
+                    "reasoning": reasoning,
                     "raw_response": result.content,
                     "token_usage": result.usage.to_dict(),
                     "processing_time_ms": processing_time
-                }, "read_handler")
+                }, "delete_handler")
             
             return HandlerResult(
                 success=True,
-                operation="READ",
-                output=ReadResult(selected_nodes=selected_nodes),
+                operation="DELETE",
+                output=DeleteResult(nodes_to_delete=nodes_to_delete, reasoning=reasoning),
                 token_usage=result.usage,
                 processing_time_ms=processing_time,
                 raw_response=result.content
             )
             
         except Exception as e:
-            logger.error(f"Error in ReadHandler: {e}")
+            logger.error(f"Error in DeleteHandler: {e}")
             processing_time = (time.perf_counter() - start_time) * 1000
             return HandlerResult(
                 success=False,
-                operation="READ",
+                operation="DELETE",
                 error=str(e),
                 processing_time_ms=processing_time
             )
@@ -117,9 +115,10 @@ Analyze each node and determine which ones are relevant to the user's query.
         self,
         response: str,
         retrieved_nodes: List[Dict[str, Any]]
-    ) -> List[SelectedNode]:
-        """Parse LLM response into SelectedNode objects."""
-        selected = []
+    ) -> tuple[List[str], str]:
+        """Parse LLM response into list of paths to delete and reasoning."""
+        nodes_to_delete = []
+        overall_reasoning = ""
         
         try:
             # Find JSON in response
@@ -130,34 +129,30 @@ Analyze each node and determine which ones are relevant to the user's query.
                 json_str = response[json_start:json_end]
                 parsed = json.loads(json_str)
                 
-                selected_list = parsed.get("selected_nodes", [])
+                delete_list = parsed.get("nodes_to_delete", [])
+                overall_reasoning = parsed.get("reasoning", "")
                 
-                for item in selected_list:
-                    node_id = str(item.get("id", ""))
-                    try:
-                        idx = int(node_id) - 1  # Convert to 0-based
-                        if 0 <= idx < len(retrieved_nodes):
-                            node = retrieved_nodes[idx]
-                            selected.append(SelectedNode(
-                                tree_path=node.get("tree_path", f"node_{idx}"),
-                                node_data=node.get("node", {}),
-                                reasoning=item.get("reasoning", "")
-                            ))
-                    except ValueError:
-                        continue
+                for item in delete_list:
+                    # Try to get path from response first
+                    path = item.get("path", "")
+                    
+                    # If no path, look up by ID
+                    if not path:
+                        node_id = str(item.get("id", ""))
+                        try:
+                            idx = int(node_id) - 1
+                            if 0 <= idx < len(retrieved_nodes):
+                                path = retrieved_nodes[idx].get("tree_path", "")
+                        except ValueError:
+                            continue
+                    
+                    if path:
+                        nodes_to_delete.append(path)
                 
-                return selected
+                return nodes_to_delete, overall_reasoning
                 
         except (json.JSONDecodeError, ValueError) as e:
-            logger.warning(f"Failed to parse read handler response: {e}")
+            logger.warning(f"Failed to parse delete handler response: {e}")
         
-        # Fallback: return all nodes as selected
-        logger.warning("Using fallback: selecting all nodes")
-        for i, node in enumerate(retrieved_nodes):
-            selected.append(SelectedNode(
-                tree_path=node.get("tree_path", f"node_{i}"),
-                node_data=node.get("node", {}),
-                reasoning="Fallback: selected due to parse error"
-            ))
-        
-        return selected
+        # Return empty list on parse error (conservative)
+        return [], "Parse error - no nodes selected for deletion"

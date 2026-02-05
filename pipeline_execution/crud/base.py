@@ -5,7 +5,6 @@ Provides common data structures and base class for downstream task handlers
 that process retrieved nodes with a single LLM call.
 """
 
-import time
 import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -17,7 +16,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from client import get_default_client, TokenUsage, CompletionResult
-from .prompt_loader import PromptLoader
+from pipeline_execution.crud.crud_prompt_loader import PromptLoader
 
 
 logger = logging.getLogger(__name__)
@@ -166,8 +165,8 @@ class BaseHandler(ABC):
     to perform relevance reasoning and task-specific output generation.
     """
     
-    PROMPTS_PATH = Path(__file__).parent.parent / "storage" / "prompts"
-    DEFAULT_TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
+    PROMPTS_PATH = Path(__file__).parent.parent.parent / "storage" / "prompts"
+    DEFAULT_TRACES_PATH = Path(__file__).parent.parent.parent / "traces" / "reasoning_traces"
     
     def __init__(
         self,

@@ -220,7 +220,7 @@ print(pipeline.format_result(result))
 | **Executor** | BFS traversal + fusion | `dense_xpath/dense_xpath_executor.py` |
 | **Predicate Handler** | Scoring + aggregation | `dense_xpath/predicate_handler.py` |
 | **Scorer** | Semantic similarity (also for version resolution) | `predicate_classifier/` |
-| **CRUD Executor** | CRUD orchestration with versioning | `crud/crud_executor.py` |
+| **Semantic XPath Orchestrator** | CRUD orchestration with versioning | `pipeline_execution/semantic_xpath_orchestrator.py` |
 
 ---
 
@@ -936,8 +936,15 @@ LLM-VM/
 ├── pipeline/
 │   ├── semantic_xpath_pipeline.py   # Main entry point (CRUD pipeline)
 │   └── serializers.py               # JSON serialization for API
-├── crud/
-│   └── crud_executor.py             # CRUD operation orchestrator
+├── pipeline_execution/
+│   ├── semantic_xpath_orchestrator.py  # CRUD operation orchestrator
+│   ├── base.py                      # Base handler classes and result types
+│   ├── prompt_loader.py             # Dynamic prompt composition
+│   └── crud/                        # CRUD handlers
+│       ├── read_handler.py          # READ operation handler
+│       ├── delete_handler.py        # DELETE operation handler
+│       ├── update_handler.py        # UPDATE operation handler
+│       └── create_handler.py        # CREATE operation handler
 ├── reasoner/
 │   ├── base.py                      # ReasonerDecision, InsertionPoint
 │   ├── node_reasoner.py             # Batched LLM node selection
@@ -1061,7 +1068,7 @@ LLM-VM/
 | Component | Purpose |
 |-----------|---------|
 | `SemanticXPathPipeline` | Main entry point for CRUD operations |
-| `CRUDExecutor` | Orchestrates CRUD operations with versioning |
+| `SemanticXPathOrchestrator` | Orchestrates CRUD operations with versioning |
 | `XPathQueryGenerator` | Unified LLM call: NL → CRUD + XPath |
 | `VersionManager` | In-tree versioning: resolve/create versions |
 | `DenseXPathExecutor` | Core XPath execution with semantic scoring |

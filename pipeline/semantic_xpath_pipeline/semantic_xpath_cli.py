@@ -103,7 +103,7 @@ class SemanticXPathCLI:
             
             # Get original tree path from a temporary pipeline to find the default tree
             temp_pipeline = SemanticXPathPipeline(**self.pipeline_config)
-            self._original_tree_path = temp_pipeline.executor.tree_path
+            self._original_tree_path = temp_pipeline.orchestrator.tree_path
             
             # Copy the source tree to session folder
             self._session_tree_path = self.session_manager.copy_tree_to_session(self._original_tree_path)

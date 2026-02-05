@@ -23,7 +23,7 @@ import sys
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from crud import CRUDExecutor
+from pipeline_execution.pipeline_orchestrator.semantic_xpath_orchestrator import SemanticXPathOrchestrator
 from dense_xpath.trace_writer import TraceWriter
 from pipeline.semantic_xpath_pipeline.semantic_xpath_data_model import SessionStatistics
 
@@ -66,7 +66,7 @@ class SemanticXPathPipeline:
             traces_path: Optional path for trace files. If None, uses default traces folder.
         """
         self._traces_path = traces_path
-        self.executor = CRUDExecutor(
+        self.orchestrator = SemanticXPathOrchestrator(
             scoring_method=scoring_method,
             top_k=top_k,
             score_threshold=score_threshold,
@@ -94,19 +94,18 @@ class SemanticXPathPipeline:
         
         # Update trace writer
         self.trace_writer = TraceWriter(traces_path=reasoning_traces_path)
-        
-        # Update executor's trace writer  
-        self.executor.executor.trace_writer = TraceWriter(traces_path=reasoning_traces_path)
+
+        self.orchestrator.executor.trace_writer = TraceWriter(traces_path=reasoning_traces_path)
         
         # Update scorer's traces path
-        if hasattr(self.executor.executor.scorer, 'traces_path'):
-            self.executor.executor.scorer.traces_path = reasoning_traces_path
+        if hasattr(self.orchestrator.executor.scorer, 'traces_path'):
+            self.orchestrator.executor.scorer.traces_path = reasoning_traces_path
             if reasoning_traces_path:
                 reasoning_traces_path.mkdir(parents=True, exist_ok=True)
         
         # Update handlers' traces paths
-        for handler in [self.executor.read_handler, self.executor.delete_handler, 
-                       self.executor.update_handler, self.executor.create_handler]:
+        for handler in [self.orchestrator.read_handler, self.orchestrator.delete_handler,
+                       self.orchestrator.update_handler, self.orchestrator.create_handler]:
             if hasattr(handler, 'traces_path'):
                 handler.traces_path = reasoning_traces_path
                 if reasoning_traces_path:
@@ -123,9 +122,8 @@ class SemanticXPathPipeline:
             Dict with operation results, traces, and timing info
         """
         start_time = time.perf_counter()
-        
-        # Execute the CRUD operation (includes step timing)
-        result = self.executor.execute(user_request)
+
+        result = self.orchestrator.execute(user_request)
         
         # Calculate total pipeline timing
         total_time_ms = (time.perf_counter() - start_time) * 1000

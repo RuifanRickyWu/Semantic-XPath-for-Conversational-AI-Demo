@@ -28,7 +28,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 # Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 # Handle both direct execution and module import
 try:
@@ -40,7 +40,7 @@ except ImportError:
 
 
 # Project root directory
-PROJECT_ROOT = Path(__file__).parent.parent.parent
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 
 # Token pricing (per token rates)
 PRICING = {

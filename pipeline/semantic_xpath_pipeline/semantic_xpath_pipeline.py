@@ -137,4 +137,8 @@ class SemanticXPathPipeline:
         # Update session stats
         self.session_stats.update(result)
         
+        # Save CRUD operation traces
+        if "timestamp" in result:
+            self.trace_writer.save_crud_traces(result["timestamp"], result)
+        
         return result

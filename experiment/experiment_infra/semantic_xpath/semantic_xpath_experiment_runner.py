@@ -31,14 +31,14 @@ from datetime import datetime
 import sys
 
 # Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 from pipeline.semantic_xpath_pipeline import SemanticXPathPipeline
 from utils.logger import LogFormatter
 
 
 # Project root directory
-PROJECT_ROOT = Path(__file__).parent.parent.parent
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 
 # Token pricing (GPT-4o as default, update as needed)
 PRICING = {

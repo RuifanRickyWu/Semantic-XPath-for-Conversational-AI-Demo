@@ -37,15 +37,16 @@ class LLMPredicateScorer(PredicateScorer):
         Args:
             client: Optional OpenAI client. If not provided, one will be created.
             save_traces: Whether to save reasoning traces to disk.
-            traces_path: Optional custom path for trace files.
+            traces_path: Optional custom path for trace files. If None, traces are not saved.
         """
         self._client = client
         self._system_prompt = None
         self.save_traces = save_traces
-        self.traces_path = traces_path or self.DEFAULT_TRACES_PATH
+        self.traces_path = traces_path
         
-        # Ensure traces directory exists
-        self.traces_path.mkdir(parents=True, exist_ok=True)
+        # Only create traces directory if explicitly provided
+        if self.traces_path:
+            self.traces_path.mkdir(parents=True, exist_ok=True)
     
     @property
     def client(self):
@@ -216,6 +217,9 @@ Output JSON array with objects containing: id, score, reasoning"""
         results: List[ScoringResult]
     ):
         """Save reasoning trace to disk."""
+        if not self.save_traces or self.traces_path is None:
+            return
+            
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         trace_file = self.traces_path / f"scoring_{timestamp}.json"
         

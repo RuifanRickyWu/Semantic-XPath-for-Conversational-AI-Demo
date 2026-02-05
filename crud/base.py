@@ -184,7 +184,7 @@ class BaseHandler(ABC):
             client: Optional OpenAI client
             schema: Optional schema dict for node type information
             save_traces: Whether to save reasoning traces
-            traces_path: Optional custom path for trace files
+            traces_path: Optional custom path for trace files. If None, traces are not saved.
             use_dynamic_prompts: Whether to use dynamic prompt loading with domain knowledge
         """
         self._client = client
@@ -192,11 +192,12 @@ class BaseHandler(ABC):
         self.save_traces = save_traces
         self.use_dynamic_prompts = use_dynamic_prompts
         self._system_prompt = None
-        self.traces_path = traces_path or self.DEFAULT_TRACES_PATH
+        self.traces_path = traces_path
         self._prompt_loader = None
         
-        # Ensure traces directory exists
-        self.traces_path.mkdir(parents=True, exist_ok=True)
+        # Only create traces directory if explicitly provided
+        if self.traces_path:
+            self.traces_path.mkdir(parents=True, exist_ok=True)
     
     @property
     def client(self):
@@ -396,7 +397,7 @@ class BaseHandler(ABC):
     
     def _save_trace(self, trace_data: Dict[str, Any], prefix: str):
         """Save a trace file for debugging."""
-        if not self.save_traces:
+        if not self.save_traces or self.traces_path is None:
             return
             
         from datetime import datetime

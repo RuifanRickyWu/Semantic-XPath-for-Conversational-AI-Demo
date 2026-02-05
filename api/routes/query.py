@@ -5,7 +5,7 @@ POST /api/query - Execute a natural language query
 """
 
 from flask import Blueprint, request, jsonify, current_app
-from pipeline.serializers import serialize_result, serialize_tree
+from api.serializers import serialize_result, serialize_tree
 
 bp = Blueprint("query", __name__)
 

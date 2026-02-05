@@ -34,7 +34,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from pipeline.semantic_xpath_pipeline import SemanticXPathPipeline
-from utils.logger.log_formatter import LogFormatter
+from utils.logger import LogFormatter
 
 
 # Project root directory

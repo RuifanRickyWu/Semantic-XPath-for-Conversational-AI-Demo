@@ -36,14 +36,13 @@ class TraceWriter:
         Initialize the trace writer.
         
         Args:
-            traces_path: Directory for JSON trace files
+            traces_path: Directory for JSON trace files. If None, traces are not saved.
         """
-        base_path = Path(__file__).parent.parent
+        self.traces_path = traces_path
         
-        self.traces_path = traces_path or base_path / "traces" / "reasoning_traces"
-        
-        # Ensure directory exists
-        self.traces_path.mkdir(parents=True, exist_ok=True)
+        # Only create directory if traces_path is explicitly provided
+        if self.traces_path:
+            self.traces_path.mkdir(parents=True, exist_ok=True)
     
     def save_traces(self, timestamp: str, result: ExecutionResult):
         """
@@ -53,6 +52,8 @@ class TraceWriter:
             timestamp: Timestamp string for file naming
             result: ExecutionResult containing all trace data
         """
+        if self.traces_path is None:
+            return
         self._save_json_trace(timestamp, result)
     
     def _save_json_trace(self, timestamp: str, result: ExecutionResult):
@@ -162,6 +163,8 @@ class TraceWriter:
             timestamp: Timestamp string for file naming
             result: CRUD operation result dictionary
         """
+        if self.traces_path is None:
+            return
         self._save_crud_json_trace(timestamp, result)
     
     def _save_crud_json_trace(self, timestamp: str, result: Dict[str, Any]):

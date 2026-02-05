@@ -176,7 +176,7 @@ class CRUDExecutor:
             base_dir = Path(tree_path).parent
         else:
             base_dir = RESULT_DIR
-            
+
         # Ensure result directory exists
         base_dir.mkdir(parents=True, exist_ok=True)
         
@@ -213,6 +213,11 @@ class CRUDExecutor:
         if self._tree is None:
             self._tree = copy.deepcopy(self.executor.tree)
         return self._tree
+    
+    @property
+    def tree_path(self) -> Path:
+        """Get the path to the tree file."""
+        return self.executor.memory_path
     
     def _sync_executor_tree(self):
         """Sync the DenseXPathExecutor's tree with our modified tree."""

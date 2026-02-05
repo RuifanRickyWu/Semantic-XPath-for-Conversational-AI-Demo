@@ -9,9 +9,8 @@ POST /api/tree/reset - Reset tree to original state
 
 from flask import Blueprint, jsonify, current_app
 from pathlib import Path
-import json
 
-from pipeline.serializers import serialize_tree
+from api.serializers import serialize_tree
 
 bp = Blueprint("tree", __name__)
 

@@ -5,7 +5,7 @@ Index Handler - Applies positional indexing to node lists.
 import xml.etree.ElementTree as ET
 from typing import List
 
-from .models import IndexRange
+from pipeline_execution.semantic_xpath_parsing.parsing_models import IndexRange
 
 
 class IndexHandler:

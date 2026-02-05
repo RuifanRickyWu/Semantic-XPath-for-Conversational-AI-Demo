@@ -1,270 +1,360 @@
 """
-Unit tests for QueryParser - specifically testing OR expression handling.
+Unit tests for the new tokenizer + recursive-descent predicate parser.
 
-Bug Description:
-    When an OR expression is wrapped in outer parentheses like:
-        (atom(content =~ "kid") OR atom(content =~ "child"))
-    
-    The parser fails to recognize it as an OR expression because:
-    1. _split_logical_operator tracks paren_depth
-    2. When it encounters '(' at the start, paren_depth becomes 1
-    3. The OR operator is found at paren_depth=1, not 0
-    4. Therefore, OR is NOT recognized as a split point
-    5. The entire expression is returned as a single part
-    6. It falls through to the fallback case and is treated as a raw string
-
-Fix Required:
-    Add logic in _parse_logical_predicate to strip outer grouping parentheses
-    before attempting to parse logical operators.
+Tests cover:
+- Tokenizer correctness
+- Basic predicate parsing (atom, not, agg_exists, agg_prev)
+- Logical operators (AND, OR) with correct precedence
+- Parenthesized grouping (the original bug that motivated the rewrite)
+- Nested/complex expressions
+- Full XPath query parsing (path + predicates)
 """
 
 import unittest
 import sys
 import os
 
-# Get absolute path to project root and semantic_xpath_execution
-_project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-_semantic_xpath_dir = os.path.join(_project_root, 'pipeline_execution', 'semantic_xpath_execution')
+# Ensure project root is on path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-# Directly import models (has no external dependencies)
-sys.path.insert(0, _semantic_xpath_dir)
-from models import IndexRange, QueryStep, AtomicPredicate, CompoundPredicate
-
-# Create a modified parser module that uses absolute imports
-# We read the parser.py file and exec it with the models already imported
-import re as _re
-from typing import List, Optional, Tuple
-
-_parser_code = open(os.path.join(_semantic_xpath_dir, 'parser.py')).read()
-# Remove the relative import line since we already have models in scope
-_parser_code = _parser_code.replace(
-    'from .models import IndexRange, QueryStep, AtomicPredicate, CompoundPredicate',
-    '# Models imported externally'
+from pipeline_execution.semantic_xpath_parsing import (
+    QueryParser,
+    get_parser,
+    parse_predicate,
+    QueryStep,
+    IndexRange,
 )
-exec(_parser_code)
-# QueryParser and get_parser are now available
+from pipeline_execution.semantic_xpath_parsing.predicate_ast import (
+    PredicateNode,
+    AtomPredicate,
+    AggExistsPredicate,
+    AggPrevPredicate,
+    AndPredicate,
+    OrPredicate,
+    NotPredicate,
+    tokenize,
+    TokenType,
+)
 
 
-class TestParserORExpression(unittest.TestCase):
-    """Test cases for OR expression parsing bug."""
-    
-    def setUp(self):
-        """Create parser instance for each test."""
-        self.parser = QueryParser()
-    
-    # =========================================================================
-    # Tests for _split_logical_operator method
-    # =========================================================================
-    
-    def test_split_or_without_outer_parens(self):
-        """OR without outer parentheses should split correctly."""
-        expr = 'atom(content =~ "kid") OR atom(content =~ "child")'
-        parts = self.parser._split_logical_operator(expr, ' OR ')
-        
-        self.assertEqual(len(parts), 2)
-        self.assertEqual(parts[0], 'atom(content =~ "kid")')
-        self.assertEqual(parts[1], 'atom(content =~ "child")')
-    
-    def test_split_or_with_outer_parens_bug(self):
-        """
-        BUG: OR with outer parentheses fails to split.
-        
-        This test documents the current broken behavior.
-        After fix, this test should be updated to expect 2 parts.
-        """
-        expr = '(atom(content =~ "kid") OR atom(content =~ "child"))'
-        parts = self.parser._split_logical_operator(expr, ' OR ')
-        
-        # CURRENT BROKEN BEHAVIOR: Returns 1 part (the whole expression)
-        # After fix, should return 2 parts
-        self.assertEqual(len(parts), 1, 
-            "BUG CONFIRMED: Outer parens prevent OR from being recognized as split point")
-    
-    def test_split_and_without_outer_parens(self):
-        """AND without outer parentheses should split correctly."""
-        expr = 'atom(content =~ "outdoor") AND atom(content =~ "free")'
-        parts = self.parser._split_logical_operator(expr, ' AND ')
-        
-        self.assertEqual(len(parts), 2)
-    
-    def test_split_and_with_outer_parens_bug(self):
-        """
-        BUG: AND with outer parentheses fails to split.
-        """
-        expr = '(atom(content =~ "outdoor") AND atom(content =~ "free"))'
-        parts = self.parser._split_logical_operator(expr, ' AND ')
-        
-        # CURRENT BROKEN BEHAVIOR
-        self.assertEqual(len(parts), 1,
-            "BUG CONFIRMED: Outer parens prevent AND from being recognized")
-    
-    # =========================================================================
-    # Tests for _parse_logical_predicate method
-    # =========================================================================
-    
-    def test_parse_or_without_outer_parens(self):
-        """OR expression without outer parens parses correctly."""
-        expr = 'atom(content =~ "kid") OR atom(content =~ "child")'
-        result = self.parser._parse_logical_predicate(expr)
-        
-        self.assertEqual(result.operator, "OR")
-        self.assertEqual(len(result.conditions), 2)
-        self.assertEqual(result.conditions[0].operator, "ATOM")
-        self.assertEqual(result.conditions[1].operator, "ATOM")
-    
-    def test_parse_or_with_outer_parens_bug(self):
-        """
-        BUG: OR expression with outer parens is NOT parsed as OR.
-        
-        Instead, it falls through to fallback and is treated as raw content.
-        """
-        expr = '(atom(content =~ "kid") OR atom(content =~ "child"))'
-        result = self.parser._parse_logical_predicate(expr)
-        
-        # CURRENT BROKEN BEHAVIOR: Falls back to ATOM with raw string
-        self.assertEqual(result.operator, "ATOM",
-            "BUG CONFIRMED: Expression wrongly parsed as ATOM instead of OR")
-        
-        # The entire expression becomes the atom value (wrong!)
-        self.assertEqual(len(result.conditions), 1)
-        self.assertIsInstance(result.conditions[0], AtomicPredicate)
-        self.assertEqual(result.conditions[0].field, "content")
-        self.assertIn("OR", result.conditions[0].value,
-            "BUG: The OR keyword ended up in the atom value as raw text")
-    
-    def test_parse_and_with_outer_parens_bug(self):
-        """
-        BUG: AND expression with outer parens is NOT parsed as AND.
-        """
-        expr = '(atom(content =~ "outdoor") AND atom(content =~ "free"))'
-        result = self.parser._parse_logical_predicate(expr)
-        
-        # CURRENT BROKEN BEHAVIOR
-        self.assertEqual(result.operator, "ATOM",
-            "BUG CONFIRMED: Expression wrongly parsed as ATOM instead of AND")
-    
-    # =========================================================================
-    # Tests for full query parsing
-    # =========================================================================
-    
-    def test_full_query_or_predicate_without_parens(self):
-        """Full query with OR predicate (no outer parens) works."""
-        query = '/Itinerary/Day/POI[atom(content =~ "kid") OR atom(content =~ "child")]'
-        steps, global_idx = self.parser.parse(query)
-        
-        self.assertEqual(len(steps), 3)
-        poi_step = steps[2]
-        self.assertEqual(poi_step.node_type, "POI")
-        self.assertIsNotNone(poi_step.predicate)
-        self.assertEqual(poi_step.predicate.operator, "OR")
-    
-    def test_full_query_or_predicate_with_parens_bug(self):
-        """
-        BUG: Full query with OR predicate wrapped in parens fails.
-        
-        This is common when users want explicit grouping:
-        POI[(A OR B) AND C] - the (A OR B) part fails
-        """
-        query = '/Itinerary/Day/POI[(atom(content =~ "kid") OR atom(content =~ "child"))]'
-        steps, global_idx = self.parser.parse(query)
-        
-        self.assertEqual(len(steps), 3)
-        poi_step = steps[2]
-        
-        # CURRENT BROKEN BEHAVIOR: OR not recognized
-        self.assertEqual(poi_step.predicate.operator, "ATOM",
-            "BUG CONFIRMED: OR predicate with parens wrongly parsed as ATOM")
+# =============================================================================
+# Tokenizer Tests
+# =============================================================================
+
+class TestTokenizer(unittest.TestCase):
+
+    def test_atom_expression(self):
+        tokens = tokenize('atom(content =~ "museum")')
+        types = [t.type for t in tokens]
+        self.assertEqual(types, [
+            TokenType.ATOM, TokenType.LPAREN, TokenType.IDENT,
+            TokenType.TILDE_EQ, TokenType.STRING, TokenType.RPAREN,
+            TokenType.EOF,
+        ])
+        self.assertEqual(tokens[2].value, "content")
+        self.assertEqual(tokens[4].value, "museum")
+
+    def test_or_expression(self):
+        tokens = tokenize('atom(content =~ "kid") OR atom(content =~ "child")')
+        types = [t.type for t in tokens]
+        self.assertIn(TokenType.OR, types)
+
+    def test_and_expression(self):
+        tokens = tokenize('atom(content =~ "outdoor") AND atom(content =~ "free")')
+        types = [t.type for t in tokens]
+        self.assertIn(TokenType.AND, types)
+
+    def test_agg_exists(self):
+        tokens = tokenize('agg_exists(POI[atom(content =~ "museum")])')
+        self.assertEqual(tokens[0].type, TokenType.AGG_EXISTS)
+        self.assertEqual(tokens[2].type, TokenType.IDENT)
+        self.assertEqual(tokens[2].value, "POI")
+
+    def test_not(self):
+        tokens = tokenize('not(atom(content =~ "expensive"))')
+        self.assertEqual(tokens[0].type, TokenType.NOT)
+
+    def test_coloncolon(self):
+        tokens = tokenize('desc::POI')
+        self.assertEqual(tokens[0].type, TokenType.IDENT)
+        self.assertEqual(tokens[0].value, "desc")
+        self.assertEqual(tokens[1].type, TokenType.COLONCOLON)
+        self.assertEqual(tokens[2].type, TokenType.IDENT)
+        self.assertEqual(tokens[2].value, "POI")
+
+    def test_single_quoted_string(self):
+        tokens = tokenize("atom(content =~ 'museum')")
+        self.assertEqual(tokens[4].type, TokenType.STRING)
+        self.assertEqual(tokens[4].value, "museum")
 
 
-class TestParserORExpressionFixed(unittest.TestCase):
-    """
-    Tests that should pass AFTER the bug is fixed.
-    
-    Run these to verify the fix works correctly.
-    """
-    
-    def setUp(self):
-        self.parser = QueryParser()
-    
-    @unittest.skip("ENABLE AFTER FIX: Currently fails due to bug")
-    def test_split_or_with_outer_parens_fixed(self):
-        """After fix: OR with outer parens should split correctly."""
-        expr = '(atom(content =~ "kid") OR atom(content =~ "child"))'
-        parts = self.parser._split_logical_operator(expr, ' OR ')
-        
-        # After stripping outer parens, should find 2 parts
-        self.assertEqual(len(parts), 2)
-    
-    @unittest.skip("ENABLE AFTER FIX: Currently fails due to bug")
-    def test_parse_or_with_outer_parens_fixed(self):
-        """After fix: OR with outer parens parses as OR."""
-        expr = '(atom(content =~ "kid") OR atom(content =~ "child"))'
-        result = self.parser._parse_logical_predicate(expr)
-        
-        self.assertEqual(result.operator, "OR")
-        self.assertEqual(len(result.conditions), 2)
-    
-    @unittest.skip("ENABLE AFTER FIX: Currently fails due to bug")
-    def test_nested_grouping_fixed(self):
-        """After fix: Nested grouping like ((A OR B) AND C) should work."""
-        expr = '(atom(content =~ "kid") OR atom(content =~ "child")) AND atom(content =~ "activity")'
-        result = self.parser._parse_logical_predicate(expr)
-        
-        self.assertEqual(result.operator, "AND")
-        self.assertEqual(len(result.conditions), 2)
-        
-        # First condition should be the OR group
-        self.assertEqual(result.conditions[0].operator, "OR")
+# =============================================================================
+# Predicate Parser Tests - Base Cases
+# =============================================================================
 
+class TestPredicateParserBaseCases(unittest.TestCase):
 
-class TestParserBasicFunctionality(unittest.TestCase):
-    """Basic parser tests to ensure other functionality works."""
-    
-    def setUp(self):
-        self.parser = QueryParser()
-    
     def test_simple_atom(self):
-        """Simple atom predicate."""
-        result = self.parser._parse_logical_predicate('atom(content =~ "museum")')
-        
-        self.assertEqual(result.operator, "ATOM")
-        self.assertEqual(len(result.conditions), 1)
-        self.assertEqual(result.conditions[0].field, "content")
-        self.assertEqual(result.conditions[0].value, "museum")
-    
-    def test_not_predicate(self):
-        """NOT predicate."""
-        result = self.parser._parse_logical_predicate('not(atom(content =~ "expensive"))')
-        
-        self.assertEqual(result.operator, "NOT")
-        self.assertEqual(len(result.conditions), 1)
-        self.assertEqual(result.conditions[0].operator, "ATOM")
-    
+        result = parse_predicate('atom(content =~ "museum")')
+        self.assertIsInstance(result, AtomPredicate)
+        self.assertEqual(result.field, "content")
+        self.assertEqual(result.value, "museum")
+
+    def test_not_atom(self):
+        result = parse_predicate('not(atom(content =~ "expensive"))')
+        self.assertIsInstance(result, NotPredicate)
+        self.assertIsInstance(result.child, AtomPredicate)
+        self.assertEqual(result.child.value, "expensive")
+
+    def test_agg_exists_with_child_type(self):
+        result = parse_predicate('agg_exists(POI[atom(content =~ "museum")])')
+        self.assertIsInstance(result, AggExistsPredicate)
+        self.assertEqual(result.child_type, "POI")
+        self.assertEqual(result.child_axis, "child")
+        self.assertIsInstance(result.inner, AtomPredicate)
+        self.assertEqual(result.inner.value, "museum")
+
+    def test_agg_prev_with_child_type(self):
+        result = parse_predicate('agg_prev(POI[atom(content =~ "artistic")])')
+        self.assertIsInstance(result, AggPrevPredicate)
+        self.assertEqual(result.child_type, "POI")
+        self.assertIsInstance(result.inner, AtomPredicate)
+
+    def test_agg_exists_with_desc_axis(self):
+        result = parse_predicate('agg_exists(desc::SubTask[atom(content =~ "review")])')
+        self.assertIsInstance(result, AggExistsPredicate)
+        self.assertEqual(result.child_axis, "desc")
+        self.assertEqual(result.child_type, "SubTask")
+
+    def test_agg_exists_without_child_type(self):
+        result = parse_predicate('agg_exists(atom(content =~ "museum"))')
+        self.assertIsInstance(result, AggExistsPredicate)
+        self.assertIsNone(result.child_type)
+        self.assertIsInstance(result.inner, AtomPredicate)
+
+
+# =============================================================================
+# Predicate Parser Tests - Logical Operators
+# =============================================================================
+
+class TestPredicateParserLogical(unittest.TestCase):
+
+    def test_simple_or(self):
+        result = parse_predicate('atom(content =~ "kid") OR atom(content =~ "child")')
+        self.assertIsInstance(result, OrPredicate)
+        self.assertEqual(len(result.children), 2)
+        self.assertIsInstance(result.children[0], AtomPredicate)
+        self.assertIsInstance(result.children[1], AtomPredicate)
+        self.assertEqual(result.children[0].value, "kid")
+        self.assertEqual(result.children[1].value, "child")
+
+    def test_simple_and(self):
+        result = parse_predicate('atom(content =~ "outdoor") AND atom(content =~ "free")')
+        self.assertIsInstance(result, AndPredicate)
+        self.assertEqual(len(result.children), 2)
+
+    def test_or_with_outer_parens(self):
+        """This was the original bug - outer parens broke OR parsing."""
+        result = parse_predicate('(atom(content =~ "kid") OR atom(content =~ "child"))')
+        self.assertIsInstance(result, OrPredicate)
+        self.assertEqual(len(result.children), 2)
+        self.assertEqual(result.children[0].value, "kid")
+        self.assertEqual(result.children[1].value, "child")
+
+    def test_and_with_outer_parens(self):
+        result = parse_predicate('(atom(content =~ "outdoor") AND atom(content =~ "free"))')
+        self.assertIsInstance(result, AndPredicate)
+        self.assertEqual(len(result.children), 2)
+
+    def test_precedence_and_binds_tighter_than_or(self):
+        """A OR B AND C should parse as Or(A, And(B, C))."""
+        result = parse_predicate(
+            'atom(content =~ "a") OR atom(content =~ "b") AND atom(content =~ "c")'
+        )
+        self.assertIsInstance(result, OrPredicate)
+        self.assertEqual(len(result.children), 2)
+        self.assertIsInstance(result.children[0], AtomPredicate)
+        self.assertIsInstance(result.children[1], AndPredicate)
+        self.assertEqual(result.children[1].children[0].value, "b")
+        self.assertEqual(result.children[1].children[1].value, "c")
+
+    def test_parens_override_precedence(self):
+        """(A OR B) AND C should parse as And(Or(A, B), C)."""
+        result = parse_predicate(
+            '(atom(content =~ "a") OR atom(content =~ "b")) AND atom(content =~ "c")'
+        )
+        self.assertIsInstance(result, AndPredicate)
+        self.assertEqual(len(result.children), 2)
+        self.assertIsInstance(result.children[0], OrPredicate)
+        self.assertIsInstance(result.children[1], AtomPredicate)
+
+    def test_not_with_complex_inner(self):
+        result = parse_predicate('not(atom(content =~ "a") OR atom(content =~ "b"))')
+        self.assertIsInstance(result, NotPredicate)
+        self.assertIsInstance(result.child, OrPredicate)
+        self.assertEqual(len(result.child.children), 2)
+
+    def test_triple_or(self):
+        result = parse_predicate(
+            'atom(content =~ "a") OR atom(content =~ "b") OR atom(content =~ "c")'
+        )
+        self.assertIsInstance(result, OrPredicate)
+        self.assertEqual(len(result.children), 3)
+
+    def test_nested_or_and(self):
+        """(A OR B) AND not(C OR D)"""
+        result = parse_predicate(
+            '(atom(content =~ "a") OR atom(content =~ "b")) '
+            'AND not(atom(content =~ "c") OR atom(content =~ "d"))'
+        )
+        self.assertIsInstance(result, AndPredicate)
+        self.assertIsInstance(result.children[0], OrPredicate)
+        self.assertIsInstance(result.children[1], NotPredicate)
+        self.assertIsInstance(result.children[1].child, OrPredicate)
+
+
+# =============================================================================
+# Predicate Parser Tests - Aggregation with Complex Inner
+# =============================================================================
+
+class TestPredicateParserAggComplex(unittest.TestCase):
+
+    def test_agg_exists_with_or_inner(self):
+        result = parse_predicate(
+            'agg_exists(POI[atom(content =~ "kid") OR atom(content =~ "child")])'
+        )
+        self.assertIsInstance(result, AggExistsPredicate)
+        self.assertEqual(result.child_type, "POI")
+        self.assertIsInstance(result.inner, OrPredicate)
+        self.assertEqual(len(result.inner.children), 2)
+
+    def test_agg_prev_with_and_inner(self):
+        result = parse_predicate(
+            'agg_prev(Restaurant[atom(content =~ "italian") AND atom(content =~ "casual")])'
+        )
+        self.assertIsInstance(result, AggPrevPredicate)
+        self.assertEqual(result.child_type, "Restaurant")
+        self.assertIsInstance(result.inner, AndPredicate)
+
+
+# =============================================================================
+# AST Node Method Tests
+# =============================================================================
+
+class TestASTNodeMethods(unittest.TestCase):
+
+    def test_get_all_atomic_values_atom(self):
+        node = AtomPredicate(field="content", value="museum")
+        self.assertEqual(node.get_all_atomic_values(), ["museum"])
+
+    def test_get_all_atomic_values_or(self):
+        node = OrPredicate(children=[
+            AtomPredicate(field="content", value="kid"),
+            AtomPredicate(field="content", value="child"),
+        ])
+        self.assertEqual(sorted(node.get_all_atomic_values()), ["child", "kid"])
+
+    def test_get_all_atomic_values_agg(self):
+        node = AggExistsPredicate(
+            inner=AtomPredicate(field="content", value="museum"),
+            child_type="POI",
+        )
+        self.assertEqual(node.get_all_atomic_values(), ["museum"])
+
+    def test_get_all_atomic_values_nested(self):
+        node = AndPredicate(children=[
+            OrPredicate(children=[
+                AtomPredicate(field="content", value="a"),
+                AtomPredicate(field="content", value="b"),
+            ]),
+            NotPredicate(child=AtomPredicate(field="content", value="c")),
+        ])
+        self.assertEqual(sorted(node.get_all_atomic_values()), ["a", "b", "c"])
+
+    def test_to_dict_atom(self):
+        node = AtomPredicate(field="content", value="museum")
+        d = node.to_dict()
+        self.assertEqual(d, {"type": "atom", "field": "content", "value": "museum"})
+
+    def test_repr_roundtrip(self):
+        """__repr__ should reconstruct valid syntax."""
+        node = parse_predicate('atom(content =~ "museum")')
+        self.assertEqual(repr(node), 'atom(content =~ "museum")')
+
+
+# =============================================================================
+# Full Query Parser Tests
+# =============================================================================
+
+class TestQueryParser(unittest.TestCase):
+
+    def setUp(self):
+        self.parser = QueryParser()
+
     def test_simple_path(self):
-        """Simple path parsing."""
         steps, global_idx = self.parser.parse('/Itinerary/Day/POI')
-        
         self.assertEqual(len(steps), 3)
         self.assertEqual(steps[0].node_type, "Itinerary")
         self.assertEqual(steps[1].node_type, "Day")
         self.assertEqual(steps[2].node_type, "POI")
         self.assertIsNone(global_idx)
-    
+
     def test_positional_index(self):
-        """Positional index parsing."""
         steps, _ = self.parser.parse('/Itinerary/Day[2]/POI[-1]')
-        
         self.assertEqual(steps[1].index.start, 2)
         self.assertEqual(steps[2].index.start, -1)
-    
+
     def test_global_index(self):
-        """Global index parsing."""
         steps, global_idx = self.parser.parse('(/Itinerary/Day/POI)[5]')
-        
         self.assertIsNotNone(global_idx)
         self.assertEqual(global_idx.start, 5)
+        self.assertEqual(len(steps), 3)
+
+    def test_atom_predicate(self):
+        steps, _ = self.parser.parse('/Itinerary/Day/POI[atom(content =~ "museum")]')
+        poi = steps[2]
+        self.assertIsInstance(poi.predicate, AtomPredicate)
+        self.assertEqual(poi.predicate.value, "museum")
+
+    def test_or_predicate_without_parens(self):
+        steps, _ = self.parser.parse(
+            '/Itinerary/Day/POI[atom(content =~ "kid") OR atom(content =~ "child")]'
+        )
+        poi = steps[2]
+        self.assertIsInstance(poi.predicate, OrPredicate)
+        self.assertEqual(len(poi.predicate.children), 2)
+
+    def test_or_predicate_with_parens(self):
+        """Previously broken: outer parens in predicate bracket."""
+        steps, _ = self.parser.parse(
+            '/Itinerary/Day/POI[(atom(content =~ "kid") OR atom(content =~ "child"))]'
+        )
+        poi = steps[2]
+        self.assertIsInstance(poi.predicate, OrPredicate)
+        self.assertEqual(len(poi.predicate.children), 2)
+
+    def test_index_and_predicate(self):
+        steps, _ = self.parser.parse(
+            '/Itinerary/Day[2][agg_exists(POI[atom(content =~ "museum")])]'
+        )
+        day = steps[1]
+        self.assertEqual(day.index.start, 2)
+        self.assertIsInstance(day.predicate, AggExistsPredicate)
+
+    def test_desc_axis(self):
+        steps, _ = self.parser.parse('/Itinerary/desc::POI[atom(content =~ "museum")]')
+        poi = steps[1]
+        self.assertEqual(poi.axis, "desc")
+        self.assertEqual(poi.node_type, "POI")
+
+    def test_not_predicate(self):
+        steps, _ = self.parser.parse(
+            '/Itinerary/Day/Restaurant[not(atom(content =~ "expensive"))]'
+        )
+        rest = steps[2]
+        self.assertIsInstance(rest.predicate, NotPredicate)
+        self.assertIsInstance(rest.predicate.child, AtomPredicate)
 
 
 if __name__ == '__main__':
-    # Run tests with verbose output
     unittest.main(verbosity=2)

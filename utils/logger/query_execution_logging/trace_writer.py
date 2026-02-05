@@ -16,7 +16,7 @@ import logging
 from pathlib import Path
 from typing import List, Dict, Any, Union
 
-from .models import ExecutionResult
+from pipeline_execution.semantic_xpath_execution.execution_models import ExecutionResult
 
 logger = logging.getLogger(__name__)
 

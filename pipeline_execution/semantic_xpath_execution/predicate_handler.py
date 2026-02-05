@@ -37,14 +37,17 @@ import time
 import xml.etree.ElementTree as ET
 from typing import List, Dict, Any, Tuple, Optional, Set
 from collections import defaultdict
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from predicate_scorer import PredicateScorer
-from .node_utils import NodeUtils
-from .models import CompoundPredicate, AtomicPredicate
+from .predicate_scorer import PredicateScorer
+from pipeline_execution.semantic_xpath_util.node_utils import NodeUtils
+from pipeline_execution.semantic_xpath_parsing.predicate_ast import (
+    PredicateNode,
+    AtomPredicate,
+    AggExistsPredicate,
+    AggPrevPredicate,
+    AndPredicate,
+    OrPredicate,
+    NotPredicate,
+)
 
 
 # Small epsilon to avoid log(0) and division by zero
@@ -166,7 +169,7 @@ class PredicateHandler:
     def _recursive_subtree_score(
         self,
         node: ET.Element,
-        child_predicate: CompoundPredicate,
+        child_predicate: PredicateNode,
         agg_operator: str,  # "EXISTS" or "PREV"
         trace_steps: List[Dict],
         execution_log: List[str]
@@ -256,7 +259,7 @@ class PredicateHandler:
     def apply_semantic_predicate(
         self, 
         nodes: List[ET.Element], 
-        predicate: CompoundPredicate,
+        predicate: PredicateNode,
         execution_log: List[str] = None
     ) -> Tuple[List[ET.Element], Dict[int, float], Dict[str, Any]]:
         """
@@ -362,7 +365,7 @@ class PredicateHandler:
     def _collect_scoring_tasks(
         self,
         nodes: List[ET.Element],
-        predicate: CompoundPredicate
+        predicate: PredicateNode
     ) -> Dict[str, List[ScoringTask]]:
         """Collect all scoring tasks grouped by semantic value."""
         tasks: Dict[str, List[ScoringTask]] = defaultdict(list)
@@ -376,7 +379,7 @@ class PredicateHandler:
     def _collect_tasks_for_node(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: PredicateNode,
         tasks: Dict[str, List[ScoringTask]]
     ):
         """
@@ -384,42 +387,28 @@ class PredicateHandler:
         
         Paper: Traverses predicate structure to find all Atom(u, φ) evaluations needed.
         """
-        if predicate.operator == "ATOM":
-            # ATOM: score node's own content (local atomic predicate)
-            if predicate.conditions:
-                condition = predicate.conditions[0]
-                if isinstance(condition, AtomicPredicate):
-                    self._add_node_content_to_tasks(node, condition.value, tasks)
+        if isinstance(predicate, AtomPredicate):
+            self._add_node_content_to_tasks(node, predicate.value, tasks)
         
-        elif predicate.operator in ("AND", "OR"):
-            # Conjunction/Disjunction: collect from all sub-predicates
-            for cond in predicate.conditions:
-                if isinstance(cond, CompoundPredicate):
-                    self._collect_tasks_for_node(node, cond, tasks)
+        elif isinstance(predicate, (AndPredicate, OrPredicate)):
+            for child in predicate.children:
+                self._collect_tasks_for_node(node, child, tasks)
         
-        elif predicate.operator == "NOT":
-            # Negation: collect from inner predicate
-            if predicate.conditions:
-                for cond in predicate.conditions:
-                    if isinstance(cond, CompoundPredicate):
-                        self._collect_tasks_for_node(node, cond, tasks)
+        elif isinstance(predicate, NotPredicate):
+            if predicate.child:
+                self._collect_tasks_for_node(node, predicate.child, tasks)
         
-        elif predicate.operator in ("AGG_EXISTS", "AGG_PREV"):
-            # Hierarchical: collect from children/descendants AND their entire subtrees
-            # for recursive bottom-up aggregation
-            if predicate.child_predicate:
-                child_axis = getattr(predicate, 'child_axis', 'child')
-                children = self._get_hierarchical_children(
-                    node, predicate.child_type, axis=child_axis
-                )
-                for child in children:
-                    # Collect for child AND all its descendants (recursive subtree)
-                    self._collect_subtree_tasks(child, predicate.child_predicate, tasks)
+        elif isinstance(predicate, (AggExistsPredicate, AggPrevPredicate)):
+            children = self._get_hierarchical_children(
+                node, predicate.child_type, axis=predicate.child_axis
+            )
+            for child in children:
+                self._collect_subtree_tasks(child, predicate.inner, tasks)
     
     def _collect_subtree_tasks(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: PredicateNode,
         tasks: Dict[str, List[ScoringTask]]
     ):
         """
@@ -606,7 +595,7 @@ class PredicateHandler:
     def score(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: PredicateNode,
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
@@ -620,64 +609,35 @@ class PredicateHandler:
             max{Score(u, ψ₁), Score(u, ψ₂)}      if ψ = ψ₁ ∨ ψ₂ (OR)
             1 - Score(u, ψ)                      if ψ = ¬ψ (NOT)
           }
-        
-        Args:
-            node: XML element u to evaluate
-            predicate: Predicate expression ψ
-            trace_steps: List to record scoring trace
-            execution_log: Execution log for debugging
-            
-        Returns:
-            Score in [0, 1]
         """
-        if predicate.operator == "ATOM":
+        if isinstance(predicate, AtomPredicate):
             return self._score_atom(node, predicate, trace_steps)
-        
-        elif predicate.operator == "OR":
+        elif isinstance(predicate, OrPredicate):
             return self._score_or(node, predicate, trace_steps, execution_log)
-        
-        elif predicate.operator == "AND":
+        elif isinstance(predicate, AndPredicate):
             return self._score_and(node, predicate, trace_steps, execution_log)
-        
-        elif predicate.operator == "NOT":
+        elif isinstance(predicate, NotPredicate):
             return self._score_not(node, predicate, trace_steps, execution_log)
-        
-        elif predicate.operator == "AGG_EXISTS":
+        elif isinstance(predicate, AggExistsPredicate):
             return self._score_agg_exists(node, predicate, trace_steps, execution_log)
-        
-        elif predicate.operator == "AGG_PREV":
+        elif isinstance(predicate, AggPrevPredicate):
             return self._score_agg_prev(node, predicate, trace_steps, execution_log)
-        
         return 0
     
     def _score_atom(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: AtomPredicate,
         trace_steps: List[Dict]
     ) -> float:
-        """
-        Score atomic predicate - Atom(u, φ) from attr(u).
-        
-        Paper Formalization:
-        - Local atomic predicates evaluate the node's OWN content
-        - Atom(u, φ) = Pr(Zᵤ(φ) = 1 | attr(u))
-        - This is distinct from hierarchical predicates that aggregate over Desc(u)
-        """
-        if not predicate.conditions:
-            return 0
-        
-        condition = predicate.conditions[0]
-        if not isinstance(condition, AtomicPredicate):
-            return 0
-        
+        """Score atomic predicate - Atom(u, φ) from attr(u)."""
         node_id = id(node)
-        cache_key = (node_id, condition.value)
+        cache_key = (node_id, predicate.value)
         score = self._score_cache.get(cache_key, 0)
         
         trace_steps.append({
             "type": "atom",
-            "condition": condition.to_dict(),
+            "condition": predicate.to_dict(),
             "score": score,
             "note": "Atom(u, φ) - local node content from attr(u)"
         })
@@ -687,24 +647,17 @@ class PredicateHandler:
     def _score_or(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: OrPredicate,
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
-        """
-        Score disjunction: ψ₁ ∨ ψ₂
-        
-        Paper: Score(u, ψ₁ ∨ ψ₂) = max{Score(u, ψ₁), Score(u, ψ₂)}
-        """
+        """Score disjunction: max{Score(u, ψ_j)}"""
         trace_steps_list = []
         child_scores = []
         
-        for cond in predicate.conditions:
-            inner_trace = []
-            if isinstance(cond, CompoundPredicate):
-                s = self.score(node, cond, inner_trace, execution_log)
-            else:
-                s = 0
+        for child in predicate.children:
+            inner_trace: List[Dict] = []
+            s = self.score(node, child, inner_trace, execution_log)
             child_scores.append(s)
             trace_steps_list.append(inner_trace)
         
@@ -724,24 +677,17 @@ class PredicateHandler:
     def _score_and(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: AndPredicate,
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
-        """
-        Score conjunction: ψ₁ ∧ ψ₂
-        
-        Paper: Score(u, ψ₁ ∧ ψ₂) = min{Score(u, ψ₁), Score(u, ψ₂)}
-        """
+        """Score conjunction: min{Score(u, ψ_j)}"""
         trace_steps_list = []
         child_scores = []
         
-        for cond in predicate.conditions:
-            inner_trace = []
-            if isinstance(cond, CompoundPredicate):
-                s = self.score(node, cond, inner_trace, execution_log)
-            else:
-                s = 0
+        for child in predicate.children:
+            inner_trace: List[Dict] = []
+            s = self.score(node, child, inner_trace, execution_log)
             child_scores.append(s)
             trace_steps_list.append(inner_trace)
         
@@ -761,24 +707,13 @@ class PredicateHandler:
     def _score_not(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: NotPredicate,
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
-        """
-        Score negation: ¬ψ
-        
-        Paper: Score(u, ¬ψ) = 1 - Score(u, ψ)
-        """
-        if not predicate.conditions:
-            return 0
-        
-        inner_cond = predicate.conditions[0]
-        inner_trace = []
-        if isinstance(inner_cond, CompoundPredicate):
-            inner_score = self.score(node, inner_cond, inner_trace, execution_log)
-        else:
-            inner_score = 0
+        """Score negation: 1 - Score(u, ψ)"""
+        inner_trace: List[Dict] = []
+        inner_score = self.score(node, predicate.child, inner_trace, execution_log) if predicate.child else 0
         
         result = 1 - inner_score
         result = max(EPSILON, min(1 - EPSILON, result))
@@ -796,56 +731,35 @@ class PredicateHandler:
     def _score_agg_exists(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: AggExistsPredicate,
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
-        """
-        Hierarchical predicate with existential aggregation and recursive subtree scoring.
-        
-        Paper Formalization (extended for recursive aggregation):
-        - For each child x ∈ Sφ(u), recursively aggregate its subtree with max
-        - Agg∃(A) = max A (no weighting - max is max)
-        - Sφ(u) ⊆ Desc(u) is the set of evidence nodes (children of specified type)
-        
-        Semantics: "At least one node in the subtree matches" - returns max score
-        across all nodes in all child subtrees.
-        """
-        if not predicate.child_predicate:
-            return 0
-        
-        # Sφ(u) - evidence nodes (children/descendants of specified type)
-        child_axis = getattr(predicate, 'child_axis', 'child')
+        """Hierarchical existential aggregation: Agg∃(A) = max(subtree scores)"""
         children = self._get_hierarchical_children(
-            node, predicate.child_type, axis=child_axis
+            node, predicate.child_type, axis=predicate.child_axis
         )
         
         if not children:
-            # Empty evidence set - return neutral
             trace_steps.append({
                 "type": "agg_exists",
                 "child_type": predicate.child_type or "*",
-                "child_axis": child_axis,
+                "child_axis": predicate.child_axis,
                 "num_children": 0,
                 "note": "Sφ(u) is empty - no children/descendants found",
                 "result": 0
             })
             return 0
         
-        # Recursively score each child's entire subtree
-        # Each child returns (score, subtree_size, best_match)
         child_results: List[Tuple[float, int, Optional[Dict]]] = []
         for child in children:
             score, size, details = self._recursive_subtree_score(
-                child, predicate.child_predicate, "EXISTS", trace_steps, execution_log
+                child, predicate.inner, "EXISTS", trace_steps, execution_log
             )
             child_results.append((score, size, details))
         
-        # Agg∃(A) = max A (no weighting for EXISTS)
-        # Find which child/subtree provided the max score
         max_score = -1.0
         best_details = None
-        
         for s, _, d in child_results:
             if s > max_score:
                 max_score = s
@@ -857,7 +771,7 @@ class PredicateHandler:
             "type": "agg_exists_recursive",
             "formula": "Agg∃(A) = max(recursive_subtree_scores)",
             "child_type": predicate.child_type or "*",
-            "child_axis": child_axis,
+            "child_axis": predicate.child_axis,
             "num_children": len(children),
             "child_results": [{"score": s, "subtree_size": sz} for s, sz, _ in child_results],
             "best_match_details": best_details,
@@ -869,53 +783,33 @@ class PredicateHandler:
     def _score_agg_prev(
         self,
         node: ET.Element,
-        predicate: CompoundPredicate,
+        predicate: AggPrevPredicate,
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
-        """
-        Hierarchical predicate with prevalence aggregation and weighted recursive scoring.
-        
-        Paper Formalization (extended for weighted recursive aggregation):
-        - For each child x ∈ Sφ(u), recursively aggregate its subtree with weighted avg
-        - Aggprev uses WEIGHTED average where weight = subtree size
-        - More subnodes = more weight (fair representation for unbalanced trees)
-        
-        Semantics: "General prevalence across subtree" - returns weighted average
-        where branches with more content contribute proportionally more.
-        """
-        if not predicate.child_predicate:
-            return 0
-        
-        # Sφ(u) - evidence nodes (children/descendants of specified type)
-        child_axis = getattr(predicate, 'child_axis', 'child')
+        """Hierarchical prevalence aggregation: Aggprev = weighted avg by subtree size"""
         children = self._get_hierarchical_children(
-            node, predicate.child_type, axis=child_axis
+            node, predicate.child_type, axis=predicate.child_axis
         )
         
         if not children:
-            # Empty evidence set - return neutral
             trace_steps.append({
                 "type": "agg_prev",
                 "child_type": predicate.child_type or "*",
-                "child_axis": child_axis,
+                "child_axis": predicate.child_axis,
                 "num_children": 0,
                 "note": "Sφ(u) is empty - no children/descendants found",
                 "result": 0
             })
             return 0
         
-        # Recursively score each child's entire subtree with weighted aggregation
-        # Each child returns (score, subtree_size) for weighting
         child_results: List[Tuple[float, int]] = []
         for child in children:
             score, size = self._recursive_subtree_score(
-                child, predicate.child_predicate, "PREV", trace_steps, execution_log
+                child, predicate.inner, "PREV", trace_steps, execution_log
             )
             child_results.append((score, size))
         
-        # Weighted average: weight = subtree size
-        # More subnodes = more weight
         weighted_sum = sum(score * size for score, size in child_results)
         total_weight = sum(size for _, size in child_results)
         result = weighted_sum / total_weight if total_weight > 0 else 0
@@ -925,7 +819,7 @@ class PredicateHandler:
             "type": "agg_prev_weighted",
             "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
             "child_type": predicate.child_type or "*",
-            "child_axis": child_axis,
+            "child_axis": predicate.child_axis,
             "num_children": len(children),
             "child_results": [{"score": s, "subtree_size": sz} for s, sz in child_results],
             "weighted_sum": weighted_sum,

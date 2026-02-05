@@ -11,7 +11,7 @@ or falls back to default field names for backwards compatibility.
 import xml.etree.ElementTree as ET
 from typing import List, Dict, Any, Tuple, Optional
 
-from .models import MatchedNode
+from pipeline_execution.semantic_xpath_execution.execution_models import MatchedNode
 
 
 class NodeUtils:

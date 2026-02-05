@@ -1,48 +1,20 @@
 """
-Dense XPath - A semantic XPath-like query execution system.
-
-This module provides tools for executing XPath-like queries against XML trees
-with support for semantic predicate matching.
-
-Implements the Semantic XPath framework with:
-- sem(): Local semantic match on node content
-- exist(): Existential aggregation (max over children)
-- mass(): Prevalence aggregation (average over children)
-- AND/OR logical operators (product/max)
-- Score fusion across query steps (product of step scores)
-- Detailed reasoning traces
-
-Query Syntax:
-- /Day[2] - Positional index (bracket notation)
-- /POI[atom(content =~ "museum")] - local semantic match
-- /Day[agg_exists(POI[atom(content =~ "museum")])] - existential over children
-- /Day[agg_prev(POI[atom(content =~ "artistic")])] - prevalence over children
+Semantic XPath Execution - Core query execution engine with semantic scoring.
 
 Modules:
-- models: Data classes for query representation and results
-- parser: Query string parsing
-- node_utils: XML node utility functions
-- index_handler: Positional index operations
-- predicate_handler: Semantic predicate scoring
-- trace_writer: Logging and trace file writing
-- schema_loader: Schema and data file loading
+- execution_models: Data classes for execution results, traces, and traversal
 - dense_xpath_executor: Main executor orchestrating all components
+- predicate_handler: Semantic predicate scoring (isinstance dispatch)
+- index_handler: Positional index operations
+- predicate_scorer: Scoring backends (LLM, entailment, cosine)
 """
 
-# Models
-from .models import (
-    # Predicate AST
-    SemanticCondition,
-    CompoundPredicate,
-    # Query and Index
-    IndexRange,
+# Execution models
+from .execution_models import (
     NodeItem,
-    QueryStep,
-    # Results
     MatchedNode,
     TraversalStep,
     ExecutionResult,
-    # Fusion traces
     StepContribution,
     NodeFusionTrace,
     ScoreFusionTrace,
@@ -50,56 +22,75 @@ from .models import (
 )
 
 # Components
-from .parser import QueryParser, get_parser
-from .node_utils import NodeUtils
 from .index_handler import IndexHandler
 from .predicate_handler import PredicateHandler
-from .trace_writer import TraceWriter
 
-# Schema loading
-from .schema_loader import (
+# Main executor
+from .dense_xpath_executor import DenseXPathExecutor
+
+# Re-export parsing types for backward compatibility
+from pipeline_execution.semantic_xpath_parsing import (
+    QueryParser,
+    get_parser,
+    QueryStep,
+    IndexRange,
+    PredicateNode,
+    AtomPredicate,
+    AggExistsPredicate,
+    AggPrevPredicate,
+    AndPredicate,
+    OrPredicate,
+    NotPredicate,
+)
+
+# Re-export util types for backward compatibility
+from pipeline_execution.semantic_xpath_util import (
+    NodeUtils,
     load_schema,
     get_data_path,
     get_schema_info,
     get_schema_summary_for_prompt,
     list_available_schemas,
-    list_available_data_files
+    list_available_data_files,
 )
 
-# Main executor
-from .dense_xpath_executor import DenseXPathExecutor
+# Re-export trace writer for backward compatibility
+from utils.logger.query_execution_logging import TraceWriter
 
 __all__ = [
-    # Predicate AST
-    "SemanticCondition",
-    "CompoundPredicate",
-    # Query and Index Models
-    "IndexRange",
+    # Execution models
     "NodeItem",
-    "QueryStep", 
-    # Result Models
     "MatchedNode",
     "TraversalStep",
     "ExecutionResult",
-    # Fusion Trace Models
     "StepContribution",
     "NodeFusionTrace",
     "ScoreFusionTrace",
     "FinalFilteringTrace",
     # Components
-    "QueryParser",
-    "get_parser",
-    "NodeUtils",
     "IndexHandler",
     "PredicateHandler",
+    # Main executor
+    "DenseXPathExecutor",
+    # Re-exported parsing types
+    "QueryParser",
+    "get_parser",
+    "QueryStep",
+    "IndexRange",
+    "PredicateNode",
+    "AtomPredicate",
+    "AggExistsPredicate",
+    "AggPrevPredicate",
+    "AndPredicate",
+    "OrPredicate",
+    "NotPredicate",
+    # Re-exported utils
+    "NodeUtils",
     "TraceWriter",
-    # Schema loading
     "load_schema",
     "get_data_path",
     "get_schema_info",
     "get_schema_summary_for_prompt",
     "list_available_schemas",
     "list_available_data_files",
-    # Main executor
-    "DenseXPathExecutor",
 ]

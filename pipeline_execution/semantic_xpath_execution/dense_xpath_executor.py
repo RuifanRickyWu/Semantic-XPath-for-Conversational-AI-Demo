@@ -33,23 +33,20 @@ from pathlib import Path
 from typing import List, Tuple, Optional, Dict
 from datetime import datetime
 import time
-import sys
+from .predicate_scorer import PredicateScorer, get_scorer
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from predicate_scorer import PredicateScorer, get_scorer
-
-from .models import (
-    IndexRange, QueryStep, MatchedNode, TraversalStep, ExecutionResult, NodeItem,
-    CompoundPredicate, SemanticCondition,
+from pipeline_execution.semantic_xpath_parsing import QueryParser
+from pipeline_execution.semantic_xpath_parsing.parsing_models import IndexRange, QueryStep
+from pipeline_execution.semantic_xpath_parsing.predicate_ast import PredicateNode, AtomPredicate
+from .execution_models import (
+    MatchedNode, TraversalStep, ExecutionResult, NodeItem,
     StepContribution, NodeFusionTrace, ScoreFusionTrace, FinalFilteringTrace
 )
-from .parser import QueryParser
-from .node_utils import NodeUtils
+from pipeline_execution.semantic_xpath_util.node_utils import NodeUtils
 from .index_handler import IndexHandler
 from .predicate_handler import PredicateHandler
-from .trace_writer import TraceWriter
-from .schema_loader import load_config, get_data_path, load_schema
+from utils.logger.query_execution_logging import TraceWriter
+from pipeline_execution.semantic_xpath_util.schema_loader import load_config, get_data_path, load_schema
 
 
 logger = logging.getLogger(__name__)
@@ -182,30 +179,17 @@ class DenseXPathExecutor:
     
     def _validate_predicate(
         self,
-        predicate: CompoundPredicate,
+        predicate: PredicateNode,
         node_type: str,
         execution_log: List[str]
     ) -> None:
         """
-        Validate predicate syntax.
-        
-        Paper Formalization - Valid operators:
-        - ATOM: Local atomic predicate Atom(u, φ) from attr(u)
-        - AGG_EXISTS: Existential aggregation Agg∃ = max over children
-        - AGG_PREV: Prevalence aggregation Aggprev = avg over children
-        - AND: Conjunction ψ₁ ∧ ψ₂
-        - OR: Disjunction ψ₁ ∨ ψ₂
-        
-        Args:
-            predicate: The predicate to validate
-            node_type: The node type being filtered
-            execution_log: Log for recording validation
+        Validate predicate is a known AST node type.
         """
-        valid_operators = ("ATOM", "AGG_EXISTS", "AGG_PREV", "AND", "OR", "NOT")
-        if predicate.operator not in valid_operators:
+        if not isinstance(predicate, PredicateNode):
             raise ValueError(
-                f"Invalid predicate operator '{predicate.operator}' on '{node_type}'. "
-                f"Valid operators: {valid_operators}"
+                f"Invalid predicate type '{type(predicate).__name__}' on '{node_type}'. "
+                f"Expected a PredicateNode subclass."
             )
     
     @property
@@ -594,11 +578,8 @@ class DenseXPathExecutor:
         if step.predicate:
             predicate = step.predicate
         else:
-            # Legacy: convert string to SEM predicate
-            predicate = CompoundPredicate(
-                operator="SEM",
-                conditions=[SemanticCondition(field="content", value=step.predicate_str)]
-            )
+            # Legacy: convert string to AtomPredicate
+            predicate = AtomPredicate(field="content", value=step.predicate_str)
         
         # Validate predicate uses required quantifier syntax
         self._validate_predicate(predicate, step.node_type, execution_log)
@@ -629,7 +610,7 @@ class DenseXPathExecutor:
             action="semantic_predicate",
             details={
                 "predicate": predicate_str,
-                "predicate_type": predicate.operator,
+                "predicate_type": type(predicate).__name__,
                 "scoring_result": trace
             }
         )

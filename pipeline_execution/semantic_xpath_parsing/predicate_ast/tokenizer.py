@@ -32,6 +32,8 @@ class TokenType(Enum):
     RBRACK = auto()      # ]
     TILDE_EQ = auto()    # =~
     COLONCOLON = auto()  # ::
+    DOT = auto()         # . (self node / wildcard)
+    STAR = auto()        # * (any node type)
 
     # Literals
     STRING = auto()      # "museum" or 'museum'
@@ -120,6 +122,14 @@ def tokenize(text: str, offset: int = 0) -> List[Token]:
             continue
         if text[pos] == ']':
             tokens.append(Token(TokenType.RBRACK, "]", pos + offset, pos + offset + 1))
+            pos += 1
+            continue
+        if text[pos] == '.':
+            tokens.append(Token(TokenType.DOT, ".", pos + offset, pos + offset + 1))
+            pos += 1
+            continue
+        if text[pos] == '*':
+            tokens.append(Token(TokenType.STAR, "*", pos + offset, pos + offset + 1))
             pos += 1
             continue
 

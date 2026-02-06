@@ -241,7 +241,14 @@ class SemanticXPathOrchestrator:
                 "token_usage": execution_result.token_usage
             },
             "handler_result": handler_result.to_dict(),
-            "timing": timer.to_dict()
+            "timing": timer.to_dict(),
+            # Include visualization data from execution result
+            "xpath_query": execution_result.query,
+            "full_query": f"{handler_result.operation}({execution_result.query})",
+            "traversal_steps": execution_result.traversal_steps,
+            "score_fusion_trace": execution_result.score_fusion_trace,
+            "final_filtering_trace": execution_result.final_filtering_trace,
+            "demo_logger_trace": execution_result.demo_logger_trace,
         }
         
         # Flatten operation-specific fields to top level for backward compatibility

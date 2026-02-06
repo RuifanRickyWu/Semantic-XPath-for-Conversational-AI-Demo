@@ -39,6 +39,7 @@ from typing import List, Dict, Any, Tuple, Optional, Set
 from collections import defaultdict
 from .predicate_scorer import PredicateScorer
 from pipeline_execution.semantic_xpath_util.node_utils import NodeUtils
+from utils.logger.demo_logging import get_demo_logger
 from pipeline_execution.semantic_xpath_parsing.predicate_ast import (
     PredicateNode,
     AtomPredicate,
@@ -822,6 +823,9 @@ class PredicateHandler:
         """Hierarchical existential aggregation: Agg∃(A) = max(subtree scores)"""
         selector = predicate.selector
         children = self._evaluate_node_test_expr(node, selector.test, selector.axis, execution_log)
+        
+        parent_name = self._node_utils.get_name(node)
+        parent_path = self._node_utils.get_path(node) if hasattr(self._node_utils, 'get_path') else ""
 
         if not children:
             trace_steps.append({
@@ -833,28 +837,60 @@ class PredicateHandler:
             })
             return 0
 
-        child_results: List[Tuple[float, int, Optional[Dict]]] = []
+        child_results: List[Tuple[float, int, Optional[Dict], ET.Element]] = []
         for child in children:
             score, size, details = self._recursive_subtree_score(
                 child, predicate.inner, "EXISTS", trace_steps, execution_log
             )
-            child_results.append((score, size, details))
+            child_results.append((score, size, details, child))
 
         max_score = -1.0
         best_details = None
-        for s, _, d in child_results:
+        best_child = None
+        for s, _, d, c in child_results:
             if s > max_score:
                 max_score = s
                 best_details = d
+                best_child = c
 
         result = max(EPSILON, min(1 - EPSILON, max_score)) if child_results else 0
+
+        # Build detailed child contributions for demo logging
+        child_contributions = []
+        for score, size, details, child in child_results:
+            child_name = self._node_utils.get_name(child)
+            child_path = self._node_utils.get_path(child) if hasattr(self._node_utils, 'get_path') else ""
+            is_best = (child == best_child)
+            child_contributions.append({
+                "childName": child_name,
+                "childPath": child_path,
+                "childType": child.tag,
+                "rawScore": score,
+                "weight": 1.0,  # No weighting for EXISTS
+                "weightedContribution": score,
+                "subtreeSize": size,
+                "isBestMatch": is_best,
+            })
+        
+        # Log to demo logger
+        demo_logger = get_demo_logger()
+        demo_logger.log_parent_contribution(
+            parent_name=parent_name,
+            parent_path=parent_path,
+            parent_type=node.tag,
+            predicate_type="agg_exists",
+            formula="Agg∃(A) = max(recursive_subtree_scores)",
+            child_contributions=child_contributions,
+            aggregated_score=result,
+        )
 
         trace_steps.append({
             "type": "agg_exists_recursive",
             "formula": "Agg∃(A) = max(recursive_subtree_scores)",
             "selector": selector.to_dict(),
             "num_children": len(children),
-            "child_results": [{"score": s, "subtree_size": sz} for s, sz, _ in child_results],
+            "child_results": [{"score": s, "subtree_size": sz} for s, sz, _, _ in child_results],
+            "child_contributions": child_contributions,  # Include detailed contributions
             "best_match_details": best_details,
             "result": result
         })
@@ -871,6 +907,9 @@ class PredicateHandler:
         """Hierarchical prevalence aggregation: Aggprev = weighted avg by subtree size"""
         selector = predicate.selector
         children = self._evaluate_node_test_expr(node, selector.test, selector.axis, execution_log)
+        
+        parent_name = self._node_utils.get_name(node)
+        parent_path = self._node_utils.get_path(node) if hasattr(self._node_utils, 'get_path') else ""
 
         if not children:
             trace_steps.append({
@@ -882,24 +921,53 @@ class PredicateHandler:
             })
             return 0
 
-        child_results: List[Tuple[float, int]] = []
+        child_results: List[Tuple[float, int, ET.Element]] = []
         for child in children:
             score, size, _ = self._recursive_subtree_score(
                 child, predicate.inner, "PREV", trace_steps, execution_log
             )
-            child_results.append((score, size))
+            child_results.append((score, size, child))
 
-        weighted_sum = sum(score * size for score, size in child_results)
-        total_weight = sum(size for _, size in child_results)
+        weighted_sum = sum(score * size for score, size, _ in child_results)
+        total_weight = sum(size for _, size, _ in child_results)
         result = weighted_sum / total_weight if total_weight > 0 else 0
         result = max(EPSILON, min(1 - EPSILON, result))
+
+        # Build detailed child contributions for demo logging
+        child_contributions = []
+        for score, size, child in child_results:
+            child_name = self._node_utils.get_name(child)
+            child_path = self._node_utils.get_path(child) if hasattr(self._node_utils, 'get_path') else ""
+            weighted_contribution = score * size
+            child_contributions.append({
+                "childName": child_name,
+                "childPath": child_path,
+                "childType": child.tag,
+                "rawScore": score,
+                "weight": size,  # Subtree size as weight for PREV
+                "weightedContribution": weighted_contribution,
+                "subtreeSize": size,
+            })
+        
+        # Log to demo logger
+        demo_logger = get_demo_logger()
+        demo_logger.log_parent_contribution(
+            parent_name=parent_name,
+            parent_path=parent_path,
+            parent_type=node.tag,
+            predicate_type="agg_prev",
+            formula=f"Aggprev(A) = {weighted_sum:.4f} / {total_weight} = {result:.4f}",
+            child_contributions=child_contributions,
+            aggregated_score=result,
+        )
 
         trace_steps.append({
             "type": "agg_prev_weighted",
             "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
             "selector": selector.to_dict(),
             "num_children": len(children),
-            "child_results": [{"score": s, "subtree_size": sz} for s, sz in child_results],
+            "child_results": [{"score": s, "subtree_size": sz} for s, sz, _ in child_results],
+            "child_contributions": child_contributions,  # Include detailed contributions
             "weighted_sum": weighted_sum,
             "total_weight": total_weight,
             "result": result

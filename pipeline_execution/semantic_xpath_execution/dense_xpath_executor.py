@@ -53,11 +53,12 @@ from pipeline_execution.semantic_xpath_parsing.predicate_ast import PredicateNod
 from .execution_models import (
     MatchedNode, TraversalStep, ExecutionResult, NodeItem,
     StepContribution, NodeFusionTrace, ScoreFusionTrace, FinalFilteringTrace,
-    ParsedQueryAST
+    ParsedQueryAST, DemoLoggerTrace
 )
 from pipeline_execution.semantic_xpath_util.node_utils import NodeUtils
 from .index_handler import IndexHandler
 from .predicate_handler import PredicateHandler
+from utils.logger.demo_logging import get_demo_logger
 from utils.logger.query_execution_logging import TraceWriter
 from pipeline_execution.semantic_xpath_util.schema_loader import load_config, get_data_path, load_schema
 
@@ -266,6 +267,10 @@ class DenseXPathExecutor:
         node_step_contributions: Dict[int, List[StepContribution]] = defaultdict(list)
         node_paths: Dict[int, str] = {}  # Track paths for trace
         
+        # Initialize demo logger for tracking accumulated scores
+        demo_logger = get_demo_logger()
+        demo_logger.reset()  # Start fresh for this query
+        
         # Execute traversal with path and score tracking
         root_type = self.root_type
         current_items: List[NodeItem] = [NodeItem(self.root, root_type, 1.0, 0)]
@@ -280,9 +285,30 @@ class DenseXPathExecutor:
                 )
                 if traversal_step:
                     traversal_steps.append(traversal_step)
+                # Log root step for accumulated score visualization
+                demo_logger.start_step(step_idx, str(step))
+                accumulated_scores = demo_logger.get_accumulated_scores()
+                for item in current_items:
+                    previous_accumulated = accumulated_scores.get(item.path, 1.0)
+                    node_name = self._node_utils.get_name(item.node)
+                    demo_logger.log_node_score(
+                        node_name=node_name,
+                        node_path=item.path,
+                        step_score=1.0,
+                        previous_accumulated=previous_accumulated,
+                    )
+                    accumulated_scores[item.path] = previous_accumulated
+                demo_logger.end_step()
                 continue
 
-            # Evaluate node test expression for this step
+            # Check if this step has predicates - start demo logging BEFORE scoring
+            has_predicates = self._step_has_predicates(step)
+            predicate_str = repr(step.test) if has_predicates else str(step)
+            
+            # Start tracking this step BEFORE scoring so parent contributions are captured
+            demo_logger.start_step(step_idx, predicate_str)
+            
+            # Evaluate node test expression for this step (scoring happens here)
             next_items, step_scores, step_trace = self._apply_step_expr(
                 current_items, step, step_idx, execution_log
             )
@@ -290,16 +316,21 @@ class DenseXPathExecutor:
 
             if not next_items:
                 execution_log.append("No matching nodes for step expression")
+                demo_logger.end_step()  # End step even if no matches
                 current_items = []
                 break
 
-            if self._step_has_predicates(step):
+            if has_predicates:
                 scoring_traces.extend(step_trace.details.get("scoring_trace", []))
-                predicate_str = repr(step.test)
+                
                 for item in next_items:
                     node_id = id(item.node)
                     step_score = step_scores.get(node_id, 1.0)
                     step_score = max(EPSILON, min(1 - EPSILON, step_score))
+                    
+                    # Track previous accumulated score for visualization
+                    previous_accumulated = node_score_product.get(node_id, 1.0)
+                    
                     node_score_product[node_id] *= step_score
                     node_paths[node_id] = item.path
                     node_step_contributions[node_id].append(StepContribution(
@@ -307,6 +338,35 @@ class DenseXPathExecutor:
                         predicate_str=predicate_str,
                         score=step_score
                     ))
+
+            # Log to demo logger with accumulated score info for every step
+            accumulated_scores = demo_logger.get_accumulated_scores()
+            for item in next_items:
+                node_id = id(item.node)
+                step_score = step_scores.get(node_id, 1.0)
+                step_score = max(EPSILON, min(1 - EPSILON, step_score))
+                
+                # Use node's own accumulated score if present, else inherit from nearest ancestor
+                if item.path in accumulated_scores:
+                    previous_accumulated = accumulated_scores[item.path]
+                else:
+                    previous_accumulated = self._get_parent_accumulated_score(
+                        item.path, accumulated_scores
+                    )
+                
+                # Log to demo logger
+                node_name = self._node_utils.get_name(item.node)
+                demo_logger.log_node_score(
+                    node_name=node_name,
+                    node_path=item.path,
+                    step_score=step_score,
+                    previous_accumulated=previous_accumulated,
+                )
+                
+                # Update local view for subsequent lookups in this step
+                accumulated_scores[item.path] = previous_accumulated * step_score
+            
+            demo_logger.end_step()
 
             current_items = next_items
             execution_log.append(f"After step: {len(current_items)} nodes remaining")
@@ -344,6 +404,46 @@ class DenseXPathExecutor:
             )
         
         score_fusion_trace = ScoreFusionTrace(per_node_traces=fusion_traces)
+        
+        # =====================================================================
+        # Parent Score Propagation: Inherit ancestor-level scores
+        # =====================================================================
+        # Build path -> fused_score map from ALL nodes scored in earlier steps.
+        # This allows propagating parent scores (e.g., Day AGG scores) down to
+        # child result nodes (e.g., POIs), giving a combined pipeline score.
+        all_scored_paths: Dict[str, float] = {}
+        for nid, npath in node_paths.items():
+            all_scored_paths[npath] = node_score_product.get(nid, 1.0)
+        
+        # Track own_score and parent_score per path for frontend display
+        own_score_map: Dict[str, float] = {}
+        parent_score_map: Dict[str, float] = {}
+        
+        propagation_count = 0
+        for idx, item in enumerate(current_items):
+            own_score = item.score
+            own_score_map[item.path] = own_score
+            
+            # Walk up ancestor paths and multiply their fused scores
+            parent_product = 1.0
+            path_parts = item.path.split(" > ")
+            for i in range(len(path_parts) - 1, 0, -1):
+                ancestor_path = " > ".join(path_parts[:i])
+                if ancestor_path in all_scored_paths:
+                    parent_product *= all_scored_paths[ancestor_path]
+            
+            parent_score_map[item.path] = parent_product
+            
+            if parent_product != 1.0:
+                item.score *= parent_product
+                fusion_traces[idx].final_score = item.score
+                propagation_count += 1
+                execution_log.append(
+                    f"  Parent propagation: {item.path}: own={own_score:.4f} × parent={parent_product:.4f} → {item.score:.4f}"
+                )
+        
+        if propagation_count > 0:
+            execution_log.append(f"\n=== Parent Score Propagation: {propagation_count} nodes updated ===")
         
         # =====================================================================
         # Threshold Filtering (before global index)
@@ -395,7 +495,13 @@ class DenseXPathExecutor:
             top_k=self.top_k,
             after_filter_count=after_count,
             filtered_nodes=[
-                {"path": item.path, "score": item.score, "type": item.node.tag}
+                {
+                    "path": item.path,
+                    "score": item.score,  # Combined pipeline score (own × parent)
+                    "type": item.node.tag,
+                    "own_score": own_score_map.get(item.path, item.score),
+                    "parent_score": parent_score_map.get(item.path, 1.0),
+                }
                 for item in current_items
             ]
         )
@@ -421,6 +527,12 @@ class DenseXPathExecutor:
                 for k in total_token_usage:
                     total_token_usage[k] += usage.get(k, 0)
         
+        # Build demo logger trace
+        demo_trace = DemoLoggerTrace(
+            step_traces=demo_logger.get_step_traces(),
+            accumulated_scores=demo_logger.get_accumulated_scores(),
+        )
+        
         result = ExecutionResult(
             query=query,
             matched_nodes=matched_nodes,
@@ -432,7 +544,8 @@ class DenseXPathExecutor:
             score_fusion_trace=score_fusion_trace,
             final_filtering_trace=final_filtering_trace,
             token_usage=total_token_usage if total_token_usage["total_tokens"] > 0 else None,
-            parsed_ast=parsed_ast
+            parsed_ast=parsed_ast,
+            demo_logger_trace=demo_trace,
         )
         
         # Save traces
@@ -508,6 +621,22 @@ class DenseXPathExecutor:
 
     def _step_has_predicates(self, step: Step) -> bool:
         return any(step.test.get_all_predicates())
+
+    def _get_parent_accumulated_score(
+        self,
+        node_path: str,
+        accumulated_scores: Dict[str, float]
+    ) -> float:
+        """
+        Find the nearest ancestor's accumulated score for a node path.
+        Falls back to 1.0 if no ancestor is found.
+        """
+        path_parts = node_path.split(" > ")
+        for i in range(len(path_parts) - 1, 0, -1):
+            ancestor_path = " > ".join(path_parts[:i])
+            if ancestor_path in accumulated_scores:
+                return accumulated_scores[ancestor_path]
+        return 1.0
 
     def _apply_step_expr(
         self,

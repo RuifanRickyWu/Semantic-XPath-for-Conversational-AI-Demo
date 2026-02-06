@@ -148,6 +148,16 @@ class NodeUtils:
         # Fallback to tag name
         return node.tag
     
+    def get_path(self, node: ET.Element) -> str:
+        """
+        Get a simple path representation for a node.
+        
+        Note: This returns just the node name as a path identifier.
+        The full tree path is maintained by the executor during traversal.
+        This method is used for logging/debugging purposes.
+        """
+        return self.get_name(node)
+    
     def get_description(self, node: ET.Element) -> str:
         """
         Get the description of a node (schema-aware instance method).

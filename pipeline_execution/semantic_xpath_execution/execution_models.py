@@ -306,6 +306,19 @@ def _collect_predicates_from_node_test_expr(expr: Dict[str, Any]) -> List[Dict[s
 
 
 @dataclass
+class DemoLoggerTrace:
+    """Trace data from demo logger for visualization."""
+    step_traces: List[Dict[str, Any]] = field(default_factory=list)
+    accumulated_scores: Dict[str, float] = field(default_factory=dict)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "step_traces": self.step_traces,
+            "accumulated_scores": self.accumulated_scores,
+        }
+
+
+@dataclass
 class ExecutionResult:
     """Result of executing an XPath query."""
     query: str
@@ -319,3 +332,4 @@ class ExecutionResult:
     score_fusion_trace: Optional[ScoreFusionTrace] = None
     final_filtering_trace: Optional[FinalFilteringTrace] = None
     parsed_ast: Optional[ParsedQueryAST] = None
+    demo_logger_trace: Optional[DemoLoggerTrace] = None

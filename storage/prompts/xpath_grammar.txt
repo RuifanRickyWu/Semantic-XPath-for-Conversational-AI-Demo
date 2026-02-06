@@ -35,9 +35,9 @@ Local predicate operator:
   semantically matches `"value"`. keep a single atom(content =~ "value") and let "value" represent the semantic concept, including its close paraphrases and synonyms implicitly.
 Aggregation predicate operator:
 - `agg_exists(evidence_node_predicate)`:
-  evaluates whether ANY evidence node satisfies the inner predicate.
+  evaluates whether ANY evidence node satisfies the inner predicate. Use when user specifically mention something
 - `agg_prev(evidence_node_predicate)`:
-  evaluates the prevalence of the inner predicate across evidence nodes.
+  evaluates the prevalence of the inner predicate across evidence nodes. Use when user is wondering on tha broad concept
 Evidence node predicate:
 - Follows the standard Step syntax.
 - Its inner predicate must ultimately reduce to a local predicate

@@ -14,8 +14,11 @@ Output: /Itinerary/Day[-1]/.
 User: which days include at least one jazz-related activity?
 Output: /Itinerary/Day[agg_exists(.[atom(content =~ "jazz")])]
 
-User: look for days that contain an affordable museum or gallery so I can adjust the plan
-Output: /Itinerary/Day[agg_exists(POI[atom(content =~ "museum") OR atom(content =~ "gallery")])]
+User: which are the museums in an artistic day?
+Output: /Itinerary/Day[agg_prev(.[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
+
+Show me days where I have both outdoor activities and a fine dining dinner planned.
+/Root/Itinerary_Version[1]/Itinerary/Day[agg_prev(.[atom(content =~ "outdoor")]) AND agg_exists(.[atom(content =~ "fine dining")])]
 
 User: find scenic places like parks or lakes that are not crowded
 Output: /Itinerary/Day/POI[atom(content =~ "park") OR atom(content =~ "lake")]

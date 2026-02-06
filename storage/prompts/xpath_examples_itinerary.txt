@@ -17,6 +17,9 @@ Output: /Itinerary/Day[agg_exists(.[atom(content =~ "jazz")])]
 User: which are the museums in an artistic day?
 Output: /Itinerary/Day[agg_prev(.[atom(content =~ "artistic")])]/POI[atom(content =~ "museum")]
 
+User: Show me days where I have both outdoor activities and a fine dining dinner planned.
+Output: /Itinerary/Day[agg_prev(.[atom(content =~ "outdoor")]) AND agg_exists(.[atom(content =~ "fine dining")])]
+
 Show me days where I have both outdoor activities and a fine dining dinner planned.
 /Root/Itinerary_Version[1]/Itinerary/Day[agg_prev(.[atom(content =~ "outdoor")]) AND agg_exists(.[atom(content =~ "fine dining")])]
 

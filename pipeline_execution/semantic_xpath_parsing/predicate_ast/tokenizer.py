@@ -46,10 +46,13 @@ class TokenType(Enum):
 _KEYWORDS = {
     "agg_exists": TokenType.AGG_EXISTS,
     "agg_prev":   TokenType.AGG_PREV,
+    "agg_or":     TokenType.AGG_EXISTS,
     "atom":       TokenType.ATOM,
     "not":        TokenType.NOT,
     "AND":        TokenType.AND,
     "OR":         TokenType.OR,
+    "and":        TokenType.AND,
+    "or":         TokenType.OR,
 }
 
 
@@ -59,9 +62,10 @@ class Token:
     type: TokenType
     value: str
     pos: int           # character offset in the source string
+    end: int           # exclusive end offset in the source string
 
     def __repr__(self) -> str:
-        return f"Token({self.type.name}, {self.value!r}, pos={self.pos})"
+        return f"Token({self.type.name}, {self.value!r}, pos={self.pos}, end={self.end})"
 
 
 class TokenizeError(Exception):
@@ -71,7 +75,7 @@ class TokenizeError(Exception):
         self.pos = pos
 
 
-def tokenize(text: str) -> List[Token]:
+def tokenize(text: str, offset: int = 0) -> List[Token]:
     """
     Convert a predicate string into a list of tokens.
 
@@ -92,30 +96,30 @@ def tokenize(text: str) -> List[Token]:
 
         # Two-character operators
         if text[pos:pos+2] == "=~":
-            tokens.append(Token(TokenType.TILDE_EQ, "=~", pos))
+            tokens.append(Token(TokenType.TILDE_EQ, "=~", pos + offset, pos + offset + 2))
             pos += 2
             continue
 
         if text[pos:pos+2] == "::":
-            tokens.append(Token(TokenType.COLONCOLON, "::", pos))
+            tokens.append(Token(TokenType.COLONCOLON, "::", pos + offset, pos + offset + 2))
             pos += 2
             continue
 
         # Single-character punctuation
         if text[pos] == '(':
-            tokens.append(Token(TokenType.LPAREN, "(", pos))
+            tokens.append(Token(TokenType.LPAREN, "(", pos + offset, pos + offset + 1))
             pos += 1
             continue
         if text[pos] == ')':
-            tokens.append(Token(TokenType.RPAREN, ")", pos))
+            tokens.append(Token(TokenType.RPAREN, ")", pos + offset, pos + offset + 1))
             pos += 1
             continue
         if text[pos] == '[':
-            tokens.append(Token(TokenType.LBRACK, "[", pos))
+            tokens.append(Token(TokenType.LBRACK, "[", pos + offset, pos + offset + 1))
             pos += 1
             continue
         if text[pos] == ']':
-            tokens.append(Token(TokenType.RBRACK, "]", pos))
+            tokens.append(Token(TokenType.RBRACK, "]", pos + offset, pos + offset + 1))
             pos += 1
             continue
 
@@ -129,7 +133,7 @@ def tokenize(text: str) -> List[Token]:
             if pos >= length:
                 raise TokenizeError(f"Unterminated string starting with {quote}", start)
             value = text[start+1:pos]
-            tokens.append(Token(TokenType.STRING, value, start))
+            tokens.append(Token(TokenType.STRING, value, start + offset, pos + offset + 1))
             pos += 1  # skip closing quote
             continue
 
@@ -142,12 +146,12 @@ def tokenize(text: str) -> List[Token]:
 
             # Check keywords
             if word in _KEYWORDS:
-                tokens.append(Token(_KEYWORDS[word], word, start))
+                tokens.append(Token(_KEYWORDS[word], word, start + offset, pos + offset))
             else:
-                tokens.append(Token(TokenType.IDENT, word, start))
+                tokens.append(Token(TokenType.IDENT, word, start + offset, pos + offset))
             continue
 
         raise TokenizeError(f"Unexpected character: {text[pos]!r}", pos)
 
-    tokens.append(Token(TokenType.EOF, "", pos))
+    tokens.append(Token(TokenType.EOF, "", pos + offset, pos + offset))
     return tokens

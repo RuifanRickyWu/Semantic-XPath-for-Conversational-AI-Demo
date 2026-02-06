@@ -5,6 +5,7 @@ Predicate AST package - typed node hierarchy and tokenizer for semantic XPath pr
 from .nodes import (
     PredicateNode,
     AtomPredicate,
+    AggPredicate,
     AggExistsPredicate,
     AggPrevPredicate,
     AndPredicate,
@@ -17,6 +18,7 @@ __all__ = [
     # AST nodes
     "PredicateNode",
     "AtomPredicate",
+    "AggPredicate",
     "AggExistsPredicate",
     "AggPrevPredicate",
     "AndPredicate",

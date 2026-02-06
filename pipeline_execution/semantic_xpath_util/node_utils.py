@@ -514,7 +514,8 @@ class NodeUtils:
             "path": path,
             "name": self.get_name(node),
             "type": node.tag,
-            "score": score
+            "score": score,
+            "node_id": id(node)
         }
 
 

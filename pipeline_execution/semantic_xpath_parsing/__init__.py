@@ -2,12 +2,35 @@
 Semantic XPath Parsing - Tokenizer, AST, and parser for Semantic XPath queries.
 """
 
-from .parser import QueryParser, get_parser, parse_predicate, PredicateParseError
-from .parsing_models import QueryStep, IndexRange
+from .parser import (
+    QueryParser,
+    get_parser,
+    parse_predicate,
+    PredicateParseError,
+    QueryParseError,
+    NodeTestParseError,
+)
+from .parsing_models import (
+    Axis,
+    EvidenceSelector,
+    Index,
+    IndexRange,
+    NodeTest,
+    NodeTestExpr,
+    NodeTestLeaf,
+    NodeTestAnd,
+    NodeTestOr,
+    PathExpr,
+    Query,
+    QueryStep,
+    SourceSpan,
+    Step,
+)
 
 from .predicate_ast import (
     PredicateNode,
     AtomPredicate,
+    AggPredicate,
     AggExistsPredicate,
     AggPrevPredicate,
     AndPredicate,
@@ -25,12 +48,27 @@ __all__ = [
     "get_parser",
     "parse_predicate",
     "PredicateParseError",
+    "QueryParseError",
+    "NodeTestParseError",
     # Parsing models
-    "QueryStep",
+    "Axis",
+    "EvidenceSelector",
+    "Index",
     "IndexRange",
+    "NodeTest",
+    "NodeTestExpr",
+    "NodeTestLeaf",
+    "NodeTestAnd",
+    "NodeTestOr",
+    "PathExpr",
+    "Query",
+    "QueryStep",
+    "SourceSpan",
+    "Step",
     # AST nodes
     "PredicateNode",
     "AtomPredicate",
+    "AggPredicate",
     "AggExistsPredicate",
     "AggPrevPredicate",
     "AndPredicate",

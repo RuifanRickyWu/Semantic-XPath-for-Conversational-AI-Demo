@@ -3,9 +3,9 @@ Index Handler - Applies positional indexing to node lists.
 """
 
 import xml.etree.ElementTree as ET
-from typing import List
+from typing import List, Union
 
-from pipeline_execution.semantic_xpath_parsing.parsing_models import IndexRange
+from pipeline_execution.semantic_xpath_parsing.parsing_models import Index, IndexRange
 
 
 class IndexHandler:
@@ -21,8 +21,8 @@ class IndexHandler:
     
     @staticmethod
     def apply_index(
-        nodes: List[ET.Element], 
-        index: IndexRange,
+        nodes: List[ET.Element],
+        index: Union[IndexRange, Index],
         execution_log: List[str] = None
     ) -> List[ET.Element]:
         """
@@ -52,7 +52,7 @@ class IndexHandler:
     @staticmethod
     def _apply_to_end_index(
         nodes: List[ET.Element],
-        index: IndexRange,
+        index: Union[IndexRange, Index],
         execution_log: List[str]
     ) -> List[ET.Element]:
         """Apply 'to end' indexing like [-2:] (from position to end)."""
@@ -84,7 +84,7 @@ class IndexHandler:
     @staticmethod
     def _apply_range_index(
         nodes: List[ET.Element],
-        index: IndexRange,
+        index: Union[IndexRange, Index],
         execution_log: List[str]
     ) -> List[ET.Element]:
         """Apply range indexing [start:end] (both 1-based, inclusive)."""
@@ -112,7 +112,7 @@ class IndexHandler:
     @staticmethod
     def _apply_single_index(
         nodes: List[ET.Element],
-        index: IndexRange,
+        index: Union[IndexRange, Index],
         execution_log: List[str]
     ) -> List[ET.Element]:
         """Apply single index (1-based positive, or negative from end)."""
@@ -142,4 +142,3 @@ class IndexHandler:
 
 # Convenience function
 apply_index = IndexHandler.apply_index
-

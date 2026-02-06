@@ -149,9 +149,18 @@ class ParsedQueryAST:
         for i, step in enumerate(self.steps):
             prefix = "├── " if i < len(self.steps) - 1 else "└── "
             axis = step.get("axis", "child")
-            axis_str = f"{axis}::" if axis != "child" else ""
-            node_type = step.get("node_type", "?")
-            lines.append(f"{prefix}Step {i}: {axis_str}{node_type}")
+            axis_val = "child" if axis in (None, "none") else axis
+            axis_str = f"{axis_val}::" if axis_val != "child" else ""
+            if "node_test_expr" in step:
+                lines.append(f"{prefix}Step {i}: {axis_str}{_format_node_test_expr(step['node_test_expr'])}")
+                predicates = _collect_predicates_from_node_test_expr(step["node_test_expr"])
+                for p_idx, pred in enumerate(predicates):
+                    label = "predicate" if len(predicates) == 1 else f"predicate[{p_idx}]"
+                    lines.append(f"    │   {label}:")
+                    lines.extend(_format_predicate_ast(pred, depth=2))
+            else:
+                node_type = step.get("node_type", "?")
+                lines.append(f"{prefix}Step {i}: {axis_str}{node_type}")
             
             # Index
             if step.get("index"):
@@ -172,7 +181,15 @@ class ParsedQueryAST:
                 lines.extend(pred_lines)
         
         if self.global_index:
-            lines.append(f"Global Index: [{self.global_index.get('start', '?')}]")
+            idx = self.global_index
+            idx_str = f"[{idx.get('start', '?')}"
+            if idx.get("to_end"):
+                idx_str += ":]"
+            elif idx.get("end") is not None:
+                idx_str += f":{idx['end']}]"
+            else:
+                idx_str += "]"
+            lines.append(f"Global Index: {idx_str}")
         
         return "\n".join(lines)
 
@@ -203,18 +220,34 @@ def _format_predicate_ast(pred: Dict[str, Any], depth: int = 0) -> List[str]:
             lines.extend(_format_predicate_ast(pred["condition"], depth + 1))
     
     elif pred_type == "AGG_EXISTS":
-        child_type = pred.get("child_type", "*")
-        axis = pred.get("child_axis", "child")
-        axis_str = f"{axis}::" if axis != "child" else ""
-        lines.append(f"{indent}└── AGG_EXISTS({axis_str}{child_type})")
+        selector = pred.get("selector")
+        if selector:
+            axis = selector.get("axis", "child")
+            axis_val = "child" if axis in (None, "none") else axis
+            axis_str = f"{axis_val}::" if axis_val != "child" else ""
+            test_str = _format_node_test_expr(selector.get("test", {}))
+            lines.append(f"{indent}└── AGG_EXISTS({axis_str}{test_str})")
+        else:
+            child_type = pred.get("child_type", "*")
+            axis = pred.get("child_axis", "child")
+            axis_str = f"{axis}::" if axis != "child" else ""
+            lines.append(f"{indent}└── AGG_EXISTS({axis_str}{child_type})")
         if pred.get("child_predicate"):
             lines.extend(_format_predicate_ast(pred["child_predicate"], depth + 1))
     
     elif pred_type == "AGG_PREV":
-        child_type = pred.get("child_type", "*")
-        axis = pred.get("child_axis", "child")
-        axis_str = f"{axis}::" if axis != "child" else ""
-        lines.append(f"{indent}└── AGG_PREV({axis_str}{child_type})")
+        selector = pred.get("selector")
+        if selector:
+            axis = selector.get("axis", "child")
+            axis_val = "child" if axis in (None, "none") else axis
+            axis_str = f"{axis_val}::" if axis_val != "child" else ""
+            test_str = _format_node_test_expr(selector.get("test", {}))
+            lines.append(f"{indent}└── AGG_PREV({axis_str}{test_str})")
+        else:
+            child_type = pred.get("child_type", "*")
+            axis = pred.get("child_axis", "child")
+            axis_str = f"{axis}::" if axis != "child" else ""
+            lines.append(f"{indent}└── AGG_PREV({axis_str}{child_type})")
         if pred.get("child_predicate"):
             lines.extend(_format_predicate_ast(pred["child_predicate"], depth + 1))
     
@@ -222,6 +255,54 @@ def _format_predicate_ast(pred: Dict[str, Any], depth: int = 0) -> List[str]:
         lines.append(f"{indent}└── {pred_type}: {pred}")
     
     return lines
+
+
+def _format_node_test_expr(expr: Dict[str, Any]) -> str:
+    if not expr:
+        return "?"
+    etype = expr.get("type")
+    if etype == "leaf":
+        return _format_node_test(expr.get("test", {}))
+    if etype == "and":
+        return " AND ".join(_format_node_test_expr(c) for c in expr.get("children", []))
+    if etype == "or":
+        return " OR ".join(_format_node_test_expr(c) for c in expr.get("children", []))
+    return str(expr)
+
+
+def _format_node_test(test: Dict[str, Any]) -> str:
+    kind = test.get("kind")
+    name = test.get("name")
+    base = "." if kind == "wildcard" else (name or "?")
+    if test.get("predicate"):
+        base += "[predicate]"
+    if test.get("index"):
+        idx = test["index"]
+        idx_str = f"[{idx.get('start', '?')}"
+        if idx.get("to_end"):
+            idx_str += ":]"
+        elif idx.get("end") is not None:
+            idx_str += f":{idx['end']}]"
+        else:
+            idx_str += "]"
+        base += idx_str
+    return base
+
+
+def _collect_predicates_from_node_test_expr(expr: Dict[str, Any]) -> List[Dict[str, Any]]:
+    preds: List[Dict[str, Any]] = []
+
+    etype = expr.get("type")
+    if etype == "leaf":
+        test = expr.get("test", {})
+        pred = test.get("predicate")
+        if pred:
+            preds.append(pred)
+        return preds
+    if etype in ("and", "or"):
+        for child in expr.get("children", []):
+            preds.extend(_collect_predicates_from_node_test_expr(child))
+    return preds
 
 
 @dataclass

@@ -14,7 +14,16 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Iterable, Tuple
+
+from pipeline_execution.semantic_xpath_parsing.parsing_models import (
+    Axis,
+    EvidenceSelector,
+    NodeTest,
+    NodeTestExpr,
+    NodeTestLeaf,
+    SourceSpan,
+)
 
 
 class PredicateNode(ABC):
@@ -48,79 +57,129 @@ class AtomPredicate(PredicateNode):
     """
     field: str   # "content" for aggregated content, or specific field name
     value: str   # The semantic query value, e.g., "museum"
+    operator: str = "=~"
+    span: Optional[SourceSpan] = None
 
     def get_all_atomic_values(self) -> List[str]:
         return [self.value]
 
     def to_dict(self) -> Dict[str, Any]:
-        return {"type": "atom", "field": self.field, "value": self.value}
-
-    def __repr__(self) -> str:
-        return f'atom({self.field} =~ "{self.value}")'
-
-
-@dataclass
-class AggExistsPredicate(PredicateNode):
-    """
-    agg_exists([axis::]ChildType[inner]) - existential aggregation (max).
-
-    Paper: Agg∃(A) = max A
-    """
-    inner: PredicateNode
-    child_type: Optional[str] = None   # e.g. "POI", None = all children
-    child_axis: str = "child"          # "child" | "desc"
-
-    def get_all_atomic_values(self) -> List[str]:
-        return self.inner.get_all_atomic_values()
-
-    def to_dict(self) -> Dict[str, Any]:
-        result: Dict[str, Any] = {
-            "operator": "AGG_EXISTS",
-            "child_predicate": self.inner.to_dict(),
+        result = {
+            "type": "atom",
+            "field": self.field,
+            "value": self.value,
+            "operator": self.operator,
         }
-        if self.child_type:
-            result["child_type"] = self.child_type
-        if self.child_axis != "child":
-            result["child_axis"] = self.child_axis
+        if self.span:
+            result["span"] = self.span.to_dict()
         return result
 
     def __repr__(self) -> str:
-        axis = f"{self.child_axis}::" if self.child_axis != "child" else ""
-        if self.child_type:
-            return f"agg_exists({axis}{self.child_type}[{self.inner}])"
-        return f"agg_exists({self.inner})"
+        return f'atom({self.field} {self.operator} "{self.value}")'
 
 
 @dataclass
-class AggPrevPredicate(PredicateNode):
+class AggPredicate(PredicateNode):
     """
-    agg_prev([axis::]ChildType[inner]) - prevalence aggregation (avg).
-
-    Paper: Aggprev(A) = (1/|A|)∑A
+    Aggregate predicate with an evidence selector and inner predicate.
     """
+    agg_type: str  # "exists" | "prev" | "or"
+    selector: EvidenceSelector
     inner: PredicateNode
-    child_type: Optional[str] = None
-    child_axis: str = "child"
+    span: Optional[SourceSpan] = None
 
     def get_all_atomic_values(self) -> List[str]:
-        return self.inner.get_all_atomic_values()
+        values: List[str] = []
+        # Include values from evidence selector predicates
+        for pred in self.selector.test.get_all_predicates():
+            if pred:
+                values.extend(pred.get_all_atomic_values())
+        values.extend(self.inner.get_all_atomic_values())
+        return values
 
     def to_dict(self) -> Dict[str, Any]:
+        op = "AGG_PREV" if self.agg_type.lower() == "prev" else "AGG_EXISTS"
         result: Dict[str, Any] = {
-            "operator": "AGG_PREV",
+            "operator": op,
+            "selector": self.selector.to_dict(),
             "child_predicate": self.inner.to_dict(),
         }
-        if self.child_type:
-            result["child_type"] = self.child_type
-        if self.child_axis != "child":
-            result["child_axis"] = self.child_axis
+        legacy = _legacy_selector_fields(self.selector)
+        if legacy:
+            axis_str, child_type = legacy
+            if child_type:
+                result["child_type"] = child_type
+            if axis_str != "child":
+                result["child_axis"] = axis_str
+        if self.span:
+            result["span"] = self.span.to_dict()
         return result
 
     def __repr__(self) -> str:
-        axis = f"{self.child_axis}::" if self.child_axis != "child" else ""
-        if self.child_type:
-            return f"agg_prev({axis}{self.child_type}[{self.inner}])"
-        return f"agg_prev({self.inner})"
+        axis = f"{self.selector.axis.value}::" if self.selector.axis != Axis.NONE else ""
+        return f"agg_{self.agg_type}({axis}{self.selector.test}[{self.inner}])"
+
+
+@dataclass
+class AggExistsPredicate(AggPredicate):
+    """Compatibility wrapper for agg_exists."""
+    def __init__(
+        self,
+        inner: PredicateNode,
+        child_type: Optional[str] = None,
+        child_axis: str = "child",
+        selector: Optional[EvidenceSelector] = None,
+        span: Optional[SourceSpan] = None,
+    ):
+        if selector is None:
+            axis = Axis.from_str(child_axis)
+            test = _selector_test_from_child_type(child_type)
+            selector = EvidenceSelector(axis=axis, test=test)
+        super().__init__(agg_type="exists", selector=selector, inner=inner, span=span)
+
+    @property
+    def child_type(self) -> Optional[str]:
+        legacy = _legacy_selector_fields(self.selector)
+        return legacy[1] if legacy else None
+
+    @property
+    def child_axis(self) -> str:
+        legacy = _legacy_selector_fields(self.selector)
+        return legacy[0] if legacy else "child"
+
+    def __repr__(self) -> str:
+        return AggPredicate.__repr__(self)
+
+
+@dataclass
+class AggPrevPredicate(AggPredicate):
+    """Compatibility wrapper for agg_prev."""
+    def __init__(
+        self,
+        inner: PredicateNode,
+        child_type: Optional[str] = None,
+        child_axis: str = "child",
+        selector: Optional[EvidenceSelector] = None,
+        span: Optional[SourceSpan] = None,
+    ):
+        if selector is None:
+            axis = Axis.from_str(child_axis)
+            test = _selector_test_from_child_type(child_type)
+            selector = EvidenceSelector(axis=axis, test=test)
+        super().__init__(agg_type="prev", selector=selector, inner=inner, span=span)
+
+    @property
+    def child_type(self) -> Optional[str]:
+        legacy = _legacy_selector_fields(self.selector)
+        return legacy[1] if legacy else None
+
+    @property
+    def child_axis(self) -> str:
+        legacy = _legacy_selector_fields(self.selector)
+        return legacy[0] if legacy else "child"
+
+    def __repr__(self) -> str:
+        return AggPredicate.__repr__(self)
 
 
 # =============================================================================
@@ -135,6 +194,7 @@ class AndPredicate(PredicateNode):
     Paper: Score(u, ψ₁ ∧ ψ₂) = min{Score(u, ψ₁), Score(u, ψ₂)}
     """
     children: List[PredicateNode] = field(default_factory=list)
+    span: Optional[SourceSpan] = None
 
     def get_all_atomic_values(self) -> List[str]:
         values: List[str] = []
@@ -143,10 +203,13 @@ class AndPredicate(PredicateNode):
         return values
 
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        result = {
             "operator": "AND",
             "conditions": [c.to_dict() for c in self.children],
         }
+        if self.span:
+            result["span"] = self.span.to_dict()
+        return result
 
     def __repr__(self) -> str:
         return " AND ".join(str(c) for c in self.children)
@@ -160,6 +223,7 @@ class OrPredicate(PredicateNode):
     Paper: Score(u, ψ₁ ∨ ψ₂) = max{Score(u, ψ₁), Score(u, ψ₂)}
     """
     children: List[PredicateNode] = field(default_factory=list)
+    span: Optional[SourceSpan] = None
 
     def get_all_atomic_values(self) -> List[str]:
         values: List[str] = []
@@ -168,10 +232,13 @@ class OrPredicate(PredicateNode):
         return values
 
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        result = {
             "operator": "OR",
             "conditions": [c.to_dict() for c in self.children],
         }
+        if self.span:
+            result["span"] = self.span.to_dict()
+        return result
 
     def __repr__(self) -> str:
         return " OR ".join(str(c) for c in self.children)
@@ -185,15 +252,37 @@ class NotPredicate(PredicateNode):
     Paper: Score(u, ¬ψ) = 1 - Score(u, ψ)
     """
     child: PredicateNode = field(default=None)  # type: ignore[assignment]
+    span: Optional[SourceSpan] = None
 
     def get_all_atomic_values(self) -> List[str]:
         return self.child.get_all_atomic_values() if self.child else []
 
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        result = {
             "operator": "NOT",
             "condition": self.child.to_dict() if self.child else {},
         }
+        if self.span:
+            result["span"] = self.span.to_dict()
+        return result
 
     def __repr__(self) -> str:
         return f"not({self.child})"
+
+
+def _selector_test_from_child_type(child_type: Optional[str]) -> NodeTestExpr:
+    if child_type:
+        test = NodeTest(kind="type", name=child_type)
+    else:
+        test = NodeTest(kind="wildcard", name=None)
+    return NodeTestLeaf(test=test)
+
+
+def _legacy_selector_fields(selector: EvidenceSelector) -> Optional[Tuple[str, Optional[str]]]:
+    if isinstance(selector.test, NodeTestLeaf):
+        test = selector.test.test
+        if test.kind == "type":
+            return (selector.axis.value if selector.axis != Axis.NONE else "child", test.name)
+        if test.kind == "wildcard":
+            return (selector.axis.value if selector.axis != Axis.NONE else "child", None)
+    return None

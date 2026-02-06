@@ -30,13 +30,25 @@ import yaml
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 from pathlib import Path
-from typing import List, Tuple, Optional, Dict
+from typing import List, Tuple, Optional, Dict, Any
 from datetime import datetime
 import time
 from .predicate_scorer import PredicateScorer, get_scorer
 
 from pipeline_execution.semantic_xpath_parsing import QueryParser
-from pipeline_execution.semantic_xpath_parsing.parsing_models import IndexRange, QueryStep
+from pipeline_execution.semantic_xpath_parsing.parsing_models import (
+    Axis,
+    Index,
+    IndexRange,
+    NodeTestExpr,
+    NodeTestAnd,
+    NodeTestLeaf,
+    NodeTestOr,
+    PathExpr,
+    Query,
+    QueryStep,
+    Step,
+)
 from pipeline_execution.semantic_xpath_parsing.predicate_ast import PredicateNode, AtomPredicate
 from .execution_models import (
     MatchedNode, TraversalStep, ExecutionResult, NodeItem,
@@ -225,13 +237,17 @@ class DenseXPathExecutor:
         execution_log.append(f"Data file: {self._memory_path.name}")
         
         # Parse the query
-        steps, global_index = self.parser.parse(query)
-        
+        parsed_query = self.parser.parse(query)
+        steps = parsed_query.path.steps
+        global_index = parsed_query.global_index
+
         # Build AST representation for tracing
         parsed_ast = self._build_parsed_ast(steps, global_index)
         
         if global_index is not None:
-            if global_index.is_range:
+            if global_index.to_end:
+                execution_log.append(f"Global index range detected: [{global_index.start}:]")
+            elif global_index.is_range:
                 execution_log.append(f"Global index range detected: [{global_index.start}:{global_index.end}]")
             else:
                 execution_log.append(f"Global index detected: {global_index.start}")
@@ -256,71 +272,42 @@ class DenseXPathExecutor:
         
         for step_idx, step in enumerate(steps):
             execution_log.append(f"\n--- Step {step_idx + 1}: {step} ---")
-            
-            # Dynamic root check
-            if step.node_type == root_type:
-                current_items, traversal_step = self._handle_root_step(
+
+            # Root step handling (simple leaf only)
+            if self._is_root_step(step, root_type):
+                current_items, traversal_step = self._handle_root_step_new(
                     current_items, step, step_idx, execution_log
                 )
                 if traversal_step:
                     traversal_steps.append(traversal_step)
                 continue
-            
-            # Track nodes before this step
-            nodes_before = self._items_to_info(current_items)
-            
-            # Step 1: Type matching - get children matching the type
-            next_items = self._apply_type_match(current_items, step, execution_log)
-            
-            # Track type matching
-            type_match_nodes = self._items_to_info(next_items)
-            traversal_steps.append(TraversalStep(
-                step_index=step_idx,
-                step_query=str(step),
-                nodes_before=nodes_before,
-                nodes_after=type_match_nodes,
-                action="type_match",
-                details={"target_type": step.node_type, "found_count": len(next_items)}
-            ))
-            
+
+            # Evaluate node test expression for this step
+            next_items, step_scores, step_trace = self._apply_step_expr(
+                current_items, step, step_idx, execution_log
+            )
+            traversal_steps.append(step_trace)
+
             if not next_items:
-                execution_log.append(f"No matching nodes for {step.node_type}")
+                execution_log.append("No matching nodes for step expression")
                 current_items = []
                 break
-            
-            # Step 2: Apply semantic predicate if present
-            if step.has_semantic_predicate():
-                next_items, pred_trace, pred_step, step_scores = self._apply_predicate_step(
-                    next_items, step, step_idx, execution_log
-                )
-                scoring_traces.append(pred_trace)
-                traversal_steps.append(pred_step)
-                
-                # Accumulate product for score fusion
-                predicate_str = str(step.predicate) if step.predicate else step.predicate_str
+
+            if self._step_has_predicates(step):
+                scoring_traces.extend(step_trace.details.get("scoring_trace", []))
+                predicate_str = repr(step.test)
                 for item in next_items:
                     node_id = id(item.node)
-                    step_score = step_scores.get(node_id, 0.5)
-                    
-                    # Clamp to avoid zero
+                    step_score = step_scores.get(node_id, 1.0)
                     step_score = max(EPSILON, min(1 - EPSILON, step_score))
-                    
                     node_score_product[node_id] *= step_score
                     node_paths[node_id] = item.path
-                    
                     node_step_contributions[node_id].append(StepContribution(
                         step_index=step_idx,
                         predicate_str=predicate_str,
                         score=step_score
                     ))
-            
-            # Step 3: Apply positional index if present
-            if step.index is not None:
-                next_items, idx_step = self._apply_index_step(
-                    next_items, step, step_idx, execution_log
-                )
-                traversal_steps.append(idx_step)
-            
+
             current_items = next_items
             execution_log.append(f"After step: {len(current_items)} nodes remaining")
         
@@ -486,6 +473,222 @@ class DenseXPathExecutor:
         else:
             execution_log.append(f"ERROR: Root is not {root_type}")
             return [], None
+
+    def _is_root_step(self, step: Step, root_type: str) -> bool:
+        if not isinstance(step.test, NodeTestLeaf):
+            return False
+        test = step.test.test
+        if test.kind != "type" or test.name != root_type:
+            return False
+        if test.predicate or test.index:
+            return False
+        return True
+
+    def _handle_root_step_new(
+        self,
+        current_items: List[NodeItem],
+        step: Step,
+        step_idx: int,
+        execution_log: List[str]
+    ) -> Tuple[List[NodeItem], Optional[TraversalStep]]:
+        root_type = self.root_type
+        if current_items and current_items[0].node.tag == root_type:
+            execution_log.append(f"Matched {root_type} root")
+            traversal_step = TraversalStep(
+                step_index=step_idx,
+                step_query=str(step),
+                nodes_before=[{"type": "root"}],
+                nodes_after=[{"type": root_type, "path": root_type}],
+                action="root_match",
+                details={"matched": True}
+            )
+            return current_items, traversal_step
+        execution_log.append(f"ERROR: Root is not {root_type}")
+        return [], None
+
+    def _step_has_predicates(self, step: Step) -> bool:
+        return any(step.test.get_all_predicates())
+
+    def _apply_step_expr(
+        self,
+        current_items: List[NodeItem],
+        step: Step,
+        step_idx: int,
+        execution_log: List[str]
+    ) -> Tuple[List[NodeItem], Dict[int, float], TraversalStep]:
+        """
+        Apply a full step: axis expansion + node test expression evaluation.
+        """
+        nodes_before = self._items_to_info(current_items)
+        axis = step.axis
+        parent_map = None
+        if axis == Axis.DESC:
+            parent_map = self._node_utils.build_parent_map(self.root)
+
+        next_items: List[NodeItem] = []
+        scores_map: Dict[int, float] = {}
+        scoring_traces: List[Dict[str, Any]] = []
+
+        for group_id, item in enumerate(current_items):
+            items, local_scores, local_traces = self._eval_node_test_expr_context(
+                item, group_id, axis, step.test, execution_log, parent_map
+            )
+            next_items.extend(items)
+            for node_id, score in local_scores.items():
+                scores_map[node_id] = max(scores_map.get(node_id, 0.0), score)
+            scoring_traces.extend(local_traces)
+
+        nodes_after = self._items_to_info(next_items)
+
+        traversal_step = TraversalStep(
+            step_index=step_idx,
+            step_query=str(step),
+            nodes_before=nodes_before,
+            nodes_after=nodes_after,
+            action="node_test_expr",
+            details={
+                "axis": axis.value,
+                "node_test_expr": step.test.to_dict(),
+                "found_count": len(next_items),
+                "scoring_trace": scoring_traces,
+            }
+        )
+        return next_items, scores_map, traversal_step
+
+    def _eval_node_test_expr_context(
+        self,
+        context_item: NodeItem,
+        group_id: int,
+        axis: Axis,
+        expr: NodeTestExpr,
+        execution_log: List[str],
+        parent_map: Optional[Dict] = None
+    ) -> Tuple[List[NodeItem], Dict[int, float], List[Dict[str, Any]]]:
+        if isinstance(expr, NodeTestLeaf):
+            return self._eval_node_test_leaf_context(
+                context_item, group_id, axis, expr, execution_log, parent_map
+            )
+
+        if isinstance(expr, NodeTestOr):
+            combined: Dict[Tuple[int, int], NodeItem] = {}
+            traces: List[Dict[str, Any]] = []
+            for child in expr.children:
+                items, _, child_traces = self._eval_node_test_expr_context(
+                    context_item, group_id, axis, child, execution_log, parent_map
+                )
+                traces.extend(child_traces)
+                for item in items:
+                    key = (id(item.node), item.parent_group_id)
+                    if key not in combined or item.score > combined[key].score:
+                        combined[key] = item
+            items_list = list(combined.values())
+            scores_map = _items_score_map(items_list)
+            return items_list, scores_map, traces
+
+        if isinstance(expr, NodeTestAnd):
+            traces: List[Dict[str, Any]] = []
+            child_results = []
+            for child in expr.children:
+                items, _, child_traces = self._eval_node_test_expr_context(
+                    context_item, group_id, axis, child, execution_log, parent_map
+                )
+                traces.extend(child_traces)
+                child_results.append({(id(item.node), item.parent_group_id): item for item in items})
+
+            if not child_results:
+                return [], {}, traces
+
+            common_keys = set(child_results[0].keys())
+            for mapping in child_results[1:]:
+                common_keys &= set(mapping.keys())
+
+            combined: Dict[Tuple[int, int], NodeItem] = {}
+            for key in common_keys:
+                first_item = child_results[0][key]
+                min_score = min(mapping[key].score for mapping in child_results)
+                combined[key] = NodeItem(
+                    first_item.node,
+                    first_item.path,
+                    min_score,
+                    first_item.parent_group_id
+                )
+            items_list = list(combined.values())
+            scores_map = _items_score_map(items_list)
+            return items_list, scores_map, traces
+
+        return [], {}, []
+
+    def _eval_node_test_leaf_context(
+        self,
+        context_item: NodeItem,
+        group_id: int,
+        axis: Axis,
+        expr: NodeTestLeaf,
+        execution_log: List[str],
+        parent_map: Optional[Dict] = None
+    ) -> Tuple[List[NodeItem], Dict[int, float], List[Dict[str, Any]]]:
+        test = expr.test
+        axis_val = axis.value if axis != Axis.NONE else "child"
+        matches: List[ET.Element] = []
+        next_items: List[NodeItem] = []
+
+        if test.kind == "wildcard":
+            if axis_val == "desc":
+                matches = [
+                    n for n in context_item.node.iter()
+                    if n is not context_item.node and NodeUtils._is_structured_node(n)
+                ]
+            else:
+                matches = [
+                    child for child in context_item.node
+                    if NodeUtils._is_structured_node(child)
+                ]
+        else:
+            if axis_val == "desc":
+                matches = [
+                    n for n in context_item.node.iter(test.name)
+                    if n is not context_item.node
+                ]
+            else:
+                matches = list(context_item.node.findall(test.name))
+
+        # Build NodeItems with path tracking
+        if axis_val == "desc":
+            if parent_map is None:
+                parent_map = self._node_utils.build_parent_map(self.root)
+            for child in matches:
+                child_path = self._node_utils.get_path_from_ancestor_to_descendant(
+                    context_item.node, child, context_item.path, parent_map
+                )
+                next_items.append(NodeItem(child, child_path, 1.0, group_id))
+        else:
+            for child in matches:
+                child_name = self._node_utils.get_name(child)
+                child_path = f"{context_item.path} > {child_name}"
+                next_items.append(NodeItem(child, child_path, 1.0, group_id))
+
+        # Apply index within this context
+        if test.index is not None:
+            nodes_only = [item.node for item in next_items]
+            indexed_nodes = IndexHandler.apply_index(nodes_only, test.index, execution_log)
+            indexed_ids = {id(n) for n in indexed_nodes}
+            next_items = [item for item in next_items if id(item.node) in indexed_ids]
+
+        scores_map: Dict[int, float] = _items_score_map(next_items)
+        traces: List[Dict[str, Any]] = []
+
+        if test.predicate and next_items:
+            nodes_only = [item.node for item in next_items]
+            _, pred_scores, trace = self.predicate_handler.apply_semantic_predicate(
+                nodes_only, test.predicate, execution_log
+            )
+            traces.append(trace)
+            for item in next_items:
+                score = pred_scores.get(id(item.node), item.score)
+                item.score = score
+            scores_map = pred_scores
+
+        return next_items, scores_map, traces
     
     def _apply_type_match(
         self,
@@ -690,7 +893,7 @@ class DenseXPathExecutor:
     def _apply_global_index(
         self,
         items: List[NodeItem],
-        global_index: IndexRange,
+        global_index: Index,
         total_steps: int,
         execution_log: List[str]
     ) -> Tuple[List[NodeItem], TraversalStep]:
@@ -728,35 +931,31 @@ class DenseXPathExecutor:
     
     def _build_parsed_ast(
         self,
-        steps: List[QueryStep],
-        global_index: Optional[IndexRange]
+        steps: List[Step],
+        global_index: Optional[Index]
     ) -> ParsedQueryAST:
         """
         Build a ParsedQueryAST object from parsed query steps.
         
-        Converts QueryStep objects and their predicate AST nodes into
+        Converts Step objects and their node-test/predicate AST nodes into
         serializable dictionaries for logging and tracing.
         """
         ast_steps = []
         for step in steps:
             step_dict = {
-                "node_type": step.node_type,
-                "axis": step.axis,
+                "axis": step.axis.value,
+                "node_test_expr": step.test.to_dict(),
             }
-            
-            # Add index if present
-            if step.index:
-                step_dict["index"] = step.index.to_dict()
-            
-            # Add predicate AST if present
-            if step.predicate:
-                step_dict["predicate_str"] = str(step.predicate)
-                step_dict["predicate_ast"] = step.predicate.to_dict()
-            elif step.predicate_str:
-                step_dict["predicate_str"] = step.predicate_str
-            
             ast_steps.append(step_dict)
-        
+
         global_idx_dict = global_index.to_dict() if global_index else None
-        
+
         return ParsedQueryAST(steps=ast_steps, global_index=global_idx_dict)
+
+
+def _items_score_map(items: List[NodeItem]) -> Dict[int, float]:
+    scores: Dict[int, float] = {}
+    for item in items:
+        node_id = id(item.node)
+        scores[node_id] = max(scores.get(node_id, 0.0), item.score)
+    return scores

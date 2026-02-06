@@ -274,7 +274,10 @@ class TestASTNodeMethods(unittest.TestCase):
     def test_to_dict_atom(self):
         node = AtomPredicate(field="content", value="museum")
         d = node.to_dict()
-        self.assertEqual(d, {"type": "atom", "field": "content", "value": "museum"})
+        self.assertEqual(
+            d,
+            {"type": "atom", "field": "content", "value": "museum", "operator": "=~"}
+        )
 
     def test_repr_roundtrip(self):
         """__repr__ should reconstruct valid syntax."""
@@ -292,7 +295,7 @@ class TestQueryParser(unittest.TestCase):
         self.parser = QueryParser()
 
     def test_simple_path(self):
-        steps, global_idx = self.parser.parse('/Itinerary/Day/POI')
+        steps, global_idx = self.parser.parse_legacy('/Itinerary/Day/POI')
         self.assertEqual(len(steps), 3)
         self.assertEqual(steps[0].node_type, "Itinerary")
         self.assertEqual(steps[1].node_type, "Day")
@@ -300,24 +303,24 @@ class TestQueryParser(unittest.TestCase):
         self.assertIsNone(global_idx)
 
     def test_positional_index(self):
-        steps, _ = self.parser.parse('/Itinerary/Day[2]/POI[-1]')
+        steps, _ = self.parser.parse_legacy('/Itinerary/Day[2]/POI[-1]')
         self.assertEqual(steps[1].index.start, 2)
         self.assertEqual(steps[2].index.start, -1)
 
     def test_global_index(self):
-        steps, global_idx = self.parser.parse('(/Itinerary/Day/POI)[5]')
+        steps, global_idx = self.parser.parse_legacy('(/Itinerary/Day/POI)[5]')
         self.assertIsNotNone(global_idx)
         self.assertEqual(global_idx.start, 5)
         self.assertEqual(len(steps), 3)
 
     def test_atom_predicate(self):
-        steps, _ = self.parser.parse('/Itinerary/Day/POI[atom(content =~ "museum")]')
+        steps, _ = self.parser.parse_legacy('/Itinerary/Day/POI[atom(content =~ "museum")]')
         poi = steps[2]
         self.assertIsInstance(poi.predicate, AtomPredicate)
         self.assertEqual(poi.predicate.value, "museum")
 
     def test_or_predicate_without_parens(self):
-        steps, _ = self.parser.parse(
+        steps, _ = self.parser.parse_legacy(
             '/Itinerary/Day/POI[atom(content =~ "kid") OR atom(content =~ "child")]'
         )
         poi = steps[2]
@@ -326,7 +329,7 @@ class TestQueryParser(unittest.TestCase):
 
     def test_or_predicate_with_parens(self):
         """Previously broken: outer parens in predicate bracket."""
-        steps, _ = self.parser.parse(
+        steps, _ = self.parser.parse_legacy(
             '/Itinerary/Day/POI[(atom(content =~ "kid") OR atom(content =~ "child"))]'
         )
         poi = steps[2]
@@ -334,7 +337,7 @@ class TestQueryParser(unittest.TestCase):
         self.assertEqual(len(poi.predicate.children), 2)
 
     def test_index_and_predicate(self):
-        steps, _ = self.parser.parse(
+        steps, _ = self.parser.parse_legacy(
             '/Itinerary/Day[2][agg_exists(POI[atom(content =~ "museum")])]'
         )
         day = steps[1]
@@ -342,13 +345,13 @@ class TestQueryParser(unittest.TestCase):
         self.assertIsInstance(day.predicate, AggExistsPredicate)
 
     def test_desc_axis(self):
-        steps, _ = self.parser.parse('/Itinerary/desc::POI[atom(content =~ "museum")]')
+        steps, _ = self.parser.parse_legacy('/Itinerary/desc::POI[atom(content =~ "museum")]')
         poi = steps[1]
         self.assertEqual(poi.axis, "desc")
         self.assertEqual(poi.node_type, "POI")
 
     def test_not_predicate(self):
-        steps, _ = self.parser.parse(
+        steps, _ = self.parser.parse_legacy(
             '/Itinerary/Day/Restaurant[not(atom(content =~ "expensive"))]'
         )
         rest = steps[2]

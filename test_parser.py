@@ -1,23 +1,17 @@
-"""Test parser for OR expression issue."""
-from pipeline_execution.semantic_xpath_execution import get_parser
+"""Quick sanity check for predicate parsing."""
+from pipeline_execution.semantic_xpath_parsing import get_parser, parse_predicate
 
 p = get_parser()
 
-# Test case: simple OR expression (should work)
 test1 = "atom(content =~ \"kid\") OR atom(content =~ \"child\")"
 print("Test 1:", test1)
-parts = p._split_logical_operator(test1, ' OR ')
-print("  Split parts:", parts)
+print("Parsed:", parse_predicate(test1))
 
-# Test case: wrapped in parentheses (this is the issue)
 test2 = "(atom(content =~ \"kid\") OR atom(content =~ \"child\"))"
 print("\nTest 2:", test2)
-parts = p._split_logical_operator(test2, ' OR ')
-print("  Split parts:", parts)
+print("Parsed:", parse_predicate(test2))
 
-# Parse the full expression
-print("\n--- Parsing full predicate string ---")
-pred_str = "(atom(content =~ \"kid\") OR atom(content =~ \"child\"))"
-result = p._parse_logical_predicate(pred_str)
-print("Result operator:", result.operator)
-print("Result conditions:", result.conditions)
+query = "/Itinerary/Day/POI[atom(content =~ \"museum\")]"
+parsed = p.parse(query)
+print("\n--- Parsed query ---")
+print(parsed)

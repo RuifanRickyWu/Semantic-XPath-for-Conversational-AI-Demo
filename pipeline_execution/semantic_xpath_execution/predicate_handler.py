@@ -42,11 +42,21 @@ from pipeline_execution.semantic_xpath_util.node_utils import NodeUtils
 from pipeline_execution.semantic_xpath_parsing.predicate_ast import (
     PredicateNode,
     AtomPredicate,
+    AggPredicate,
     AggExistsPredicate,
     AggPrevPredicate,
     AndPredicate,
     OrPredicate,
     NotPredicate,
+)
+from pipeline_execution.semantic_xpath_parsing.parsing_models import (
+    Axis,
+    Index,
+    NodeTest,
+    NodeTestExpr,
+    NodeTestLeaf,
+    NodeTestAnd,
+    NodeTestOr,
 )
 
 
@@ -161,6 +171,74 @@ class PredicateHandler:
             else:
                 # Leaf node or no children defined - return empty
                 return []
+
+    def _apply_index_to_nodes(self, nodes: List[ET.Element], index: Optional[Index]) -> List[ET.Element]:
+        if not index:
+            return nodes
+        from pipeline_execution.semantic_xpath_execution.index_handler import IndexHandler
+        return IndexHandler.apply_index(nodes, index)  # type: ignore[arg-type]
+
+    def _evaluate_node_test_expr(
+        self,
+        node: ET.Element,
+        expr: NodeTestExpr,
+        axis: Axis,
+        execution_log: List[str]
+    ) -> List[ET.Element]:
+        """
+        Evaluate a NodeTestExpr against a node to select evidence nodes.
+
+        Predicates inside node tests are treated as filters using score_threshold.
+        """
+        if isinstance(expr, NodeTestLeaf):
+            return self._evaluate_node_test_leaf(node, expr.test, axis, execution_log)
+
+        if isinstance(expr, NodeTestOr):
+            seen = set()
+            result: List[ET.Element] = []
+            for child in expr.children:
+                for n in self._evaluate_node_test_expr(node, child, axis, execution_log):
+                    nid = id(n)
+                    if nid not in seen:
+                        seen.add(nid)
+                        result.append(n)
+            return result
+
+        if isinstance(expr, NodeTestAnd):
+            child_lists = [
+                self._evaluate_node_test_expr(node, child, axis, execution_log)
+                for child in expr.children
+            ]
+            if not child_lists:
+                return []
+            # Intersection by node id, preserve order of first list
+            common_ids = {id(n) for n in child_lists[0]}
+            for lst in child_lists[1:]:
+                common_ids &= {id(n) for n in lst}
+            return [n for n in child_lists[0] if id(n) in common_ids]
+
+        return []
+
+    def _evaluate_node_test_leaf(
+        self,
+        node: ET.Element,
+        test: NodeTest,
+        axis: Axis,
+        execution_log: List[str]
+    ) -> List[ET.Element]:
+        axis_str = axis.value if axis != Axis.NONE else "child"
+        if test.kind == "wildcard":
+            candidates = self._get_hierarchical_children(node, child_type=None, axis=axis_str)
+        else:
+            candidates = self._get_hierarchical_children(node, child_type=test.name, axis=axis_str)
+
+        candidates = self._apply_index_to_nodes(candidates, test.index)
+
+        if test.predicate:
+            _, scores_map, _ = self.apply_semantic_predicate(candidates, test.predicate, execution_log)
+            threshold = self.score_threshold
+            return [n for n in candidates if scores_map.get(id(n), 0.0) >= threshold]
+        return candidates
     
     def _get_all_structural_types(self) -> set:
         """Get all node types defined in the schema."""
@@ -325,6 +403,7 @@ class PredicateHandler:
             node_name = self._node_utils.get_name(node)
             node_trace = {
                 "node_idx": idx,
+                "node_id": id(node),
                 "node_name": node_name,
                 "node_type": node.tag,
                 "scoring_steps": []
@@ -612,15 +691,20 @@ class PredicateHandler:
         """
         if isinstance(predicate, AtomPredicate):
             return self._score_atom(node, predicate, trace_steps)
-        elif isinstance(predicate, OrPredicate):
+        if isinstance(predicate, OrPredicate):
             return self._score_or(node, predicate, trace_steps, execution_log)
-        elif isinstance(predicate, AndPredicate):
+        if isinstance(predicate, AndPredicate):
             return self._score_and(node, predicate, trace_steps, execution_log)
-        elif isinstance(predicate, NotPredicate):
+        if isinstance(predicate, NotPredicate):
             return self._score_not(node, predicate, trace_steps, execution_log)
-        elif isinstance(predicate, AggExistsPredicate):
+        if isinstance(predicate, AggPredicate):
+            agg_type = predicate.agg_type.lower()
+            if agg_type == "prev":
+                return self._score_agg_prev(node, predicate, trace_steps, execution_log)
             return self._score_agg_exists(node, predicate, trace_steps, execution_log)
-        elif isinstance(predicate, AggPrevPredicate):
+        if isinstance(predicate, AggExistsPredicate):
+            return self._score_agg_exists(node, predicate, trace_steps, execution_log)
+        if isinstance(predicate, AggPrevPredicate):
             return self._score_agg_prev(node, predicate, trace_steps, execution_log)
         return 0
     
@@ -731,100 +815,94 @@ class PredicateHandler:
     def _score_agg_exists(
         self,
         node: ET.Element,
-        predicate: AggExistsPredicate,
+        predicate: AggPredicate,
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
         """Hierarchical existential aggregation: Agg∃(A) = max(subtree scores)"""
-        children = self._get_hierarchical_children(
-            node, predicate.child_type, axis=predicate.child_axis
-        )
-        
+        selector = predicate.selector
+        children = self._evaluate_node_test_expr(node, selector.test, selector.axis, execution_log)
+
         if not children:
             trace_steps.append({
                 "type": "agg_exists",
-                "child_type": predicate.child_type or "*",
-                "child_axis": predicate.child_axis,
+                "selector": selector.to_dict(),
                 "num_children": 0,
-                "note": "Sφ(u) is empty - no children/descendants found",
+                "note": "Sφ(u) is empty - no evidence nodes found",
                 "result": 0
             })
             return 0
-        
+
         child_results: List[Tuple[float, int, Optional[Dict]]] = []
         for child in children:
             score, size, details = self._recursive_subtree_score(
                 child, predicate.inner, "EXISTS", trace_steps, execution_log
             )
             child_results.append((score, size, details))
-        
+
         max_score = -1.0
         best_details = None
         for s, _, d in child_results:
             if s > max_score:
                 max_score = s
                 best_details = d
-                
+
         result = max(EPSILON, min(1 - EPSILON, max_score)) if child_results else 0
-        
+
         trace_steps.append({
             "type": "agg_exists_recursive",
             "formula": "Agg∃(A) = max(recursive_subtree_scores)",
-            "child_type": predicate.child_type or "*",
-            "child_axis": predicate.child_axis,
+            "selector": selector.to_dict(),
             "num_children": len(children),
             "child_results": [{"score": s, "subtree_size": sz} for s, sz, _ in child_results],
             "best_match_details": best_details,
             "result": result
         })
-        
+
         return result
     
     def _score_agg_prev(
         self,
         node: ET.Element,
-        predicate: AggPrevPredicate,
+        predicate: AggPredicate,
         trace_steps: List[Dict],
         execution_log: List[str]
     ) -> float:
         """Hierarchical prevalence aggregation: Aggprev = weighted avg by subtree size"""
-        children = self._get_hierarchical_children(
-            node, predicate.child_type, axis=predicate.child_axis
-        )
-        
+        selector = predicate.selector
+        children = self._evaluate_node_test_expr(node, selector.test, selector.axis, execution_log)
+
         if not children:
             trace_steps.append({
                 "type": "agg_prev",
-                "child_type": predicate.child_type or "*",
-                "child_axis": predicate.child_axis,
+                "selector": selector.to_dict(),
                 "num_children": 0,
-                "note": "Sφ(u) is empty - no children/descendants found",
+                "note": "Sφ(u) is empty - no evidence nodes found",
                 "result": 0
             })
             return 0
-        
+
         child_results: List[Tuple[float, int]] = []
         for child in children:
-            score, size = self._recursive_subtree_score(
+            score, size, _ = self._recursive_subtree_score(
                 child, predicate.inner, "PREV", trace_steps, execution_log
             )
             child_results.append((score, size))
-        
+
         weighted_sum = sum(score * size for score, size in child_results)
         total_weight = sum(size for _, size in child_results)
         result = weighted_sum / total_weight if total_weight > 0 else 0
         result = max(EPSILON, min(1 - EPSILON, result))
-        
+
         trace_steps.append({
             "type": "agg_prev_weighted",
             "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
-            "child_type": predicate.child_type or "*",
-            "child_axis": predicate.child_axis,
+            "selector": selector.to_dict(),
             "num_children": len(children),
             "child_results": [{"score": s, "subtree_size": sz} for s, sz in child_results],
             "weighted_sum": weighted_sum,
             "total_weight": total_weight,
             "result": result
         })
-        
+
         return result

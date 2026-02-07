@@ -1,0 +1,4815 @@
+{
+  "timestamp": "20260205_161342_660577",
+  "query": "/Root/Itinerary_Version[1]/Itinerary/Day/.[atom(content =~ \"Niagara Falls\")]",
+  "data_file": "tree.xml",
+  "execution_time_ms": 1958.6132080000027,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Root",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Root",
+          "path": "Root"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[1]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root",
+          "name": "Root",
+          "type": "Root",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Itinerary_Version",
+        "found_count": 1
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[1]",
+      "action": "positional_index",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "index": {
+          "start": 1,
+          "type": "single"
+        },
+        "selected_count": 1,
+        "groups_processed": 1,
+        "group_details": [
+          {
+            "group_id": 0,
+            "group_size": 1,
+            "selected_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Itinerary",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Itinerary",
+        "found_count": 1
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 10,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4",
+          "name": "Day 4",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5",
+          "name": "Day 5",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+          "name": "Day 6",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+          "name": "Day 7",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+          "name": "Day 8",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+          "name": "Day 9",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10",
+          "name": "Day 10",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 10
+      }
+    },
+    {
+      "step_index": 4,
+      "step_query": ".[atom(content =~ \"Niagara Falls\")]",
+      "action": "type_match",
+      "nodes_before_count": 10,
+      "nodes_after_count": 43,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4",
+          "name": "Day 4",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5",
+          "name": "Day 5",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+          "name": "Day 6",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+          "name": "Day 7",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+          "name": "Day 8",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+          "name": "Day 9",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10",
+          "name": "Day 10",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > YYZ Airport Arrival",
+          "name": "YYZ Airport Arrival",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Harbourfront Stroll",
+          "name": "Harbourfront Stroll",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+          "name": "Canoe Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Client Kickoff Meeting",
+          "name": "Client Kickoff Meeting",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Strategy Workshop",
+          "name": "Strategy Workshop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "name": "Alo Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Stakeholder Presentation",
+          "name": "Stakeholder Presentation",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Full-Day Workshop",
+          "name": "Full-Day Workshop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Bloor Street Shopping",
+          "name": "Bloor Street Shopping",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "name": "Client Check-in Call",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "name": "Email Catch-up Block",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+          "name": "Networking Drinks",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "name": "Kaiseki Kaji",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+          "name": "Toronto Islands Ferry and Bike Ride",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+          "name": "Distillery District Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+          "name": "Niagara Falls Day Trip",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+          "name": "Elements on the Falls",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Eaton Centre Shopping",
+          "name": "Eaton Centre Shopping",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower",
+          "name": "360 Restaurant at CN Tower",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Airport Snack Stop",
+          "name": "Airport Snack Stop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+          "name": "YYZ Departure",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": ".",
+        "found_count": 43
+      }
+    },
+    {
+      "step_index": 4,
+      "step_query": ".[atom(content =~ \"Niagara Falls\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 43,
+      "nodes_after_count": 43,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > YYZ Airport Arrival",
+          "name": "YYZ Airport Arrival",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Harbourfront Stroll",
+          "name": "Harbourfront Stroll",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+          "name": "Canoe Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Client Kickoff Meeting",
+          "name": "Client Kickoff Meeting",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Strategy Workshop",
+          "name": "Strategy Workshop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "name": "Alo Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Stakeholder Presentation",
+          "name": "Stakeholder Presentation",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Full-Day Workshop",
+          "name": "Full-Day Workshop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Bloor Street Shopping",
+          "name": "Bloor Street Shopping",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "name": "Client Check-in Call",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "name": "Email Catch-up Block",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+          "name": "Networking Drinks",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "name": "Kaiseki Kaji",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+          "name": "Toronto Islands Ferry and Bike Ride",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+          "name": "Distillery District Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+          "name": "Niagara Falls Day Trip",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+          "name": "Elements on the Falls",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Eaton Centre Shopping",
+          "name": "Eaton Centre Shopping",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower",
+          "name": "360 Restaurant at CN Tower",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Airport Snack Stop",
+          "name": "Airport Snack Stop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+          "name": "YYZ Departure",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > YYZ Airport Arrival",
+          "name": "YYZ Airport Arrival",
+          "type": "POI",
+          "score": 0.002395773306488991
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Harbourfront Stroll",
+          "name": "Harbourfront Stroll",
+          "type": "POI",
+          "score": 0.01035704743117094
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+          "name": "Canoe Restaurant",
+          "type": "Restaurant",
+          "score": 0.17090171575546265
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Client Kickoff Meeting",
+          "name": "Client Kickoff Meeting",
+          "type": "POI",
+          "score": 0.01251707598567009
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Strategy Workshop",
+          "name": "Strategy Workshop",
+          "type": "POI",
+          "score": 0.04483425244688988
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "name": "Alo Restaurant",
+          "type": "Restaurant",
+          "score": 0.07102937251329422
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 0.017794910818338394
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Stakeholder Presentation",
+          "name": "Stakeholder Presentation",
+          "type": "POI",
+          "score": 0.029972590506076813
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 0.17593912780284882
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 0.011861909180879593
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 0.013494131155312061
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 0.001660794485360384
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Full-Day Workshop",
+          "name": "Full-Day Workshop",
+          "type": "POI",
+          "score": 0.10637638717889786
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Bloor Street Shopping",
+          "name": "Bloor Street Shopping",
+          "type": "POI",
+          "score": 0.00304593937471509
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 0.039027392864227295
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 0.00552497198805213
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "name": "Client Check-in Call",
+          "type": "POI",
+          "score": 0.03719769045710564
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "name": "Email Catch-up Block",
+          "type": "POI",
+          "score": 0.005934890825301409
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+          "name": "Networking Drinks",
+          "type": "POI",
+          "score": 0.021146254613995552
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "name": "Kaiseki Kaji",
+          "type": "Restaurant",
+          "score": 0.04477127268910408
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 0.021770238876342773
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+          "name": "Toronto Islands Ferry and Bike Ride",
+          "type": "POI",
+          "score": 0.012319369241595268
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 0.01998315379023552
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 0.04714304953813553
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 0.04122071713209152
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 0.0057265800423920155
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.0648256465792656
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 0.008378323167562485
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+          "name": "Distillery District Walk",
+          "type": "POI",
+          "score": 0.0062829796224832535
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 0.006476738024502993
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+          "name": "Niagara Falls Day Trip",
+          "type": "POI",
+          "score": 0.9996898174285889
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+          "name": "Elements on the Falls",
+          "type": "Restaurant",
+          "score": 0.999213695526123
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 0.04124411940574646
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 0.006821395829319954
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Eaton Centre Shopping",
+          "name": "Eaton Centre Shopping",
+          "type": "POI",
+          "score": 0.009730065241456032
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 0.007860495708882809
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 0.014513343572616577
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 0.006838694680482149
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 0.039809491485357285
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 0.0071112001314759254
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower",
+          "name": "360 Restaurant at CN Tower",
+          "type": "Restaurant",
+          "score": 0.007888766936957836
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Airport Snack Stop",
+          "name": "Airport Snack Stop",
+          "type": "POI",
+          "score": 0.03604888916015625
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+          "name": "YYZ Departure",
+          "type": "POI",
+          "score": 0.11495722830295563
+        }
+      ],
+      "details": {
+        "predicate": "atom(content =~ \"Niagara Falls\")",
+        "predicate_type": "AtomPredicate",
+        "scoring_result": {
+          "predicate": "atom(content =~ \"Niagara Falls\")",
+          "predicate_ast": {
+            "type": "atom",
+            "field": "content",
+            "value": "Niagara Falls"
+          },
+          "config": {
+            "top_k": 5,
+            "score_threshold": 0.05
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "YYZ Airport Arrival",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.002395773306488991,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.002395773306488991
+            },
+            {
+              "node_idx": 1,
+              "node_name": "Harbourfront Stroll",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.01035704743117094,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.01035704743117094
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Canoe Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.17090171575546265,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.17090171575546265
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Client Kickoff Meeting",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.01251707598567009,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.01251707598567009
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Strategy Workshop",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.04483425244688988,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.04483425244688988
+            },
+            {
+              "node_idx": 5,
+              "node_name": "Alo Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.07102937251329422,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.07102937251329422
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Hotel Continental Breakfast",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.017794910818338394,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.017794910818338394
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Stakeholder Presentation",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.029972590506076813,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.029972590506076813
+            },
+            {
+              "node_idx": 8,
+              "node_name": "Art Gallery of Ontario",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.17593912780284882,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.17593912780284882
+            },
+            {
+              "node_idx": 9,
+              "node_name": "FRANK Restaurant at AGO",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.011861909180879593,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.011861909180879593
+            },
+            {
+              "node_idx": 10,
+              "node_name": "Pai Northern Thai",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.013494131155312061,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.013494131155312061
+            },
+            {
+              "node_idx": 11,
+              "node_name": "Quick Grab Coffee",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.001660794485360384,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.001660794485360384
+            },
+            {
+              "node_idx": 12,
+              "node_name": "Full-Day Workshop",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.10637638717889786,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.10637638717889786
+            },
+            {
+              "node_idx": 13,
+              "node_name": "Bloor Street Shopping",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.00304593937471509,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.00304593937471509
+            },
+            {
+              "node_idx": 14,
+              "node_name": "Lee Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.039027392864227295,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.039027392864227295
+            },
+            {
+              "node_idx": 15,
+              "node_name": "Mildred's Temple Kitchen",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.00552497198805213,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.00552497198805213
+            },
+            {
+              "node_idx": 16,
+              "node_name": "Client Check-in Call",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.03719769045710564,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.03719769045710564
+            },
+            {
+              "node_idx": 17,
+              "node_name": "Email Catch-up Block",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.005934890825301409,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.005934890825301409
+            },
+            {
+              "node_idx": 18,
+              "node_name": "Networking Drinks",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.021146254613995552,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.021146254613995552
+            },
+            {
+              "node_idx": 19,
+              "node_name": "Kaiseki Kaji",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.04477127268910408,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.04477127268910408
+            },
+            {
+              "node_idx": 20,
+              "node_name": "Sunset Grill",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.021770238876342773,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.021770238876342773
+            },
+            {
+              "node_idx": 21,
+              "node_name": "Toronto Islands Ferry and Bike Ride",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.012319369241595268,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.012319369241595268
+            },
+            {
+              "node_idx": 22,
+              "node_name": "Island Cafe Picnic Lunch",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.01998315379023552,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.01998315379023552
+            },
+            {
+              "node_idx": 23,
+              "node_name": "Ripley's Aquarium",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.04714304953813553,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.04714304953813553
+            },
+            {
+              "node_idx": 24,
+              "node_name": "The Keg Steakhouse",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.04122071713209152,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.04122071713209152
+            },
+            {
+              "node_idx": 25,
+              "node_name": "Fran's Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.0057265800423920155,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.0057265800423920155
+            },
+            {
+              "node_idx": 26,
+              "node_name": "Royal Ontario Museum",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.0648256465792656,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.0648256465792656
+            },
+            {
+              "node_idx": 27,
+              "node_name": "Eataly Toronto",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.008378323167562485,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.008378323167562485
+            },
+            {
+              "node_idx": 28,
+              "node_name": "Distillery District Walk",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.0062829796224832535,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.0062829796224832535
+            },
+            {
+              "node_idx": 29,
+              "node_name": "Cluny Bistro",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.006476738024502993,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.006476738024502993
+            },
+            {
+              "node_idx": 30,
+              "node_name": "Niagara Falls Day Trip",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.9996898174285889,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9996898174285889
+            },
+            {
+              "node_idx": 31,
+              "node_name": "Elements on the Falls",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.999213695526123,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.999213695526123
+            },
+            {
+              "node_idx": 32,
+              "node_name": "Antler Kitchen",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.04124411940574646,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.04124411940574646
+            },
+            {
+              "node_idx": 33,
+              "node_name": "Lady Marmalade",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.006821395829319954,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.006821395829319954
+            },
+            {
+              "node_idx": 34,
+              "node_name": "Eaton Centre Shopping",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.009730065241456032,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.009730065241456032
+            },
+            {
+              "node_idx": 35,
+              "node_name": "Urban Eatery Food Court",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.007860495708882809,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.007860495708882809
+            },
+            {
+              "node_idx": 36,
+              "node_name": "Queen Street West Boutiques",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.014513343572616577,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.014513343572616577
+            },
+            {
+              "node_idx": 37,
+              "node_name": "Bar Isabel",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.006838694680482149,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.006838694680482149
+            },
+            {
+              "node_idx": 38,
+              "node_name": "Hotel Quick Checkout Breakfast",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.039809491485357285,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.039809491485357285
+            },
+            {
+              "node_idx": 39,
+              "node_name": "CN Tower EdgeWalk",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.0071112001314759254,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.0071112001314759254
+            },
+            {
+              "node_idx": 40,
+              "node_name": "360 Restaurant at CN Tower",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.007888766936957836,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.007888766936957836
+            },
+            {
+              "node_idx": 41,
+              "node_name": "Airport Snack Stop",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.03604888916015625,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.03604888916015625
+            },
+            {
+              "node_idx": 42,
+              "node_name": "YYZ Departure",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Niagara Falls"
+                  },
+                  "score": 0.11495722830295563,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.11495722830295563
+            }
+          ],
+          "batch_scoring": {
+            "semantic_values": [
+              "Niagara Falls"
+            ],
+            "per_value_stats": [
+              {
+                "value": "Niagara Falls",
+                "num_descriptions": 43,
+                "call_time_ms": 1956.0
+              }
+            ],
+            "total_scorer_calls": 1,
+            "total_descriptions_scored": 43
+          },
+          "token_usage": null,
+          "ranking": [
+            {
+              "idx": 30,
+              "score": 0.9996898174285889,
+              "name": "Niagara Falls Day Trip"
+            },
+            {
+              "idx": 31,
+              "score": 0.999213695526123,
+              "name": "Elements on the Falls"
+            },
+            {
+              "idx": 8,
+              "score": 0.17593912780284882,
+              "name": "Art Gallery of Ontario"
+            },
+            {
+              "idx": 2,
+              "score": 0.17090171575546265,
+              "name": "Canoe Restaurant"
+            },
+            {
+              "idx": 42,
+              "score": 0.11495722830295563,
+              "name": "YYZ Departure"
+            },
+            {
+              "idx": 12,
+              "score": 0.10637638717889786,
+              "name": "Full-Day Workshop"
+            },
+            {
+              "idx": 5,
+              "score": 0.07102937251329422,
+              "name": "Alo Restaurant"
+            },
+            {
+              "idx": 26,
+              "score": 0.0648256465792656,
+              "name": "Royal Ontario Museum"
+            },
+            {
+              "idx": 23,
+              "score": 0.04714304953813553,
+              "name": "Ripley's Aquarium"
+            },
+            {
+              "idx": 4,
+              "score": 0.04483425244688988,
+              "name": "Strategy Workshop"
+            },
+            {
+              "idx": 19,
+              "score": 0.04477127268910408,
+              "name": "Kaiseki Kaji"
+            },
+            {
+              "idx": 32,
+              "score": 0.04124411940574646,
+              "name": "Antler Kitchen"
+            },
+            {
+              "idx": 24,
+              "score": 0.04122071713209152,
+              "name": "The Keg Steakhouse"
+            },
+            {
+              "idx": 38,
+              "score": 0.039809491485357285,
+              "name": "Hotel Quick Checkout Breakfast"
+            },
+            {
+              "idx": 14,
+              "score": 0.039027392864227295,
+              "name": "Lee Restaurant"
+            },
+            {
+              "idx": 16,
+              "score": 0.03719769045710564,
+              "name": "Client Check-in Call"
+            },
+            {
+              "idx": 41,
+              "score": 0.03604888916015625,
+              "name": "Airport Snack Stop"
+            },
+            {
+              "idx": 7,
+              "score": 0.029972590506076813,
+              "name": "Stakeholder Presentation"
+            },
+            {
+              "idx": 20,
+              "score": 0.021770238876342773,
+              "name": "Sunset Grill"
+            },
+            {
+              "idx": 18,
+              "score": 0.021146254613995552,
+              "name": "Networking Drinks"
+            },
+            {
+              "idx": 22,
+              "score": 0.01998315379023552,
+              "name": "Island Cafe Picnic Lunch"
+            },
+            {
+              "idx": 6,
+              "score": 0.017794910818338394,
+              "name": "Hotel Continental Breakfast"
+            },
+            {
+              "idx": 36,
+              "score": 0.014513343572616577,
+              "name": "Queen Street West Boutiques"
+            },
+            {
+              "idx": 10,
+              "score": 0.013494131155312061,
+              "name": "Pai Northern Thai"
+            },
+            {
+              "idx": 3,
+              "score": 0.01251707598567009,
+              "name": "Client Kickoff Meeting"
+            },
+            {
+              "idx": 21,
+              "score": 0.012319369241595268,
+              "name": "Toronto Islands Ferry and Bike Ride"
+            },
+            {
+              "idx": 9,
+              "score": 0.011861909180879593,
+              "name": "FRANK Restaurant at AGO"
+            },
+            {
+              "idx": 1,
+              "score": 0.01035704743117094,
+              "name": "Harbourfront Stroll"
+            },
+            {
+              "idx": 34,
+              "score": 0.009730065241456032,
+              "name": "Eaton Centre Shopping"
+            },
+            {
+              "idx": 27,
+              "score": 0.008378323167562485,
+              "name": "Eataly Toronto"
+            },
+            {
+              "idx": 40,
+              "score": 0.007888766936957836,
+              "name": "360 Restaurant at CN Tower"
+            },
+            {
+              "idx": 35,
+              "score": 0.007860495708882809,
+              "name": "Urban Eatery Food Court"
+            },
+            {
+              "idx": 39,
+              "score": 0.0071112001314759254,
+              "name": "CN Tower EdgeWalk"
+            },
+            {
+              "idx": 37,
+              "score": 0.006838694680482149,
+              "name": "Bar Isabel"
+            },
+            {
+              "idx": 33,
+              "score": 0.006821395829319954,
+              "name": "Lady Marmalade"
+            },
+            {
+              "idx": 29,
+              "score": 0.006476738024502993,
+              "name": "Cluny Bistro"
+            },
+            {
+              "idx": 28,
+              "score": 0.0062829796224832535,
+              "name": "Distillery District Walk"
+            },
+            {
+              "idx": 17,
+              "score": 0.005934890825301409,
+              "name": "Email Catch-up Block"
+            },
+            {
+              "idx": 25,
+              "score": 0.0057265800423920155,
+              "name": "Fran's Restaurant"
+            },
+            {
+              "idx": 15,
+              "score": 0.00552497198805213,
+              "name": "Mildred's Temple Kitchen"
+            },
+            {
+              "idx": 13,
+              "score": 0.00304593937471509,
+              "name": "Bloor Street Shopping"
+            },
+            {
+              "idx": 0,
+              "score": 0.002395773306488991,
+              "name": "YYZ Airport Arrival"
+            },
+            {
+              "idx": 11,
+              "score": 0.001660794485360384,
+              "name": "Quick Grab Coffee"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "atom(content =~ \"Niagara Falls\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "Niagara Falls"
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "YYZ Airport Arrival",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.002395773306488991,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.002395773306488991
+        },
+        {
+          "node_idx": 1,
+          "node_name": "Harbourfront Stroll",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.01035704743117094,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.01035704743117094
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Canoe Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.17090171575546265,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.17090171575546265
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Client Kickoff Meeting",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.01251707598567009,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.01251707598567009
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Strategy Workshop",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.04483425244688988,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.04483425244688988
+        },
+        {
+          "node_idx": 5,
+          "node_name": "Alo Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.07102937251329422,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.07102937251329422
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Hotel Continental Breakfast",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.017794910818338394,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.017794910818338394
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Stakeholder Presentation",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.029972590506076813,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.029972590506076813
+        },
+        {
+          "node_idx": 8,
+          "node_name": "Art Gallery of Ontario",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.17593912780284882,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.17593912780284882
+        },
+        {
+          "node_idx": 9,
+          "node_name": "FRANK Restaurant at AGO",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.011861909180879593,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.011861909180879593
+        },
+        {
+          "node_idx": 10,
+          "node_name": "Pai Northern Thai",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.013494131155312061,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.013494131155312061
+        },
+        {
+          "node_idx": 11,
+          "node_name": "Quick Grab Coffee",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.001660794485360384,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.001660794485360384
+        },
+        {
+          "node_idx": 12,
+          "node_name": "Full-Day Workshop",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.10637638717889786,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.10637638717889786
+        },
+        {
+          "node_idx": 13,
+          "node_name": "Bloor Street Shopping",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.00304593937471509,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.00304593937471509
+        },
+        {
+          "node_idx": 14,
+          "node_name": "Lee Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.039027392864227295,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.039027392864227295
+        },
+        {
+          "node_idx": 15,
+          "node_name": "Mildred's Temple Kitchen",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.00552497198805213,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.00552497198805213
+        },
+        {
+          "node_idx": 16,
+          "node_name": "Client Check-in Call",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.03719769045710564,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.03719769045710564
+        },
+        {
+          "node_idx": 17,
+          "node_name": "Email Catch-up Block",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.005934890825301409,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.005934890825301409
+        },
+        {
+          "node_idx": 18,
+          "node_name": "Networking Drinks",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.021146254613995552,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.021146254613995552
+        },
+        {
+          "node_idx": 19,
+          "node_name": "Kaiseki Kaji",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.04477127268910408,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.04477127268910408
+        },
+        {
+          "node_idx": 20,
+          "node_name": "Sunset Grill",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.021770238876342773,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.021770238876342773
+        },
+        {
+          "node_idx": 21,
+          "node_name": "Toronto Islands Ferry and Bike Ride",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.012319369241595268,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.012319369241595268
+        },
+        {
+          "node_idx": 22,
+          "node_name": "Island Cafe Picnic Lunch",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.01998315379023552,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.01998315379023552
+        },
+        {
+          "node_idx": 23,
+          "node_name": "Ripley's Aquarium",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.04714304953813553,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.04714304953813553
+        },
+        {
+          "node_idx": 24,
+          "node_name": "The Keg Steakhouse",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.04122071713209152,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.04122071713209152
+        },
+        {
+          "node_idx": 25,
+          "node_name": "Fran's Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.0057265800423920155,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.0057265800423920155
+        },
+        {
+          "node_idx": 26,
+          "node_name": "Royal Ontario Museum",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.0648256465792656,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.0648256465792656
+        },
+        {
+          "node_idx": 27,
+          "node_name": "Eataly Toronto",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.008378323167562485,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.008378323167562485
+        },
+        {
+          "node_idx": 28,
+          "node_name": "Distillery District Walk",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.0062829796224832535,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.0062829796224832535
+        },
+        {
+          "node_idx": 29,
+          "node_name": "Cluny Bistro",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.006476738024502993,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.006476738024502993
+        },
+        {
+          "node_idx": 30,
+          "node_name": "Niagara Falls Day Trip",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.9996898174285889,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9996898174285889
+        },
+        {
+          "node_idx": 31,
+          "node_name": "Elements on the Falls",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.999213695526123,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.999213695526123
+        },
+        {
+          "node_idx": 32,
+          "node_name": "Antler Kitchen",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.04124411940574646,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.04124411940574646
+        },
+        {
+          "node_idx": 33,
+          "node_name": "Lady Marmalade",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.006821395829319954,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.006821395829319954
+        },
+        {
+          "node_idx": 34,
+          "node_name": "Eaton Centre Shopping",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.009730065241456032,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.009730065241456032
+        },
+        {
+          "node_idx": 35,
+          "node_name": "Urban Eatery Food Court",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.007860495708882809,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.007860495708882809
+        },
+        {
+          "node_idx": 36,
+          "node_name": "Queen Street West Boutiques",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.014513343572616577,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.014513343572616577
+        },
+        {
+          "node_idx": 37,
+          "node_name": "Bar Isabel",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.006838694680482149,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.006838694680482149
+        },
+        {
+          "node_idx": 38,
+          "node_name": "Hotel Quick Checkout Breakfast",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.039809491485357285,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.039809491485357285
+        },
+        {
+          "node_idx": 39,
+          "node_name": "CN Tower EdgeWalk",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.0071112001314759254,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.0071112001314759254
+        },
+        {
+          "node_idx": 40,
+          "node_name": "360 Restaurant at CN Tower",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.007888766936957836,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.007888766936957836
+        },
+        {
+          "node_idx": 41,
+          "node_name": "Airport Snack Stop",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.03604888916015625,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.03604888916015625
+        },
+        {
+          "node_idx": 42,
+          "node_name": "YYZ Departure",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls"
+              },
+              "score": 0.11495722830295563,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.11495722830295563
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "Niagara Falls"
+        ],
+        "per_value_stats": [
+          {
+            "value": "Niagara Falls",
+            "num_descriptions": 43,
+            "call_time_ms": 1956.0
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 43
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 30,
+          "score": 0.9996898174285889,
+          "name": "Niagara Falls Day Trip"
+        },
+        {
+          "idx": 31,
+          "score": 0.999213695526123,
+          "name": "Elements on the Falls"
+        },
+        {
+          "idx": 8,
+          "score": 0.17593912780284882,
+          "name": "Art Gallery of Ontario"
+        },
+        {
+          "idx": 2,
+          "score": 0.17090171575546265,
+          "name": "Canoe Restaurant"
+        },
+        {
+          "idx": 42,
+          "score": 0.11495722830295563,
+          "name": "YYZ Departure"
+        },
+        {
+          "idx": 12,
+          "score": 0.10637638717889786,
+          "name": "Full-Day Workshop"
+        },
+        {
+          "idx": 5,
+          "score": 0.07102937251329422,
+          "name": "Alo Restaurant"
+        },
+        {
+          "idx": 26,
+          "score": 0.0648256465792656,
+          "name": "Royal Ontario Museum"
+        },
+        {
+          "idx": 23,
+          "score": 0.04714304953813553,
+          "name": "Ripley's Aquarium"
+        },
+        {
+          "idx": 4,
+          "score": 0.04483425244688988,
+          "name": "Strategy Workshop"
+        },
+        {
+          "idx": 19,
+          "score": 0.04477127268910408,
+          "name": "Kaiseki Kaji"
+        },
+        {
+          "idx": 32,
+          "score": 0.04124411940574646,
+          "name": "Antler Kitchen"
+        },
+        {
+          "idx": 24,
+          "score": 0.04122071713209152,
+          "name": "The Keg Steakhouse"
+        },
+        {
+          "idx": 38,
+          "score": 0.039809491485357285,
+          "name": "Hotel Quick Checkout Breakfast"
+        },
+        {
+          "idx": 14,
+          "score": 0.039027392864227295,
+          "name": "Lee Restaurant"
+        },
+        {
+          "idx": 16,
+          "score": 0.03719769045710564,
+          "name": "Client Check-in Call"
+        },
+        {
+          "idx": 41,
+          "score": 0.03604888916015625,
+          "name": "Airport Snack Stop"
+        },
+        {
+          "idx": 7,
+          "score": 0.029972590506076813,
+          "name": "Stakeholder Presentation"
+        },
+        {
+          "idx": 20,
+          "score": 0.021770238876342773,
+          "name": "Sunset Grill"
+        },
+        {
+          "idx": 18,
+          "score": 0.021146254613995552,
+          "name": "Networking Drinks"
+        },
+        {
+          "idx": 22,
+          "score": 0.01998315379023552,
+          "name": "Island Cafe Picnic Lunch"
+        },
+        {
+          "idx": 6,
+          "score": 0.017794910818338394,
+          "name": "Hotel Continental Breakfast"
+        },
+        {
+          "idx": 36,
+          "score": 0.014513343572616577,
+          "name": "Queen Street West Boutiques"
+        },
+        {
+          "idx": 10,
+          "score": 0.013494131155312061,
+          "name": "Pai Northern Thai"
+        },
+        {
+          "idx": 3,
+          "score": 0.01251707598567009,
+          "name": "Client Kickoff Meeting"
+        },
+        {
+          "idx": 21,
+          "score": 0.012319369241595268,
+          "name": "Toronto Islands Ferry and Bike Ride"
+        },
+        {
+          "idx": 9,
+          "score": 0.011861909180879593,
+          "name": "FRANK Restaurant at AGO"
+        },
+        {
+          "idx": 1,
+          "score": 0.01035704743117094,
+          "name": "Harbourfront Stroll"
+        },
+        {
+          "idx": 34,
+          "score": 0.009730065241456032,
+          "name": "Eaton Centre Shopping"
+        },
+        {
+          "idx": 27,
+          "score": 0.008378323167562485,
+          "name": "Eataly Toronto"
+        },
+        {
+          "idx": 40,
+          "score": 0.007888766936957836,
+          "name": "360 Restaurant at CN Tower"
+        },
+        {
+          "idx": 35,
+          "score": 0.007860495708882809,
+          "name": "Urban Eatery Food Court"
+        },
+        {
+          "idx": 39,
+          "score": 0.0071112001314759254,
+          "name": "CN Tower EdgeWalk"
+        },
+        {
+          "idx": 37,
+          "score": 0.006838694680482149,
+          "name": "Bar Isabel"
+        },
+        {
+          "idx": 33,
+          "score": 0.006821395829319954,
+          "name": "Lady Marmalade"
+        },
+        {
+          "idx": 29,
+          "score": 0.006476738024502993,
+          "name": "Cluny Bistro"
+        },
+        {
+          "idx": 28,
+          "score": 0.0062829796224832535,
+          "name": "Distillery District Walk"
+        },
+        {
+          "idx": 17,
+          "score": 0.005934890825301409,
+          "name": "Email Catch-up Block"
+        },
+        {
+          "idx": 25,
+          "score": 0.0057265800423920155,
+          "name": "Fran's Restaurant"
+        },
+        {
+          "idx": 15,
+          "score": 0.00552497198805213,
+          "name": "Mildred's Temple Kitchen"
+        },
+        {
+          "idx": 13,
+          "score": 0.00304593937471509,
+          "name": "Bloor Street Shopping"
+        },
+        {
+          "idx": 0,
+          "score": 0.002395773306488991,
+          "name": "YYZ Airport Arrival"
+        },
+        {
+          "idx": 11,
+          "score": 0.001660794485360384,
+          "name": "Quick Grab Coffee"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "atom(content =~ \"Niagara Falls\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "Niagara Falls"
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "YYZ Airport Arrival",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.002395773306488991,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.002395773306488991
+          },
+          {
+            "node_idx": 1,
+            "node_name": "Harbourfront Stroll",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.01035704743117094,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.01035704743117094
+          },
+          {
+            "node_idx": 2,
+            "node_name": "Canoe Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.17090171575546265,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.17090171575546265
+          },
+          {
+            "node_idx": 3,
+            "node_name": "Client Kickoff Meeting",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.01251707598567009,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.01251707598567009
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Strategy Workshop",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.04483425244688988,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.04483425244688988
+          },
+          {
+            "node_idx": 5,
+            "node_name": "Alo Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.07102937251329422,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.07102937251329422
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Hotel Continental Breakfast",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.017794910818338394,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.017794910818338394
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Stakeholder Presentation",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.029972590506076813,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.029972590506076813
+          },
+          {
+            "node_idx": 8,
+            "node_name": "Art Gallery of Ontario",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.17593912780284882,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.17593912780284882
+          },
+          {
+            "node_idx": 9,
+            "node_name": "FRANK Restaurant at AGO",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.011861909180879593,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.011861909180879593
+          },
+          {
+            "node_idx": 10,
+            "node_name": "Pai Northern Thai",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.013494131155312061,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.013494131155312061
+          },
+          {
+            "node_idx": 11,
+            "node_name": "Quick Grab Coffee",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.001660794485360384,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.001660794485360384
+          },
+          {
+            "node_idx": 12,
+            "node_name": "Full-Day Workshop",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.10637638717889786,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.10637638717889786
+          },
+          {
+            "node_idx": 13,
+            "node_name": "Bloor Street Shopping",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.00304593937471509,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.00304593937471509
+          },
+          {
+            "node_idx": 14,
+            "node_name": "Lee Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.039027392864227295,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.039027392864227295
+          },
+          {
+            "node_idx": 15,
+            "node_name": "Mildred's Temple Kitchen",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.00552497198805213,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.00552497198805213
+          },
+          {
+            "node_idx": 16,
+            "node_name": "Client Check-in Call",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.03719769045710564,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.03719769045710564
+          },
+          {
+            "node_idx": 17,
+            "node_name": "Email Catch-up Block",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.005934890825301409,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.005934890825301409
+          },
+          {
+            "node_idx": 18,
+            "node_name": "Networking Drinks",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.021146254613995552,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.021146254613995552
+          },
+          {
+            "node_idx": 19,
+            "node_name": "Kaiseki Kaji",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.04477127268910408,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.04477127268910408
+          },
+          {
+            "node_idx": 20,
+            "node_name": "Sunset Grill",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.021770238876342773,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.021770238876342773
+          },
+          {
+            "node_idx": 21,
+            "node_name": "Toronto Islands Ferry and Bike Ride",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.012319369241595268,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.012319369241595268
+          },
+          {
+            "node_idx": 22,
+            "node_name": "Island Cafe Picnic Lunch",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.01998315379023552,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.01998315379023552
+          },
+          {
+            "node_idx": 23,
+            "node_name": "Ripley's Aquarium",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.04714304953813553,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.04714304953813553
+          },
+          {
+            "node_idx": 24,
+            "node_name": "The Keg Steakhouse",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.04122071713209152,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.04122071713209152
+          },
+          {
+            "node_idx": 25,
+            "node_name": "Fran's Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.0057265800423920155,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.0057265800423920155
+          },
+          {
+            "node_idx": 26,
+            "node_name": "Royal Ontario Museum",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.0648256465792656,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.0648256465792656
+          },
+          {
+            "node_idx": 27,
+            "node_name": "Eataly Toronto",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.008378323167562485,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.008378323167562485
+          },
+          {
+            "node_idx": 28,
+            "node_name": "Distillery District Walk",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.0062829796224832535,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.0062829796224832535
+          },
+          {
+            "node_idx": 29,
+            "node_name": "Cluny Bistro",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.006476738024502993,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.006476738024502993
+          },
+          {
+            "node_idx": 30,
+            "node_name": "Niagara Falls Day Trip",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.9996898174285889,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9996898174285889
+          },
+          {
+            "node_idx": 31,
+            "node_name": "Elements on the Falls",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.999213695526123,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.999213695526123
+          },
+          {
+            "node_idx": 32,
+            "node_name": "Antler Kitchen",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.04124411940574646,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.04124411940574646
+          },
+          {
+            "node_idx": 33,
+            "node_name": "Lady Marmalade",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.006821395829319954,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.006821395829319954
+          },
+          {
+            "node_idx": 34,
+            "node_name": "Eaton Centre Shopping",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.009730065241456032,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.009730065241456032
+          },
+          {
+            "node_idx": 35,
+            "node_name": "Urban Eatery Food Court",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.007860495708882809,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.007860495708882809
+          },
+          {
+            "node_idx": 36,
+            "node_name": "Queen Street West Boutiques",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.014513343572616577,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.014513343572616577
+          },
+          {
+            "node_idx": 37,
+            "node_name": "Bar Isabel",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.006838694680482149,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.006838694680482149
+          },
+          {
+            "node_idx": 38,
+            "node_name": "Hotel Quick Checkout Breakfast",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.039809491485357285,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.039809491485357285
+          },
+          {
+            "node_idx": 39,
+            "node_name": "CN Tower EdgeWalk",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.0071112001314759254,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.0071112001314759254
+          },
+          {
+            "node_idx": 40,
+            "node_name": "360 Restaurant at CN Tower",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.007888766936957836,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.007888766936957836
+          },
+          {
+            "node_idx": 41,
+            "node_name": "Airport Snack Stop",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.03604888916015625,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.03604888916015625
+          },
+          {
+            "node_idx": 42,
+            "node_name": "YYZ Departure",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls"
+                },
+                "score": 0.11495722830295563,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.11495722830295563
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 30,
+            "score": 0.9996898174285889,
+            "name": "Niagara Falls Day Trip"
+          },
+          {
+            "idx": 31,
+            "score": 0.999213695526123,
+            "name": "Elements on the Falls"
+          },
+          {
+            "idx": 8,
+            "score": 0.17593912780284882,
+            "name": "Art Gallery of Ontario"
+          },
+          {
+            "idx": 2,
+            "score": 0.17090171575546265,
+            "name": "Canoe Restaurant"
+          },
+          {
+            "idx": 42,
+            "score": 0.11495722830295563,
+            "name": "YYZ Departure"
+          },
+          {
+            "idx": 12,
+            "score": 0.10637638717889786,
+            "name": "Full-Day Workshop"
+          },
+          {
+            "idx": 5,
+            "score": 0.07102937251329422,
+            "name": "Alo Restaurant"
+          },
+          {
+            "idx": 26,
+            "score": 0.0648256465792656,
+            "name": "Royal Ontario Museum"
+          },
+          {
+            "idx": 23,
+            "score": 0.04714304953813553,
+            "name": "Ripley's Aquarium"
+          },
+          {
+            "idx": 4,
+            "score": 0.04483425244688988,
+            "name": "Strategy Workshop"
+          },
+          {
+            "idx": 19,
+            "score": 0.04477127268910408,
+            "name": "Kaiseki Kaji"
+          },
+          {
+            "idx": 32,
+            "score": 0.04124411940574646,
+            "name": "Antler Kitchen"
+          },
+          {
+            "idx": 24,
+            "score": 0.04122071713209152,
+            "name": "The Keg Steakhouse"
+          },
+          {
+            "idx": 38,
+            "score": 0.039809491485357285,
+            "name": "Hotel Quick Checkout Breakfast"
+          },
+          {
+            "idx": 14,
+            "score": 0.039027392864227295,
+            "name": "Lee Restaurant"
+          },
+          {
+            "idx": 16,
+            "score": 0.03719769045710564,
+            "name": "Client Check-in Call"
+          },
+          {
+            "idx": 41,
+            "score": 0.03604888916015625,
+            "name": "Airport Snack Stop"
+          },
+          {
+            "idx": 7,
+            "score": 0.029972590506076813,
+            "name": "Stakeholder Presentation"
+          },
+          {
+            "idx": 20,
+            "score": 0.021770238876342773,
+            "name": "Sunset Grill"
+          },
+          {
+            "idx": 18,
+            "score": 0.021146254613995552,
+            "name": "Networking Drinks"
+          },
+          {
+            "idx": 22,
+            "score": 0.01998315379023552,
+            "name": "Island Cafe Picnic Lunch"
+          },
+          {
+            "idx": 6,
+            "score": 0.017794910818338394,
+            "name": "Hotel Continental Breakfast"
+          },
+          {
+            "idx": 36,
+            "score": 0.014513343572616577,
+            "name": "Queen Street West Boutiques"
+          },
+          {
+            "idx": 10,
+            "score": 0.013494131155312061,
+            "name": "Pai Northern Thai"
+          },
+          {
+            "idx": 3,
+            "score": 0.01251707598567009,
+            "name": "Client Kickoff Meeting"
+          },
+          {
+            "idx": 21,
+            "score": 0.012319369241595268,
+            "name": "Toronto Islands Ferry and Bike Ride"
+          },
+          {
+            "idx": 9,
+            "score": 0.011861909180879593,
+            "name": "FRANK Restaurant at AGO"
+          },
+          {
+            "idx": 1,
+            "score": 0.01035704743117094,
+            "name": "Harbourfront Stroll"
+          },
+          {
+            "idx": 34,
+            "score": 0.009730065241456032,
+            "name": "Eaton Centre Shopping"
+          },
+          {
+            "idx": 27,
+            "score": 0.008378323167562485,
+            "name": "Eataly Toronto"
+          },
+          {
+            "idx": 40,
+            "score": 0.007888766936957836,
+            "name": "360 Restaurant at CN Tower"
+          },
+          {
+            "idx": 35,
+            "score": 0.007860495708882809,
+            "name": "Urban Eatery Food Court"
+          },
+          {
+            "idx": 39,
+            "score": 0.0071112001314759254,
+            "name": "CN Tower EdgeWalk"
+          },
+          {
+            "idx": 37,
+            "score": 0.006838694680482149,
+            "name": "Bar Isabel"
+          },
+          {
+            "idx": 33,
+            "score": 0.006821395829319954,
+            "name": "Lady Marmalade"
+          },
+          {
+            "idx": 29,
+            "score": 0.006476738024502993,
+            "name": "Cluny Bistro"
+          },
+          {
+            "idx": 28,
+            "score": 0.0062829796224832535,
+            "name": "Distillery District Walk"
+          },
+          {
+            "idx": 17,
+            "score": 0.005934890825301409,
+            "name": "Email Catch-up Block"
+          },
+          {
+            "idx": 25,
+            "score": 0.0057265800423920155,
+            "name": "Fran's Restaurant"
+          },
+          {
+            "idx": 15,
+            "score": 0.00552497198805213,
+            "name": "Mildred's Temple Kitchen"
+          },
+          {
+            "idx": 13,
+            "score": 0.00304593937471509,
+            "name": "Bloor Street Shopping"
+          },
+          {
+            "idx": 0,
+            "score": 0.002395773306488991,
+            "name": "YYZ Airport Arrival"
+          },
+          {
+            "idx": 11,
+            "score": 0.001660794485360384,
+            "name": "Quick Grab Coffee"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > YYZ Airport Arrival",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.002395773306488991
+            }
+          ],
+          "accumulated_product": 0.002395773306488991,
+          "final_score": 0.002395773306488991
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Harbourfront Stroll",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.01035704743117094
+            }
+          ],
+          "accumulated_product": 0.01035704743117094,
+          "final_score": 0.01035704743117094
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.17090171575546265
+            }
+          ],
+          "accumulated_product": 0.17090171575546265,
+          "final_score": 0.17090171575546265
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Client Kickoff Meeting",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.01251707598567009
+            }
+          ],
+          "accumulated_product": 0.01251707598567009,
+          "final_score": 0.01251707598567009
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Strategy Workshop",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.04483425244688988
+            }
+          ],
+          "accumulated_product": 0.04483425244688988,
+          "final_score": 0.04483425244688988
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.07102937251329422
+            }
+          ],
+          "accumulated_product": 0.07102937251329422,
+          "final_score": 0.07102937251329422
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.017794910818338394
+            }
+          ],
+          "accumulated_product": 0.017794910818338394,
+          "final_score": 0.017794910818338394
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Stakeholder Presentation",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.029972590506076813
+            }
+          ],
+          "accumulated_product": 0.029972590506076813,
+          "final_score": 0.029972590506076813
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.17593912780284882
+            }
+          ],
+          "accumulated_product": 0.17593912780284882,
+          "final_score": 0.17593912780284882
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.011861909180879593
+            }
+          ],
+          "accumulated_product": 0.011861909180879593,
+          "final_score": 0.011861909180879593
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Pai Northern Thai",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.013494131155312061
+            }
+          ],
+          "accumulated_product": 0.013494131155312061,
+          "final_score": 0.013494131155312061
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Quick Grab Coffee",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.001660794485360384
+            }
+          ],
+          "accumulated_product": 0.001660794485360384,
+          "final_score": 0.001660794485360384
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Full-Day Workshop",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.10637638717889786
+            }
+          ],
+          "accumulated_product": 0.10637638717889786,
+          "final_score": 0.10637638717889786
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Bloor Street Shopping",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.00304593937471509
+            }
+          ],
+          "accumulated_product": 0.00304593937471509,
+          "final_score": 0.00304593937471509
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Lee Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.039027392864227295
+            }
+          ],
+          "accumulated_product": 0.039027392864227295,
+          "final_score": 0.039027392864227295
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.00552497198805213
+            }
+          ],
+          "accumulated_product": 0.00552497198805213,
+          "final_score": 0.00552497198805213
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.03719769045710564
+            }
+          ],
+          "accumulated_product": 0.03719769045710564,
+          "final_score": 0.03719769045710564
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.005934890825301409
+            }
+          ],
+          "accumulated_product": 0.005934890825301409,
+          "final_score": 0.005934890825301409
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.021146254613995552
+            }
+          ],
+          "accumulated_product": 0.021146254613995552,
+          "final_score": 0.021146254613995552
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.04477127268910408
+            }
+          ],
+          "accumulated_product": 0.04477127268910408,
+          "final_score": 0.04477127268910408
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.021770238876342773
+            }
+          ],
+          "accumulated_product": 0.021770238876342773,
+          "final_score": 0.021770238876342773
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.012319369241595268
+            }
+          ],
+          "accumulated_product": 0.012319369241595268,
+          "final_score": 0.012319369241595268
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.01998315379023552
+            }
+          ],
+          "accumulated_product": 0.01998315379023552,
+          "final_score": 0.01998315379023552
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.04714304953813553
+            }
+          ],
+          "accumulated_product": 0.04714304953813553,
+          "final_score": 0.04714304953813553
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > The Keg Steakhouse",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.04122071713209152
+            }
+          ],
+          "accumulated_product": 0.04122071713209152,
+          "final_score": 0.04122071713209152
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.0057265800423920155
+            }
+          ],
+          "accumulated_product": 0.0057265800423920155,
+          "final_score": 0.0057265800423920155
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Royal Ontario Museum",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.0648256465792656
+            }
+          ],
+          "accumulated_product": 0.0648256465792656,
+          "final_score": 0.0648256465792656
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Eataly Toronto",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.008378323167562485
+            }
+          ],
+          "accumulated_product": 0.008378323167562485,
+          "final_score": 0.008378323167562485
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.0062829796224832535
+            }
+          ],
+          "accumulated_product": 0.0062829796224832535,
+          "final_score": 0.0062829796224832535
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Cluny Bistro",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.006476738024502993
+            }
+          ],
+          "accumulated_product": 0.006476738024502993,
+          "final_score": 0.006476738024502993
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.9996898174285889
+            }
+          ],
+          "accumulated_product": 0.9996898174285889,
+          "final_score": 0.9996898174285889
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.999213695526123
+            }
+          ],
+          "accumulated_product": 0.999213695526123,
+          "final_score": 0.999213695526123
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Antler Kitchen",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.04124411940574646
+            }
+          ],
+          "accumulated_product": 0.04124411940574646,
+          "final_score": 0.04124411940574646
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.006821395829319954
+            }
+          ],
+          "accumulated_product": 0.006821395829319954,
+          "final_score": 0.006821395829319954
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Eaton Centre Shopping",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.009730065241456032
+            }
+          ],
+          "accumulated_product": 0.009730065241456032,
+          "final_score": 0.009730065241456032
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.007860495708882809
+            }
+          ],
+          "accumulated_product": 0.007860495708882809,
+          "final_score": 0.007860495708882809
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.014513343572616577
+            }
+          ],
+          "accumulated_product": 0.014513343572616577,
+          "final_score": 0.014513343572616577
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Bar Isabel",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.006838694680482149
+            }
+          ],
+          "accumulated_product": 0.006838694680482149,
+          "final_score": 0.006838694680482149
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.039809491485357285
+            }
+          ],
+          "accumulated_product": 0.039809491485357285,
+          "final_score": 0.039809491485357285
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.0071112001314759254
+            }
+          ],
+          "accumulated_product": 0.0071112001314759254,
+          "final_score": 0.0071112001314759254
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.007888766936957836
+            }
+          ],
+          "accumulated_product": 0.007888766936957836,
+          "final_score": 0.007888766936957836
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Airport Snack Stop",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.03604888916015625
+            }
+          ],
+          "accumulated_product": 0.03604888916015625,
+          "final_score": 0.03604888916015625
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"Niagara Falls\")",
+              "score": 0.11495722830295563
+            }
+          ],
+          "accumulated_product": 0.11495722830295563,
+          "final_score": 0.11495722830295563
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 43,
+    "threshold": 0.05,
+    "top_k": 5,
+    "after_filter_count": 5,
+    "filtered_nodes": [
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+        "score": 0.9996898174285889,
+        "type": "POI"
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+        "score": 0.999213695526123,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+        "score": 0.17593912780284882,
+        "type": "POI"
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+        "score": 0.17090171575546265,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+        "score": 0.11495722830295563,
+        "type": "POI"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+      "score": 0.9996898174285889,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Niagara Falls Day Trip",
+        "time_block": "8:00 AM - 6:00 PM",
+        "description": "Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.",
+        "travel_method": "Tour Bus",
+        "expected_cost": "CAD 150",
+        "highlights": [
+          "Outdoor nature",
+          "Scenic waterfall",
+          "Full day trip",
+          "Iconic destination"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+      "score": 0.999213695526123,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Elements on the Falls",
+        "time_block": "1:00 PM - 2:00 PM",
+        "description": "Dining with direct view of Niagara Falls. Tourist location but unbeatable views. Part of the day trip package.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 45",
+        "highlights": [
+          "Falls view dining",
+          "Tourist spot"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+      "score": 0.17593912780284882,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Art Gallery of Ontario",
+        "time_block": "12:00 PM - 2:00 PM",
+        "description": "World-class art museum with Canadian and international collections. Indoor cultural experience in Frank Gehry-designed building. Quiet and contemplative atmosphere.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Indoor museum",
+          "Cultural experience",
+          "Art gallery"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+      "score": 0.17090171575546265,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Canoe Restaurant",
+        "time_block": "7:30 PM - 9:00 PM",
+        "description": "Upscale Canadian cuisine on the 54th floor of TD Tower. Expensive fine dining with panoramic city views. Elegant and formal atmosphere.",
+        "travel_method": "Taxi",
+        "expected_cost": "CAD 150-200",
+        "highlights": [
+          "Expensive fine dining",
+          "City skyline views",
+          "Upscale atmosphere"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+      "score": 0.11495722830295563,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "YYZ Departure",
+        "time_block": "6:00 PM",
+        "description": "Flight departure from Toronto Pearson International Airport. End of trip.",
+        "travel_method": "Flight",
+        "expected_cost": "Included",
+        "highlights": [
+          "Departure flight",
+          "End of trip"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 7,
+    "total_scoring_calls": 1,
+    "matched_count": 5,
+    "execution_time_ms": 1958.6132080000027,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 43,
+    "num_nodes_after_filter": 5
+  }
+}

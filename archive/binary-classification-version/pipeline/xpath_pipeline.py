@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from client import get_client
 from xpath_query_generation import XPathQueryGenerator
-from dense_xpath import DenseXPathExecutor, ExecutionTrace
+from pipeline_execution.semantic_xpath_execution import DenseXPathExecutor, ExecutionTrace
 from predicate_classifiers import NodeInfo, LLMPredicateClassifier, EntailmentPredicateClassifier, CosinePredicateClassifier
 
 

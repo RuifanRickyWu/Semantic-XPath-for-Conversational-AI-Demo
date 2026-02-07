@@ -5,3 +5,6 @@
 .env
 test_notebook.ipynb
 
+# Session results (keep folder structure, ignore actual session data)
+cli_session_results/*
+!cli_session_results/.gitkeep

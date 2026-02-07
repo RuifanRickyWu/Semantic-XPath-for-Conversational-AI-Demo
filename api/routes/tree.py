@@ -9,11 +9,20 @@ POST /api/tree/reset - Reset tree to original state
 
 from flask import Blueprint, jsonify, current_app
 from pathlib import Path
-import json
 
-from pipeline.serializers import serialize_tree
+from api.serializers import serialize_tree
 
 bp = Blueprint("tree", __name__)
+
+
+def get_executor(pipeline):
+    """Get the executor from the pipeline (handles both direct and orchestrator access)."""
+    if hasattr(pipeline, 'orchestrator') and hasattr(pipeline.orchestrator, 'executor'):
+        return pipeline.orchestrator.executor
+    elif hasattr(pipeline, 'executor'):
+        return pipeline.executor
+    else:
+        raise AttributeError("Cannot find executor in pipeline")
 
 
 @bp.route("", methods=["GET"])
@@ -27,13 +36,16 @@ def get_tree():
     pipeline = current_app.pipeline
     
     try:
-        tree_data = serialize_tree(pipeline.executor.tree.getroot())
+        executor = get_executor(pipeline)
+        tree_data = serialize_tree(executor.tree.getroot())
         return jsonify({
             "success": True,
             "tree": tree_data,
-            "dataFile": pipeline.executor.memory_path.name
+            "dataFile": executor.memory_path.name if hasattr(executor, 'memory_path') else "unknown"
         })
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e), "success": False}), 500
 
 
@@ -48,10 +60,12 @@ def list_versions():
     pipeline = current_app.pipeline
     
     try:
-        # Get versions from the version manager
-        versions = pipeline.executor.version_manager.list_versions(
-            pipeline.executor.memory_path
-        )
+        executor = get_executor(pipeline)
+        # Get versions from the version manager if available
+        if hasattr(executor, 'version_manager') and hasattr(executor, 'memory_path'):
+            versions = executor.version_manager.list_versions(executor.memory_path)
+        else:
+            versions = []
         
         return jsonify({
             "success": True,
@@ -79,8 +93,9 @@ def get_version(version_id: int):
     pipeline = current_app.pipeline
     
     try:
+        executor = get_executor(pipeline)
         # Build version file path
-        base_name = pipeline.executor.memory_path.stem
+        base_name = executor.memory_path.stem if hasattr(executor, 'memory_path') else "itinerary"
         result_dir = Path(__file__).parent.parent.parent / "result" / "demo"
         version_file = result_dir / f"{base_name}_v{version_id}.xml"
         
@@ -101,6 +116,8 @@ def get_version(version_id: int):
         })
         
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e), "success": False}), 500
 
 
@@ -115,11 +132,17 @@ def reset_tree():
     pipeline = current_app.pipeline
     
     try:
-        # Reload from original file
-        pipeline.executor.reload_tree()
+        # Try orchestrator method first, then executor method
+        if hasattr(pipeline, 'orchestrator') and hasattr(pipeline.orchestrator, 'reload_tree'):
+            pipeline.orchestrator.reload_tree()
+        elif hasattr(pipeline, 'executor') and hasattr(pipeline.executor, 'reload_tree'):
+            pipeline.executor.reload_tree()
+        else:
+            return jsonify({"error": "No reload method available", "success": False}), 500
         
         # Get fresh tree state
-        tree_data = serialize_tree(pipeline.executor.tree.getroot())
+        executor = get_executor(pipeline)
+        tree_data = serialize_tree(executor.tree.getroot())
         
         return jsonify({
             "success": True,
@@ -128,4 +151,6 @@ def reset_tree():
         })
         
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e), "success": False}), 500

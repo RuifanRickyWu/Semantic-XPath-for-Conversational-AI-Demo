@@ -6,7 +6,7 @@ PUT /api/config - Update configuration
 """
 
 from flask import Blueprint, request, jsonify, current_app
-from pipeline.serializers import serialize_config
+from api.serializers import serialize_config
 
 bp = Blueprint("config", __name__)
 

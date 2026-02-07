@@ -1,0 +1,17 @@
+{
+  "user_query": "I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.",
+  "candidates_count": 5,
+  "nodes_to_delete": [
+    "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+    "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+    "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks"
+  ],
+  "reasoning": "User requested cancelling every work-related activity on Day 5. Candidates 1–3 are explicitly work or work-adjacent and are on Day 5, so they should be removed. Candidates 4 and 5 are restaurants/non-work leisure and are therefore excluded.",
+  "raw_response": "{\n  \"nodes_to_delete\": [\n    {\n      \"id\": \"1\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block\",\n      \"reasoning\": \"Explicitly work-related (email catch-up) scheduled on Day 5; matches 'skip all the work stuff.'\"\n    },\n    {\n      \"id\": \"2\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call\",\n      \"reasoning\": \"Remote client call (work commitment) on Day 5; clearly a work activity to cancel.\"\n    },\n    {\n      \"id\": \"3\",\n      \"path\": \"Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks\",\n      \"reasoning\": \"Work-adjacent networking event on Day 5 (professional socializing); falls under 'work-related activity' and should be canceled.\"\n    }\n  ],\n  \"reasoning\": \"User requested cancelling every work-related activity on Day 5. Candidates 1–3 are explicitly work or work-adjacent and are on Day 5, so they should be removed. Candidates 4 and 5 are restaurants/non-work leisure and are therefore excluded.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1396,
+    "completion_tokens": 405,
+    "total_tokens": 1801
+  },
+  "processing_time_ms": 6110.039999999998
+}

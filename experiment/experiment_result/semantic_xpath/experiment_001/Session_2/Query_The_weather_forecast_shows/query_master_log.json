@@ -1,0 +1,59 @@
+{
+  "user_query": "The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?",
+  "version_xpath": "at([-1])",
+  "version_result": {
+    "selector_type": "at",
+    "index": -1,
+    "semantic_query": null,
+    "task_query": "list outdoor activities on Day 7 that might need rescheduling",
+    "resolved_version": 1
+  },
+  "operation_type": "READ",
+  "semantic_xpath_query": "/Itinerary/Day[7]/POI[atom(content =~ \"outdoor\")]",
+  "semantic_xpath_execution_log": {
+    "aggregation_execution_log": "reasoning_traces/execution_20260205_161211_353873.json",
+    "predicate_batch_scoring_log": "reasoning_traces/entailment_scoring_20260205_161211_534140.json"
+  },
+  "semantic_xpath_result": [
+    {
+      "node_relative_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+      "node_info": {
+        "name": "Distillery District Walk",
+        "type": "POI"
+      },
+      "children_names": [],
+      "score": 0.0
+    }
+  ],
+  "downstream_task_result": {
+    "operation": "READ",
+    "success": true,
+    "selected_count": 1,
+    "candidates_count": 2,
+    "total_time_ms": 9027.91
+  },
+  "execution_time_ms": 9028.75,
+  "token_usage": {
+    "prompt_tokens": 3717,
+    "completion_tokens": 409,
+    "total_tokens": 4126,
+    "by_stage": {
+      "version_resolution": {
+        "prompt_tokens": 986,
+        "completion_tokens": 93,
+        "total_tokens": 1079
+      },
+      "xpath_generation": {
+        "prompt_tokens": 1778,
+        "completion_tokens": 219,
+        "total_tokens": 1997
+      },
+      "read_handler": {
+        "prompt_tokens": 953,
+        "completion_tokens": 97,
+        "total_tokens": 1050
+      }
+    },
+    "cost_usd": 0.04944
+  }
+}

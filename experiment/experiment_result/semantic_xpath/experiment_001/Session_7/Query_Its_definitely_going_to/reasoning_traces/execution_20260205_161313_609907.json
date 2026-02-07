@@ -1,0 +1,4817 @@
+{
+  "timestamp": "20260205_161313_609907",
+  "query": "/Root/Itinerary_Version[1]/Itinerary/Day/.[atom(content =~ \"outdoor\")]",
+  "data_file": "tree.xml",
+  "execution_time_ms": 2663.213333999991,
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Root",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Root",
+          "path": "Root"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[1]",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root",
+          "name": "Root",
+          "type": "Root",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Itinerary_Version",
+        "found_count": 1
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[1]",
+      "action": "positional_index",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "index": {
+          "start": 1,
+          "type": "single"
+        },
+        "selected_count": 1,
+        "groups_processed": 1,
+        "group_details": [
+          {
+            "group_id": 0,
+            "group_size": 1,
+            "selected_count": 1
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Itinerary",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Itinerary",
+        "found_count": 1
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "Day",
+      "action": "type_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 10,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary",
+          "name": "Itinerary",
+          "type": "Itinerary",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4",
+          "name": "Day 4",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5",
+          "name": "Day 5",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+          "name": "Day 6",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+          "name": "Day 7",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+          "name": "Day 8",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+          "name": "Day 9",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10",
+          "name": "Day 10",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": "Day",
+        "found_count": 10
+      }
+    },
+    {
+      "step_index": 4,
+      "step_query": ".[atom(content =~ \"outdoor\")]",
+      "action": "type_match",
+      "nodes_before_count": 10,
+      "nodes_after_count": 43,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4",
+          "name": "Day 4",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5",
+          "name": "Day 5",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6",
+          "name": "Day 6",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7",
+          "name": "Day 7",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8",
+          "name": "Day 8",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9",
+          "name": "Day 9",
+          "type": "Day",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10",
+          "name": "Day 10",
+          "type": "Day",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > YYZ Airport Arrival",
+          "name": "YYZ Airport Arrival",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Harbourfront Stroll",
+          "name": "Harbourfront Stroll",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+          "name": "Canoe Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Client Kickoff Meeting",
+          "name": "Client Kickoff Meeting",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Strategy Workshop",
+          "name": "Strategy Workshop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "name": "Alo Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Stakeholder Presentation",
+          "name": "Stakeholder Presentation",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Full-Day Workshop",
+          "name": "Full-Day Workshop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Bloor Street Shopping",
+          "name": "Bloor Street Shopping",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "name": "Client Check-in Call",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "name": "Email Catch-up Block",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+          "name": "Networking Drinks",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "name": "Kaiseki Kaji",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+          "name": "Toronto Islands Ferry and Bike Ride",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+          "name": "Distillery District Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+          "name": "Niagara Falls Day Trip",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+          "name": "Elements on the Falls",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Eaton Centre Shopping",
+          "name": "Eaton Centre Shopping",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower",
+          "name": "360 Restaurant at CN Tower",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Airport Snack Stop",
+          "name": "Airport Snack Stop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+          "name": "YYZ Departure",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "details": {
+        "target_type": ".",
+        "found_count": 43
+      }
+    },
+    {
+      "step_index": 4,
+      "step_query": ".[atom(content =~ \"outdoor\")]",
+      "action": "semantic_predicate",
+      "nodes_before_count": 43,
+      "nodes_after_count": 43,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > YYZ Airport Arrival",
+          "name": "YYZ Airport Arrival",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Harbourfront Stroll",
+          "name": "Harbourfront Stroll",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+          "name": "Canoe Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Client Kickoff Meeting",
+          "name": "Client Kickoff Meeting",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Strategy Workshop",
+          "name": "Strategy Workshop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "name": "Alo Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Stakeholder Presentation",
+          "name": "Stakeholder Presentation",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Full-Day Workshop",
+          "name": "Full-Day Workshop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Bloor Street Shopping",
+          "name": "Bloor Street Shopping",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "name": "Client Check-in Call",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "name": "Email Catch-up Block",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+          "name": "Networking Drinks",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "name": "Kaiseki Kaji",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+          "name": "Toronto Islands Ferry and Bike Ride",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+          "name": "Distillery District Walk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+          "name": "Niagara Falls Day Trip",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+          "name": "Elements on the Falls",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Eaton Centre Shopping",
+          "name": "Eaton Centre Shopping",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower",
+          "name": "360 Restaurant at CN Tower",
+          "type": "Restaurant",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Airport Snack Stop",
+          "name": "Airport Snack Stop",
+          "type": "POI",
+          "score": 1.0
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+          "name": "YYZ Departure",
+          "type": "POI",
+          "score": 1.0
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > YYZ Airport Arrival",
+          "name": "YYZ Airport Arrival",
+          "type": "POI",
+          "score": 0.14367683231830597
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Harbourfront Stroll",
+          "name": "Harbourfront Stroll",
+          "type": "POI",
+          "score": 0.9975589513778687
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+          "name": "Canoe Restaurant",
+          "type": "Restaurant",
+          "score": 0.8013402819633484
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Client Kickoff Meeting",
+          "name": "Client Kickoff Meeting",
+          "type": "POI",
+          "score": 0.6112866401672363
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Strategy Workshop",
+          "name": "Strategy Workshop",
+          "type": "POI",
+          "score": 0.6111902594566345
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "name": "Alo Restaurant",
+          "type": "Restaurant",
+          "score": 0.2633431851863861
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "name": "Hotel Continental Breakfast",
+          "type": "Restaurant",
+          "score": 0.11677328497171402
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Stakeholder Presentation",
+          "name": "Stakeholder Presentation",
+          "type": "POI",
+          "score": 0.8928378224372864
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 0.09104454517364502
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "name": "FRANK Restaurant at AGO",
+          "type": "Restaurant",
+          "score": 0.006440482102334499
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Pai Northern Thai",
+          "name": "Pai Northern Thai",
+          "type": "Restaurant",
+          "score": 0.3755951225757599
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Quick Grab Coffee",
+          "name": "Quick Grab Coffee",
+          "type": "Restaurant",
+          "score": 0.03916936740279198
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Full-Day Workshop",
+          "name": "Full-Day Workshop",
+          "type": "POI",
+          "score": 0.9698014259338379
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Bloor Street Shopping",
+          "name": "Bloor Street Shopping",
+          "type": "POI",
+          "score": 0.46042585372924805
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Lee Restaurant",
+          "name": "Lee Restaurant",
+          "type": "Restaurant",
+          "score": 0.27634429931640625
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "name": "Mildred's Temple Kitchen",
+          "type": "Restaurant",
+          "score": 0.4605395793914795
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "name": "Client Check-in Call",
+          "type": "POI",
+          "score": 0.09020271897315979
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "name": "Email Catch-up Block",
+          "type": "POI",
+          "score": 0.053557269275188446
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+          "name": "Networking Drinks",
+          "type": "POI",
+          "score": 0.17747439444065094
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "name": "Kaiseki Kaji",
+          "type": "Restaurant",
+          "score": 0.2687724828720093
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+          "name": "Sunset Grill",
+          "type": "Restaurant",
+          "score": 0.929837167263031
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+          "name": "Toronto Islands Ferry and Bike Ride",
+          "type": "POI",
+          "score": 0.9992045760154724
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "name": "Island Cafe Picnic Lunch",
+          "type": "Restaurant",
+          "score": 0.9990100860595703
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+          "name": "Ripley's Aquarium",
+          "type": "POI",
+          "score": 0.22396330535411835
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > The Keg Steakhouse",
+          "name": "The Keg Steakhouse",
+          "type": "Restaurant",
+          "score": 0.8054074048995972
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+          "name": "Fran's Restaurant",
+          "type": "Restaurant",
+          "score": 0.4097740650177002
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.11701314151287079
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Eataly Toronto",
+          "name": "Eataly Toronto",
+          "type": "Restaurant",
+          "score": 0.06811229884624481
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+          "name": "Distillery District Walk",
+          "type": "POI",
+          "score": 0.9980721473693848
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 0.4750765860080719
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+          "name": "Niagara Falls Day Trip",
+          "type": "POI",
+          "score": 0.9994831085205078
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+          "name": "Elements on the Falls",
+          "type": "Restaurant",
+          "score": 0.9586464762687683
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Antler Kitchen",
+          "name": "Antler Kitchen",
+          "type": "Restaurant",
+          "score": 0.9805132150650024
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+          "name": "Lady Marmalade",
+          "type": "Restaurant",
+          "score": 0.6333255767822266
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Eaton Centre Shopping",
+          "name": "Eaton Centre Shopping",
+          "type": "POI",
+          "score": 0.014050251804292202
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "name": "Urban Eatery Food Court",
+          "type": "Restaurant",
+          "score": 0.03887054696679115
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+          "name": "Queen Street West Boutiques",
+          "type": "POI",
+          "score": 0.9987006187438965
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Bar Isabel",
+          "name": "Bar Isabel",
+          "type": "Restaurant",
+          "score": 0.39019912481307983
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "name": "Hotel Quick Checkout Breakfast",
+          "type": "Restaurant",
+          "score": 0.3311688005924225
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+          "name": "CN Tower EdgeWalk",
+          "type": "POI",
+          "score": 0.9965068697929382
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower",
+          "name": "360 Restaurant at CN Tower",
+          "type": "Restaurant",
+          "score": 0.12465504556894302
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Airport Snack Stop",
+          "name": "Airport Snack Stop",
+          "type": "POI",
+          "score": 0.5182414054870605
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+          "name": "YYZ Departure",
+          "type": "POI",
+          "score": 0.6466239094734192
+        }
+      ],
+      "details": {
+        "predicate": "atom(content =~ \"outdoor\")",
+        "predicate_type": "AtomPredicate",
+        "scoring_result": {
+          "predicate": "atom(content =~ \"outdoor\")",
+          "predicate_ast": {
+            "type": "atom",
+            "field": "content",
+            "value": "outdoor"
+          },
+          "config": {
+            "top_k": 5,
+            "score_threshold": 0.05
+          },
+          "node_scores": [
+            {
+              "node_idx": 0,
+              "node_name": "YYZ Airport Arrival",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.14367683231830597,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.14367683231830597
+            },
+            {
+              "node_idx": 1,
+              "node_name": "Harbourfront Stroll",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9975589513778687,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9975589513778687
+            },
+            {
+              "node_idx": 2,
+              "node_name": "Canoe Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.8013402819633484,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.8013402819633484
+            },
+            {
+              "node_idx": 3,
+              "node_name": "Client Kickoff Meeting",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.6112866401672363,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.6112866401672363
+            },
+            {
+              "node_idx": 4,
+              "node_name": "Strategy Workshop",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.6111902594566345,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.6111902594566345
+            },
+            {
+              "node_idx": 5,
+              "node_name": "Alo Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.2633431851863861,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.2633431851863861
+            },
+            {
+              "node_idx": 6,
+              "node_name": "Hotel Continental Breakfast",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.11677328497171402,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.11677328497171402
+            },
+            {
+              "node_idx": 7,
+              "node_name": "Stakeholder Presentation",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.8928378224372864,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.8928378224372864
+            },
+            {
+              "node_idx": 8,
+              "node_name": "Art Gallery of Ontario",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.09104454517364502,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.09104454517364502
+            },
+            {
+              "node_idx": 9,
+              "node_name": "FRANK Restaurant at AGO",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.006440482102334499,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.006440482102334499
+            },
+            {
+              "node_idx": 10,
+              "node_name": "Pai Northern Thai",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.3755951225757599,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.3755951225757599
+            },
+            {
+              "node_idx": 11,
+              "node_name": "Quick Grab Coffee",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.03916936740279198,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.03916936740279198
+            },
+            {
+              "node_idx": 12,
+              "node_name": "Full-Day Workshop",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9698014259338379,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9698014259338379
+            },
+            {
+              "node_idx": 13,
+              "node_name": "Bloor Street Shopping",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.46042585372924805,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.46042585372924805
+            },
+            {
+              "node_idx": 14,
+              "node_name": "Lee Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.27634429931640625,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.27634429931640625
+            },
+            {
+              "node_idx": 15,
+              "node_name": "Mildred's Temple Kitchen",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.4605395793914795,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.4605395793914795
+            },
+            {
+              "node_idx": 16,
+              "node_name": "Client Check-in Call",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.09020271897315979,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.09020271897315979
+            },
+            {
+              "node_idx": 17,
+              "node_name": "Email Catch-up Block",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.053557269275188446,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.053557269275188446
+            },
+            {
+              "node_idx": 18,
+              "node_name": "Networking Drinks",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.17747439444065094,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.17747439444065094
+            },
+            {
+              "node_idx": 19,
+              "node_name": "Kaiseki Kaji",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.2687724828720093,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.2687724828720093
+            },
+            {
+              "node_idx": 20,
+              "node_name": "Sunset Grill",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.929837167263031,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.929837167263031
+            },
+            {
+              "node_idx": 21,
+              "node_name": "Toronto Islands Ferry and Bike Ride",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9992045760154724,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9992045760154724
+            },
+            {
+              "node_idx": 22,
+              "node_name": "Island Cafe Picnic Lunch",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9990100860595703,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9990100860595703
+            },
+            {
+              "node_idx": 23,
+              "node_name": "Ripley's Aquarium",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.22396330535411835,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.22396330535411835
+            },
+            {
+              "node_idx": 24,
+              "node_name": "The Keg Steakhouse",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.8054074048995972,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.8054074048995972
+            },
+            {
+              "node_idx": 25,
+              "node_name": "Fran's Restaurant",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.4097740650177002,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.4097740650177002
+            },
+            {
+              "node_idx": 26,
+              "node_name": "Royal Ontario Museum",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.11701314151287079,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.11701314151287079
+            },
+            {
+              "node_idx": 27,
+              "node_name": "Eataly Toronto",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.06811229884624481,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.06811229884624481
+            },
+            {
+              "node_idx": 28,
+              "node_name": "Distillery District Walk",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9980721473693848,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9980721473693848
+            },
+            {
+              "node_idx": 29,
+              "node_name": "Cluny Bistro",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.4750765860080719,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.4750765860080719
+            },
+            {
+              "node_idx": 30,
+              "node_name": "Niagara Falls Day Trip",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9994831085205078,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9994831085205078
+            },
+            {
+              "node_idx": 31,
+              "node_name": "Elements on the Falls",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9586464762687683,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9586464762687683
+            },
+            {
+              "node_idx": 32,
+              "node_name": "Antler Kitchen",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9805132150650024,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9805132150650024
+            },
+            {
+              "node_idx": 33,
+              "node_name": "Lady Marmalade",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.6333255767822266,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.6333255767822266
+            },
+            {
+              "node_idx": 34,
+              "node_name": "Eaton Centre Shopping",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.014050251804292202,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.014050251804292202
+            },
+            {
+              "node_idx": 35,
+              "node_name": "Urban Eatery Food Court",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.03887054696679115,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.03887054696679115
+            },
+            {
+              "node_idx": 36,
+              "node_name": "Queen Street West Boutiques",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9987006187438965,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9987006187438965
+            },
+            {
+              "node_idx": 37,
+              "node_name": "Bar Isabel",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.39019912481307983,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.39019912481307983
+            },
+            {
+              "node_idx": 38,
+              "node_name": "Hotel Quick Checkout Breakfast",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.3311688005924225,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.3311688005924225
+            },
+            {
+              "node_idx": 39,
+              "node_name": "CN Tower EdgeWalk",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.9965068697929382,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.9965068697929382
+            },
+            {
+              "node_idx": 40,
+              "node_name": "360 Restaurant at CN Tower",
+              "node_type": "Restaurant",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.12465504556894302,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.12465504556894302
+            },
+            {
+              "node_idx": 41,
+              "node_name": "Airport Snack Stop",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.5182414054870605,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.5182414054870605
+            },
+            {
+              "node_idx": 42,
+              "node_name": "YYZ Departure",
+              "node_type": "POI",
+              "scoring_steps": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "outdoor"
+                  },
+                  "score": 0.6466239094734192,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "final_score": 0.6466239094734192
+            }
+          ],
+          "batch_scoring": {
+            "semantic_values": [
+              "outdoor"
+            ],
+            "per_value_stats": [
+              {
+                "value": "outdoor",
+                "num_descriptions": 43,
+                "call_time_ms": 2661.31
+              }
+            ],
+            "total_scorer_calls": 1,
+            "total_descriptions_scored": 43
+          },
+          "token_usage": null,
+          "ranking": [
+            {
+              "idx": 30,
+              "score": 0.9994831085205078,
+              "name": "Niagara Falls Day Trip"
+            },
+            {
+              "idx": 21,
+              "score": 0.9992045760154724,
+              "name": "Toronto Islands Ferry and Bike Ride"
+            },
+            {
+              "idx": 22,
+              "score": 0.9990100860595703,
+              "name": "Island Cafe Picnic Lunch"
+            },
+            {
+              "idx": 36,
+              "score": 0.9987006187438965,
+              "name": "Queen Street West Boutiques"
+            },
+            {
+              "idx": 28,
+              "score": 0.9980721473693848,
+              "name": "Distillery District Walk"
+            },
+            {
+              "idx": 1,
+              "score": 0.9975589513778687,
+              "name": "Harbourfront Stroll"
+            },
+            {
+              "idx": 39,
+              "score": 0.9965068697929382,
+              "name": "CN Tower EdgeWalk"
+            },
+            {
+              "idx": 32,
+              "score": 0.9805132150650024,
+              "name": "Antler Kitchen"
+            },
+            {
+              "idx": 12,
+              "score": 0.9698014259338379,
+              "name": "Full-Day Workshop"
+            },
+            {
+              "idx": 31,
+              "score": 0.9586464762687683,
+              "name": "Elements on the Falls"
+            },
+            {
+              "idx": 20,
+              "score": 0.929837167263031,
+              "name": "Sunset Grill"
+            },
+            {
+              "idx": 7,
+              "score": 0.8928378224372864,
+              "name": "Stakeholder Presentation"
+            },
+            {
+              "idx": 24,
+              "score": 0.8054074048995972,
+              "name": "The Keg Steakhouse"
+            },
+            {
+              "idx": 2,
+              "score": 0.8013402819633484,
+              "name": "Canoe Restaurant"
+            },
+            {
+              "idx": 42,
+              "score": 0.6466239094734192,
+              "name": "YYZ Departure"
+            },
+            {
+              "idx": 33,
+              "score": 0.6333255767822266,
+              "name": "Lady Marmalade"
+            },
+            {
+              "idx": 3,
+              "score": 0.6112866401672363,
+              "name": "Client Kickoff Meeting"
+            },
+            {
+              "idx": 4,
+              "score": 0.6111902594566345,
+              "name": "Strategy Workshop"
+            },
+            {
+              "idx": 41,
+              "score": 0.5182414054870605,
+              "name": "Airport Snack Stop"
+            },
+            {
+              "idx": 29,
+              "score": 0.4750765860080719,
+              "name": "Cluny Bistro"
+            },
+            {
+              "idx": 15,
+              "score": 0.4605395793914795,
+              "name": "Mildred's Temple Kitchen"
+            },
+            {
+              "idx": 13,
+              "score": 0.46042585372924805,
+              "name": "Bloor Street Shopping"
+            },
+            {
+              "idx": 25,
+              "score": 0.4097740650177002,
+              "name": "Fran's Restaurant"
+            },
+            {
+              "idx": 37,
+              "score": 0.39019912481307983,
+              "name": "Bar Isabel"
+            },
+            {
+              "idx": 10,
+              "score": 0.3755951225757599,
+              "name": "Pai Northern Thai"
+            },
+            {
+              "idx": 38,
+              "score": 0.3311688005924225,
+              "name": "Hotel Quick Checkout Breakfast"
+            },
+            {
+              "idx": 14,
+              "score": 0.27634429931640625,
+              "name": "Lee Restaurant"
+            },
+            {
+              "idx": 19,
+              "score": 0.2687724828720093,
+              "name": "Kaiseki Kaji"
+            },
+            {
+              "idx": 5,
+              "score": 0.2633431851863861,
+              "name": "Alo Restaurant"
+            },
+            {
+              "idx": 23,
+              "score": 0.22396330535411835,
+              "name": "Ripley's Aquarium"
+            },
+            {
+              "idx": 18,
+              "score": 0.17747439444065094,
+              "name": "Networking Drinks"
+            },
+            {
+              "idx": 0,
+              "score": 0.14367683231830597,
+              "name": "YYZ Airport Arrival"
+            },
+            {
+              "idx": 40,
+              "score": 0.12465504556894302,
+              "name": "360 Restaurant at CN Tower"
+            },
+            {
+              "idx": 26,
+              "score": 0.11701314151287079,
+              "name": "Royal Ontario Museum"
+            },
+            {
+              "idx": 6,
+              "score": 0.11677328497171402,
+              "name": "Hotel Continental Breakfast"
+            },
+            {
+              "idx": 8,
+              "score": 0.09104454517364502,
+              "name": "Art Gallery of Ontario"
+            },
+            {
+              "idx": 16,
+              "score": 0.09020271897315979,
+              "name": "Client Check-in Call"
+            },
+            {
+              "idx": 27,
+              "score": 0.06811229884624481,
+              "name": "Eataly Toronto"
+            },
+            {
+              "idx": 17,
+              "score": 0.053557269275188446,
+              "name": "Email Catch-up Block"
+            },
+            {
+              "idx": 11,
+              "score": 0.03916936740279198,
+              "name": "Quick Grab Coffee"
+            },
+            {
+              "idx": 35,
+              "score": 0.03887054696679115,
+              "name": "Urban Eatery Food Court"
+            },
+            {
+              "idx": 34,
+              "score": 0.014050251804292202,
+              "name": "Eaton Centre Shopping"
+            },
+            {
+              "idx": 9,
+              "score": 0.006440482102334499,
+              "name": "FRANK Restaurant at AGO"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "atom(content =~ \"outdoor\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "outdoor"
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_name": "YYZ Airport Arrival",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.14367683231830597,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.14367683231830597
+        },
+        {
+          "node_idx": 1,
+          "node_name": "Harbourfront Stroll",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9975589513778687,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9975589513778687
+        },
+        {
+          "node_idx": 2,
+          "node_name": "Canoe Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.8013402819633484,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.8013402819633484
+        },
+        {
+          "node_idx": 3,
+          "node_name": "Client Kickoff Meeting",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.6112866401672363,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.6112866401672363
+        },
+        {
+          "node_idx": 4,
+          "node_name": "Strategy Workshop",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.6111902594566345,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.6111902594566345
+        },
+        {
+          "node_idx": 5,
+          "node_name": "Alo Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.2633431851863861,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.2633431851863861
+        },
+        {
+          "node_idx": 6,
+          "node_name": "Hotel Continental Breakfast",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.11677328497171402,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.11677328497171402
+        },
+        {
+          "node_idx": 7,
+          "node_name": "Stakeholder Presentation",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.8928378224372864,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.8928378224372864
+        },
+        {
+          "node_idx": 8,
+          "node_name": "Art Gallery of Ontario",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.09104454517364502,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.09104454517364502
+        },
+        {
+          "node_idx": 9,
+          "node_name": "FRANK Restaurant at AGO",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.006440482102334499,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.006440482102334499
+        },
+        {
+          "node_idx": 10,
+          "node_name": "Pai Northern Thai",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.3755951225757599,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.3755951225757599
+        },
+        {
+          "node_idx": 11,
+          "node_name": "Quick Grab Coffee",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.03916936740279198,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.03916936740279198
+        },
+        {
+          "node_idx": 12,
+          "node_name": "Full-Day Workshop",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9698014259338379,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9698014259338379
+        },
+        {
+          "node_idx": 13,
+          "node_name": "Bloor Street Shopping",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.46042585372924805,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.46042585372924805
+        },
+        {
+          "node_idx": 14,
+          "node_name": "Lee Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.27634429931640625,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.27634429931640625
+        },
+        {
+          "node_idx": 15,
+          "node_name": "Mildred's Temple Kitchen",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.4605395793914795,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.4605395793914795
+        },
+        {
+          "node_idx": 16,
+          "node_name": "Client Check-in Call",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.09020271897315979,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.09020271897315979
+        },
+        {
+          "node_idx": 17,
+          "node_name": "Email Catch-up Block",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.053557269275188446,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.053557269275188446
+        },
+        {
+          "node_idx": 18,
+          "node_name": "Networking Drinks",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.17747439444065094,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.17747439444065094
+        },
+        {
+          "node_idx": 19,
+          "node_name": "Kaiseki Kaji",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.2687724828720093,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.2687724828720093
+        },
+        {
+          "node_idx": 20,
+          "node_name": "Sunset Grill",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.929837167263031,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.929837167263031
+        },
+        {
+          "node_idx": 21,
+          "node_name": "Toronto Islands Ferry and Bike Ride",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9992045760154724,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9992045760154724
+        },
+        {
+          "node_idx": 22,
+          "node_name": "Island Cafe Picnic Lunch",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9990100860595703,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9990100860595703
+        },
+        {
+          "node_idx": 23,
+          "node_name": "Ripley's Aquarium",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.22396330535411835,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.22396330535411835
+        },
+        {
+          "node_idx": 24,
+          "node_name": "The Keg Steakhouse",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.8054074048995972,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.8054074048995972
+        },
+        {
+          "node_idx": 25,
+          "node_name": "Fran's Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.4097740650177002,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.4097740650177002
+        },
+        {
+          "node_idx": 26,
+          "node_name": "Royal Ontario Museum",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.11701314151287079,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.11701314151287079
+        },
+        {
+          "node_idx": 27,
+          "node_name": "Eataly Toronto",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.06811229884624481,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.06811229884624481
+        },
+        {
+          "node_idx": 28,
+          "node_name": "Distillery District Walk",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9980721473693848,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9980721473693848
+        },
+        {
+          "node_idx": 29,
+          "node_name": "Cluny Bistro",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.4750765860080719,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.4750765860080719
+        },
+        {
+          "node_idx": 30,
+          "node_name": "Niagara Falls Day Trip",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9994831085205078,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9994831085205078
+        },
+        {
+          "node_idx": 31,
+          "node_name": "Elements on the Falls",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9586464762687683,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9586464762687683
+        },
+        {
+          "node_idx": 32,
+          "node_name": "Antler Kitchen",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9805132150650024,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9805132150650024
+        },
+        {
+          "node_idx": 33,
+          "node_name": "Lady Marmalade",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.6333255767822266,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.6333255767822266
+        },
+        {
+          "node_idx": 34,
+          "node_name": "Eaton Centre Shopping",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.014050251804292202,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.014050251804292202
+        },
+        {
+          "node_idx": 35,
+          "node_name": "Urban Eatery Food Court",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.03887054696679115,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.03887054696679115
+        },
+        {
+          "node_idx": 36,
+          "node_name": "Queen Street West Boutiques",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9987006187438965,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9987006187438965
+        },
+        {
+          "node_idx": 37,
+          "node_name": "Bar Isabel",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.39019912481307983,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.39019912481307983
+        },
+        {
+          "node_idx": 38,
+          "node_name": "Hotel Quick Checkout Breakfast",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.3311688005924225,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.3311688005924225
+        },
+        {
+          "node_idx": 39,
+          "node_name": "CN Tower EdgeWalk",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.9965068697929382,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9965068697929382
+        },
+        {
+          "node_idx": 40,
+          "node_name": "360 Restaurant at CN Tower",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.12465504556894302,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.12465504556894302
+        },
+        {
+          "node_idx": 41,
+          "node_name": "Airport Snack Stop",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.5182414054870605,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.5182414054870605
+        },
+        {
+          "node_idx": 42,
+          "node_name": "YYZ Departure",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor"
+              },
+              "score": 0.6466239094734192,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.6466239094734192
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "outdoor"
+        ],
+        "per_value_stats": [
+          {
+            "value": "outdoor",
+            "num_descriptions": 43,
+            "call_time_ms": 2661.31
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 43
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 30,
+          "score": 0.9994831085205078,
+          "name": "Niagara Falls Day Trip"
+        },
+        {
+          "idx": 21,
+          "score": 0.9992045760154724,
+          "name": "Toronto Islands Ferry and Bike Ride"
+        },
+        {
+          "idx": 22,
+          "score": 0.9990100860595703,
+          "name": "Island Cafe Picnic Lunch"
+        },
+        {
+          "idx": 36,
+          "score": 0.9987006187438965,
+          "name": "Queen Street West Boutiques"
+        },
+        {
+          "idx": 28,
+          "score": 0.9980721473693848,
+          "name": "Distillery District Walk"
+        },
+        {
+          "idx": 1,
+          "score": 0.9975589513778687,
+          "name": "Harbourfront Stroll"
+        },
+        {
+          "idx": 39,
+          "score": 0.9965068697929382,
+          "name": "CN Tower EdgeWalk"
+        },
+        {
+          "idx": 32,
+          "score": 0.9805132150650024,
+          "name": "Antler Kitchen"
+        },
+        {
+          "idx": 12,
+          "score": 0.9698014259338379,
+          "name": "Full-Day Workshop"
+        },
+        {
+          "idx": 31,
+          "score": 0.9586464762687683,
+          "name": "Elements on the Falls"
+        },
+        {
+          "idx": 20,
+          "score": 0.929837167263031,
+          "name": "Sunset Grill"
+        },
+        {
+          "idx": 7,
+          "score": 0.8928378224372864,
+          "name": "Stakeholder Presentation"
+        },
+        {
+          "idx": 24,
+          "score": 0.8054074048995972,
+          "name": "The Keg Steakhouse"
+        },
+        {
+          "idx": 2,
+          "score": 0.8013402819633484,
+          "name": "Canoe Restaurant"
+        },
+        {
+          "idx": 42,
+          "score": 0.6466239094734192,
+          "name": "YYZ Departure"
+        },
+        {
+          "idx": 33,
+          "score": 0.6333255767822266,
+          "name": "Lady Marmalade"
+        },
+        {
+          "idx": 3,
+          "score": 0.6112866401672363,
+          "name": "Client Kickoff Meeting"
+        },
+        {
+          "idx": 4,
+          "score": 0.6111902594566345,
+          "name": "Strategy Workshop"
+        },
+        {
+          "idx": 41,
+          "score": 0.5182414054870605,
+          "name": "Airport Snack Stop"
+        },
+        {
+          "idx": 29,
+          "score": 0.4750765860080719,
+          "name": "Cluny Bistro"
+        },
+        {
+          "idx": 15,
+          "score": 0.4605395793914795,
+          "name": "Mildred's Temple Kitchen"
+        },
+        {
+          "idx": 13,
+          "score": 0.46042585372924805,
+          "name": "Bloor Street Shopping"
+        },
+        {
+          "idx": 25,
+          "score": 0.4097740650177002,
+          "name": "Fran's Restaurant"
+        },
+        {
+          "idx": 37,
+          "score": 0.39019912481307983,
+          "name": "Bar Isabel"
+        },
+        {
+          "idx": 10,
+          "score": 0.3755951225757599,
+          "name": "Pai Northern Thai"
+        },
+        {
+          "idx": 38,
+          "score": 0.3311688005924225,
+          "name": "Hotel Quick Checkout Breakfast"
+        },
+        {
+          "idx": 14,
+          "score": 0.27634429931640625,
+          "name": "Lee Restaurant"
+        },
+        {
+          "idx": 19,
+          "score": 0.2687724828720093,
+          "name": "Kaiseki Kaji"
+        },
+        {
+          "idx": 5,
+          "score": 0.2633431851863861,
+          "name": "Alo Restaurant"
+        },
+        {
+          "idx": 23,
+          "score": 0.22396330535411835,
+          "name": "Ripley's Aquarium"
+        },
+        {
+          "idx": 18,
+          "score": 0.17747439444065094,
+          "name": "Networking Drinks"
+        },
+        {
+          "idx": 0,
+          "score": 0.14367683231830597,
+          "name": "YYZ Airport Arrival"
+        },
+        {
+          "idx": 40,
+          "score": 0.12465504556894302,
+          "name": "360 Restaurant at CN Tower"
+        },
+        {
+          "idx": 26,
+          "score": 0.11701314151287079,
+          "name": "Royal Ontario Museum"
+        },
+        {
+          "idx": 6,
+          "score": 0.11677328497171402,
+          "name": "Hotel Continental Breakfast"
+        },
+        {
+          "idx": 8,
+          "score": 0.09104454517364502,
+          "name": "Art Gallery of Ontario"
+        },
+        {
+          "idx": 16,
+          "score": 0.09020271897315979,
+          "name": "Client Check-in Call"
+        },
+        {
+          "idx": 27,
+          "score": 0.06811229884624481,
+          "name": "Eataly Toronto"
+        },
+        {
+          "idx": 17,
+          "score": 0.053557269275188446,
+          "name": "Email Catch-up Block"
+        },
+        {
+          "idx": 11,
+          "score": 0.03916936740279198,
+          "name": "Quick Grab Coffee"
+        },
+        {
+          "idx": 35,
+          "score": 0.03887054696679115,
+          "name": "Urban Eatery Food Court"
+        },
+        {
+          "idx": 34,
+          "score": 0.014050251804292202,
+          "name": "Eaton Centre Shopping"
+        },
+        {
+          "idx": 9,
+          "score": 0.006440482102334499,
+          "name": "FRANK Restaurant at AGO"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "atom(content =~ \"outdoor\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "outdoor"
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_name": "YYZ Airport Arrival",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.14367683231830597,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.14367683231830597
+          },
+          {
+            "node_idx": 1,
+            "node_name": "Harbourfront Stroll",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9975589513778687,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9975589513778687
+          },
+          {
+            "node_idx": 2,
+            "node_name": "Canoe Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.8013402819633484,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.8013402819633484
+          },
+          {
+            "node_idx": 3,
+            "node_name": "Client Kickoff Meeting",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.6112866401672363,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.6112866401672363
+          },
+          {
+            "node_idx": 4,
+            "node_name": "Strategy Workshop",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.6111902594566345,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.6111902594566345
+          },
+          {
+            "node_idx": 5,
+            "node_name": "Alo Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.2633431851863861,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.2633431851863861
+          },
+          {
+            "node_idx": 6,
+            "node_name": "Hotel Continental Breakfast",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.11677328497171402,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.11677328497171402
+          },
+          {
+            "node_idx": 7,
+            "node_name": "Stakeholder Presentation",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.8928378224372864,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.8928378224372864
+          },
+          {
+            "node_idx": 8,
+            "node_name": "Art Gallery of Ontario",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.09104454517364502,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.09104454517364502
+          },
+          {
+            "node_idx": 9,
+            "node_name": "FRANK Restaurant at AGO",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.006440482102334499,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.006440482102334499
+          },
+          {
+            "node_idx": 10,
+            "node_name": "Pai Northern Thai",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.3755951225757599,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.3755951225757599
+          },
+          {
+            "node_idx": 11,
+            "node_name": "Quick Grab Coffee",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.03916936740279198,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.03916936740279198
+          },
+          {
+            "node_idx": 12,
+            "node_name": "Full-Day Workshop",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9698014259338379,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9698014259338379
+          },
+          {
+            "node_idx": 13,
+            "node_name": "Bloor Street Shopping",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.46042585372924805,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.46042585372924805
+          },
+          {
+            "node_idx": 14,
+            "node_name": "Lee Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.27634429931640625,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.27634429931640625
+          },
+          {
+            "node_idx": 15,
+            "node_name": "Mildred's Temple Kitchen",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.4605395793914795,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.4605395793914795
+          },
+          {
+            "node_idx": 16,
+            "node_name": "Client Check-in Call",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.09020271897315979,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.09020271897315979
+          },
+          {
+            "node_idx": 17,
+            "node_name": "Email Catch-up Block",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.053557269275188446,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.053557269275188446
+          },
+          {
+            "node_idx": 18,
+            "node_name": "Networking Drinks",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.17747439444065094,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.17747439444065094
+          },
+          {
+            "node_idx": 19,
+            "node_name": "Kaiseki Kaji",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.2687724828720093,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.2687724828720093
+          },
+          {
+            "node_idx": 20,
+            "node_name": "Sunset Grill",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.929837167263031,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.929837167263031
+          },
+          {
+            "node_idx": 21,
+            "node_name": "Toronto Islands Ferry and Bike Ride",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9992045760154724,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9992045760154724
+          },
+          {
+            "node_idx": 22,
+            "node_name": "Island Cafe Picnic Lunch",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9990100860595703,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9990100860595703
+          },
+          {
+            "node_idx": 23,
+            "node_name": "Ripley's Aquarium",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.22396330535411835,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.22396330535411835
+          },
+          {
+            "node_idx": 24,
+            "node_name": "The Keg Steakhouse",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.8054074048995972,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.8054074048995972
+          },
+          {
+            "node_idx": 25,
+            "node_name": "Fran's Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.4097740650177002,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.4097740650177002
+          },
+          {
+            "node_idx": 26,
+            "node_name": "Royal Ontario Museum",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.11701314151287079,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.11701314151287079
+          },
+          {
+            "node_idx": 27,
+            "node_name": "Eataly Toronto",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.06811229884624481,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.06811229884624481
+          },
+          {
+            "node_idx": 28,
+            "node_name": "Distillery District Walk",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9980721473693848,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9980721473693848
+          },
+          {
+            "node_idx": 29,
+            "node_name": "Cluny Bistro",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.4750765860080719,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.4750765860080719
+          },
+          {
+            "node_idx": 30,
+            "node_name": "Niagara Falls Day Trip",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9994831085205078,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9994831085205078
+          },
+          {
+            "node_idx": 31,
+            "node_name": "Elements on the Falls",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9586464762687683,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9586464762687683
+          },
+          {
+            "node_idx": 32,
+            "node_name": "Antler Kitchen",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9805132150650024,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9805132150650024
+          },
+          {
+            "node_idx": 33,
+            "node_name": "Lady Marmalade",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.6333255767822266,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.6333255767822266
+          },
+          {
+            "node_idx": 34,
+            "node_name": "Eaton Centre Shopping",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.014050251804292202,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.014050251804292202
+          },
+          {
+            "node_idx": 35,
+            "node_name": "Urban Eatery Food Court",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.03887054696679115,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.03887054696679115
+          },
+          {
+            "node_idx": 36,
+            "node_name": "Queen Street West Boutiques",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9987006187438965,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9987006187438965
+          },
+          {
+            "node_idx": 37,
+            "node_name": "Bar Isabel",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.39019912481307983,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.39019912481307983
+          },
+          {
+            "node_idx": 38,
+            "node_name": "Hotel Quick Checkout Breakfast",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.3311688005924225,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.3311688005924225
+          },
+          {
+            "node_idx": 39,
+            "node_name": "CN Tower EdgeWalk",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.9965068697929382,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9965068697929382
+          },
+          {
+            "node_idx": 40,
+            "node_name": "360 Restaurant at CN Tower",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.12465504556894302,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.12465504556894302
+          },
+          {
+            "node_idx": 41,
+            "node_name": "Airport Snack Stop",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.5182414054870605,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.5182414054870605
+          },
+          {
+            "node_idx": 42,
+            "node_name": "YYZ Departure",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor"
+                },
+                "score": 0.6466239094734192,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.6466239094734192
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 30,
+            "score": 0.9994831085205078,
+            "name": "Niagara Falls Day Trip"
+          },
+          {
+            "idx": 21,
+            "score": 0.9992045760154724,
+            "name": "Toronto Islands Ferry and Bike Ride"
+          },
+          {
+            "idx": 22,
+            "score": 0.9990100860595703,
+            "name": "Island Cafe Picnic Lunch"
+          },
+          {
+            "idx": 36,
+            "score": 0.9987006187438965,
+            "name": "Queen Street West Boutiques"
+          },
+          {
+            "idx": 28,
+            "score": 0.9980721473693848,
+            "name": "Distillery District Walk"
+          },
+          {
+            "idx": 1,
+            "score": 0.9975589513778687,
+            "name": "Harbourfront Stroll"
+          },
+          {
+            "idx": 39,
+            "score": 0.9965068697929382,
+            "name": "CN Tower EdgeWalk"
+          },
+          {
+            "idx": 32,
+            "score": 0.9805132150650024,
+            "name": "Antler Kitchen"
+          },
+          {
+            "idx": 12,
+            "score": 0.9698014259338379,
+            "name": "Full-Day Workshop"
+          },
+          {
+            "idx": 31,
+            "score": 0.9586464762687683,
+            "name": "Elements on the Falls"
+          },
+          {
+            "idx": 20,
+            "score": 0.929837167263031,
+            "name": "Sunset Grill"
+          },
+          {
+            "idx": 7,
+            "score": 0.8928378224372864,
+            "name": "Stakeholder Presentation"
+          },
+          {
+            "idx": 24,
+            "score": 0.8054074048995972,
+            "name": "The Keg Steakhouse"
+          },
+          {
+            "idx": 2,
+            "score": 0.8013402819633484,
+            "name": "Canoe Restaurant"
+          },
+          {
+            "idx": 42,
+            "score": 0.6466239094734192,
+            "name": "YYZ Departure"
+          },
+          {
+            "idx": 33,
+            "score": 0.6333255767822266,
+            "name": "Lady Marmalade"
+          },
+          {
+            "idx": 3,
+            "score": 0.6112866401672363,
+            "name": "Client Kickoff Meeting"
+          },
+          {
+            "idx": 4,
+            "score": 0.6111902594566345,
+            "name": "Strategy Workshop"
+          },
+          {
+            "idx": 41,
+            "score": 0.5182414054870605,
+            "name": "Airport Snack Stop"
+          },
+          {
+            "idx": 29,
+            "score": 0.4750765860080719,
+            "name": "Cluny Bistro"
+          },
+          {
+            "idx": 15,
+            "score": 0.4605395793914795,
+            "name": "Mildred's Temple Kitchen"
+          },
+          {
+            "idx": 13,
+            "score": 0.46042585372924805,
+            "name": "Bloor Street Shopping"
+          },
+          {
+            "idx": 25,
+            "score": 0.4097740650177002,
+            "name": "Fran's Restaurant"
+          },
+          {
+            "idx": 37,
+            "score": 0.39019912481307983,
+            "name": "Bar Isabel"
+          },
+          {
+            "idx": 10,
+            "score": 0.3755951225757599,
+            "name": "Pai Northern Thai"
+          },
+          {
+            "idx": 38,
+            "score": 0.3311688005924225,
+            "name": "Hotel Quick Checkout Breakfast"
+          },
+          {
+            "idx": 14,
+            "score": 0.27634429931640625,
+            "name": "Lee Restaurant"
+          },
+          {
+            "idx": 19,
+            "score": 0.2687724828720093,
+            "name": "Kaiseki Kaji"
+          },
+          {
+            "idx": 5,
+            "score": 0.2633431851863861,
+            "name": "Alo Restaurant"
+          },
+          {
+            "idx": 23,
+            "score": 0.22396330535411835,
+            "name": "Ripley's Aquarium"
+          },
+          {
+            "idx": 18,
+            "score": 0.17747439444065094,
+            "name": "Networking Drinks"
+          },
+          {
+            "idx": 0,
+            "score": 0.14367683231830597,
+            "name": "YYZ Airport Arrival"
+          },
+          {
+            "idx": 40,
+            "score": 0.12465504556894302,
+            "name": "360 Restaurant at CN Tower"
+          },
+          {
+            "idx": 26,
+            "score": 0.11701314151287079,
+            "name": "Royal Ontario Museum"
+          },
+          {
+            "idx": 6,
+            "score": 0.11677328497171402,
+            "name": "Hotel Continental Breakfast"
+          },
+          {
+            "idx": 8,
+            "score": 0.09104454517364502,
+            "name": "Art Gallery of Ontario"
+          },
+          {
+            "idx": 16,
+            "score": 0.09020271897315979,
+            "name": "Client Check-in Call"
+          },
+          {
+            "idx": 27,
+            "score": 0.06811229884624481,
+            "name": "Eataly Toronto"
+          },
+          {
+            "idx": 17,
+            "score": 0.053557269275188446,
+            "name": "Email Catch-up Block"
+          },
+          {
+            "idx": 11,
+            "score": 0.03916936740279198,
+            "name": "Quick Grab Coffee"
+          },
+          {
+            "idx": 35,
+            "score": 0.03887054696679115,
+            "name": "Urban Eatery Food Court"
+          },
+          {
+            "idx": 34,
+            "score": 0.014050251804292202,
+            "name": "Eaton Centre Shopping"
+          },
+          {
+            "idx": 9,
+            "score": 0.006440482102334499,
+            "name": "FRANK Restaurant at AGO"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > YYZ Airport Arrival",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.14367683231830597
+            }
+          ],
+          "accumulated_product": 0.14367683231830597,
+          "final_score": 0.14367683231830597
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Harbourfront Stroll",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9975589513778687
+            }
+          ],
+          "accumulated_product": 0.9975589513778687,
+          "final_score": 0.9975589513778687
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.8013402819633484
+            }
+          ],
+          "accumulated_product": 0.8013402819633484,
+          "final_score": 0.8013402819633484
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Client Kickoff Meeting",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.6112866401672363
+            }
+          ],
+          "accumulated_product": 0.6112866401672363,
+          "final_score": 0.6112866401672363
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Strategy Workshop",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.6111902594566345
+            }
+          ],
+          "accumulated_product": 0.6111902594566345,
+          "final_score": 0.6111902594566345
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.2633431851863861
+            }
+          ],
+          "accumulated_product": 0.2633431851863861,
+          "final_score": 0.2633431851863861
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Hotel Continental Breakfast",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.11677328497171402
+            }
+          ],
+          "accumulated_product": 0.11677328497171402,
+          "final_score": 0.11677328497171402
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Stakeholder Presentation",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.8928378224372864
+            }
+          ],
+          "accumulated_product": 0.8928378224372864,
+          "final_score": 0.8928378224372864
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Art Gallery of Ontario",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.09104454517364502
+            }
+          ],
+          "accumulated_product": 0.09104454517364502,
+          "final_score": 0.09104454517364502
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > FRANK Restaurant at AGO",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.006440482102334499
+            }
+          ],
+          "accumulated_product": 0.006440482102334499,
+          "final_score": 0.006440482102334499
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 3 > Pai Northern Thai",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.3755951225757599
+            }
+          ],
+          "accumulated_product": 0.3755951225757599,
+          "final_score": 0.3755951225757599
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Quick Grab Coffee",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.03916936740279198
+            }
+          ],
+          "accumulated_product": 0.03916936740279198,
+          "final_score": 0.03916936740279198
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Full-Day Workshop",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9698014259338379
+            }
+          ],
+          "accumulated_product": 0.9698014259338379,
+          "final_score": 0.9698014259338379
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Bloor Street Shopping",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.46042585372924805
+            }
+          ],
+          "accumulated_product": 0.46042585372924805,
+          "final_score": 0.46042585372924805
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 4 > Lee Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.27634429931640625
+            }
+          ],
+          "accumulated_product": 0.27634429931640625,
+          "final_score": 0.27634429931640625
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Mildred's Temple Kitchen",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.4605395793914795
+            }
+          ],
+          "accumulated_product": 0.4605395793914795,
+          "final_score": 0.4605395793914795
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.09020271897315979
+            }
+          ],
+          "accumulated_product": 0.09020271897315979,
+          "final_score": 0.09020271897315979
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.053557269275188446
+            }
+          ],
+          "accumulated_product": 0.053557269275188446,
+          "final_score": 0.053557269275188446
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.17747439444065094
+            }
+          ],
+          "accumulated_product": 0.17747439444065094,
+          "final_score": 0.17747439444065094
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.2687724828720093
+            }
+          ],
+          "accumulated_product": 0.2687724828720093,
+          "final_score": 0.2687724828720093
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Sunset Grill",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.929837167263031
+            }
+          ],
+          "accumulated_product": 0.929837167263031,
+          "final_score": 0.929837167263031
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9992045760154724
+            }
+          ],
+          "accumulated_product": 0.9992045760154724,
+          "final_score": 0.9992045760154724
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9990100860595703
+            }
+          ],
+          "accumulated_product": 0.9990100860595703,
+          "final_score": 0.9990100860595703
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.22396330535411835
+            }
+          ],
+          "accumulated_product": 0.22396330535411835,
+          "final_score": 0.22396330535411835
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > The Keg Steakhouse",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.8054074048995972
+            }
+          ],
+          "accumulated_product": 0.8054074048995972,
+          "final_score": 0.8054074048995972
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Fran's Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.4097740650177002
+            }
+          ],
+          "accumulated_product": 0.4097740650177002,
+          "final_score": 0.4097740650177002
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Royal Ontario Museum",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.11701314151287079
+            }
+          ],
+          "accumulated_product": 0.11701314151287079,
+          "final_score": 0.11701314151287079
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Eataly Toronto",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.06811229884624481
+            }
+          ],
+          "accumulated_product": 0.06811229884624481,
+          "final_score": 0.06811229884624481
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9980721473693848
+            }
+          ],
+          "accumulated_product": 0.9980721473693848,
+          "final_score": 0.9980721473693848
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Cluny Bistro",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.4750765860080719
+            }
+          ],
+          "accumulated_product": 0.4750765860080719,
+          "final_score": 0.4750765860080719
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9994831085205078
+            }
+          ],
+          "accumulated_product": 0.9994831085205078,
+          "final_score": 0.9994831085205078
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9586464762687683
+            }
+          ],
+          "accumulated_product": 0.9586464762687683,
+          "final_score": 0.9586464762687683
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Antler Kitchen",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9805132150650024
+            }
+          ],
+          "accumulated_product": 0.9805132150650024,
+          "final_score": 0.9805132150650024
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Lady Marmalade",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.6333255767822266
+            }
+          ],
+          "accumulated_product": 0.6333255767822266,
+          "final_score": 0.6333255767822266
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Eaton Centre Shopping",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.014050251804292202
+            }
+          ],
+          "accumulated_product": 0.014050251804292202,
+          "final_score": 0.014050251804292202
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Urban Eatery Food Court",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.03887054696679115
+            }
+          ],
+          "accumulated_product": 0.03887054696679115,
+          "final_score": 0.03887054696679115
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9987006187438965
+            }
+          ],
+          "accumulated_product": 0.9987006187438965,
+          "final_score": 0.9987006187438965
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Bar Isabel",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.39019912481307983
+            }
+          ],
+          "accumulated_product": 0.39019912481307983,
+          "final_score": 0.39019912481307983
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Hotel Quick Checkout Breakfast",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.3311688005924225
+            }
+          ],
+          "accumulated_product": 0.3311688005924225,
+          "final_score": 0.3311688005924225
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.9965068697929382
+            }
+          ],
+          "accumulated_product": 0.9965068697929382,
+          "final_score": 0.9965068697929382
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.12465504556894302
+            }
+          ],
+          "accumulated_product": 0.12465504556894302,
+          "final_score": 0.12465504556894302
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > Airport Snack Stop",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.5182414054870605
+            }
+          ],
+          "accumulated_product": 0.5182414054870605,
+          "final_score": 0.5182414054870605
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Itinerary > Day 10 > YYZ Departure",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 4,
+              "predicate": "atom(content =~ \"outdoor\")",
+              "score": 0.6466239094734192
+            }
+          ],
+          "accumulated_product": 0.6466239094734192,
+          "final_score": 0.6466239094734192
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 43,
+    "threshold": 0.05,
+    "top_k": 5,
+    "after_filter_count": 5,
+    "filtered_nodes": [
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+        "score": 0.9994831085205078,
+        "type": "POI"
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+        "score": 0.9992045760154724,
+        "type": "POI"
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+        "score": 0.9990100860595703,
+        "type": "Restaurant"
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+        "score": 0.9987006187438965,
+        "type": "POI"
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+        "score": 0.9980721473693848,
+        "type": "POI"
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+      "score": 0.9994831085205078,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Niagara Falls Day Trip",
+        "time_block": "8:00 AM - 6:00 PM",
+        "description": "Full-day excursion to Niagara Falls. Includes bus transportation, Hornblower boat ride, and time_block to explore the falls. Outdoor scenic adventure, weather dependent.",
+        "travel_method": "Tour Bus",
+        "expected_cost": "CAD 150",
+        "highlights": [
+          "Outdoor nature",
+          "Scenic waterfall",
+          "Full day trip",
+          "Iconic destination"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride",
+      "score": 0.9992045760154724,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Toronto Islands Ferry and Bike Ride",
+        "time_block": "10:30 AM - 1:30 PM",
+        "description": "Ferry ride to Toronto Islands followed by bike rental and exploration. Outdoor nature activity with beaches, gardens, and stunning skyline views. Perfect for families and kids.",
+        "travel_method": "Walk and Ferry",
+        "expected_cost": "CAD 35",
+        "highlights": [
+          "Outdoor nature",
+          "Kid-friendly family activity",
+          "Bike riding",
+          "Beach access"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 6 > Island Cafe Picnic Lunch",
+      "score": 0.9990100860595703,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Island Cafe Picnic Lunch",
+        "time_block": "1:30 PM - 2:30 PM",
+        "description": "Casual picnic-style lunch on Centre Island. Sandwiches and snacks from the island cafe. Relaxed outdoor dining.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Casual outdoor lunch",
+          "Family friendly"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 9 > Queen Street West Boutiques",
+      "score": 0.9987006187438965,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Queen Street West Boutiques",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Eclectic shopping district with independent boutiques, vintage stores, and Canadian designers. Outdoor walking and browsing experience.",
+        "travel_method": "Walk",
+        "expected_cost": "Variable",
+        "highlights": [
+          "Boutique shopping",
+          "Independent stores",
+          "Outdoor walking"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk",
+      "score": 0.9980721473693848,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Distillery District Walk",
+        "time_block": "3:00 PM - 5:00 PM",
+        "description": "Historic pedestrian village with cobblestone streets, artisan shops, and galleries. Outdoor walking experience through restored Victorian industrial architecture.",
+        "travel_method": "Public Transit",
+        "expected_cost": "Free",
+        "highlights": [
+          "Outdoor walking tour",
+          "Historic architecture",
+          "Artisan shops"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 7,
+    "total_scoring_calls": 1,
+    "matched_count": 5,
+    "execution_time_ms": 2663.213333999991,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 43,
+    "num_nodes_after_filter": 5
+  }
+}

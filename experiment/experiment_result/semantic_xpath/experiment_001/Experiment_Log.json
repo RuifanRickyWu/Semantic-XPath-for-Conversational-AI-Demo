@@ -1,0 +1,505 @@
+{
+  "experiment_name": "experiment_001",
+  "timestamp": "2026-02-05T16:14:46.962894",
+  "total_sessions": 13,
+  "total_queries": 15,
+  "results": {
+    "Session_1_Query_My_friend_lives_in": {
+      "query": "My friend lives in Mississauga, about an hour from downtown. What days are without any work commitments or flights?",
+      "operation": "READ",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 9",
+        "Root > Itinerary_Version 1 > Itinerary > Day 8",
+        "Root > Itinerary_Version 1 > Itinerary > Day 7"
+      ],
+      "execution_time_ms": 26151.44,
+      "token_usage": {
+        "prompt_tokens": 4609,
+        "completion_tokens": 881,
+        "total_tokens": 5490,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 987,
+            "completion_tokens": 89,
+            "total_tokens": 1076
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1774,
+            "completion_tokens": 442,
+            "total_tokens": 2216
+          },
+          "read_handler": {
+            "prompt_tokens": 1848,
+            "completion_tokens": 350,
+            "total_tokens": 2198
+          }
+        },
+        "cost_usd": 0.07252
+      }
+    },
+    "Session_1_Query_I_actually_went_to": {
+      "query": "I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.",
+      "operation": "DELETE",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+        "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower"
+      ],
+      "execution_time_ms": 15989.8,
+      "token_usage": {
+        "prompt_tokens": 5415,
+        "completion_tokens": 648,
+        "total_tokens": 6063,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 989,
+            "completion_tokens": 22,
+            "total_tokens": 1011
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1771,
+            "completion_tokens": 215,
+            "total_tokens": 1986
+          },
+          "delete_handler": {
+            "prompt_tokens": 2655,
+            "completion_tokens": 411,
+            "total_tokens": 3066
+          }
+        },
+        "cost_usd": 0.07359
+      }
+    },
+    "Session_1_Query_Its_definitely_going_to": {
+      "query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+      "operation": "DELETE",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 2 > Itinerary > Day 7 > Distillery District Walk"
+      ],
+      "execution_time_ms": 10416.29,
+      "token_usage": {
+        "prompt_tokens": 4158,
+        "completion_tokens": 509,
+        "total_tokens": 4667,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 985,
+            "completion_tokens": 89,
+            "total_tokens": 1074
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1774,
+            "completion_tokens": 217,
+            "total_tokens": 1991
+          },
+          "delete_handler": {
+            "prompt_tokens": 1399,
+            "completion_tokens": 203,
+            "total_tokens": 1602
+          }
+        },
+        "cost_usd": 0.056850000000000005
+      }
+    },
+    "Session_2_Query_The_weather_forecast_shows": {
+      "query": "The weather forecast shows heavy rain on Day 7. Which activities are outdoors that I might need to reschedule?",
+      "operation": "READ",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk"
+      ],
+      "execution_time_ms": 9028.75,
+      "token_usage": {
+        "prompt_tokens": 3717,
+        "completion_tokens": 409,
+        "total_tokens": 4126,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 986,
+            "completion_tokens": 93,
+            "total_tokens": 1079
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1778,
+            "completion_tokens": 219,
+            "total_tokens": 1997
+          },
+          "read_handler": {
+            "prompt_tokens": 953,
+            "completion_tokens": 97,
+            "total_tokens": 1050
+          }
+        },
+        "cost_usd": 0.04944
+      }
+    },
+    "Session_3_Query_My_sister_and_nephew": {
+      "query": "My sister and nephew are joining me on Day 6. He's 10 years old. What activities do I already have planned that would be fun for a kid?",
+      "operation": "READ",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 6 > Ripley's Aquarium",
+        "Root > Itinerary_Version 1 > Itinerary > Day 6 > Toronto Islands Ferry and Bike Ride"
+      ],
+      "execution_time_ms": 13746.84,
+      "token_usage": {
+        "prompt_tokens": 3985,
+        "completion_tokens": 635,
+        "total_tokens": 4620,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 996,
+            "completion_tokens": 98,
+            "total_tokens": 1094
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1783,
+            "completion_tokens": 222,
+            "total_tokens": 2005
+          },
+          "read_handler": {
+            "prompt_tokens": 1206,
+            "completion_tokens": 315,
+            "total_tokens": 1521
+          }
+        },
+        "cost_usd": 0.0589
+      }
+    },
+    "Session_4_Query_Im_putting_together_my": {
+      "query": "I'm putting together my expense report. What are the most expensive restaurants I've booked?",
+      "operation": "READ",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+        "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+        "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+      ],
+      "execution_time_ms": 11294.1,
+      "token_usage": {
+        "prompt_tokens": 4063,
+        "completion_tokens": 464,
+        "total_tokens": 4527,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 979,
+            "completion_tokens": 24,
+            "total_tokens": 1003
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1773,
+            "completion_tokens": 152,
+            "total_tokens": 1925
+          },
+          "read_handler": {
+            "prompt_tokens": 1311,
+            "completion_tokens": 288,
+            "total_tokens": 1599
+          }
+        },
+        "cost_usd": 0.05455
+      }
+    },
+    "Session_5_Query_Ive_been_stuck_in": {
+      "query": "I've been stuck in meetings most of the week. Which days have nature activities where I can actually get outside?",
+      "operation": "READ",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 8",
+        "Root > Itinerary_Version 1 > Itinerary > Day 6",
+        "Root > Itinerary_Version 1 > Itinerary > Day 1"
+      ],
+      "execution_time_ms": 14634.72,
+      "token_usage": {
+        "prompt_tokens": 5335,
+        "completion_tokens": 807,
+        "total_tokens": 6142,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 985,
+            "completion_tokens": 157,
+            "total_tokens": 1142
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1778,
+            "completion_tokens": 221,
+            "total_tokens": 1999
+          },
+          "read_handler": {
+            "prompt_tokens": 2572,
+            "completion_tokens": 429,
+            "total_tokens": 3001
+          }
+        },
+        "cost_usd": 0.07756
+      }
+    },
+    "Session_6_Query_I_just_checked_my": {
+      "query": "I just checked my spending and I'm way over budget. Cut the expensive dinners from the itinerary and I'll find cheaper alternatives later.",
+      "operation": "DELETE",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 2 > Alo Restaurant",
+        "Root > Itinerary_Version 1 > Itinerary > Day 5 > Kaiseki Kaji",
+        "Root > Itinerary_Version 1 > Itinerary > Day 1 > Canoe Restaurant"
+      ],
+      "execution_time_ms": 13416.02,
+      "token_usage": {
+        "prompt_tokens": 4193,
+        "completion_tokens": 602,
+        "total_tokens": 4795,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 988,
+            "completion_tokens": 24,
+            "total_tokens": 1012
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1773,
+            "completion_tokens": 96,
+            "total_tokens": 1869
+          },
+          "delete_handler": {
+            "prompt_tokens": 1432,
+            "completion_tokens": 482,
+            "total_tokens": 1914
+          }
+        },
+        "cost_usd": 0.05999
+      }
+    },
+    "Session_7_Query_Its_definitely_going_to": {
+      "query": "It's definitely going to rain all day on Day 7. Cancel any outdoor activities, I'll figure out replacements.",
+      "operation": "DELETE",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 7 > Distillery District Walk"
+      ],
+      "execution_time_ms": 16021.26,
+      "token_usage": {
+        "prompt_tokens": 4195,
+        "completion_tokens": 579,
+        "total_tokens": 4774,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 985,
+            "completion_tokens": 85,
+            "total_tokens": 1070
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1770,
+            "completion_tokens": 215,
+            "total_tokens": 1985
+          },
+          "delete_handler": {
+            "prompt_tokens": 1440,
+            "completion_tokens": 279,
+            "total_tokens": 1719
+          }
+        },
+        "cost_usd": 0.05932
+      }
+    },
+    "Session_8_Query_I_actually_went_to": {
+      "query": "I actually went to the CN Tower on my last trip to Toronto. Remove any CN Tower activities. I'd rather do something new.",
+      "operation": "DELETE",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 10 > CN Tower EdgeWalk",
+        "Root > Itinerary_Version 1 > Itinerary > Day 10 > 360 Restaurant at CN Tower"
+      ],
+      "execution_time_ms": 13653.52,
+      "token_usage": {
+        "prompt_tokens": 5415,
+        "completion_tokens": 645,
+        "total_tokens": 6060,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 989,
+            "completion_tokens": 22,
+            "total_tokens": 1011
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1771,
+            "completion_tokens": 151,
+            "total_tokens": 1922
+          },
+          "delete_handler": {
+            "prompt_tokens": 2655,
+            "completion_tokens": 472,
+            "total_tokens": 3127
+          }
+        },
+        "cost_usd": 0.07350000000000001
+      }
+    },
+    "Session_9_Query_Bad_news_my_friend": {
+      "query": "Bad news. my friend who was going to host me at Niagara just tested positive for COVID. I need to cancel the Niagara Falls trip.",
+      "operation": "DELETE",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 8 > Niagara Falls Day Trip",
+        "Root > Itinerary_Version 1 > Itinerary > Day 8 > Elements on the Falls"
+      ],
+      "execution_time_ms": 12846.08,
+      "token_usage": {
+        "prompt_tokens": 4177,
+        "completion_tokens": 513,
+        "total_tokens": 4690,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 991,
+            "completion_tokens": 22,
+            "total_tokens": 1013
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1771,
+            "completion_tokens": 216,
+            "total_tokens": 1987
+          },
+          "delete_handler": {
+            "prompt_tokens": 1415,
+            "completion_tokens": 275,
+            "total_tokens": 1690
+          }
+        },
+        "cost_usd": 0.05716
+      }
+    },
+    "Session_10_Query_Im_exhausted_Im_going": {
+      "query": "I'm exhausted. I'm going to take Day 5 as a personal day and skip all the work stuff. Cancel every work-related activity on that day.",
+      "operation": "DELETE",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 5 > Email Catch-up Block",
+        "Root > Itinerary_Version 1 > Itinerary > Day 5 > Client Check-in Call",
+        "Root > Itinerary_Version 1 > Itinerary > Day 5 > Networking Drinks"
+      ],
+      "execution_time_ms": 14879.62,
+      "token_usage": {
+        "prompt_tokens": 4164,
+        "completion_tokens": 647,
+        "total_tokens": 4811,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 993,
+            "completion_tokens": 90,
+            "total_tokens": 1083
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1775,
+            "completion_tokens": 152,
+            "total_tokens": 1927
+          },
+          "delete_handler": {
+            "prompt_tokens": 1396,
+            "completion_tokens": 405,
+            "total_tokens": 1801
+          }
+        },
+        "cost_usd": 0.06105
+      }
+    },
+    "Session_11_Query_I_just_noticed_Day": {
+      "query": "I just noticed Day 2 has no breakfast, my first meeting is at 9am and I'll be starving. Add a quick hotel breakfast before the meeting.",
+      "operation": "CREATE",
+      "success": true,
+      "top_k_nodes": [
+        "Itinerary_Version 1 > Itinerary > Day 2/POI"
+      ],
+      "execution_time_ms": 8902.08,
+      "token_usage": {
+        "prompt_tokens": 4302,
+        "completion_tokens": 412,
+        "total_tokens": 4714,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 995,
+            "completion_tokens": 96,
+            "total_tokens": 1091
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1781,
+            "completion_tokens": 17,
+            "total_tokens": 1798
+          },
+          "create_handler": {
+            "prompt_tokens": 1526,
+            "completion_tokens": 299,
+            "total_tokens": 1825
+          }
+        },
+        "cost_usd": 0.05538
+      }
+    },
+    "Session_12_Query_The_workshop_on_Day": {
+      "query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+      "operation": "CREATE",
+      "success": true,
+      "top_k_nodes": [
+        "Itinerary > Day 3/POI"
+      ],
+      "execution_time_ms": 12538.9,
+      "token_usage": {
+        "prompt_tokens": 4445,
+        "completion_tokens": 645,
+        "total_tokens": 5090,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 1000,
+            "completion_tokens": 107,
+            "total_tokens": 1107
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1792,
+            "completion_tokens": 17,
+            "total_tokens": 1809
+          },
+          "create_handler": {
+            "prompt_tokens": 1653,
+            "completion_tokens": 521,
+            "total_tokens": 2174
+          }
+        },
+        "cost_usd": 0.0638
+      }
+    },
+    "Session_13_Query_I_completely_forgot_about": {
+      "query": "I completely forgot about souvenirs. Add a stop at Roots or the Hudson's Bay flagship on Day 10 morning before the CN Tower. I need to grab gifts before I fly out.",
+      "operation": "CREATE",
+      "success": true,
+      "top_k_nodes": [
+        "Root > Itinerary_Version 1 > Itinerary > Day 10/POI"
+      ],
+      "execution_time_ms": 20677.87,
+      "token_usage": {
+        "prompt_tokens": 4447,
+        "completion_tokens": 694,
+        "total_tokens": 5141,
+        "by_stage": {
+          "version_resolution": {
+            "prompt_tokens": 1000,
+            "completion_tokens": 165,
+            "total_tokens": 1165
+          },
+          "xpath_generation": {
+            "prompt_tokens": 1786,
+            "completion_tokens": 81,
+            "total_tokens": 1867
+          },
+          "create_handler": {
+            "prompt_tokens": 1661,
+            "completion_tokens": 448,
+            "total_tokens": 2109
+          }
+        },
+        "cost_usd": 0.06529
+      }
+    }
+  },
+  "total_execution_time_ms": 214669.74,
+  "total_tokens": 75710,
+  "total_cost_usd": 0.9389
+}

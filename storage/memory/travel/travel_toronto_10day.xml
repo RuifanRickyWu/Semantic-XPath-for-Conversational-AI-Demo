@@ -3,8 +3,7 @@
   <Itinerary_Version number="1">
     <patch_info />
     <conversation_history />
-    <Itinerary>
-      <Day index="1">
+    <Day index="1">
         <POI>
           <name>YYZ Airport Arrival</name>
           <time_block>2:00 PM - 3:00 PM</time_block>
@@ -515,6 +514,5 @@
           </highlights>
         </POI>
       </Day>
-    </Itinerary>
   </Itinerary_Version>
 </Root>

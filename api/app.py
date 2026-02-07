@@ -52,7 +52,6 @@ def create_app(config: dict = None) -> Flask:
     from pipeline import SemanticXPathPipeline
     
     app.pipeline = SemanticXPathPipeline(
-        mode="demo",
         scoring_method=app.config.get("SCORING_METHOD"),
         top_k=app.config.get("TOP_K"),
         score_threshold=app.config.get("SCORE_THRESHOLD")

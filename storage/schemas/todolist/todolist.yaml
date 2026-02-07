@@ -1,0 +1,42 @@
+name: "todolist"
+description: "Task management with projects, tasks and subtasks"
+
+# Tree hierarchy (for documentation and LLM prompt generation)
+hierarchy: |
+  Project (root)
+  └── Task (container)
+      └── SubTask (leaf)
+
+# Node type definitions
+nodes:
+  Project:
+    type: root
+    fields: ["name", "description"]
+    children: ["Task"]
+    
+  Task:
+    type: container
+    fields: ["title", "description", "status", "priority", "due_date"]
+    children: ["SubTask"]
+    
+  SubTask:
+    type: leaf
+    fields: ["title", "description", "status"]
+    children: []
+
+# Available data files for this schema
+data_files:
+  todolist_sample: "memory/todo_list/todolist_sample.xml"
+
+# Default data file to use
+default_data: "todolist_sample"
+
+# XPath query generation prompt components
+examples_file: "prompts/xpath_examples_todolist.txt"
+
+# Syntax rules specific to this schema
+syntax_rules: |
+  - Paths start with /Project
+  - Node types: Project, Task, SubTask
+  - Indices: Task[2], Task[-1], Task[1:3]
+  - Logical: AND / OR / not() combine predicates WITHIN brackets (e.g., [A OR B], [not(A)]), never between paths

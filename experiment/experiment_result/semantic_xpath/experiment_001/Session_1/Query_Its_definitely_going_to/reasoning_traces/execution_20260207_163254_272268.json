@@ -1,0 +1,1177 @@
+{
+  "timestamp": "20260207_163254_272268",
+  "query": "/Root/Itinerary_Version[1]/Day/POI[atom(content =~ \"outdoor\")]",
+  "data_file": "tree.xml",
+  "execution_time_ms": 1053.0756670000017,
+  "parsed_ast": {
+    "steps": [
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Root",
+            "span": {
+              "start": 1,
+              "end": 5
+            }
+          },
+          "span": {
+            "start": 1,
+            "end": 5
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Itinerary_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 23,
+                "end": 26
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 26
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 26
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Day",
+            "span": {
+              "start": 27,
+              "end": 30
+            }
+          },
+          "span": {
+            "start": 27,
+            "end": 30
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "POI",
+            "predicate": {
+              "type": "atom",
+              "field": "content",
+              "value": "outdoor",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 61
+              }
+            },
+            "predicate_str": "atom(content =~ \"outdoor\")",
+            "span": {
+              "start": 31,
+              "end": 62
+            }
+          },
+          "span": {
+            "start": 31,
+            "end": 62
+          }
+        }
+      }
+    ],
+    "global_index": null
+  },
+  "parsed_ast_tree": "Query AST:\n├── Step 0: Root\n├── Step 1: Itinerary_Version[1]\n├── Step 2: Day\n└── Step 3: POI[predicate]\n    │   predicate:\n        │   └── ATOM(content =~ \"outdoor\")",
+  "execution_log": [
+    "[20260207_163254_272268] Executing query: /Root/Itinerary_Version[1]/Day/POI[atom(content =~ \"outdoor\")]",
+    "Data file: tree.xml",
+    "Parsed steps: [Root, Itinerary_Version[1], Day, POI[atom(content =~ \"outdoor\")]]",
+    "",
+    "Query AST:\n├── Step 0: Root\n├── Step 1: Itinerary_Version[1]\n├── Step 2: Day\n└── Step 3: POI[predicate]\n    │   predicate:\n        │   └── ATOM(content =~ \"outdoor\")",
+    "\n--- Step 1: Root ---",
+    "Matched Root root",
+    "\n--- Step 2: Itinerary_Version[1] ---",
+    "Selected node at index 1 (0-based: 0)",
+    "After step: 1 nodes remaining",
+    "\n--- Step 3: Day ---",
+    "After step: 3 nodes remaining",
+    "\n--- Step 4: POI[atom(content =~ \"outdoor\")] ---",
+    "Scoring predicate: atom(content =~ \"outdoor\") (atomic values: ['outdoor'])",
+    "  Collected 1 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 1 total descriptions",
+    "  Node 0 (Art Gallery of Ontario): score = 0.4864",
+    "Scoring predicate: atom(content =~ \"outdoor\") (atomic values: ['outdoor'])",
+    "  Collected 1 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 1 total descriptions",
+    "  Node 0 (Royal Ontario Museum): score = 0.8880",
+    "Scoring predicate: atom(content =~ \"outdoor\") (atomic values: ['outdoor'])",
+    "  Collected 2 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 2 total descriptions",
+    "  Node 0 (Toronto Islands): score = 0.9917",
+    "  Node 1 (Distillery District): score = 0.8722",
+    "After step: 4 nodes remaining",
+    "\n=== Score Fusion ===",
+    "  Root > Itinerary_Version 1 > Day 1 > Art Gallery of Ontario: product=0.4864 → score=0.4864",
+    "  Root > Itinerary_Version 1 > Day 2 > Royal Ontario Museum: product=0.8880 → score=0.8880",
+    "  Root > Itinerary_Version 1 > Day 3 > Toronto Islands: product=0.9917 → score=0.9917",
+    "  Root > Itinerary_Version 1 > Day 3 > Distillery District: product=0.8722 → score=0.8722",
+    "\n=== Threshold Filtering (threshold=0.05) ===",
+    "  Filtered: 4 → 4 nodes",
+    "\n=== Final Filtering (top_k=5) ===",
+    "  After top_k: 4 → 4 nodes",
+    "\nFinal result: 4 nodes (sorted by score)",
+    "⏱️  Query execution time: 1053.08ms"
+  ],
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Root",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Root",
+          "path": "Root"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[1]",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root",
+          "name": "Root",
+          "type": "Root",
+          "score": 1.0,
+          "node_id": 5526447664
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0,
+          "node_id": 5526448064
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Itinerary_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 23,
+                "end": 26
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 26
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 26
+          }
+        },
+        "found_count": 1,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Day",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0,
+          "node_id": 5526448064
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5526448624
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5527179488
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5527182368
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Day",
+            "span": {
+              "start": 27,
+              "end": 30
+            }
+          },
+          "span": {
+            "start": 27,
+            "end": 30
+          }
+        },
+        "found_count": 3,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "POI[atom(content =~ \"outdoor\")]",
+      "action": "node_test_expr",
+      "nodes_before_count": 3,
+      "nodes_after_count": 4,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5526448624
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5527179488
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5527182368
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 0.48642608523368835,
+          "node_id": 5526447344
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.8879603743553162,
+          "node_id": 5527179568
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3 > Toronto Islands",
+          "name": "Toronto Islands",
+          "type": "POI",
+          "score": 0.9917019009590149,
+          "node_id": 5527182448
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 0.8721858859062195,
+          "node_id": 5527229360
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "POI",
+            "predicate": {
+              "type": "atom",
+              "field": "content",
+              "value": "outdoor",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 61
+              }
+            },
+            "predicate_str": "atom(content =~ \"outdoor\")",
+            "span": {
+              "start": 31,
+              "end": 62
+            }
+          },
+          "span": {
+            "start": 31,
+            "end": 62
+          }
+        },
+        "found_count": 4,
+        "scoring_trace": [
+          {
+            "predicate": "atom(content =~ \"outdoor\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "outdoor",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 61
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 5526447344,
+                "node_name": "Art Gallery of Ontario",
+                "node_type": "POI",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "outdoor",
+                      "operator": "=~",
+                      "span": {
+                        "start": 35,
+                        "end": 61
+                      }
+                    },
+                    "score": 0.48642608523368835,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.48642608523368835
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "outdoor"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "outdoor",
+                  "num_descriptions": 1,
+                  "call_time_ms": 610.86
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 1
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.48642608523368835,
+                "name": "Art Gallery of Ontario"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"outdoor\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "outdoor",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 61
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 5527179568,
+                "node_name": "Royal Ontario Museum",
+                "node_type": "POI",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "outdoor",
+                      "operator": "=~",
+                      "span": {
+                        "start": 35,
+                        "end": 61
+                      }
+                    },
+                    "score": 0.8879603743553162,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.8879603743553162
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "outdoor"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "outdoor",
+                  "num_descriptions": 1,
+                  "call_time_ms": 273.36
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 1
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.8879603743553162,
+                "name": "Royal Ontario Museum"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"outdoor\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "outdoor",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 61
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 5527182448,
+                "node_name": "Toronto Islands",
+                "node_type": "POI",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "outdoor",
+                      "operator": "=~",
+                      "span": {
+                        "start": 35,
+                        "end": 61
+                      }
+                    },
+                    "score": 0.9917019009590149,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.9917019009590149
+              },
+              {
+                "node_idx": 1,
+                "node_id": 5527229360,
+                "node_name": "Distillery District",
+                "node_type": "POI",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "outdoor",
+                      "operator": "=~",
+                      "span": {
+                        "start": 35,
+                        "end": 61
+                      }
+                    },
+                    "score": 0.8721858859062195,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.8721858859062195
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "outdoor"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "outdoor",
+                  "num_descriptions": 2,
+                  "call_time_ms": 167.76
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 2
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.9917019009590149,
+                "name": "Toronto Islands"
+              },
+              {
+                "idx": 1,
+                "score": 0.8721858859062195,
+                "name": "Distillery District"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "atom(content =~ \"outdoor\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "outdoor",
+        "operator": "=~",
+        "span": {
+          "start": 35,
+          "end": 61
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 5526447344,
+          "node_name": "Art Gallery of Ontario",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor",
+                "operator": "=~",
+                "span": {
+                  "start": 35,
+                  "end": 61
+                }
+              },
+              "score": 0.48642608523368835,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.48642608523368835
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "outdoor"
+        ],
+        "per_value_stats": [
+          {
+            "value": "outdoor",
+            "num_descriptions": 1,
+            "call_time_ms": 610.86
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 1
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.48642608523368835,
+          "name": "Art Gallery of Ontario"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"outdoor\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "outdoor",
+        "operator": "=~",
+        "span": {
+          "start": 35,
+          "end": 61
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 5527179568,
+          "node_name": "Royal Ontario Museum",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor",
+                "operator": "=~",
+                "span": {
+                  "start": 35,
+                  "end": 61
+                }
+              },
+              "score": 0.8879603743553162,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.8879603743553162
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "outdoor"
+        ],
+        "per_value_stats": [
+          {
+            "value": "outdoor",
+            "num_descriptions": 1,
+            "call_time_ms": 273.36
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 1
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.8879603743553162,
+          "name": "Royal Ontario Museum"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"outdoor\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "outdoor",
+        "operator": "=~",
+        "span": {
+          "start": 35,
+          "end": 61
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 5527182448,
+          "node_name": "Toronto Islands",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor",
+                "operator": "=~",
+                "span": {
+                  "start": 35,
+                  "end": 61
+                }
+              },
+              "score": 0.9917019009590149,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9917019009590149
+        },
+        {
+          "node_idx": 1,
+          "node_id": 5527229360,
+          "node_name": "Distillery District",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "outdoor",
+                "operator": "=~",
+                "span": {
+                  "start": 35,
+                  "end": 61
+                }
+              },
+              "score": 0.8721858859062195,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.8721858859062195
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "outdoor"
+        ],
+        "per_value_stats": [
+          {
+            "value": "outdoor",
+            "num_descriptions": 2,
+            "call_time_ms": 167.76
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 2
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.9917019009590149,
+          "name": "Toronto Islands"
+        },
+        {
+          "idx": 1,
+          "score": 0.8721858859062195,
+          "name": "Distillery District"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "atom(content =~ \"outdoor\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "outdoor",
+          "operator": "=~",
+          "span": {
+            "start": 35,
+            "end": 61
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 5526447344,
+            "node_name": "Art Gallery of Ontario",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor",
+                  "operator": "=~",
+                  "span": {
+                    "start": 35,
+                    "end": 61
+                  }
+                },
+                "score": 0.48642608523368835,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.48642608523368835
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.48642608523368835,
+            "name": "Art Gallery of Ontario"
+          }
+        ]
+      },
+      {
+        "step_index": 1,
+        "predicate": "atom(content =~ \"outdoor\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "outdoor",
+          "operator": "=~",
+          "span": {
+            "start": 35,
+            "end": 61
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 5527179568,
+            "node_name": "Royal Ontario Museum",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor",
+                  "operator": "=~",
+                  "span": {
+                    "start": 35,
+                    "end": 61
+                  }
+                },
+                "score": 0.8879603743553162,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.8879603743553162
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.8879603743553162,
+            "name": "Royal Ontario Museum"
+          }
+        ]
+      },
+      {
+        "step_index": 2,
+        "predicate": "atom(content =~ \"outdoor\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "outdoor",
+          "operator": "=~",
+          "span": {
+            "start": 35,
+            "end": 61
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 5527182448,
+            "node_name": "Toronto Islands",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor",
+                  "operator": "=~",
+                  "span": {
+                    "start": 35,
+                    "end": 61
+                  }
+                },
+                "score": 0.9917019009590149,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9917019009590149
+          },
+          {
+            "node_idx": 1,
+            "node_id": 5527229360,
+            "node_name": "Distillery District",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "outdoor",
+                  "operator": "=~",
+                  "span": {
+                    "start": 35,
+                    "end": 61
+                  }
+                },
+                "score": 0.8721858859062195,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.8721858859062195
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.9917019009590149,
+            "name": "Toronto Islands"
+          },
+          {
+            "idx": 1,
+            "score": 0.8721858859062195,
+            "name": "Distillery District"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 1 > Art Gallery of Ontario",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "POI[atom(content =~ \"outdoor\")]",
+              "score": 0.48642608523368835
+            }
+          ],
+          "accumulated_product": 0.48642608523368835,
+          "final_score": 0.48642608523368835
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 2 > Royal Ontario Museum",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "POI[atom(content =~ \"outdoor\")]",
+              "score": 0.8879603743553162
+            }
+          ],
+          "accumulated_product": 0.8879603743553162,
+          "final_score": 0.8879603743553162
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 3 > Toronto Islands",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "POI[atom(content =~ \"outdoor\")]",
+              "score": 0.9917019009590149
+            }
+          ],
+          "accumulated_product": 0.9917019009590149,
+          "final_score": 0.9917019009590149
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 3 > Distillery District",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "POI[atom(content =~ \"outdoor\")]",
+              "score": 0.8721858859062195
+            }
+          ],
+          "accumulated_product": 0.8721858859062195,
+          "final_score": 0.8721858859062195
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 4,
+    "threshold": 0.05,
+    "top_k": 5,
+    "after_filter_count": 4,
+    "filtered_nodes": [
+      {
+        "path": "Root > Itinerary_Version 1 > Day 3 > Toronto Islands",
+        "score": 0.9917019009590149,
+        "type": "POI",
+        "own_score": 0.9917019009590149,
+        "parent_score": 1.0
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Day 2 > Royal Ontario Museum",
+        "score": 0.8879603743553162,
+        "type": "POI",
+        "own_score": 0.8879603743553162,
+        "parent_score": 1.0
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Day 3 > Distillery District",
+        "score": 0.8721858859062195,
+        "type": "POI",
+        "own_score": 0.8721858859062195,
+        "parent_score": 1.0
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Day 1 > Art Gallery of Ontario",
+        "score": 0.48642608523368835,
+        "type": "POI",
+        "own_score": 0.48642608523368835,
+        "parent_score": 1.0
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 3 > Toronto Islands",
+      "score": 0.9917019009590149,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Toronto Islands",
+        "time_block": "11:00 AM - 2:00 PM",
+        "description": "Ferry ride to scenic islands with beaches, bike trails, and gardens.",
+        "travel_method": "Walk & Ferry",
+        "expected_cost": "CAD 8.50",
+        "highlights": [
+          "Waterfront views",
+          "Centre Island"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 2 > Royal Ontario Museum",
+      "score": 0.8879603743553162,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Royal Ontario Museum",
+        "time_block": "11:00 AM - 1:00 PM",
+        "description": "World-renowned museum showcasing art, culture, and natural history.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 23",
+        "highlights": [
+          "Dinosaurs",
+          "Chinese architecture",
+          "Bloor Street design"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 3 > Distillery District",
+      "score": 0.8721858859062195,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Distillery District",
+        "time_block": "4:00 PM - 5:30 PM",
+        "description": "Historic pedestrian village with cobblestone streets and artisan shops.",
+        "travel_method": "Walk",
+        "expected_cost": "Free",
+        "highlights": [
+          "Historic architecture",
+          "Artisan boutiques"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 1 > Art Gallery of Ontario",
+      "score": 0.48642608523368835,
+      "node": {
+        "type": "POI",
+        "attributes": {},
+        "name": "Art Gallery of Ontario",
+        "time_block": "2:30 PM - 4:00 PM",
+        "description": "Explore Canadian, European, and contemporary art in a Frank Gehry-designed building.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 25",
+        "highlights": [
+          "Group of Seven",
+          "Modern architecture"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 3,
+    "matched_count": 4,
+    "execution_time_ms": 1053.0756670000017,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 4,
+    "num_nodes_after_filter": 4
+  }
+}

@@ -484,7 +484,7 @@ def serialize_config(config: Dict[str, Any]) -> Dict[str, Any]:
     """
     executor_config = config.get("xpath_executor", {})
     return {
-        "activeSchema": config.get("active_schema", "itinerary"),
+        "activeSchema": config.get("active_schema"),
         "activeData": config.get("active_data", ""),
         "mode": config.get("mode", "demo"),
         "executor": {

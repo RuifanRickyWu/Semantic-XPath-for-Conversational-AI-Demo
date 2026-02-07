@@ -1,0 +1,30 @@
+{
+  "user_query": "I completely forgot about souvenirs. Add a stop at Roots or the Hudson's Bay flagship on Day 10 morning before the CN Tower. I need to grab gifts before I fly out.",
+  "context_nodes_count": 0,
+  "create_info": {},
+  "result": {
+    "parent_path": "Itinerary > Day 10",
+    "position": 0,
+    "node_type": "POI",
+    "fields": {
+      "name": "Roots Flagship Store",
+      "time_block": "8:30 AM - 9:15 AM",
+      "description": "Flagship Roots store for Canadian apparel and gift items—great for picking up cozy souvenirs like toques, scarves, and leather goods before your flight.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 20-100",
+      "highlights": [
+        "Canadian apparel & accessories",
+        "Souvenirs and gift-ready items",
+        "Flagship store experience"
+      ]
+    },
+    "reasoning": "User requested a souvenir stop before the CN Tower on Day 10 morning. Placing this POI at position 0 ensures it occurs before the CN Tower and gives time to buy gifts before departure."
+  },
+  "raw_response": "{\n  \"parent_path\": \"Itinerary > Day 10\",\n  \"position\": 0,\n  \"node_type\": \"POI\",\n  \"fields\": {\n    \"name\": \"Roots Flagship Store\",\n    \"time_block\": \"8:30 AM - 9:15 AM\",\n    \"description\": \"Flagship Roots store for Canadian apparel and gift items—great for picking up cozy souvenirs like toques, scarves, and leather goods before your flight.\",\n    \"travel_method\": \"Walk\",\n    \"expected_cost\": \"CAD 20-100\",\n    \"highlights\": [\"Canadian apparel & accessories\", \"Souvenirs and gift-ready items\", \"Flagship store experience\"]\n  },\n  \"reasoning\": \"User requested a souvenir stop before the CN Tower on Day 10 morning. Placing this POI at position 0 ensures it occurs before the CN Tower and gives time to buy gifts before departure.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1270,
+    "completion_tokens": 521,
+    "total_tokens": 1791
+  },
+  "processing_time_ms": 5900.257041999993
+}

@@ -28,7 +28,7 @@ def get_config():
             "scoring_method": pipeline.executor.executor.scoring_method
         },
         "mode": pipeline.mode,
-        "active_schema": pipeline.executor.executor.schema_name or "itinerary",
+        "active_schema": pipeline.executor.executor.schema_name,
         "active_data": pipeline.executor.executor.data_name or ""
     }
     

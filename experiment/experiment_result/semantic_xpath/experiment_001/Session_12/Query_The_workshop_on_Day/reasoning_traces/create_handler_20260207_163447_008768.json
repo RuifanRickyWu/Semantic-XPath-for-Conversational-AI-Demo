@@ -1,0 +1,30 @@
+{
+  "user_query": "The workshop on Day 3 ends at 11am and then I have nothing until the AGO at noon. Add a coffee break in between. there's a good cafe near the gallery.",
+  "context_nodes_count": 1,
+  "create_info": {},
+  "result": {
+    "parent_path": "Root > Itinerary_Version 1 > Day 3",
+    "position": 0,
+    "node_type": "POI",
+    "fields": {
+      "name": "Dark Horse Espresso Bar (near AGO)",
+      "time_block": "11:15 AM - 11:45 AM",
+      "description": "Quick coffee and pastry stop at a popular local espresso bar within a short walk of the Art Gallery of Ontario — good for a mid-morning break before the AGO visit.",
+      "travel_method": "Walk",
+      "expected_cost": "CAD 6-12",
+      "highlights": [
+        "Specialty espresso",
+        "Fresh pastries",
+        "Quick service"
+      ]
+    },
+    "reasoning": "User wants a short coffee break between a workshop ending at 11:00 AM and the AGO at noon; scheduling 11:15–11:45 fills that gap. Position 0 places the break before the day's listed items so it occurs immediately after the workshop and prior to the AGO visit."
+  },
+  "raw_response": "{\n  \"parent_path\": \"Root > Itinerary_Version 1 > Day 3\",\n  \"position\": 0,\n  \"node_type\": \"POI\",\n  \"fields\": {\n    \"name\": \"Dark Horse Espresso Bar (near AGO)\",\n    \"time_block\": \"11:15 AM - 11:45 AM\",\n    \"description\": \"Quick coffee and pastry stop at a popular local espresso bar within a short walk of the Art Gallery of Ontario — good for a mid-morning break before the AGO visit.\",\n    \"travel_method\": \"Walk\",\n    \"expected_cost\": \"CAD 6-12\",\n    \"highlights\": [\"Specialty espresso\", \"Fresh pastries\", \"Quick service\"]\n  },\n  \"reasoning\": \"User wants a short coffee break between a workshop ending at 11:00 AM and the AGO at noon; scheduling 11:15–11:45 fills that gap. Position 0 places the break before the day's listed items so it occurs immediately after the workshop and prior to the AGO visit.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1545,
+    "completion_tokens": 738,
+    "total_tokens": 2283
+  },
+  "processing_time_ms": 8635.827958000022
+}

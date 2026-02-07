@@ -19,7 +19,7 @@ class PromptLoader:
     Loads and composes prompts dynamically based on schema/domain.
     
     Directory structure:
-        storage/prompts/
+        storage/prompts/crud/
         ├── templates/           # Base templates with placeholders
         │   ├── create_handler.txt
         │   ├── read_handler.txt
@@ -40,13 +40,10 @@ class PromptLoader:
                 └── ...
     """
     
-    PROMPTS_ROOT = Path(__file__).parent.parent.parent / "storage" / "prompts"
+    PROMPTS_ROOT = Path(__file__).parent.parent.parent / "storage" / "prompts" / "crud"
     TEMPLATES_PATH = PROMPTS_ROOT / "templates"
     SHARED_PATH = PROMPTS_ROOT / "shared"
     DOMAINS_PATH = PROMPTS_ROOT / "domains"
-    
-    # Legacy prompts path for backward compatibility
-    LEGACY_PATH = PROMPTS_ROOT
     
     def __init__(self, schema: Optional[Dict[str, Any]] = None):
         """
@@ -60,19 +57,30 @@ class PromptLoader:
         self._cache: Dict[str, str] = {}
     
     def _detect_domain(self) -> str:
-        """Detect domain from schema name."""
+        """Detect domain from schema name or prompt_domain override."""
         schema_name = self.schema.get("name", "").lower()
+        prompt_domain = self.schema.get("prompt_domain", "").lower()
+        available = set(self.get_available_domains())
         
-        # Map schema names to domain folders
-        domain_mapping = {
-            "itinerary": "itinerary",
-            "travel": "itinerary",
-            "todolist": "todolist",
+        # Prefer explicit prompt_domain override
+        if prompt_domain:
+            return prompt_domain
+        
+        # Use schema name when matching a domain folder
+        if schema_name in available:
+            return schema_name
+        
+        # Allow a few common aliases without forcing a default domain
+        alias_mapping = {
             "todo": "todolist",
             "task": "todolist",
         }
+        alias = alias_mapping.get(schema_name)
+        if alias and alias in available:
+            return alias
         
-        return domain_mapping.get(schema_name, "itinerary")  # Default to itinerary
+        # Fall back to schema name; missing files will be empty
+        return schema_name or (next(iter(available)) if available else "")
     
     @property
     def domain(self) -> str:
@@ -82,11 +90,11 @@ class PromptLoader:
     @property
     def schema_name(self) -> str:
         """Get human-readable schema name for prompts."""
-        name_mapping = {
-            "itinerary": "travel itineraries",
-            "todolist": "task management",
-        }
-        return name_mapping.get(self._domain, self._domain)
+        return (
+            self.schema.get("prompt_name")
+            or self.schema.get("name")
+            or self._domain
+        )
     
     def _load_file(self, path: Path) -> str:
         """Load a file's content, using cache."""
@@ -136,9 +144,9 @@ class PromptLoader:
         template = self._load_template(handler_type)
         
         if not template:
-            # Fall back to legacy single-file prompt
-            logger.warning(f"Template not found for {handler_type}, using legacy")
-            return self._load_file(self.LEGACY_PATH / f"{handler_type}.txt")
+            raise FileNotFoundError(
+                f"Prompt template not found: {self.TEMPLATES_PATH / f'{handler_type}.txt'}"
+            )
         
         # Load shared snippets
         positional_selection = self._load_shared("positional_selection")
@@ -160,18 +168,6 @@ class PromptLoader:
         )
         
         return prompt
-    
-    def load_legacy_prompt(self, filename: str) -> str:
-        """
-        Load a legacy single-file prompt (for non-CRUD handlers).
-        
-        Args:
-            filename: Name of the prompt file (e.g., 'node_reasoner.txt')
-            
-        Returns:
-            Prompt content
-        """
-        return self._load_file(self.LEGACY_PATH / filename)
     
     def clear_cache(self):
         """Clear the file cache."""

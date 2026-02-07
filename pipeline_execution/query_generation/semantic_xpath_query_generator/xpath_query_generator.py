@@ -24,7 +24,12 @@ from pipeline_execution.query_generation.semantic_xpath_query_generator.semantic
 from pipeline_execution.semantic_xpath_execution import get_schema_info, get_schema_summary_for_prompt
 
 # Prompts directory
-_PROMPTS_DIR = Path(__file__).parent.parent.parent.parent / "storage" / "prompts"
+_PROMPTS_DIR = (
+    Path(__file__).parent.parent.parent.parent
+    / "storage"
+    / "prompts"
+    / "query_generator"
+)
 
 
 class XPathQueryGenerator:

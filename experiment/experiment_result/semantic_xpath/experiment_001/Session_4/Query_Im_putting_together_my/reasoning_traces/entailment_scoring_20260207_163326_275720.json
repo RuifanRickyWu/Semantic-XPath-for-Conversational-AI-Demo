@@ -1,0 +1,40 @@
+{
+  "timestamp": "20260207_163326_275720",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "most expensive",
+  "hypothesis": "This is related to most expensive.",
+  "nodes": [
+    {
+      "id": "5349427616_main",
+      "type": "Restaurant",
+      "name": "Amsterdam BrewHouse",
+      "description": "name: Amsterdam BrewHouse | time_block: 2:30 PM - 3:30 PM | description: Lakeside pub offering local craft beers and hearty meals. | travel_method: Walk | expected_cost: CAD 25-35 | highlights: Craft ",
+      "premise": "Restaurant: Amsterdam BrewHouse - name: Amsterdam BrewHouse | time_block: 2:30 PM - 3:30 PM | description: Lakeside pub offering local craft beers and hearty meals. | travel_method: Walk | expected_cost: CAD 25-35 | highlights: Craft beer, Lake views",
+      "score": 0.15461410582065582
+    },
+    {
+      "id": "5527132576_main",
+      "type": "Restaurant",
+      "name": "Cluny Bistro",
+      "description": "name: Cluny Bistro | time_block: 6:00 PM - 7:30 PM | description: French-inspired bistro serving classic and modern dishes. | travel_method: Walk | expected_cost: CAD 50-70 | highlights: Elegant decor",
+      "premise": "Restaurant: Cluny Bistro - name: Cluny Bistro | time_block: 6:00 PM - 7:30 PM | description: French-inspired bistro serving classic and modern dishes. | travel_method: Walk | expected_cost: CAD 50-70 | highlights: Elegant decor, French pastries",
+      "score": 0.4396791160106659
+    }
+  ],
+  "results": [
+    {
+      "node_id": "5349427616_main",
+      "node_type": "Restaurant",
+      "score": 0.15461410582065582,
+      "reasoning": "Entailment score: 0.1546"
+    },
+    {
+      "node_id": "5527132576_main",
+      "node_type": "Restaurant",
+      "score": 0.4396791160106659,
+      "reasoning": "Entailment score: 0.4397"
+    }
+  ]
+}

@@ -32,7 +32,7 @@ data_files:
 default_data: "todolist_sample"
 
 # XPath query generation prompt components
-examples_file: "prompts/xpath_examples_todolist.txt"
+examples_file: "prompts/query_generator/domains/xpath_examples_todolist.txt"
 
 # Syntax rules specific to this schema
 syntax_rules: |

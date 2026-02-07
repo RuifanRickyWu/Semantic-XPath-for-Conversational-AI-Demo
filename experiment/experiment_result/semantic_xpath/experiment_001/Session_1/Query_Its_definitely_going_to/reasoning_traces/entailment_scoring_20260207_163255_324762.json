@@ -1,0 +1,40 @@
+{
+  "timestamp": "20260207_163255_324762",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "outdoor",
+  "hypothesis": "This is related to outdoor.",
+  "nodes": [
+    {
+      "id": "5527182448_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "name: Toronto Islands | time_block: 11:00 AM - 2:00 PM | description: Ferry ride to scenic islands with beaches, bike trails, and gardens. | travel_method: Walk & Ferry | expected_cost: CAD 8.50 | hig",
+      "premise": "POI: Toronto Islands - name: Toronto Islands | time_block: 11:00 AM - 2:00 PM | description: Ferry ride to scenic islands with beaches, bike trails, and gardens. | travel_method: Walk & Ferry | expected_cost: CAD 8.50 | highlights: Waterfront views, Centre Island",
+      "score": 0.9917019009590149
+    },
+    {
+      "id": "5527229360_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "name: Distillery District | time_block: 4:00 PM - 5:30 PM | description: Historic pedestrian village with cobblestone streets and artisan shops. | travel_method: Walk | expected_cost: Free | highlight",
+      "premise": "POI: Distillery District - name: Distillery District | time_block: 4:00 PM - 5:30 PM | description: Historic pedestrian village with cobblestone streets and artisan shops. | travel_method: Walk | expected_cost: Free | highlights: Historic architecture, Artisan boutiques",
+      "score": 0.8721858859062195
+    }
+  ],
+  "results": [
+    {
+      "node_id": "5527182448_main",
+      "node_type": "POI",
+      "score": 0.9917019009590149,
+      "reasoning": "Entailment score: 0.9917"
+    },
+    {
+      "node_id": "5527229360_main",
+      "node_type": "POI",
+      "score": 0.8721858859062195,
+      "reasoning": "Entailment score: 0.8722"
+    }
+  ]
+}

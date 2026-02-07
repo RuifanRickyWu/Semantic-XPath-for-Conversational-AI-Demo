@@ -27,7 +27,7 @@ class LLMPredicateScorer(PredicateScorer):
     Sends batch requests to LLM to score multiple nodes against a predicate.
     """
     
-    PROMPT_PATH = Path(__file__).parent.parent / "storage" / "prompts" / "predicate_scorer.txt"
+    PROMPT_PATH = Path(__file__).parent.parent / "storage" / "prompts" / "predicate_scoring" / "predicate_scorer.txt"
     DEFAULT_TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
     
     def __init__(self, client=None, save_traces: bool = True, traces_path: Path = None):

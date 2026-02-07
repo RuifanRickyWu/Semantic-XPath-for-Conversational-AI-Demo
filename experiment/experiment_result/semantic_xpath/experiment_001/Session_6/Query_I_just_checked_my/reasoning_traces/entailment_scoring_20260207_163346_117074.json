@@ -1,0 +1,54 @@
+{
+  "timestamp": "20260207_163346_117074",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "expensive",
+  "hypothesis": "This is related to expensive.",
+  "nodes": [
+    {
+      "id": "5351081040_main",
+      "type": "POI",
+      "name": "Royal Ontario Museum",
+      "description": "name: Royal Ontario Museum | time_block: 11:00 AM - 1:00 PM | description: World-renowned museum showcasing art, culture, and natural history. | travel_method: Walk | expected_cost: CAD 23 | highlight",
+      "premise": "POI: Royal Ontario Museum - name: Royal Ontario Museum | time_block: 11:00 AM - 1:00 PM | description: World-renowned museum showcasing art, culture, and natural history. | travel_method: Walk | expected_cost: CAD 23 | highlights: Dinosaurs, Chinese architecture, Bloor Street design",
+      "score": 0.9196242094039917
+    },
+    {
+      "id": "5351082880_main",
+      "type": "Restaurant",
+      "name": "Annona Restaurant",
+      "description": "name: Annona Restaurant | time_block: 1:30 PM - 2:30 PM | description: Sophisticated international cuisine in a bright, modern setting. | travel_method: Walk | expected_cost: CAD 30-40 | highlights: P",
+      "premise": "Restaurant: Annona Restaurant - name: Annona Restaurant | time_block: 1:30 PM - 2:30 PM | description: Sophisticated international cuisine in a bright, modern setting. | travel_method: Walk | expected_cost: CAD 30-40 | highlights: Patio seating, Refined dishes",
+      "score": 0.7671956419944763
+    },
+    {
+      "id": "5351083760_main",
+      "type": "Restaurant",
+      "name": "DaiLo",
+      "description": "name: DaiLo | time_block: 6:00 PM - 7:30 PM | description: Modern Asian-Canadian fusion cuisine with creative flavors. | travel_method: Public Transit | expected_cost: CAD 50-60 | highlights: Fusion m",
+      "premise": "Restaurant: DaiLo - name: DaiLo | time_block: 6:00 PM - 7:30 PM | description: Modern Asian-Canadian fusion cuisine with creative flavors. | travel_method: Public Transit | expected_cost: CAD 50-60 | highlights: Fusion menu, Trendy vibe",
+      "score": 0.7732117772102356
+    }
+  ],
+  "results": [
+    {
+      "node_id": "5351081040_main",
+      "node_type": "POI",
+      "score": 0.9196242094039917,
+      "reasoning": "Entailment score: 0.9196"
+    },
+    {
+      "node_id": "5351082880_main",
+      "node_type": "Restaurant",
+      "score": 0.7671956419944763,
+      "reasoning": "Entailment score: 0.7672"
+    },
+    {
+      "node_id": "5351083760_main",
+      "node_type": "Restaurant",
+      "score": 0.7732117772102356,
+      "reasoning": "Entailment score: 0.7732"
+    }
+  ]
+}

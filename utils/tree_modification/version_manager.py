@@ -3,20 +3,18 @@ Version Manager - Manages in-tree versioning of XML trees.
 
 Supports the new 2-stage query processing with 'at' and 'before' selectors.
 
-Structure (new format):
+Structure (schema-defined format):
 Root
-└── Itinerary_Version (number="1")
+└── VersionNode (number="1")
     ├── patch_info: description of changes
     ├── conversation_history: user's request
-    └── Itinerary
-        └── Day (content nodes)
-└── Itinerary_Version (number="2")
-    ├── patch_info: "deleted museum POI"
-    ├── conversation_history: "delete the museum"
-    └── Itinerary
-        └── Day (modified content)
+    └── ContentContainer (content nodes)
+└── VersionNode (number="2")
+    ├── patch_info: "deleted item"
+    ├── conversation_history: "delete the item"
+    └── ContentContainer (modified content)
 
-Also supports legacy format with 'Version' tag for backward compatibility.
+Also supports legacy format with a 'Version' tag for backward compatibility.
 """
 
 import copy
@@ -46,8 +44,8 @@ class VersionManager:
     - Itinerary: container for content nodes (Days)
     """
     
-    # Version tag names to support both old and new formats
-    VERSION_TAGS = ("Itinerary_Version", "Version")
+    # Version tag names to support legacy formats
+    VERSION_TAGS = ("Version",)
     
     def __init__(self, base_directory: Path = None, schema_name: Optional[str] = None):
         """
@@ -68,7 +66,7 @@ class VersionManager:
         """
         Find all version elements in the tree.
         
-        Supports both Itinerary_Version (new) and Version (legacy) tags.
+        Supports schema-defined version tags or legacy tags.
         
         Args:
             tree: The XML tree
@@ -84,8 +82,9 @@ class VersionManager:
             versions.extend(root.findall(self._version_tag))
             return versions
         
-        for tag in self.VERSION_TAGS:
-            versions.extend(root.findall(tag))
+        for child in list(root):
+            if self._is_version_tag(child.tag):
+                versions.append(child)
         
         return versions
     
@@ -97,19 +96,27 @@ class VersionManager:
             tree: The XML tree
             
         Returns:
-            Version tag name ("Itinerary_Version" or "Version")
+            Version tag name (schema-defined or legacy "Version")
         """
         root = tree.getroot()
         
         if self._version_tag:
             return self._version_tag
         
-        # Check for new format first
-        if root.find("Itinerary_Version") is not None:
-            return "Itinerary_Version"
+        # Prefer a detected version tag from the tree
+        for child in list(root):
+            if self._is_version_tag(child.tag):
+                return child.tag
         
         # Fall back to legacy format
         return "Version"
+
+    @staticmethod
+    def _is_version_tag(tag: str) -> bool:
+        """Heuristic for legacy version tag detection when schema is missing."""
+        if tag in VersionManager.VERSION_TAGS:
+            return True
+        return tag.endswith("_Version")
     
     def get_version_count(self, tree: ET.ElementTree) -> int:
         """

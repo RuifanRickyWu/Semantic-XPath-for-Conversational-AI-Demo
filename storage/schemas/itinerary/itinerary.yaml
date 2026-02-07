@@ -49,7 +49,7 @@ data_files:
 default_data: "travel_memory_3day"
 
 # XPath query generation prompt components
-examples_file: "prompts/xpath_examples_itinerary.txt"
+examples_file: "prompts/query_generator/domains/xpath_examples_itinerary.txt"
 
 # Syntax rules specific to this schema
 syntax_rules: |

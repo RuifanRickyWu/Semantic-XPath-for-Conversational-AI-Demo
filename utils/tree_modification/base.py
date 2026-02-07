@@ -140,23 +140,25 @@ def find_node_by_path(root: ET.Element, tree_path: str) -> Optional[ET.Element]:
             node_type = words[0]
             index = int(words[1])
             
-            if node_type == "Day":
-                # Find Day by @index attribute
-                found = None
-                for child in current:
-                    if child.tag == "Day" and child.get("index") == str(index):
+            # Prefer matching by index/number attribute when available
+            found = None
+            for child in current:
+                if child.tag == node_type:
+                    child_index = child.get("index") or child.get("number")
+                    if child_index == str(index):
                         found = child
                         break
-                if found is None:
-                    return None
+            
+            if found is not None:
                 current = found
+                continue
+            
+            # Fallback: positional indexing among same-type siblings (1-based)
+            children = [c for c in current if c.tag == node_type]
+            if 0 < index <= len(children):
+                current = children[index - 1]
             else:
-                # Find by position (1-based)
-                children = [c for c in current if c.tag == node_type]
-                if 0 < index <= len(children):
-                    current = children[index - 1]
-                else:
-                    return None
+                return None
         else:
             # Case 2: Try direct child by tag name first
             found = current.find(part)

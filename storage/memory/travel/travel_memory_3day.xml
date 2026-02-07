@@ -3,43 +3,7 @@
   <Itinerary_Version number="1">
     <patch_info>None</patch_info>
     <conversation_history>Initial_Version</conversation_history>
-    <Itinerary>
-      <Day index="1">
-        <POI>
-          <name>St. Lawrence Market</name>
-          <time_block>9:00 AM - 10:30 AM</time_block>
-          <description>Start your day at this iconic market, where you can grab a breakfast of famed peameal bacon sandwiches from Carousel Bakery.</description>
-          <travel_method>Walk</travel_method>
-          <expected_cost>CAD 10-15</expected_cost>
-          <highlights>
-            <highlight>Fresh produce</highlight>
-            <highlight>Specialty foods</highlight>
-            <highlight>Local artisans</highlight>
-          </highlights>
-        </POI>
-        <POI>
-          <name>CN Tower</name>
-          <time_block>11:00 AM - 12:30 PM</time_block>
-          <description>Visit one of the world's tallest towers and enjoy panoramic city views from the observation deck.</description>
-          <travel_method>Walk</travel_method>
-          <expected_cost>CAD 43</expected_cost>
-          <highlights>
-            <highlight>Glass floor</highlight>
-            <highlight>360 Restaurant</highlight>
-            <highlight>EdgeWalk</highlight>
-          </highlights>
-        </POI>
-        <Restaurant>
-          <name>Queen Street Warehouse</name>
-          <time_block>1:00 PM - 2:00 PM</time_block>
-          <description>Budget-friendly comfort food in a lively setting with a diverse menu.</description>
-          <travel_method>Walk</travel_method>
-          <expected_cost>CAD 10-15</expected_cost>
-          <highlights>
-            <highlight>Funky decor</highlight>
-            <highlight>Vibrant atmosphere</highlight>
-          </highlights>
-        </Restaurant>
+    <Day index="1">
         <POI>
           <name>Art Gallery of Ontario</name>
           <time_block>2:30 PM - 4:00 PM</time_block>
@@ -75,17 +39,6 @@
         </Restaurant>
       </Day>
       <Day index="2">
-        <Restaurant>
-          <name>Pow Wow Cafe</name>
-          <time_block>9:00 AM - 10:30 AM</time_block>
-          <description>Indigenous-inspired brunch featuring bannock tacos in Kensington Market.</description>
-          <travel_method>Public Transit</travel_method>
-          <expected_cost>CAD 15-20</expected_cost>
-          <highlights>
-            <highlight>Indigenous cuisine</highlight>
-            <highlight>Bohemian neighborhood</highlight>
-          </highlights>
-        </Restaurant>
         <POI>
           <name>Royal Ontario Museum</name>
           <time_block>11:00 AM - 1:00 PM</time_block>
@@ -109,17 +62,6 @@
             <highlight>Refined dishes</highlight>
           </highlights>
         </Restaurant>
-        <POI>
-          <name>Casa Loma</name>
-          <time_block>3:00 PM - 5:00 PM</time_block>
-          <description>Historic castle featuring secret passages, gardens, and panoramic views.</description>
-          <travel_method>Public Transit</travel_method>
-          <expected_cost>CAD 30</expected_cost>
-          <highlights>
-            <highlight>Castle architecture</highlight>
-            <highlight>City viewpoints</highlight>
-          </highlights>
-        </POI>
         <Restaurant>
           <name>DaiLo</name>
           <time_block>6:00 PM - 7:30 PM</time_block>
@@ -131,30 +73,8 @@
             <highlight>Trendy vibe</highlight>
           </highlights>
         </Restaurant>
-        <POI>
-          <name>Rivoli</name>
-          <time_block>8:00 PM - 10:00 PM</time_block>
-          <description>Live music venue showcasing jazz, indie, and emerging artists.</description>
-          <travel_method>Walk</travel_method>
-          <expected_cost>CAD 10-20</expected_cost>
-          <highlights>
-            <highlight>Historic venue</highlight>
-            <highlight>Diverse genres</highlight>
-          </highlights>
-        </POI>
       </Day>
       <Day index="3">
-        <Restaurant>
-          <name>Beauty Barbecue &amp; Smokehouse</name>
-          <time_block>9:00 AM - 10:30 AM</time_block>
-          <description>Hearty breakfast featuring smoked meats and classic comfort food.</description>
-          <travel_method>Walk</travel_method>
-          <expected_cost>CAD 15-25</expected_cost>
-          <highlights>
-            <highlight>Smoked meats</highlight>
-            <highlight>Casual atmosphere</highlight>
-          </highlights>
-        </Restaurant>
         <POI>
           <name>Toronto Islands</name>
           <time_block>11:00 AM - 2:00 PM</time_block>
@@ -199,18 +119,6 @@
             <highlight>French pastries</highlight>
           </highlights>
         </Restaurant>
-        <Restaurant>
-          <name>Jazz Bistro</name>
-          <time_block>8:00 PM - 10:30 PM</time_block>
-          <description>Renowned jazz club with intimate setting and excellent acoustics.</description>
-          <travel_method>Public Transit</travel_method>
-          <expected_cost>CAD 15 + drinks</expected_cost>
-          <highlights>
-            <highlight>Live jazz</highlight>
-            <highlight>Classic red piano</highlight>
-          </highlights>
-        </Restaurant>
       </Day>
-    </Itinerary>
   </Itinerary_Version>
 </Root>

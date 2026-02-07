@@ -37,6 +37,7 @@ try:
 except ImportError:
     from in_context_pipeline import InContextPipeline, InContextResult
     from result_logger import InContextResultLogger, SessionResult, QueryResult
+from pipeline_execution.semantic_xpath_util import load_schema
 
 
 # Project root directory
@@ -157,9 +158,7 @@ class InContextRunner:
     def _get_source_tree_path(self) -> Path:
         """Get the source tree path from schema config."""
         # Load schema to find default data file
-        schema_path = PROJECT_ROOT / "storage" / "schemas" / "itinerary.yaml"
-        with open(schema_path, "r") as f:
-            schema = yaml.safe_load(f)
+        schema = load_schema()
         
         # Use travel_toronto_10day as default for experiments
         data_files = schema.get("data_files", {})

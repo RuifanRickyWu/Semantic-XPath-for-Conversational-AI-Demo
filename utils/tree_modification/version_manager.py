@@ -28,6 +28,7 @@ from typing import Optional, List, Dict, Any, Tuple
 import xml.etree.ElementTree as ET
 
 from .base import TreeVersion
+from pipeline_execution.semantic_xpath_util import get_versioning_info
 
 
 logger = logging.getLogger(__name__)
@@ -48,7 +49,7 @@ class VersionManager:
     # Version tag names to support both old and new formats
     VERSION_TAGS = ("Itinerary_Version", "Version")
     
-    def __init__(self, base_directory: Path = None):
+    def __init__(self, base_directory: Path = None, schema_name: Optional[str] = None):
         """
         Initialize the version manager.
         
@@ -57,6 +58,11 @@ class VersionManager:
                           If None, uses the original file's directory.
         """
         self.base_directory = base_directory
+        self._versioning = get_versioning_info(schema_name)
+        self._version_tag = self._versioning.get("version_tag")
+        self._version_index_attr = self._versioning.get("version_index_attr", "number")
+        self._content_container = self._versioning.get("content_container")
+        self._metadata_tags = {"patch_info", "conversation_history"}
     
     def _find_versions(self, tree: ET.ElementTree) -> List[ET.Element]:
         """
@@ -72,6 +78,11 @@ class VersionManager:
         """
         root = tree.getroot()
         versions = []
+        
+        # Prefer schema-defined version tag if available
+        if self._version_tag:
+            versions.extend(root.findall(self._version_tag))
+            return versions
         
         for tag in self.VERSION_TAGS:
             versions.extend(root.findall(tag))
@@ -89,6 +100,9 @@ class VersionManager:
             Version tag name ("Itinerary_Version" or "Version")
         """
         root = tree.getroot()
+        
+        if self._version_tag:
+            return self._version_tag
         
         # Check for new format first
         if root.find("Itinerary_Version") is not None:
@@ -152,7 +166,7 @@ class VersionManager:
         
         # Positive number - find by @number attribute
         for version in versions:
-            if version.get("number") == str(number):
+            if version.get(self._version_index_attr) == str(number):
                 return version
         
         return None
@@ -230,7 +244,7 @@ class VersionManager:
                 text_parts.append(f"Request: {conv_history.text}")
             
             description = " | ".join(text_parts) if text_parts else "(no changes recorded)"
-            version_number = version.get("number", str(i + 1))
+            version_number = version.get(self._version_index_attr, str(i + 1))
             
             version_nodes.append({
                 "id": f"version_{version_number}",
@@ -253,7 +267,7 @@ class VersionManager:
                     )
                     
                     if best_idx is not None and best_result.score > 0:
-                        logger.info(f"Semantic version match: Version {versions[best_idx].get('number')} "
+                        logger.info(f"Semantic version match: Version {versions[best_idx].get(self._version_index_attr)} "
                                   f"(score: {best_result.score:.3f})")
                         return versions[best_idx]
             except Exception as e:
@@ -389,7 +403,7 @@ class VersionManager:
         
         # Create new Version element
         new_version = ET.Element(version_tag)
-        new_version.set("number", str(new_number))
+        new_version.set(self._version_index_attr, str(new_number))
         
         # Add patch_info
         patch_elem = ET.SubElement(new_version, "patch_info")
@@ -400,33 +414,27 @@ class VersionManager:
         conv_elem.text = conversation_history
         
         # Handle content based on format
-        if version_tag == "Itinerary_Version":
-            # New format: wrap content in Itinerary
-            itinerary_elem = ET.SubElement(new_version, "Itinerary")
+        content_container = self._get_content_container(source_version)
+        if content_container is not None:
+            # Content wrapped in a container
+            container_tag = content_container.tag
+            new_container = ET.SubElement(new_version, container_tag)
             
             if modified_content is not None:
                 for elem in modified_content:
-                    itinerary_elem.append(copy.deepcopy(elem))
+                    new_container.append(copy.deepcopy(elem))
             else:
-                # Copy content from source version's Itinerary
-                source_itinerary = source_version.find("Itinerary")
-                if source_itinerary is not None:
-                    for child in source_itinerary:
-                        itinerary_elem.append(copy.deepcopy(child))
-                else:
-                    # Fallback: copy non-metadata children
-                    for child in source_version:
-                        if child.tag not in ("patch_info", "conversation_history"):
-                            itinerary_elem.append(copy.deepcopy(child))
+                for child in content_container:
+                    new_container.append(copy.deepcopy(child))
         else:
-            # Legacy format: content directly under Version
+            # Content directly under version
             if modified_content is not None:
                 for elem in modified_content:
                     new_version.append(copy.deepcopy(elem))
             else:
                 # Copy content from source version (excluding metadata)
                 for child in source_version:
-                    if child.tag not in ("patch_info", "conversation_history"):
+                    if child.tag not in self._metadata_tags:
                         new_version.append(copy.deepcopy(child))
         
         # Append to root
@@ -449,16 +457,34 @@ class VersionManager:
         Returns:
             List of content child elements (not patch_info or conversation_history)
         """
-        # Check for new format with Itinerary container
-        itinerary = version_elem.find("Itinerary")
-        if itinerary is not None:
-            return list(itinerary)
+        content_container = self._get_content_container(version_elem)
+        if content_container is not None:
+            return list(content_container)
         
-        # Legacy format: return non-metadata children
+        # Content directly under version
         return [
             child for child in version_elem 
-            if child.tag not in ("patch_info", "conversation_history")
+            if child.tag not in self._metadata_tags
         ]
+
+    def _get_content_container(self, version_elem: ET.Element) -> Optional[ET.Element]:
+        """
+        Get the content container element if one exists.
+        
+        Uses schema-defined content_container when available, otherwise
+        falls back to a structural heuristic to support legacy trees.
+        """
+        if self._content_container:
+            container = version_elem.find(self._content_container)
+            if container is not None:
+                return container
+        
+        # Heuristic: a single non-metadata child that has children
+        non_meta = [c for c in version_elem if c.tag not in self._metadata_tags]
+        if len(non_meta) == 1 and len(non_meta[0]) > 0:
+            return non_meta[0]
+        
+        return None
     
     def save_tree(
         self,
@@ -543,7 +569,7 @@ class VersionManager:
             conv_history = version.find("conversation_history")
             
             history.append({
-                "number": int(version.get("number", 0)),
+            "number": int(version.get(self._version_index_attr, 0)),
                 "patch_info": patch_info.text if patch_info is not None else "",
                 "conversation_history": conv_history.text if conv_history is not None else "",
                 "content_count": len(self.get_version_content(version))

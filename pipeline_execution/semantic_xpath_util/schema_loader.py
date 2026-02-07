@@ -6,13 +6,37 @@ Provides functions to load schema definitions and resolve data file paths.
 
 import yaml
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 
 # Base directories
 _BASE_DIR = Path(__file__).parent.parent.parent
 _SCHEMA_DIR = _BASE_DIR / "storage" / "schemas"
 _STORAGE_DIR = _BASE_DIR / "storage"
+
+
+def _get_schema_dir(schema_name: str) -> Path:
+    """
+    Resolve the schema directory for a scenario.
+    
+    Supports both legacy single-file schemas and new folder-based schemas:
+    - storage/schemas/{schema_name}.yaml
+    - storage/schemas/{schema_name}/{schema_name}.yaml
+    """
+    candidate = _SCHEMA_DIR / schema_name
+    if candidate.is_dir():
+        return candidate
+    return _SCHEMA_DIR
+
+
+def _get_schema_path(schema_name: str) -> Path:
+    """Get path to the main content schema file."""
+    return _get_schema_dir(schema_name) / f"{schema_name}.yaml"
+
+
+def _get_version_schema_path(schema_name: str) -> Path:
+    """Get path to the version schema file for a scenario."""
+    return _get_schema_dir(schema_name) / f"{schema_name}_version.yaml"
 
 
 def load_config() -> Dict[str, Any]:
@@ -37,13 +61,113 @@ def load_schema(schema_name: Optional[str] = None) -> Dict[str, Any]:
         config = load_config()
         schema_name = config.get("active_schema", "itinerary")
     
-    schema_path = _SCHEMA_DIR / f"{schema_name}.yaml"
+    schema_path = _get_schema_path(schema_name)
     
     if not schema_path.exists():
         raise FileNotFoundError(f"Schema file not found: {schema_path}")
     
     with open(schema_path, "r") as f:
         return yaml.safe_load(f)
+
+
+def load_version_schema(schema_name: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Load the version schema definition by name.
+    
+    Args:
+        schema_name: Name of the schema (e.g., "itinerary").
+                    If None, uses active_schema from config.yaml.
+    
+    Returns:
+        Version schema dictionary, or empty dict if not found.
+    """
+    if schema_name is None:
+        config = load_config()
+        schema_name = config.get("active_schema", "itinerary")
+    
+    version_path = _get_version_schema_path(schema_name)
+    
+    if not version_path.exists():
+        return {}
+    
+    with open(version_path, "r") as f:
+        return yaml.safe_load(f)
+
+
+def _find_node_by_type(nodes: Dict[str, Any], node_type: str) -> Optional[str]:
+    for name, config in nodes.items():
+        if config.get("type") == node_type:
+            return name
+    return None
+
+
+def _find_path_between_nodes(
+    nodes: Dict[str, Any], 
+    root_name: str, 
+    target_name: str
+) -> list:
+    """Find a path from root to target using children links."""
+    if not root_name or not target_name:
+        return []
+    
+    queue = [(root_name, [root_name])]
+    visited = set()
+    
+    while queue:
+        current, path = queue.pop(0)
+        if current in visited:
+            continue
+        visited.add(current)
+        
+        if current == target_name:
+            return path
+        
+        children = nodes.get(current, {}).get("children", [])
+        for child in children:
+            if child not in visited:
+                queue.append((child, path + [child]))
+    
+    return []
+
+
+def get_versioning_info(schema_name: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Get versioning metadata and resolved path info for a schema.
+    
+    Returns:
+        Dict with root tag, version tag, index attr, and path parts.
+    """
+    version_schema = load_version_schema(schema_name)
+    nodes = version_schema.get("nodes", {}) if version_schema else {}
+    versioning = version_schema.get("versioning", {}) if version_schema else {}
+    
+    root_tag = versioning.get("root") or _find_node_by_type(nodes, "root")
+    version_tag = versioning.get("version_node") or _find_node_by_type(nodes, "version")
+    
+    index_attr = (
+        versioning.get("version_index_attr")
+        or nodes.get(version_tag, {}).get("index_attr")
+        or "number"
+    )
+    
+    content_container = versioning.get("content_container")
+    
+    path_parts = versioning.get("path_parts")
+    if not path_parts and root_tag and version_tag:
+        path_parts = _find_path_between_nodes(nodes, root_tag, version_tag)
+    if not path_parts and root_tag and version_tag:
+        path_parts = [root_tag, version_tag]
+    
+    version_path = "/" + "/".join(path_parts) if path_parts else ""
+    
+    return {
+        "root_tag": root_tag,
+        "version_tag": version_tag,
+        "version_index_attr": index_attr,
+        "content_container": content_container,
+        "version_path_parts": path_parts,
+        "version_path": version_path,
+    }
 
 
 def get_data_path(
@@ -101,6 +225,8 @@ def get_schema_info(schema_name: Optional[str] = None) -> Dict[str, Any]:
     """
     config = load_config()
     schema = load_schema(schema_name)
+    version_schema = load_version_schema(schema_name)
+    versioning_info = get_versioning_info(schema_name)
     
     # Get active data name
     active_data = config.get("active_data") or schema.get("default_data")
@@ -109,6 +235,9 @@ def get_schema_info(schema_name: Optional[str] = None) -> Dict[str, Any]:
     resolved_data_files = {}
     for name, rel_path in schema.get("data_files", {}).items():
         resolved_data_files[name] = str(_STORAGE_DIR / rel_path)
+    
+    # Determine content root for prompt guidance
+    content_root = _find_node_by_type(schema.get("nodes", {}), "root")
     
     return {
         "schema_name": schema.get("name"),
@@ -119,7 +248,10 @@ def get_schema_info(schema_name: Optional[str] = None) -> Dict[str, Any]:
         "data_files": resolved_data_files,
         "examples_file": str(_STORAGE_DIR / schema.get("examples_file", "")),
         "syntax_rules": schema.get("syntax_rules", ""),
-        "version_resolver_prompt": schema.get("version_resolver_prompt", "prompts/version_resolver.txt")
+        "version_resolver_prompt": schema.get("version_resolver_prompt", "prompts/version_resolver.txt"),
+        "version_schema": version_schema,
+        "versioning": versioning_info,
+        "content_root": content_root,
     }
 
 
@@ -139,10 +271,20 @@ def get_node_config(schema_name: Optional[str] = None) -> Dict[str, Dict[str, An
 
 def list_available_schemas() -> list:
     """List all available schema names."""
-    schemas = []
+    schemas = set()
+    
+    # Legacy single-file schemas
     for path in _SCHEMA_DIR.glob("*.yaml"):
-        schemas.append(path.stem)
-    return schemas
+        schemas.add(path.stem)
+    
+    # Folder-based schemas
+    for item in _SCHEMA_DIR.iterdir():
+        if item.is_dir():
+            content_path = item / f"{item.name}.yaml"
+            if content_path.exists():
+                schemas.add(item.name)
+    
+    return sorted(schemas)
 
 
 def list_available_data_files(schema_name: Optional[str] = None) -> list:

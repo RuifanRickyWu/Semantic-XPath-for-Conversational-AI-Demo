@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 from client import get_default_client
 from utils.tree_modification import VersionManager
+from pipeline_execution.semantic_xpath_util import load_schema, get_versioning_info
 
 
 # Project root directory
@@ -78,11 +79,27 @@ class InContextPipeline:
                       If None, will be set per-session.
         """
         self.client = get_default_client()
-        self.version_manager = VersionManager()
+        self._schema = load_schema()
+        self._versioning = get_versioning_info()
+        self.version_manager = VersionManager(schema_name=self._schema.get("name"))
         self.prompt_template = self._load_prompt_template()
         
         self._tree_path = tree_path
         self._tree: Optional[ET.ElementTree] = None
+        
+        self._node_configs = self._schema.get("nodes", {})
+        self._content_root = next(
+            (name for name, cfg in self._node_configs.items() if cfg.get("type") == "root"),
+            None
+        )
+        self._leaf_types = {name for name, cfg in self._node_configs.items() if cfg.get("type") == "leaf"}
+        self._container_types = {
+            name for name, cfg in self._node_configs.items()
+            if cfg.get("type") in ("container", "root")
+        }
+        self._field_names = {
+            field for cfg in self._node_configs.values() for field in cfg.get("fields", [])
+        }
     
     def _load_prompt_template(self) -> str:
         """Load the in-context pipeline prompt template."""
@@ -325,17 +342,15 @@ class InContextPipeline:
                     current_path = f"{parent_path} > {tag}" if parent_path else tag
             
             # Add leaf nodes to paths
-            if tag in ("POI", "Restaurant"):
+            if tag in self._leaf_types:
                 paths.append(current_path.strip(" >"))
-            elif tag == "Day":
+            elif tag in self._container_types:
                 # Add Day to paths for READ queries about days
                 paths.append(current_path.strip(" >"))
             
             # Recurse to children
             for child in elem:
-                if child.tag not in ("name", "time_block", "description", 
-                                    "travel_method", "expected_cost", "highlights",
-                                    "patch_info", "conversation_history"):
+                if child.tag not in self._field_names and child.tag not in ("patch_info", "conversation_history"):
                     build_path(child, current_path)
         
         build_path(root)
@@ -345,8 +360,16 @@ class InContextPipeline:
         """Extract node paths from reasoning text."""
         paths = []
         
-        # Pattern to match paths like "Day 1 > POI Name" or "Version 1 > Day 2"
-        path_pattern = r'(?:Root\s*>\s*)?(?:Itinerary_Version\s*\d+\s*>\s*)?(?:Itinerary\s*>\s*)?(Day\s*\d+(?:\s*>\s*[^,\n\]]+)?)'
+        # Pattern to match paths like "Day 1 > POI Name" with dynamic version/root tags
+        root_tag = self._versioning.get("root_tag")
+        version_tag = self._versioning.get("version_tag")
+        content_root = self._content_root or "Day"
+        
+        root_part = rf"(?:{root_tag}\s*>\s*)?" if root_tag else ""
+        version_part = rf"(?:{version_tag}\s*\d+\s*>\s*)?" if version_tag else ""
+        content_part = rf"{content_root}(?:\s*\d+)?(?:\s*>\s*[^,\n\]]+)?"
+        
+        path_pattern = rf"{root_part}{version_part}({content_part})"
         
         matches = re.findall(path_pattern, reasoning, re.IGNORECASE)
         for match in matches:

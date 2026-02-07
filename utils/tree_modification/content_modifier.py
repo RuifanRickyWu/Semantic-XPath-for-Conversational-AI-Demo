@@ -10,6 +10,8 @@ import logging
 from typing import List, Optional, Tuple
 import xml.etree.ElementTree as ET
 
+from pipeline_execution.semantic_xpath_util import get_versioning_info
+
 
 logger = logging.getLogger(__name__)
 
@@ -39,16 +41,26 @@ class ContentModifier:
         Returns:
             List of deep-copied content elements (e.g., Day elements)
         """
-        # Check for new format with Itinerary container
-        itinerary = version.find("Itinerary")
-        if itinerary is not None:
-            return [copy.deepcopy(child) for child in itinerary]
+        metadata_tags = {"patch_info", "conversation_history"}
         
-        # Legacy format: return non-metadata children
+        # Prefer schema-defined content container when available
+        versioning = get_versioning_info()
+        content_container = versioning.get("content_container")
+        if content_container:
+            container = version.find(content_container)
+            if container is not None:
+                return [copy.deepcopy(child) for child in container]
+        
+        # Heuristic: single non-metadata child with its own children
+        non_meta = [c for c in version if c.tag not in metadata_tags]
+        if len(non_meta) == 1 and len(non_meta[0]) > 0:
+            return [copy.deepcopy(child) for child in non_meta[0]]
+        
+        # Content directly under version
         return [
             copy.deepcopy(child)
             for child in version
-            if child.tag not in ("patch_info", "conversation_history", "Itinerary")
+            if child.tag not in metadata_tags
         ]
     
     @staticmethod
@@ -70,19 +82,37 @@ class ContentModifier:
             Relative path within version content
         """
         parts = [p.strip() for p in tree_path.split(">")]
+        versioning = get_versioning_info()
+        version_tag = version.tag if version is not None else versioning.get("version_tag")
+        path_prefix = versioning.get("version_path_parts") or []
+        content_container = versioning.get("content_container")
         
-        result_parts = []
-        for part in parts:
-            # Skip root and version-related prefixes
-            if part == "Root":
-                continue
-            if part.startswith("Itinerary_Version"):
-                continue
-            if part == "Itinerary":
-                continue
-            result_parts.append(part)
+        def strip_prefix(parts_list: List[str], prefix_parts: List[str]) -> List[str]:
+            idx = 0
+            for prefix in prefix_parts:
+                if idx >= len(parts_list):
+                    return parts_list
+                if not parts_list[idx].startswith(prefix):
+                    return parts_list
+                idx += 1
+            return parts_list[idx:]
         
-        return " > ".join(result_parts)
+        # If the version node appears in the path, strip up to it
+        if version_tag:
+            for i, part in enumerate(parts):
+                if part.startswith(version_tag):
+                    parts = parts[i + 1:]
+                    break
+        
+        # Otherwise, try stripping the schema-defined root-to-version path
+        if path_prefix and parts:
+            parts = strip_prefix(parts, path_prefix)
+        
+        # Remove content container if defined and at start
+        if content_container and parts and parts[0].startswith(content_container):
+            parts = parts[1:]
+        
+        return " > ".join(parts)
     
     @classmethod
     def find_node_in_content(

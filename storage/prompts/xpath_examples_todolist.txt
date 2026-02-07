@@ -2,110 +2,110 @@
 
 ### Basic Queries
 User: find all urgent tasks that need immediate attention
-Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "urgent")]
+Output: /Project/Task[atom(content =~ "urgent")]
 
 User: show me all tasks in the frontend project
-Output: /TodoList/Version[-1]/Project[atom(content =~ "frontend")]/Task
+Output: /Project[atom(content =~ "frontend")]/Task
 
 User: what tasks are assigned to the backend team?
-Output: /TodoList/Version[-1]/Project[atom(content =~ "backend")]/Task
+Output: /Project[atom(content =~ "backend")]/Task
 
 ### Aggregation Queries
 User: which projects have at least one incomplete task?
-Output: /TodoList/Version[-1]/Project[agg_exists(Task[atom(content =~ "incomplete")])]
+Output: /Project[agg_exists(Task[atom(content =~ "incomplete")])]
 
 User: find projects that contain any blocked tasks so I can help unblock them
-Output: /TodoList/Version[-1]/Project[agg_exists(Task[atom(content =~ "blocked")])]
+Output: /Project[agg_exists(Task[atom(content =~ "blocked")])]
 
 User: show me projects that have a bug or a critical issue that needs fixing
-Output: /TodoList/Version[-1]/Project[agg_exists(Task[(atom(content =~ "bug") OR atom(content =~ "critical")) AND not(atom(content =~ "resolved"))])]
+Output: /Project[agg_exists(Task[(atom(content =~ "bug") OR atom(content =~ "critical")) AND not(atom(content =~ "resolved"))])]
 
 ### Negation Queries
 User: find tasks that are not blocked so I can work on them
-Output: /TodoList/Version[-1]/Project/Task[not(atom(content =~ "blocked"))]
+Output: /Project/Task[not(atom(content =~ "blocked"))]
 
 User: show me tasks that are either high priority or urgent but not yet started
-Output: /TodoList/Version[-1]/Project/Task[(atom(content =~ "high priority") OR atom(content =~ "urgent")) AND not(atom(content =~ "in progress"))]
+Output: /Project/Task[(atom(content =~ "high priority") OR atom(content =~ "urgent")) AND not(atom(content =~ "in progress"))]
 
 ### Local Index Queries (per-parent selection)
 User: show me all projects in version 2
-Output: /TodoList/Version[2]/Project
+Output: /Project
 
 User: review everything in the first project
-Output: /TodoList/Version[-1]/Project[1]/.
+Output: /Project[1]/.
 
 User: give me tasks from project 2 through project 4 so I can review them
-Output: /TodoList/Version[-1]/Project[2:4]/Task
+Output: /Project[2:4]/Task
 
 User: show me the last two tasks in each project
-Output: /TodoList/Version[-1]/Project/Task[-2:]
+Output: /Project/Task[-2:]
 
 ### Global Index Queries (overall result selection)
 User: show me the first 5 tasks across all projects
-Output: (/TodoList/Version[-1]/Project/Task)[1:5]
+Output: (/Project/Task)[1:5]
 
 User: what is the 3rd task overall in the todolist?
-Output: (/TodoList/Version[-1]/Project/Task)[3]
+Output: (/Project/Task)[3]
 
 User: find the last task in the entire todolist
-Output: (/TodoList/Version[-1]/Project/Task)[-1]
+Output: (/Project/Task)[-1]
 
 User: show me the last 3 urgent tasks across all projects
-Output: (/TodoList/Version[-1]/Project/Task[atom(content =~ "urgent")])[-3:]
+Output: (/Project/Task[atom(content =~ "urgent")])[-3:]
 
-### Descendant Axis Queries (schema: Version → Project → Task → SubTask)
+### Descendant Axis Queries (schema: Project → Task → SubTask)
 User: show me all subtasks in the latest version
-Output: /TodoList/Version[-1]/desc::SubTask
+Output: /Project/desc::SubTask
 
 User: find all tasks across all projects in the current version
-Output: /TodoList/Version[-1]/desc::Task
+Output: /Project/desc::Task
 
 User: which projects have urgent subtasks that need attention?
-Output: /TodoList/Version[-1]/Project[agg_exists(desc::SubTask[atom(content =~ "urgent")])]
+Output: /Project[agg_exists(desc::SubTask[atom(content =~ "urgent")])]
 
 User: find tasks that have blocking subtasks preventing progress
-Output: /TodoList/Version[-1]/Project/Task[agg_exists(SubTask[atom(content =~ "blocking")])]
+Output: /Project/Task[agg_exists(SubTask[atom(content =~ "blocking")])]
 
 User: show me all bug-related subtasks across the entire todolist
-Output: /TodoList/Version[-1]/desc::SubTask[atom(content =~ "bug")]
+Output: /Project/desc::SubTask[atom(content =~ "bug")]
 
 ### Wildcard Queries (select all children)
 User: show me everything in the first project
-Output: /TodoList/Version[-1]/Project[1]/.
+Output: /Project[1]/.
 
 User: review all items in the last project
-Output: /TodoList/Version[-1]/Project[-1]/.
+Output: /Project[-1]/.
 
 User: give me the first 5 items across all projects
-Output: (/TodoList/Version[-1]/Project/.)[1:5]
+Output: (/Project/.)[1:5]
 
 ### Combined Index and Predicate
 User: find the first urgent task in each project
-Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "urgent")][1]
+Output: /Project/Task[atom(content =~ "urgent")][1]
 
 User: show me the second bug-related task overall
-Output: (/TodoList/Version[-1]/Project/Task[atom(content =~ "bug")])[2]
+Output: (/Project/Task[atom(content =~ "bug")])[2]
 
 ### CRUD Operations
 Operation: CREATE
 User: add a new task for implementing the login page in the frontend project
-Output: /TodoList/Version[-1]/Project[atom(content =~ "frontend")]
+Output: /Project[atom(content =~ "frontend")]
 Reason: The query retrieves the frontend Project node as the insertion scope. The terms "login page" describe properties of the task to be created and therefore do not participate in retrieval.
 
 Operation: CREATE
 User: add a subtask for writing unit tests under the authentication task
-Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "authentication")]
+Output: /Project/Task[atom(content =~ "authentication")]
 Reason: The query retrieves the authentication Task node as the insertion scope. The phrase "writing unit tests" describes the subtask to be created and does not affect retrieval.
 
 Operation: UPDATE
 User: mark the login task as completed
-Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "login")]
+Output: /Project/Task[atom(content =~ "login")]
 Reason: The query retrieves the existing login Task as the target node to be modified. The new status (completed) is applied during the update step and does not affect retrieval.
 
 Operation: DELETE
 User: delete all completed tasks
-Output: /TodoList/Version[-1]/Project/Task[atom(content =~ "completed")]
+Output: /Project/Task[atom(content =~ "completed")]
 
 Operation: DELETE
 User: remove the first task in the backend project
-Output: /TodoList/Version[-1]/Project[atom(content =~ "backend")]/Task[1]
+Output: /Project[atom(content =~ "backend")]/Task[1]

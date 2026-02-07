@@ -33,7 +33,7 @@ from pipeline_execution.query_generation.semantic_xpath_query_generator.xpath_qu
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import CRUDOperation
 from pipeline_execution.query_generation.semantic_xpath_query_generator.semantic_xpath_query_generator_model import ParsedQuery
 from pipeline_execution.pipeline_orchestrator.orchestrator_models import PipelineTimer
-from pipeline_execution.semantic_xpath_execution import DenseXPathExecutor
+from pipeline_execution.semantic_xpath_execution import DenseXPathExecutor, get_versioning_info
 from utils.tree_modification import VersionManager, copy_version_content
 from utils.logger.query_orchestrator_logging import PipelineSummaryLogger
 
@@ -106,7 +106,10 @@ class SemanticXPathOrchestrator:
         self.create_handler = CreateHandler(schema=schema, traces_path=handler_traces_path)
         
         # Tree modification components
-        self.version_manager = VersionManager(base_directory=base_dir)
+        self.version_manager = VersionManager(
+            base_directory=base_dir,
+            schema_name=self.executor.schema_name
+        )
         
         # Store reference to tree for modifications
         self._tree = None
@@ -171,7 +174,9 @@ class SemanticXPathOrchestrator:
                 "timing": timer.to_dict()
             }
         
-        version_number = target_version.get("number", "?")
+        versioning = get_versioning_info(self.executor.schema_name)
+        index_attr = versioning.get("version_index_attr") or "number"
+        version_number = target_version.get(index_attr, "?")
         logger.info(f"Operating on version {version_number}")
         print(f"📁 Target version: {version_number}")
         
@@ -545,17 +550,38 @@ class SemanticXPathOrchestrator:
         """Build an xpath query that targets the specific version.
         
         Handles both regular paths and global index queries:
-        - Regular: /Itinerary/Day/POI -> /Root/Itinerary_Version[1]/Itinerary/Day/POI
-        - Global: (/Itinerary/Day/POI)[1] -> (/Root/Itinerary_Version[1]/Itinerary/Day/POI)[1]
+        - Regular: /Day/POI -> /Root/Itinerary_Version[1]/Day/POI
+        - Global: (/Day/POI)[1] -> (/Root/Itinerary_Version[1]/Day/POI)[1]
         
         Note: Uses positional index [N] instead of attribute predicate [@number='N']
         because the semantic XPath parser doesn't support attribute predicates.
         """
         import re
         
-        version_number = version.get("number", "1")
-        # Use positional index syntax which the parser understands
-        version_prefix = f"/Root/Itinerary_Version[{version_number}]/Itinerary"
+        versioning = get_versioning_info(self.executor.schema_name)
+        version_tag = versioning.get("version_tag") or version.tag
+        index_attr = versioning.get("version_index_attr") or "number"
+        version_number = version.get(index_attr) or version.get("number") or "1"
+        
+        # Build dynamic prefix based on version schema
+        path_parts = versioning.get("version_path_parts") or [versioning.get("root_tag"), version_tag]
+        path_parts = [p for p in path_parts if p]
+        if path_parts:
+            prefix_parts = path_parts[:-1] + [f"{version_tag}[{version_number}]"]
+            version_prefix = "/" + "/".join(prefix_parts)
+            version_path_base = "/" + "/".join(path_parts)
+        else:
+            version_prefix = f"/{version_tag}[{version_number}]"
+            version_path_base = f"/{version_tag}"
+        
+        def apply_prefix(inner_path: str) -> str:
+            if inner_path.startswith(version_prefix):
+                return inner_path
+            if inner_path.startswith(version_path_base):
+                return f"{version_prefix}{inner_path[len(version_path_base):]}"
+            if not inner_path.startswith("/"):
+                inner_path = "/" + inner_path
+            return f"{version_prefix}{inner_path}"
         
         # Handle global index queries: (/path)[index] -> (/version_prefix/path)[index]
         # Pattern matches (/...)[N] or (/...)[N:M] or (/...)[-N:] etc.
@@ -563,24 +589,10 @@ class SemanticXPathOrchestrator:
         if global_index_match:
             inner_path = global_index_match.group(1)
             global_index = global_index_match.group(2)
-            
-            # Transform the inner path
-            if inner_path.startswith("/Itinerary"):
-                inner_path = inner_path[len("/Itinerary"):]
-            elif not inner_path.startswith("/"):
-                inner_path = "/" + inner_path
-                
-            return f"({version_prefix}{inner_path}){global_index}"
+            return f"({apply_prefix(inner_path)}){global_index}"
         
         # Regular queries
-        if xpath.startswith("/Itinerary"):
-            remaining = xpath[len("/Itinerary"):]
-            return f"{version_prefix}{remaining}"
-        
-        if not xpath.startswith("/"):
-            xpath = "/" + xpath
-        
-        return f"{version_prefix}{xpath}"
+        return apply_prefix(xpath)
     
     def reload_tree(self):
         """Reload the tree from the original file."""

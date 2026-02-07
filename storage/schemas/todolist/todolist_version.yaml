@@ -1,0 +1,22 @@
+name: "todolist_version"
+description: "Version wrapper for todolist content"
+
+versioning:
+  root: "TodoList"
+  version_node: "Version"
+  version_index_attr: "number"
+  content_container: null
+
+nodes:
+  TodoList:
+    type: root
+    fields: []
+    children: ["Version"]
+
+  Version:
+    type: version
+    index_attr: "number"
+    fields:
+      - patch_info
+      - conversation_history
+    children: []

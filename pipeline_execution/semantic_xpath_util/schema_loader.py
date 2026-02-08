@@ -59,7 +59,9 @@ def load_schema(schema_name: Optional[str] = None) -> Dict[str, Any]:
     """
     if schema_name is None:
         config = load_config()
-        schema_name = config.get("active_schema", "itinerary")
+        schema_name = config.get("active_schema")
+        if not schema_name:
+            raise ValueError("No active_schema set in config.yaml")
     
     schema_path = _get_schema_path(schema_name)
     
@@ -83,7 +85,9 @@ def load_version_schema(schema_name: Optional[str] = None) -> Dict[str, Any]:
     """
     if schema_name is None:
         config = load_config()
-        schema_name = config.get("active_schema", "itinerary")
+        schema_name = config.get("active_schema")
+        if not schema_name:
+            raise ValueError("No active_schema set in config.yaml")
     
     version_path = _get_version_schema_path(schema_name)
     
@@ -248,7 +252,10 @@ def get_schema_info(schema_name: Optional[str] = None) -> Dict[str, Any]:
         "data_files": resolved_data_files,
         "examples_file": str(_STORAGE_DIR / schema.get("examples_file", "")),
         "syntax_rules": schema.get("syntax_rules", ""),
-        "version_resolver_prompt": schema.get("version_resolver_prompt", "prompts/version_resolver.txt"),
+        "version_resolver_prompt": schema.get(
+            "version_resolver_prompt",
+            "prompts/query_generator/version_resolver.txt",
+        ),
         "version_schema": version_schema,
         "versioning": versioning_info,
         "content_root": content_root,

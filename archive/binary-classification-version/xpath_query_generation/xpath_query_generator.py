@@ -28,7 +28,13 @@ class XPathQueryGenerator:
         - Restaurant
     """
     
-    PROMPT_PATH = Path(__file__).parent.parent / "storage" / "prompts" / "xpath_query_generator.txt"
+    PROMPT_PATH = (
+        Path(__file__).parent.parent
+        / "storage"
+        / "prompts"
+        / "query_generator"
+        / "xpath_query_generator.txt"
+    )
     
     def __init__(self, client=None):
         """

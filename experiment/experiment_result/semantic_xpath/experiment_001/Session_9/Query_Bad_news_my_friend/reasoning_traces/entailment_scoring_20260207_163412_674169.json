@@ -1,0 +1,26 @@
+{
+  "timestamp": "20260207_163412_674169",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "Niagara Falls",
+  "hypothesis": "This is related to Niagara Falls.",
+  "nodes": [
+    {
+      "id": "5351078784_main",
+      "type": "POI",
+      "name": "Art Gallery of Ontario",
+      "description": "name: Art Gallery of Ontario | time_block: 2:30 PM - 4:00 PM | description: Explore Canadian, European, and contemporary art in a Frank Gehry-designed building. | travel_method: Walk | expected_cost: ",
+      "premise": "POI: Art Gallery of Ontario - name: Art Gallery of Ontario | time_block: 2:30 PM - 4:00 PM | description: Explore Canadian, European, and contemporary art in a Frank Gehry-designed building. | travel_method: Walk | expected_cost: CAD 25 | highlights: Group of Seven, Modern architecture",
+      "score": 0.02442334033548832
+    }
+  ],
+  "results": [
+    {
+      "node_id": "5351078784_main",
+      "node_type": "POI",
+      "score": 0.02442334033548832,
+      "reasoning": "Entailment score: 0.0244"
+    }
+  ]
+}

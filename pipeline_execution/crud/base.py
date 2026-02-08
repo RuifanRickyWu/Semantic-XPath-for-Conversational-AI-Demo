@@ -165,7 +165,6 @@ class BaseHandler(ABC):
     to perform relevance reasoning and task-specific output generation.
     """
     
-    PROMPTS_PATH = Path(__file__).parent.parent.parent / "storage" / "prompts"
     DEFAULT_TRACES_PATH = Path(__file__).parent.parent.parent / "traces" / "reasoning_traces"
     
     def __init__(
@@ -174,7 +173,6 @@ class BaseHandler(ABC):
         schema: Optional[Dict[str, Any]] = None,
         save_traces: bool = True,
         traces_path: Path = None,
-        use_dynamic_prompts: bool = True
     ):
         """
         Initialize the handler.
@@ -184,12 +182,10 @@ class BaseHandler(ABC):
             schema: Optional schema dict for node type information
             save_traces: Whether to save reasoning traces
             traces_path: Optional custom path for trace files. If None, traces are not saved.
-            use_dynamic_prompts: Whether to use dynamic prompt loading with domain knowledge
         """
         self._client = client
         self.schema = schema or {}
         self.save_traces = save_traces
-        self.use_dynamic_prompts = use_dynamic_prompts
         self._system_prompt = None
         self.traces_path = traces_path
         self._prompt_loader = None
@@ -220,22 +216,10 @@ class BaseHandler(ABC):
     
     @property
     def system_prompt(self) -> str:
-        """
-        Lazy load the system prompt.
-        
-        Uses dynamic prompt composition if use_dynamic_prompts is True,
-        otherwise falls back to legacy single-file prompts.
-        """
+        """Lazy load the system prompt via dynamic prompt composition."""
         if self._system_prompt is None:
-            if self.use_dynamic_prompts:
-                # Use new dynamic prompt loading
-                handler_type = self.prompt_file.replace(".txt", "")
-                self._system_prompt = self.prompt_loader.load_prompt(handler_type)
-            else:
-                # Legacy: load from single file
-                prompt_path = self.PROMPTS_PATH / self.prompt_file
-                with open(prompt_path, "r", encoding="utf-8") as f:
-                    self._system_prompt = f.read()
+            handler_type = self.prompt_file.replace(".txt", "")
+            self._system_prompt = self.prompt_loader.load_prompt(handler_type)
         return self._system_prompt
     
     @abstractmethod

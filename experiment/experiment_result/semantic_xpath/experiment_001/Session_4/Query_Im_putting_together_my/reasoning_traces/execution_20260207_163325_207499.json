@@ -1,0 +1,1419 @@
+{
+  "timestamp": "20260207_163325_207499",
+  "query": "/Root/Itinerary_Version[1]/Day/desc::Restaurant[atom(content =~ \"most expensive\")]",
+  "data_file": "tree.xml",
+  "execution_time_ms": 1068.7961249999917,
+  "parsed_ast": {
+    "steps": [
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Root",
+            "span": {
+              "start": 1,
+              "end": 5
+            }
+          },
+          "span": {
+            "start": 1,
+            "end": 5
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Itinerary_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 23,
+                "end": 26
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 26
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 26
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Day",
+            "span": {
+              "start": 27,
+              "end": 30
+            }
+          },
+          "span": {
+            "start": 27,
+            "end": 30
+          }
+        }
+      },
+      {
+        "axis": "desc",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Restaurant",
+            "predicate": {
+              "type": "atom",
+              "field": "content",
+              "value": "most expensive",
+              "operator": "=~",
+              "span": {
+                "start": 48,
+                "end": 81
+              }
+            },
+            "predicate_str": "atom(content =~ \"most expensive\")",
+            "span": {
+              "start": 37,
+              "end": 82
+            }
+          },
+          "span": {
+            "start": 37,
+            "end": 82
+          }
+        }
+      }
+    ],
+    "global_index": null
+  },
+  "parsed_ast_tree": "Query AST:\n├── Step 0: Root\n├── Step 1: Itinerary_Version[1]\n├── Step 2: Day\n└── Step 3: desc::Restaurant[predicate]\n    │   predicate:\n        │   └── ATOM(content =~ \"most expensive\")",
+  "execution_log": [
+    "[20260207_163325_207499] Executing query: /Root/Itinerary_Version[1]/Day/desc::Restaurant[atom(content =~ \"most expensive\")]",
+    "Data file: tree.xml",
+    "Parsed steps: [Root, Itinerary_Version[1], Day, desc::Restaurant[atom(content =~ \"most expensive\")]]",
+    "",
+    "Query AST:\n├── Step 0: Root\n├── Step 1: Itinerary_Version[1]\n├── Step 2: Day\n└── Step 3: desc::Restaurant[predicate]\n    │   predicate:\n        │   └── ATOM(content =~ \"most expensive\")",
+    "\n--- Step 1: Root ---",
+    "Matched Root root",
+    "\n--- Step 2: Itinerary_Version[1] ---",
+    "Selected node at index 1 (0-based: 0)",
+    "After step: 1 nodes remaining",
+    "\n--- Step 3: Day ---",
+    "After step: 3 nodes remaining",
+    "\n--- Step 4: desc::Restaurant[atom(content =~ \"most expensive\")] ---",
+    "Scoring predicate: atom(content =~ \"most expensive\") (atomic values: ['most expensive'])",
+    "  Collected 2 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 2 total descriptions",
+    "  Node 0 (Buca Yorkville): score = 0.5303",
+    "  Node 1 (The Rex Hotel Jazz & Blues Bar): score = 0.6218",
+    "Scoring predicate: atom(content =~ \"most expensive\") (atomic values: ['most expensive'])",
+    "  Collected 2 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 2 total descriptions",
+    "  Node 0 (Annona Restaurant): score = 0.2544",
+    "  Node 1 (DaiLo): score = 0.2757",
+    "Scoring predicate: atom(content =~ \"most expensive\") (atomic values: ['most expensive'])",
+    "  Collected 2 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 2 total descriptions",
+    "  Node 0 (Amsterdam BrewHouse): score = 0.1546",
+    "  Node 1 (Cluny Bistro): score = 0.4397",
+    "After step: 6 nodes remaining",
+    "\n=== Score Fusion ===",
+    "  Root > Itinerary_Version 1 > Day 1 > Buca Yorkville: product=0.5303 → score=0.5303",
+    "  Root > Itinerary_Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar: product=0.6218 → score=0.6218",
+    "  Root > Itinerary_Version 1 > Day 2 > Annona Restaurant: product=0.2544 → score=0.2544",
+    "  Root > Itinerary_Version 1 > Day 2 > DaiLo: product=0.2757 → score=0.2757",
+    "  Root > Itinerary_Version 1 > Day 3 > Amsterdam BrewHouse: product=0.1546 → score=0.1546",
+    "  Root > Itinerary_Version 1 > Day 3 > Cluny Bistro: product=0.4397 → score=0.4397",
+    "\n=== Threshold Filtering (threshold=0.05) ===",
+    "  Filtered: 6 → 6 nodes",
+    "\n=== Final Filtering (top_k=5) ===",
+    "  After top_k: 6 → 5 nodes",
+    "\nFinal result: 5 nodes (sorted by score)",
+    "⏱️  Query execution time: 1068.80ms"
+  ],
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Root",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Root",
+          "path": "Root"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[1]",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root",
+          "name": "Root",
+          "type": "Root",
+          "score": 1.0,
+          "node_id": 5346415136
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0,
+          "node_id": 5527101248
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Itinerary_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 23,
+                "end": 26
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 26
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 26
+          }
+        },
+        "found_count": 1,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Day",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0,
+          "node_id": 5527101248
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5527100048
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5527181648
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5346359792
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Day",
+            "span": {
+              "start": 27,
+              "end": 30
+            }
+          },
+          "span": {
+            "start": 27,
+            "end": 30
+          }
+        },
+        "found_count": 3,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "desc::Restaurant[atom(content =~ \"most expensive\")]",
+      "action": "node_test_expr",
+      "nodes_before_count": 3,
+      "nodes_after_count": 6,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5527100048
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5527181648
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5346359792
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1 > Buca Yorkville",
+          "name": "Buca Yorkville",
+          "type": "Restaurant",
+          "score": 0.5302680730819702,
+          "node_id": 5527182768
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "name": "The Rex Hotel Jazz & Blues Bar",
+          "type": "Restaurant",
+          "score": 0.6217933893203735,
+          "node_id": 5527180128
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2 > Annona Restaurant",
+          "name": "Annona Restaurant",
+          "type": "Restaurant",
+          "score": 0.25439146161079407,
+          "node_id": 5346378432
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2 > DaiLo",
+          "name": "DaiLo",
+          "type": "Restaurant",
+          "score": 0.2757495939731598,
+          "node_id": 5526446464
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3 > Amsterdam BrewHouse",
+          "name": "Amsterdam BrewHouse",
+          "type": "Restaurant",
+          "score": 0.15461410582065582,
+          "node_id": 5349427616
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3 > Cluny Bistro",
+          "name": "Cluny Bistro",
+          "type": "Restaurant",
+          "score": 0.4396791160106659,
+          "node_id": 5527132576
+        }
+      ],
+      "details": {
+        "axis": "desc",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Restaurant",
+            "predicate": {
+              "type": "atom",
+              "field": "content",
+              "value": "most expensive",
+              "operator": "=~",
+              "span": {
+                "start": 48,
+                "end": 81
+              }
+            },
+            "predicate_str": "atom(content =~ \"most expensive\")",
+            "span": {
+              "start": 37,
+              "end": 82
+            }
+          },
+          "span": {
+            "start": 37,
+            "end": 82
+          }
+        },
+        "found_count": 6,
+        "scoring_trace": [
+          {
+            "predicate": "atom(content =~ \"most expensive\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "most expensive",
+              "operator": "=~",
+              "span": {
+                "start": 48,
+                "end": 81
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 5527182768,
+                "node_name": "Buca Yorkville",
+                "node_type": "Restaurant",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "most expensive",
+                      "operator": "=~",
+                      "span": {
+                        "start": 48,
+                        "end": 81
+                      }
+                    },
+                    "score": 0.5302680730819702,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.5302680730819702
+              },
+              {
+                "node_idx": 1,
+                "node_id": 5527180128,
+                "node_name": "The Rex Hotel Jazz & Blues Bar",
+                "node_type": "Restaurant",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "most expensive",
+                      "operator": "=~",
+                      "span": {
+                        "start": 48,
+                        "end": 81
+                      }
+                    },
+                    "score": 0.6217933893203735,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.6217933893203735
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "most expensive"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "most expensive",
+                  "num_descriptions": 2,
+                  "call_time_ms": 767.16
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 2
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 1,
+                "score": 0.6217933893203735,
+                "name": "The Rex Hotel Jazz & Blues Bar"
+              },
+              {
+                "idx": 0,
+                "score": 0.5302680730819702,
+                "name": "Buca Yorkville"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"most expensive\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "most expensive",
+              "operator": "=~",
+              "span": {
+                "start": 48,
+                "end": 81
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 5346378432,
+                "node_name": "Annona Restaurant",
+                "node_type": "Restaurant",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "most expensive",
+                      "operator": "=~",
+                      "span": {
+                        "start": 48,
+                        "end": 81
+                      }
+                    },
+                    "score": 0.25439146161079407,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.25439146161079407
+              },
+              {
+                "node_idx": 1,
+                "node_id": 5526446464,
+                "node_name": "DaiLo",
+                "node_type": "Restaurant",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "most expensive",
+                      "operator": "=~",
+                      "span": {
+                        "start": 48,
+                        "end": 81
+                      }
+                    },
+                    "score": 0.2757495939731598,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.2757495939731598
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "most expensive"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "most expensive",
+                  "num_descriptions": 2,
+                  "call_time_ms": 138.15
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 2
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 1,
+                "score": 0.2757495939731598,
+                "name": "DaiLo"
+              },
+              {
+                "idx": 0,
+                "score": 0.25439146161079407,
+                "name": "Annona Restaurant"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"most expensive\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "most expensive",
+              "operator": "=~",
+              "span": {
+                "start": 48,
+                "end": 81
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 5349427616,
+                "node_name": "Amsterdam BrewHouse",
+                "node_type": "Restaurant",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "most expensive",
+                      "operator": "=~",
+                      "span": {
+                        "start": 48,
+                        "end": 81
+                      }
+                    },
+                    "score": 0.15461410582065582,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.15461410582065582
+              },
+              {
+                "node_idx": 1,
+                "node_id": 5527132576,
+                "node_name": "Cluny Bistro",
+                "node_type": "Restaurant",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "most expensive",
+                      "operator": "=~",
+                      "span": {
+                        "start": 48,
+                        "end": 81
+                      }
+                    },
+                    "score": 0.4396791160106659,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.4396791160106659
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "most expensive"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "most expensive",
+                  "num_descriptions": 2,
+                  "call_time_ms": 162.21
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 2
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 1,
+                "score": 0.4396791160106659,
+                "name": "Cluny Bistro"
+              },
+              {
+                "idx": 0,
+                "score": 0.15461410582065582,
+                "name": "Amsterdam BrewHouse"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "atom(content =~ \"most expensive\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "most expensive",
+        "operator": "=~",
+        "span": {
+          "start": 48,
+          "end": 81
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 5527182768,
+          "node_name": "Buca Yorkville",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "most expensive",
+                "operator": "=~",
+                "span": {
+                  "start": 48,
+                  "end": 81
+                }
+              },
+              "score": 0.5302680730819702,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.5302680730819702
+        },
+        {
+          "node_idx": 1,
+          "node_id": 5527180128,
+          "node_name": "The Rex Hotel Jazz & Blues Bar",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "most expensive",
+                "operator": "=~",
+                "span": {
+                  "start": 48,
+                  "end": 81
+                }
+              },
+              "score": 0.6217933893203735,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.6217933893203735
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "most expensive"
+        ],
+        "per_value_stats": [
+          {
+            "value": "most expensive",
+            "num_descriptions": 2,
+            "call_time_ms": 767.16
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 2
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 1,
+          "score": 0.6217933893203735,
+          "name": "The Rex Hotel Jazz & Blues Bar"
+        },
+        {
+          "idx": 0,
+          "score": 0.5302680730819702,
+          "name": "Buca Yorkville"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"most expensive\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "most expensive",
+        "operator": "=~",
+        "span": {
+          "start": 48,
+          "end": 81
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 5346378432,
+          "node_name": "Annona Restaurant",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "most expensive",
+                "operator": "=~",
+                "span": {
+                  "start": 48,
+                  "end": 81
+                }
+              },
+              "score": 0.25439146161079407,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.25439146161079407
+        },
+        {
+          "node_idx": 1,
+          "node_id": 5526446464,
+          "node_name": "DaiLo",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "most expensive",
+                "operator": "=~",
+                "span": {
+                  "start": 48,
+                  "end": 81
+                }
+              },
+              "score": 0.2757495939731598,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.2757495939731598
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "most expensive"
+        ],
+        "per_value_stats": [
+          {
+            "value": "most expensive",
+            "num_descriptions": 2,
+            "call_time_ms": 138.15
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 2
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 1,
+          "score": 0.2757495939731598,
+          "name": "DaiLo"
+        },
+        {
+          "idx": 0,
+          "score": 0.25439146161079407,
+          "name": "Annona Restaurant"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"most expensive\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "most expensive",
+        "operator": "=~",
+        "span": {
+          "start": 48,
+          "end": 81
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 5349427616,
+          "node_name": "Amsterdam BrewHouse",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "most expensive",
+                "operator": "=~",
+                "span": {
+                  "start": 48,
+                  "end": 81
+                }
+              },
+              "score": 0.15461410582065582,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.15461410582065582
+        },
+        {
+          "node_idx": 1,
+          "node_id": 5527132576,
+          "node_name": "Cluny Bistro",
+          "node_type": "Restaurant",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "most expensive",
+                "operator": "=~",
+                "span": {
+                  "start": 48,
+                  "end": 81
+                }
+              },
+              "score": 0.4396791160106659,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.4396791160106659
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "most expensive"
+        ],
+        "per_value_stats": [
+          {
+            "value": "most expensive",
+            "num_descriptions": 2,
+            "call_time_ms": 162.21
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 2
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 1,
+          "score": 0.4396791160106659,
+          "name": "Cluny Bistro"
+        },
+        {
+          "idx": 0,
+          "score": 0.15461410582065582,
+          "name": "Amsterdam BrewHouse"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "atom(content =~ \"most expensive\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "most expensive",
+          "operator": "=~",
+          "span": {
+            "start": 48,
+            "end": 81
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 5527182768,
+            "node_name": "Buca Yorkville",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "most expensive",
+                  "operator": "=~",
+                  "span": {
+                    "start": 48,
+                    "end": 81
+                  }
+                },
+                "score": 0.5302680730819702,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.5302680730819702
+          },
+          {
+            "node_idx": 1,
+            "node_id": 5527180128,
+            "node_name": "The Rex Hotel Jazz & Blues Bar",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "most expensive",
+                  "operator": "=~",
+                  "span": {
+                    "start": 48,
+                    "end": 81
+                  }
+                },
+                "score": 0.6217933893203735,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.6217933893203735
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 1,
+            "score": 0.6217933893203735,
+            "name": "The Rex Hotel Jazz & Blues Bar"
+          },
+          {
+            "idx": 0,
+            "score": 0.5302680730819702,
+            "name": "Buca Yorkville"
+          }
+        ]
+      },
+      {
+        "step_index": 1,
+        "predicate": "atom(content =~ \"most expensive\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "most expensive",
+          "operator": "=~",
+          "span": {
+            "start": 48,
+            "end": 81
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 5346378432,
+            "node_name": "Annona Restaurant",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "most expensive",
+                  "operator": "=~",
+                  "span": {
+                    "start": 48,
+                    "end": 81
+                  }
+                },
+                "score": 0.25439146161079407,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.25439146161079407
+          },
+          {
+            "node_idx": 1,
+            "node_id": 5526446464,
+            "node_name": "DaiLo",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "most expensive",
+                  "operator": "=~",
+                  "span": {
+                    "start": 48,
+                    "end": 81
+                  }
+                },
+                "score": 0.2757495939731598,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.2757495939731598
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 1,
+            "score": 0.2757495939731598,
+            "name": "DaiLo"
+          },
+          {
+            "idx": 0,
+            "score": 0.25439146161079407,
+            "name": "Annona Restaurant"
+          }
+        ]
+      },
+      {
+        "step_index": 2,
+        "predicate": "atom(content =~ \"most expensive\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "most expensive",
+          "operator": "=~",
+          "span": {
+            "start": 48,
+            "end": 81
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 5349427616,
+            "node_name": "Amsterdam BrewHouse",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "most expensive",
+                  "operator": "=~",
+                  "span": {
+                    "start": 48,
+                    "end": 81
+                  }
+                },
+                "score": 0.15461410582065582,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.15461410582065582
+          },
+          {
+            "node_idx": 1,
+            "node_id": 5527132576,
+            "node_name": "Cluny Bistro",
+            "node_type": "Restaurant",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "most expensive",
+                  "operator": "=~",
+                  "span": {
+                    "start": 48,
+                    "end": 81
+                  }
+                },
+                "score": 0.4396791160106659,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.4396791160106659
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 1,
+            "score": 0.4396791160106659,
+            "name": "Cluny Bistro"
+          },
+          {
+            "idx": 0,
+            "score": 0.15461410582065582,
+            "name": "Amsterdam BrewHouse"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 1 > Buca Yorkville",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "Restaurant[atom(content =~ \"most expensive\")]",
+              "score": 0.5302680730819702
+            }
+          ],
+          "accumulated_product": 0.5302680730819702,
+          "final_score": 0.5302680730819702
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "Restaurant[atom(content =~ \"most expensive\")]",
+              "score": 0.6217933893203735
+            }
+          ],
+          "accumulated_product": 0.6217933893203735,
+          "final_score": 0.6217933893203735
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 2 > Annona Restaurant",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "Restaurant[atom(content =~ \"most expensive\")]",
+              "score": 0.25439146161079407
+            }
+          ],
+          "accumulated_product": 0.25439146161079407,
+          "final_score": 0.25439146161079407
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 2 > DaiLo",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "Restaurant[atom(content =~ \"most expensive\")]",
+              "score": 0.2757495939731598
+            }
+          ],
+          "accumulated_product": 0.2757495939731598,
+          "final_score": 0.2757495939731598
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 3 > Amsterdam BrewHouse",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "Restaurant[atom(content =~ \"most expensive\")]",
+              "score": 0.15461410582065582
+            }
+          ],
+          "accumulated_product": 0.15461410582065582,
+          "final_score": 0.15461410582065582
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 3 > Cluny Bistro",
+          "node_type": "Restaurant",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "Restaurant[atom(content =~ \"most expensive\")]",
+              "score": 0.4396791160106659
+            }
+          ],
+          "accumulated_product": 0.4396791160106659,
+          "final_score": 0.4396791160106659
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 6,
+    "threshold": 0.05,
+    "top_k": 5,
+    "after_filter_count": 5,
+    "filtered_nodes": [
+      {
+        "path": "Root > Itinerary_Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar",
+        "score": 0.6217933893203735,
+        "type": "Restaurant",
+        "own_score": 0.6217933893203735,
+        "parent_score": 1.0
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Day 1 > Buca Yorkville",
+        "score": 0.5302680730819702,
+        "type": "Restaurant",
+        "own_score": 0.5302680730819702,
+        "parent_score": 1.0
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Day 3 > Cluny Bistro",
+        "score": 0.4396791160106659,
+        "type": "Restaurant",
+        "own_score": 0.4396791160106659,
+        "parent_score": 1.0
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Day 2 > DaiLo",
+        "score": 0.2757495939731598,
+        "type": "Restaurant",
+        "own_score": 0.2757495939731598,
+        "parent_score": 1.0
+      },
+      {
+        "path": "Root > Itinerary_Version 1 > Day 2 > Annona Restaurant",
+        "score": 0.25439146161079407,
+        "type": "Restaurant",
+        "own_score": 0.25439146161079407,
+        "parent_score": 1.0
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 1 > The Rex Hotel Jazz & Blues Bar",
+      "score": 0.6217933893203735,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "The Rex Hotel Jazz & Blues Bar",
+        "time_block": "8:00 PM - 10:30 PM",
+        "description": "Live jazz performances in a cozy, iconic Toronto venue.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 15 + drinks",
+        "highlights": [
+          "Live jazz",
+          "Intimate atmosphere"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 1 > Buca Yorkville",
+      "score": 0.5302680730819702,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Buca Yorkville",
+        "time_block": "5:30 PM - 7:00 PM",
+        "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Handmade pasta",
+          "Elegant ambiance"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 3 > Cluny Bistro",
+      "score": 0.4396791160106659,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Cluny Bistro",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "French-inspired bistro serving classic and modern dishes.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Elegant decor",
+          "French pastries"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 2 > DaiLo",
+      "score": 0.2757495939731598,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "DaiLo",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-60",
+        "highlights": [
+          "Fusion menu",
+          "Trendy vibe"
+        ]
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 2 > Annona Restaurant",
+      "score": 0.25439146161079407,
+      "node": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Annona Restaurant",
+        "time_block": "1:30 PM - 2:30 PM",
+        "description": "Sophisticated international cuisine in a bright, modern setting.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 30-40",
+        "highlights": [
+          "Patio seating",
+          "Refined dishes"
+        ]
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 3,
+    "matched_count": 5,
+    "execution_time_ms": 1068.7961249999917,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 6,
+    "num_nodes_after_filter": 5
+  }
+}

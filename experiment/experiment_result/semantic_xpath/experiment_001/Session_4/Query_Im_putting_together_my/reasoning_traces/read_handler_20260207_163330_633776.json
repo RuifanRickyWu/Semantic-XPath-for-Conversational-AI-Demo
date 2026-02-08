@@ -1,0 +1,65 @@
+{
+  "user_query": "I'm putting together my expense report. What are the most expensive restaurants I've booked?",
+  "candidates_count": 5,
+  "selected_count": 3,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 1 > Buca Yorkville",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Buca Yorkville",
+        "time_block": "5:30 PM - 7:00 PM",
+        "description": "Upscale Italian dining featuring traditional dishes with a modern twist.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Handmade pasta",
+          "Elegant ambiance"
+        ]
+      },
+      "reasoning": "Buca Yorkville has an expected cost of CAD 50-70, placing it among the most expensive bookings."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 3 > Cluny Bistro",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "Cluny Bistro",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "French-inspired bistro serving classic and modern dishes.",
+        "travel_method": "Walk",
+        "expected_cost": "CAD 50-70",
+        "highlights": [
+          "Elegant decor",
+          "French pastries"
+        ]
+      },
+      "reasoning": "Cluny Bistro has an expected cost of CAD 50-70, matching the highest price range in the list."
+    },
+    {
+      "tree_path": "Root > Itinerary_Version 1 > Day 2 > DaiLo",
+      "node_data": {
+        "type": "Restaurant",
+        "attributes": {},
+        "name": "DaiLo",
+        "time_block": "6:00 PM - 7:30 PM",
+        "description": "Modern Asian-Canadian fusion cuisine with creative flavors.",
+        "travel_method": "Public Transit",
+        "expected_cost": "CAD 50-60",
+        "highlights": [
+          "Fusion menu",
+          "Trendy vibe"
+        ]
+      },
+      "reasoning": "DaiLo has an expected cost of CAD 50-60, which is within the top price bracket among the restaurants."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Buca Yorkville has an expected cost of CAD 50-70, placing it among the most expensive bookings.\"\n    },\n    {\n      \"id\": \"3\",\n      \"reasoning\": \"Cluny Bistro has an expected cost of CAD 50-70, matching the highest price range in the list.\"\n    },\n    {\n      \"id\": \"4\",\n      \"reasoning\": \"DaiLo has an expected cost of CAD 50-60, which is within the top price bracket among the restaurants.\"\n    }\n  ],\n  \"reasoning\": \"Selected the restaurants with the highest listed expected_cost ranges (CAD 50-70 and CAD 50-60). Excluded The Rex (CAD 15+) and Annona (CAD 30-40) as they are lower-cost bookings.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1211,
+    "completion_tokens": 324,
+    "total_tokens": 1535
+  },
+  "processing_time_ms": 4356.111208999991
+}

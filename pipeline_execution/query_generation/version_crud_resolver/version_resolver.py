@@ -69,7 +69,10 @@ class VersionResolver:
         
         # Get schema info to determine prompt path
         schema_info = get_schema_info(schema_name)
-        prompt_file = schema_info.get("version_resolver_prompt", "prompts/version_resolver.txt")
+        prompt_file = schema_info.get(
+            "version_resolver_prompt",
+            "prompts/query_generator/version_resolver.txt",
+        )
         self._prompt_path = Path(__file__).parent.parent.parent.parent / "storage" / prompt_file
         self._schema_name = schema_info["schema_name"]
     

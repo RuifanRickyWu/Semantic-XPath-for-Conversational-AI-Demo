@@ -103,7 +103,7 @@ class InContextPipeline:
     
     def _load_prompt_template(self) -> str:
         """Load the in-context pipeline prompt template."""
-        prompt_path = PROJECT_ROOT / "storage" / "prompts" / "incontext_pipeline.txt"
+        prompt_path = PROJECT_ROOT / "storage" / "prompts" / "experiment" / "incontext_pipeline.txt"
         with open(prompt_path, "r") as f:
             return f.read()
     

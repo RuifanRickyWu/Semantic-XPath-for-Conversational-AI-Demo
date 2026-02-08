@@ -1,0 +1,68 @@
+{
+  "timestamp": "20260207_163346_329601",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "dinner",
+  "hypothesis": "This is related to dinner.",
+  "nodes": [
+    {
+      "id": "5349085568_main",
+      "type": "POI",
+      "name": "Toronto Islands",
+      "description": "name: Toronto Islands | time_block: 11:00 AM - 2:00 PM | description: Ferry ride to scenic islands with beaches, bike trails, and gardens. | travel_method: Walk & Ferry | expected_cost: CAD 8.50 | hig",
+      "premise": "POI: Toronto Islands - name: Toronto Islands | time_block: 11:00 AM - 2:00 PM | description: Ferry ride to scenic islands with beaches, bike trails, and gardens. | travel_method: Walk & Ferry | expected_cost: CAD 8.50 | highlights: Waterfront views, Centre Island",
+      "score": 0.002588090253993869
+    },
+    {
+      "id": "5349088688_main",
+      "type": "Restaurant",
+      "name": "Amsterdam BrewHouse",
+      "description": "name: Amsterdam BrewHouse | time_block: 2:30 PM - 3:30 PM | description: Lakeside pub offering local craft beers and hearty meals. | travel_method: Walk | expected_cost: CAD 25-35 | highlights: Craft ",
+      "premise": "Restaurant: Amsterdam BrewHouse - name: Amsterdam BrewHouse | time_block: 2:30 PM - 3:30 PM | description: Lakeside pub offering local craft beers and hearty meals. | travel_method: Walk | expected_cost: CAD 25-35 | highlights: Craft beer, Lake views",
+      "score": 0.6089515686035156
+    },
+    {
+      "id": "5349088928_main",
+      "type": "POI",
+      "name": "Distillery District",
+      "description": "name: Distillery District | time_block: 4:00 PM - 5:30 PM | description: Historic pedestrian village with cobblestone streets and artisan shops. | travel_method: Walk | expected_cost: Free | highlight",
+      "premise": "POI: Distillery District - name: Distillery District | time_block: 4:00 PM - 5:30 PM | description: Historic pedestrian village with cobblestone streets and artisan shops. | travel_method: Walk | expected_cost: Free | highlights: Historic architecture, Artisan boutiques",
+      "score": 0.024594057351350784
+    },
+    {
+      "id": "5527133936_main",
+      "type": "Restaurant",
+      "name": "Cluny Bistro",
+      "description": "name: Cluny Bistro | time_block: 6:00 PM - 7:30 PM | description: French-inspired bistro serving classic and modern dishes. | travel_method: Walk | expected_cost: CAD 50-70 | highlights: Elegant decor",
+      "premise": "Restaurant: Cluny Bistro - name: Cluny Bistro | time_block: 6:00 PM - 7:30 PM | description: French-inspired bistro serving classic and modern dishes. | travel_method: Walk | expected_cost: CAD 50-70 | highlights: Elegant decor, French pastries",
+      "score": 0.9983622431755066
+    }
+  ],
+  "results": [
+    {
+      "node_id": "5349085568_main",
+      "node_type": "POI",
+      "score": 0.002588090253993869,
+      "reasoning": "Entailment score: 0.0026"
+    },
+    {
+      "node_id": "5349088688_main",
+      "node_type": "Restaurant",
+      "score": 0.6089515686035156,
+      "reasoning": "Entailment score: 0.6090"
+    },
+    {
+      "node_id": "5349088928_main",
+      "node_type": "POI",
+      "score": 0.024594057351350784,
+      "reasoning": "Entailment score: 0.0246"
+    },
+    {
+      "node_id": "5527133936_main",
+      "node_type": "Restaurant",
+      "score": 0.9983622431755066,
+      "reasoning": "Entailment score: 0.9984"
+    }
+  ]
+}

@@ -1,0 +1,1074 @@
+{
+  "timestamp": "20260207_163411_943260",
+  "query": "/Root/Itinerary_Version[1]/Day/POI[atom(content =~ \"Niagara Falls\")]",
+  "data_file": "tree.xml",
+  "execution_time_ms": 859.2759999999942,
+  "parsed_ast": {
+    "steps": [
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Root",
+            "span": {
+              "start": 1,
+              "end": 5
+            }
+          },
+          "span": {
+            "start": 1,
+            "end": 5
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Itinerary_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 23,
+                "end": 26
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 26
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 26
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Day",
+            "span": {
+              "start": 27,
+              "end": 30
+            }
+          },
+          "span": {
+            "start": 27,
+            "end": 30
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "POI",
+            "predicate": {
+              "type": "atom",
+              "field": "content",
+              "value": "Niagara Falls",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 67
+              }
+            },
+            "predicate_str": "atom(content =~ \"Niagara Falls\")",
+            "span": {
+              "start": 31,
+              "end": 68
+            }
+          },
+          "span": {
+            "start": 31,
+            "end": 68
+          }
+        }
+      }
+    ],
+    "global_index": null
+  },
+  "parsed_ast_tree": "Query AST:\n├── Step 0: Root\n├── Step 1: Itinerary_Version[1]\n├── Step 2: Day\n└── Step 3: POI[predicate]\n    │   predicate:\n        │   └── ATOM(content =~ \"Niagara Falls\")",
+  "execution_log": [
+    "[20260207_163411_943260] Executing query: /Root/Itinerary_Version[1]/Day/POI[atom(content =~ \"Niagara Falls\")]",
+    "Data file: tree.xml",
+    "Parsed steps: [Root, Itinerary_Version[1], Day, POI[atom(content =~ \"Niagara Falls\")]]",
+    "",
+    "Query AST:\n├── Step 0: Root\n├── Step 1: Itinerary_Version[1]\n├── Step 2: Day\n└── Step 3: POI[predicate]\n    │   predicate:\n        │   └── ATOM(content =~ \"Niagara Falls\")",
+    "\n--- Step 1: Root ---",
+    "Matched Root root",
+    "\n--- Step 2: Itinerary_Version[1] ---",
+    "Selected node at index 1 (0-based: 0)",
+    "After step: 1 nodes remaining",
+    "\n--- Step 3: Day ---",
+    "After step: 3 nodes remaining",
+    "\n--- Step 4: POI[atom(content =~ \"Niagara Falls\")] ---",
+    "Scoring predicate: atom(content =~ \"Niagara Falls\") (atomic values: ['Niagara Falls'])",
+    "  Collected 1 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 1 total descriptions",
+    "  Node 0 (Art Gallery of Ontario): score = 0.0244",
+    "Scoring predicate: atom(content =~ \"Niagara Falls\") (atomic values: ['Niagara Falls'])",
+    "  Collected 1 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 1 total descriptions",
+    "  Node 0 (Royal Ontario Museum): score = 0.0067",
+    "Scoring predicate: atom(content =~ \"Niagara Falls\") (atomic values: ['Niagara Falls'])",
+    "  Collected 2 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 2 total descriptions",
+    "  Node 0 (Toronto Islands): score = 0.0011",
+    "  Node 1 (Distillery District): score = 0.0021",
+    "After step: 4 nodes remaining",
+    "\n=== Score Fusion ===",
+    "  Root > Itinerary_Version 1 > Day 1 > Art Gallery of Ontario: product=0.0244 → score=0.0244",
+    "  Root > Itinerary_Version 1 > Day 2 > Royal Ontario Museum: product=0.0067 → score=0.0067",
+    "  Root > Itinerary_Version 1 > Day 3 > Toronto Islands: product=0.0011 → score=0.0011",
+    "  Root > Itinerary_Version 1 > Day 3 > Distillery District: product=0.0021 → score=0.0021",
+    "\n=== Threshold Filtering (threshold=0.05) ===",
+    "  Filtered: 4 → 0 nodes",
+    "\n=== Final Filtering (top_k=5) ===",
+    "  After top_k: 0 → 0 nodes",
+    "\nFinal result: 0 nodes (sorted by score)",
+    "⏱️  Query execution time: 859.28ms"
+  ],
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Root",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Root",
+          "path": "Root"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "Itinerary_Version[1]",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root",
+          "name": "Root",
+          "type": "Root",
+          "score": 1.0,
+          "node_id": 5351078144
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0,
+          "node_id": 5351076944
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Itinerary_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 23,
+                "end": 26
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 26
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 26
+          }
+        },
+        "found_count": 1,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Day",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 3,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1",
+          "name": "Itinerary_Version 1",
+          "type": "Itinerary_Version",
+          "score": 1.0,
+          "node_id": 5351076944
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5351077344
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5349426336
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5346359152
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Day",
+            "span": {
+              "start": 27,
+              "end": 30
+            }
+          },
+          "span": {
+            "start": 27,
+            "end": 30
+          }
+        },
+        "found_count": 3,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "POI[atom(content =~ \"Niagara Falls\")]",
+      "action": "node_test_expr",
+      "nodes_before_count": 3,
+      "nodes_after_count": 4,
+      "nodes_before": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1",
+          "name": "Day 1",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5351077344
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2",
+          "name": "Day 2",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5349426336
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3",
+          "name": "Day 3",
+          "type": "Day",
+          "score": 1.0,
+          "node_id": 5346359152
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > Itinerary_Version 1 > Day 1 > Art Gallery of Ontario",
+          "name": "Art Gallery of Ontario",
+          "type": "POI",
+          "score": 0.02442334033548832,
+          "node_id": 5351078784
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 2 > Royal Ontario Museum",
+          "name": "Royal Ontario Museum",
+          "type": "POI",
+          "score": 0.006729051936417818,
+          "node_id": 5349426096
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3 > Toronto Islands",
+          "name": "Toronto Islands",
+          "type": "POI",
+          "score": 0.0010794444242492318,
+          "node_id": 4335360656
+        },
+        {
+          "path": "Root > Itinerary_Version 1 > Day 3 > Distillery District",
+          "name": "Distillery District",
+          "type": "POI",
+          "score": 0.0020629409700632095,
+          "node_id": 4335360736
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "POI",
+            "predicate": {
+              "type": "atom",
+              "field": "content",
+              "value": "Niagara Falls",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 67
+              }
+            },
+            "predicate_str": "atom(content =~ \"Niagara Falls\")",
+            "span": {
+              "start": 31,
+              "end": 68
+            }
+          },
+          "span": {
+            "start": 31,
+            "end": 68
+          }
+        },
+        "found_count": 4,
+        "scoring_trace": [
+          {
+            "predicate": "atom(content =~ \"Niagara Falls\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "Niagara Falls",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 67
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 5351078784,
+                "node_name": "Art Gallery of Ontario",
+                "node_type": "POI",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Niagara Falls",
+                      "operator": "=~",
+                      "span": {
+                        "start": 35,
+                        "end": 67
+                      }
+                    },
+                    "score": 0.02442334033548832,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.02442334033548832
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "Niagara Falls"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "Niagara Falls",
+                  "num_descriptions": 1,
+                  "call_time_ms": 730.49
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 1
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.02442334033548832,
+                "name": "Art Gallery of Ontario"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"Niagara Falls\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "Niagara Falls",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 67
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 5349426096,
+                "node_name": "Royal Ontario Museum",
+                "node_type": "POI",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Niagara Falls",
+                      "operator": "=~",
+                      "span": {
+                        "start": 35,
+                        "end": 67
+                      }
+                    },
+                    "score": 0.006729051936417818,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.006729051936417818
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "Niagara Falls"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "Niagara Falls",
+                  "num_descriptions": 1,
+                  "call_time_ms": 50.48
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 1
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.006729051936417818,
+                "name": "Royal Ontario Museum"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"Niagara Falls\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "Niagara Falls",
+              "operator": "=~",
+              "span": {
+                "start": 35,
+                "end": 67
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 4335360656,
+                "node_name": "Toronto Islands",
+                "node_type": "POI",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Niagara Falls",
+                      "operator": "=~",
+                      "span": {
+                        "start": 35,
+                        "end": 67
+                      }
+                    },
+                    "score": 0.0010794444242492318,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.0010794444242492318
+              },
+              {
+                "node_idx": 1,
+                "node_id": 4335360736,
+                "node_name": "Distillery District",
+                "node_type": "POI",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Niagara Falls",
+                      "operator": "=~",
+                      "span": {
+                        "start": 35,
+                        "end": 67
+                      }
+                    },
+                    "score": 0.0020629409700632095,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.0020629409700632095
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "Niagara Falls"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "Niagara Falls",
+                  "num_descriptions": 2,
+                  "call_time_ms": 77.25
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 2
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 1,
+                "score": 0.0020629409700632095,
+                "name": "Distillery District"
+              },
+              {
+                "idx": 0,
+                "score": 0.0010794444242492318,
+                "name": "Toronto Islands"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "atom(content =~ \"Niagara Falls\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "Niagara Falls",
+        "operator": "=~",
+        "span": {
+          "start": 35,
+          "end": 67
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 5351078784,
+          "node_name": "Art Gallery of Ontario",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls",
+                "operator": "=~",
+                "span": {
+                  "start": 35,
+                  "end": 67
+                }
+              },
+              "score": 0.02442334033548832,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.02442334033548832
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "Niagara Falls"
+        ],
+        "per_value_stats": [
+          {
+            "value": "Niagara Falls",
+            "num_descriptions": 1,
+            "call_time_ms": 730.49
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 1
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.02442334033548832,
+          "name": "Art Gallery of Ontario"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"Niagara Falls\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "Niagara Falls",
+        "operator": "=~",
+        "span": {
+          "start": 35,
+          "end": 67
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 5349426096,
+          "node_name": "Royal Ontario Museum",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls",
+                "operator": "=~",
+                "span": {
+                  "start": 35,
+                  "end": 67
+                }
+              },
+              "score": 0.006729051936417818,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.006729051936417818
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "Niagara Falls"
+        ],
+        "per_value_stats": [
+          {
+            "value": "Niagara Falls",
+            "num_descriptions": 1,
+            "call_time_ms": 50.48
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 1
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.006729051936417818,
+          "name": "Royal Ontario Museum"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"Niagara Falls\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "Niagara Falls",
+        "operator": "=~",
+        "span": {
+          "start": 35,
+          "end": 67
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 4335360656,
+          "node_name": "Toronto Islands",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls",
+                "operator": "=~",
+                "span": {
+                  "start": 35,
+                  "end": 67
+                }
+              },
+              "score": 0.0010794444242492318,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.0010794444242492318
+        },
+        {
+          "node_idx": 1,
+          "node_id": 4335360736,
+          "node_name": "Distillery District",
+          "node_type": "POI",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Niagara Falls",
+                "operator": "=~",
+                "span": {
+                  "start": 35,
+                  "end": 67
+                }
+              },
+              "score": 0.0020629409700632095,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.0020629409700632095
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "Niagara Falls"
+        ],
+        "per_value_stats": [
+          {
+            "value": "Niagara Falls",
+            "num_descriptions": 2,
+            "call_time_ms": 77.25
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 2
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 1,
+          "score": 0.0020629409700632095,
+          "name": "Distillery District"
+        },
+        {
+          "idx": 0,
+          "score": 0.0010794444242492318,
+          "name": "Toronto Islands"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "atom(content =~ \"Niagara Falls\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "Niagara Falls",
+          "operator": "=~",
+          "span": {
+            "start": 35,
+            "end": 67
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 5351078784,
+            "node_name": "Art Gallery of Ontario",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls",
+                  "operator": "=~",
+                  "span": {
+                    "start": 35,
+                    "end": 67
+                  }
+                },
+                "score": 0.02442334033548832,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.02442334033548832
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.02442334033548832,
+            "name": "Art Gallery of Ontario"
+          }
+        ]
+      },
+      {
+        "step_index": 1,
+        "predicate": "atom(content =~ \"Niagara Falls\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "Niagara Falls",
+          "operator": "=~",
+          "span": {
+            "start": 35,
+            "end": 67
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 5349426096,
+            "node_name": "Royal Ontario Museum",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls",
+                  "operator": "=~",
+                  "span": {
+                    "start": 35,
+                    "end": 67
+                  }
+                },
+                "score": 0.006729051936417818,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.006729051936417818
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.006729051936417818,
+            "name": "Royal Ontario Museum"
+          }
+        ]
+      },
+      {
+        "step_index": 2,
+        "predicate": "atom(content =~ \"Niagara Falls\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "Niagara Falls",
+          "operator": "=~",
+          "span": {
+            "start": 35,
+            "end": 67
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 4335360656,
+            "node_name": "Toronto Islands",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls",
+                  "operator": "=~",
+                  "span": {
+                    "start": 35,
+                    "end": 67
+                  }
+                },
+                "score": 0.0010794444242492318,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.0010794444242492318
+          },
+          {
+            "node_idx": 1,
+            "node_id": 4335360736,
+            "node_name": "Distillery District",
+            "node_type": "POI",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "Niagara Falls",
+                  "operator": "=~",
+                  "span": {
+                    "start": 35,
+                    "end": 67
+                  }
+                },
+                "score": 0.0020629409700632095,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.0020629409700632095
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 1,
+            "score": 0.0020629409700632095,
+            "name": "Distillery District"
+          },
+          {
+            "idx": 0,
+            "score": 0.0010794444242492318,
+            "name": "Toronto Islands"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 1 > Art Gallery of Ontario",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "POI[atom(content =~ \"Niagara Falls\")]",
+              "score": 0.02442334033548832
+            }
+          ],
+          "accumulated_product": 0.02442334033548832,
+          "final_score": 0.02442334033548832
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 2 > Royal Ontario Museum",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "POI[atom(content =~ \"Niagara Falls\")]",
+              "score": 0.006729051936417818
+            }
+          ],
+          "accumulated_product": 0.006729051936417818,
+          "final_score": 0.006729051936417818
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 3 > Toronto Islands",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "POI[atom(content =~ \"Niagara Falls\")]",
+              "score": 0.0010794444242492318
+            }
+          ],
+          "accumulated_product": 0.0010794444242492318,
+          "final_score": 0.0010794444242492318
+        },
+        {
+          "node_path": "Root > Itinerary_Version 1 > Day 3 > Distillery District",
+          "node_type": "POI",
+          "step_contributions": [
+            {
+              "step_index": 3,
+              "predicate": "POI[atom(content =~ \"Niagara Falls\")]",
+              "score": 0.0020629409700632095
+            }
+          ],
+          "accumulated_product": 0.0020629409700632095,
+          "final_score": 0.0020629409700632095
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 4,
+    "threshold": 0.05,
+    "top_k": 5,
+    "after_filter_count": 0,
+    "filtered_nodes": []
+  },
+  "matched_nodes": [],
+  "summary": {
+    "total_steps": 4,
+    "total_scoring_calls": 3,
+    "matched_count": 0,
+    "execution_time_ms": 859.2759999999942,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 4,
+    "num_nodes_after_filter": 0
+  }
+}

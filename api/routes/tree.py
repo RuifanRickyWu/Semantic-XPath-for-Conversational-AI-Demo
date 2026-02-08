@@ -95,7 +95,10 @@ def get_version(version_id: int):
     try:
         executor = get_executor(pipeline)
         # Build version file path
-        base_name = executor.memory_path.stem if hasattr(executor, 'memory_path') else "itinerary"
+        if hasattr(executor, "memory_path"):
+            base_name = executor.memory_path.stem
+        else:
+            base_name = getattr(executor, "schema_name", None) or "tree"
         result_dir = Path(__file__).parent.parent.parent / "result" / "demo"
         version_file = result_dir / f"{base_name}_v{version_id}.xml"
         

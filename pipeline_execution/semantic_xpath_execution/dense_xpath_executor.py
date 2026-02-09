@@ -831,13 +831,13 @@ class DenseXPathExecutor:
         Axis semantics:
         - child (default): Match only direct children using findall()
         - desc: Match all descendants at any depth using iter()
-        - "." (wildcard): Match all structured children regardless of type
+        - "*" (wildcard): Match all structured children regardless of type
         
         Each parent node's matches are assigned a unique parent_group_id,
         enabling local indexing like Day/POI[2] to select the 2nd POI
         within EACH Day rather than the global 2nd POI.
         
-        For descendant axis (desc::), the full path through intermediate nodes
+        For descendant axis (//), the full path through intermediate nodes
         is computed to ensure tree operations can find the correct location.
         """
         next_items = []
@@ -849,7 +849,7 @@ class DenseXPathExecutor:
             parent_map = self._node_utils.build_parent_map(self.root)
         
         for group_id, item in enumerate(current_items):
-            if step.node_type == ".":
+            if step.node_type in (".", "*"):
                 # Wildcard: get all structured children regardless of type
                 matches = [
                     child for child in item.node
@@ -882,7 +882,7 @@ class DenseXPathExecutor:
                     next_items.append(NodeItem(child, child_path, item.score, group_id))
         
         # Build log message based on match type
-        if step.node_type == ".":
+        if step.node_type in (".", "*"):
             execution_log.append(
                 f"Found {len(next_items)} children (wildcard) across {len(current_items)} parent(s)"
             )

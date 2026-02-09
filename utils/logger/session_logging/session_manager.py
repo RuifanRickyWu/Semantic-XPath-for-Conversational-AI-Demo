@@ -175,6 +175,8 @@ class SessionManager:
             "success": result.get("success"),
             "xpath_query": result.get("xpath_query"),
             "full_query": result.get("full_query"),
+            "canonical_xpath_query": result.get("canonical_xpath_query"),
+            "canonical_full_query": result.get("canonical_full_query"),
             "timing": result.get("timing", {}),
             "total_time_ms": result.get("total_time_ms"),
             "result_summary": self._extract_result_summary(result)

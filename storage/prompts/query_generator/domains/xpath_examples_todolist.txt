@@ -32,7 +32,7 @@ User: show me all projects in version 2
 Output: /Project
 
 User: review everything in the first project
-Output: /Project[1]/.
+Output: /Project[1]/*
 
 User: give me tasks from project 2 through project 4 so I can review them
 Output: /Project[2:4]/Task
@@ -55,29 +55,29 @@ Output: (/Project/Task[atom(content =~ "urgent")])[-3:]
 
 ### Descendant Axis Queries (schema: Project → Task → SubTask)
 User: show me all subtasks in the latest version
-Output: /Project/desc::SubTask
+Output: /Project//SubTask
 
 User: find all tasks across all projects in the current version
-Output: /Project/desc::Task
+Output: /Project//Task
 
 User: which projects have urgent subtasks that need attention?
-Output: /Project[agg_exists(desc::SubTask[atom(content =~ "urgent")])]
+Output: /Project[agg_exists(//SubTask[atom(content =~ "urgent")])]
 
 User: find tasks that have blocking subtasks preventing progress
 Output: /Project/Task[agg_exists(SubTask[atom(content =~ "blocking")])]
 
 User: show me all bug-related subtasks across the entire todolist
-Output: /Project/desc::SubTask[atom(content =~ "bug")]
+Output: /Project//SubTask[atom(content =~ "bug")]
 
 ### Wildcard Queries (select all children)
 User: show me everything in the first project
-Output: /Project[1]/.
+Output: /Project[1]/*
 
 User: review all items in the last project
-Output: /Project[-1]/.
+Output: /Project[-1]/*
 
 User: give me the first 5 items across all projects
-Output: (/Project/.)[1:5]
+Output: (/Project/*)[1:5]
 
 ### Combined Index and Predicate
 User: find the first urgent task in each project

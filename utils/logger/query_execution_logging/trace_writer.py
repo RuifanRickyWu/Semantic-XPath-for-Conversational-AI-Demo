@@ -17,6 +17,10 @@ from pathlib import Path
 from typing import List, Dict, Any, Union
 
 from pipeline_execution.semantic_xpath_execution.execution_models import ExecutionResult
+from pipeline_execution.semantic_xpath_execution.query_display import (
+    canonicalize_query,
+    canonicalize_parsed_ast_tree,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -104,19 +108,25 @@ class TraceWriter:
         # Build parsed AST if available
         parsed_ast = None
         parsed_ast_tree = None
+        canonical_ast_tree = None
         if result.parsed_ast:
             parsed_ast = result.parsed_ast.to_dict()
             parsed_ast_tree = result.parsed_ast.to_tree_string()
+            canonical_ast_tree = canonicalize_parsed_ast_tree(result.parsed_ast)
+
+        canonical_query = canonicalize_query(result.query)
         
         trace_data = {
             "timestamp": timestamp,
             "query": result.query,
+            "canonical_query": canonical_query,
             "data_file": result.data_file,
             "execution_time_ms": result.execution_time_ms,
             
             # Parsed AST (NEW: for debugging and visualization)
             "parsed_ast": parsed_ast,
             "parsed_ast_tree": parsed_ast_tree,
+            "canonical_parsed_ast_tree": canonical_ast_tree,
             
             # Execution log (human-readable steps)
             "execution_log": result.execution_log,
@@ -202,12 +212,21 @@ class TraceWriter:
         operation = result.get("operation", "unknown").lower()
         trace_file = self.traces_path / f"crud_{operation}_{timestamp}.json"
         
+        xpath_query = result.get("xpath_query")
+        canonical_xpath_query = canonicalize_query(xpath_query) if xpath_query else None
+        operation = result.get("operation")
+        canonical_full_query = None
+        if canonical_xpath_query and operation:
+            canonical_full_query = f"{operation}({canonical_xpath_query})"
+
         trace_data = {
             "timestamp": result.get("timestamp", timestamp),
             "operation": result.get("operation"),
             "user_query": result.get("user_query"),
             "full_query": result.get("full_query"),
             "xpath_query": result.get("xpath_query"),
+            "canonical_full_query": canonical_full_query,
+            "canonical_xpath_query": canonical_xpath_query,
             "success": result.get("success"),
             
             "intent": result.get("intent"),

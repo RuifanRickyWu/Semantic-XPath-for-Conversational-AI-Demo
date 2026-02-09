@@ -32,6 +32,7 @@ from pipeline_execution.query_generation.version_crud_resolver.version_selector_
 from pipeline_execution.query_generation.semantic_xpath_query_generator.xpath_query_generator import XPathQueryGenerator
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import CRUDOperation
 from pipeline_execution.query_generation.semantic_xpath_query_generator.semantic_xpath_query_generator_model import ParsedQuery
+from pipeline_execution.semantic_xpath_execution.query_display import canonicalize_query
 from pipeline_execution.pipeline_orchestrator.orchestrator_models import PipelineTimer
 from pipeline_execution.semantic_xpath_execution import DenseXPathExecutor, get_versioning_info
 from utils.tree_modification import VersionManager, copy_version_content
@@ -194,8 +195,9 @@ class SemanticXPathOrchestrator:
         )
         timer.stop(token_usage=parsed_query.token_usage)
         
-        logger.info(f"Generated XPath: {parsed_query.xpath}")
-        print(f"🛤️  XPath: {parsed_query.xpath}")
+        canonical_generated_xpath = canonicalize_query(parsed_query.xpath)
+        logger.info(f"Generated XPath (canonical): {canonical_generated_xpath}")
+        print(f"🛤️  XPath: {canonical_generated_xpath}")
         
         # Stage 3: XPath Execution (non-LLM)
         timer.start("xpath_execution")
@@ -230,6 +232,9 @@ class SemanticXPathOrchestrator:
         timer.stop(token_usage=token_usage)
         
         # Build result
+        canonical_xpath_query = canonicalize_query(execution_result.query)
+        canonical_full_query = f"{handler_result.operation}({canonical_xpath_query})"
+
         result = {
             "timestamp": timestamp,
             "user_query": user_query,
@@ -241,6 +246,7 @@ class SemanticXPathOrchestrator:
             "version_used": version_number,
             "xpath_execution": {
                 "query": execution_result.query,
+                "canonical_query": canonical_xpath_query,
                 "matched_count": len(execution_result.matched_nodes),
                 "execution_time_ms": execution_result.execution_time_ms,
                 "token_usage": execution_result.token_usage
@@ -250,6 +256,8 @@ class SemanticXPathOrchestrator:
             # Include visualization data from execution result
             "xpath_query": execution_result.query,
             "full_query": f"{handler_result.operation}({execution_result.query})",
+            "canonical_xpath_query": canonical_xpath_query,
+            "canonical_full_query": canonical_full_query,
             "traversal_steps": execution_result.traversal_steps,
             "score_fusion_trace": execution_result.score_fusion_trace,
             "final_filtering_trace": execution_result.final_filtering_trace,

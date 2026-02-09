@@ -39,9 +39,11 @@ class LogFormatter:
         # Extract operation type
         operation_type = pipeline_result.get("operation", "UNKNOWN")
         
-        # Extract semantic xpath query from parsed_query
-        parsed_query = pipeline_result.get("parsed_query", {})
-        semantic_xpath_query = parsed_query.get("xpath", "")
+        # Extract semantic xpath query from parsed_query (prefer canonical if available)
+        semantic_xpath_query = pipeline_result.get("canonical_xpath_query")
+        if not semantic_xpath_query:
+            parsed_query = pipeline_result.get("parsed_query", {})
+            semantic_xpath_query = parsed_query.get("xpath", "")
         
         # Find trace files
         trace_files = LogFormatter.get_trace_file_paths(traces_dir)

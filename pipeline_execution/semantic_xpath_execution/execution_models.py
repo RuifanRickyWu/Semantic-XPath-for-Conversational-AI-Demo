@@ -150,7 +150,7 @@ class ParsedQueryAST:
             prefix = "├── " if i < len(self.steps) - 1 else "└── "
             axis = step.get("axis", "child")
             axis_val = "child" if axis in (None, "none") else axis
-            axis_str = f"{axis_val}::" if axis_val != "child" else ""
+            axis_str = "//" if axis_val == "desc" else ""
             if "node_test_expr" in step:
                 lines.append(f"{prefix}Step {i}: {axis_str}{_format_node_test_expr(step['node_test_expr'])}")
                 predicates = _collect_predicates_from_node_test_expr(step["node_test_expr"])
@@ -224,13 +224,13 @@ def _format_predicate_ast(pred: Dict[str, Any], depth: int = 0) -> List[str]:
         if selector:
             axis = selector.get("axis", "child")
             axis_val = "child" if axis in (None, "none") else axis
-            axis_str = f"{axis_val}::" if axis_val != "child" else ""
+            axis_str = "//" if axis_val == "desc" else ""
             test_str = _format_node_test_expr(selector.get("test", {}))
             lines.append(f"{indent}└── AGG_EXISTS({axis_str}{test_str})")
         else:
             child_type = pred.get("child_type", "*")
             axis = pred.get("child_axis", "child")
-            axis_str = f"{axis}::" if axis != "child" else ""
+            axis_str = "//" if axis == "desc" else ""
             lines.append(f"{indent}└── AGG_EXISTS({axis_str}{child_type})")
         if pred.get("child_predicate"):
             lines.extend(_format_predicate_ast(pred["child_predicate"], depth + 1))
@@ -240,13 +240,13 @@ def _format_predicate_ast(pred: Dict[str, Any], depth: int = 0) -> List[str]:
         if selector:
             axis = selector.get("axis", "child")
             axis_val = "child" if axis in (None, "none") else axis
-            axis_str = f"{axis_val}::" if axis_val != "child" else ""
+            axis_str = "//" if axis_val == "desc" else ""
             test_str = _format_node_test_expr(selector.get("test", {}))
             lines.append(f"{indent}└── AGG_PREV({axis_str}{test_str})")
         else:
             child_type = pred.get("child_type", "*")
             axis = pred.get("child_axis", "child")
-            axis_str = f"{axis}::" if axis != "child" else ""
+            axis_str = "//" if axis == "desc" else ""
             lines.append(f"{indent}└── AGG_PREV({axis_str}{child_type})")
         if pred.get("child_predicate"):
             lines.extend(_format_predicate_ast(pred["child_predicate"], depth + 1))
@@ -273,7 +273,7 @@ def _format_node_test_expr(expr: Dict[str, Any]) -> str:
 def _format_node_test(test: Dict[str, Any]) -> str:
     kind = test.get("kind")
     name = test.get("name")
-    base = "." if kind == "wildcard" else (name or "?")
+    base = "*" if kind == "wildcard" else (name or "?")
     if test.get("predicate"):
         base += "[predicate]"
     if test.get("index"):

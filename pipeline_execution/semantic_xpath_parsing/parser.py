@@ -119,7 +119,7 @@ class NodeTestExprParser:
         or_expr   := and_expr (OR and_expr)*
         and_expr  := primary (AND primary)*
         primary   := node_test | LPAREN expr RPAREN
-        node_test := IDENT | "."  with optional [index] and [predicate]
+        node_test := IDENT | "*"  with optional [index] and [predicate]
     """
 
     def __init__(
@@ -208,7 +208,7 @@ class NodeTestExprParser:
     def _parse_node_test(self) -> NodeTestExpr:
         self._skip_ws()
         start = self._pos
-        if self._peek() == ".":
+        if self._peek() in ("*", "."):
             self._pos += 1
             kind = "wildcard"
             name = None
@@ -666,7 +666,7 @@ class QueryParser:
                 raise QueryParseError("Legacy parse supports only simple node tests.")
             test = step.test.test
             if test.kind == "wildcard":
-                node_type = "."
+                node_type = "*"
             else:
                 node_type = test.name or "?"
             axis = step.axis.value if step.axis != Axis.NONE else "child"
@@ -695,16 +695,18 @@ class QueryParser:
 
     def _parse_path(self, text: str, base_offset: int) -> PathExpr:
         steps: List[Step] = []
-        for part, start, end in _split_path(text, base_offset):
-            step = self._parse_step(part, start, end)
+        for part, start, end, axis_hint in _split_path(text, base_offset):
+            step = self._parse_step(part, start, end, axis_hint)
             steps.append(step)
         span = SourceSpan(base_offset, base_offset + len(text))
         return PathExpr(steps=steps, span=span)
 
-    def _parse_step(self, text: str, start: int, end: int) -> Step:
+    def _parse_step(self, text: str, start: int, end: int, axis_hint: Axis) -> Step:
         trimmed, trim_offset = _lstrip_with_offset(text)
         axis, axis_len = _parse_axis_prefix(trimmed)
         body = trimmed[axis_len:]
+        if axis_len == 0:
+            axis = axis_hint
         body_offset = start + trim_offset + axis_len
         parser = NodeTestExprParser(body, base_offset=body_offset, predicate_parser=parse_predicate)
         expr = parser.parse()
@@ -718,14 +720,10 @@ class QueryParser:
 
 
 def _parse_axis_prefix(text: str) -> Tuple[Axis, int]:
-    if text.startswith("child::"):
-        return Axis.CHILD, len("child::")
-    if text.startswith("desc::"):
-        return Axis.DESC, len("desc::")
-    if text.startswith("::child"):
-        return Axis.CHILD, len("::child")
-    if text.startswith("::desc"):
-        return Axis.DESC, len("::desc")
+    if text.startswith("//"):
+        return Axis.DESC, len("//")
+    if text.startswith("/"):
+        return Axis.NONE, len("/")
     return Axis.NONE, 0
 
 
@@ -794,12 +792,13 @@ def _extract_bracket_global(text: str, start: int) -> Tuple[str, int]:
     return text[start + 1:i - 1], i
 
 
-def _split_path(text: str, base_offset: int) -> List[Tuple[str, int, int]]:
-    parts: List[Tuple[str, int, int]] = []
+def _split_path(text: str, base_offset: int) -> List[Tuple[str, int, int, Axis]]:
+    parts: List[Tuple[str, int, int, Axis]] = []
     bracket_depth = 0
     paren_depth = 0
     in_quote: Optional[str] = None
     current_start = 0
+    pending_axis = Axis.NONE
 
     i = 0
     while i < len(text):
@@ -822,11 +821,18 @@ def _split_path(text: str, base_offset: int) -> List[Tuple[str, int, int]]:
         elif ch == ")":
             paren_depth = max(0, paren_depth - 1)
         elif ch == "/" and bracket_depth == 0 and paren_depth == 0:
+            is_double = i + 1 < len(text) and text[i + 1] == "/"
             segment = text[current_start:i]
             if segment:
                 start = base_offset + current_start
                 end = base_offset + i
-                parts.append((segment, start, end))
+                parts.append((segment, start, end, pending_axis))
+                pending_axis = Axis.NONE
+            if is_double:
+                pending_axis = Axis.DESC
+                i += 1
+            else:
+                pending_axis = Axis.NONE
             current_start = i + 1
         i += 1
 
@@ -835,7 +841,7 @@ def _split_path(text: str, base_offset: int) -> List[Tuple[str, int, int]]:
         if segment:
             start = base_offset + current_start
             end = base_offset + len(text)
-            parts.append((segment, start, end))
+            parts.append((segment, start, end, pending_axis))
 
     # Trim leading empty segment for absolute paths
     if parts and parts[0][0] == "":

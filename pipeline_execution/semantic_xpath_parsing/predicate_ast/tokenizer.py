@@ -3,7 +3,7 @@ Predicate Tokenizer - Converts a predicate string into a flat token stream.
 
 Token types cover the full predicate grammar:
     Keywords:    ATOM, AGG_EXISTS, AGG_PREV, NOT, AND, OR
-    Symbols:     LPAREN, RPAREN, LBRACK, RBRACK, TILDE_EQ (=~), COLONCOLON (::)
+    Symbols:     LPAREN, RPAREN, LBRACK, RBRACK, TILDE_EQ (=~), COLONCOLON (::), SLASH (/)
     Literals:    STRING ("museum"), IDENT (content, POI, desc, child)
     Control:     EOF
 """
@@ -34,6 +34,7 @@ class TokenType(Enum):
     COLONCOLON = auto()  # ::
     DOT = auto()         # . (self node / wildcard)
     STAR = auto()        # * (any node type)
+    SLASH = auto()       # / (axis separator in agg selectors)
 
     # Literals
     STRING = auto()      # "museum" or 'museum'
@@ -130,6 +131,10 @@ def tokenize(text: str, offset: int = 0) -> List[Token]:
             continue
         if text[pos] == '*':
             tokens.append(Token(TokenType.STAR, "*", pos + offset, pos + offset + 1))
+            pos += 1
+            continue
+        if text[pos] == '/':
+            tokens.append(Token(TokenType.SLASH, "/", pos + offset, pos + offset + 1))
             pos += 1
             continue
 

@@ -1,0 +1,38 @@
+{
+  "user_query": "I need to see the first two tasks for the NSERC grant application.",
+  "candidates_count": 5,
+  "selected_count": 2,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Draft research proposal (max 1 page)",
+        "status": "In Progress",
+        "priority": "High",
+        "due_date": "2026-11-15"
+      },
+      "reasoning": "Located under 'NSERC CGS-M Grant Application' (Work) and is a Task ('Draft research proposal'), so it matches the NSERC grant tasks request."
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Request reference letters from Prof. Hinton and Prof. Ng",
+        "status": "Done",
+        "priority": "High",
+        "due_date": "2026-10-30"
+      },
+      "reasoning": "Located under 'NSERC CGS-M Grant Application' (Work) and is a Task ('Request reference letters from Prof. Hinton and Prof. Ng'), so it matches the NSERC grant tasks request."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Located under 'NSERC CGS-M Grant Application' (Work) and is a Task ('Draft research proposal'), so it matches the NSERC grant tasks request.\"\n    },\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Located under 'NSERC CGS-M Grant Application' (Work) and is a Task ('Request reference letters from Prof. Hinton and Prof. Ng'), so it matches the NSERC grant tasks request.\"\n    }\n  ],\n  \"reasoning\": \"Selected the two tasks that are directly under the NSERC CGS-M Grant Application. Excluded other candidates because they belong to different categories (Household or Personal) and are not part of the NSERC grant application.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1059,
+    "completion_tokens": 370,
+    "total_tokens": 1429
+  },
+  "processing_time_ms": 6713.718800107017
+}

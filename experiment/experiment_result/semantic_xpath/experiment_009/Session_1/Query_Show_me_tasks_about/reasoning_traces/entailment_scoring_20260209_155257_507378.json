@@ -1,0 +1,26 @@
+{
+  "timestamp": "20260209_155257_507378",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "running",
+  "hypothesis": "This is related to running.",
+  "nodes": [
+    {
+      "id": "2510768735312_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Daily Meditation (10 mins) | status: Todo | priority: Medium | due_date: Daily",
+      "premise": "Task: Task - description: Daily Meditation (10 mins) | status: Todo | priority: Medium | due_date: Daily",
+      "score": 0.00064355309586972
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2510768735312_main",
+      "node_type": "Task",
+      "score": 0.00064355309586972,
+      "reasoning": "Entailment score: 0.0006"
+    }
+  ]
+}

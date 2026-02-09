@@ -1,0 +1,63 @@
+{
+  "timestamp": "20260209_155115_261281",
+  "operation": "READ",
+  "user_query": "Show me all high priority tasks related to my research.",
+  "full_query": "READ(/Root/ToDoList_Version[1]/Category[atom(content =~ \"Work\")]/Project[atom(content =~ \"research\")]/Task[atom(content =~ \"high priority\")])",
+  "xpath_query": "/Root/ToDoList_Version[1]/Category[atom(content =~ \"Work\")]/Project[atom(content =~ \"research\")]/Task[atom(content =~ \"high priority\")]",
+  "success": true,
+  "intent": null,
+  "reasoning_trace": null,
+  "operation_data": {
+    "candidates_count": 5,
+    "selected_count": 4,
+    "selected_nodes": [
+      {
+        "type": "Task",
+        "attributes": {},
+        "description": "Run simulation benchmark on cluster (HPC)",
+        "status": "Blocked",
+        "priority": "High",
+        "due_date": "2026-02-12",
+        "note": "Waiting for compute allocation",
+        "tree_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+        "reasoning": "Priority is 'High' and task is part of the 'Thesis: Generative Models for fluid dynamics' project (research-related)."
+      },
+      {
+        "type": "Task",
+        "attributes": {},
+        "description": "Weekly meeting prep: Slides on failed experiments",
+        "status": "Todo",
+        "priority": "High",
+        "due_date": "2026-02-10",
+        "tree_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+        "reasoning": "Priority is 'High' and task is part of the 'Thesis: Generative Models for fluid dynamics' project (research-related)."
+      },
+      {
+        "type": "Task",
+        "attributes": {},
+        "description": "Draft research proposal (max 1 page)",
+        "status": "In Progress",
+        "priority": "High",
+        "due_date": "2026-11-15",
+        "tree_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+        "reasoning": "Priority is 'High' and task is part of the 'NSERC CGS-M Grant Application' (research-related grant task)."
+      },
+      {
+        "type": "Task",
+        "attributes": {},
+        "description": "Request reference letters from Prof. Hinton and Prof. Ng",
+        "status": "Done",
+        "priority": "High",
+        "due_date": "2026-10-30",
+        "tree_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+        "reasoning": "Priority is 'High' and task is part of the 'NSERC CGS-M Grant Application' (research-related). Included despite status 'Done' because the query did not restrict by status."
+      }
+    ]
+  },
+  "tree_version": null,
+  "summary": {
+    "operation": "READ",
+    "success": true,
+    "affected_count": 0
+  }
+}

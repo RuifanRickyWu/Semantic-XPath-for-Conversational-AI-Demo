@@ -49,20 +49,22 @@ class SemanticXPathPipeline:
         score_threshold: float = None,
         scoring_method: str = None,
         tree_path: Path = None,
-        traces_path: Path = None
+        traces_path: Path = None,
+        config: dict = None
     ):
         """
         Initialize the pipeline.
         
         Args:
             top_k: Number of top-scoring nodes to consider for semantic predicates.
-                   If None, uses value from config.yaml.
+                   If None, uses value from config.
             score_threshold: Minimum score for a node to be considered relevant.
-                   If None, uses value from config.yaml.
+                   If None, uses value from config.
             scoring_method: Scoring method ("llm" or "entailment").
-                   If None, uses value from config.yaml.
+                   If None, uses value from config.
             tree_path: Optional path to the XML tree. Overrides config default.
             traces_path: Optional path for trace files. If None, uses default traces folder.
+            config: Optional config dict. If not provided, loads from config.yaml.
         """
         self._traces_path = traces_path
         self.orchestrator = SemanticXPathOrchestrator(
@@ -70,7 +72,8 @@ class SemanticXPathPipeline:
             top_k=top_k,
             score_threshold=score_threshold,
             tree_path=tree_path,
-            traces_path=traces_path
+            traces_path=traces_path,
+            config=config
         )
         self.trace_writer = TraceWriter(
             traces_path=traces_path / "reasoning_traces" if traces_path else None

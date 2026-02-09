@@ -1,0 +1,40 @@
+{
+  "timestamp": "20260209_155404_370425",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "Teaching Assistant duties",
+  "hypothesis": "This is related to Teaching Assistant duties.",
+  "nodes": [
+    {
+      "id": "2510768645168_main",
+      "type": "Project",
+      "name": "General",
+      "description": "name: General | status: Active | priority: Low",
+      "premise": "Project: General - name: General | status: Active | priority: Low",
+      "score": 0.12717190384864807
+    },
+    {
+      "id": "2510768646368_main",
+      "type": "Project",
+      "name": "Conference Travel: Vancouver",
+      "description": "name: Conference Travel: Vancouver | status: On Hold | priority: Medium",
+      "premise": "Project: Conference Travel: Vancouver - name: Conference Travel: Vancouver | status: On Hold | priority: Medium",
+      "score": 0.08471720665693283
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2510768645168_main",
+      "node_type": "Project",
+      "score": 0.12717190384864807,
+      "reasoning": "Entailment score: 0.1272"
+    },
+    {
+      "node_id": "2510768646368_main",
+      "node_type": "Project",
+      "score": 0.08471720665693283,
+      "reasoning": "Entailment score: 0.0847"
+    }
+  ]
+}

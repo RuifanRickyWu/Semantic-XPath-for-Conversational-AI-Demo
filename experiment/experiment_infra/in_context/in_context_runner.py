@@ -84,13 +84,20 @@ class InContextRunner:
         self.experiment_name = self.config.get("name", "experiment")
         self.queries = self.config.get("queries", [])
         
-        # Load model from config for pricing
-        try:
-            with open(PROJECT_ROOT / "config.yaml", "r") as f:
-                app_config = yaml.safe_load(f)
-            self.model = app_config.get("openai", {}).get("model", "gpt-4o")
-        except (FileNotFoundError, yaml.YAMLError):
-            self.model = "gpt-4o"  # Default fallback
+        # Load model from embedded config, fallback to config.yaml
+        embedded_config = self.config.get("config", {})
+        if embedded_config:
+            self.app_config = embedded_config
+            self.model = embedded_config.get("openai", {}).get("model", "gpt-4o")
+        else:
+            # Fallback to config.yaml for backward compatibility
+            try:
+                with open(PROJECT_ROOT / "config.yaml", "r") as f:
+                    self.app_config = yaml.safe_load(f)
+                self.model = self.app_config.get("openai", {}).get("model", "gpt-4o")
+            except (FileNotFoundError, yaml.YAMLError):
+                self.app_config = {}
+                self.model = "gpt-4o"  # Default fallback
         
         # Setup output directory
         self.base_output_dir = PROJECT_ROOT / "experiment" / "experiment_result" / "in_context"

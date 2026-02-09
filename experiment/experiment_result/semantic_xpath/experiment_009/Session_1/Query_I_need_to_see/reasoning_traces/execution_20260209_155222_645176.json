@@ -1,0 +1,2463 @@
+{
+  "timestamp": "20260209_155222_645176",
+  "query": "/Root/ToDoList_Version[1]/Category/Project[atom(content =~ \"NSERC grant application\")]/Task[1:2]",
+  "data_file": "tree.xml",
+  "execution_time_ms": 282.3137999512255,
+  "parsed_ast": {
+    "steps": [
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Root",
+            "span": {
+              "start": 1,
+              "end": 5
+            }
+          },
+          "span": {
+            "start": 1,
+            "end": 5
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "ToDoList_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 22,
+                "end": 25
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 25
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 25
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Category",
+            "span": {
+              "start": 26,
+              "end": 34
+            }
+          },
+          "span": {
+            "start": 26,
+            "end": 34
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Project",
+            "predicate": {
+              "type": "atom",
+              "field": "content",
+              "value": "NSERC grant application",
+              "operator": "=~",
+              "span": {
+                "start": 43,
+                "end": 85
+              }
+            },
+            "predicate_str": "atom(content =~ \"NSERC grant application\")",
+            "span": {
+              "start": 35,
+              "end": 86
+            }
+          },
+          "span": {
+            "start": 35,
+            "end": 86
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Task",
+            "index": {
+              "start": 1,
+              "type": "range",
+              "end": 2,
+              "span": {
+                "start": 91,
+                "end": 96
+              }
+            },
+            "span": {
+              "start": 87,
+              "end": 96
+            }
+          },
+          "span": {
+            "start": 87,
+            "end": 96
+          }
+        }
+      }
+    ],
+    "global_index": null
+  },
+  "parsed_ast_tree": "Query AST:\n├── Step 0: Root\n├── Step 1: ToDoList_Version[1]\n├── Step 2: Category\n├── Step 3: Project[predicate]\n    │   predicate:\n        │   └── ATOM(content =~ \"NSERC grant application\")\n└── Step 4: Task[1:2]",
+  "execution_log": [
+    "[20260209_155222_645176] Executing query: /Root/ToDoList_Version[1]/Category/Project[atom(content =~ \"NSERC grant application\")]/Task[1:2]",
+    "Data file: tree.xml",
+    "Parsed steps: [Root, ToDoList_Version[1], Category, Project[atom(content =~ \"NSERC grant application\")], Task[1:2]]",
+    "",
+    "Query AST:\n├── Step 0: Root\n├── Step 1: ToDoList_Version[1]\n├── Step 2: Category\n├── Step 3: Project[predicate]\n    │   predicate:\n        │   └── ATOM(content =~ \"NSERC grant application\")\n└── Step 4: Task[1:2]",
+    "\n--- Step 1: Root ---",
+    "Matched Root root",
+    "\n--- Step 2: ToDoList_Version[1] ---",
+    "Selected node at index 1 (0-based: 0)",
+    "After step: 1 nodes remaining",
+    "\n--- Step 3: Category ---",
+    "After step: 5 nodes remaining",
+    "\n--- Step 4: Project[atom(content =~ \"NSERC grant application\")] ---",
+    "Scoring predicate: atom(content =~ \"NSERC grant application\") (atomic values: ['NSERC grant application'])",
+    "  Collected 3 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 3 total descriptions",
+    "  Node 0 (NSERC CGS-M Grant Application): score = 0.9995",
+    "  Node 1 (Thesis: Generative Models for fluid dynamics): score = 0.0205",
+    "  Node 2 (TA: Intro to ML (CS480)): score = 0.3530",
+    "Scoring predicate: atom(content =~ \"NSERC grant application\") (atomic values: ['NSERC grant application'])",
+    "  Collected 2 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 2 total descriptions",
+    "  Node 0 (General): score = 0.5192",
+    "  Node 1 (Conference Travel: Vancouver): score = 0.1211",
+    "Scoring predicate: atom(content =~ \"NSERC grant application\") (atomic values: ['NSERC grant application'])",
+    "  Collected 3 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 3 total descriptions",
+    "  Node 0 (Fix Garage Door): score = 0.0320",
+    "  Node 1 (Weekly Groceries): score = 0.0074",
+    "  Node 2 (General): score = 0.5192",
+    "Scoring predicate: atom(content =~ \"NSERC grant application\") (atomic values: ['NSERC grant application'])",
+    "  Collected 2 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 2 total descriptions",
+    "  Node 0 (Marathon Training Block): score = 0.1514",
+    "  Node 1 (Mental Health): score = 0.0556",
+    "Scoring predicate: atom(content =~ \"NSERC grant application\") (atomic values: ['NSERC grant application'])",
+    "  Collected 1 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 1 total descriptions",
+    "  Node 0 (Skill Acquisition): score = 0.1034",
+    "After step: 11 nodes remaining",
+    "\n--- Step 5: Task[1:2] ---",
+    "Selected nodes at range [1:2] (0-based: 0:2, got 2 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:2, got 2 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:2, got 2 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:2, got 2 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:1, got 1 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:2, got 2 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:2, got 2 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:1, got 1 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:2, got 2 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:1, got 1 nodes)",
+    "Selected nodes at range [1:2] (0-based: 0:2, got 2 nodes)",
+    "After step: 19 nodes remaining",
+    "\n=== Score Fusion ===",
+    "  Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Personal > General > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Personal > General > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > General > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Health > Marathon Training Block > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Health > Marathon Training Block > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Health > Mental Health > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task: product=1.0000 → score=1.0000",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: own=1.0000 × parent=0.9995 → 0.9995",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: own=1.0000 × parent=0.9995 → 0.9995",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: own=1.0000 × parent=0.0205 → 0.0205",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: own=1.0000 × parent=0.0205 → 0.0205",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task: own=1.0000 × parent=0.3530 → 0.3530",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task: own=1.0000 × parent=0.3530 → 0.3530",
+    "  Parent propagation: Root > ToDoList_Version 1 > Personal > General > Task: own=1.0000 × parent=0.5192 → 0.5192",
+    "  Parent propagation: Root > ToDoList_Version 1 > Personal > General > Task: own=1.0000 × parent=0.5192 → 0.5192",
+    "  Parent propagation: Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver > Task: own=1.0000 × parent=0.1211 → 0.1211",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: own=1.0000 × parent=0.0320 → 0.0320",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: own=1.0000 × parent=0.0320 → 0.0320",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: own=1.0000 × parent=0.0074 → 0.0074",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: own=1.0000 × parent=0.0074 → 0.0074",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > General > Task: own=1.0000 × parent=0.5192 → 0.5192",
+    "  Parent propagation: Root > ToDoList_Version 1 > Health > Marathon Training Block > Task: own=1.0000 × parent=0.1514 → 0.1514",
+    "  Parent propagation: Root > ToDoList_Version 1 > Health > Marathon Training Block > Task: own=1.0000 × parent=0.1514 → 0.1514",
+    "  Parent propagation: Root > ToDoList_Version 1 > Health > Mental Health > Task: own=1.0000 × parent=0.0556 → 0.0556",
+    "  Parent propagation: Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task: own=1.0000 × parent=0.1034 → 0.1034",
+    "  Parent propagation: Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task: own=1.0000 × parent=0.1034 → 0.1034",
+    "\n=== Parent Score Propagation: 19 nodes updated ===",
+    "\n=== Threshold Filtering (threshold=0.05) ===",
+    "  Filtered: 19 → 13 nodes",
+    "\n=== Final Filtering (top_k=5) ===",
+    "  After top_k: 13 → 5 nodes",
+    "\nFinal result: 5 nodes (sorted by score)",
+    "⏱️  Query execution time: 282.31ms"
+  ],
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Root",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Root",
+          "path": "Root"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "ToDoList_Version[1]",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root",
+          "name": "Root",
+          "type": "Root",
+          "score": 1.0,
+          "node_id": 2511884038000
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > ToDoList_Version 1",
+          "name": "ToDoList_Version 1",
+          "type": "ToDoList_Version",
+          "score": 1.0,
+          "node_id": 2511885092640
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "ToDoList_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 22,
+                "end": 25
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 25
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 25
+          }
+        },
+        "found_count": 1,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Category",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 5,
+      "nodes_before": [
+        {
+          "path": "Root > ToDoList_Version 1",
+          "name": "ToDoList_Version 1",
+          "type": "ToDoList_Version",
+          "score": 1.0,
+          "node_id": 2511885092640
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work",
+          "name": "Work",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2511885092800
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal",
+          "name": "Personal",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2510768644928
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household",
+          "name": "Household",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2510768647168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health",
+          "name": "Health",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2510768651568
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning",
+          "name": "Learning",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2510768735792
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Category",
+            "span": {
+              "start": 26,
+              "end": 34
+            }
+          },
+          "span": {
+            "start": 26,
+            "end": 34
+          }
+        },
+        "found_count": 5,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "Project[atom(content =~ \"NSERC grant application\")]",
+      "action": "node_test_expr",
+      "nodes_before_count": 5,
+      "nodes_after_count": 11,
+      "nodes_before": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work",
+          "name": "Work",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2511885092800
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal",
+          "name": "Personal",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2510768644928
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household",
+          "name": "Household",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2510768647168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health",
+          "name": "Health",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2510768651568
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning",
+          "name": "Learning",
+          "type": "Category",
+          "score": 1.0,
+          "node_id": 2510768735792
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application",
+          "name": "NSERC CGS-M Grant Application",
+          "type": "Project",
+          "score": 0.9995043277740479,
+          "node_id": 2511885091200
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics",
+          "name": "Thesis: Generative Models for fluid dynamics",
+          "type": "Project",
+          "score": 0.02048308216035366,
+          "node_id": 2511885094720
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480)",
+          "name": "TA: Intro to ML (CS480)",
+          "type": "Project",
+          "score": 0.3530443608760834,
+          "node_id": 2510768643728
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > General",
+          "name": "General",
+          "type": "Project",
+          "score": 0.5192166566848755,
+          "node_id": 2510768645168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver",
+          "name": "Conference Travel: Vancouver",
+          "type": "Project",
+          "score": 0.12106719613075256,
+          "node_id": 2510768646368
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door",
+          "name": "Fix Garage Door",
+          "type": "Project",
+          "score": 0.03199949115514755,
+          "node_id": 2510768647408
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries",
+          "name": "Weekly Groceries",
+          "type": "Project",
+          "score": 0.007370959036052227,
+          "node_id": 2510768649168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > General",
+          "name": "General",
+          "type": "Project",
+          "score": 0.5192174315452576,
+          "node_id": 2510768650768
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block",
+          "name": "Marathon Training Block",
+          "type": "Project",
+          "score": 0.1514316350221634,
+          "node_id": 2510768651808
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Mental Health",
+          "name": "Mental Health",
+          "type": "Project",
+          "score": 0.05556042492389679,
+          "node_id": 2510768734992
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition",
+          "name": "Skill Acquisition",
+          "type": "Project",
+          "score": 0.10343369096517563,
+          "node_id": 2510768736032
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Project",
+            "predicate": {
+              "type": "atom",
+              "field": "content",
+              "value": "NSERC grant application",
+              "operator": "=~",
+              "span": {
+                "start": 43,
+                "end": 85
+              }
+            },
+            "predicate_str": "atom(content =~ \"NSERC grant application\")",
+            "span": {
+              "start": 35,
+              "end": 86
+            }
+          },
+          "span": {
+            "start": 35,
+            "end": 86
+          }
+        },
+        "found_count": 11,
+        "scoring_trace": [
+          {
+            "predicate": "atom(content =~ \"NSERC grant application\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "NSERC grant application",
+              "operator": "=~",
+              "span": {
+                "start": 43,
+                "end": 85
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 2511885091200,
+                "node_name": "NSERC CGS-M Grant Application",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.9995043277740479,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.9995043277740479
+              },
+              {
+                "node_idx": 1,
+                "node_id": 2511885094720,
+                "node_name": "Thesis: Generative Models for fluid dynamics",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.02048308216035366,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.02048308216035366
+              },
+              {
+                "node_idx": 2,
+                "node_id": 2510768643728,
+                "node_name": "TA: Intro to ML (CS480)",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.3530443608760834,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.3530443608760834
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "NSERC grant application"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "NSERC grant application",
+                  "num_descriptions": 3,
+                  "call_time_ms": 146.61
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 3
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.9995043277740479,
+                "name": "NSERC CGS-M Grant Application"
+              },
+              {
+                "idx": 2,
+                "score": 0.3530443608760834,
+                "name": "TA: Intro to ML (CS480)"
+              },
+              {
+                "idx": 1,
+                "score": 0.02048308216035366,
+                "name": "Thesis: Generative Models for fluid dynamics"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"NSERC grant application\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "NSERC grant application",
+              "operator": "=~",
+              "span": {
+                "start": 43,
+                "end": 85
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 2510768645168,
+                "node_name": "General",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.5192166566848755,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.5192166566848755
+              },
+              {
+                "node_idx": 1,
+                "node_id": 2510768646368,
+                "node_name": "Conference Travel: Vancouver",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.12106719613075256,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.12106719613075256
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "NSERC grant application"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "NSERC grant application",
+                  "num_descriptions": 2,
+                  "call_time_ms": 35.86
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 2
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.5192166566848755,
+                "name": "General"
+              },
+              {
+                "idx": 1,
+                "score": 0.12106719613075256,
+                "name": "Conference Travel: Vancouver"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"NSERC grant application\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "NSERC grant application",
+              "operator": "=~",
+              "span": {
+                "start": 43,
+                "end": 85
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 2510768647408,
+                "node_name": "Fix Garage Door",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.03199949115514755,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.03199949115514755
+              },
+              {
+                "node_idx": 1,
+                "node_id": 2510768649168,
+                "node_name": "Weekly Groceries",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.007370959036052227,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.007370959036052227
+              },
+              {
+                "node_idx": 2,
+                "node_id": 2510768650768,
+                "node_name": "General",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.5192174315452576,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.5192174315452576
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "NSERC grant application"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "NSERC grant application",
+                  "num_descriptions": 3,
+                  "call_time_ms": 45.52
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 3
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 2,
+                "score": 0.5192174315452576,
+                "name": "General"
+              },
+              {
+                "idx": 0,
+                "score": 0.03199949115514755,
+                "name": "Fix Garage Door"
+              },
+              {
+                "idx": 1,
+                "score": 0.007370959036052227,
+                "name": "Weekly Groceries"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"NSERC grant application\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "NSERC grant application",
+              "operator": "=~",
+              "span": {
+                "start": 43,
+                "end": 85
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 2510768651808,
+                "node_name": "Marathon Training Block",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.1514316350221634,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.1514316350221634
+              },
+              {
+                "node_idx": 1,
+                "node_id": 2510768734992,
+                "node_name": "Mental Health",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.05556042492389679,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.05556042492389679
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "NSERC grant application"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "NSERC grant application",
+                  "num_descriptions": 2,
+                  "call_time_ms": 28.04
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 2
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.1514316350221634,
+                "name": "Marathon Training Block"
+              },
+              {
+                "idx": 1,
+                "score": 0.05556042492389679,
+                "name": "Mental Health"
+              }
+            ]
+          },
+          {
+            "predicate": "atom(content =~ \"NSERC grant application\")",
+            "predicate_ast": {
+              "type": "atom",
+              "field": "content",
+              "value": "NSERC grant application",
+              "operator": "=~",
+              "span": {
+                "start": 43,
+                "end": 85
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 2510768736032,
+                "node_name": "Skill Acquisition",
+                "node_type": "Project",
+                "scoring_steps": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "NSERC grant application",
+                      "operator": "=~",
+                      "span": {
+                        "start": 43,
+                        "end": 85
+                      }
+                    },
+                    "score": 0.10343369096517563,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "final_score": 0.10343369096517563
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "NSERC grant application"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "NSERC grant application",
+                  "num_descriptions": 1,
+                  "call_time_ms": 24.9
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 1
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 0,
+                "score": 0.10343369096517563,
+                "name": "Skill Acquisition"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 4,
+      "step_query": "Task[1:2]",
+      "action": "node_test_expr",
+      "nodes_before_count": 11,
+      "nodes_after_count": 19,
+      "nodes_before": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application",
+          "name": "NSERC CGS-M Grant Application",
+          "type": "Project",
+          "score": 0.9995043277740479,
+          "node_id": 2511885091200
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics",
+          "name": "Thesis: Generative Models for fluid dynamics",
+          "type": "Project",
+          "score": 0.02048308216035366,
+          "node_id": 2511885094720
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480)",
+          "name": "TA: Intro to ML (CS480)",
+          "type": "Project",
+          "score": 0.3530443608760834,
+          "node_id": 2510768643728
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > General",
+          "name": "General",
+          "type": "Project",
+          "score": 0.5192166566848755,
+          "node_id": 2510768645168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver",
+          "name": "Conference Travel: Vancouver",
+          "type": "Project",
+          "score": 0.12106719613075256,
+          "node_id": 2510768646368
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door",
+          "name": "Fix Garage Door",
+          "type": "Project",
+          "score": 0.03199949115514755,
+          "node_id": 2510768647408
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries",
+          "name": "Weekly Groceries",
+          "type": "Project",
+          "score": 0.007370959036052227,
+          "node_id": 2510768649168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > General",
+          "name": "General",
+          "type": "Project",
+          "score": 0.5192174315452576,
+          "node_id": 2510768650768
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block",
+          "name": "Marathon Training Block",
+          "type": "Project",
+          "score": 0.1514316350221634,
+          "node_id": 2510768651808
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Mental Health",
+          "name": "Mental Health",
+          "type": "Project",
+          "score": 0.05556042492389679,
+          "node_id": 2510768734992
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition",
+          "name": "Skill Acquisition",
+          "type": "Project",
+          "score": 0.10343369096517563,
+          "node_id": 2510768736032
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2511885092000
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2511885094240
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768642288
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768642848
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768644048
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768644528
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > General > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768645488
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > General > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768645968
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768646768
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768647728
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768648208
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768649488
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768649888
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > General > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768651088
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768652128
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768734512
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Mental Health > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768735312
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768736352
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768736832
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Task",
+            "index": {
+              "start": 1,
+              "type": "range",
+              "end": 2,
+              "span": {
+                "start": 91,
+                "end": 96
+              }
+            },
+            "span": {
+              "start": 87,
+              "end": 96
+            }
+          },
+          "span": {
+            "start": 87,
+            "end": 96
+          }
+        },
+        "found_count": 19,
+        "scoring_trace": []
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "atom(content =~ \"NSERC grant application\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "NSERC grant application",
+        "operator": "=~",
+        "span": {
+          "start": 43,
+          "end": 85
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 2511885091200,
+          "node_name": "NSERC CGS-M Grant Application",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.9995043277740479,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.9995043277740479
+        },
+        {
+          "node_idx": 1,
+          "node_id": 2511885094720,
+          "node_name": "Thesis: Generative Models for fluid dynamics",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.02048308216035366,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.02048308216035366
+        },
+        {
+          "node_idx": 2,
+          "node_id": 2510768643728,
+          "node_name": "TA: Intro to ML (CS480)",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.3530443608760834,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.3530443608760834
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "NSERC grant application"
+        ],
+        "per_value_stats": [
+          {
+            "value": "NSERC grant application",
+            "num_descriptions": 3,
+            "call_time_ms": 146.61
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 3
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.9995043277740479,
+          "name": "NSERC CGS-M Grant Application"
+        },
+        {
+          "idx": 2,
+          "score": 0.3530443608760834,
+          "name": "TA: Intro to ML (CS480)"
+        },
+        {
+          "idx": 1,
+          "score": 0.02048308216035366,
+          "name": "Thesis: Generative Models for fluid dynamics"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"NSERC grant application\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "NSERC grant application",
+        "operator": "=~",
+        "span": {
+          "start": 43,
+          "end": 85
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 2510768645168,
+          "node_name": "General",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.5192166566848755,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.5192166566848755
+        },
+        {
+          "node_idx": 1,
+          "node_id": 2510768646368,
+          "node_name": "Conference Travel: Vancouver",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.12106719613075256,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.12106719613075256
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "NSERC grant application"
+        ],
+        "per_value_stats": [
+          {
+            "value": "NSERC grant application",
+            "num_descriptions": 2,
+            "call_time_ms": 35.86
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 2
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.5192166566848755,
+          "name": "General"
+        },
+        {
+          "idx": 1,
+          "score": 0.12106719613075256,
+          "name": "Conference Travel: Vancouver"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"NSERC grant application\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "NSERC grant application",
+        "operator": "=~",
+        "span": {
+          "start": 43,
+          "end": 85
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 2510768647408,
+          "node_name": "Fix Garage Door",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.03199949115514755,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.03199949115514755
+        },
+        {
+          "node_idx": 1,
+          "node_id": 2510768649168,
+          "node_name": "Weekly Groceries",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.007370959036052227,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.007370959036052227
+        },
+        {
+          "node_idx": 2,
+          "node_id": 2510768650768,
+          "node_name": "General",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.5192174315452576,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.5192174315452576
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "NSERC grant application"
+        ],
+        "per_value_stats": [
+          {
+            "value": "NSERC grant application",
+            "num_descriptions": 3,
+            "call_time_ms": 45.52
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 3
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 2,
+          "score": 0.5192174315452576,
+          "name": "General"
+        },
+        {
+          "idx": 0,
+          "score": 0.03199949115514755,
+          "name": "Fix Garage Door"
+        },
+        {
+          "idx": 1,
+          "score": 0.007370959036052227,
+          "name": "Weekly Groceries"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"NSERC grant application\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "NSERC grant application",
+        "operator": "=~",
+        "span": {
+          "start": 43,
+          "end": 85
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 2510768651808,
+          "node_name": "Marathon Training Block",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.1514316350221634,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.1514316350221634
+        },
+        {
+          "node_idx": 1,
+          "node_id": 2510768734992,
+          "node_name": "Mental Health",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.05556042492389679,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.05556042492389679
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "NSERC grant application"
+        ],
+        "per_value_stats": [
+          {
+            "value": "NSERC grant application",
+            "num_descriptions": 2,
+            "call_time_ms": 28.04
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 2
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.1514316350221634,
+          "name": "Marathon Training Block"
+        },
+        {
+          "idx": 1,
+          "score": 0.05556042492389679,
+          "name": "Mental Health"
+        }
+      ]
+    },
+    {
+      "predicate": "atom(content =~ \"NSERC grant application\")",
+      "predicate_ast": {
+        "type": "atom",
+        "field": "content",
+        "value": "NSERC grant application",
+        "operator": "=~",
+        "span": {
+          "start": 43,
+          "end": 85
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 2510768736032,
+          "node_name": "Skill Acquisition",
+          "node_type": "Project",
+          "scoring_steps": [
+            {
+              "type": "atom",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "NSERC grant application",
+                "operator": "=~",
+                "span": {
+                  "start": 43,
+                  "end": 85
+                }
+              },
+              "score": 0.10343369096517563,
+              "note": "Atom(u, φ) - local node content from attr(u)"
+            }
+          ],
+          "final_score": 0.10343369096517563
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "NSERC grant application"
+        ],
+        "per_value_stats": [
+          {
+            "value": "NSERC grant application",
+            "num_descriptions": 1,
+            "call_time_ms": 24.9
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 1
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 0,
+          "score": 0.10343369096517563,
+          "name": "Skill Acquisition"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "atom(content =~ \"NSERC grant application\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "NSERC grant application",
+          "operator": "=~",
+          "span": {
+            "start": 43,
+            "end": 85
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 2511885091200,
+            "node_name": "NSERC CGS-M Grant Application",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.9995043277740479,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.9995043277740479
+          },
+          {
+            "node_idx": 1,
+            "node_id": 2511885094720,
+            "node_name": "Thesis: Generative Models for fluid dynamics",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.02048308216035366,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.02048308216035366
+          },
+          {
+            "node_idx": 2,
+            "node_id": 2510768643728,
+            "node_name": "TA: Intro to ML (CS480)",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.3530443608760834,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.3530443608760834
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.9995043277740479,
+            "name": "NSERC CGS-M Grant Application"
+          },
+          {
+            "idx": 2,
+            "score": 0.3530443608760834,
+            "name": "TA: Intro to ML (CS480)"
+          },
+          {
+            "idx": 1,
+            "score": 0.02048308216035366,
+            "name": "Thesis: Generative Models for fluid dynamics"
+          }
+        ]
+      },
+      {
+        "step_index": 1,
+        "predicate": "atom(content =~ \"NSERC grant application\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "NSERC grant application",
+          "operator": "=~",
+          "span": {
+            "start": 43,
+            "end": 85
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 2510768645168,
+            "node_name": "General",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.5192166566848755,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.5192166566848755
+          },
+          {
+            "node_idx": 1,
+            "node_id": 2510768646368,
+            "node_name": "Conference Travel: Vancouver",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.12106719613075256,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.12106719613075256
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.5192166566848755,
+            "name": "General"
+          },
+          {
+            "idx": 1,
+            "score": 0.12106719613075256,
+            "name": "Conference Travel: Vancouver"
+          }
+        ]
+      },
+      {
+        "step_index": 2,
+        "predicate": "atom(content =~ \"NSERC grant application\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "NSERC grant application",
+          "operator": "=~",
+          "span": {
+            "start": 43,
+            "end": 85
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 2510768647408,
+            "node_name": "Fix Garage Door",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.03199949115514755,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.03199949115514755
+          },
+          {
+            "node_idx": 1,
+            "node_id": 2510768649168,
+            "node_name": "Weekly Groceries",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.007370959036052227,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.007370959036052227
+          },
+          {
+            "node_idx": 2,
+            "node_id": 2510768650768,
+            "node_name": "General",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.5192174315452576,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.5192174315452576
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 2,
+            "score": 0.5192174315452576,
+            "name": "General"
+          },
+          {
+            "idx": 0,
+            "score": 0.03199949115514755,
+            "name": "Fix Garage Door"
+          },
+          {
+            "idx": 1,
+            "score": 0.007370959036052227,
+            "name": "Weekly Groceries"
+          }
+        ]
+      },
+      {
+        "step_index": 3,
+        "predicate": "atom(content =~ \"NSERC grant application\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "NSERC grant application",
+          "operator": "=~",
+          "span": {
+            "start": 43,
+            "end": 85
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 2510768651808,
+            "node_name": "Marathon Training Block",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.1514316350221634,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.1514316350221634
+          },
+          {
+            "node_idx": 1,
+            "node_id": 2510768734992,
+            "node_name": "Mental Health",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.05556042492389679,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.05556042492389679
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.1514316350221634,
+            "name": "Marathon Training Block"
+          },
+          {
+            "idx": 1,
+            "score": 0.05556042492389679,
+            "name": "Mental Health"
+          }
+        ]
+      },
+      {
+        "step_index": 4,
+        "predicate": "atom(content =~ \"NSERC grant application\")",
+        "predicate_ast": {
+          "type": "atom",
+          "field": "content",
+          "value": "NSERC grant application",
+          "operator": "=~",
+          "span": {
+            "start": 43,
+            "end": 85
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 2510768736032,
+            "node_name": "Skill Acquisition",
+            "node_type": "Project",
+            "scoring_steps": [
+              {
+                "type": "atom",
+                "condition": {
+                  "type": "atom",
+                  "field": "content",
+                  "value": "NSERC grant application",
+                  "operator": "=~",
+                  "span": {
+                    "start": 43,
+                    "end": 85
+                  }
+                },
+                "score": 0.10343369096517563,
+                "note": "Atom(u, φ) - local node content from attr(u)"
+              }
+            ],
+            "final_score": 0.10343369096517563
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 0,
+            "score": 0.10343369096517563,
+            "name": "Skill Acquisition"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9995043277740479
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9995043277740479
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.02048308216035366
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.02048308216035366
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.3530443608760834
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.3530443608760834
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Personal > General > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.5192166566848755
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Personal > General > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.5192166566848755
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.12106719613075256
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.03199949115514755
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.03199949115514755
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.007370959036052227
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.007370959036052227
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > General > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.5192174315452576
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.1514316350221634
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.1514316350221634
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Health > Mental Health > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.05556042492389679
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.10343369096517563
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.10343369096517563
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 19,
+    "threshold": 0.05,
+    "top_k": 5,
+    "after_filter_count": 5,
+    "filtered_nodes": [
+      {
+        "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+        "score": 0.9995043277740479,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.9995043277740479
+      },
+      {
+        "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+        "score": 0.9995043277740479,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.9995043277740479
+      },
+      {
+        "path": "Root > ToDoList_Version 1 > Household > General > Task",
+        "score": 0.5192174315452576,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.5192174315452576
+      },
+      {
+        "path": "Root > ToDoList_Version 1 > Personal > General > Task",
+        "score": 0.5192166566848755,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.5192166566848755
+      },
+      {
+        "path": "Root > ToDoList_Version 1 > Personal > General > Task",
+        "score": 0.5192166566848755,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.5192166566848755
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+      "score": 0.9995043277740479,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Draft research proposal (max 1 page)",
+        "status": "In Progress",
+        "priority": "High",
+        "due_date": "2026-11-15"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+      "score": 0.9995043277740479,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Request reference letters from Prof. Hinton and Prof. Ng",
+        "status": "Done",
+        "priority": "High",
+        "due_date": "2026-10-30"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Household > General > Task",
+      "score": 0.5192174315452576,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Replace burnt out light bulb in hallway",
+        "status": "Todo",
+        "priority": "Low",
+        "due_date": "2026-02-20"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Personal > General > Task",
+      "score": 0.5192166566848755,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Call Mom regarding weekend plans",
+        "status": "Todo",
+        "priority": "Medium",
+        "due_date": "2026-02-11"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Personal > General > Task",
+      "score": 0.5192166566848755,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Renew passport",
+        "status": "Todo",
+        "priority": "Low",
+        "due_date": "2026-06-01"
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 5,
+    "total_scoring_calls": 5,
+    "matched_count": 5,
+    "execution_time_ms": 282.3137999512255,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 19,
+    "num_nodes_after_filter": 5
+  }
+}

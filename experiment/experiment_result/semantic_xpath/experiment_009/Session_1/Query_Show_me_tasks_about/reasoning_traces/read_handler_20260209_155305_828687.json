@@ -1,0 +1,38 @@
+{
+  "user_query": "Show me tasks about either 'running' or 'meditation'",
+  "candidates_count": 5,
+  "selected_count": 2,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Long Run: 15km zone 2",
+        "status": "Done",
+        "priority": "High",
+        "due_date": "2026-02-09"
+      },
+      "reasoning": "Description is 'Long Run: 15km zone 2' — explicitly about running (exercise)."
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Health > Mental Health > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Daily Meditation (10 mins)",
+        "status": "Todo",
+        "priority": "Medium",
+        "due_date": "Daily"
+      },
+      "reasoning": "Description is 'Daily Meditation (10 mins)' — explicitly about meditation."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Description is 'Long Run: 15km zone 2' — explicitly about running (exercise).\"\n    },\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Description is 'Daily Meditation (10 mins)' — explicitly about meditation.\"\n    }\n  ],\n  \"reasoning\": \"Selected tasks that explicitly match 'running' (node 1) and 'meditation' (node 2). Excluded node 3 because 'Run' refers to a simulation (not physical running) and is tangential; nodes 4 and 5 are unrelated.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1063,
+    "completion_tokens": 405,
+    "total_tokens": 1468
+  },
+  "processing_time_ms": 8221.103299874812
+}

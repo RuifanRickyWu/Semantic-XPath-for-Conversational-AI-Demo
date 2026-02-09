@@ -1,0 +1,36 @@
+{
+  "user_query": "Which project has the most completed tasks?",
+  "candidates_count": 5,
+  "selected_count": 2,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block",
+      "node_data": {
+        "type": "Project",
+        "attributes": {},
+        "name": "Marathon Training Block",
+        "status": "Active",
+        "priority": "High"
+      },
+      "reasoning": "Contains 2 tasks, 1 with status 'Done' (Long Run: 15km) — tied for the highest number of completed tasks among candidates."
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480)",
+      "node_data": {
+        "type": "Project",
+        "attributes": {},
+        "name": "TA: Intro to ML (CS480)",
+        "status": "Active",
+        "priority": "Medium"
+      },
+      "reasoning": "Contains 2 tasks, 1 with status 'Done' (Hold office hours) — tied for the highest number of completed tasks among candidates."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Contains 2 tasks, 1 with status 'Done' (Long Run: 15km) — tied for the highest number of completed tasks among candidates.\"\n    },\n    {\n      \"id\": \"4\",\n      \"reasoning\": \"Contains 2 tasks, 1 with status 'Done' (Hold office hours) — tied for the highest number of completed tasks among candidates.\"\n    }\n  ],\n  \"reasoning\": \"Projects 1 (Marathon Training Block) and 4 (TA: Intro to ML) each have 1 completed task, which is the highest count among the provided candidates. All other projects have 0 completed tasks.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1245,
+    "completion_tokens": 421,
+    "total_tokens": 1666
+  },
+  "processing_time_ms": 6678.598799975589
+}

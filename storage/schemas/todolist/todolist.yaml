@@ -1,42 +1,54 @@
 name: "todolist"
-description: "Task management with projects, tasks and subtasks"
+description: "Hierarchical task manager with Categories, Projects, and Tasks"
 
 # Tree hierarchy (for documentation and LLM prompt generation)
 hierarchy: |
-  Project (root)
-  └── Task (container)
-      └── SubTask (leaf)
+  Category (root, indexed by @name)
+  └── Project (container)
+      └── Task (leaf)
 
 # Node type definitions
 nodes:
-  Project:
+  Category:
     type: root
-    fields: ["name", "description"]
-    children: ["Task"]
-    
-  Task:
+    index_attr: "name" # Uses <Category name="Work">
+    fields:
+      - description
+    children: ["Project"]
+
+  Project:
     type: container
-    fields: ["title", "description", "status", "priority", "due_date"]
-    children: ["SubTask"]
-    
-  SubTask:
+    fields:
+      - name
+      - status
+      - priority
+      - deadline
+    children: ["Task"]
+
+  Task:
     type: leaf
-    fields: ["title", "description", "status"]
+    fields:
+      - description
+      - status
+      - priority
+      - due_date
+      - note
     children: []
 
 # Available data files for this schema
 data_files:
-  todolist_sample: "memory/todo_list/todolist_sample.xml"
+  todolist: "memory/todo_list/todolist.xml"
 
 # Default data file to use
-default_data: "todolist_sample"
+default_data: "todolist"
 
 # XPath query generation prompt components
 examples_file: "prompts/query_generator/domains/xpath_examples_todolist.txt"
 
 # Syntax rules specific to this schema
 syntax_rules: |
-  - Paths start with /Project
-  - Node types: Project, Task, SubTask
-  - Indices: Task[2], Task[-1], Task[1:3]
-  - Logical: AND / OR / not() combine predicates WITHIN brackets (e.g., [A OR B], [not(A)]), never between paths
+  - Paths always start with /Category
+  - Node types: Category, Project, Task
+  - Hierarchy is strictly: Category -> Project -> Task
+  - Indices: Task[1], Task[-1], Task[1:2]
+  - Logical: AND / OR / not() combine predicates WITHIN brackets

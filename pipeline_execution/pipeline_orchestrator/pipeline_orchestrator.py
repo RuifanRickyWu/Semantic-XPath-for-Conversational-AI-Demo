@@ -68,7 +68,8 @@ class SemanticXPathOrchestrator:
         top_k: int = None,
         score_threshold: float = None,
         tree_path: Path = None,
-        traces_path: Path = None
+        traces_path: Path = None,
+        config: dict = None
     ):
         """
         Initialize the CRUD executor.
@@ -79,6 +80,7 @@ class SemanticXPathOrchestrator:
             score_threshold: Minimum score threshold
             tree_path: Optional path to XML tree (uses config default if not provided)
             traces_path: Optional directory for trace files
+            config: Optional config dict. If not provided, loads from config.yaml.
         """
         # Initialize query processing components
         self.version_resolver = VersionResolver()
@@ -90,7 +92,8 @@ class SemanticXPathOrchestrator:
             top_k=top_k,
             score_threshold=score_threshold,
             tree_path=tree_path,
-            traces_path=traces_path
+            traces_path=traces_path,
+            config=config
         )
         
         # Get base directory from executor's resolved tree path

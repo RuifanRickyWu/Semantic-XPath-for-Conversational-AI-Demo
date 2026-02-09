@@ -1,0 +1,63 @@
+{
+  "user_query": "Show me all high priority tasks related to my research.",
+  "candidates_count": 5,
+  "selected_count": 4,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Run simulation benchmark on cluster (HPC)",
+        "status": "Blocked",
+        "priority": "High",
+        "due_date": "2026-02-12",
+        "note": "Waiting for compute allocation"
+      },
+      "reasoning": "Priority is 'High' and task is part of the 'Thesis: Generative Models for fluid dynamics' project (research-related)."
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Weekly meeting prep: Slides on failed experiments",
+        "status": "Todo",
+        "priority": "High",
+        "due_date": "2026-02-10"
+      },
+      "reasoning": "Priority is 'High' and task is part of the 'Thesis: Generative Models for fluid dynamics' project (research-related)."
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Draft research proposal (max 1 page)",
+        "status": "In Progress",
+        "priority": "High",
+        "due_date": "2026-11-15"
+      },
+      "reasoning": "Priority is 'High' and task is part of the 'NSERC CGS-M Grant Application' (research-related grant task)."
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Request reference letters from Prof. Hinton and Prof. Ng",
+        "status": "Done",
+        "priority": "High",
+        "due_date": "2026-10-30"
+      },
+      "reasoning": "Priority is 'High' and task is part of the 'NSERC CGS-M Grant Application' (research-related). Included despite status 'Done' because the query did not restrict by status."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Priority is 'High' and task is part of the 'Thesis: Generative Models for fluid dynamics' project (research-related).\"\n    },\n    {\n      \"id\": \"2\",\n      \"reasoning\": \"Priority is 'High' and task is part of the 'Thesis: Generative Models for fluid dynamics' project (research-related).\"\n    },\n    {\n      \"id\": \"3\",\n      \"reasoning\": \"Priority is 'High' and task is part of the 'NSERC CGS-M Grant Application' (research-related grant task).\"\n    },\n    {\n      \"id\": \"4\",\n      \"reasoning\": \"Priority is 'High' and task is part of the 'NSERC CGS-M Grant Application' (research-related). Included despite status 'Done' because the query did not restrict by status.\"\n    }\n  ],\n  \"reasoning\": \"Selected all nodes with priority 'High' that are clearly related to research (Thesis or Grant Application). Excluded node 5 because its priority is 'Medium'.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1092,
+    "completion_tokens": 569,
+    "total_tokens": 1661
+  },
+  "processing_time_ms": 10780.082000186667
+}

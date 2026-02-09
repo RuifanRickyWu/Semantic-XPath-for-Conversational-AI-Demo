@@ -1,0 +1,26 @@
+{
+  "user_query": "What are my learning goals for this semester?",
+  "candidates_count": 5,
+  "selected_count": 1,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+      "node_data": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Read 'Attention is All You Need' paper again",
+        "status": "Done",
+        "priority": "Medium",
+        "due_date": "2026-01-20"
+      },
+      "reasoning": "Located under Learning > Skill Acquisition and describes a concrete learning activity ('Read \"Attention is All You Need\" paper again'), which directly corresponds to a learning goal for the semester."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"3\",\n      \"reasoning\": \"Located under Learning > Skill Acquisition and describes a concrete learning activity ('Read \\\"Attention is All You Need\\\" paper again'), which directly corresponds to a learning goal for the semester.\"\n    }\n  ],\n  \"reasoning\": \"Only node 3 is explicitly in the Learning category and represents a learning goal. The other candidates are Work or Personal tasks (grading, travel, grant/thesis prep) and do not directly match the user's request for learning goals.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1078,
+    "completion_tokens": 379,
+    "total_tokens": 1457
+  },
+  "processing_time_ms": 7561.439400073141
+}

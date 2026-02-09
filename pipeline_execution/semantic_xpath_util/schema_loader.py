@@ -46,22 +46,24 @@ def load_config() -> Dict[str, Any]:
         return yaml.safe_load(f)
 
 
-def load_schema(schema_name: Optional[str] = None) -> Dict[str, Any]:
+def load_schema(schema_name: Optional[str] = None, config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """
     Load a schema definition by name.
     
     Args:
         schema_name: Name of the schema (e.g., "itinerary"). 
-                    If None, uses active_schema from config.yaml.
+                    If None, uses active_schema from config.
+        config: Optional config dict. If not provided, loads from config.yaml.
     
     Returns:
         Schema dictionary with node definitions, data files, etc.
     """
     if schema_name is None:
-        config = load_config()
+        if config is None:
+            config = load_config()
         schema_name = config.get("active_schema")
         if not schema_name:
-            raise ValueError("No active_schema set in config.yaml")
+            raise ValueError("No active_schema set in config")
     
     schema_path = _get_schema_path(schema_name)
     
@@ -176,25 +178,28 @@ def get_versioning_info(schema_name: Optional[str] = None) -> Dict[str, Any]:
 
 def get_data_path(
     data_name: Optional[str] = None, 
-    schema_name: Optional[str] = None
+    schema_name: Optional[str] = None,
+    config: Optional[Dict[str, Any]] = None
 ) -> Path:
     """
     Get the full path to a data file.
     
     Args:
         data_name: Name of the data file (e.g., "travel_memory_5day").
-                  If None, uses active_data from config.yaml or schema's default.
+                  If None, uses active_data from config or schema's default.
         schema_name: Name of the schema. If None, uses active_schema from config.
+        config: Optional config dict. If not provided, loads from config.yaml.
     
     Returns:
         Full Path to the data file.
     """
-    config = load_config()
-    schema = load_schema(schema_name)
+    if config is None:
+        config = load_config()
+    schema = load_schema(schema_name, config=config)
     
     # Determine which data file to use
     if data_name is None:
-        # First check config.yaml for active_data
+        # First check config for active_data
         data_name = config.get("active_data")
         
         # Fall back to schema's default_data

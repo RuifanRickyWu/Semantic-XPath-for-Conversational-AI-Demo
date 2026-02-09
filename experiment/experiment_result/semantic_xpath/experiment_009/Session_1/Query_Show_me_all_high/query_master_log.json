@@ -1,0 +1,86 @@
+{
+  "user_query": "Show me all high priority tasks related to my research.",
+  "version_xpath": "at([-1])",
+  "version_result": {
+    "selector_type": "at",
+    "index": -1,
+    "semantic_query": null,
+    "task_query": "show all high priority tasks related to my research",
+    "resolved_version": 1
+  },
+  "operation_type": "READ",
+  "semantic_xpath_query": "/Category[atom(content =~ \"Work\")]/Project[atom(content =~ \"research\")]/Task[atom(content =~ \"high priority\")]",
+  "semantic_xpath_execution_log": {
+    "aggregation_execution_log": "reasoning_traces/execution_20260209_155145_332057.json",
+    "predicate_batch_scoring_log": "reasoning_traces/entailment_scoring_20260209_155145_407478.json"
+  },
+  "semantic_xpath_result": [
+    {
+      "node_relative_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+      "node_info": {
+        "name": "",
+        "type": "Task"
+      },
+      "children_names": [],
+      "score": 0.0
+    },
+    {
+      "node_relative_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+      "node_info": {
+        "name": "",
+        "type": "Task"
+      },
+      "children_names": [],
+      "score": 0.0
+    },
+    {
+      "node_relative_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+      "node_info": {
+        "name": "",
+        "type": "Task"
+      },
+      "children_names": [],
+      "score": 0.0
+    },
+    {
+      "node_relative_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+      "node_info": {
+        "name": "",
+        "type": "Task"
+      },
+      "children_names": [],
+      "score": 0.0
+    }
+  ],
+  "downstream_task_result": {
+    "operation": "READ",
+    "success": true,
+    "selected_count": 4,
+    "candidates_count": 5,
+    "total_time_ms": 41549.66
+  },
+  "execution_time_ms": 41557.51,
+  "token_usage": {
+    "prompt_tokens": 4013,
+    "completion_tokens": 1976,
+    "total_tokens": 5989,
+    "by_stage": {
+      "version_resolution": {
+        "prompt_tokens": 975,
+        "completion_tokens": 154,
+        "total_tokens": 1129
+      },
+      "xpath_generation": {
+        "prompt_tokens": 1946,
+        "completion_tokens": 1253,
+        "total_tokens": 3199
+      },
+      "read_handler": {
+        "prompt_tokens": 1092,
+        "completion_tokens": 569,
+        "total_tokens": 1661
+      }
+    },
+    "cost_usd": 0.09941
+  }
+}

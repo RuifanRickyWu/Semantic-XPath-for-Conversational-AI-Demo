@@ -1,0 +1,54 @@
+{
+  "timestamp": "20260209_155347_301334",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "this semester",
+  "hypothesis": "This is related to this semester.",
+  "nodes": [
+    {
+      "id": "2510768652128_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Long Run: 15km zone 2 | status: Done | priority: High | due_date: 2026-02-09",
+      "premise": "Task: Task - description: Long Run: 15km zone 2 | status: Done | priority: High | due_date: 2026-02-09",
+      "score": 0.8674660921096802
+    },
+    {
+      "id": "2510768734512_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Physio appointment for knee | status: Todo | priority: High | due_date: 2026-02-14",
+      "premise": "Task: Task - description: Physio appointment for knee | status: Todo | priority: High | due_date: 2026-02-14",
+      "score": 0.844613790512085
+    },
+    {
+      "id": "2510768735312_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Daily Meditation (10 mins) | status: Todo | priority: Medium | due_date: Daily",
+      "premise": "Task: Task - description: Daily Meditation (10 mins) | status: Todo | priority: Medium | due_date: Daily",
+      "score": 0.35241982340812683
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2510768652128_main",
+      "node_type": "Task",
+      "score": 0.8674660921096802,
+      "reasoning": "Entailment score: 0.8675"
+    },
+    {
+      "node_id": "2510768734512_main",
+      "node_type": "Task",
+      "score": 0.844613790512085,
+      "reasoning": "Entailment score: 0.8446"
+    },
+    {
+      "node_id": "2510768735312_main",
+      "node_type": "Task",
+      "score": 0.35241982340812683,
+      "reasoning": "Entailment score: 0.3524"
+    }
+  ]
+}

@@ -1,0 +1,1753 @@
+{
+  "timestamp": "20260209_155239_912962",
+  "query": "/Root/ToDoList_Version[1]/Category[not(atom(content =~ \"Work\"))]/Project/Task",
+  "data_file": "tree.xml",
+  "execution_time_ms": 226.61100002005696,
+  "parsed_ast": {
+    "steps": [
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Root",
+            "span": {
+              "start": 1,
+              "end": 5
+            }
+          },
+          "span": {
+            "start": 1,
+            "end": 5
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "ToDoList_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 22,
+                "end": 25
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 25
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 25
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Category",
+            "predicate": {
+              "operator": "NOT",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Work",
+                "operator": "=~",
+                "span": {
+                  "start": 38,
+                  "end": 63
+                }
+              },
+              "span": {
+                "start": 35,
+                "end": 63
+              }
+            },
+            "predicate_str": "not(atom(content =~ \"Work\"))",
+            "span": {
+              "start": 26,
+              "end": 64
+            }
+          },
+          "span": {
+            "start": 26,
+            "end": 64
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Project",
+            "span": {
+              "start": 65,
+              "end": 72
+            }
+          },
+          "span": {
+            "start": 65,
+            "end": 72
+          }
+        }
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Task",
+            "span": {
+              "start": 73,
+              "end": 77
+            }
+          },
+          "span": {
+            "start": 73,
+            "end": 77
+          }
+        }
+      }
+    ],
+    "global_index": null
+  },
+  "parsed_ast_tree": "Query AST:\n├── Step 0: Root\n├── Step 1: ToDoList_Version[1]\n├── Step 2: Category[predicate]\n    │   predicate:\n        │   └── NOT\n            │   └── ATOM(content =~ \"Work\")\n├── Step 3: Project\n└── Step 4: Task",
+  "execution_log": [
+    "[20260209_155239_912962] Executing query: /Root/ToDoList_Version[1]/Category[not(atom(content =~ \"Work\"))]/Project/Task",
+    "Data file: tree.xml",
+    "Parsed steps: [Root, ToDoList_Version[1], Category[not(atom(content =~ \"Work\"))], Project, Task]",
+    "",
+    "Query AST:\n├── Step 0: Root\n├── Step 1: ToDoList_Version[1]\n├── Step 2: Category[predicate]\n    │   predicate:\n        │   └── NOT\n            │   └── ATOM(content =~ \"Work\")\n├── Step 3: Project\n└── Step 4: Task",
+    "\n--- Step 1: Root ---",
+    "Matched Root root",
+    "\n--- Step 2: ToDoList_Version[1] ---",
+    "Selected node at index 1 (0-based: 0)",
+    "After step: 1 nodes remaining",
+    "\n--- Step 3: Category[not(atom(content =~ \"Work\"))] ---",
+    "Scoring predicate: not(atom(content =~ \"Work\")) (atomic values: ['Work'])",
+    "  Collected 5 descriptions for 1 unique semantic value(s)",
+    "  Made 1 scorer call(s) for 5 total descriptions",
+    "  Node 0 (Work): score = 0.0006",
+    "  Node 1 (Personal): score = 0.9977",
+    "  Node 2 (Household): score = 0.9983",
+    "  Node 3 (Health): score = 0.9996",
+    "  Node 4 (Learning): score = 0.9807",
+    "After step: 5 nodes remaining",
+    "\n--- Step 4: Project ---",
+    "After step: 11 nodes remaining",
+    "\n--- Step 5: Task ---",
+    "After step: 23 nodes remaining",
+    "\n=== Score Fusion ===",
+    "  Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Personal > General > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Personal > General > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Household > General > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Health > Marathon Training Block > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Health > Marathon Training Block > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Health > Mental Health > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task: product=1.0000 → score=1.0000",
+    "  Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task: product=1.0000 → score=1.0000",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: own=1.0000 × parent=0.0006 → 0.0006",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: own=1.0000 × parent=0.0006 → 0.0006",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task: own=1.0000 × parent=0.0006 → 0.0006",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: own=1.0000 × parent=0.0006 → 0.0006",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: own=1.0000 × parent=0.0006 → 0.0006",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task: own=1.0000 × parent=0.0006 → 0.0006",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task: own=1.0000 × parent=0.0006 → 0.0006",
+    "  Parent propagation: Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task: own=1.0000 × parent=0.0006 → 0.0006",
+    "  Parent propagation: Root > ToDoList_Version 1 > Personal > General > Task: own=1.0000 × parent=0.9977 → 0.9977",
+    "  Parent propagation: Root > ToDoList_Version 1 > Personal > General > Task: own=1.0000 × parent=0.9977 → 0.9977",
+    "  Parent propagation: Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver > Task: own=1.0000 × parent=0.9977 → 0.9977",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: own=1.0000 × parent=0.9983 → 0.9983",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: own=1.0000 × parent=0.9983 → 0.9983",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Fix Garage Door > Task: own=1.0000 × parent=0.9983 → 0.9983",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: own=1.0000 × parent=0.9983 → 0.9983",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: own=1.0000 × parent=0.9983 → 0.9983",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > Weekly Groceries > Task: own=1.0000 × parent=0.9983 → 0.9983",
+    "  Parent propagation: Root > ToDoList_Version 1 > Household > General > Task: own=1.0000 × parent=0.9983 → 0.9983",
+    "  Parent propagation: Root > ToDoList_Version 1 > Health > Marathon Training Block > Task: own=1.0000 × parent=0.9996 → 0.9996",
+    "  Parent propagation: Root > ToDoList_Version 1 > Health > Marathon Training Block > Task: own=1.0000 × parent=0.9996 → 0.9996",
+    "  Parent propagation: Root > ToDoList_Version 1 > Health > Mental Health > Task: own=1.0000 × parent=0.9996 → 0.9996",
+    "  Parent propagation: Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task: own=1.0000 × parent=0.9807 → 0.9807",
+    "  Parent propagation: Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task: own=1.0000 × parent=0.9807 → 0.9807",
+    "\n=== Parent Score Propagation: 23 nodes updated ===",
+    "\n=== Threshold Filtering (threshold=0.05) ===",
+    "  Filtered: 23 → 15 nodes",
+    "\n=== Final Filtering (top_k=5) ===",
+    "  After top_k: 15 → 5 nodes",
+    "\nFinal result: 5 nodes (sorted by score)",
+    "⏱️  Query execution time: 226.61ms"
+  ],
+  "traversal_steps": [
+    {
+      "step_index": 0,
+      "step_query": "Root",
+      "action": "root_match",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "type": "root"
+        }
+      ],
+      "nodes_after": [
+        {
+          "type": "Root",
+          "path": "Root"
+        }
+      ],
+      "details": {
+        "matched": true
+      }
+    },
+    {
+      "step_index": 1,
+      "step_query": "ToDoList_Version[1]",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 1,
+      "nodes_before": [
+        {
+          "path": "Root",
+          "name": "Root",
+          "type": "Root",
+          "score": 1.0,
+          "node_id": 2511884038000
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > ToDoList_Version 1",
+          "name": "ToDoList_Version 1",
+          "type": "ToDoList_Version",
+          "score": 1.0,
+          "node_id": 2511885092640
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "ToDoList_Version",
+            "index": {
+              "start": 1,
+              "type": "single",
+              "span": {
+                "start": 22,
+                "end": 25
+              }
+            },
+            "span": {
+              "start": 6,
+              "end": 25
+            }
+          },
+          "span": {
+            "start": 6,
+            "end": 25
+          }
+        },
+        "found_count": 1,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 2,
+      "step_query": "Category[not(atom(content =~ \"Work\"))]",
+      "action": "node_test_expr",
+      "nodes_before_count": 1,
+      "nodes_after_count": 5,
+      "nodes_before": [
+        {
+          "path": "Root > ToDoList_Version 1",
+          "name": "ToDoList_Version 1",
+          "type": "ToDoList_Version",
+          "score": 1.0,
+          "node_id": 2511885092640
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work",
+          "name": "Work",
+          "type": "Category",
+          "score": 0.0005726814270019531,
+          "node_id": 2511885092800
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal",
+          "name": "Personal",
+          "type": "Category",
+          "score": 0.9977211379446089,
+          "node_id": 2510768644928
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household",
+          "name": "Household",
+          "type": "Category",
+          "score": 0.9983227208722383,
+          "node_id": 2510768647168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health",
+          "name": "Health",
+          "type": "Category",
+          "score": 0.9996498060354497,
+          "node_id": 2510768651568
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning",
+          "name": "Learning",
+          "type": "Category",
+          "score": 0.9806662239134312,
+          "node_id": 2510768735792
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Category",
+            "predicate": {
+              "operator": "NOT",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Work",
+                "operator": "=~",
+                "span": {
+                  "start": 38,
+                  "end": 63
+                }
+              },
+              "span": {
+                "start": 35,
+                "end": 63
+              }
+            },
+            "predicate_str": "not(atom(content =~ \"Work\"))",
+            "span": {
+              "start": 26,
+              "end": 64
+            }
+          },
+          "span": {
+            "start": 26,
+            "end": 64
+          }
+        },
+        "found_count": 5,
+        "scoring_trace": [
+          {
+            "predicate": "not(atom(content =~ \"Work\"))",
+            "predicate_ast": {
+              "operator": "NOT",
+              "condition": {
+                "type": "atom",
+                "field": "content",
+                "value": "Work",
+                "operator": "=~",
+                "span": {
+                  "start": 38,
+                  "end": 63
+                }
+              },
+              "span": {
+                "start": 35,
+                "end": 63
+              }
+            },
+            "config": {
+              "top_k": 5,
+              "score_threshold": 0.05
+            },
+            "node_scores": [
+              {
+                "node_idx": 0,
+                "node_id": 2511885092800,
+                "node_name": "Work",
+                "node_type": "Category",
+                "scoring_steps": [
+                  {
+                    "type": "not",
+                    "formula": "1 - Score(u, ψ)",
+                    "inner_score": 0.999427318572998,
+                    "inner_trace": [
+                      {
+                        "type": "atom",
+                        "condition": {
+                          "type": "atom",
+                          "field": "content",
+                          "value": "Work",
+                          "operator": "=~",
+                          "span": {
+                            "start": 38,
+                            "end": 63
+                          }
+                        },
+                        "score": 0.999427318572998,
+                        "note": "Atom(u, φ) - local node content from attr(u)"
+                      }
+                    ],
+                    "result": 0.0005726814270019531
+                  }
+                ],
+                "final_score": 0.0005726814270019531
+              },
+              {
+                "node_idx": 1,
+                "node_id": 2510768644928,
+                "node_name": "Personal",
+                "node_type": "Category",
+                "scoring_steps": [
+                  {
+                    "type": "not",
+                    "formula": "1 - Score(u, ψ)",
+                    "inner_score": 0.0022788620553910732,
+                    "inner_trace": [
+                      {
+                        "type": "atom",
+                        "condition": {
+                          "type": "atom",
+                          "field": "content",
+                          "value": "Work",
+                          "operator": "=~",
+                          "span": {
+                            "start": 38,
+                            "end": 63
+                          }
+                        },
+                        "score": 0.0022788620553910732,
+                        "note": "Atom(u, φ) - local node content from attr(u)"
+                      }
+                    ],
+                    "result": 0.9977211379446089
+                  }
+                ],
+                "final_score": 0.9977211379446089
+              },
+              {
+                "node_idx": 2,
+                "node_id": 2510768647168,
+                "node_name": "Household",
+                "node_type": "Category",
+                "scoring_steps": [
+                  {
+                    "type": "not",
+                    "formula": "1 - Score(u, ψ)",
+                    "inner_score": 0.0016772791277617216,
+                    "inner_trace": [
+                      {
+                        "type": "atom",
+                        "condition": {
+                          "type": "atom",
+                          "field": "content",
+                          "value": "Work",
+                          "operator": "=~",
+                          "span": {
+                            "start": 38,
+                            "end": 63
+                          }
+                        },
+                        "score": 0.0016772791277617216,
+                        "note": "Atom(u, φ) - local node content from attr(u)"
+                      }
+                    ],
+                    "result": 0.9983227208722383
+                  }
+                ],
+                "final_score": 0.9983227208722383
+              },
+              {
+                "node_idx": 3,
+                "node_id": 2510768651568,
+                "node_name": "Health",
+                "node_type": "Category",
+                "scoring_steps": [
+                  {
+                    "type": "not",
+                    "formula": "1 - Score(u, ψ)",
+                    "inner_score": 0.00035019396455027163,
+                    "inner_trace": [
+                      {
+                        "type": "atom",
+                        "condition": {
+                          "type": "atom",
+                          "field": "content",
+                          "value": "Work",
+                          "operator": "=~",
+                          "span": {
+                            "start": 38,
+                            "end": 63
+                          }
+                        },
+                        "score": 0.00035019396455027163,
+                        "note": "Atom(u, φ) - local node content from attr(u)"
+                      }
+                    ],
+                    "result": 0.9996498060354497
+                  }
+                ],
+                "final_score": 0.9996498060354497
+              },
+              {
+                "node_idx": 4,
+                "node_id": 2510768735792,
+                "node_name": "Learning",
+                "node_type": "Category",
+                "scoring_steps": [
+                  {
+                    "type": "not",
+                    "formula": "1 - Score(u, ψ)",
+                    "inner_score": 0.019333776086568832,
+                    "inner_trace": [
+                      {
+                        "type": "atom",
+                        "condition": {
+                          "type": "atom",
+                          "field": "content",
+                          "value": "Work",
+                          "operator": "=~",
+                          "span": {
+                            "start": 38,
+                            "end": 63
+                          }
+                        },
+                        "score": 0.019333776086568832,
+                        "note": "Atom(u, φ) - local node content from attr(u)"
+                      }
+                    ],
+                    "result": 0.9806662239134312
+                  }
+                ],
+                "final_score": 0.9806662239134312
+              }
+            ],
+            "batch_scoring": {
+              "semantic_values": [
+                "Work"
+              ],
+              "per_value_stats": [
+                {
+                  "value": "Work",
+                  "num_descriptions": 5,
+                  "call_time_ms": 225.53
+                }
+              ],
+              "total_scorer_calls": 1,
+              "total_descriptions_scored": 5
+            },
+            "token_usage": null,
+            "ranking": [
+              {
+                "idx": 3,
+                "score": 0.9996498060354497,
+                "name": "Health"
+              },
+              {
+                "idx": 2,
+                "score": 0.9983227208722383,
+                "name": "Household"
+              },
+              {
+                "idx": 1,
+                "score": 0.9977211379446089,
+                "name": "Personal"
+              },
+              {
+                "idx": 4,
+                "score": 0.9806662239134312,
+                "name": "Learning"
+              },
+              {
+                "idx": 0,
+                "score": 0.0005726814270019531,
+                "name": "Work"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 3,
+      "step_query": "Project",
+      "action": "node_test_expr",
+      "nodes_before_count": 5,
+      "nodes_after_count": 11,
+      "nodes_before": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work",
+          "name": "Work",
+          "type": "Category",
+          "score": 0.0005726814270019531,
+          "node_id": 2511885092800
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal",
+          "name": "Personal",
+          "type": "Category",
+          "score": 0.9977211379446089,
+          "node_id": 2510768644928
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household",
+          "name": "Household",
+          "type": "Category",
+          "score": 0.9983227208722383,
+          "node_id": 2510768647168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health",
+          "name": "Health",
+          "type": "Category",
+          "score": 0.9996498060354497,
+          "node_id": 2510768651568
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning",
+          "name": "Learning",
+          "type": "Category",
+          "score": 0.9806662239134312,
+          "node_id": 2510768735792
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application",
+          "name": "NSERC CGS-M Grant Application",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2511885091200
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics",
+          "name": "Thesis: Generative Models for fluid dynamics",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2511885094720
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480)",
+          "name": "TA: Intro to ML (CS480)",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768643728
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > General",
+          "name": "General",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768645168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver",
+          "name": "Conference Travel: Vancouver",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768646368
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door",
+          "name": "Fix Garage Door",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768647408
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries",
+          "name": "Weekly Groceries",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768649168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > General",
+          "name": "General",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768650768
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block",
+          "name": "Marathon Training Block",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768651808
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Mental Health",
+          "name": "Mental Health",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768734992
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition",
+          "name": "Skill Acquisition",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768736032
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Project",
+            "span": {
+              "start": 65,
+              "end": 72
+            }
+          },
+          "span": {
+            "start": 65,
+            "end": 72
+          }
+        },
+        "found_count": 11,
+        "scoring_trace": []
+      }
+    },
+    {
+      "step_index": 4,
+      "step_query": "Task",
+      "action": "node_test_expr",
+      "nodes_before_count": 11,
+      "nodes_after_count": 23,
+      "nodes_before": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application",
+          "name": "NSERC CGS-M Grant Application",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2511885091200
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics",
+          "name": "Thesis: Generative Models for fluid dynamics",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2511885094720
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480)",
+          "name": "TA: Intro to ML (CS480)",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768643728
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > General",
+          "name": "General",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768645168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver",
+          "name": "Conference Travel: Vancouver",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768646368
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door",
+          "name": "Fix Garage Door",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768647408
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries",
+          "name": "Weekly Groceries",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768649168
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > General",
+          "name": "General",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768650768
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block",
+          "name": "Marathon Training Block",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768651808
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Mental Health",
+          "name": "Mental Health",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768734992
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition",
+          "name": "Skill Acquisition",
+          "type": "Project",
+          "score": 1.0,
+          "node_id": 2510768736032
+        }
+      ],
+      "nodes_after": [
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2511885092000
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2511885094240
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2511885092960
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768642288
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768642848
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768643328
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768644048
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768644528
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > General > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768645488
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > General > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768645968
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768646768
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768647728
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768648208
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768648688
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768649488
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768649888
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768650288
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Household > General > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768651088
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768652128
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768734512
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Health > Mental Health > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768735312
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768736352
+        },
+        {
+          "path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+          "name": "Task",
+          "type": "Task",
+          "score": 1.0,
+          "node_id": 2510768736832
+        }
+      ],
+      "details": {
+        "axis": "none",
+        "node_test_expr": {
+          "type": "leaf",
+          "test": {
+            "type": "node_test",
+            "kind": "type",
+            "name": "Task",
+            "span": {
+              "start": 73,
+              "end": 77
+            }
+          },
+          "span": {
+            "start": 73,
+            "end": 77
+          }
+        },
+        "found_count": 23,
+        "scoring_trace": []
+      }
+    }
+  ],
+  "scoring_traces": [
+    {
+      "predicate": "not(atom(content =~ \"Work\"))",
+      "predicate_ast": {
+        "operator": "NOT",
+        "condition": {
+          "type": "atom",
+          "field": "content",
+          "value": "Work",
+          "operator": "=~",
+          "span": {
+            "start": 38,
+            "end": 63
+          }
+        },
+        "span": {
+          "start": 35,
+          "end": 63
+        }
+      },
+      "config": {
+        "top_k": 5,
+        "score_threshold": 0.05
+      },
+      "node_scores": [
+        {
+          "node_idx": 0,
+          "node_id": 2511885092800,
+          "node_name": "Work",
+          "node_type": "Category",
+          "scoring_steps": [
+            {
+              "type": "not",
+              "formula": "1 - Score(u, ψ)",
+              "inner_score": 0.999427318572998,
+              "inner_trace": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Work",
+                    "operator": "=~",
+                    "span": {
+                      "start": 38,
+                      "end": 63
+                    }
+                  },
+                  "score": 0.999427318572998,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "result": 0.0005726814270019531
+            }
+          ],
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_idx": 1,
+          "node_id": 2510768644928,
+          "node_name": "Personal",
+          "node_type": "Category",
+          "scoring_steps": [
+            {
+              "type": "not",
+              "formula": "1 - Score(u, ψ)",
+              "inner_score": 0.0022788620553910732,
+              "inner_trace": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Work",
+                    "operator": "=~",
+                    "span": {
+                      "start": 38,
+                      "end": 63
+                    }
+                  },
+                  "score": 0.0022788620553910732,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "result": 0.9977211379446089
+            }
+          ],
+          "final_score": 0.9977211379446089
+        },
+        {
+          "node_idx": 2,
+          "node_id": 2510768647168,
+          "node_name": "Household",
+          "node_type": "Category",
+          "scoring_steps": [
+            {
+              "type": "not",
+              "formula": "1 - Score(u, ψ)",
+              "inner_score": 0.0016772791277617216,
+              "inner_trace": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Work",
+                    "operator": "=~",
+                    "span": {
+                      "start": 38,
+                      "end": 63
+                    }
+                  },
+                  "score": 0.0016772791277617216,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "result": 0.9983227208722383
+            }
+          ],
+          "final_score": 0.9983227208722383
+        },
+        {
+          "node_idx": 3,
+          "node_id": 2510768651568,
+          "node_name": "Health",
+          "node_type": "Category",
+          "scoring_steps": [
+            {
+              "type": "not",
+              "formula": "1 - Score(u, ψ)",
+              "inner_score": 0.00035019396455027163,
+              "inner_trace": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Work",
+                    "operator": "=~",
+                    "span": {
+                      "start": 38,
+                      "end": 63
+                    }
+                  },
+                  "score": 0.00035019396455027163,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "result": 0.9996498060354497
+            }
+          ],
+          "final_score": 0.9996498060354497
+        },
+        {
+          "node_idx": 4,
+          "node_id": 2510768735792,
+          "node_name": "Learning",
+          "node_type": "Category",
+          "scoring_steps": [
+            {
+              "type": "not",
+              "formula": "1 - Score(u, ψ)",
+              "inner_score": 0.019333776086568832,
+              "inner_trace": [
+                {
+                  "type": "atom",
+                  "condition": {
+                    "type": "atom",
+                    "field": "content",
+                    "value": "Work",
+                    "operator": "=~",
+                    "span": {
+                      "start": 38,
+                      "end": 63
+                    }
+                  },
+                  "score": 0.019333776086568832,
+                  "note": "Atom(u, φ) - local node content from attr(u)"
+                }
+              ],
+              "result": 0.9806662239134312
+            }
+          ],
+          "final_score": 0.9806662239134312
+        }
+      ],
+      "batch_scoring": {
+        "semantic_values": [
+          "Work"
+        ],
+        "per_value_stats": [
+          {
+            "value": "Work",
+            "num_descriptions": 5,
+            "call_time_ms": 225.53
+          }
+        ],
+        "total_scorer_calls": 1,
+        "total_descriptions_scored": 5
+      },
+      "token_usage": null,
+      "ranking": [
+        {
+          "idx": 3,
+          "score": 0.9996498060354497,
+          "name": "Health"
+        },
+        {
+          "idx": 2,
+          "score": 0.9983227208722383,
+          "name": "Household"
+        },
+        {
+          "idx": 1,
+          "score": 0.9977211379446089,
+          "name": "Personal"
+        },
+        {
+          "idx": 4,
+          "score": 0.9806662239134312,
+          "name": "Learning"
+        },
+        {
+          "idx": 0,
+          "score": 0.0005726814270019531,
+          "name": "Work"
+        }
+      ]
+    }
+  ],
+  "scoring_details": {
+    "step_scores": [
+      {
+        "step_index": 0,
+        "predicate": "not(atom(content =~ \"Work\"))",
+        "predicate_ast": {
+          "operator": "NOT",
+          "condition": {
+            "type": "atom",
+            "field": "content",
+            "value": "Work",
+            "operator": "=~",
+            "span": {
+              "start": 38,
+              "end": 63
+            }
+          },
+          "span": {
+            "start": 35,
+            "end": 63
+          }
+        },
+        "node_scores": [
+          {
+            "node_idx": 0,
+            "node_id": 2511885092800,
+            "node_name": "Work",
+            "node_type": "Category",
+            "scoring_steps": [
+              {
+                "type": "not",
+                "formula": "1 - Score(u, ψ)",
+                "inner_score": 0.999427318572998,
+                "inner_trace": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Work",
+                      "operator": "=~",
+                      "span": {
+                        "start": 38,
+                        "end": 63
+                      }
+                    },
+                    "score": 0.999427318572998,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "result": 0.0005726814270019531
+              }
+            ],
+            "final_score": 0.0005726814270019531
+          },
+          {
+            "node_idx": 1,
+            "node_id": 2510768644928,
+            "node_name": "Personal",
+            "node_type": "Category",
+            "scoring_steps": [
+              {
+                "type": "not",
+                "formula": "1 - Score(u, ψ)",
+                "inner_score": 0.0022788620553910732,
+                "inner_trace": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Work",
+                      "operator": "=~",
+                      "span": {
+                        "start": 38,
+                        "end": 63
+                      }
+                    },
+                    "score": 0.0022788620553910732,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "result": 0.9977211379446089
+              }
+            ],
+            "final_score": 0.9977211379446089
+          },
+          {
+            "node_idx": 2,
+            "node_id": 2510768647168,
+            "node_name": "Household",
+            "node_type": "Category",
+            "scoring_steps": [
+              {
+                "type": "not",
+                "formula": "1 - Score(u, ψ)",
+                "inner_score": 0.0016772791277617216,
+                "inner_trace": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Work",
+                      "operator": "=~",
+                      "span": {
+                        "start": 38,
+                        "end": 63
+                      }
+                    },
+                    "score": 0.0016772791277617216,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "result": 0.9983227208722383
+              }
+            ],
+            "final_score": 0.9983227208722383
+          },
+          {
+            "node_idx": 3,
+            "node_id": 2510768651568,
+            "node_name": "Health",
+            "node_type": "Category",
+            "scoring_steps": [
+              {
+                "type": "not",
+                "formula": "1 - Score(u, ψ)",
+                "inner_score": 0.00035019396455027163,
+                "inner_trace": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Work",
+                      "operator": "=~",
+                      "span": {
+                        "start": 38,
+                        "end": 63
+                      }
+                    },
+                    "score": 0.00035019396455027163,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "result": 0.9996498060354497
+              }
+            ],
+            "final_score": 0.9996498060354497
+          },
+          {
+            "node_idx": 4,
+            "node_id": 2510768735792,
+            "node_name": "Learning",
+            "node_type": "Category",
+            "scoring_steps": [
+              {
+                "type": "not",
+                "formula": "1 - Score(u, ψ)",
+                "inner_score": 0.019333776086568832,
+                "inner_trace": [
+                  {
+                    "type": "atom",
+                    "condition": {
+                      "type": "atom",
+                      "field": "content",
+                      "value": "Work",
+                      "operator": "=~",
+                      "span": {
+                        "start": 38,
+                        "end": 63
+                      }
+                    },
+                    "score": 0.019333776086568832,
+                    "note": "Atom(u, φ) - local node content from attr(u)"
+                  }
+                ],
+                "result": 0.9806662239134312
+              }
+            ],
+            "final_score": 0.9806662239134312
+          }
+        ],
+        "ranking": [
+          {
+            "idx": 3,
+            "score": 0.9996498060354497,
+            "name": "Health"
+          },
+          {
+            "idx": 2,
+            "score": 0.9983227208722383,
+            "name": "Household"
+          },
+          {
+            "idx": 1,
+            "score": 0.9977211379446089,
+            "name": "Personal"
+          },
+          {
+            "idx": 4,
+            "score": 0.9806662239134312,
+            "name": "Learning"
+          },
+          {
+            "idx": 0,
+            "score": 0.0005726814270019531,
+            "name": "Work"
+          }
+        ]
+      }
+    ],
+    "score_fusion": {
+      "per_node": [
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > NSERC CGS-M Grant Application > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Work > TA: Intro to ML (CS480) > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.0005726814270019531
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Personal > General > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9977211379446089
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Personal > General > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9977211379446089
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Personal > Conference Travel: Vancouver > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9977211379446089
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9983227208722383
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9983227208722383
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9983227208722383
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9983227208722383
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9983227208722383
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9983227208722383
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Household > General > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9983227208722383
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9996498060354497
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9996498060354497
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Health > Mental Health > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9996498060354497
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9806662239134312
+        },
+        {
+          "node_path": "Root > ToDoList_Version 1 > Learning > Skill Acquisition > Task",
+          "node_type": "Task",
+          "step_contributions": [],
+          "accumulated_product": 1.0,
+          "final_score": 0.9806662239134312
+        }
+      ]
+    }
+  },
+  "final_filtering": {
+    "before_filter_count": 23,
+    "threshold": 0.05,
+    "top_k": 5,
+    "after_filter_count": 5,
+    "filtered_nodes": [
+      {
+        "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+        "score": 0.9996498060354497,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.9996498060354497
+      },
+      {
+        "path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+        "score": 0.9996498060354497,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.9996498060354497
+      },
+      {
+        "path": "Root > ToDoList_Version 1 > Health > Mental Health > Task",
+        "score": 0.9996498060354497,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.9996498060354497
+      },
+      {
+        "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+        "score": 0.9983227208722383,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.9983227208722383
+      },
+      {
+        "path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+        "score": 0.9983227208722383,
+        "type": "Task",
+        "own_score": 1.0,
+        "parent_score": 0.9983227208722383
+      }
+    ]
+  },
+  "matched_nodes": [
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+      "score": 0.9996498060354497,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Long Run: 15km zone 2",
+        "status": "Done",
+        "priority": "High",
+        "due_date": "2026-02-09"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+      "score": 0.9996498060354497,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Physio appointment for knee",
+        "status": "Todo",
+        "priority": "High",
+        "due_date": "2026-02-14"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Health > Mental Health > Task",
+      "score": 0.9996498060354497,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Daily Meditation (10 mins)",
+        "status": "Todo",
+        "priority": "Medium",
+        "due_date": "Daily"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+      "score": 0.9983227208722383,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Diagnose sensor alignment issue",
+        "status": "Done",
+        "priority": "High",
+        "due_date": "2026-02-01"
+      },
+      "children": []
+    },
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Household > Fix Garage Door > Task",
+      "score": 0.9983227208722383,
+      "node": {
+        "type": "Task",
+        "attributes": {},
+        "description": "Buy replacement torsion spring",
+        "status": "Todo",
+        "priority": "High",
+        "due_date": "2026-02-12"
+      },
+      "children": []
+    }
+  ],
+  "summary": {
+    "total_steps": 5,
+    "total_scoring_calls": 1,
+    "matched_count": 5,
+    "execution_time_ms": 226.61100002005696,
+    "has_score_fusion": true,
+    "num_nodes_before_filter": 23,
+    "num_nodes_after_filter": 5
+  }
+}

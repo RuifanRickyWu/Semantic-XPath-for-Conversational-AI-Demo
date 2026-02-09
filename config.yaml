@@ -1,7 +1,7 @@
 # Schema configuration
 # Choose which schema and data file to use
-active_schema: "itinerary" #Can choose between itinerary and todolist, session_recommendation
-active_data: "travel_memory_3day" # Options: travel_memory_3day, travel_memory_5day, travel_memory_10day_themed
+active_schema: "todolist" #Can choose between itinerary and todolist, session_recommendation
+active_data: "todolist" # Options: todolist, travel_toronto_10day
 
 # Note: The system now uses in-tree versioning - all operations create new Version nodes
 # within the tree itself, enabling full history tracking and version-based queries.
@@ -12,10 +12,10 @@ openai:
   api_key: "${OPENAI_API_KEY}"
   model: "gpt-5-mini"
   max_tokens: 16384
-  
+
   # For GPT-4 series: temperature controls creativity (0-1)
   temperature: 0
-  
+
   # For GPT-5/o1/o3 series: reasoning_effort controls reasoning depth
   # Options: none (fastest), low, medium (default), high, xhigh (deepest)
   reasoning_effort: "low"

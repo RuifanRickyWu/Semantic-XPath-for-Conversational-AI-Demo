@@ -1,0 +1,54 @@
+{
+  "timestamp": "20260209_155257_224495",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "running",
+  "hypothesis": "This is related to running.",
+  "nodes": [
+    {
+      "id": "2510768647728_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Diagnose sensor alignment issue | status: Done | priority: High | due_date: 2026-02-01",
+      "premise": "Task: Task - description: Diagnose sensor alignment issue | status: Done | priority: High | due_date: 2026-02-01",
+      "score": 0.2174690216779709
+    },
+    {
+      "id": "2510768648208_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Buy replacement torsion spring | status: Todo | priority: High | due_date: 2026-02-12",
+      "premise": "Task: Task - description: Buy replacement torsion spring | status: Todo | priority: High | due_date: 2026-02-12",
+      "score": 0.6626771092414856
+    },
+    {
+      "id": "2510768648688_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Schedule repair technician | status: Todo | priority: Medium | due_date: 2026-02-15",
+      "premise": "Task: Task - description: Schedule repair technician | status: Todo | priority: Medium | due_date: 2026-02-15",
+      "score": 0.29449692368507385
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2510768647728_main",
+      "node_type": "Task",
+      "score": 0.2174690216779709,
+      "reasoning": "Entailment score: 0.2175"
+    },
+    {
+      "node_id": "2510768648208_main",
+      "node_type": "Task",
+      "score": 0.6626771092414856,
+      "reasoning": "Entailment score: 0.6627"
+    },
+    {
+      "node_id": "2510768648688_main",
+      "node_type": "Task",
+      "score": 0.29449692368507385,
+      "reasoning": "Entailment score: 0.2945"
+    }
+  ]
+}

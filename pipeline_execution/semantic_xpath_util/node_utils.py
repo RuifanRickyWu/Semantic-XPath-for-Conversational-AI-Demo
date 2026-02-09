@@ -133,6 +133,7 @@ class NodeUtils:
         Get the display name of a node (schema-aware instance method).
         
         For container nodes with index/number attribute, uses "{NodeType} {index}" format.
+        For nodes with @name attribute, uses the attribute value.
         For leaf nodes, uses schema-defined name field or falls back to defaults.
         """
         # For container nodes with index or number, use "{Tag} {index}" format
@@ -140,7 +141,12 @@ class NodeUtils:
         if index is not None:
             return f"{node.tag} {index}"
         
-        # For leaf nodes, use schema-aware field lookup
+        # Check for @name attribute (like Category name="Work")
+        name_attr = node.get("name")
+        if name_attr:
+            return name_attr
+        
+        # For leaf nodes, use schema-aware field lookup (child element)
         name = self.get_field_value(node, "name")
         if name:
             return name
@@ -196,13 +202,21 @@ class NodeUtils:
         """
         Check if a node is a simple list (like <highlights>).
         
-        A simple list has children, but all children are text-only leaf elements.
+        A simple list has children that are all text-only AND have the same tag.
         Examples: <highlights><highlight>A</highlight><highlight>B</highlight></highlights>
+        
+        Structured entities like <Task> have heterogeneous children (description, status, etc.)
+        and should NOT be considered simple lists even if all children are text-only.
         """
         if len(node) == 0:
             return False
         # All children must be text-only leaves (no grandchildren)
-        return all(len(child) == 0 for child in node)
+        if not all(len(child) == 0 for child in node):
+            return False
+        # Additionally, a simple list has homogeneous children (all same tag)
+        # Structured entities have heterogeneous children (different tags)
+        child_tags = set(child.tag for child in node)
+        return len(child_tags) == 1
     
     @staticmethod
     def _is_structured_node(node: ET.Element) -> bool:
@@ -267,6 +281,7 @@ class NodeUtils:
         Get the display name of a node.
         
         For container nodes with index/number attribute, uses "{NodeType} {index}" format.
+        For nodes with @name attribute, uses the attribute value.
         For leaf nodes, tries common name fields.
         Works with any tree structure.
         """
@@ -276,7 +291,12 @@ class NodeUtils:
         if index is not None:
             return f"{node.tag} {index}"
         
-        # For leaf nodes, try common name fields
+        # Check for @name attribute (like Category name="Work")
+        name_attr = node.get("name")
+        if name_attr:
+            return name_attr
+        
+        # For leaf nodes, try common name fields (child elements)
         name = NodeUtils._get_field_value(node, NodeUtils.NAME_FIELDS)
         if name:
             return name

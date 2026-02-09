@@ -1,0 +1,26 @@
+{
+  "timestamp": "20260209_155257_191171",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "meditation",
+  "hypothesis": "This is related to meditation.",
+  "nodes": [
+    {
+      "id": "2510768646768_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Book flight with university travel agent | status: Todo | priority: Medium | due_date: 2026-03-01",
+      "premise": "Task: Task - description: Book flight with university travel agent | status: Todo | priority: Medium | due_date: 2026-03-01",
+      "score": 0.000982306431978941
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2510768646768_main",
+      "node_type": "Task",
+      "score": 0.000982306431978941,
+      "reasoning": "Entailment score: 0.0010"
+    }
+  ]
+}

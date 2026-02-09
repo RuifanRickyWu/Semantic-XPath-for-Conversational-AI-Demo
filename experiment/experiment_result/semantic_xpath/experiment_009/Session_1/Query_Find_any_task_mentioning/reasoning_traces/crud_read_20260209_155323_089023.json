@@ -1,0 +1,32 @@
+{
+  "timestamp": "20260209_155323_089023",
+  "operation": "READ",
+  "user_query": "Find any task mentioning 'coffee' anywhere in the system.",
+  "full_query": "READ(/Root/ToDoList_Version[1]/Category/desc::Task[atom(content =~ \"coffee\")])",
+  "xpath_query": "/Root/ToDoList_Version[1]/Category/desc::Task[atom(content =~ \"coffee\")]",
+  "success": true,
+  "intent": null,
+  "reasoning_trace": null,
+  "operation_data": {
+    "candidates_count": 1,
+    "selected_count": 1,
+    "selected_nodes": [
+      {
+        "type": "Task",
+        "attributes": {},
+        "description": "Buy Coffee Beans",
+        "status": "Todo",
+        "priority": "High",
+        "due_date": "2026-02-10",
+        "tree_path": "Root > ToDoList_Version 1 > Household > Weekly Groceries > Task",
+        "reasoning": "Description 'Buy Coffee Beans' contains the keyword 'coffee' (case-insensitive), so it directly matches the query."
+      }
+    ]
+  },
+  "tree_version": null,
+  "summary": {
+    "operation": "READ",
+    "success": true,
+    "affected_count": 0
+  }
+}

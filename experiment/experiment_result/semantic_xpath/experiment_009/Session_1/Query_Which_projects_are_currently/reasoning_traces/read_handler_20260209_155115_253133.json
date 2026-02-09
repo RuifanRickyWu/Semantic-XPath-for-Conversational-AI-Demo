@@ -1,0 +1,26 @@
+{
+  "user_query": "Which projects are currently stuck or blocked?",
+  "candidates_count": 5,
+  "selected_count": 1,
+  "selected_nodes": [
+    {
+      "tree_path": "Root > ToDoList_Version 1 > Work > Thesis: Generative Models for fluid dynamics",
+      "node_data": {
+        "type": "Project",
+        "attributes": {},
+        "name": "Thesis: Generative Models for fluid dynamics",
+        "status": "Active",
+        "priority": "High",
+        "deadline": "2027-05-01"
+      },
+      "reasoning": "Project contains a task with status 'Blocked' ('Run simulation benchmark on cluster (HPC)' — note: Waiting for compute allocation), so the project is currently blocked/stuck."
+    }
+  ],
+  "raw_response": "{\n  \"selected_nodes\": [\n    {\n      \"id\": \"1\",\n      \"reasoning\": \"Project contains a task with status 'Blocked' ('Run simulation benchmark on cluster (HPC)' — note: Waiting for compute allocation), so the project is currently blocked/stuck.\"\n    }\n  ],\n  \"reasoning\": \"Only the 'Thesis: Generative Models for fluid dynamics' project has a child task marked 'Blocked'. The other projects' tasks are Todo, In Progress, Done, or not blocked, so they do not match 'stuck or blocked'.\"\n}",
+  "token_usage": {
+    "prompt_tokens": 1420,
+    "completion_tokens": 385,
+    "total_tokens": 1805
+  },
+  "processing_time_ms": 8356.641399906948
+}

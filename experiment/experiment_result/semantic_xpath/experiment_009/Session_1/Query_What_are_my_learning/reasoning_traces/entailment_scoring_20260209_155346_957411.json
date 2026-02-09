@@ -1,0 +1,124 @@
+{
+  "timestamp": "20260209_155346_957411",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "learning goals",
+  "hypothesis": "This is related to learning goals.",
+  "nodes": [
+    {
+      "id": "2511885092000_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Draft research proposal (max 1 page) | status: In Progress | priority: High | due_date: 2026-11-15",
+      "premise": "Task: Task - description: Draft research proposal (max 1 page) | status: In Progress | priority: High | due_date: 2026-11-15",
+      "score": 0.7476952075958252
+    },
+    {
+      "id": "2511885094240_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Request reference letters from Prof. Hinton and Prof. Ng | status: Done | priority: High | due_date: 2026-10-30",
+      "premise": "Task: Task - description: Request reference letters from Prof. Hinton and Prof. Ng | status: Done | priority: High | due_date: 2026-10-30",
+      "score": 0.958614706993103
+    },
+    {
+      "id": "2511885092960_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Finalize CCV (Canadian Common CV) updates | status: Todo | priority: Medium | due_date: 2026-11-20",
+      "premise": "Task: Task - description: Finalize CCV (Canadian Common CV) updates | status: Todo | priority: Medium | due_date: 2026-11-20",
+      "score": 0.6467730402946472
+    },
+    {
+      "id": "2510768642288_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Run simulation benchmark on cluster (HPC) | status: Blocked | priority: High | due_date: 2026-02-12 | note: Waiting for compute allocation",
+      "premise": "Task: Task - description: Run simulation benchmark on cluster (HPC) | status: Blocked | priority: High | due_date: 2026-02-12 | note: Waiting for compute allocation",
+      "score": 0.795488178730011
+    },
+    {
+      "id": "2510768642848_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Literature review on Neural Operators | status: Done | priority: Medium | due_date: 2026-01-15",
+      "premise": "Task: Task - description: Literature review on Neural Operators | status: Done | priority: Medium | due_date: 2026-01-15",
+      "score": 0.6494763493537903
+    },
+    {
+      "id": "2510768643328_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Weekly meeting prep: Slides on failed experiments | status: Todo | priority: High | due_date: 2026-02-10",
+      "premise": "Task: Task - description: Weekly meeting prep: Slides on failed experiments | status: Todo | priority: High | due_date: 2026-02-10",
+      "score": 0.9350099563598633
+    },
+    {
+      "id": "2510768644048_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Grade midterm exams (Batch 1 of 3) | status: Todo | priority: Medium | due_date: 2026-02-14",
+      "premise": "Task: Task - description: Grade midterm exams (Batch 1 of 3) | status: Todo | priority: Medium | due_date: 2026-02-14",
+      "score": 0.997089684009552
+    },
+    {
+      "id": "2510768644528_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Hold office hours | status: Done | priority: Low | due_date: 2026-02-08",
+      "premise": "Task: Task - description: Hold office hours | status: Done | priority: Low | due_date: 2026-02-08",
+      "score": 0.2750222682952881
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2511885092000_main",
+      "node_type": "Task",
+      "score": 0.7476952075958252,
+      "reasoning": "Entailment score: 0.7477"
+    },
+    {
+      "node_id": "2511885094240_main",
+      "node_type": "Task",
+      "score": 0.958614706993103,
+      "reasoning": "Entailment score: 0.9586"
+    },
+    {
+      "node_id": "2511885092960_main",
+      "node_type": "Task",
+      "score": 0.6467730402946472,
+      "reasoning": "Entailment score: 0.6468"
+    },
+    {
+      "node_id": "2510768642288_main",
+      "node_type": "Task",
+      "score": 0.795488178730011,
+      "reasoning": "Entailment score: 0.7955"
+    },
+    {
+      "node_id": "2510768642848_main",
+      "node_type": "Task",
+      "score": 0.6494763493537903,
+      "reasoning": "Entailment score: 0.6495"
+    },
+    {
+      "node_id": "2510768643328_main",
+      "node_type": "Task",
+      "score": 0.9350099563598633,
+      "reasoning": "Entailment score: 0.9350"
+    },
+    {
+      "node_id": "2510768644048_main",
+      "node_type": "Task",
+      "score": 0.997089684009552,
+      "reasoning": "Entailment score: 0.9971"
+    },
+    {
+      "node_id": "2510768644528_main",
+      "node_type": "Task",
+      "score": 0.2750222682952881,
+      "reasoning": "Entailment score: 0.2750"
+    }
+  ]
+}

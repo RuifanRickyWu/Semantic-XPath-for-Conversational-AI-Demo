@@ -1,0 +1,68 @@
+{
+  "user_query": "Show me tasks about either 'running' or 'meditation'",
+  "version_xpath": "at([-1])",
+  "version_result": {
+    "selector_type": "at",
+    "index": -1,
+    "semantic_query": null,
+    "task_query": "show tasks about running or meditation",
+    "resolved_version": 1
+  },
+  "operation_type": "READ",
+  "semantic_xpath_query": "/Category/Project/Task[atom(content =~ \"running\") OR atom(content =~ \"meditation\")]",
+  "semantic_xpath_execution_log": {
+    "aggregation_execution_log": "reasoning_traces/execution_20260209_155256_597210.json",
+    "predicate_batch_scoring_log": "reasoning_traces/entailment_scoring_20260209_155256_816960.json"
+  },
+  "semantic_xpath_result": [
+    {
+      "node_relative_path": "Root > ToDoList_Version 1 > Health > Marathon Training Block > Task",
+      "node_info": {
+        "name": "",
+        "type": "Task"
+      },
+      "children_names": [],
+      "score": 0.0
+    },
+    {
+      "node_relative_path": "Root > ToDoList_Version 1 > Health > Mental Health > Task",
+      "node_info": {
+        "name": "",
+        "type": "Task"
+      },
+      "children_names": [],
+      "score": 0.0
+    }
+  ],
+  "downstream_task_result": {
+    "operation": "READ",
+    "success": true,
+    "selected_count": 2,
+    "candidates_count": 5,
+    "total_time_ms": 18889.31
+  },
+  "execution_time_ms": 18905.5,
+  "token_usage": {
+    "prompt_tokens": 3983,
+    "completion_tokens": 778,
+    "total_tokens": 4761,
+    "by_stage": {
+      "version_resolution": {
+        "prompt_tokens": 977,
+        "completion_tokens": 215,
+        "total_tokens": 1192
+      },
+      "xpath_generation": {
+        "prompt_tokens": 1943,
+        "completion_tokens": 158,
+        "total_tokens": 2101
+      },
+      "read_handler": {
+        "prompt_tokens": 1063,
+        "completion_tokens": 405,
+        "total_tokens": 1468
+      }
+    },
+    "cost_usd": 0.06317
+  }
+}

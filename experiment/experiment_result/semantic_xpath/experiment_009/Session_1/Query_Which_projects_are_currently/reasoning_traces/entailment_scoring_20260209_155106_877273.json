@@ -1,0 +1,40 @@
+{
+  "timestamp": "20260209_155106_877273",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "blocked",
+  "hypothesis": "This is related to blocked.",
+  "nodes": [
+    {
+      "id": "2510768736352_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Learn Rust programming basics | status: In Progress | priority: Low | due_date: 2026-04-01",
+      "premise": "Task: Task - description: Learn Rust programming basics | status: In Progress | priority: Low | due_date: 2026-04-01",
+      "score": 0.2581857740879059
+    },
+    {
+      "id": "2510768736832_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Read 'Attention is All You Need' paper again | status: Done | priority: Medium | due_date: 2026-01-20",
+      "premise": "Task: Task - description: Read 'Attention is All You Need' paper again | status: Done | priority: Medium | due_date: 2026-01-20",
+      "score": 0.24289986491203308
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2510768736352_main",
+      "node_type": "Task",
+      "score": 0.2581857740879059,
+      "reasoning": "Entailment score: 0.2582"
+    },
+    {
+      "node_id": "2510768736832_main",
+      "node_type": "Task",
+      "score": 0.24289986491203308,
+      "reasoning": "Entailment score: 0.2429"
+    }
+  ]
+}

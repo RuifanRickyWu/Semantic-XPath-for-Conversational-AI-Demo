@@ -81,10 +81,15 @@ class ExperimentRunner:
         self.experiment_name = self.config.get("name", "experiment")
         self.queries = self.config.get("queries", [])
         
-        # Load model from config for pricing
-        with open(PROJECT_ROOT / "config.yaml", "r") as f:
-            app_config = yaml.safe_load(f)
-        self.model = app_config.get("openai", {}).get("model", "gpt-4o")
+        # Load config from embedded 'config' section (required)
+        embedded_config = self.config.get("config")
+        if not embedded_config:
+            raise ValueError(
+                "Experiment config must have a 'config' section with all settings. "
+                "See experiment.yaml for the expected format."
+            )
+        self.app_config = embedded_config
+        self.model = embedded_config.get("openai", {}).get("model", "gpt-4o")
         
         # Setup output directory
         self.base_output_dir = PROJECT_ROOT / "experiment" / "experiment_result" / "semantic_xpath"
@@ -311,16 +316,16 @@ class ExperimentRunner:
         print(f"Session {session_index}: {len(query_list)} queries")
         print(f"{'='*60}")
         
-        # Get source tree path
+        # Get source tree path using embedded config
         from pipeline_execution.semantic_xpath_execution import get_data_path
-        source_tree = get_data_path()
+        source_tree = get_data_path(config=self.app_config)
         
         # Copy tree to session directory
         session_tree = session_dir / "tree.xml"
         shutil.copy2(source_tree, session_tree)
         
-        # Create pipeline for this session (uses session's tree)
-        pipeline = SemanticXPathPipeline(tree_path=session_tree)
+        # Create pipeline for this session (uses session's tree and embedded config)
+        pipeline = SemanticXPathPipeline(tree_path=session_tree, config=self.app_config)
         
         session_results = {}
         

@@ -1,0 +1,40 @@
+{
+  "timestamp": "20260209_155257_105791",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "running",
+  "hypothesis": "This is related to running.",
+  "nodes": [
+    {
+      "id": "2510768645488_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Call Mom regarding weekend plans | status: Todo | priority: Medium | due_date: 2026-02-11",
+      "premise": "Task: Task - description: Call Mom regarding weekend plans | status: Todo | priority: Medium | due_date: 2026-02-11",
+      "score": 0.032350290566682816
+    },
+    {
+      "id": "2510768645968_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Renew passport | status: Todo | priority: Low | due_date: 2026-06-01",
+      "premise": "Task: Task - description: Renew passport | status: Todo | priority: Low | due_date: 2026-06-01",
+      "score": 0.42052528262138367
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2510768645488_main",
+      "node_type": "Task",
+      "score": 0.032350290566682816,
+      "reasoning": "Entailment score: 0.0324"
+    },
+    {
+      "node_id": "2510768645968_main",
+      "node_type": "Task",
+      "score": 0.42052528262138367,
+      "reasoning": "Entailment score: 0.4205"
+    }
+  ]
+}

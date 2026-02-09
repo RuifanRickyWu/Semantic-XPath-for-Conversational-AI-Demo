@@ -1,0 +1,54 @@
+{
+  "timestamp": "20260209_155106_570932",
+  "method": "entailment",
+  "model": "facebook/bart-large-mnli",
+  "hypothesis_template": "This is related to {predicate}.",
+  "predicate": "blocked",
+  "hypothesis": "This is related to blocked.",
+  "nodes": [
+    {
+      "id": "2510768645488_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Call Mom regarding weekend plans | status: Todo | priority: Medium | due_date: 2026-02-11",
+      "premise": "Task: Task - description: Call Mom regarding weekend plans | status: Todo | priority: Medium | due_date: 2026-02-11",
+      "score": 0.083870068192482
+    },
+    {
+      "id": "2510768645968_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Renew passport | status: Todo | priority: Low | due_date: 2026-06-01",
+      "premise": "Task: Task - description: Renew passport | status: Todo | priority: Low | due_date: 2026-06-01",
+      "score": 0.20083460211753845
+    },
+    {
+      "id": "2510768646768_main",
+      "type": "Task",
+      "name": "Task",
+      "description": "description: Book flight with university travel agent | status: Todo | priority: Medium | due_date: 2026-03-01",
+      "premise": "Task: Task - description: Book flight with university travel agent | status: Todo | priority: Medium | due_date: 2026-03-01",
+      "score": 0.13728956878185272
+    }
+  ],
+  "results": [
+    {
+      "node_id": "2510768645488_main",
+      "node_type": "Task",
+      "score": 0.083870068192482,
+      "reasoning": "Entailment score: 0.0839"
+    },
+    {
+      "node_id": "2510768645968_main",
+      "node_type": "Task",
+      "score": 0.20083460211753845,
+      "reasoning": "Entailment score: 0.2008"
+    },
+    {
+      "node_id": "2510768646768_main",
+      "node_type": "Task",
+      "score": 0.13728956878185272,
+      "reasoning": "Entailment score: 0.1373"
+    }
+  ]
+}

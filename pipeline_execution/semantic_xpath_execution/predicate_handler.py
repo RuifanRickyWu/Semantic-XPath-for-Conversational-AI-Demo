@@ -281,6 +281,8 @@ class PredicateHandler:
         current_node_details = {
              "type": "node_match",
              "node_name": self._node_utils.get_name(node),
+             "node_type": node.tag,
+             "node_path": self._node_utils.get_path(node) if hasattr(self._node_utils, "get_path") else "",
              "score": own_score,
              "trace": node_match_trace
         }
@@ -306,6 +308,7 @@ class PredicateHandler:
         
         # 5. Aggregate based on operator
         best_match = current_node_details
+        best_match_score = own_score
         
         if agg_operator == "EXISTS":
             # Max - no weighting (max is max)
@@ -315,6 +318,8 @@ class PredicateHandler:
             for c_score, c_size, c_details in child_results:
                 if c_score > max_score:
                     max_score = c_score
+                if c_details and c_details.get("score", -1) > best_match_score:
+                    best_match_score = c_details["score"]
                     best_match = c_details
             
             result = max_score
@@ -327,7 +332,10 @@ class PredicateHandler:
                 weighted_sum += child_score * child_size
                 total_weight += child_size
             result = weighted_sum / total_weight
-            best_match = None # Concept applies less to avg
+            for _, _, c_details in child_results:
+                if c_details and c_details.get("score", -1) > best_match_score:
+                    best_match_score = c_details["score"]
+                    best_match = c_details
         
         return (result, subtree_size, best_match)
     
@@ -921,21 +929,23 @@ class PredicateHandler:
             })
             return 0
 
-        child_results: List[Tuple[float, int, ET.Element]] = []
+        child_results: List[Tuple[float, int, Optional[Dict], ET.Element]] = []
         for child in children:
-            score, size, _ = self._recursive_subtree_score(
+            score, size, details = self._recursive_subtree_score(
                 child, predicate.inner, "PREV", trace_steps, execution_log
             )
-            child_results.append((score, size, child))
+            child_results.append((score, size, details, child))
 
-        weighted_sum = sum(score * size for score, size, _ in child_results)
-        total_weight = sum(size for _, size, _ in child_results)
+        weighted_sum = sum(score * size for score, size, _, _ in child_results)
+        total_weight = sum(size for _, size, _, _ in child_results)
         result = weighted_sum / total_weight if total_weight > 0 else 0
         result = max(EPSILON, min(1 - EPSILON, result))
 
         # Build detailed child contributions for demo logging
         child_contributions = []
-        for score, size, child in child_results:
+        best_details = None
+        best_details_score = -1.0
+        for score, size, details, child in child_results:
             child_name = self._node_utils.get_name(child)
             child_path = self._node_utils.get_path(child) if hasattr(self._node_utils, 'get_path') else ""
             weighted_contribution = score * size
@@ -948,6 +958,9 @@ class PredicateHandler:
                 "weightedContribution": weighted_contribution,
                 "subtreeSize": size,
             })
+            if details and details.get("score", -1) > best_details_score:
+                best_details_score = details["score"]
+                best_details = details
         
         # Log to demo logger
         demo_logger = get_demo_logger()
@@ -966,8 +979,9 @@ class PredicateHandler:
             "formula": "Aggprev(A) = Σ(score_i × size_i) / Σ(size_i)",
             "selector": selector.to_dict(),
             "num_children": len(children),
-            "child_results": [{"score": s, "subtree_size": sz} for s, sz, _ in child_results],
+            "child_results": [{"score": s, "subtree_size": sz} for s, sz, _, _ in child_results],
             "child_contributions": child_contributions,  # Include detailed contributions
+            "best_match_details": best_details,
             "weighted_sum": weighted_sum,
             "total_weight": total_weight,
             "result": result

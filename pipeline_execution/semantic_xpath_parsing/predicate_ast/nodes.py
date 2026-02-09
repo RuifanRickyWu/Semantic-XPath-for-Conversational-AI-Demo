@@ -116,8 +116,8 @@ class AggPredicate(PredicateNode):
         return result
 
     def __repr__(self) -> str:
-        axis = f"{self.selector.axis.value}::" if self.selector.axis != Axis.NONE else ""
-        return f"agg_{self.agg_type}({axis}{self.selector.test}[{self.inner}])"
+        axis_prefix = "//" if self.selector.axis == Axis.DESC else ""
+        return f"agg_{self.agg_type}({axis_prefix}{self.selector.test}[{self.inner}])"
 
 
 @dataclass

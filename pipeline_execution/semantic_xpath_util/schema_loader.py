@@ -327,7 +327,7 @@ def get_schema_summary_for_prompt(schema_name: Optional[str] = None) -> str:
     
     # Include hierarchy visualization if available (helps with axis selection)
     if hierarchy:
-        lines.append("Tree Hierarchy (use desc:: axis to skip intermediate levels):")
+        lines.append("Tree Hierarchy (use // to skip intermediate levels):")
         lines.append(hierarchy.strip())
         lines.append("")
     
@@ -362,4 +362,3 @@ def get_schema_summary_for_prompt(schema_name: Optional[str] = None) -> str:
         lines.append("")
     
     return "\n".join(lines)
-

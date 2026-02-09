@@ -1,9 +1,9 @@
 ====================
 Grammar Definition
 ====================
-Query Q := Step | Step / Query
-Step := Axis NodeType Index [Predicate]
-Axis := none | desc ::
+Query Q := Step | Step / Query | Step // Query
+Step := NodeType Index [Predicate]
+Axis := / | //
 Index := none | [i] | [-i] | [i:j]
 Predicate :=
     Predicate AND Predicate
@@ -13,16 +13,20 @@ Predicate :=
   | Agg
 Atom := atom(content =~ "value")
 Agg :=
-    agg_exists(Axis ChildType [Predicate])
-  | agg_prev(Axis ChildType [Predicate])
+    agg_exists(Selector [Predicate])
+  | agg_prev(Selector [Predicate])
+Selector :=
+    NodeType
+  | / NodeType
+  | // NodeType
 ====================
 Operator Semantics
 ====================
 Axis operator:
-- `none`: navigate to the children of the current node (default).
-- `desc ::`: navigate to all descendants of the current node.
+- `/`: navigate to the children of the current node (default).
+- `//`: navigate to all descendants of the current node.
 Node type operator:
-- `.`: wildcard node type; all nodes in the navigation scope are valid.
+- `*`: wildcard node type; all nodes in the navigation scope are valid.
 - `NodeType`: restricts candidates to nodes of the specified type.
 Index operator:
 - `none`: retain all candidate nodes (default).

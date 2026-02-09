@@ -114,7 +114,7 @@ class NodeTest:
         return result
 
     def __repr__(self) -> str:
-        base = "." if self.kind == "wildcard" else (self.name or "?")
+        base = "*" if self.kind == "wildcard" else (self.name or "?")
         brackets: List[tuple[int, str]] = []
         if self.predicate:
             pred_span = getattr(self.predicate, "span", None)
@@ -222,8 +222,8 @@ class EvidenceSelector:
         return result
 
     def __repr__(self) -> str:
-        axis = f"{self.axis.value}::" if self.axis != Axis.NONE else ""
-        return f"{axis}{self.test}"
+        axis_prefix = "//" if self.axis == Axis.DESC else ""
+        return f"{axis_prefix}{self.test}"
 
 
 @dataclass
@@ -260,7 +260,13 @@ class PathExpr:
         return result
 
     def __repr__(self) -> str:
-        return "/" + "/".join(repr(s) for s in self.steps)
+        if not self.steps:
+            return "/"
+        parts: List[str] = []
+        for step in self.steps:
+            sep = "//" if step.axis == Axis.DESC else "/"
+            parts.append(f"{sep}{step.test}")
+        return "".join(parts)
 
 
 @dataclass
@@ -337,7 +343,7 @@ class QueryStep:
     predicate_str: Optional[str] = None  # Original predicate string for display
 
     def __repr__(self) -> str:
-        axis_prefix = f"{self.axis}::" if self.axis != "child" else ""
+        axis_prefix = "//" if self.axis == "desc" else ""
         parts = [f"{axis_prefix}{self.node_type}"]
         if self.predicate:
             parts.append(f'[{self.predicate}]')

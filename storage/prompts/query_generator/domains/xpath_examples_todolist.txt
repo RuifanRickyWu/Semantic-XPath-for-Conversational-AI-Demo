@@ -56,8 +56,8 @@ Output: /Category/Project/Task[atom(content =~ "high priority") AND not(atom(con
 User: show me all projects in the Health category
 Output: /Category[atom(content =~ "Health")]/Project
 
-User: review everything in the first project of each category
-Output: /Category/Project[1]/.
+User: review everything in the first project
+Output: /Project[1]/.
 
 User: give me tasks from the first 2 projects in each category
 Output: /Category/Project[1:2]/Task
@@ -75,15 +75,38 @@ Output: (/Category/Project/Task)[3]
 User: find the last task in the entire todolist
 Output: (/Category/Project/Task)[-1]
 
-### Descendant Axis Queries (skip intermediate levels)
-User: find all tasks across all categories
-Output: /Category/desc::Task
+### Descendant Axis Queries (schema: Project → Task → SubTask)
+User: show me all subtasks in the latest version
+Output: /Project/desc::SubTask
 
-User: which categories have any blocked tasks anywhere?
-Output: /Category[agg_exists(desc::Task[atom(content =~ "blocked")])]
+User: find all tasks across all projects in the current version
+Output: /Project/desc::Task
 
-User: show me all high priority items in the Work category
-Output: /Category[atom(content =~ "Work")]/desc::Task[atom(content =~ "high priority")]
+User: which projects have urgent subtasks that need attention?
+Output: /Project[agg_exists(desc::SubTask[atom(content =~ "urgent")])]
+
+User: find tasks that have blocking subtasks preventing progress
+Output: /Project/Task[agg_exists(SubTask[atom(content =~ "blocking")])]
+
+User: show me all bug-related subtasks across the entire todolist
+Output: /Project/desc::SubTask[atom(content =~ "bug")]
+
+### Wildcard Queries (select all children)
+User: show me everything in the first project
+Output: /Project[1]/.
+
+User: review all items in the last project
+Output: /Project[-1]/.
+
+User: give me the first 5 items across all projects
+Output: (/Project/.)[1:5]
+
+### Combined Index and Predicate
+User: find the first urgent task in each project
+Output: /Project/Task[atom(content =~ "urgent")][1]
+
+User: show me the second bug-related task overall
+Output: (/Project/Task[atom(content =~ "bug")])[2]
 
 ### CRUD Operations
 Operation: CREATE

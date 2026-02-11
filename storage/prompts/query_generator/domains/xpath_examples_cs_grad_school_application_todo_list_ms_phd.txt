@@ -1,0 +1,20 @@
+## Examples
+
+### Basic Queries
+User: find items related to a topic
+Output: /Root//Subtask[atom(content =~ "topic")]
+
+User: show me the second Phase
+Output: /Root/Phase[2]
+
+### Local Index Queries
+User: everything under the first Phase
+Output: /Root/Phase[1]/*
+
+### Global Index Queries
+User: the first 3 Subtask overall
+Output: (/Root//Subtask)[1:3]
+
+### Descendant Axis Queries
+User: all Subtask in the structure
+Output: /Root//Subtask

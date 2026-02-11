@@ -1,0 +1,229 @@
+domain:
+  name: travel
+  description: City travel planning and day-trip itineraries.
+task:
+  name: tokyo_1day_plan
+  title: 1-Day Tokyo Travel Plan
+  description: A compact, well-paced one-day itinerary to see Tokyo highlights with
+    transit and meal suggestions.
+schema:
+  name: itinerary
+  description: One-day itinerary with ordered day, points of interest, transit steps,
+    and meals.
+  root: Itinerary
+  nodes:
+    Itinerary:
+      type: root
+      fields:
+      - title
+      - summary
+      children:
+      - Day
+    Day:
+      type: container
+      index_attr: index
+      fields:
+      - theme
+      children:
+      - POI
+      - Transit
+      - Meal
+    POI:
+      type: leaf
+      fields:
+      - name
+      - time_block
+      - description
+      - highlights
+      children: []
+    Transit:
+      type: leaf
+      fields:
+      - name
+      - time_block
+      - description
+      - highlights
+      children: []
+    Meal:
+      type: leaf
+      fields:
+      - name
+      - time_block
+      - description
+      - highlights
+      children: []
+content:
+  root_fields:
+    title: 1-Day Tokyo Highlights
+    summary: A single-day route covering Shibuya, Harajuku/Meiji Shrine, Asakusa,
+      Ueno, and an evening skyline view, with suggested transit and meals for smooth
+      pacing.
+  root_attrs: {}
+  children:
+  - tag: Day
+    attrs:
+      index: '1'
+    fields:
+      theme: Central Tokyo highlights with walking and short trains
+    children:
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Shibuya Crossing & Hachiko
+        time_block: 08:30 - 09:15
+        description: Start at Shibuya to experience the famous scramble crossing and
+          the Hachiko statue nearby.
+        highlights:
+        - Iconic scramble crossing photos
+        - Morning coffee near the station
+      children: []
+    - tag: Transit
+      attrs: {}
+      fields:
+        name: Train to Harajuku (JR Yamanote)
+        time_block: 09:20 - 09:30
+        description: Short JR ride from Shibuya to Harajuku station.
+        highlights:
+        - Quick transfer (1 stop)
+        - Arrive near Meiji Shrine and Takeshita Street
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Meiji Shrine & Yoyogi Park
+        time_block: 09:30 - 10:30
+        description: Peaceful walk through the forested approach and visit the shrine
+          grounds.
+        highlights:
+        - Traditional shrine atmosphere
+        - Short walk in Yoyogi Park
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Takeshita Street (Harajuku)
+        time_block: 10:30 - 11:15
+        description: Explore youthful fashion shops and crepe stands along the bustling
+          pedestrian street.
+        highlights:
+        - Street fashion and sweets
+        - Unique shops and souvenirs
+      children: []
+    - tag: Meal
+      attrs: {}
+      fields:
+        name: Lunch in Omotesando/Harajuku
+        time_block: 11:30 - 12:30
+        description: Choose a casual sushi spot, ramen, or a trendy cafe along Omotesando.
+        highlights:
+        - Local or fusion options
+        - Reserve time for lines
+      children: []
+    - tag: Transit
+      attrs: {}
+      fields:
+        name: Train to Asakusa (Ginza Line transfer)
+        time_block: 12:40 - 13:20
+        description: Change lines to head northeast to Asakusa for traditional Tokyo
+          sights.
+        highlights:
+        - About 25-40 minutes depending on transfer speed
+        - Scenic above-ground segments
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Senso-ji Temple & Nakamise
+        time_block: 13:25 - 14:30
+        description: Visit Tokyo's oldest temple and browse the Nakamise shopping
+          street for snacks and souvenirs.
+        highlights:
+        - Historic temple gate (Kaminarimon)
+        - Street-food tasting opportunities
+      children: []
+    - tag: Transit
+      attrs: {}
+      fields:
+        name: Short train to Ueno
+        time_block: 14:35 - 14:45
+        description: Quick ride to Ueno for park and cultural stops.
+        highlights:
+        - Fast local connection
+        - Arrive near museums and park
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Ueno Park & Ameyoko Market
+        time_block: 14:50 - 16:00
+        description: Stroll the park, visit a museum if desired, and explore the lively
+          Ameya-Yokocho market.
+        highlights:
+        - Cherry trees / green space
+        - Market bargains and street snacks
+      children: []
+    - tag: Transit
+      attrs: {}
+      fields:
+        name: Train to Tokyo Skytree area
+        time_block: 16:10 - 16:40
+        description: Head east to the Sumida district for evening skyline views.
+        highlights:
+        - Scenic river-area approach
+        - Timing good for sunset
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Tokyo Skytree / Sumida Riverside
+        time_block: 16:45 - 18:15
+        description: Optional observation deck visit or riverside walk to view the
+          tower at golden hour.
+        highlights:
+        - Panoramic city views
+        - Photo opportunities at dusk
+      children: []
+    - tag: Meal
+      attrs: {}
+      fields:
+        name: Dinner near Skytree or Asakusa
+        time_block: 18:30 - 20:00
+        description: 'Finish with a relaxed dinner: traditional izakaya, tempura,
+          or modern dining with tower views.'
+        highlights:
+        - Try tempura or yakitori
+        - Evening atmosphere and lights
+      children: []
+user_facing:
+  title: One-Day Tokyo Highlights
+  overview: A compact, walk-and-train plan to see Shibuya, Harajuku, Asakusa, Ueno,
+    and finish with evening skyline views, paced for comfort and photo stops.
+  sections:
+  - title: "Morning \u2014 Shibuya and Harajuku"
+    summary: Start with the iconic Shibuya crossing, then a peaceful visit to Meiji
+      Shrine followed by vibrant Takeshita Street.
+    bullets:
+    - See Hachiko and the scramble crossing at low morning crowds
+    - Walk through Meiji Shrine and nearby Yoyogi Park
+    - Explore Takeshita Street for unique shops and snacks
+  - title: "Midday \u2014 Asakusa and Traditional Tokyo"
+    summary: Travel to Asakusa to visit Senso-ji and browse Nakamise for street food
+      and souvenirs.
+    bullets:
+    - Historic temple and photo spots at Kaminarimon
+    - Sample local snacks along Nakamise
+    - Plan ~1 hour to explore comfortably
+  - title: "Afternoon \u2014 Ueno Park and Market"
+    summary: Short ride to Ueno for park time, optional museums, and the bustling
+      Ameyoko market.
+    bullets:
+    - Stroll Ueno Park or visit a museum if interested
+    - Discover deals and street-food at Ameyoko
+    - Good rest stop before the evening
+  - title: "Evening \u2014 Skytree and Dinner"
+    summary: Head to the Sumida area for skyline views at Tokyo Skytree and enjoy
+      dinner nearby to end the day.
+    bullets:
+    - Visit observation deck at sunset for best views
+    - Choose a local izakaya or tempura restaurant for dinner
+    - Allow time for transit and possible queues

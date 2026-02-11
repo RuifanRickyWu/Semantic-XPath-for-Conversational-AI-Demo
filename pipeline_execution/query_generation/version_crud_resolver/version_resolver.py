@@ -19,10 +19,14 @@ from pathlib import Path
 from typing import Optional
 import sys
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from client import get_default_client
+<<<<<<< ours
 from pipeline_execution.semantic_xpath_execution import get_schema_info
+=======
+from pipeline_execution.semantic_xpath_execution import get_schema_info, get_schema_summary_for_prompt
+>>>>>>> theirs
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import CRUDOperation
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import VersionSelector
 from pipeline_execution.query_generation.version_crud_resolver.version_selector_model import ResolvedVersion
@@ -42,6 +46,7 @@ class VersionResolver:
     
     # Pattern to parse LLM response (first line: version selector and operation)
     RESPONSE_PATTERN = re.compile(
+<<<<<<< ours
         r'(at|before)\s*\(\s*'
         r'(?:'
         r'\[\s*(-?\d+)\s*\]'  # Index: [-1] or [2]
@@ -50,11 +55,27 @@ class VersionResolver:
         r')\s*\)'
         r'\s*,\s*'
         r'(READ|CREATE|UPDATE|DELETE)',
+=======
+        r'task\s*\(\s*(.+?)\s*\)\s*,\s*version\s*\(\s*(.+?)\s*\)\s*,\s*'
+        r'(READ|CREATE|UPDATE|DELETE|STATE)',
+>>>>>>> theirs
         re.IGNORECASE
     )
     
     # Pattern to parse task query (second line)
     TASK_PATTERN = re.compile(r'task:\s*(.+)', re.IGNORECASE)
+<<<<<<< ours
+=======
+    SELECTOR_PATTERN = re.compile(
+        r'^(at|before)\s*\(\s*(.+?)\s*\)$',
+        re.IGNORECASE
+    )
+    NODE_INDEX_PATTERN = re.compile(r'^(?:/|//)?(Task|Version)\s*\[\s*(-?\d+)\s*\]\s*$', re.IGNORECASE)
+    NODE_ATOM_PATTERN = re.compile(
+        r'^(?:/|//)?(Task|Version)\s*\[\s*atom\s*\(\s*content\s*~=\s*["\']([^"\']+)["\']\s*\)\s*\]\s*$',
+        re.IGNORECASE
+    )
+>>>>>>> theirs
     
     def __init__(self, client=None, schema_name: Optional[str] = None):
         """
@@ -73,7 +94,7 @@ class VersionResolver:
             "version_resolver_prompt",
             "prompts/query_generator/version_resolver.txt",
         )
-        self._prompt_path = Path(__file__).parent.parent.parent.parent / "storage" / prompt_file
+        self._prompt_path = Path(__file__).resolve().parents[3] / "storage" / prompt_file
         self._schema_name = schema_info["schema_name"]
     
     @property
@@ -88,7 +109,26 @@ class VersionResolver:
         """Lazy load the system prompt from file."""
         if self._system_prompt is None:
             with open(self._prompt_path, "r", encoding="utf-8") as f:
+<<<<<<< ours
                 self._system_prompt = f.read()
+=======
+                template = f.read()
+            grammar_path = self._prompt_path.parent / "xpath_grammar.txt"
+            grammar = ""
+            if grammar_path.exists():
+                with open(grammar_path, "r", encoding="utf-8") as gf:
+                    grammar = gf.read().strip()
+            schema_summary = ""
+            try:
+                schema_summary = get_schema_summary_for_prompt(self._schema_name)
+            except Exception:
+                schema_summary = ""
+            self._system_prompt = template.format(
+                grammar=grammar,
+                schema=schema_summary,
+                schema_name=self._schema_name
+            )
+>>>>>>> theirs
         return self._system_prompt
     
     def resolve(self, user_query: str) -> ResolvedVersion:
@@ -147,6 +187,7 @@ class VersionResolver:
         task_match = self.TASK_PATTERN.search(response)
         task_query = task_match.group(1).strip() if task_match else original_query
         
+<<<<<<< ours
         if match:
             selector_str = match.group(1).lower()
             index_str = match.group(2)
@@ -161,6 +202,71 @@ class VersionResolver:
             else:
                 index = None
                 semantic_query = semantic_str
+=======
+        task_selector_raw = None
+        version_selector_raw = None
+        crud_str = None
+
+        if match:
+            task_selector_raw = match.group(1).strip()
+            version_selector_raw = match.group(2).strip()
+            crud_str = match.group(3).upper()
+        else:
+            # New multi-line format
+            lines = [ln.strip() for ln in response.splitlines() if ln.strip()]
+            for line in lines:
+                lower = line.lower()
+                if lower.startswith("task selector:"):
+                    task_selector_raw = line.split(":", 1)[1].strip()
+                elif lower.startswith("version selector:"):
+                    version_selector_raw = line.split(":", 1)[1].strip()
+                elif lower.startswith("operation:"):
+                    crud_str = line.split(":", 1)[1].strip().upper()
+                elif lower in ("read", "create", "update", "delete", "state"):
+                    crud_str = line.upper()
+                elif lower.startswith("task("):
+                    task_selector_raw = line
+                elif lower.startswith("version("):
+                    version_selector_raw = line
+
+            if task_selector_raw and task_selector_raw.lower().startswith("task("):
+                task_selector_raw = task_selector_raw[len("task("):-1].strip()
+            if version_selector_raw and version_selector_raw.lower().startswith("version("):
+                version_selector_raw = version_selector_raw[len("version("):-1].strip()
+
+        if task_selector_raw and version_selector_raw and crud_str:
+            
+            task_selector_type = VersionSelector.AT
+            version_selector_type = VersionSelector.AT
+            task_index = None
+            task_semantic_query = None
+            index = None
+            semantic_query = None
+
+            if task_selector_raw.lower() != "none":
+                task_match_sel = self.SELECTOR_PATTERN.match(task_selector_raw)
+                if task_match_sel:
+                    task_selector_str = task_match_sel.group(1).lower()
+                    inner = task_match_sel.group(2).strip()
+                    task_selector_type = VersionSelector.AT if task_selector_str == "at" else VersionSelector.BEFORE
+                    idx_match = self.NODE_INDEX_PATTERN.match(inner)
+                    if idx_match:
+                        task_index = int(idx_match.group(2))
+                    else:
+                        task_semantic_query = inner
+
+            if version_selector_raw.lower() != "none":
+                version_match_sel = self.SELECTOR_PATTERN.match(version_selector_raw)
+                if version_match_sel:
+                    version_selector_str = version_match_sel.group(1).lower()
+                    inner = version_match_sel.group(2).strip()
+                    version_selector_type = VersionSelector.AT if version_selector_str == "at" else VersionSelector.BEFORE
+                    idx_match = self.NODE_INDEX_PATTERN.match(inner)
+                    if idx_match:
+                        index = int(idx_match.group(2))
+                    else:
+                        semantic_query = inner
+>>>>>>> theirs
             
             try:
                 crud_operation = CRUDOperation(crud_str.capitalize())
@@ -168,9 +274,18 @@ class VersionResolver:
                 crud_operation = CRUDOperation.READ
             
             return ResolvedVersion(
+<<<<<<< ours
                 selector_type=selector_type,
                 semantic_query=semantic_query,
                 index=index,
+=======
+                selector_type=version_selector_type,
+                semantic_query=semantic_query,
+                index=index,
+                task_selector_type=task_selector_type,
+                task_semantic_query=task_semantic_query,
+                task_index=task_index,
+>>>>>>> theirs
                 crud_operation=crud_operation,
                 raw_response=response,
                 task_query=task_query
@@ -182,7 +297,14 @@ class VersionResolver:
         return ResolvedVersion(
             selector_type=VersionSelector.AT,
             semantic_query=None,
+<<<<<<< ours
             index=-1,
+=======
+            index=None,
+            task_selector_type=VersionSelector.AT,
+            task_semantic_query=None,
+            task_index=None,
+>>>>>>> theirs
             crud_operation=crud_operation,
             raw_response=response,
             task_query=task_query
@@ -200,6 +322,7 @@ class VersionResolver:
         """
         text_lower = text.lower()
         
+<<<<<<< ours
         # Check for CRUD keywords
         delete_keywords = ["delete", "remove", "drop", "cancel", "eliminate"]
         create_keywords = ["add", "create", "insert", "new", "schedule", "put", "include"]
@@ -217,4 +340,6 @@ class VersionResolver:
             if keyword in text_lower:
                 return CRUDOperation.UPDATE
         
+=======
+>>>>>>> theirs
         return CRUDOperation.READ

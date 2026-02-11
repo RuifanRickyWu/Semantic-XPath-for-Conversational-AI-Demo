@@ -275,6 +275,8 @@ class DenseXPathExecutor:
         root_type = self.root_type
         current_items: List[NodeItem] = [NodeItem(self.root, root_type, 1.0, 0)]
         
+        any_predicates_used = False
+
         for step_idx, step in enumerate(steps):
             execution_log.append(f"\n--- Step {step_idx + 1}: {step} ---")
 
@@ -285,6 +287,7 @@ class DenseXPathExecutor:
                 )
                 if traversal_step:
                     traversal_steps.append(traversal_step)
+                print(f"🔎 Step {step_idx + 1} (root): matched {len(current_items)} nodes")
                 # Log root step for accumulated score visualization
                 demo_logger.start_step(step_idx, str(step))
                 accumulated_scores = demo_logger.get_accumulated_scores()
@@ -314,6 +317,8 @@ class DenseXPathExecutor:
             )
             traversal_steps.append(step_trace)
 
+            print(f"🔎 Step {step_idx + 1}: matched {len(next_items)} nodes")
+
             if not next_items:
                 execution_log.append("No matching nodes for step expression")
                 demo_logger.end_step()  # End step even if no matches
@@ -321,6 +326,7 @@ class DenseXPathExecutor:
                 break
 
             if has_predicates:
+                any_predicates_used = True
                 scoring_traces.extend(step_trace.details.get("scoring_trace", []))
                 
                 for item in next_items:
@@ -445,66 +451,98 @@ class DenseXPathExecutor:
         if propagation_count > 0:
             execution_log.append(f"\n=== Parent Score Propagation: {propagation_count} nodes updated ===")
         
-        # =====================================================================
-        # Threshold Filtering (before global index)
-        # =====================================================================
-        execution_log.append(f"\n=== Threshold Filtering (threshold={self.score_threshold}) ===")
-        
-        before_threshold_count = len(current_items)
-        
-        # Apply threshold filter first
-        current_items = [item for item in current_items if item.score >= self.score_threshold]
-        
-        # Sort by score descending
-        current_items.sort(key=lambda x: x.score, reverse=True)
-        
-        execution_log.append(
-            f"  Filtered: {before_threshold_count} → {len(current_items)} nodes"
-        )
-        
-        # =====================================================================
-        # Apply global index AFTER threshold filtering
-        # =====================================================================
-        # This ensures that e.g. "first museum" selects from nodes that actually
-        # match "museum" (pass threshold), not the first node in document order.
-        if global_index is not None and current_items:
-            current_items, global_step = self._apply_global_index(
-                current_items, global_index, len(steps), execution_log
+        if not any_predicates_used:
+            # No semantic predicates: skip threshold and top_k filtering
+            execution_log.append("\n=== Final Filtering (no predicates) ===")
+            before_count = len(current_items)
+
+            if global_index is not None and current_items:
+                current_items, global_step = self._apply_global_index(
+                    current_items, global_index, len(steps), execution_log
+                )
+                traversal_steps.append(global_step)
+
+            after_count = len(current_items)
+            execution_log.append(
+                f"  Returned all matches: {before_count} → {after_count} nodes"
             )
-            traversal_steps.append(global_step)
-        
-        # =====================================================================
-        # Final top_k limit
-        # =====================================================================
-        execution_log.append(f"\n=== Final Filtering (top_k={self.top_k}) ===")
-        
-        before_count = len(current_items)
-        
-        # Apply top_k limit
-        current_items = current_items[:self.top_k]
-        
-        after_count = len(current_items)
-        
-        execution_log.append(
-            f"  After top_k: {before_count} → {after_count} nodes"
-        )
-        
-        final_filtering_trace = FinalFilteringTrace(
-            before_filter_count=before_threshold_count,
-            threshold=self.score_threshold,
-            top_k=self.top_k,
-            after_filter_count=after_count,
-            filtered_nodes=[
-                {
-                    "path": item.path,
-                    "score": item.score,  # Combined pipeline score (own × parent)
-                    "type": item.node.tag,
-                    "own_score": own_score_map.get(item.path, item.score),
-                    "parent_score": parent_score_map.get(item.path, 1.0),
-                }
-                for item in current_items
-            ]
-        )
+
+            final_filtering_trace = FinalFilteringTrace(
+                before_filter_count=before_count,
+                threshold=0.0,
+                top_k=0,
+                after_filter_count=after_count,
+                filtered_nodes=[
+                    {
+                        "path": item.path,
+                        "score": item.score,
+                        "type": item.node.tag,
+                        "own_score": own_score_map.get(item.path, item.score),
+                        "parent_score": parent_score_map.get(item.path, 1.0),
+                    }
+                    for item in current_items
+                ]
+            )
+        else:
+            # =====================================================================
+            # Threshold Filtering (before global index)
+            # =====================================================================
+            execution_log.append(f"\n=== Threshold Filtering (threshold={self.score_threshold}) ===")
+
+            before_threshold_count = len(current_items)
+            # Apply threshold filter first
+            current_items = [item for item in current_items if item.score >= self.score_threshold]
+
+            # Sort by score descending
+            current_items.sort(key=lambda x: x.score, reverse=True)
+
+            execution_log.append(
+                f"  Filtered: {before_threshold_count} → {len(current_items)} nodes"
+            )
+
+            # =====================================================================
+            # Apply global index AFTER threshold filtering
+            # =====================================================================
+            # This ensures that e.g. "first museum" selects from nodes that actually
+            # match "museum" (pass threshold), not the first node in document order.
+            if global_index is not None and current_items:
+                current_items, global_step = self._apply_global_index(
+                    current_items, global_index, len(steps), execution_log
+                )
+                traversal_steps.append(global_step)
+
+            # =====================================================================
+            # Final top_k limit
+            # =====================================================================
+            execution_log.append(f"\n=== Final Filtering (top_k={self.top_k}) ===")
+
+            before_count = len(current_items)
+
+            # Apply top_k limit
+            current_items = current_items[:self.top_k]
+
+            after_count = len(current_items)
+
+            execution_log.append(
+                f"  After top_k: {before_count} → {after_count} nodes"
+            )
+
+            final_filtering_trace = FinalFilteringTrace(
+                before_filter_count=before_threshold_count,
+                threshold=self.score_threshold,
+                top_k=self.top_k,
+                after_filter_count=after_count,
+                filtered_nodes=[
+                    {
+                        "path": item.path,
+                        "score": item.score,  # Combined pipeline score (own × parent)
+                        "type": item.node.tag,
+                        "own_score": own_score_map.get(item.path, item.score),
+                        "parent_score": parent_score_map.get(item.path, 1.0),
+                    }
+                    for item in current_items
+                ]
+            )
         
         # Convert to result format with full subtree
         matched_nodes = [

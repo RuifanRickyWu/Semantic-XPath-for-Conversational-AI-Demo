@@ -20,7 +20,7 @@ from typing import Dict, Any
 import sys
 
 # Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from pipeline_execution.pipeline_orchestrator.pipeline_orchestrator import SemanticXPathOrchestrator
 from pipeline_execution.semantic_xpath_execution import TraceWriter

@@ -1,0 +1,910 @@
+{
+  "success": true,
+  "llm_output": {
+    "domain": {
+      "name": "travel",
+      "description": "Travel planning tasks such as itineraries and multi-day trip schedules."
+    },
+    "task": {
+      "name": "japan_10_day_trip",
+      "title": "10-Day Japan Travel Plan",
+      "description": "A balanced 10-day itinerary covering Tokyo, Hakone, Kyoto, Nara, Osaka, Hiroshima, and Miyajima with cultural sites, city highlights, and travel logistics."
+    },
+    "schema": {
+      "name": "itinerary",
+      "description": "Multi-day travel itinerary with ordered days, activities, and accommodation entries.",
+      "root": "Itinerary",
+      "nodes": {
+        "Itinerary": {
+          "type": "root",
+          "fields": [
+            "title",
+            "summary"
+          ],
+          "children": [
+            "Day"
+          ]
+        },
+        "Day": {
+          "type": "container",
+          "index_attr": "index",
+          "fields": [
+            "date_note",
+            "focus"
+          ],
+          "children": [
+            "Activity",
+            "Accommodation"
+          ]
+        },
+        "Activity": {
+          "type": "leaf",
+          "fields": [
+            "name",
+            "time_block",
+            "description",
+            "highlights"
+          ],
+          "children": []
+        },
+        "Accommodation": {
+          "type": "leaf",
+          "fields": [
+            "name",
+            "time_block",
+            "notes",
+            "highlights"
+          ],
+          "children": []
+        }
+      }
+    },
+    "content": {
+      "root_fields": {
+        "title": "10-Day Japan Essentials: Tokyo to Miyajima",
+        "summary": "A 10-day route combining major cities, cultural experiences, natural scenery, and efficient travel connections for first-time or return visitors to Japan."
+      },
+      "root_attrs": {},
+      "children": [
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "1"
+          },
+          "fields": {
+            "date_note": "Arrival in Tokyo",
+            "focus": "Settle in and light exploration"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Arrive at Narita/Haneda, transfer to hotel",
+                "time_block": "Morning - Early Afternoon",
+                "description": "Clear immigration, take airport transfer to central Tokyo, check in or store luggage.",
+                "highlights": [
+                  "Smooth airport transfer",
+                  "First view of Tokyo neighborhoods"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Shinjuku stroll & observation",
+                "time_block": "Afternoon - Evening",
+                "description": "Explore Shinjuku station area, visit Metropolitan Government Building for free city views and have dinner nearby.",
+                "highlights": [
+                  "City skyline view",
+                  "Casual izakaya dinner"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Tokyo hotel (Shinjuku or Shibuya area)",
+                "time_block": "Night",
+                "notes": "Choose convenient station access for subsequent travel.",
+                "highlights": [
+                  "Central location",
+                  "Easy train access"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "2"
+          },
+          "fields": {
+            "date_note": "Tokyo - East and Central",
+            "focus": "Classic Tokyo neighborhoods and cultural sites"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Asakusa & Senso-ji",
+                "time_block": "Morning",
+                "description": "Visit Senso-ji temple, stroll Nakamise shopping street for snacks and souvenirs.",
+                "highlights": [
+                  "Historic temple",
+                  "Traditional street foods"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Ueno Park & Museums or Ameya-Yokocho Market",
+                "time_block": "Late Morning - Early Afternoon",
+                "description": "Choose a museum (Tokyo National Museum) or explore market stalls and casual eats.",
+                "highlights": [
+                  "Cultural museums",
+                  "Local market vibe"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Akihabara or Ginza depending on interest",
+                "time_block": "Afternoon - Evening",
+                "description": "Electronics and anime culture in Akihabara or upscale shopping and dining in Ginza.",
+                "highlights": [
+                  "Pop culture or luxury shopping",
+                  "Evening dining options"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Tokyo hotel (same area)",
+                "time_block": "Night",
+                "notes": "Rest before Hakone trip tomorrow.",
+                "highlights": [
+                  "Convenient departure",
+                  "Good transit links"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "3"
+          },
+          "fields": {
+            "date_note": "Day trip to Hakone (or overnight)",
+            "focus": "Onsen, views of Mt. Fuji, and scenic transport"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Travel to Hakone via Odawara/Shinkansen + local transport",
+                "time_block": "Morning",
+                "description": "Take bullet train to Odawara, then Hakone Tozan Railway/cable car and sightseeing loop.",
+                "highlights": [
+                  "Efficient shinkansen leg",
+                  "Scenic mountain transport"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Hakone Sightseeing: Open-Air Museum and Lake Ashi",
+                "time_block": "Afternoon",
+                "description": "Visit Hakone Open-Air Museum and take a boat on Lake Ashi for views of Mt. Fuji (weather permitting).",
+                "highlights": [
+                  "Art & nature",
+                  "Possible Mt. Fuji views"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Ryokan or onsen hotel in Hakone (optional overnight)",
+                "time_block": "Night",
+                "notes": "Enjoy onsen and kaiseki dinner if staying overnight.",
+                "highlights": [
+                  "Traditional lodging",
+                  "Relaxing hot springs"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "4"
+          },
+          "fields": {
+            "date_note": "Travel to Kyoto",
+            "focus": "Transit day with evening Kyoto introduction"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Shinkansen to Kyoto",
+                "time_block": "Morning - Early Afternoon",
+                "description": "Board bullet train from Odawara or Tokyo to Kyoto; check into accommodation and rest.",
+                "highlights": [
+                  "Fast transfer",
+                  "Comfortable travel"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Gion evening walk and Yasaka Shrine",
+                "time_block": "Evening",
+                "description": "Stroll historic Gion district, glimpse traditional streets and Yasaka Shrine illuminated at night.",
+                "highlights": [
+                  "Historic atmosphere",
+                  "Possible geisha sightings"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Kyoto machiya or hotel near Kawaramachi",
+                "time_block": "Night",
+                "notes": "Central location for walking to major sites.",
+                "highlights": [
+                  "Traditional option available",
+                  "Good access to public transit"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "5"
+          },
+          "fields": {
+            "date_note": "Kyoto full day",
+            "focus": "Iconic temples and bamboo groves"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Fushimi Inari Taisha early visit",
+                "time_block": "Morning",
+                "description": "Beat crowds for the torii gate trail at Fushimi Inari.",
+                "highlights": [
+                  "Endless torii gates",
+                  "Morning light"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Kiyomizu-dera and Higashiyama district",
+                "time_block": "Late Morning - Afternoon",
+                "description": "Explore the temple and charming historic streets leading to shops and tea houses.",
+                "highlights": [
+                  "Panoramic views",
+                  "Traditional crafts and snacks"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Arashiyama bamboo grove and Tenryu-ji",
+                "time_block": "Afternoon",
+                "description": "Visit the bamboo grove, riverside area, and Tenryu-ji temple; consider boat or stroll.",
+                "highlights": [
+                  "Scenic nature spot",
+                  "Relaxed pace"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Kyoto hotel (same area)",
+                "time_block": "Night",
+                "notes": "Rest; optional evening tea ceremony.",
+                "highlights": [
+                  "Central base",
+                  "Evening cultural options"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "6"
+          },
+          "fields": {
+            "date_note": "Day trip to Nara or more Kyoto",
+            "focus": "Deer park and Todai-ji or deeper Kyoto neighborhoods"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Nara: Todai-ji and Nara Park",
+                "time_block": "Morning - Afternoon",
+                "description": "Meet free-roaming deer, visit the Great Buddha at Todai-ji, and stroll the park.",
+                "highlights": [
+                  "Giant Buddha",
+                  "Friendly deer encounters"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Return to Kyoto: Philosopher's Path or tea district",
+                "time_block": "Late Afternoon",
+                "description": "Walk the Philosopher's Path or visit smaller temples and cafes in the area.",
+                "highlights": [
+                  "Scenic walk",
+                  "Quiet temples"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Kyoto hotel",
+                "time_block": "Night",
+                "notes": "Prepare for transfer to Osaka tomorrow.",
+                "highlights": [
+                  "Easy transit to next city",
+                  "Pack for short move"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "7"
+          },
+          "fields": {
+            "date_note": "Travel to Osaka",
+            "focus": "City food culture and evening nightlife"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Short train to Osaka, check into hotel",
+                "time_block": "Morning",
+                "description": "Move to Osaka and settle in near Namba or Umeda for best dining options.",
+                "highlights": [
+                  "Quick transit",
+                  "Vibrant neighborhoods"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Dotonbori and Kuromon Market food crawl",
+                "time_block": "Afternoon - Evening",
+                "description": "Taste takoyaki, okonomiyaki, and market specialties; enjoy neon-lit canal area at night.",
+                "highlights": [
+                  "Street food heaven",
+                  "Iconic neon signage"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Osaka hotel (Namba/Umeda)",
+                "time_block": "Night",
+                "notes": "Stay central for next day's travel or Osaka castle visit.",
+                "highlights": [
+                  "Central nightlife access",
+                  "Good train connections"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "8"
+          },
+          "fields": {
+            "date_note": "Osaka - optional day trip",
+            "focus": "Castle, shopping, or Universal Studios"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Osaka Castle and park visit",
+                "time_block": "Morning",
+                "description": "Tour the historic castle and its museum, then walk the surrounding park.",
+                "highlights": [
+                  "Historical landmark",
+                  "Nice photo spots"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Afternoon options: Universal Studios Japan or shopping in Umeda",
+                "time_block": "Afternoon - Evening",
+                "description": "Choose theme park fun or department store and underground shopping exploration.",
+                "highlights": [
+                  "Family-friendly option",
+                  "Retail and dining choices"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Osaka hotel",
+                "time_block": "Night",
+                "notes": "Prepare for early transfer to Hiroshima tomorrow.",
+                "highlights": [
+                  "Rest before long-distance travel",
+                  "Pack light for transit"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "9"
+          },
+          "fields": {
+            "date_note": "Travel to Hiroshima and Miyajima",
+            "focus": "Peace Memorial Park and Itsukushima Shrine"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Shinkansen to Hiroshima, visit Peace Memorial Park & Museum",
+                "time_block": "Morning - Afternoon",
+                "description": "Spend time at the museum and memorial for reflection and history.",
+                "highlights": [
+                  "Important historical site",
+                  "Reflective museum exhibits"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Ferry to Miyajima and Itsukushima Shrine",
+                "time_block": "Late Afternoon - Evening",
+                "description": "See the floating torii gate at low or high tide and stroll the island; try local oysters.",
+                "highlights": [
+                  "Iconic torii gate",
+                  "Scenic island atmosphere"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Hiroshima or Miyajima ryokan/hotel",
+                "time_block": "Night",
+                "notes": "Overnight on island for sunset/sunrise views if desired.",
+                "highlights": [
+                  "Scenic stay option",
+                  "Easy access to shrine"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "10"
+          },
+          "fields": {
+            "date_note": "Return to Tokyo or depart from Kansai/Osaka",
+            "focus": "Transit and departure preparations"
+          },
+          "children": [
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Return travel: Shinkansen to Tokyo or transfer to Kansai Intl",
+                "time_block": "Morning - Afternoon",
+                "description": "Allow ample time for transfers; consider direct shinkansen back to Tokyo or train/airport transfer for international flight.",
+                "highlights": [
+                  "Plan buffer time",
+                  "Final souvenir shopping"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Activity",
+              "attrs": {},
+              "fields": {
+                "name": "Last-minute city time depending on flight schedule",
+                "time_block": "Afternoon - Evening",
+                "description": "If time permits, enjoy a final meal or short walk in departure city before heading to airport.",
+                "highlights": [
+                  "Memorable final meal",
+                  "Relaxed departure pace"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Accommodation",
+              "attrs": {},
+              "fields": {
+                "name": "Departure night or airport hotel (if needed)",
+                "time_block": "Night",
+                "notes": "Stay near airport if early flight; otherwise final night in Tokyo/Osaka.",
+                "highlights": [
+                  "Convenient for flight",
+                  "Final packing time"
+                ]
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    "user_facing": {
+      "title": "10-Day Japan Trip \u2014 Quick Overview",
+      "overview": "A practical 10-day route from Tokyo to Miyajima balancing major sights, culture, food, and comfortable travel pacing.",
+      "sections": [
+        {
+          "title": "Trip Flow Summary",
+          "summary": "Start in Tokyo, enjoy a Hakone nature/onsen stop, then immerse in Kyoto culture before finishing with Osaka and Hiroshima/Miyajima.",
+          "bullets": [
+            "Days 1-3: Tokyo highlights and Hakone day/overnight",
+            "Days 4-6: Kyoto and Nara cultural core",
+            "Days 7-9: Osaka urban food scene then Hiroshima/Miyajima"
+          ]
+        },
+        {
+          "title": "Daily Pacing Advice",
+          "summary": "Mix busy sightseeing days with lighter travel or onsen/rest days to avoid burnout.",
+          "bullets": [
+            "Plan mornings for top sites to avoid crowds",
+            "Reserve evenings for relaxed dining or neighborhood walks",
+            "Include one full rest or optional activity day (e.g., Universal Studios, Hakone onsen)"
+          ]
+        },
+        {
+          "title": "Transport and Tickets",
+          "summary": "Use JR Pass for long-distance shinkansen legs and buy local tickets or IC card for city transit.",
+          "bullets": [
+            "Consider a 7-day JR Pass activated for Kyoto-to-Hiroshima leg",
+            "Get a Suica/Pasmo or Icoca IC card for city trains and buses",
+            "Reserve shinkansen seats for peak travel days"
+          ]
+        },
+        {
+          "title": "Accommodation Tips",
+          "summary": "Stay near major stations for convenience and experience at least one ryokan/onsen overnight.",
+          "bullets": [
+            "Tokyo: Shinjuku/Shibuya for connectivity",
+            "Kyoto: Central Kawaramachi/Gion for walking access",
+            "Try a ryokan in Hakone or Miyajima for traditional lodging"
+          ]
+        },
+        {
+          "title": "Food & Cultural Notes",
+          "summary": "Sample regional specialties and be mindful of local etiquette in temples, shrines, and public transport.",
+          "bullets": [
+            "Try takoyaki and okonomiyaki in Osaka, oysters in Miyajima",
+            "Remove shoes where required and keep phone conversations low on trains",
+            "Carry cash for small vendors; many places accept cards but not all"
+          ]
+        },
+        {
+          "title": "Final Departure Planning",
+          "summary": "Build buffer time for transfers and last-minute packing before your international flight.",
+          "bullets": [
+            "Allow 3+ hours for airport transfer if departing same day as travel",
+            "Check luggage forwarding services if moving between many cities",
+            "Confirm flight check-in and customs timing the day before departure"
+          ]
+        }
+      ]
+    }
+  },
+  "user_facing": {
+    "title": "10-Day Japan Trip  Quick Overview",
+    "overview": "A practical 10-day route from Tokyo to Miyajima balancing major sights, culture, food, and comfortable travel pacing.",
+    "sections": [
+      {
+        "title": "Trip Flow Summary",
+        "summary": "Start in Tokyo, enjoy a Hakone nature/onsen stop, then immerse in Kyoto culture before finishing with Osaka and Hiroshima/Miyajima.",
+        "bullets": [
+          "Days 1-3: Tokyo highlights and Hakone day/overnight",
+          "Days 4-6: Kyoto and Nara cultural core",
+          "Days 7-9: Osaka urban food scene then Hiroshima/Miyajima"
+        ]
+      },
+      {
+        "title": "Daily Pacing Advice",
+        "summary": "Mix busy sightseeing days with lighter travel or onsen/rest days to avoid burnout.",
+        "bullets": [
+          "Plan mornings for top sites to avoid crowds",
+          "Reserve evenings for relaxed dining or neighborhood walks",
+          "Include one full rest or optional activity day (e.g., Universal Studios, Hakone onsen)"
+        ]
+      },
+      {
+        "title": "Transport and Tickets",
+        "summary": "Use JR Pass for long-distance shinkansen legs and buy local tickets or IC card for city transit.",
+        "bullets": [
+          "Consider a 7-day JR Pass activated for Kyoto-to-Hiroshima leg",
+          "Get a Suica/Pasmo or Icoca IC card for city trains and buses",
+          "Reserve shinkansen seats for peak travel days"
+        ]
+      },
+      {
+        "title": "Accommodation Tips",
+        "summary": "Stay near major stations for convenience and experience at least one ryokan/onsen overnight.",
+        "bullets": [
+          "Tokyo: Shinjuku/Shibuya for connectivity",
+          "Kyoto: Central Kawaramachi/Gion for walking access",
+          "Try a ryokan in Hakone or Miyajima for traditional lodging"
+        ]
+      },
+      {
+        "title": "Food & Cultural Notes",
+        "summary": "Sample regional specialties and be mindful of local etiquette in temples, shrines, and public transport.",
+        "bullets": [
+          "Try takoyaki and okonomiyaki in Osaka, oysters in Miyajima",
+          "Remove shoes where required and keep phone conversations low on trains",
+          "Carry cash for small vendors; many places accept cards but not all"
+        ]
+      },
+      {
+        "title": "Final Departure Planning",
+        "summary": "Build buffer time for transfers and last-minute packing before your international flight.",
+        "bullets": [
+          "Allow 3+ hours for airport transfer if departing same day as travel",
+          "Check luggage forwarding services if moving between many cities",
+          "Confirm flight check-in and customs timing the day before departure"
+        ]
+      }
+    ]
+  },
+  "domain": {
+    "name": "travel",
+    "description": "Travel planning tasks such as itineraries and multi-day trip schedules."
+  },
+  "task": {
+    "name": "japan_10_day_trip",
+    "title": "10-Day Japan Travel Plan",
+    "description": "A balanced 10-day itinerary covering Tokyo, Hakone, Kyoto, Nara, Osaka, Hiroshima, and Miyajima with cultural sites, city highlights, and travel logistics.",
+    "domain": "travel"
+  },
+  "task_schema": {
+    "name": "itinerary_cs6",
+    "description": "Multi-day travel itinerary with ordered days, activities, and accommodation entries.",
+    "hierarchy": "Itinerary (root)\n    `-- Day (container, indexed by @index)\n        |-- Activity (leaf)\n        `-- Accommodation (leaf)",
+    "nodes": {
+      "Itinerary": {
+        "type": "root",
+        "fields": [
+          "title",
+          "summary"
+        ],
+        "children": [
+          "Day"
+        ]
+      },
+      "Day": {
+        "type": "container",
+        "fields": [
+          "date_note",
+          "focus"
+        ],
+        "children": [
+          "Activity",
+          "Accommodation"
+        ],
+        "index_attr": "index"
+      },
+      "Activity": {
+        "type": "leaf",
+        "fields": [
+          "name",
+          "time_block",
+          "description",
+          "highlights"
+        ],
+        "children": []
+      },
+      "Accommodation": {
+        "type": "leaf",
+        "fields": [
+          "name",
+          "time_block",
+          "notes",
+          "highlights"
+        ],
+        "children": []
+      }
+    },
+    "data_files": {
+      "japan_10_day_trip": "memory/travel/japan_10_day_trip.xml"
+    },
+    "default_data": "japan_10_day_trip",
+    "examples_file": "prompts/query_generator/domains/xpath_examples_itinerary_cs6.txt",
+    "syntax_rules": "- Paths start with /Itinerary\n- Node types: Itinerary, Day, Activity, Accommodation\n- Indices: Node[1], Node[-1], Node[1:3]\n- Logical: AND / OR / not() combine predicates WITHIN brackets"
+  },
+  "version_schema": {
+    "name": "itinerary_cs6_version",
+    "description": "Version wrapper for itinerary",
+    "versioning": {
+      "root": "Root",
+      "version_node": "Itinerary_Version",
+      "version_index_attr": "number",
+      "content_container": "Itinerary"
+    },
+    "nodes": {
+      "Root": {
+        "type": "root",
+        "fields": [],
+        "children": [
+          "Itinerary_Version"
+        ]
+      },
+      "Itinerary_Version": {
+        "type": "version",
+        "index_attr": "number",
+        "fields": [
+          "patch_info",
+          "conversation_history"
+        ],
+        "children": []
+      }
+    }
+  },
+  "domain_schema": {
+    "name": "travel_domain",
+    "description": "Domain container for travel tasks with versions",
+    "hierarchy": "Travel_Root (root)\n  `-- Task (container, indexed by @name)\n      `-- TaskVersion (version, indexed by @number)",
+    "nodes": {
+      "Travel_Root": {
+        "type": "root",
+        "fields": [],
+        "children": [
+          "Task"
+        ]
+      },
+      "Task": {
+        "type": "container",
+        "index_attr": "name",
+        "fields": [
+          "title",
+          "description",
+          "status"
+        ],
+        "children": [
+          "TaskVersion"
+        ]
+      },
+      "TaskVersion": {
+        "type": "version",
+        "index_attr": "number",
+        "fields": [
+          "patch_info",
+          "conversation_history",
+          "created_at"
+        ],
+        "children": []
+      }
+    }
+  },
+  "memory_xml": "<?xml version='1.0' encoding='utf-8'?>\n<Root><Itinerary_Version number=\"1\"><patch_info>cold start initialization</patch_info><conversation_history>give me 10 days travel plan in Japan</conversation_history><Itinerary><title>10-Day Japan Essentials: Tokyo to Miyajima</title><summary>A 10-day route combining major cities, cultural experiences, natural scenery, and efficient travel connections for first-time or return visitors to Japan.</summary><Day index=\"1\"><date_note>Arrival in Tokyo</date_note><focus>Settle in and light exploration</focus><Activity><name>Arrive at Narita/Haneda, transfer to hotel</name><time_block>Morning - Early Afternoon</time_block><description>Clear immigration, take airport transfer to central Tokyo, check in or store luggage.</description><highlights><highlight>Smooth airport transfer</highlight><highlight>First view of Tokyo neighborhoods</highlight></highlights></Activity><Activity><name>Shinjuku stroll &amp; observation</name><time_block>Afternoon - Evening</time_block><description>Explore Shinjuku station area, visit Metropolitan Government Building for free city views and have dinner nearby.</description><highlights><highlight>City skyline view</highlight><highlight>Casual izakaya dinner</highlight></highlights></Activity><Accommodation><name>Tokyo hotel (Shinjuku or Shibuya area)</name><time_block>Night</time_block><notes>Choose convenient station access for subsequent travel.</notes><highlights><highlight>Central location</highlight><highlight>Easy train access</highlight></highlights></Accommodation></Day><Day index=\"2\"><date_note>Tokyo - East and Central</date_note><focus>Classic Tokyo neighborhoods and cultural sites</focus><Activity><name>Asakusa &amp; Senso-ji</name><time_block>Morning</time_block><description>Visit Senso-ji temple, stroll Nakamise shopping street for snacks and souvenirs.</description><highlights><highlight>Historic temple</highlight><highlight>Traditional street foods</highlight></highlights></Activity><Activity><name>Ueno Park &amp; Museums or Ameya-Yokocho Market</name><time_block>Late Morning - Early Afternoon</time_block><description>Choose a museum (Tokyo National Museum) or explore market stalls and casual eats.</description><highlights><highlight>Cultural museums</highlight><highlight>Local market vibe</highlight></highlights></Activity><Activity><name>Akihabara or Ginza depending on interest</name><time_block>Afternoon - Evening</time_block><description>Electronics and anime culture in Akihabara or upscale shopping and dining in Ginza.</description><highlights><highlight>Pop culture or luxury shopping</highlight><highlight>Evening dining options</highlight></highlights></Activity><Accommodation><name>Tokyo hotel (same area)</name><time_block>Night</time_block><notes>Rest before Hakone trip tomorrow.</notes><highlights><highlight>Convenient departure</highlight><highlight>Good transit links</highlight></highlights></Accommodation></Day><Day index=\"3\"><date_note>Day trip to Hakone (or overnight)</date_note><focus>Onsen, views of Mt. Fuji, and scenic transport</focus><Activity><name>Travel to Hakone via Odawara/Shinkansen + local transport</name><time_block>Morning</time_block><description>Take bullet train to Odawara, then Hakone Tozan Railway/cable car and sightseeing loop.</description><highlights><highlight>Efficient shinkansen leg</highlight><highlight>Scenic mountain transport</highlight></highlights></Activity><Activity><name>Hakone Sightseeing: Open-Air Museum and Lake Ashi</name><time_block>Afternoon</time_block><description>Visit Hakone Open-Air Museum and take a boat on Lake Ashi for views of Mt. Fuji (weather permitting).</description><highlights><highlight>Art &amp; nature</highlight><highlight>Possible Mt. Fuji views</highlight></highlights></Activity><Accommodation><name>Ryokan or onsen hotel in Hakone (optional overnight)</name><time_block>Night</time_block><notes>Enjoy onsen and kaiseki dinner if staying overnight.</notes><highlights><highlight>Traditional lodging</highlight><highlight>Relaxing hot springs</highlight></highlights></Accommodation></Day><Day index=\"4\"><date_note>Travel to Kyoto</date_note><focus>Transit day with evening Kyoto introduction</focus><Activity><name>Shinkansen to Kyoto</name><time_block>Morning - Early Afternoon</time_block><description>Board bullet train from Odawara or Tokyo to Kyoto; check into accommodation and rest.</description><highlights><highlight>Fast transfer</highlight><highlight>Comfortable travel</highlight></highlights></Activity><Activity><name>Gion evening walk and Yasaka Shrine</name><time_block>Evening</time_block><description>Stroll historic Gion district, glimpse traditional streets and Yasaka Shrine illuminated at night.</description><highlights><highlight>Historic atmosphere</highlight><highlight>Possible geisha sightings</highlight></highlights></Activity><Accommodation><name>Kyoto machiya or hotel near Kawaramachi</name><time_block>Night</time_block><notes>Central location for walking to major sites.</notes><highlights><highlight>Traditional option available</highlight><highlight>Good access to public transit</highlight></highlights></Accommodation></Day><Day index=\"5\"><date_note>Kyoto full day</date_note><focus>Iconic temples and bamboo groves</focus><Activity><name>Fushimi Inari Taisha early visit</name><time_block>Morning</time_block><description>Beat crowds for the torii gate trail at Fushimi Inari.</description><highlights><highlight>Endless torii gates</highlight><highlight>Morning light</highlight></highlights></Activity><Activity><name>Kiyomizu-dera and Higashiyama district</name><time_block>Late Morning - Afternoon</time_block><description>Explore the temple and charming historic streets leading to shops and tea houses.</description><highlights><highlight>Panoramic views</highlight><highlight>Traditional crafts and snacks</highlight></highlights></Activity><Activity><name>Arashiyama bamboo grove and Tenryu-ji</name><time_block>Afternoon</time_block><description>Visit the bamboo grove, riverside area, and Tenryu-ji temple; consider boat or stroll.</description><highlights><highlight>Scenic nature spot</highlight><highlight>Relaxed pace</highlight></highlights></Activity><Accommodation><name>Kyoto hotel (same area)</name><time_block>Night</time_block><notes>Rest; optional evening tea ceremony.</notes><highlights><highlight>Central base</highlight><highlight>Evening cultural options</highlight></highlights></Accommodation></Day><Day index=\"6\"><date_note>Day trip to Nara or more Kyoto</date_note><focus>Deer park and Todai-ji or deeper Kyoto neighborhoods</focus><Activity><name>Nara: Todai-ji and Nara Park</name><time_block>Morning - Afternoon</time_block><description>Meet free-roaming deer, visit the Great Buddha at Todai-ji, and stroll the park.</description><highlights><highlight>Giant Buddha</highlight><highlight>Friendly deer encounters</highlight></highlights></Activity><Activity><name>Return to Kyoto: Philosopher's Path or tea district</name><time_block>Late Afternoon</time_block><description>Walk the Philosopher's Path or visit smaller temples and cafes in the area.</description><highlights><highlight>Scenic walk</highlight><highlight>Quiet temples</highlight></highlights></Activity><Accommodation><name>Kyoto hotel</name><time_block>Night</time_block><notes>Prepare for transfer to Osaka tomorrow.</notes><highlights><highlight>Easy transit to next city</highlight><highlight>Pack for short move</highlight></highlights></Accommodation></Day><Day index=\"7\"><date_note>Travel to Osaka</date_note><focus>City food culture and evening nightlife</focus><Activity><name>Short train to Osaka, check into hotel</name><time_block>Morning</time_block><description>Move to Osaka and settle in near Namba or Umeda for best dining options.</description><highlights><highlight>Quick transit</highlight><highlight>Vibrant neighborhoods</highlight></highlights></Activity><Activity><name>Dotonbori and Kuromon Market food crawl</name><time_block>Afternoon - Evening</time_block><description>Taste takoyaki, okonomiyaki, and market specialties; enjoy neon-lit canal area at night.</description><highlights><highlight>Street food heaven</highlight><highlight>Iconic neon signage</highlight></highlights></Activity><Accommodation><name>Osaka hotel (Namba/Umeda)</name><time_block>Night</time_block><notes>Stay central for next day's travel or Osaka castle visit.</notes><highlights><highlight>Central nightlife access</highlight><highlight>Good train connections</highlight></highlights></Accommodation></Day><Day index=\"8\"><date_note>Osaka - optional day trip</date_note><focus>Castle, shopping, or Universal Studios</focus><Activity><name>Osaka Castle and park visit</name><time_block>Morning</time_block><description>Tour the historic castle and its museum, then walk the surrounding park.</description><highlights><highlight>Historical landmark</highlight><highlight>Nice photo spots</highlight></highlights></Activity><Activity><name>Afternoon options: Universal Studios Japan or shopping in Umeda</name><time_block>Afternoon - Evening</time_block><description>Choose theme park fun or department store and underground shopping exploration.</description><highlights><highlight>Family-friendly option</highlight><highlight>Retail and dining choices</highlight></highlights></Activity><Accommodation><name>Osaka hotel</name><time_block>Night</time_block><notes>Prepare for early transfer to Hiroshima tomorrow.</notes><highlights><highlight>Rest before long-distance travel</highlight><highlight>Pack light for transit</highlight></highlights></Accommodation></Day><Day index=\"9\"><date_note>Travel to Hiroshima and Miyajima</date_note><focus>Peace Memorial Park and Itsukushima Shrine</focus><Activity><name>Shinkansen to Hiroshima, visit Peace Memorial Park &amp; Museum</name><time_block>Morning - Afternoon</time_block><description>Spend time at the museum and memorial for reflection and history.</description><highlights><highlight>Important historical site</highlight><highlight>Reflective museum exhibits</highlight></highlights></Activity><Activity><name>Ferry to Miyajima and Itsukushima Shrine</name><time_block>Late Afternoon - Evening</time_block><description>See the floating torii gate at low or high tide and stroll the island; try local oysters.</description><highlights><highlight>Iconic torii gate</highlight><highlight>Scenic island atmosphere</highlight></highlights></Activity><Accommodation><name>Hiroshima or Miyajima ryokan/hotel</name><time_block>Night</time_block><notes>Overnight on island for sunset/sunrise views if desired.</notes><highlights><highlight>Scenic stay option</highlight><highlight>Easy access to shrine</highlight></highlights></Accommodation></Day><Day index=\"10\"><date_note>Return to Tokyo or depart from Kansai/Osaka</date_note><focus>Transit and departure preparations</focus><Activity><name>Return travel: Shinkansen to Tokyo or transfer to Kansai Intl</name><time_block>Morning - Afternoon</time_block><description>Allow ample time for transfers; consider direct shinkansen back to Tokyo or train/airport transfer for international flight.</description><highlights><highlight>Plan buffer time</highlight><highlight>Final souvenir shopping</highlight></highlights></Activity><Activity><name>Last-minute city time depending on flight schedule</name><time_block>Afternoon - Evening</time_block><description>If time permits, enjoy a final meal or short walk in departure city before heading to airport.</description><highlights><highlight>Memorable final meal</highlight><highlight>Relaxed departure pace</highlight></highlights></Activity><Accommodation><name>Departure night or airport hotel (if needed)</name><time_block>Night</time_block><notes>Stay near airport if early flight; otherwise final night in Tokyo/Osaka.</notes><highlights><highlight>Convenient for flight</highlight><highlight>Final packing time</highlight></highlights></Accommodation></Day></Itinerary></Itinerary_Version></Root>",
+  "paths": {
+    "task_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/itinerary_cs6/itinerary_cs6.yaml",
+    "version_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/itinerary_cs6/itinerary_cs6_version.yaml",
+    "domain_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/domains/travel.yaml",
+    "memory_xml": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/travel/japan_10_day_trip.xml",
+    "examples": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/prompts/query_generator/domains/xpath_examples_itinerary_cs6.txt"
+  },
+  "warnings": [],
+  "token_usage": {
+    "prompt_tokens": 806,
+    "completion_tokens": 4961,
+    "total_tokens": 5767
+  },
+  "display": {
+    "summary": "Cold Start Result\nDomain: travel - Travel planning tasks such as itineraries and multi-day trip schedules.\nTask: japan_10_day_trip - 10-Day Japan Travel Plan\nSchema: itinerary_cs6",
+    "paths": "Paths\nTask schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/itinerary_cs6/itinerary_cs6.yaml\nVersion schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/itinerary_cs6/itinerary_cs6_version.yaml\nDomain schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/domains/travel.yaml\nExamples: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/prompts/query_generator/domains/xpath_examples_itinerary_cs6.txt\nMemory XML: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/travel/japan_10_day_trip.xml",
+    "domain_schema": "name: travel_domain\ndescription: Domain container for travel tasks with versions\nhierarchy: \"Travel_Root (root)\\n  `-- Task (container, indexed by @name)\\n      `--\\\n  \\ TaskVersion (version, indexed by @number)\"\nnodes:\n  Travel_Root:\n    type: root\n    fields: []\n    children:\n    - Task\n  Task:\n    type: container\n    index_attr: name\n    fields:\n    - title\n    - description\n    - status\n    children:\n    - TaskVersion\n  TaskVersion:\n    type: version\n    index_attr: number\n    fields:\n    - patch_info\n    - conversation_history\n    - created_at\n    children: []",
+    "task_schema": "name: itinerary_cs6\ndescription: Multi-day travel itinerary with ordered days, activities, and accommodation\n  entries.\nhierarchy: \"Itinerary (root)\\n    `-- Day (container, indexed by @index)\\n       \\\n  \\ |-- Activity (leaf)\\n        `-- Accommodation (leaf)\"\nnodes:\n  Itinerary:\n    type: root\n    fields:\n    - title\n    - summary\n    children:\n    - Day\n  Day:\n    type: container\n    fields:\n    - date_note\n    - focus\n    children:\n    - Activity\n    - Accommodation\n    index_attr: index\n  Activity:\n    type: leaf\n    fields:\n    - name\n    - time_block\n    - description\n    - highlights\n    children: []\n  Accommodation:\n    type: leaf\n    fields:\n    - name\n    - time_block\n    - notes\n    - highlights\n    children: []\ndata_files:\n  japan_10_day_trip: memory/travel/japan_10_day_trip.xml\ndefault_data: japan_10_day_trip\nexamples_file: prompts/query_generator/domains/xpath_examples_itinerary_cs6.txt\nsyntax_rules: '- Paths start with /Itinerary\n\n  - Node types: Itinerary, Day, Activity, Accommodation\n\n  - Indices: Node[1], Node[-1], Node[1:3]\n\n  - Logical: AND / OR / not() combine predicates WITHIN brackets'",
+    "memory_xml": "<?xml version=\"1.0\" ?>\n<Root>\n  <Itinerary_Version number=\"1\">\n    <patch_info>cold start initialization</patch_info>\n    <conversation_history>give me 10 days travel plan in Japan</conversation_history>\n    <Itinerary>\n      <title>10-Day Japan Essentials: Tokyo to Miyajima</title>\n      <summary>A 10-day route combining major cities, cultural experiences, natural scenery, and efficient travel connections for first-time or return visitors to Japan.</summary>\n      <Day index=\"1\">\n        <date_note>Arrival in Tokyo</date_note>\n        <focus>Settle in and light exploration</focus>\n        <Activity>\n          <name>Arrive at Narita/Haneda, transfer to hotel</name>\n          <time_block>Morning - Early Afternoon</time_block>\n          <description>Clear immigration, take airport transfer to central Tokyo, check in or store luggage.</description>\n          <highlights>\n            <highlight>Smooth airport transfer</highlight>\n            <highlight>First view of Tokyo neighborhoods</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Shinjuku stroll &amp; observation</name>\n          <time_block>Afternoon - Evening</time_block>\n          <description>Explore Shinjuku station area, visit Metropolitan Government Building for free city views and have dinner nearby.</description>\n          <highlights>\n            <highlight>City skyline view</highlight>\n            <highlight>Casual izakaya dinner</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Tokyo hotel (Shinjuku or Shibuya area)</name>\n          <time_block>Night</time_block>\n          <notes>Choose convenient station access for subsequent travel.</notes>\n          <highlights>\n            <highlight>Central location</highlight>\n            <highlight>Easy train access</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"2\">\n        <date_note>Tokyo - East and Central</date_note>\n        <focus>Classic Tokyo neighborhoods and cultural sites</focus>\n        <Activity>\n          <name>Asakusa &amp; Senso-ji</name>\n          <time_block>Morning</time_block>\n          <description>Visit Senso-ji temple, stroll Nakamise shopping street for snacks and souvenirs.</description>\n          <highlights>\n            <highlight>Historic temple</highlight>\n            <highlight>Traditional street foods</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Ueno Park &amp; Museums or Ameya-Yokocho Market</name>\n          <time_block>Late Morning - Early Afternoon</time_block>\n          <description>Choose a museum (Tokyo National Museum) or explore market stalls and casual eats.</description>\n          <highlights>\n            <highlight>Cultural museums</highlight>\n            <highlight>Local market vibe</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Akihabara or Ginza depending on interest</name>\n          <time_block>Afternoon - Evening</time_block>\n          <description>Electronics and anime culture in Akihabara or upscale shopping and dining in Ginza.</description>\n          <highlights>\n            <highlight>Pop culture or luxury shopping</highlight>\n            <highlight>Evening dining options</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Tokyo hotel (same area)</name>\n          <time_block>Night</time_block>\n          <notes>Rest before Hakone trip tomorrow.</notes>\n          <highlights>\n            <highlight>Convenient departure</highlight>\n            <highlight>Good transit links</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"3\">\n        <date_note>Day trip to Hakone (or overnight)</date_note>\n        <focus>Onsen, views of Mt. Fuji, and scenic transport</focus>\n        <Activity>\n          <name>Travel to Hakone via Odawara/Shinkansen + local transport</name>\n          <time_block>Morning</time_block>\n          <description>Take bullet train to Odawara, then Hakone Tozan Railway/cable car and sightseeing loop.</description>\n          <highlights>\n            <highlight>Efficient shinkansen leg</highlight>\n            <highlight>Scenic mountain transport</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Hakone Sightseeing: Open-Air Museum and Lake Ashi</name>\n          <time_block>Afternoon</time_block>\n          <description>Visit Hakone Open-Air Museum and take a boat on Lake Ashi for views of Mt. Fuji (weather permitting).</description>\n          <highlights>\n            <highlight>Art &amp; nature</highlight>\n            <highlight>Possible Mt. Fuji views</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Ryokan or onsen hotel in Hakone (optional overnight)</name>\n          <time_block>Night</time_block>\n          <notes>Enjoy onsen and kaiseki dinner if staying overnight.</notes>\n          <highlights>\n            <highlight>Traditional lodging</highlight>\n            <highlight>Relaxing hot springs</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"4\">\n        <date_note>Travel to Kyoto</date_note>\n        <focus>Transit day with evening Kyoto introduction</focus>\n        <Activity>\n          <name>Shinkansen to Kyoto</name>\n          <time_block>Morning - Early Afternoon</time_block>\n          <description>Board bullet train from Odawara or Tokyo to Kyoto; check into accommodation and rest.</description>\n          <highlights>\n            <highlight>Fast transfer</highlight>\n            <highlight>Comfortable travel</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Gion evening walk and Yasaka Shrine</name>\n          <time_block>Evening</time_block>\n          <description>Stroll historic Gion district, glimpse traditional streets and Yasaka Shrine illuminated at night.</description>\n          <highlights>\n            <highlight>Historic atmosphere</highlight>\n            <highlight>Possible geisha sightings</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Kyoto machiya or hotel near Kawaramachi</name>\n          <time_block>Night</time_block>\n          <notes>Central location for walking to major sites.</notes>\n          <highlights>\n            <highlight>Traditional option available</highlight>\n            <highlight>Good access to public transit</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"5\">\n        <date_note>Kyoto full day</date_note>\n        <focus>Iconic temples and bamboo groves</focus>\n        <Activity>\n          <name>Fushimi Inari Taisha early visit</name>\n          <time_block>Morning</time_block>\n          <description>Beat crowds for the torii gate trail at Fushimi Inari.</description>\n          <highlights>\n            <highlight>Endless torii gates</highlight>\n            <highlight>Morning light</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Kiyomizu-dera and Higashiyama district</name>\n          <time_block>Late Morning - Afternoon</time_block>\n          <description>Explore the temple and charming historic streets leading to shops and tea houses.</description>\n          <highlights>\n            <highlight>Panoramic views</highlight>\n            <highlight>Traditional crafts and snacks</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Arashiyama bamboo grove and Tenryu-ji</name>\n          <time_block>Afternoon</time_block>\n          <description>Visit the bamboo grove, riverside area, and Tenryu-ji temple; consider boat or stroll.</description>\n          <highlights>\n            <highlight>Scenic nature spot</highlight>\n            <highlight>Relaxed pace</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Kyoto hotel (same area)</name>\n          <time_block>Night</time_block>\n          <notes>Rest; optional evening tea ceremony.</notes>\n          <highlights>\n            <highlight>Central base</highlight>\n            <highlight>Evening cultural options</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"6\">\n        <date_note>Day trip to Nara or more Kyoto</date_note>\n        <focus>Deer park and Todai-ji or deeper Kyoto neighborhoods</focus>\n        <Activity>\n          <name>Nara: Todai-ji and Nara Park</name>\n          <time_block>Morning - Afternoon</time_block>\n          <description>Meet free-roaming deer, visit the Great Buddha at Todai-ji, and stroll the park.</description>\n          <highlights>\n            <highlight>Giant Buddha</highlight>\n            <highlight>Friendly deer encounters</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Return to Kyoto: Philosopher's Path or tea district</name>\n          <time_block>Late Afternoon</time_block>\n          <description>Walk the Philosopher's Path or visit smaller temples and cafes in the area.</description>\n          <highlights>\n            <highlight>Scenic walk</highlight>\n            <highlight>Quiet temples</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Kyoto hotel</name>\n          <time_block>Night</time_block>\n          <notes>Prepare for transfer to Osaka tomorrow.</notes>\n          <highlights>\n            <highlight>Easy transit to next city</highlight>\n            <highlight>Pack for short move</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"7\">\n        <date_note>Travel to Osaka</date_note>\n        <focus>City food culture and evening nightlife</focus>\n        <Activity>\n          <name>Short train to Osaka, check into hotel</name>\n          <time_block>Morning</time_block>\n          <description>Move to Osaka and settle in near Namba or Umeda for best dining options.</description>\n          <highlights>\n            <highlight>Quick transit</highlight>\n            <highlight>Vibrant neighborhoods</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Dotonbori and Kuromon Market food crawl</name>\n          <time_block>Afternoon - Evening</time_block>\n          <description>Taste takoyaki, okonomiyaki, and market specialties; enjoy neon-lit canal area at night.</description>\n          <highlights>\n            <highlight>Street food heaven</highlight>\n            <highlight>Iconic neon signage</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Osaka hotel (Namba/Umeda)</name>\n          <time_block>Night</time_block>\n          <notes>Stay central for next day's travel or Osaka castle visit.</notes>\n          <highlights>\n            <highlight>Central nightlife access</highlight>\n            <highlight>Good train connections</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"8\">\n        <date_note>Osaka - optional day trip</date_note>\n        <focus>Castle, shopping, or Universal Studios</focus>\n        <Activity>\n          <name>Osaka Castle and park visit</name>\n          <time_block>Morning</time_block>\n          <description>Tour the historic castle and its museum, then walk the surrounding park.</description>\n          <highlights>\n            <highlight>Historical landmark</highlight>\n            <highlight>Nice photo spots</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Afternoon options: Universal Studios Japan or shopping in Umeda</name>\n          <time_block>Afternoon - Evening</time_block>\n          <description>Choose theme park fun or department store and underground shopping exploration.</description>\n          <highlights>\n            <highlight>Family-friendly option</highlight>\n            <highlight>Retail and dining choices</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Osaka hotel</name>\n          <time_block>Night</time_block>\n          <notes>Prepare for early transfer to Hiroshima tomorrow.</notes>\n          <highlights>\n            <highlight>Rest before long-distance travel</highlight>\n            <highlight>Pack light for transit</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"9\">\n        <date_note>Travel to Hiroshima and Miyajima</date_note>\n        <focus>Peace Memorial Park and Itsukushima Shrine</focus>\n        <Activity>\n          <name>Shinkansen to Hiroshima, visit Peace Memorial Park &amp; Museum</name>\n          <time_block>Morning - Afternoon</time_block>\n          <description>Spend time at the museum and memorial for reflection and history.</description>\n          <highlights>\n            <highlight>Important historical site</highlight>\n            <highlight>Reflective museum exhibits</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Ferry to Miyajima and Itsukushima Shrine</name>\n          <time_block>Late Afternoon - Evening</time_block>\n          <description>See the floating torii gate at low or high tide and stroll the island; try local oysters.</description>\n          <highlights>\n            <highlight>Iconic torii gate</highlight>\n            <highlight>Scenic island atmosphere</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Hiroshima or Miyajima ryokan/hotel</name>\n          <time_block>Night</time_block>\n          <notes>Overnight on island for sunset/sunrise views if desired.</notes>\n          <highlights>\n            <highlight>Scenic stay option</highlight>\n            <highlight>Easy access to shrine</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n      <Day index=\"10\">\n        <date_note>Return to Tokyo or depart from Kansai/Osaka</date_note>\n        <focus>Transit and departure preparations</focus>\n        <Activity>\n          <name>Return travel: Shinkansen to Tokyo or transfer to Kansai Intl</name>\n          <time_block>Morning - Afternoon</time_block>\n          <description>Allow ample time for transfers; consider direct shinkansen back to Tokyo or train/airport transfer for international flight.</description>\n          <highlights>\n            <highlight>Plan buffer time</highlight>\n            <highlight>Final souvenir shopping</highlight>\n          </highlights>\n        </Activity>\n        <Activity>\n          <name>Last-minute city time depending on flight schedule</name>\n          <time_block>Afternoon - Evening</time_block>\n          <description>If time permits, enjoy a final meal or short walk in departure city before heading to airport.</description>\n          <highlights>\n            <highlight>Memorable final meal</highlight>\n            <highlight>Relaxed departure pace</highlight>\n          </highlights>\n        </Activity>\n        <Accommodation>\n          <name>Departure night or airport hotel (if needed)</name>\n          <time_block>Night</time_block>\n          <notes>Stay near airport if early flight; otherwise final night in Tokyo/Osaka.</notes>\n          <highlights>\n            <highlight>Convenient for flight</highlight>\n            <highlight>Final packing time</highlight>\n          </highlights>\n        </Accommodation>\n      </Day>\n    </Itinerary>\n  </Itinerary_Version>\n</Root>"
+  }
+}

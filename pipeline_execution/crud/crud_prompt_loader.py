@@ -40,7 +40,7 @@ class PromptLoader:
                 └── ...
     """
     
-    PROMPTS_ROOT = Path(__file__).parent.parent.parent / "storage" / "prompts" / "crud"
+    PROMPTS_ROOT = Path(__file__).resolve().parents[2] / "storage" / "prompts" / "crud"
     TEMPLATES_PATH = PROMPTS_ROOT / "templates"
     SHARED_PATH = PROMPTS_ROOT / "shared"
     DOMAINS_PATH = PROMPTS_ROOT / "domains"

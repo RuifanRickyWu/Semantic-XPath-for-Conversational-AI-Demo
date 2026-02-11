@@ -124,6 +124,12 @@ class ResultFormatter:
         if "total_time_ms" in result:
             lines.append(f"⏱️  Time: {result['total_time_ms']:.1f}ms")
         
+        # User-facing response
+        user_facing = result.get("user_facing")
+        if user_facing:
+            lines.append("\n💬 Response:")
+            lines.append(str(user_facing).strip())
+
         # Operation-specific formatting
         if operation == "READ":
             lines.extend(self._format_read_result(result))
@@ -199,16 +205,21 @@ class ResultFormatter:
                 
                 # For container nodes, display children subtree
                 children = node.get("children", [])
-                if children:
-                    lines.append(f"    📦 Children ({len(children)}):")
-                    for child in children:
-                        child_type = child.get("type", "?")
-                        child_name = child.get("name", "Unknown")
-                        child_desc = child.get("description", "")
-                        lines.append(f"        - {child_type}: {child_name}")
-                        if child_desc:
-                            short_desc = child_desc[:60] + "..." if len(child_desc) > 60 else child_desc
-                            lines.append(f"          {short_desc}")
+                if isinstance(children, list) and children:
+                    dict_children = [c for c in children if isinstance(c, dict)]
+                    text_children = [c for c in children if isinstance(c, str)]
+                    if dict_children:
+                        lines.append(f"    📦 Children ({len(dict_children)}):")
+                        for child in dict_children:
+                            child_type = child.get("type", "?")
+                            child_name = child.get("name", "Unknown")
+                            child_desc = child.get("description", "")
+                            lines.append(f"        - {child_type}: {child_name}")
+                            if child_desc:
+                                short_desc = child_desc[:60] + "..." if len(child_desc) > 60 else child_desc
+                                lines.append(f"          {short_desc}")
+                    elif text_children:
+                        lines.append(f"    📦 Children: {', '.join(text_children)}")
         else:
             lines.append("\n⚠️  No nodes matched the query")
         

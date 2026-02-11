@@ -32,6 +32,9 @@ from pipeline_execution.semantic_xpath_util import get_versioning_info
 logger = logging.getLogger(__name__)
 
 
+DEFAULT_VERSION_TAGS = ("Version",)
+
+
 class VersionManager:
     """
     Manages in-tree versioning of XML trees.
@@ -39,14 +42,12 @@ class VersionManager:
     Versions are stored as child nodes of the root element.
     Each Itinerary_Version node contains:
     - number attribute: version number (1, 2, 3, ...)
-    - patch_info: description of changes made
-    - conversation_history: user's natural language request
+    - description: short description of changes
     - Itinerary: container for content nodes (Days)
     """
     
     # Version tag names to support legacy formats
-    VERSION_TAGS = ("Version",)
-    
+    VERSION_TAGS = DEFAULT_VERSION_TAGS
     def __init__(self, base_directory: Path = None, schema_name: Optional[str] = None):
         """
         Initialize the version manager.
@@ -60,7 +61,7 @@ class VersionManager:
         self._version_tag = self._versioning.get("version_tag")
         self._version_index_attr = self._versioning.get("version_index_attr", "number")
         self._content_container = self._versioning.get("content_container")
-        self._metadata_tags = {"patch_info", "conversation_history"}
+        self._metadata_tags = {"description", "patch_info", "conversation_history"}
     
     def _find_versions(self, tree: ET.ElementTree) -> List[ET.Element]:
         """
@@ -114,7 +115,8 @@ class VersionManager:
     @staticmethod
     def _is_version_tag(tag: str) -> bool:
         """Heuristic for legacy version tag detection when schema is missing."""
-        if tag in VersionManager.VERSION_TAGS:
+        version_tags = getattr(VersionManager, "VERSION_TAGS", DEFAULT_VERSION_TAGS)
+        if tag in version_tags:
             return True
         return tag.endswith("_Version")
     
@@ -219,7 +221,7 @@ class VersionManager:
         scorer=None
     ) -> Optional[ET.Element]:
         """
-        Find a version by semantic matching on patch_info/conversation_history.
+        Find a version by semantic matching on description (fallback to legacy fields).
         
         Uses entailment scoring to find the best matching version (top-1).
         Falls back to keyword matching if no scorer is provided.
@@ -240,15 +242,17 @@ class VersionManager:
         # Build version nodes for scoring
         version_nodes = []
         for i, version in enumerate(versions):
+            description_elem = version.find("description")
             patch_info = version.find("patch_info")
             conv_history = version.find("conversation_history")
-            
-            # Combine text for description
+
             text_parts = []
+            if description_elem is not None and description_elem.text:
+                text_parts.append(description_elem.text)
             if patch_info is not None and patch_info.text:
-                text_parts.append(f"Changes: {patch_info.text}")
+                text_parts.append(patch_info.text)
             if conv_history is not None and conv_history.text:
-                text_parts.append(f"Request: {conv_history.text}")
+                text_parts.append(conv_history.text)
             
             description = " | ".join(text_parts) if text_parts else "(no changes recorded)"
             version_number = version.get(self._version_index_attr, str(i + 1))
@@ -309,7 +313,7 @@ class VersionManager:
         Selectors:
         - "[-1]" or "[-N]": Negative index (from end)
         - "[N]": Positive version number
-        - "[atom(content =~ '...')]": Semantic match on patch_info/conversation_history
+        - "[atom(content =~ '...')]": Semantic match on description (or legacy fields)
         
         Args:
             tree: The XML tree
@@ -383,8 +387,7 @@ class VersionManager:
         self,
         tree: ET.ElementTree,
         source_version: ET.Element,
-        patch_info: str,
-        conversation_history: str,
+        description: str,
         modified_content: List[ET.Element] = None
     ) -> ET.Element:
         """
@@ -393,8 +396,7 @@ class VersionManager:
         Args:
             tree: The XML tree to modify
             source_version: The source Version element (content will be copied)
-            patch_info: Description of changes made
-            conversation_history: User's original request
+            description: Short description of changes
             modified_content: Optional pre-modified content nodes (Days).
                             If None, copies content from source_version.
             
@@ -412,13 +414,9 @@ class VersionManager:
         new_version = ET.Element(version_tag)
         new_version.set(self._version_index_attr, str(new_number))
         
-        # Add patch_info
-        patch_elem = ET.SubElement(new_version, "patch_info")
-        patch_elem.text = patch_info
-        
-        # Add conversation_history
-        conv_elem = ET.SubElement(new_version, "conversation_history")
-        conv_elem.text = conversation_history
+        # Add description
+        desc_elem = ET.SubElement(new_version, "description")
+        desc_elem.text = description
         
         # Handle content based on format
         content_container = self._get_content_container(source_version)
@@ -462,7 +460,7 @@ class VersionManager:
             version_elem: The Version element
             
         Returns:
-            List of content child elements (not patch_info or conversation_history)
+            List of content child elements (not description or legacy metadata)
         """
         content_container = self._get_content_container(version_elem)
         if content_container is not None:
@@ -572,11 +570,13 @@ class VersionManager:
         
         history = []
         for version in versions:
+            description = version.find("description")
             patch_info = version.find("patch_info")
             conv_history = version.find("conversation_history")
             
             history.append({
             "number": int(version.get(self._version_index_attr, 0)),
+                "description": description.text if description is not None else "",
                 "patch_info": patch_info.text if patch_info is not None else "",
                 "conversation_history": conv_history.text if conv_history is not None else "",
                 "content_count": len(self.get_version_content(version))

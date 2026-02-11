@@ -1,0 +1,273 @@
+domain:
+  name: travel
+  description: Trip planning and itineraries for city visits and vacations.
+task:
+  name: toronto_5day_trip
+  title: 5-Day Toronto Trip Plan
+  description: 'A paced 5-day itinerary covering Toronto''s highlights: museums, neighborhoods,
+    waterfront, islands, and local food.'
+schema:
+  name: itinerary
+  description: A day-by-day travel itinerary with ordered days and activities.
+  root: Itinerary
+  nodes:
+    Itinerary:
+      type: root
+      fields:
+      - title
+      - summary
+      children:
+      - Day
+    Day:
+      type: container
+      index_attr: index
+      fields:
+      - theme
+      - note
+      children:
+      - Activity
+    Activity:
+      type: leaf
+      fields:
+      - name
+      - time_block
+      - type
+      - description
+      - highlights
+      children: []
+content:
+  root_fields:
+    title: 5-Day Toronto Trip
+    summary: A balanced 5-day plan mixing major attractions, neighborhood exploration,
+      island time, and local dining with relaxed pacing.
+  root_attrs: {}
+  children:
+  - tag: Day
+    attrs:
+      index: '1'
+    fields:
+      theme: Arrival + Downtown Highlights
+      note: Easy first day to get oriented and adjust to the city.
+    children:
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Arrival and hotel check-in
+        time_block: Morning - Early Afternoon
+        type: logistics
+        description: Settle into accommodation, drop bags, quick rest.
+        highlights:
+        - smooth check-in
+        - map orientation
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: CN Tower & Harbourfront walk
+        time_block: Late Afternoon
+        type: sightseeing
+        description: Visit CN Tower (optional EdgeWalk view) then stroll the waterfront
+          and Queens Quay.
+        highlights:
+        - city skyline views
+        - waterfront promenade
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Dinner at a waterfront restaurant
+        time_block: Evening
+        type: dining
+        description: Choose a casual spot with lake views to unwind.
+        highlights:
+        - local seafood options
+        - sunset over lake
+  - tag: Day
+    attrs:
+      index: '2'
+    fields:
+      theme: Museums and Historic Distillery
+      note: Culture-focused day with indoor options in case of rain.
+    children:
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Royal Ontario Museum (ROM)
+        time_block: Morning
+        type: museum
+        description: Explore natural history and world cultures exhibits.
+        highlights:
+        - dinosaur gallery
+        - special exhibits
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Lunch on Bloor or Yorkville cafe
+        time_block: Midday
+        type: dining
+        description: Light lunch in the upscale Yorkville or nearby cafes.
+        highlights:
+        - bistro options
+        - people-watching
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Distillery District stroll and shops
+        time_block: Afternoon - Early Evening
+        type: neighborhood
+        description: Historic brick-lined district with galleries, boutiques, and
+          craft beer.
+        highlights:
+        - Victorian industrial architecture
+        - artisan shops
+  - tag: Day
+    attrs:
+      index: '3'
+    fields:
+      theme: Islands and Relaxation
+      note: A relaxed day with outdoor time and scenic views.
+    children:
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Ferry to Toronto Islands
+        time_block: Morning
+        type: transportation
+        description: Short ferry ride to the Islands for walking, biking, or beach
+          time.
+        highlights:
+        - panoramic skyline views
+        - beaches and bike paths
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Picnic or cafe on the Islands
+        time_block: Midday
+        type: dining
+        description: Bring or buy a casual lunch and relax by the water.
+        highlights:
+        - laid-back atmosphere
+        - picnic spots
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Return and dinner in the Entertainment District
+        time_block: Evening
+        type: dining
+        description: Try a trendy restaurant or gastropub near King St.
+        highlights:
+        - vibrant nightlife
+        - diverse cuisine
+  - tag: Day
+    attrs:
+      index: '4'
+    fields:
+      theme: 'Neighborhoods: Kensington + Chinatown'
+      note: Explore local markets, murals, and diverse food options.
+    children:
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Kensington Market wander
+        time_block: Morning
+        type: neighborhood
+        description: Vintage shops, street art, and eclectic markets.
+        highlights:
+        - unique boutiques
+        - street vendors
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Lunch in Chinatown
+        time_block: Midday
+        type: dining
+        description: Savor dumplings, noodles, and bubble tea.
+        highlights:
+        - authentic eats
+        - affordable options
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Art gallery or Graffiti Alley photo walk
+        time_block: Afternoon
+        type: culture
+        description: Visit local galleries or photograph murals in the Fashion District.
+        highlights:
+        - street art
+        - gallery exhibitions
+  - tag: Day
+    attrs:
+      index: '5'
+    fields:
+      theme: 'Final Day: Markets and Farewell'
+      note: Wrap up with a market visit and flexible time before departure.
+    children:
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: St. Lawrence Market visit
+        time_block: Morning
+        type: market
+        description: Sample local foods, grab souvenirs, and browse specialty stalls.
+        highlights:
+        - peameal bacon sandwich
+        - artisan products
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: 'Optional afternoon: Hockey Hall of Fame or shopping on Queen'
+        time_block: Afternoon
+        type: optional
+        description: Choose an attraction based on interest and time before heading
+          to airport or station.
+        highlights:
+        - sports history
+        - last-minute shopping
+    - tag: Activity
+      attrs: {}
+      fields:
+        name: Departure
+        time_block: Evening (as scheduled)
+        type: logistics
+        description: Return to accommodation, collect luggage, and travel to airport
+          or train station.
+        highlights:
+        - allow transit time
+        - confirm pickup/transport
+user_facing:
+  title: 5-Day Toronto Trip Plan
+  overview: A relaxed 5-day schedule that balances major sights, neighborhood discovery,
+    island time, and local food recommendations.
+  sections:
+  - title: "Day 1 \u2014 Arrival & Waterfront"
+    summary: Settle in and take an easy waterfront stroll with skyline views.
+    bullets:
+    - Check into your hotel and get oriented
+    - Visit CN Tower area and walk Queens Quay
+    - Dinner with lake views to unwind
+  - title: "Day 2 \u2014 Museums & Distillery"
+    summary: 'Culture day: major museum in the morning and the historic Distillery
+      District in the afternoon.'
+    bullets:
+    - Royal Ontario Museum exhibits
+    - Lunch near Yorkville
+    - Evening in the Distillery District
+  - title: "Day 3 \u2014 Toronto Islands"
+    summary: Relax on the Toronto Islands with ferry rides, beaches, and easy cycling
+      or walking.
+    bullets:
+    - Morning ferry for skyline views
+    - Picnic or island cafe for lunch
+    - Return for dinner in the Entertainment District
+  - title: "Day 4 \u2014 Kensington & Chinatown"
+    summary: Explore eclectic Kensington Market, enjoy Chinatown eats, and see local
+      street art.
+    bullets:
+    - Browse vintage shops and vendors
+    - Authentic lunch in Chinatown
+    - Afternoon art walk or gallery visit
+  - title: "Day 5 \u2014 Market & Departure"
+    summary: Finish with St. Lawrence Market, optional quick attraction, then head
+      home.
+    bullets:
+    - Sample treats and souvenirs at St. Lawrence Market
+    - Choose a final attraction or shopping stop
+    - Allow time to collect luggage and travel to the airport

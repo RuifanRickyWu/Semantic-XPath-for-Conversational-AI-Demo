@@ -11,7 +11,7 @@ from typing import List, Dict, Any
 from datetime import datetime
 import sys
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from client import get_default_client
 from .base import PredicateScorer, ScoringResult, BatchScoringResult
@@ -27,8 +27,8 @@ class LLMPredicateScorer(PredicateScorer):
     Sends batch requests to LLM to score multiple nodes against a predicate.
     """
     
-    PROMPT_PATH = Path(__file__).parent.parent / "storage" / "prompts" / "predicate_scoring" / "predicate_scorer.txt"
-    DEFAULT_TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
+    PROMPT_PATH = Path(__file__).resolve().parents[3] / "storage" / "prompts" / "predicate_scoring" / "predicate_scorer.txt"
+    DEFAULT_TRACES_PATH = Path(__file__).resolve().parents[3] / "traces" / "reasoning_traces"
     
     def __init__(self, client=None, save_traces: bool = True, traces_path: Path = None):
         """

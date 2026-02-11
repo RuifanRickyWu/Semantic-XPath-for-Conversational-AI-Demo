@@ -1,0 +1,112 @@
+domain:
+  name: communication
+  description: Short written communication and conversational planning (greetings,
+    replies, tone selection).
+task:
+  name: simple_greeting_response
+  title: Simple Greeting and Reply Options
+  description: Provide a brief greeting record and several short reply options with
+    tones and usage notes.
+schema:
+  name: greeting_conversation
+  description: A short conversation node with an initial greeting and ordered reply
+    options.
+  root: GreetingConversation
+  nodes:
+    GreetingConversation:
+      type: root
+      fields:
+      - title
+      - summary
+      children:
+      - Greeting
+      - ResponseOptions
+    Greeting:
+      type: leaf
+      fields:
+      - text
+      - language
+      children: []
+    ResponseOptions:
+      type: container
+      index_attr: index
+      fields:
+      - context_note
+      children:
+      - Option
+    Option:
+      type: leaf
+      fields:
+      - text
+      - tone
+      - usage_notes
+      children: []
+content:
+  root_fields:
+    title: "Hello \u2014 quick reply options"
+    summary: Record of a received greeting and three concise reply options in different
+      tones for immediate use.
+  root_attrs: {}
+  children:
+  - tag: Greeting
+    attrs: {}
+    fields:
+      text: hello
+      language: English
+    children: []
+  - tag: ResponseOptions
+    attrs:
+      index: '1'
+    fields:
+      context_note: Casual, immediate reply choices for a friendly chat.
+    children:
+    - tag: Option
+      attrs: {}
+      fields:
+        text: Hi! How's it going?
+        tone: friendly
+        usage_notes:
+        - Good for peers or acquaintances
+        - Invites a short update or small talk
+      children: []
+    - tag: Option
+      attrs: {}
+      fields:
+        text: "Hello \u2014 nice to hear from you."
+        tone: polite
+        usage_notes:
+        - Suitable for formal or semi-formal contacts
+        - Keeps tone warm but reserved
+      children: []
+    - tag: Option
+      attrs: {}
+      fields:
+        text: Hey! What's up?
+        tone: casual
+        usage_notes:
+        - Use with close friends
+        - Encourages quick, informal replies
+      children: []
+user_facing:
+  title: Quick replies to 'hello'
+  overview: Three concise reply options in different tones so you can respond immediately
+    based on context.
+  sections:
+  - title: Friendly option
+    summary: A warm, open reply that invites conversation.
+    bullets:
+    - 'Text: "Hi! How''s it going?"'
+    - 'Tone: friendly and approachable'
+    - Use with peers or casual acquaintances
+  - title: Polite option
+    summary: A slightly more formal and courteous response.
+    bullets:
+    - "Text: \"Hello \u2014 nice to hear from you.\""
+    - 'Tone: polite and reserved'
+    - Good for workplace or semi-formal contacts
+  - title: Casual option
+    summary: A relaxed, informal reply for close friends.
+    bullets:
+    - 'Text: "Hey! What''s up?"'
+    - 'Tone: very casual and direct'
+    - Use with close friends or informal groups

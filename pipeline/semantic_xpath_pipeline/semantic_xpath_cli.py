@@ -22,7 +22,7 @@ from utils.logger.session_logging.session_manager import SessionManager
 
 def load_config() -> dict:
     """Load configuration from config.yaml"""
-    config_path = Path(__file__).parent.parent.parent / "config.yaml"
+    config_path = Path(__file__).resolve().parents[2] / "config.yaml"
     with open(config_path, "r") as f:
         return yaml.safe_load(f)
 
@@ -49,7 +49,7 @@ class SemanticXPathCLI:
         self, 
         pipeline_config: Optional[Dict[str, Any]] = None,
         session_manager: Optional[SessionManager] = None,
-        enable_session_logging: bool = True
+        enable_session_logging: bool = False
     ):
         """
         Initialize the CLI.
@@ -248,9 +248,11 @@ class SemanticXPathCLI:
         
         for version in history:
             print(f"\n  Version {version['number']}:")
-            if version['patch_info']:
+            if version.get("description"):
+                print(f"    📝 Description: {version['description']}")
+            if version.get("patch_info"):
                 print(f"    📝 Changes: {version['patch_info']}")
-            if version['conversation_history']:
+            if version.get("conversation_history"):
                 print(f"    💬 Request: {version['conversation_history']}")
             print(f"    📦 Content: {version['content_count']} items")
         print()
@@ -300,21 +302,67 @@ def main():
                         help=f"Scoring method: llm, entailment, or cosine (default from config: {default_method})")
     parser.add_argument("--query", "-q", type=str, default=None,
                         help="Single query to execute (non-interactive)")
-    parser.add_argument("--no-session-log", action="store_true",
-                        help="Disable session-based logging to cli_session_results/")
+    parser.add_argument("--schema-path", type=str, default=None,
+                        help="Full path to schema YAML (overrides config)")
+    parser.add_argument("--data-path", type=str, default=None,
+                        help="Full path to data XML (overrides config)")
+    parser.add_argument("--cold-start", type=str, default=None,
+                        help="Generate schema and memory tree from a request")
+    parser.add_argument("--json", action="store_true",
+                        help="Print raw JSON for cold start output")
+    parser.add_argument("--no-save", action="store_true",
+                        help="Do not write generated schema/tree to disk")
+    parser.add_argument("--activate", action="store_true",
+                        help="Update config.yaml to use generated schema/data")
+    parser.add_argument("--session-log", action="store_true",
+                        help="Enable session-based logging to cli_session_results/")
     
     args = parser.parse_args()
+
+    # Apply full-path overrides via environment (used by schema loader)
+    if args.schema_path:
+        import os
+        os.environ["SEMANTIC_XPATH_SCHEMA_PATH"] = args.schema_path
+    if args.data_path:
+        import os
+        os.environ["SEMANTIC_XPATH_DATA_PATH"] = args.data_path
     
+    # Cold start mode
+    if args.cold_start:
+        from pipeline_execution.cold_start import TaskBootstrapper
+        import json
+
+        bootstrapper = TaskBootstrapper()
+        result = bootstrapper.generate(
+            args.cold_start,
+            save=not args.no_save,
+            activate=args.activate,
+            emit_user_facing=True,
+        )
+        if args.json or not result.get("success"):
+            print(json.dumps(result, indent=2))
+        else:
+            display = result.get("display", {})
+            for key in ["summary", "paths", "domain_schema", "task_schema", "memory_xml"]:
+                value = display.get(key)
+                if value:
+                    print(value)
+                    print("")
+        return
+
     # Build pipeline config (pipeline created later in CLI)
     pipeline_config = {
         "top_k": args.top_k,
         "score_threshold": args.threshold,
-        "scoring_method": args.scoring
+        "scoring_method": args.scoring,
     }
+
+    if args.data_path:
+        pipeline_config["tree_path"] = Path(args.data_path)
     
     cli = SemanticXPathCLI(
         pipeline_config=pipeline_config,
-        enable_session_logging=not args.no_session_log
+        enable_session_logging=args.session_log
     )
     
     if args.query:

@@ -11,7 +11,7 @@ from typing import List, Dict, Any
 from datetime import datetime
 import sys
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from client import get_bart_client, BartNLIClient
 from .base import PredicateScorer, ScoringResult, BatchScoringResult
@@ -28,7 +28,7 @@ class EntailmentPredicateScorer(PredicateScorer):
     node descriptions and semantic predicates.
     """
     
-    DEFAULT_TRACES_PATH = Path(__file__).parent.parent / "traces" / "reasoning_traces"
+    DEFAULT_TRACES_PATH = Path(__file__).resolve().parents[3] / "traces" / "reasoning_traces"
     
     def __init__(
         self, 

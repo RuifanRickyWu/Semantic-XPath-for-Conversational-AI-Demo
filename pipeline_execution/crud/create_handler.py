@@ -92,7 +92,7 @@ Determine the best insertion point and generate complete content for the new nod
             result = self._make_llm_call(prompt, max_tokens=4096)
             
             # Parse response
-            create_result = self._parse_response(result.content, node_type)
+            create_result, user_facing = self._parse_response(result.content, node_type)
             
             processing_time = (time.perf_counter() - start_time) * 1000
             
@@ -114,7 +114,8 @@ Determine the best insertion point and generate complete content for the new nod
                 output=create_result,
                 token_usage=result.usage,
                 processing_time_ms=processing_time,
-                raw_response=result.content
+                raw_response=result.content,
+                user_facing=user_facing
             )
             
         except Exception as e:
@@ -199,8 +200,9 @@ Determine the best insertion point and generate complete content for the new nod
         
         return "\n".join(lines)
     
-    def _parse_response(self, response: str, default_node_type: str) -> CreateResult:
-        """Parse LLM response into CreateResult."""
+    def _parse_response(self, response: str, default_node_type: str) -> tuple[CreateResult, str]:
+        """Parse LLM response into CreateResult and user-facing text."""
+        user_facing = ""
         try:
             # Find JSON in response
             json_start = response.find("{")
@@ -215,6 +217,7 @@ Determine the best insertion point and generate complete content for the new nod
                 node_type = parsed.get("node_type", default_node_type)
                 fields = parsed.get("fields", {})
                 reasoning = parsed.get("reasoning", "")
+                user_facing = str(parsed.get("user_facing", "")).strip()
                 
                 # Create XML element
                 xml_element = self._create_xml_element(node_type, fields)
@@ -226,7 +229,7 @@ Determine the best insertion point and generate complete content for the new nod
                     node_type=node_type,
                     fields=fields,
                     reasoning=reasoning
-                )
+                ), user_facing
                 
         except (json.JSONDecodeError, ValueError) as e:
             logger.warning(f"Failed to parse create handler response: {e}")
@@ -236,7 +239,7 @@ Determine the best insertion point and generate complete content for the new nod
             position=-1,
             created_content=None,
             reasoning="Parse error - could not generate content"
-        )
+        ), user_facing
     
     def _create_xml_element(self, node_type: str, fields: Dict[str, Any]) -> ET.Element:
         """Create an XML element from fields."""

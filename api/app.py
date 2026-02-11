@@ -58,11 +58,13 @@ def create_app(config: dict = None) -> Flask:
     )
     
     # Register blueprints
-    from .routes import query_bp, tree_bp, config_bp
+    from .routes import query_bp, tree_bp, config_bp, cold_start_bp, chat_plan_bp
     
     app.register_blueprint(query_bp, url_prefix="/api")
     app.register_blueprint(tree_bp, url_prefix="/api/tree")
     app.register_blueprint(config_bp, url_prefix="/api/config")
+    app.register_blueprint(cold_start_bp, url_prefix="/api")
+    app.register_blueprint(chat_plan_bp, url_prefix="/api")
     
     # Health check endpoint
     @app.route("/api/health")

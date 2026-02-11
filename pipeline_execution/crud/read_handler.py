@@ -58,7 +58,8 @@ class ReadHandler(BaseHandler):
                 success=True,
                 operation="READ",
                 output=ReadResult(selected_nodes=[]),
-                processing_time_ms=0.0
+                processing_time_ms=0.0,
+                user_facing="I could not find the requested information."
             )
         
         # Format nodes for the prompt
@@ -77,7 +78,7 @@ Analyze each node and determine which ones are relevant to the user's query.
             result = self._make_llm_call(prompt)
             
             # Parse response
-            selected_nodes = self._parse_response(result.content, retrieved_nodes)
+            selected_nodes, user_facing = self._parse_response(result.content, retrieved_nodes)
             
             processing_time = (time.perf_counter() - start_time) * 1000
             
@@ -99,7 +100,8 @@ Analyze each node and determine which ones are relevant to the user's query.
                 output=ReadResult(selected_nodes=selected_nodes),
                 token_usage=result.usage,
                 processing_time_ms=processing_time,
-                raw_response=result.content
+                raw_response=result.content,
+                user_facing=user_facing
             )
             
         except Exception as e:
@@ -116,9 +118,10 @@ Analyze each node and determine which ones are relevant to the user's query.
         self,
         response: str,
         retrieved_nodes: List[Dict[str, Any]]
-    ) -> List[SelectedNode]:
-        """Parse LLM response into SelectedNode objects."""
+    ) -> tuple[List[SelectedNode], str]:
+        """Parse LLM response into SelectedNode objects and user-facing text."""
         selected = []
+        user_facing = ""
         
         try:
             # Find JSON in response
@@ -130,6 +133,7 @@ Analyze each node and determine which ones are relevant to the user's query.
                 parsed = json.loads(json_str)
                 
                 selected_list = parsed.get("selected_nodes", [])
+                user_facing = str(parsed.get("user_facing", "")).strip()
                 
                 for item in selected_list:
                     node_id = str(item.get("id", ""))
@@ -145,7 +149,7 @@ Analyze each node and determine which ones are relevant to the user's query.
                     except ValueError:
                         continue
                 
-                return selected
+                return selected, user_facing
                 
         except (json.JSONDecodeError, ValueError) as e:
             logger.warning(f"Failed to parse read handler response: {e}")
@@ -159,4 +163,4 @@ Analyze each node and determine which ones are relevant to the user's query.
                 reasoning="Fallback: selected due to parse error"
             ))
         
-        return selected
+        return selected, user_facing

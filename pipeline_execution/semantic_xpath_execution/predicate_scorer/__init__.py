@@ -9,7 +9,7 @@ from .cosine_scorer import CosinePredicateScorer
 
 def load_config() -> dict:
     """Load configuration from config.yaml"""
-    config_path = Path(__file__).parent.parent.parent.parent / "config.yaml"
+    config_path = Path(__file__).resolve().parents[3] / "config.yaml"
     with open(config_path, "r") as f:
         return yaml.safe_load(f)
 

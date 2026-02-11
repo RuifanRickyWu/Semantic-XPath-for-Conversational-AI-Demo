@@ -4,13 +4,14 @@ Schema Loader - Loads tree schema configurations.
 Provides functions to load schema definitions and resolve data file paths.
 """
 
+import os
 import yaml
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
 
 # Base directories
-_BASE_DIR = Path(__file__).parent.parent.parent
+_BASE_DIR = Path(__file__).resolve().parents[2]
 _SCHEMA_DIR = _BASE_DIR / "storage" / "schemas"
 _STORAGE_DIR = _BASE_DIR / "storage"
 
@@ -22,10 +23,28 @@ def _get_schema_dir(schema_name: str) -> Path:
     Supports both legacy single-file schemas and new folder-based schemas:
     - storage/schemas/{schema_name}.yaml
     - storage/schemas/{schema_name}/{schema_name}.yaml
+    - storage/schemas/global/{schema_name}.yaml
+    - storage/schemas/task/{schema_name}.yaml
     """
+    # Folder-based schemas (legacy)
     candidate = _SCHEMA_DIR / schema_name
     if candidate.is_dir():
         return candidate
+
+    # Single-file schemas at root
+    if (_SCHEMA_DIR / f"{schema_name}.yaml").exists():
+        return _SCHEMA_DIR
+
+    # Global schemas
+    global_dir = _SCHEMA_DIR / "global"
+    if (global_dir / f"{schema_name}.yaml").exists():
+        return global_dir
+
+    # Task schemas
+    task_dir = _SCHEMA_DIR / "task"
+    if (task_dir / f"{schema_name}.yaml").exists():
+        return task_dir
+
     return _SCHEMA_DIR
 
 
@@ -40,10 +59,30 @@ def _get_version_schema_path(schema_name: str) -> Path:
 
 
 def load_config() -> Dict[str, Any]:
-    """Load the main config.yaml file."""
+    """Load the main config.yaml file with optional path overrides."""
     config_path = _BASE_DIR / "config.yaml"
     with open(config_path, "r") as f:
-        return yaml.safe_load(f)
+        config = yaml.safe_load(f)
+
+    # Environment overrides (highest precedence)
+    env_schema_path = os.getenv("SEMANTIC_XPATH_SCHEMA_PATH")
+    env_data_path = os.getenv("SEMANTIC_XPATH_DATA_PATH")
+    if env_schema_path:
+        config["active_schema_path"] = env_schema_path
+    if env_data_path:
+        config["active_data_path"] = env_data_path
+
+    # Optional semantic xpath path overrides from config.yaml
+    task_schema_path = config.get("task_schema_path")
+    data_path = config.get("data_path")
+    if task_schema_path and not config.get("active_schema_path"):
+        candidate = Path(task_schema_path)
+        if candidate.exists() and candidate.is_file():
+            config["active_schema_path"] = task_schema_path
+    if data_path and not config.get("active_data_path"):
+        config["active_data_path"] = data_path
+
+    return config
 
 
 def load_schema(schema_name: Optional[str] = None, config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -58,14 +97,42 @@ def load_schema(schema_name: Optional[str] = None, config: Optional[Dict[str, An
     Returns:
         Schema dictionary with node definitions, data files, etc.
     """
-    if schema_name is None:
-        if config is None:
-            config = load_config()
-        schema_name = config.get("active_schema")
-        if not schema_name:
-            raise ValueError("No active_schema set in config")
-    
-    schema_path = _get_schema_path(schema_name)
+    if config is None:
+        config = load_config()
+
+    schema_path = None
+
+    # Allow direct path in schema_name
+    if schema_name:
+        candidate = Path(schema_name)
+        if candidate.exists() and candidate.is_file():
+            schema_path = candidate
+
+    # Allow config-specified full path override
+    if schema_path is None:
+        schema_path_value = config.get("active_schema_path")
+        if schema_path_value:
+            schema_path = Path(schema_path_value)
+
+    if schema_path is None:
+        if schema_name is None:
+            schema_name = config.get("active_schema")
+        if schema_name:
+            schema_path = _get_schema_path(schema_name)
+        else:
+            # Fallback to task or global schema paths from config
+            task_schema_path = config.get("task_schema_path")
+            global_schema_path = config.get("global_schema_path")
+            if task_schema_path:
+                candidate = Path(task_schema_path)
+                if candidate.exists() and candidate.is_file():
+                    schema_path = candidate
+            if schema_path is None and global_schema_path:
+                candidate = Path(global_schema_path)
+                if candidate.exists() and candidate.is_file():
+                    schema_path = candidate
+            else:
+                raise ValueError("No schema path configured in config.yaml")
     
     if not schema_path.exists():
         raise FileNotFoundError(f"Schema file not found: {schema_path}")
@@ -85,14 +152,36 @@ def load_version_schema(schema_name: Optional[str] = None) -> Dict[str, Any]:
     Returns:
         Version schema dictionary, or empty dict if not found.
     """
-    if schema_name is None:
-        config = load_config()
-        schema_name = config.get("active_schema")
-        if not schema_name:
-            raise ValueError("No active_schema set in config.yaml")
+    config = load_config()
+    version_path = None
+
+    # If a schema path override exists, look for sibling *_version.yaml
+    schema_path_value = config.get("active_schema_path")
+    if schema_path_value:
+        schema_path = Path(schema_path_value)
+        if schema_path.exists():
+            candidate = schema_path.with_name(f"{schema_path.stem}_version.yaml")
+            if candidate.exists():
+                version_path = candidate
+
+    if version_path is None:
+        if schema_name is None:
+            schema_name = config.get("active_schema")
+        if schema_name:
+            version_path = _get_version_schema_path(schema_name)
+        else:
+            # Fallback to global schema path from config
+            global_schema_path = config.get("global_schema_path")
+            if global_schema_path:
+                schema_path = Path(global_schema_path)
+                candidate = schema_path.with_name(f"{schema_path.stem}_version.yaml")
+                if candidate.exists():
+                    version_path = candidate
+            else:
+                raise ValueError("No global schema path configured in config.yaml")
     
-    version_path = _get_version_schema_path(schema_name)
-    
+    if version_path is None:
+        return {}
     if not version_path.exists():
         return {}
     
@@ -195,6 +284,20 @@ def get_data_path(
     """
     if config is None:
         config = load_config()
+
+    # Allow direct path in data_name
+    if data_name:
+        candidate = Path(data_name)
+        if candidate.exists():
+            return candidate
+
+    # Allow config-specified full path override
+    data_path_value = config.get("active_data_path")
+    if data_path_value:
+        candidate = Path(data_path_value)
+        if candidate.exists():
+            return candidate
+
     schema = load_schema(schema_name, config=config)
     
     # Determine which data file to use
@@ -322,19 +425,95 @@ def get_schema_summary_for_prompt(schema_name: Optional[str] = None) -> str:
     schema = load_schema(schema_name)
     nodes = schema.get("nodes", {})
     hierarchy = schema.get("hierarchy", "")
-    
+    content_root = schema.get("content_root")
+
+    def collect_subtree(root_tag: str) -> Dict[str, Any]:
+        if not root_tag or root_tag not in nodes:
+            return nodes
+        visited = set()
+        queue = [root_tag]
+        while queue:
+            current = queue.pop(0)
+            if current in visited:
+                continue
+            visited.add(current)
+            children = nodes.get(current, {}).get("children", [])
+            for child in children:
+                if child not in visited:
+                    queue.append(child)
+        return {name: nodes[name] for name in visited if name in nodes}
+
+    def build_hierarchy(root_tag: str, subset: Dict[str, Any]) -> str:
+        lines = []
+
+        def label(tag: str) -> str:
+            cfg = subset.get(tag, {})
+            node_type = cfg.get("type", "leaf")
+            index_attr = cfg.get("index_attr")
+            if node_type == "root":
+                return f"{tag} (root)"
+            if node_type == "container":
+                if index_attr:
+                    return f"{tag} (container, indexed by @{index_attr})"
+                return f"{tag} (container)"
+            return f"{tag} (leaf)"
+
+        def walk(tag: str, prefix: str, is_last: bool):
+            if not prefix:
+                lines.append(label(tag))
+            else:
+                branch = "`-- " if is_last else "|-- "
+                lines.append(prefix + branch + label(tag))
+            children = subset.get(tag, {}).get("children", [])
+            if not children:
+                return
+            next_prefix = prefix + ("    " if is_last else "|   ")
+            for i, child in enumerate(children):
+                if child in subset:
+                    walk(child, next_prefix, i == len(children) - 1)
+
+        walk(root_tag, "", True)
+        return "\n".join(lines)
+
     lines = []
+
+    if content_root:
+        nodes_for_prompt = collect_subtree(content_root)
+        hierarchy = build_hierarchy(content_root, nodes_for_prompt)
+    else:
+        nodes_for_prompt = nodes
     
+    def _format_hierarchy(value: Any) -> str:
+        if isinstance(value, str):
+            return value.strip()
+        if isinstance(value, dict):
+            def walk(node: Dict[str, Any], prefix: str, is_last: bool) -> List[str]:
+                if not node:
+                    return []
+                tag = next(iter(node))
+                children = node.get(tag, {})
+                line = tag if not prefix else prefix + ("`-- " if is_last else "|-- ") + tag
+                lines_local = [line]
+                if isinstance(children, dict) and children:
+                    child_items = list(children.items())
+                    for idx, (child_tag, child_children) in enumerate(child_items):
+                        child_prefix = prefix + ("    " if is_last else "|   ")
+                        child_node = {child_tag: child_children}
+                        lines_local.extend(walk(child_node, child_prefix, idx == len(child_items) - 1))
+                return lines_local
+            return "\n".join(walk(value, "", True))
+        return ""
+
     # Include hierarchy visualization if available (helps with axis selection)
     if hierarchy:
         lines.append("Tree Hierarchy (use // to skip intermediate levels):")
-        lines.append(hierarchy.strip())
+        lines.append(_format_hierarchy(hierarchy))
         lines.append("")
     
     lines.append("Node Definitions:")
     lines.append("")
     
-    for node_name, node_config in nodes.items():
+    for node_name, node_config in nodes_for_prompt.items():
         node_type = node_config.get("type", "unknown")
         fields = node_config.get("fields", [])
         children = node_config.get("children", [])

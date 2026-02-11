@@ -1,0 +1,116 @@
+domain:
+  name: personal_assistant
+  description: General-purpose assistant tasks such as greetings, small talk, and
+    quick help options.
+task:
+  name: greeting_response
+  title: Greeting and Quick-Start Options
+  description: Provide a friendly greeting and a few suggested next actions the user
+    can choose from.
+schema:
+  name: greeting
+  description: Structure for a greeting with optional follow-up suggestions.
+  root: Greeting
+  nodes:
+    Greeting:
+      type: root
+      fields:
+      - title
+      - summary
+      children:
+      - Message
+      - Suggestion
+    Message:
+      type: leaf
+      fields:
+      - text
+      - tone
+      children: []
+    Suggestion:
+      type: container
+      index_attr: index
+      fields:
+      - prompt
+      children:
+      - Action
+    Action:
+      type: leaf
+      fields:
+      - text
+      - actions
+      children: []
+content:
+  root_fields:
+    title: Welcome
+    summary: Friendly greeting with a few suggested next actions you can pick from.
+  root_attrs: {}
+  children:
+  - tag: Message
+    attrs: {}
+    fields:
+      text: Hello! How can I help you today?
+      tone: friendly
+    children: []
+  - tag: Suggestion
+    attrs:
+      index: '1'
+    fields:
+      prompt: Common tasks
+    children:
+    - tag: Action
+      attrs: {}
+      fields:
+        text: Ask about the weather
+        actions:
+        - What's the weather like?
+        - Weather forecast
+      children: []
+    - tag: Action
+      attrs: {}
+      fields:
+        text: Set a reminder
+        actions:
+        - Remind me to ...
+        - Set a timer
+      children: []
+  - tag: Suggestion
+    attrs:
+      index: '2'
+    fields:
+      prompt: Get help with writing or planning
+    children:
+    - tag: Action
+      attrs: {}
+      fields:
+        text: Draft an email or message
+        actions:
+        - Write an email to ...
+        - Compose a short message
+      children: []
+    - tag: Action
+      attrs: {}
+      fields:
+        text: Create a plan or outline
+        actions:
+        - Make a meeting agenda
+        - Plan a trip
+      children: []
+user_facing:
+  title: "Hello \u2014 how can I help?"
+  overview: A quick friendly greeting and a few suggested actions to get started.
+  sections:
+  - title: Quick helpful actions
+    summary: Common, fast tasks you can ask me to do right away.
+    bullets:
+    - Check the weather or get a forecast.
+    - Set a reminder or timer.
+  - title: Writing and planning
+    summary: Help with composing messages or creating simple plans and outlines.
+    bullets:
+    - Draft emails, messages, or announcements.
+    - Create agendas, trip plans, or checklists.
+  - title: Conversation and troubleshooting
+    summary: General questions, small talk, or troubleshooting steps.
+    bullets:
+    - Ask general knowledge questions or for explanations.
+    - Describe a problem and I'll help diagnose it.

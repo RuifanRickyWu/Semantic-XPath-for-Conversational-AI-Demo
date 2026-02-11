@@ -66,7 +66,8 @@ class DeleteHandler(BaseHandler, TreeModificationMixin):
                 success=True,
                 operation="DELETE",
                 output=DeleteResult(nodes_to_delete=[], reasoning="No candidates to delete"),
-                processing_time_ms=0.0
+                processing_time_ms=0.0,
+                user_facing="I could not find anything to delete."
             )
         
         # Format nodes for the prompt
@@ -85,7 +86,7 @@ Analyze each node and determine which ones should be deleted based on the user's
             result = self._make_llm_call(prompt)
             
             # Parse response
-            nodes_to_delete, reasoning = self._parse_response(result.content, retrieved_nodes)
+            nodes_to_delete, reasoning, user_facing = self._parse_response(result.content, retrieved_nodes)
             
             processing_time = (time.perf_counter() - start_time) * 1000
             
@@ -107,7 +108,8 @@ Analyze each node and determine which ones should be deleted based on the user's
                 output=DeleteResult(nodes_to_delete=nodes_to_delete, reasoning=reasoning),
                 token_usage=result.usage,
                 processing_time_ms=processing_time,
-                raw_response=result.content
+                raw_response=result.content,
+                user_facing=user_facing
             )
             
         except Exception as e:
@@ -158,10 +160,11 @@ Analyze each node and determine which ones should be deleted based on the user's
         self,
         response: str,
         retrieved_nodes: List[Dict[str, Any]]
-    ) -> tuple[List[str], str]:
-        """Parse LLM response into list of paths to delete and reasoning."""
+    ) -> tuple[List[str], str, str]:
+        """Parse LLM response into list of paths to delete, reasoning, and user-facing text."""
         nodes_to_delete = []
         overall_reasoning = ""
+        user_facing = ""
         
         try:
             # Find JSON in response
@@ -174,6 +177,7 @@ Analyze each node and determine which ones should be deleted based on the user's
                 
                 delete_list = parsed.get("nodes_to_delete", [])
                 overall_reasoning = parsed.get("reasoning", "")
+                user_facing = str(parsed.get("user_facing", "")).strip()
                 
                 for item in delete_list:
                     # Try to get path from response first
@@ -192,10 +196,10 @@ Analyze each node and determine which ones should be deleted based on the user's
                     if path:
                         nodes_to_delete.append(path)
                 
-                return nodes_to_delete, overall_reasoning
+                return nodes_to_delete, overall_reasoning, user_facing
                 
         except (json.JSONDecodeError, ValueError) as e:
             logger.warning(f"Failed to parse delete handler response: {e}")
         
         # Return empty list on parse error (conservative)
-        return [], "Parse error - no nodes selected for deletion"
+        return [], "Parse error - no nodes selected for deletion", user_facing

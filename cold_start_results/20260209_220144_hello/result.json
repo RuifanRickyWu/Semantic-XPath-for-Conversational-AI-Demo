@@ -1,0 +1,314 @@
+{
+  "success": true,
+  "llm_output": {
+    "domain": {
+      "name": "communication",
+      "description": "Short written communication and conversational planning (greetings, replies, tone selection)."
+    },
+    "task": {
+      "name": "simple_greeting_response",
+      "title": "Simple Greeting and Reply Options",
+      "description": "Provide a brief greeting record and several short reply options with tones and usage notes."
+    },
+    "schema": {
+      "name": "greeting_conversation",
+      "description": "A short conversation node with an initial greeting and ordered reply options.",
+      "root": "GreetingConversation",
+      "nodes": {
+        "GreetingConversation": {
+          "type": "root",
+          "fields": [
+            "title",
+            "summary"
+          ],
+          "children": [
+            "Greeting",
+            "ResponseOptions"
+          ]
+        },
+        "Greeting": {
+          "type": "leaf",
+          "fields": [
+            "text",
+            "language"
+          ],
+          "children": []
+        },
+        "ResponseOptions": {
+          "type": "container",
+          "index_attr": "index",
+          "fields": [
+            "context_note"
+          ],
+          "children": [
+            "Option"
+          ]
+        },
+        "Option": {
+          "type": "leaf",
+          "fields": [
+            "text",
+            "tone",
+            "usage_notes"
+          ],
+          "children": []
+        }
+      }
+    },
+    "content": {
+      "root_fields": {
+        "title": "Hello \u2014 quick reply options",
+        "summary": "Record of a received greeting and three concise reply options in different tones for immediate use."
+      },
+      "root_attrs": {},
+      "children": [
+        {
+          "tag": "Greeting",
+          "attrs": {},
+          "fields": {
+            "text": "hello",
+            "language": "English"
+          },
+          "children": []
+        },
+        {
+          "tag": "ResponseOptions",
+          "attrs": {
+            "index": "1"
+          },
+          "fields": {
+            "context_note": "Casual, immediate reply choices for a friendly chat."
+          },
+          "children": [
+            {
+              "tag": "Option",
+              "attrs": {},
+              "fields": {
+                "text": "Hi! How's it going?",
+                "tone": "friendly",
+                "usage_notes": [
+                  "Good for peers or acquaintances",
+                  "Invites a short update or small talk"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Option",
+              "attrs": {},
+              "fields": {
+                "text": "Hello \u2014 nice to hear from you.",
+                "tone": "polite",
+                "usage_notes": [
+                  "Suitable for formal or semi-formal contacts",
+                  "Keeps tone warm but reserved"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Option",
+              "attrs": {},
+              "fields": {
+                "text": "Hey! What's up?",
+                "tone": "casual",
+                "usage_notes": [
+                  "Use with close friends",
+                  "Encourages quick, informal replies"
+                ]
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    "user_facing": {
+      "title": "Quick replies to 'hello'",
+      "overview": "Three concise reply options in different tones so you can respond immediately based on context.",
+      "sections": [
+        {
+          "title": "Friendly option",
+          "summary": "A warm, open reply that invites conversation.",
+          "bullets": [
+            "Text: \"Hi! How's it going?\"",
+            "Tone: friendly and approachable",
+            "Use with peers or casual acquaintances"
+          ]
+        },
+        {
+          "title": "Polite option",
+          "summary": "A slightly more formal and courteous response.",
+          "bullets": [
+            "Text: \"Hello \u2014 nice to hear from you.\"",
+            "Tone: polite and reserved",
+            "Good for workplace or semi-formal contacts"
+          ]
+        },
+        {
+          "title": "Casual option",
+          "summary": "A relaxed, informal reply for close friends.",
+          "bullets": [
+            "Text: \"Hey! What's up?\"",
+            "Tone: very casual and direct",
+            "Use with close friends or informal groups"
+          ]
+        }
+      ]
+    }
+  },
+  "user_facing": {
+    "title": "Quick replies to 'hello'",
+    "overview": "Three concise reply options in different tones so you can respond immediately based on context.",
+    "sections": [
+      {
+        "title": "Friendly option",
+        "summary": "A warm, open reply that invites conversation.",
+        "bullets": [
+          "Text: \"Hi! How's it going?\"",
+          "Tone: friendly and approachable",
+          "Use with peers or casual acquaintances"
+        ]
+      },
+      {
+        "title": "Polite option",
+        "summary": "A slightly more formal and courteous response.",
+        "bullets": [
+          "Text: \"Hello  nice to hear from you.\"",
+          "Tone: polite and reserved",
+          "Good for workplace or semi-formal contacts"
+        ]
+      },
+      {
+        "title": "Casual option",
+        "summary": "A relaxed, informal reply for close friends.",
+        "bullets": [
+          "Text: \"Hey! What's up?\"",
+          "Tone: very casual and direct",
+          "Use with close friends or informal groups"
+        ]
+      }
+    ]
+  },
+  "domain": {
+    "name": "communication",
+    "description": "Short written communication and conversational planning (greetings, replies, tone selection)."
+  },
+  "task": {
+    "name": "simple_greeting_response",
+    "title": "Simple Greeting and Reply Options",
+    "description": "Provide a brief greeting record and several short reply options with tones and usage notes.",
+    "domain": "communication"
+  },
+  "task_schema": {
+    "name": "greeting_conversation",
+    "description": "A short conversation node with an initial greeting and ordered reply options.",
+    "hierarchy": "GreetingConversation (root)\n    |-- Greeting (leaf)\n    `-- ResponseOptions (container, indexed by @index)\n        `-- Option (leaf)",
+    "nodes": {
+      "GreetingConversation": {
+        "type": "root",
+        "fields": [
+          "title",
+          "summary"
+        ],
+        "children": [
+          "Greeting",
+          "ResponseOptions"
+        ]
+      },
+      "Greeting": {
+        "type": "leaf",
+        "fields": [
+          "text",
+          "language"
+        ],
+        "children": []
+      },
+      "ResponseOptions": {
+        "type": "container",
+        "fields": [
+          "context_note"
+        ],
+        "children": [
+          "Option"
+        ],
+        "index_attr": "index"
+      },
+      "Option": {
+        "type": "leaf",
+        "fields": [
+          "text",
+          "tone",
+          "usage_notes"
+        ],
+        "children": []
+      }
+    },
+    "data_files": {
+      "simple_greeting_response": "memory/communication/simple_greeting_response.xml"
+    },
+    "default_data": "simple_greeting_response",
+    "examples_file": "prompts/query_generator/domains/xpath_examples_greeting_conversation.txt",
+    "syntax_rules": "- Paths start with /GreetingConversation\n- Node types: GreetingConversation, Greeting, ResponseOptions, Option\n- Indices: Node[1], Node[-1], Node[1:3]\n- Logical: AND / OR / not() combine predicates WITHIN brackets"
+  },
+  "domain_schema": {
+    "name": "root_task_version",
+    "description": "Global container for tasks with versions",
+    "hierarchy": "Root (root)\n  `-- Task (container, indexed by @name)\n      `-- Version (version, indexed by @number)",
+    "nodes": {
+      "Root": {
+        "type": "root",
+        "fields": [],
+        "children": [
+          "Task"
+        ]
+      },
+      "Task": {
+        "type": "container",
+        "index_attr": "name",
+        "fields": [
+          "title",
+          "description",
+          "status"
+        ],
+        "children": [
+          "Version"
+        ]
+      },
+      "Version": {
+        "type": "version",
+        "index_attr": "number",
+        "fields": [
+          "patch_info",
+          "conversation_history",
+          "created_at",
+          "schema_name",
+          "data_name",
+          "summary"
+        ],
+        "children": []
+      }
+    }
+  },
+  "memory_xml": "<?xml version='1.0' encoding='utf-8'?>\n<Root><GreetingConversation_Version number=\"1\"><patch_info>cold start initialization</patch_info><conversation_history>hello</conversation_history><GreetingConversation><title>Hello  quick reply options</title><summary>Record of a received greeting and three concise reply options in different tones for immediate use.</summary><Greeting><text>hello</text><language>English</language></Greeting><ResponseOptions index=\"1\"><context_note>Casual, immediate reply choices for a friendly chat.</context_note><Option><text>Hi! How's it going?</text><tone>friendly</tone><usage_notes><usage_note>Good for peers or acquaintances</usage_note><usage_note>Invites a short update or small talk</usage_note></usage_notes></Option><Option><text>Hello  nice to hear from you.</text><tone>polite</tone><usage_notes><usage_note>Suitable for formal or semi-formal contacts</usage_note><usage_note>Keeps tone warm but reserved</usage_note></usage_notes></Option><Option><text>Hey! What's up?</text><tone>casual</tone><usage_notes><usage_note>Use with close friends</usage_note><usage_note>Encourages quick, informal replies</usage_note></usage_notes></Option></ResponseOptions></GreetingConversation></GreetingConversation_Version></Root>",
+  "paths": {
+    "task_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/greeting_conversation/greeting_conversation.yaml",
+    "domain_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/global/root_task_version.yaml",
+    "memory_xml": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/communication/simple_greeting_response.xml",
+    "examples": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/prompts/query_generator/domains/xpath_examples_greeting_conversation.txt",
+    "global_memory_xml": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/global/root_task_version.xml"
+  },
+  "warnings": [],
+  "token_usage": {
+    "prompt_tokens": 798,
+    "completion_tokens": 1130,
+    "total_tokens": 1928
+  },
+  "display": {
+    "summary": "Cold Start Result\nDomain: communication - Short written communication and conversational planning (greetings, replies, tone selection).\nTask: simple_greeting_response - Simple Greeting and Reply Options\nSchema: greeting_conversation",
+    "paths": "Paths\nTask schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/greeting_conversation/greeting_conversation.yaml\nDomain schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/global/root_task_version.yaml\nExamples: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/prompts/query_generator/domains/xpath_examples_greeting_conversation.txt\nMemory XML: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/communication/simple_greeting_response.xml\nGlobal memory XML: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/global/root_task_version.xml",
+    "domain_schema": "name: root_task_version\ndescription: Global container for tasks with versions\nhierarchy: \"Root (root)\\n  `-- Task (container, indexed by @name)\\n      `-- Version\\\n  \\ (version, indexed by @number)\"\nnodes:\n  Root:\n    type: root\n    fields: []\n    children:\n    - Task\n  Task:\n    type: container\n    index_attr: name\n    fields:\n    - title\n    - description\n    - status\n    children:\n    - Version\n  Version:\n    type: version\n    index_attr: number\n    fields:\n    - patch_info\n    - conversation_history\n    - created_at\n    - schema_name\n    - data_name\n    - summary\n    children: []",
+    "task_schema": "name: greeting_conversation\ndescription: A short conversation node with an initial greeting and ordered reply\n  options.\nhierarchy: \"GreetingConversation (root)\\n    |-- Greeting (leaf)\\n    `-- ResponseOptions\\\n  \\ (container, indexed by @index)\\n        `-- Option (leaf)\"\nnodes:\n  GreetingConversation:\n    type: root\n    fields:\n    - title\n    - summary\n    children:\n    - Greeting\n    - ResponseOptions\n  Greeting:\n    type: leaf\n    fields:\n    - text\n    - language\n    children: []\n  ResponseOptions:\n    type: container\n    fields:\n    - context_note\n    children:\n    - Option\n    index_attr: index\n  Option:\n    type: leaf\n    fields:\n    - text\n    - tone\n    - usage_notes\n    children: []\ndata_files:\n  simple_greeting_response: memory/communication/simple_greeting_response.xml\ndefault_data: simple_greeting_response\nexamples_file: prompts/query_generator/domains/xpath_examples_greeting_conversation.txt\nsyntax_rules: '- Paths start with /GreetingConversation\n\n  - Node types: GreetingConversation, Greeting, ResponseOptions, Option\n\n  - Indices: Node[1], Node[-1], Node[1:3]\n\n  - Logical: AND / OR / not() combine predicates WITHIN brackets'",
+    "memory_xml": "<?xml version=\"1.0\" ?>\n<Root>\n  <GreetingConversation_Version number=\"1\">\n    <patch_info>cold start initialization</patch_info>\n    <conversation_history>hello</conversation_history>\n    <GreetingConversation>\n      <title>Hello  quick reply options</title>\n      <summary>Record of a received greeting and three concise reply options in different tones for immediate use.</summary>\n      <Greeting>\n        <text>hello</text>\n        <language>English</language>\n      </Greeting>\n      <ResponseOptions index=\"1\">\n        <context_note>Casual, immediate reply choices for a friendly chat.</context_note>\n        <Option>\n          <text>Hi! How's it going?</text>\n          <tone>friendly</tone>\n          <usage_notes>\n            <usage_note>Good for peers or acquaintances</usage_note>\n            <usage_note>Invites a short update or small talk</usage_note>\n          </usage_notes>\n        </Option>\n        <Option>\n          <text>Hello  nice to hear from you.</text>\n          <tone>polite</tone>\n          <usage_notes>\n            <usage_note>Suitable for formal or semi-formal contacts</usage_note>\n            <usage_note>Keeps tone warm but reserved</usage_note>\n          </usage_notes>\n        </Option>\n        <Option>\n          <text>Hey! What's up?</text>\n          <tone>casual</tone>\n          <usage_notes>\n            <usage_note>Use with close friends</usage_note>\n            <usage_note>Encourages quick, informal replies</usage_note>\n          </usage_notes>\n        </Option>\n      </ResponseOptions>\n    </GreetingConversation>\n  </GreetingConversation_Version>\n</Root>"
+  }
+}

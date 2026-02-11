@@ -118,9 +118,14 @@ class PredicateHandler:
         # Track node descriptions
         self._node_descriptions: Dict[int, List[str]] = {}
     
-    def _get_allowed_children(self, node_type: str) -> List[str]:
-        """Get the allowed child types for a node type from schema."""
-        node_config = self._node_configs.get(node_type, {})
+    def _get_allowed_children(self, node_type: str) -> Optional[List[str]]:
+        """Get the allowed child types for a node type from schema.
+
+        Returns None if the node type is not defined in the schema.
+        """
+        node_config = self._node_configs.get(node_type)
+        if node_config is None:
+            return None
         return node_config.get("children", [])
     
     def _get_hierarchical_children(
@@ -163,15 +168,21 @@ class PredicateHandler:
             # Child axis (default): direct children only
             if child_type:
                 return list(node.findall(child_type))
-            
+
             # Use schema's children definition for this node type
             allowed_children = self._get_allowed_children(node.tag)
-            
+
+            if allowed_children is None:
+                # Unknown node type: allow all direct children
+                return list(node)
             if allowed_children:
                 return [child for child in node if child.tag in allowed_children]
-            else:
-                # Leaf node or no children defined - return empty
-                return []
+            # If this is a version node with no declared children, allow all
+            node_cfg = self._node_configs.get(node.tag, {})
+            if node_cfg.get("type") == "version":
+                return list(node)
+            # Leaf node or no children defined - return empty
+            return []
 
     def _apply_index_to_nodes(self, nodes: List[ET.Element], index: Optional[Index]) -> List[ET.Element]:
         if not index:
@@ -366,7 +377,6 @@ class PredicateHandler:
         """
         if execution_log is None:
             execution_log = []
-        
         # Clear caches
         self._score_cache.clear()
         self._node_descriptions.clear()
@@ -461,7 +471,6 @@ class PredicateHandler:
         
         for node in nodes:
             self._collect_tasks_for_node(node, predicate, tasks)
-        
         return tasks
     
     def _collect_tasks_for_node(
@@ -521,9 +530,8 @@ class PredicateHandler:
     ):
         """Add a node's content to scoring tasks.
         
-        For container nodes (like Day), aggregates full content from all children.
-        For leaf nodes, builds comprehensive content from ALL schema-defined fields
-        (not just description) to enable temporal/cost-aware semantic matching.
+        For all nodes (internal or leaf), builds content by concatenating
+        all schema-defined descriptive fields (not child summaries).
         """
         node_id = id(node)
         
@@ -532,28 +540,9 @@ class PredicateHandler:
             return
         
         node_name = self._node_utils.get_name(node)
-        
-        # For container nodes, build comprehensive description from all children
-        if NodeUtils._is_container_node(node):
-            # Aggregate full content from all structured children
-            parts = []
-            for child in node:
-                if NodeUtils._is_structured_node(child):
-                    # Use schema-aware field lookup for child name/desc
-                    child_name = self._node_utils.get_field_value(child, "name")
-                    child_desc = self._node_utils.get_field_value(child, "desc")
-                    if child_name and child_desc:
-                        parts.append(f"{child.tag}: {child_name} - {child_desc}")
-                    elif child_name:
-                        parts.append(f"{child.tag}: {child_name}")
-                    elif child_desc:
-                        parts.append(f"{child.tag}: {child_desc}")
-            
-            # Use aggregated description if available, otherwise fallback
-            node_desc = "; ".join(parts) if parts else self._node_utils.get_description(node)
-        else:
-            # For leaf nodes, build content from ALL schema-defined fields
-            node_desc = self._build_leaf_node_content(node)
+
+        # Build content from ALL schema-defined fields for any node type
+        node_desc = self._build_node_content(node)
         
         desc_ids = []
         
@@ -573,16 +562,16 @@ class PredicateHandler:
         
         self._node_descriptions[node_id] = desc_ids
     
-    def _build_leaf_node_content(self, node: ET.Element) -> str:
+    def _build_node_content(self, node: ET.Element) -> str:
         """
-        Build comprehensive content string for a leaf node using schema-defined fields.
+        Build comprehensive content string for any node using schema-defined fields.
         
         Uses the schema's 'fields' list for the node type to include ALL relevant
         fields (name, time_block, description, expected_cost, etc.) in the content
         string. This enables semantic matching that considers temporal and cost context.
         
         Args:
-            node: XML element (leaf node like POI, Restaurant)
+            node: XML element (any structured node)
             
         Returns:
             Content string with all field values, formatted as "field: value" pairs
@@ -644,10 +633,8 @@ class PredicateHandler:
                 continue
             
             start_time = time.perf_counter()
-            
             desc_dicts = [task[2] for task in tasks]
             batch_result = self.scorer.score_batch(desc_dicts, semantic_value)
-            
             # Accumulate token usage if present
             if hasattr(batch_result, "token_usage") and batch_result.token_usage:
                 for k in total_token_usage:

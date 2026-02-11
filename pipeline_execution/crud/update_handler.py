@@ -67,7 +67,8 @@ class UpdateHandler(BaseHandler, TreeModificationMixin):
                 success=True,
                 operation="UPDATE",
                 output=UpdateResult(updates=[]),
-                processing_time_ms=0.0
+                processing_time_ms=0.0,
+                user_facing="I could not find anything to update."
             )
         
         # Format nodes for the prompt with full content
@@ -93,7 +94,7 @@ Analyze each node and determine which ones should be updated. For each update, p
             result = self._make_llm_call(prompt, max_tokens=4096)
             
             # Parse response
-            updates = self._parse_response(result.content, retrieved_nodes)
+            updates, user_facing = self._parse_response(result.content, retrieved_nodes)
             
             processing_time = (time.perf_counter() - start_time) * 1000
             
@@ -115,7 +116,8 @@ Analyze each node and determine which ones should be updated. For each update, p
                 output=UpdateResult(updates=updates),
                 token_usage=result.usage,
                 processing_time_ms=processing_time,
-                raw_response=result.content
+                raw_response=result.content,
+                user_facing=user_facing
             )
             
         except Exception as e:
@@ -211,9 +213,10 @@ Analyze each node and determine which ones should be updated. For each update, p
         self,
         response: str,
         retrieved_nodes: List[Dict[str, Any]]
-    ) -> List[UpdateItem]:
-        """Parse LLM response into UpdateItem objects."""
+    ) -> tuple[List[UpdateItem], str]:
+        """Parse LLM response into UpdateItem objects and user-facing text."""
         updates = []
+        user_facing = ""
         
         try:
             # Find JSON in response
@@ -225,6 +228,7 @@ Analyze each node and determine which ones should be updated. For each update, p
                 parsed = json.loads(json_str)
                 
                 update_list = parsed.get("updates", [])
+                user_facing = str(parsed.get("user_facing", "")).strip()
                 
                 for item in update_list:
                     node_id = str(item.get("id", ""))
@@ -260,12 +264,12 @@ Analyze each node and determine which ones should be updated. For each update, p
                     except ValueError:
                         continue
                 
-                return updates
+                return updates, user_facing
                 
         except (json.JSONDecodeError, ValueError) as e:
             logger.warning(f"Failed to parse update handler response: {e}")
         
-        return []
+        return [], user_facing
     
     def _create_xml_element(self, node_type: str, fields: Dict[str, Any]) -> ET.Element:
         """Create an XML element from fields."""

@@ -1,7 +1,8 @@
 # Schema configuration
-# Choose which schema and data file to use
-active_schema: "todolist" #Can choose between itinerary and todolist, session_recommendation
-active_data: "todolist" # Options: todolist, travel_toronto_10day
+# Paths used by semantic xpath CLI
+global_schema_path: "storage/schemas/global/root_task_version.yaml"
+task_schema_path: "storage/schemas/task"
+data_path: "storage/memory/global/root_task_version.xml"
 
 # Note: The system now uses in-tree versioning - all operations create new Version nodes
 # within the tree itself, enabling full history tracking and version-based queries.
@@ -10,8 +11,8 @@ active_data: "todolist" # Options: todolist, travel_toronto_10day
 # Model options: "gpt-4o", "gpt-5", "gpt-5-mini", "o1", "o3-mini", etc.
 openai:
   api_key: "${OPENAI_API_KEY}"
-  model: "gpt-5-mini"
-  max_tokens: 16384
+  model: "gpt-5.2"
+  max_tokens: 50000
 
   # For GPT-4 series: temperature controls creativity (0-1)
   temperature: 0
@@ -25,11 +26,6 @@ xpath_executor:
   score_threshold: 0.05
   # Scoring method: "llm", "entailment", or "cosine"
   scoring_method: "entailment"
-
-# In-context pipeline settings (single LLM call with full tree)
-incontext_pipeline:
-  temperature: 0
-  max_tokens: 16384
 
 entailment:
   model: "facebook/bart-large-mnli"

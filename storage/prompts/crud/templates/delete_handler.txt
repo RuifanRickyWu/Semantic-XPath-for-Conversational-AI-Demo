@@ -36,7 +36,8 @@ Output a single JSON object in the following format:
       "reasoning": "Brief explanation of why this node matches the deletion request."
     }}
   ],
-  "reasoning": "Overall explanation of the deletion decision."
+  "reasoning": "Overall explanation of the deletion decision.",
+  "user_facing": "Explain what will be deleted and where."
 }}
 ```
 
@@ -44,7 +45,8 @@ If no nodes match, output:
 ```json
 {{
   "nodes_to_delete": [],
-  "reasoning": "None match because..."
+  "reasoning": "None match because...",
+  "user_facing": "I could not find anything to delete."
 }}
 ```
 {examples}

@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Root>
+  <title>1-Day Beijing Highlights Itinerary (Classic First-Timer Route)</title>
+  <date_or_day_label>Day 1</date_or_day_label>
+  <starting_area>Central Beijing (hotel area; easy access by subway)</starting_area>
+  <pace>Moderate (full day with transfers; start early to avoid crowds)</pace>
+  <assumptions>
+    <assumption>First-time visitor focusing on classic highlights</assumption>
+    <assumption>Using subway plus walking, with taxis/ride-hail as needed</assumption>
+    <assumption>Forbidden City tickets booked in advance; note it is closed Mondays</assumption>
+    <assumption>Carry passport/ID for ticket checks</assumption>
+    <assumption>Weather may affect outdoor stops; backup indoor museum option included</assumption>
+  </assumptions>
+  <Day index="1">
+    <theme>Imperial core + viewpoints + hutongs + Temple of Heaven</theme>
+    <start_time>08:00</start_time>
+    <end_time>20:30</end_time>
+    <Stop index="1">
+      <name>Breakfast near your hotel</name>
+      <time_start>08:00</time_start>
+      <time_end>09:00</time_end>
+      <duration>1h</duration>
+      <what_to_do>Quick local breakfast before sightseeing.</what_to_do>
+      <tickets_or_entry>N/A</tickets_or_entry>
+      <address_or_area>Near your hotel (central Beijing)</address_or_area>
+      <Meal>
+        <meal_type>Breakfast</meal_type>
+        <time>08:00</time>
+        <suggested_spot>Local breakfast stall or small shop near your hotel</suggested_spot>
+        <what_to_order>Jianbing (savory crepe) + soy milk</what_to_order>
+        <budget_level>Budget</budget_level>
+      </Meal>
+      <Notes>
+        <tip>Start early to beat crowds at major sights.</tip>
+        <backup_option>If you prefer seated breakfast, pick a nearby cafe-style chain in Dongcheng/Chaoyang.</backup_option>
+        <time_saver>Eat close to your hotel to avoid morning detours.</time_saver>
+      </Notes>
+    </Stop>
+    <Stop index="2">
+      <name>Forbidden City (Palace Museum)</name>
+      <time_start>09:00</time_start>
+      <time_end>11:30</time_end>
+      <duration>2.5h</duration>
+      <what_to_do>Focus on the main halls and the central north-south axis for a first visit.</what_to_do>
+      <tickets_or_entry>Timed ticket required; book in advance (closed Mondays). Bring passport/ID.</tickets_or_entry>
+      <address_or_area>Palace Museum area (near Tiananmen)</address_or_area>
+      <Transport_Leg>
+        <from>Hotel area</from>
+        <to>Forbidden City (Palace Museum)</to>
+        <mode>Subway + walk</mode>
+        <estimated_time>20-40 min (varies by starting point)</estimated_time>
+        <route_hint>Subway to Tiananmen East or Tiananmen West, then a short walk toward the museum entrance area.</route_hint>
+        <cost_hint>Low (standard subway fare)</cost_hint>
+      </Transport_Leg>
+      <Notes>
+        <tip>Carry passport/ID for entry checks; arrive early for smoother entry.</tip>
+        <backup_option>If tickets are unavailable or weather is poor, consider an indoor museum such as the National Museum of China or the Capital Museum.</backup_option>
+        <time_saver>Prioritize the central axis highlights rather than trying to cover every courtyard.</time_saver>
+      </Notes>
+    </Stop>
+    <Stop index="3">
+      <name>Jingshan Park</name>
+      <time_start>12:00</time_start>
+      <time_end>13:00</time_end>
+      <duration>1h</duration>
+      <what_to_do>Climb to the pavilion for one of the best panoramas over the Forbidden City.</what_to_do>
+      <tickets_or_entry>Park ticket may be required (small fee).</tickets_or_entry>
+      <address_or_area>Jingshan Park (north of the Forbidden City)</address_or_area>
+      <Transport_Leg>
+        <from>Forbidden City (Palace Museum)</from>
+        <to>Jingshan Park</to>
+        <mode>Walk or short taxi</mode>
+        <estimated_time>10-30 min</estimated_time>
+        <route_hint>Head north from the Forbidden City area; walking is feasible depending on exit and crowds.</route_hint>
+        <cost_hint>Free (walk) or low (short taxi)</cost_hint>
+      </Transport_Leg>
+      <Notes>
+        <tip>Bring water; the climb is short but can feel steep in summer heat.</tip>
+        <backup_option>If you are tired, shorten the park visit and spend more time in hutongs later.</backup_option>
+        <time_saver>Go directly to the main viewpoint pavilion for the iconic photo.</time_saver>
+      </Notes>
+    </Stop>
+    <Stop index="4">
+      <name>Lunch in Shichahai/Houhai area</name>
+      <time_start>13:15</time_start>
+      <time_end>14:15</time_end>
+      <duration>1h</duration>
+      <what_to_do>Refuel with a classic Beijing dish before exploring nearby hutongs.</what_to_do>
+      <tickets_or_entry>N/A</tickets_or_entry>
+      <address_or_area>Shichahai / Houhai</address_or_area>
+      <Transport_Leg>
+        <from>Jingshan Park</from>
+        <to>Shichahai / Houhai</to>
+        <mode>Taxi/ride-hail or subway + walk</mode>
+        <estimated_time>15-25 min (taxi) or longer by subway + walk</estimated_time>
+        <route_hint>Taxi/ride-hail is often simplest; subway + walking works if traffic is heavy.</route_hint>
+        <cost_hint>Low to medium (depending on mode and traffic)</cost_hint>
+      </Transport_Leg>
+      <Meal>
+        <meal_type>Lunch</meal_type>
+        <time>13:15</time>
+        <suggested_spot>Restaurants around Shichahai/Houhai</suggested_spot>
+        <what_to_order>Peking duck or Beijing zhajiangmian (noodles with soybean paste)</what_to_order>
+        <budget_level>Mid-range (varies by restaurant)</budget_level>
+      </Meal>
+      <Notes>
+        <tip>If you want Peking duck, consider reserving or choosing a well-reviewed spot nearby.</tip>
+        <backup_option>If it is crowded, pick a smaller noodle/dumpling shop in the hutongs.</backup_option>
+        <time_saver>Eat close to where you will start the hutong walk to avoid extra transfers.</time_saver>
+      </Notes>
+    </Stop>
+    <Stop index="5">
+      <name>Hutongs (Shichahai/Houhai)</name>
+      <time_start>14:30</time_start>
+      <time_end>16:00</time_end>
+      <duration>1.5h</duration>
+      <what_to_do>Stroll lanes and courtyards; enjoy lakeside views around Shichahai/Houhai.</what_to_do>
+      <tickets_or_entry>N/A (public lanes); any paid courtyard sites optional.</tickets_or_entry>
+      <address_or_area>Shichahai / Houhai hutong area</address_or_area>
+      <Notes>
+        <tip>Keep an eye out for quiet side lanes away from the busiest lakeside strip.</tip>
+        <backup_option>If weather turns bad, head to a nearby tea house or an indoor museum later in the day.</backup_option>
+        <time_saver>Stick to a simple loop walk starting near your lunch spot.</time_saver>
+      </Notes>
+    </Stop>
+    <Stop index="6">
+      <name>Temple of Heaven</name>
+      <time_start>16:30</time_start>
+      <time_end>18:30</time_end>
+      <duration>2h</duration>
+      <what_to_do>See the Hall of Prayer for Good Harvests and enjoy the park atmosphere near sunset.</what_to_do>
+      <tickets_or_entry>Park entry; additional ticket may be required for main halls (varies by season/ticket type).</tickets_or_entry>
+      <address_or_area>Tiantan Park / Temple of Heaven area</address_or_area>
+      <Transport_Leg>
+        <from>Shichahai / Houhai</from>
+        <to>Temple of Heaven (Tiantan Park)</to>
+        <mode>Subway or taxi</mode>
+        <estimated_time>25-40 min</estimated_time>
+        <route_hint>Subway option: aim for Line 8 toward Tiantan East Gate area; taxi is direct but traffic-dependent.</route_hint>
+        <cost_hint>Low (subway) to medium (taxi)</cost_hint>
+      </Transport_Leg>
+      <Notes>
+        <tip>Late afternoon light is great for photos; allow time to walk between gates and the main hall.</tip>
+        <backup_option>If it is raining, shorten the park portion and shift time to dinner or an indoor museum.</backup_option>
+        <time_saver>Enter near the area that best matches the Hall of Prayer route to reduce walking.</time_saver>
+      </Notes>
+    </Stop>
+    <Stop index="7">
+      <name>Dinner in Wangfujing/Dongcheng (or nearby)</name>
+      <time_start>19:00</time_start>
+      <time_end>20:30</time_end>
+      <duration>1.5h</duration>
+      <what_to_do>Choose an easy, flexible dinner area with many options after a full day.</what_to_do>
+      <tickets_or_entry>N/A</tickets_or_entry>
+      <address_or_area>Wangfujing / Dongcheng (or convenient to your hotel)</address_or_area>
+      <Transport_Leg>
+        <from>Temple of Heaven (Tiantan Park)</from>
+        <to>Wangfujing / Dongcheng dinner area</to>
+        <mode>Subway or taxi/ride-hail</mode>
+        <estimated_time>20-45 min</estimated_time>
+        <route_hint>Use subway for predictability at peak traffic; taxi is convenient if you are tired.</route_hint>
+        <cost_hint>Low (subway) to medium (taxi)</cost_hint>
+      </Transport_Leg>
+      <Meal>
+        <meal_type>Dinner</meal_type>
+        <time>19:00</time>
+        <suggested_spot>Restaurants in Wangfujing/Dongcheng with many choices</suggested_spot>
+        <what_to_order>Hot pot or dumplings</what_to_order>
+        <budget_level>Mid-range (varies by restaurant)</budget_level>
+      </Meal>
+      <Notes>
+        <tip>Pick a place with short waits or make a reservation if dining at peak time.</tip>
+        <backup_option>If Wangfujing is too crowded, eat near your hotel or along a convenient subway line.</backup_option>
+        <time_saver>Choose a restaurant close to the subway exit to minimize walking when tired.</time_saver>
+      </Notes>
+    </Stop>
+  </Day>
+</Root>

@@ -26,7 +26,8 @@ Output a single JSON object in the following format:
     {{"id": "1", "reasoning": "Matches because..."}},
     {{"id": "3", "reasoning": "Matches because..."}}
   ],
-  "reasoning": "Overall explanation"
+  "reasoning": "Overall explanation",
+  "user_facing": "Answer the user's question in concise natural language."
 }}
 ```
 
@@ -34,7 +35,8 @@ Empty if none match:
 ```json
 {{
   "selected_nodes": [],
-  "reasoning": "None match because..."
+  "reasoning": "None match because...",
+  "user_facing": "I could not find the requested information."
 }}
 ```
 {examples}

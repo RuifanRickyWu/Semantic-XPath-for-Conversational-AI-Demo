@@ -49,23 +49,23 @@ def execute_query():
     
     try:
         executor = get_executor(pipeline)
-        
+
         # Capture tree state before operation
         tree_before = serialize_tree(executor.tree.getroot())
-        
+
         # Execute the query
         result = pipeline.process_request(query)
-        
+
         # Capture tree state after operation
         tree_after = serialize_tree(executor.tree.getroot())
-        
+
         # Build response with all visualization data
         response = serialize_result(result)
         response["tree"] = {
             "before": tree_before,
             "after": tree_after
         }
-        
+
         return jsonify(response)
         
     except Exception as e:

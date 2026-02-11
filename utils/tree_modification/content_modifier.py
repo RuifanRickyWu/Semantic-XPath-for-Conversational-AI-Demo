@@ -41,7 +41,7 @@ class ContentModifier:
         Returns:
             List of deep-copied content elements (e.g., Day elements)
         """
-        metadata_tags = {"patch_info", "conversation_history"}
+        metadata_tags = {"description", "patch_info", "conversation_history"}
         
         # Prefer schema-defined content container when available
         versioning = get_versioning_info()

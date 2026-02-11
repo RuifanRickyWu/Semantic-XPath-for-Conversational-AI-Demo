@@ -56,7 +56,8 @@ Output a single JSON object:
       "reasoning": "Changed X from Y to Z"
     }}
   ],
-  "reasoning": "Overall explanation"
+  "reasoning": "Overall explanation",
+  "user_facing": "Explain what will be updated and where."
 }}
 ```
 
@@ -70,7 +71,8 @@ Output a single JSON object:
 ```json
 {{
   "updates": [],
-  "reasoning": "No candidates clearly match because [specific reason]"
+  "reasoning": "No candidates clearly match because [specific reason]",
+  "user_facing": "I could not find anything to update."
 }}
 ```
 {examples}

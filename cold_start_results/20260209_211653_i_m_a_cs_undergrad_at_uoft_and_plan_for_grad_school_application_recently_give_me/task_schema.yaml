@@ -1,0 +1,39 @@
+name: todo_list
+description: A year-long todo list organized by month with actionable tasks.
+hierarchy: "TodoList (root)\n    `-- Month (container, indexed by @month_number)\n\
+  \        `-- Task (leaf)"
+nodes:
+  TodoList:
+    type: root
+    fields:
+    - title
+    - overview
+    children:
+    - Month
+  Month:
+    type: container
+    fields:
+    - name
+    children:
+    - Task
+    index_attr: month_number
+  Task:
+    type: leaf
+    fields:
+    - name
+    - due_date
+    - description
+    - check_items
+    - priority
+    children: []
+data_files:
+  one_year_grad_application_todo_list: memory/education/one_year_grad_application_todo_list.xml
+default_data: one_year_grad_application_todo_list
+examples_file: prompts/query_generator/domains/xpath_examples_todo_list.txt
+syntax_rules: '- Paths start with /TodoList
+
+  - Node types: TodoList, Month, Task
+
+  - Indices: Node[1], Node[-1], Node[1:3]
+
+  - Logical: AND / OR / not() combine predicates WITHIN brackets'

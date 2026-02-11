@@ -13,6 +13,10 @@ class CRUDOperation(Enum):
     CREATE = "Create"
     UPDATE = "Update"
     DELETE = "Delete"
+<<<<<<< ours
+=======
+    STATE = "State"
+>>>>>>> theirs
 
 @dataclass
 class ResolvedVersion:
@@ -30,6 +34,12 @@ class ResolvedVersion:
     selector_type: VersionSelector
     semantic_query: Optional[str]
     index: Optional[int]
+<<<<<<< ours
+=======
+    task_selector_type: VersionSelector
+    task_semantic_query: Optional[str]
+    task_index: Optional[int]
+>>>>>>> theirs
     crud_operation: CRUDOperation
     raw_response: str
     task_query: Optional[str] = None
@@ -41,6 +51,12 @@ class ResolvedVersion:
             "selector_type": self.selector_type.value,
             "semantic_query": self.semantic_query,
             "index": self.index,
+<<<<<<< ours
+=======
+            "task_selector_type": self.task_selector_type.value,
+            "task_semantic_query": self.task_semantic_query,
+            "task_index": self.task_index,
+>>>>>>> theirs
             "crud_operation": self.crud_operation.value,
             "raw_response": self.raw_response,
             "task_query": self.task_query,
@@ -54,9 +70,35 @@ class ResolvedVersion:
         Returns:
             Version selector string like "at([-1])" or "before(sem(content ~= 'museum'))"
         """
+<<<<<<< ours
         if self.semantic_query:
             inner = f'sem(content ~= "{self.semantic_query}")'
         else:
             inner = f"[{self.index}]"
 
         return f"{self.selector_type.value}({inner})"
+=======
+        if self.index is None and not self.semantic_query:
+            return "state"
+        if self.semantic_query:
+            if self.semantic_query.startswith(("/", "//")) or self.semantic_query.startswith(("Task", "Version")):
+                inner = self.semantic_query
+            else:
+                inner = f'sem(content ~= "{self.semantic_query}")'
+        else:
+            inner = f"[{self.index}]"
+
+        return f"{self.selector_type.value}({inner})"
+
+    def get_task_selector_string(self) -> str:
+        if self.task_index is None and not self.task_semantic_query:
+            return "state"
+        if self.task_semantic_query:
+            if self.task_semantic_query.startswith(("/", "//")) or self.task_semantic_query.startswith(("Task", "Version")):
+                inner = self.task_semantic_query
+            else:
+                inner = f'sem(content ~= "{self.task_semantic_query}")'
+        else:
+            inner = f"[{self.task_index}]"
+        return f"{self.task_selector_type.value}({inner})"
+>>>>>>> theirs

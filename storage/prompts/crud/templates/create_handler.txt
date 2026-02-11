@@ -31,7 +31,8 @@ Output a single JSON object in the following format:
   "position": N,
   "node_type": "...",
   "fields": {{ ... }},
-  "reasoning": "Brief explanation"
+  "reasoning": "Brief explanation",
+  "user_facing": "Explain what will be created and where."
 }}
 ```
 {examples}

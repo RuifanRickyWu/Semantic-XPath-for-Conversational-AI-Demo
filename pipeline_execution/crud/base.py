@@ -13,7 +13,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 import sys
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from client import get_default_client, TokenUsage, CompletionResult
 from pipeline_execution.crud.crud_prompt_loader import PromptLoader
@@ -136,6 +136,7 @@ class HandlerResult:
     token_usage: Optional[TokenUsage] = None
     processing_time_ms: float = 0.0
     raw_response: str = ""
+    user_facing: str = ""
     error: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
@@ -151,6 +152,9 @@ class HandlerResult:
         if self.token_usage:
             result["token_usage"] = self.token_usage.to_dict()
         
+        if self.user_facing:
+            result["user_facing"] = self.user_facing
+        
         if self.error:
             result["error"] = self.error
             
@@ -165,7 +169,7 @@ class BaseHandler(ABC):
     to perform relevance reasoning and task-specific output generation.
     """
     
-    DEFAULT_TRACES_PATH = Path(__file__).parent.parent.parent / "traces" / "reasoning_traces"
+    DEFAULT_TRACES_PATH = Path(__file__).resolve().parents[2] / "traces" / "reasoning_traces"
     
     def __init__(
         self,

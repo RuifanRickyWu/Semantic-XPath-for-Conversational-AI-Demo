@@ -1,0 +1,292 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2491 470" width="2491" height="470" fill="none">
+  <defs>
+    <style>
+      .node-body { fill: #ccc; stroke: #aaa; stroke-width: 1.5; rx: 8; }
+      .node-header { fill: #bbb; stroke: #999; stroke-width: 1.5; rx: 6; }
+      .connector { stroke: #999; stroke-width: 2; fill: none; }
+      .dot { fill: #999; }
+      .label { fill: #666; font-family: sans-serif; }
+    </style>
+  </defs>
+
+  <!-- ===== Root Node (Level 0) ===== -->
+  <!-- Root header tab -->
+  <rect class="node-header" x="1161" y="0" width="32" height="20" />
+  <!-- Root body -->
+  <rect class="node-body" x="1161" y="11" width="176" height="40" />
+  <!-- Root text -->
+  <text class="label" x="1175" y="35" font-size="8">Root</text>
+  <text class="label" x="1169" y="8" font-size="6">ROOT</text>
+
+  <!-- Root junction dot below -->
+  <circle class="dot" cx="1249" cy="44" r="5" />
+
+  <!-- Vertical connector Root ? Level 1 -->
+  <line class="connector" x1="1249" y1="51" x2="1249" y2="104" />
+
+  <!-- ===== Level 1: Itinerary Version (center) ===== -->
+  <circle class="dot" cx="1249" cy="108" r="5" />
+  <rect class="node-header" x="1161" y="104" width="66" height="20" />
+  <rect class="node-body" x="1161" y="115" width="176" height="40" />
+  <text class="label" x="1175" y="139" font-size="7">Itinerary Version</text>
+  <text class="label" x="1169" y="112" font-size="5">ITINERARY VERSION</text>
+
+  <!-- Junction dot below Level 1 -->
+  <circle class="dot" cx="1249" cy="148" r="5" />
+
+  <!-- Vertical connector Level 1 ? Level 2 junction -->
+  <line class="connector" x1="1249" y1="155" x2="1249" y2="211" />
+
+  <!-- Horizontal branch lines Level 1 ? Level 2 -->
+  <!-- Left branch: from center down to left -->
+  <path class="connector" d="M 1249 158 L 1249 175 Q 1249 185 1239 185 L 506 185 Q 496 185 496 195 L 496 211" />
+  <!-- Right branch: from center down to right -->
+  <path class="connector" d="M 1249 158 L 1249 175 Q 1249 185 1259 185 L 1966 185 Q 1976 185 1976 195 L 1976 211" />
+
+  <!-- ===== Level 2: Three Itinerary Version nodes ===== -->
+
+  <!-- Level 2 Center -->
+  <circle class="dot" cx="1249" cy="211" r="5" />
+  <rect class="node-header" x="1161" y="208" width="66" height="20" />
+  <rect class="node-body" x="1161" y="219" width="176" height="40" />
+  <text class="label" x="1175" y="243" font-size="7">Itinerary Version</text>
+  <text class="label" x="1169" y="216" font-size="5">ITINERARY VERSION</text>
+  <circle class="dot" cx="1249" cy="253" r="5" />
+
+  <!-- Level 2 Left -->
+  <circle class="dot" cx="496" cy="211" r="5" />
+  <rect class="node-header" x="419" y="208" width="66" height="20" />
+  <rect class="node-body" x="419" y="219" width="176" height="40" />
+  <text class="label" x="433" y="243" font-size="7">Itinerary Version</text>
+  <text class="label" x="427" y="216" font-size="5">ITINERARY VERSION</text>
+  <circle class="dot" cx="496" cy="253" r="5" />
+
+  <!-- Level 2 Right -->
+  <circle class="dot" cx="1976" cy="211" r="5" />
+  <rect class="node-header" x="1893" y="208" width="66" height="20" />
+  <rect class="node-body" x="1893" y="219" width="176" height="40" />
+  <text class="label" x="1907" y="243" font-size="7">Itinerary Version</text>
+  <text class="label" x="1901" y="216" font-size="5">ITINERARY VERSION</text>
+  <circle class="dot" cx="1976" cy="253" r="5" />
+
+  <!-- Vertical connectors Level 2 ? Level 3 -->
+  <line class="connector" x1="1249" y1="259" x2="1249" y2="316" />
+  <line class="connector" x1="496" y1="259" x2="496" y2="316" />
+  <line class="connector" x1="1976" y1="259" x2="1976" y2="316" />
+
+  <!-- ===== Level 3 Horizontal Branches ===== -->
+
+  <!-- Center group branches (4 nodes) -->
+  <path class="connector" d="M 1249 263 L 1249 280 Q 1249 290 1239 290 L 943 290 Q 933 290 933 300 L 933 316" />
+  <path class="connector" d="M 1249 263 L 1249 280 Q 1249 290 1259 290 L 1552 290 Q 1562 290 1562 300 L 1562 316" />
+  <path class="connector" d="M 1562 290 L 1762 290 Q 1772 290 1772 300 L 1772 316" />
+  <path class="connector" d="M 933 290 L 715 290 Q 705 290 705 300 L 705 316" />
+
+  <!-- Left group branches (4 nodes) -->
+  <path class="connector" d="M 496 263 L 496 280 Q 496 290 486 290 L 297 290 Q 287 290 287 300 L 287 316" />
+  <path class="connector" d="M 496 263 L 496 280 Q 496 290 506 290 L 695 290 Q 705 290 705 300 L 705 316" />
+
+  <!-- Right group branches (4 nodes) -->
+  <path class="connector" d="M 1976 263 L 1976 280 Q 1976 290 1966 290 L 1771 290 Q 1761 290 1761 300 L 1761 316" />
+  <path class="connector" d="M 1976 263 L 1976 280 Q 1976 290 1986 290 L 2181 290 Q 2191 290 2191 300 L 2191 316" />
+
+  <!-- ===== Level 3 Junction Dots ===== -->
+  <circle class="dot" cx="287" cy="316" r="5" />
+  <circle class="dot" cx="496" cy="316" r="5" />
+  <circle class="dot" cx="705" cy="316" r="5" />
+  <circle class="dot" cx="933" cy="316" r="5" />
+  <circle class="dot" cx="1249" cy="316" r="5" />
+  <circle class="dot" cx="1562" cy="316" r="5" />
+  <circle class="dot" cx="1772" cy="316" r="5" />
+  <circle class="dot" cx="1976" cy="316" r="5" />
+  <circle class="dot" cx="2191" cy="316" r="5" />
+
+  <!-- ===== Level 3 Leaf Nodes ===== -->
+
+  <!-- Node at x=83 (left-most under left branch) - Annona Restaurant -->
+  <rect class="node-header" x="199" y="312" width="66" height="20" />
+  <rect class="node-body" x="199" y="323" width="176" height="40" />
+  <text class="label" x="213" y="347" font-size="7">Annona Restaurant</text>
+  <text class="label" x="207" y="320" font-size="5">RESTAURANT</text>
+
+  <!-- Node at x=413 (under left branch) - DaiLo -->
+  <rect class="node-header" x="413" y="312" width="66" height="20" />
+  <rect class="node-body" x="413" y="323" width="176" height="40" />
+  <text class="label" x="427" y="347" font-size="7">DaiLo</text>
+  <text class="label" x="421" y="320" font-size="5">RESTAURANT</text>
+
+  <!-- Node at x=617 (under left branch) - Doyal Ontario Museum -->
+  <rect class="node-header" x="617" y="312" width="66" height="20" />
+  <rect class="node-body" x="617" y="323" width="176" height="40" />
+  <text class="label" x="631" y="347" font-size="7">Doyal Ontario Museum</text>
+  <text class="label" x="625" y="320" font-size="5">POI</text>
+
+  <!-- Node at x=845 (under center branch) - Annona Restaurant -->
+  <rect class="node-header" x="845" y="312" width="66" height="20" />
+  <rect class="node-body" x="845" y="323" width="176" height="40" />
+  <text class="label" x="859" y="347" font-size="7">Annona Restaurant</text>
+  <text class="label" x="853" y="320" font-size="5">RESTAURANT</text>
+
+  <!-- Node at x=1161 (center) - DaiLo -->
+  <rect class="node-header" x="1161" y="312" width="66" height="20" />
+  <rect class="node-body" x="1161" y="323" width="176" height="40" />
+  <text class="label" x="1175" y="347" font-size="7">DaiLo</text>
+  <text class="label" x="1169" y="320" font-size="5">RESTAURANT</text>
+
+  <!-- Node at x=1474 (under center-right branch) - Doyal Ontario Museum -->
+  <rect class="node-header" x="1474" y="312" width="66" height="20" />
+  <rect class="node-body" x="1474" y="323" width="176" height="40" />
+  <text class="label" x="1488" y="347" font-size="7">Doyal Ontario Museum</text>
+  <text class="label" x="1482" y="320" font-size="5">POI</text>
+
+  <!-- Node at x=1683 (under right branch) - Annona Restaurant -->
+  <rect class="node-header" x="1683" y="312" width="66" height="20" />
+  <rect class="node-body" x="1683" y="323" width="176" height="40" />
+  <text class="label" x="1697" y="347" font-size="7">Annona Restaurant</text>
+  <text class="label" x="1691" y="320" font-size="5">RESTAURANT</text>
+
+  <!-- Node at x=1893 (under right branch) - DaiLo -->
+  <rect class="node-header" x="1893" y="312" width="66" height="20" />
+  <rect class="node-body" x="1893" y="323" width="176" height="40" />
+  <text class="label" x="1907" y="347" font-size="7">DaiLo</text>
+  <text class="label" x="1901" y="320" font-size="5">RESTAURANT</text>
+
+  <!-- Node at x=2103 (right-most) - Doyal Ontario Museum -->
+  <rect class="node-header" x="2103" y="312" width="66" height="20" />
+  <rect class="node-body" x="2103" y="323" width="176" height="40" />
+  <text class="label" x="2117" y="347" font-size="7">Doyal Ontario Museum</text>
+  <text class="label" x="2111" y="320" font-size="5">POI</text>
+
+  <!-- ===== Level 4 Vertical Connectors ===== -->
+  <line class="connector" x1="287" y1="363" x2="287" y2="370" />
+  <circle class="dot" cx="287" cy="370" r="5" />
+  <line class="connector" x1="496" y1="363" x2="496" y2="370" />
+  <circle class="dot" cx="496" cy="370" r="5" />
+  <line class="connector" x1="705" y1="363" x2="705" y2="370" />
+  <circle class="dot" cx="705" cy="370" r="5" />
+  <line class="connector" x1="933" y1="363" x2="933" y2="370" />
+  <circle class="dot" cx="933" cy="370" r="5" />
+  <line class="connector" x1="1249" y1="363" x2="1249" y2="370" />
+  <circle class="dot" cx="1249" cy="370" r="5" />
+  <line class="connector" x1="1562" y1="363" x2="1562" y2="370" />
+  <circle class="dot" cx="1562" cy="370" r="5" />
+  <line class="connector" x1="1772" y1="363" x2="1772" y2="370" />
+  <circle class="dot" cx="1772" cy="370" r="5" />
+  <line class="connector" x1="1976" y1="363" x2="1976" y2="370" />
+  <circle class="dot" cx="1976" cy="370" r="5" />
+  <line class="connector" x1="2191" y1="363" x2="2191" y2="370" />
+  <circle class="dot" cx="2191" cy="370" r="5" />
+
+  <!-- Level 4 horizontal branches -->
+  <line class="connector" x1="287" y1="370" x2="287" y2="424" />
+  <line class="connector" x1="496" y1="370" x2="496" y2="424" />
+  <line class="connector" x1="705" y1="370" x2="705" y2="424" />
+  <line class="connector" x1="933" y1="370" x2="933" y2="424" />
+  <line class="connector" x1="1249" y1="370" x2="1249" y2="424" />
+  <line class="connector" x1="1562" y1="370" x2="1562" y2="424" />
+  <line class="connector" x1="1772" y1="370" x2="1772" y2="424" />
+  <line class="connector" x1="1976" y1="370" x2="1976" y2="424" />
+  <line class="connector" x1="2191" y1="370" x2="2191" y2="424" />
+
+  <!-- Level 4 junction dots -->
+  <circle class="dot" cx="83" cy="424" r="5" />
+  <circle class="dot" cx="287" cy="424" r="5" />
+  <circle class="dot" cx="496" cy="424" r="5" />
+  <circle class="dot" cx="722" cy="424" r="5" />
+  <circle class="dot" cx="933" cy="424" r="5" />
+  <circle class="dot" cx="1148" cy="424" r="5" />
+  <circle class="dot" cx="1353" cy="424" r="5" />
+  <circle class="dot" cx="1562" cy="424" r="5" />
+  <circle class="dot" cx="1772" cy="424" r="5" />
+  <circle class="dot" cx="1976" cy="424" r="5" />
+  <circle class="dot" cx="2191" cy="424" r="5" />
+  <circle class="dot" cx="2398" cy="424" r="5" />
+
+  <!-- Level 4 branch lines -->
+  <path class="connector" d="M 287 375 L 287 395 Q 287 405 277 405 L 93 405 Q 83 405 83 415 L 83 424" />
+  <path class="connector" d="M 287 375 L 287 395 Q 287 405 297 405 L 486 405 Q 496 405 496 415 L 496 424" />
+  <path class="connector" d="M 705 375 L 705 395 Q 705 405 715 405 L 712 405 Q 722 405 722 415 L 722 424" />
+  <path class="connector" d="M 933 375 L 933 395 Q 933 405 923 405 L 722 405" />
+  <path class="connector" d="M 933 375 L 933 395 Q 933 405 943 405 L 1138 405 Q 1148 405 1148 415 L 1148 424" />
+  <path class="connector" d="M 1249 375 L 1249 395 Q 1249 405 1239 405 L 1148 405" />
+  <path class="connector" d="M 1249 375 L 1249 395 Q 1249 405 1259 405 L 1343 405 Q 1353 405 1353 415 L 1353 424" />
+  <path class="connector" d="M 1562 375 L 1562 395 Q 1562 405 1552 405 L 1353 405" />
+  <path class="connector" d="M 1772 375 L 1772 395 Q 1772 405 1762 405 L 1562 405" />
+  <path class="connector" d="M 1976 375 L 1976 395 Q 1976 405 1966 405 L 1772 405" />
+  <path class="connector" d="M 1976 375 L 1976 395 Q 1976 405 1986 405 L 2181 405 Q 2191 405 2191 415 L 2191 424" />
+  <path class="connector" d="M 2191 405 L 2388 405 Q 2398 405 2398 415 L 2398 424" />
+
+  <!-- ===== Level 4 Leaf Nodes ===== -->
+
+  <!-- DaiLo -->
+  <rect class="node-header" x="-5" y="420" width="66" height="20" />
+  <rect class="node-body" x="-5" y="431" width="176" height="40" rx="8" />
+  <text class="label" x="9" y="455" font-size="7">DaiLo</text>
+  <text class="label" x="3" y="428" font-size="5">RESTAURANT</text>
+
+  <!-- Doyal Ontario Museum -->
+  <rect class="node-header" x="199" y="420" width="66" height="20" />
+  <rect class="node-body" x="199" y="431" width="176" height="40" />
+  <text class="label" x="213" y="455" font-size="7">Doyal Ontario Museum</text>
+  <text class="label" x="207" y="428" font-size="5">POI</text>
+
+  <!-- Annona Restaurant -->
+  <rect class="node-header" x="408" y="420" width="66" height="20" />
+  <rect class="node-body" x="408" y="431" width="176" height="40" />
+  <text class="label" x="422" y="455" font-size="7">Annona Restaurant</text>
+  <text class="label" x="416" y="428" font-size="5">RESTAURANT</text>
+
+  <!-- DaiLo -->
+  <rect class="node-header" x="634" y="420" width="66" height="20" />
+  <rect class="node-body" x="634" y="431" width="176" height="40" />
+  <text class="label" x="648" y="455" font-size="7">DaiLo</text>
+  <text class="label" x="642" y="428" font-size="5">RESTAURANT</text>
+
+  <!-- Doyal Ontario Museum -->
+  <rect class="node-header" x="845" y="420" width="66" height="20" />
+  <rect class="node-body" x="845" y="431" width="176" height="40" />
+  <text class="label" x="859" y="455" font-size="7">Doyal Ontario Museum</text>
+  <text class="label" x="853" y="428" font-size="5">POI</text>
+
+  <!-- Annona Restaurant -->
+  <rect class="node-header" x="1060" y="420" width="66" height="20" />
+  <rect class="node-body" x="1060" y="431" width="176" height="40" />
+  <text class="label" x="1074" y="455" font-size="7">Annona Restaurant</text>
+  <text class="label" x="1068" y="428" font-size="5">RESTAURANT</text>
+
+  <!-- DaiLo -->
+  <rect class="node-header" x="1265" y="420" width="66" height="20" />
+  <rect class="node-body" x="1265" y="431" width="176" height="40" />
+  <text class="label" x="1279" y="455" font-size="7">DaiLo</text>
+  <text class="label" x="1273" y="428" font-size="5">RESTAURANT</text>
+
+  <!-- Doyal Ontario Museum -->
+  <rect class="node-header" x="1474" y="420" width="66" height="20" />
+  <rect class="node-body" x="1474" y="431" width="176" height="40" />
+  <text class="label" x="1488" y="455" font-size="7">Doyal Ontario Museum</text>
+  <text class="label" x="1482" y="428" font-size="5">POI</text>
+
+  <!-- Annona Restaurant -->
+  <rect class="node-header" x="1683" y="420" width="66" height="20" />
+  <rect class="node-body" x="1683" y="431" width="176" height="40" />
+  <text class="label" x="1697" y="455" font-size="7">Annona Restaurant</text>
+  <text class="label" x="1691" y="428" font-size="5">RESTAURANT</text>
+
+  <!-- DaiLo -->
+  <rect class="node-header" x="1893" y="420" width="66" height="20" />
+  <rect class="node-body" x="1893" y="431" width="176" height="40" />
+  <text class="label" x="1907" y="455" font-size="7">DaiLo</text>
+  <text class="label" x="1901" y="428" font-size="5">RESTAURANT</text>
+
+  <!-- Doyal Ontario Museum -->
+  <rect class="node-header" x="2103" y="420" width="66" height="20" />
+  <rect class="node-body" x="2103" y="431" width="176" height="40" />
+  <text class="label" x="2117" y="455" font-size="7">Doyal Ontario Museum</text>
+  <text class="label" x="2111" y="428" font-size="5">POI</text>
+
+  <!-- Annona Restaurant (right-most) -->
+  <rect class="node-header" x="2310" y="420" width="66" height="20" />
+  <rect class="node-body" x="2310" y="431" width="176" height="40" />
+  <text class="label" x="2324" y="455" font-size="7">Annona Restaurant</text>
+  <text class="label" x="2318" y="428" font-size="5">RESTAURANT</text>
+</svg>

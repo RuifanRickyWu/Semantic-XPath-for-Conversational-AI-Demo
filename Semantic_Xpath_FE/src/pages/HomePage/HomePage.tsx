@@ -34,8 +34,22 @@ export default function HomePage() {
 
   return (
     <div className="home-page">
-      {/* Background decoration */}
-      <div className="home-bg-arc" />
+      {/* Dot grid pattern overlay */}
+      <div className="home-bg-dots" />
+      {/* Background tree structure */}
+      <img className="home-bg-tree" src="/assets/tree-bg.svg?v=2" alt="" />
+      {/* Inner glow halo */}
+      <img className="home-bg-inner-glow" src="/assets/halo-glow.svg" alt="" />
+      {/* Background arc decoration */}
+      <div className="home-bg-arc-container">
+        <div className="home-bg-arc-ring arc-ring-1" />
+        <div className="home-bg-arc-ring arc-ring-2" />
+        <div className="home-bg-arc-ring arc-ring-3" />
+        <div className="home-bg-arc-ring arc-ring-4" />
+        <div className="home-bg-arc-ring arc-ring-5" />
+        <div className="home-bg-arc-ring arc-glow" />
+        <div className="home-bg-arc-ring arc-ring-6" />
+      </div>
 
       {/* Hero section */}
       <div className="home-hero">

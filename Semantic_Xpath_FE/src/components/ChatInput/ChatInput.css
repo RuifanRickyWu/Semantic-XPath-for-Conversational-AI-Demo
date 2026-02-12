@@ -1,5 +1,6 @@
 .chat-input-wrapper {
-  width: 100%;
+  width: 45vw;
+  min-width: 400px;
   max-width: 868px;
   margin: 0 auto;
 }
@@ -7,8 +8,9 @@
 .chat-input-container {
   background: #fff;
   border: 1px solid #e0e0e0;
-  border-radius: 20px;
+  border-radius: 16px;
   padding: 16px 20px 12px;
+  box-sizing: border-box;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   transition: box-shadow 0.2s, border-color 0.2s;
 }
@@ -54,8 +56,8 @@
 }
 
 .chat-action-btn.small {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
 }
 
 .chat-action-btn:hover:not(:disabled) {
@@ -72,8 +74,8 @@
 }
 
 .chat-submit-btn {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: none;
   background: #7c3aed;

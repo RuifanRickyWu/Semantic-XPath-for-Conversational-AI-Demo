@@ -1,43 +1,164 @@
 .home-page {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding-top: 60px;
   position: relative;
   overflow: hidden;
   background: #fafafa;
+  box-sizing: border-box;
 }
 
-/* Purple arc background */
-.home-bg-arc {
+/* Dot grid pattern overlay — white dots, only bottom half near the arc */
+.home-bg-dots {
   position: absolute;
-  bottom: -400px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  opacity: 0.30;
+  pointer-events: none;
+  z-index: 1;
+  background-image: radial-gradient(circle, #ffffff 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+}
+
+/* Purple arc background — multi-layered ring */
+.home-bg-arc-container {
+  position: absolute;
+  bottom: calc(-1401px + 49.5vh);
   left: 50%;
   transform: translateX(-50%);
-  width: 1400px;
-  height: 1400px;
+  width: 1401px;
+  height: 1430px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-bg-arc-ring {
+  position: absolute;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 0%,
-    rgba(124, 58, 237, 0.06) 0%,
-    rgba(124, 58, 237, 0.02) 40%,
-    transparent 70%
-  );
-  border: 2px solid rgba(124, 58, 237, 0.12);
+  box-sizing: border-box;
+}
+
+/* Ring 1 — outermost, lightest purple */
+.arc-ring-1 {
+  width: 1401px;
+  height: 1401px;
+  top: 0;
+  left: 0;
+  border: 24px solid #EFE5FF;
+  box-shadow:
+    0px -20px 50px rgba(209, 189, 255, 0.30),
+    0px 80px 80px #A383F0;
+}
+
+/* Ring 2 */
+.arc-ring-2 {
+  width: 1401px;
+  height: 1401px;
+  top: 2.56px;
+  left: 0;
+  border: 24px solid #CBADFF;
+  box-shadow: 0px -20px 50px rgba(209, 189, 255, 0.30);
+}
+
+/* Ring 3 */
+.arc-ring-3 {
+  width: 1401px;
+  height: 1399px;
+  top: 6.6px;
+  left: 0;
+  border: 20px solid #B791FC;
+  box-shadow: 0px -20px 50px rgba(209, 189, 255, 0.30);
+}
+
+/* Ring 4 */
+.arc-ring-4 {
+  width: 1398px;
+  height: 1398px;
+  top: 10.6px;
+  left: 2.83px;
+  border: 20px solid #9772EB;
+  box-shadow: 0px -20px 50px rgba(209, 189, 255, 0.30);
+}
+
+/* Ring 5 */
+.arc-ring-5 {
+  width: 1393px;
+  height: 1396px;
+  top: 15.6px;
+  left: 3.83px;
+  border: 20px solid #8658EF;
+  box-shadow: 0px -20px 50px rgba(209, 189, 255, 0.30);
+}
+
+/* Glow layer — blurred ring for soft light effect */
+.arc-glow {
+  width: 1401px;
+  height: 1401px;
+  top: 28.18px;
+  left: 0;
+  border: 20px solid rgba(197, 171, 255, 0.60);
+  box-shadow:
+    0px -20px 50px rgba(209, 189, 255, 0.30),
+    0px 40px 80px rgba(188, 159, 254, 0.10) inset;
+  filter: blur(25px);
+}
+
+/* Ring 6 — innermost, darkest purple */
+.arc-ring-6 {
+  width: 1384px;
+  height: 1396px;
+  top: 19.6px;
+  left: 8.83px;
+  border: 15px solid #734BCE;
+  box-shadow:
+    0px -20px 50px rgba(209, 189, 255, 0.30),
+    0px 40px 80px rgba(188, 159, 254, 0.10) inset;
+}
+
+/* Inner glow halo — soft violet light behind the title */
+.home-bg-inner-glow {
+  position: absolute;
+  width: 1400px;
+  height: 800px;
+  left: 50%;
+  top: calc(28vh - 200px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  box-sizing: border-box;
+  opacity: 0.95;
+}
+
+/* Background tree structure — faint decorative diagram */
+.home-bg-tree {
+  position: absolute;
+  width: 2491px;
+  height: 470px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -30%);
+  opacity: 0.07;
   pointer-events: none;
   z-index: 0;
 }
 
 .home-hero {
   text-align: center;
-  margin-bottom: 48px;
-  z-index: 1;
+  margin-top: calc(28vh - 60px);
+  margin-bottom: 0;
+  z-index: 2;
+  flex-shrink: 0;
 }
 
 .home-title {
-  font-size: 48px;
+  font-size: clamp(32px, 2.5vw, 48px);
   font-weight: 700;
   color: #1a1a1a;
   margin: 0 0 12px;
@@ -48,7 +169,7 @@
   font-size: 18px;
   font-weight: 500;
   color: #444;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .home-description {
@@ -61,7 +182,11 @@
   width: 100%;
   max-width: 900px;
   padding: 0 16px;
-  z-index: 1;
+  z-index: 2;
+  margin-top: auto;
+  margin-bottom: 1.7vh;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .home-error {

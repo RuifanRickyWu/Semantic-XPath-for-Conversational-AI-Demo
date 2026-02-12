@@ -68,6 +68,7 @@ class GlobalInfoResolver:
         self._task_schema_name: Optional[str] = None
         self._state_task_index: Optional[int] = None
         self._state_version_index: Optional[int] = None
+        print(f"🧭 State init: task={self._state_task_index} version={self._state_version_index}")
         self._tree: Optional[ET.ElementTree] = None
         self._schema_cache: Dict[str, Dict[str, Any]] = {}
         self._task_schema_cache: Dict[int, str] = {}
@@ -275,16 +276,24 @@ class GlobalInfoResolver:
     def apply_state_defaults(self, version_result: ResolvedVersion) -> None:
         if self._state_task_index is not None:
             if version_result.task_index is None and not version_result.task_semantic_query:
+                print(f"🧭 State default applied: task={self._state_task_index}")
                 version_result.task_index = self._state_task_index
         if self._state_version_index is not None:
             if version_result.index is None and not version_result.semantic_query:
+                print(f"🧭 State default applied: version={self._state_version_index}")
                 version_result.index = self._state_version_index
 
     def update_state(self, task_number: Optional[int], version_number: Optional[int]) -> None:
+        prev_task, prev_version = self._state_task_index, self._state_version_index
         if task_number is not None and task_number > 0:
             self._state_task_index = task_number
         if version_number is not None and version_number > 0:
             self._state_version_index = version_number
+        if (prev_task, prev_version) != (self._state_task_index, self._state_version_index):
+            print(f"🧭 State updated: task={self._state_task_index} version={self._state_version_index}")
+
+    def get_state(self) -> Tuple[Optional[int], Optional[int]]:
+        return self._state_task_index, self._state_version_index
 
     def resolve_task_context(self, version_result: ResolvedVersion) -> Optional[Dict[str, Any]]:
         task_elem = self.resolve_task_from_global(version_result)
@@ -463,6 +472,11 @@ class GlobalInfoResolver:
                 return matches[0]
             return tasks[-1]
         if version_result.task_index is None:
+            if self._state_task_index is not None:
+                print(f"🧭 State select task: task={self._state_task_index}")
+                for task in tasks:
+                    if task.get("number") == str(self._state_task_index):
+                        return task
             return tasks[-1]
         if version_result.task_index < 0:
             ordered = self._order_by_number(tasks)
@@ -480,6 +494,11 @@ class GlobalInfoResolver:
                 return matches[0]
             return versions[-1]
         if version_result.index is None:
+            if self._state_version_index is not None:
+                print(f"🧭 State select version: version={self._state_version_index}")
+                for version in versions:
+                    if version.get("number") == str(self._state_version_index):
+                        return version
             return versions[-1]
         if version_result.index < 0:
             idx = len(versions) + version_result.index

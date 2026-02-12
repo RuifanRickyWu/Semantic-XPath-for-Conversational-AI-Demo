@@ -256,6 +256,8 @@ class SemanticXPathOrchestrator:
         # State-change only request (from classifier)
         if version_result.crud_operation == CRUDOperation.STATE:
             self._global_info_resolver.update_state(task_number_resolved, target_version_number)
+            state_task, state_version = self._global_info_resolver.get_state()
+            print(f"🧭 State: task={state_task} version={state_version}")
             version_number = str(target_version_number) if target_version_number is not None else "?"
             task_number = str(task_number_resolved) if task_number_resolved is not None else task_elem.get("number", "?")
             task_title = (task_elem.findtext("title") or "").strip()
@@ -303,6 +305,8 @@ class SemanticXPathOrchestrator:
         self._current_task = task_elem
         self._current_task_number = task_number_resolved
         self._global_info_resolver.update_state(task_number_resolved, target_version_number)
+        state_task, state_version = self._global_info_resolver.get_state()
+        print(f"🧭 State: task={state_task} version={state_version}")
         
         # Stage 2: XPath Generation (LLM Call 2)
         # Use task_query (version-stripped query) for xpath generation

@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Root>
+  <title>3-Day Trip in Toronto</title>
+  <pace>Easy pace</pace>
+  <start_area_suggestion>Downtown Toronto (central base for subway/streetcar access)</start_area_suggestion>
+  <Day day_number="1">
+    <theme>Downtown icons</theme>
+    <primary_area>Downtown core (Old Town to Waterfront)</primary_area>
+    <Time_Block block_name="Morning">
+      <time_of_day>Morning</time_of_day>
+      <focus>Breakfast + historic neighborhoods</focus>
+      <Stop>
+        <name>St. Lawrence Market</name>
+        <neighborhood>Old Town</neighborhood>
+        <why_go>Classic Toronto food market for breakfast and browsing local vendors.</why_go>
+        <suggested_duration>1.5-2 hours</suggested_duration>
+        <logistics_tip>Arrive earlier to avoid crowds; easy TTC access and walkable to the next stop.</logistics_tip>
+      </Stop>
+      <Stop>
+        <name>Distillery District</name>
+        <neighborhood>Distillery District</neighborhood>
+        <why_go>Pedestrian-only cobblestone lanes with preserved Victorian-era industrial architecture, shops, and cafes.</why_go>
+        <suggested_duration>1-1.5 hours</suggested_duration>
+        <logistics_tip>Use the streetcar or a short rideshare from Old Town; best explored on foot.</logistics_tip>
+      </Stop>
+    </Time_Block>
+    <Time_Block block_name="Afternoon">
+      <time_of_day>Afternoon</time_of_day>
+      <focus>Skyline views + major attraction</focus>
+      <Stop>
+        <name>CN Tower</name>
+        <neighborhood>Entertainment District</neighborhood>
+        <why_go>Signature landmark with panoramic city and lake views.</why_go>
+        <suggested_duration>1.5-2 hours</suggested_duration>
+        <logistics_tip>Book timed tickets in peak season and go early to reduce lines.</logistics_tip>
+      </Stop>
+      <Stop>
+        <name>Ripley's Aquarium of Canada (optional)</name>
+        <neighborhood>Entertainment District</neighborhood>
+        <why_go>Convenient, family-friendly indoor attraction next to the CN Tower.</why_go>
+        <suggested_duration>1.5-2 hours</suggested_duration>
+        <logistics_tip>Go directly after the CN Tower since its next door; consider skipping if you prefer more neighborhood time.</logistics_tip>
+      </Stop>
+    </Time_Block>
+    <Time_Block block_name="Evening">
+      <time_of_day>Evening</time_of_day>
+      <focus>Waterfront stroll + dinner</focus>
+      <Stop>
+        <name>Harbourfront Centre / Waterfront walk</name>
+        <neighborhood>Harbourfront</neighborhood>
+        <why_go>Relaxing lakeside promenade with sunset views and an easy end to a sightseeing day.</why_go>
+        <suggested_duration>1-2 hours</suggested_duration>
+        <logistics_tip>Walk from the CN Tower area or take a short streetcar; bring a light layer near the lake.</logistics_tip>
+      </Stop>
+      <Stop>
+        <name>Dinner in King West / Entertainment District</name>
+        <neighborhood>King West / Entertainment District</neighborhood>
+        <why_go>High-density dining and nightlife options near major downtown sights.</why_go>
+        <suggested_duration>1.5-2 hours</suggested_duration>
+        <logistics_tip>Reserve on weekends; TTC or a short walk from the waterfront.</logistics_tip>
+      </Stop>
+    </Time_Block>
+  </Day>
+  <Day day_number="2">
+    <theme>Museums + Yorkville + Kensington</theme>
+    <primary_area>Midtown/Downtown west (Museum area to Kensington/Chinatown)</primary_area>
+    <Time_Block block_name="Morning">
+      <time_of_day>Morning</time_of_day>
+      <focus>Major museum</focus>
+      <Stop>
+        <name>Royal Ontario Museum (ROM)</name>
+        <neighborhood>Museum / Bloor-Yorkville</neighborhood>
+        <why_go>Top museum for natural history, world cultures, and rotating exhibitions.</why_go>
+        <suggested_duration>2-3 hours</suggested_duration>
+        <logistics_tip>Book timed tickets in busy periods; arrive near opening for a quieter visit.</logistics_tip>
+      </Stop>
+    </Time_Block>
+    <Time_Block block_name="Afternoon">
+      <time_of_day>Afternoon</time_of_day>
+      <focus>Shopping streets + campus stroll</focus>
+      <Stop>
+        <name>Yorkville</name>
+        <neighborhood>Yorkville</neighborhood>
+        <why_go>Upscale shops, cafes, and people-watching in a compact, walkable area.</why_go>
+        <suggested_duration>1-2 hours</suggested_duration>
+        <logistics_tip>Easy walk from the ROM; good spot for a coffee break.</logistics_tip>
+      </Stop>
+      <Stop>
+        <name>University of Toronto campus stroll</name>
+        <neighborhood>St. George / Annex</neighborhood>
+        <why_go>Historic architecture and green quads that show a different side of central Toronto.</why_go>
+        <suggested_duration>1-1.5 hours</suggested_duration>
+        <logistics_tip>Walk south from Bloor; combine with nearby cafes or bookstores.</logistics_tip>
+      </Stop>
+    </Time_Block>
+    <Time_Block block_name="Evening">
+      <time_of_day>Evening</time_of_day>
+      <focus>Street food + lively neighborhoods</focus>
+      <Stop>
+        <name>Kensington Market</name>
+        <neighborhood>Kensington Market</neighborhood>
+        <why_go>Eclectic streets, small bites, vintage shops, and casual bars.</why_go>
+        <suggested_duration>1.5-2.5 hours</suggested_duration>
+        <logistics_tip>Best explored on foot; go hungry and snack as you wander.</logistics_tip>
+      </Stop>
+      <Stop>
+        <name>Chinatown (Spadina Avenue)</name>
+        <neighborhood>Chinatown</neighborhood>
+        <why_go>Great value eats and dessert spots, steps from Kensington.</why_go>
+        <suggested_duration>1-2 hours</suggested_duration>
+        <logistics_tip>Combine with Kensington in one walk; TTC streetcar/subway makes it easy to return downtown.</logistics_tip>
+      </Stop>
+    </Time_Block>
+  </Day>
+  <Day day_number="3">
+    <theme>Waterfront nature + west end</theme>
+    <primary_area>Toronto Islands / West end (High Park to Queen West/Ossington)</primary_area>
+    <Time_Block block_name="Morning">
+      <time_of_day>Morning</time_of_day>
+      <focus>Easy nature + skyline photos</focus>
+      <Stop>
+        <name>Toronto Islands</name>
+        <neighborhood>Toronto Islands</neighborhood>
+        <why_go>Car-free paths, beaches/parks, and classic skyline viewpoints.</why_go>
+        <suggested_duration>3-4 hours</suggested_duration>
+        <logistics_tip>Take the ferry from Jack Layton Ferry Terminal; bring water and plan for wind on the lake.</logistics_tip>
+      </Stop>
+    </Time_Block>
+    <Time_Block block_name="Afternoon">
+      <time_of_day>Afternoon</time_of_day>
+      <focus>Big park walk (or indoor alternative)</focus>
+      <Stop>
+        <name>High Park (Grenadier Pond trails)</name>
+        <neighborhood>High Park</neighborhood>
+        <why_go>Largest central park feel in the city with easy trails and pond views.</why_go>
+        <suggested_duration>2-3 hours</suggested_duration>
+        <logistics_tip>Take Line 2 subway to High Park station; wear comfortable walking shoes.</logistics_tip>
+      </Stop>
+      <Stop>
+        <name>Casa Loma (substitute option)</name>
+        <neighborhood>Casa Loma / Midtown</neighborhood>
+        <why_go>Indoor, castle-like historic site if you prefer sights over park time or need weather backup.</why_go>
+        <suggested_duration>1.5-2.5 hours</suggested_duration>
+        <logistics_tip>Use TTC to Dupont station and walk uphill; best as a swap for High Park in poor weather.</logistics_tip>
+      </Stop>
+    </Time_Block>
+    <Time_Block block_name="Evening">
+      <time_of_day>Evening</time_of_day>
+      <focus>Neighborhood shopping + dinner</focus>
+      <Stop>
+        <name>Queen West</name>
+        <neighborhood>Queen Street West</neighborhood>
+        <why_go>Boutiques, galleries, and a lively street scene for an easy evening wander.</why_go>
+        <suggested_duration>1-2 hours</suggested_duration>
+        <logistics_tip>Use the streetcar along Queen; start around Trinity Bellwoods area and wander west.</logistics_tip>
+      </Stop>
+      <Stop>
+        <name>Ossington strip (dinner/drinks)</name>
+        <neighborhood>Ossington</neighborhood>
+        <why_go>Popular strip for restaurants, patios, and casual nightlife.</why_go>
+        <suggested_duration>2-3 hours</suggested_duration>
+        <logistics_tip>Reservations help on weekends; easy connection by streetcar/bus from Queen West.</logistics_tip>
+      </Stop>
+    </Time_Block>
+  </Day>
+  <Trip_Notes>
+    <category>Practical tips</category>
+    <Note_Item>
+      <title>Getting around</title>
+      <details>Use the TTC (subway/streetcar) for most stops; consider a day pass if you will take many rides.</details>
+    </Note_Item>
+    <Note_Item>
+      <title>Tickets and timing</title>
+      <details>Book timed tickets for the CN Tower and ROM in peak season and go early to avoid lines.</details>
+    </Note_Item>
+    <Note_Item>
+      <title>Weather backup (winter or rain)</title>
+      <details>If conditions are poor, swap Toronto Islands and/or High Park for more indoor time such as the Art Gallery of Ontario (AGO), a hockey game, or food halls.</details>
+    </Note_Item>
+  </Trip_Notes>
+</Root>

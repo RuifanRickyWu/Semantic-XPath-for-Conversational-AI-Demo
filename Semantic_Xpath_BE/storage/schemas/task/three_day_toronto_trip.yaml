@@ -1,0 +1,69 @@
+name: three_day_toronto_trip
+description: Three Day Toronto Trip structure
+hierarchy:
+  Root:
+    Day:
+      Time_Block:
+        Stop: {}
+    Trip_Notes:
+      Note_Item: {}
+nodes:
+  Root:
+    type: root
+    fields:
+    - title
+    - pace
+    - start_area_suggestion
+    children:
+    - Day
+    - Trip_Notes
+  Day:
+    type: container
+    fields:
+    - theme
+    - primary_area
+    children:
+    - Time_Block
+    index_attr: day_number
+  Time_Block:
+    type: container
+    fields:
+    - time_of_day
+    - focus
+    children:
+    - Stop
+    index_attr: block_name
+  Stop:
+    type: leaf
+    fields:
+    - name
+    - neighborhood
+    - why_go
+    - suggested_duration
+    - logistics_tip
+    children: []
+  Trip_Notes:
+    type: container
+    fields:
+    - category
+    children:
+    - Note_Item
+  Note_Item:
+    type: leaf
+    fields:
+    - title
+    - details
+    children: []
+root: Root
+content_root: Root
+data_files:
+  three_day_toronto_trip: memory/task/three_day_toronto_trip.xml
+default_data: three_day_toronto_trip
+examples_file: prompts/query_generator/domains/xpath_examples_three_day_toronto_trip.txt
+syntax_rules: '- Paths start with /Root
+
+  - Node types: Root, Day, Time_Block, Stop, Trip_Notes, Note_Item
+
+  - Indices: Node[1], Node[-1], Node[1:3]
+
+  - Logical: AND / OR / not() combine predicates WITHIN brackets'

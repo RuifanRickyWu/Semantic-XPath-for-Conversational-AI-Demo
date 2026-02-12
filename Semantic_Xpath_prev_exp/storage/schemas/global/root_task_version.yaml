@@ -1,0 +1,24 @@
+name: root_task_version
+description: Global container for tasks with versions
+hierarchy: "Root (root)\n  `-- Task (container, indexed by @number)\n      `-- Version\
+  \ (version, indexed by @number)"
+nodes:
+  Root:
+    type: root
+    fields: []
+    children:
+    - Task
+  Task:
+    type: container
+    index_attr: number
+    fields:
+    - title
+    - description
+    children:
+    - Version
+  Version:
+    type: version
+    index_attr: number
+    fields:
+    - description
+    children: []

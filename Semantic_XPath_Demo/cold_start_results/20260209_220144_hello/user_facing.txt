@@ -1,0 +1,21 @@
+Quick replies to 'hello'
+
+Three concise reply options in different tones so you can respond immediately based on context.
+
+Friendly option
+A warm, open reply that invites conversation.
+- Text: "Hi! How's it going?"
+- Tone: friendly and approachable
+- Use with peers or casual acquaintances
+
+Polite option
+A slightly more formal and courteous response.
+- Text: "Hello  nice to hear from you."
+- Tone: polite and reserved
+- Good for workplace or semi-formal contacts
+
+Casual option
+A relaxed, informal reply for close friends.
+- Text: "Hey! What's up?"
+- Tone: very casual and direct
+- Use with close friends or informal groups

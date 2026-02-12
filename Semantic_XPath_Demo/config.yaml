@@ -1,0 +1,38 @@
+# Schema configuration
+# Paths used by semantic xpath CLI
+global_schema_path: "storage/schemas/global/root_task_version.yaml"
+task_schema_path: "storage/schemas/task"
+data_path: "storage/memory/global/root_task_version.xml"
+
+# Note: The system now uses in-tree versioning - all operations create new Version nodes
+# within the tree itself, enabling full history tracking and version-based queries.
+
+# LLM Client configuration
+# Model options: "gpt-4o", "gpt-5", "gpt-5-mini", "o1", "o3-mini", etc.
+openai:
+  api_key: "${OPENAI_API_KEY}"
+  model: "gpt-5.2"
+  max_tokens: 50000
+
+  # For GPT-4 series: temperature controls creativity (0-1)
+  temperature: 0
+
+  # For GPT-5/o1/o3 series: reasoning_effort controls reasoning depth
+  # Options: none (fastest), low, medium (default), high, xhigh (deepest)
+  reasoning_effort: "low"
+
+xpath_executor:
+  top_k: 5
+  score_threshold: 0.05
+  # Scoring method: "llm", "entailment", or "cosine"
+  scoring_method: "entailment"
+
+entailment:
+  model: "facebook/bart-large-mnli"
+  hypothesis_template: "This is related to {predicate}."
+  # device: auto-detected if not set (cuda > mps > cpu)
+
+cosine:
+  model: "sentence-transformers/msmarco-distilbert-base-tas-b"
+  predicate_template: "{predicate}"
+  # device: auto-detected if not set (cuda > mps > cpu)

@@ -1,0 +1,812 @@
+{
+  "success": true,
+  "llm_output": {
+    "domain": {
+      "name": "education",
+      "description": "Planning and checklists for academic goals such as graduate school applications."
+    },
+    "task": {
+      "name": "one_year_grad_application_todo_list",
+      "title": "1-Year Graduate School Application To-Do List",
+      "description": "Monthly breakdown of tasks and milestones for preparing and submitting graduate school applications over one year."
+    },
+    "schema": {
+      "name": "todo_list",
+      "description": "A year-long todo list organized by month with actionable tasks.",
+      "root": "TodoList",
+      "nodes": {
+        "TodoList": {
+          "type": "root",
+          "fields": [
+            "title",
+            "overview"
+          ],
+          "children": [
+            "Month"
+          ]
+        },
+        "Month": {
+          "type": "container",
+          "index_attr": "month_number",
+          "fields": [
+            "name"
+          ],
+          "children": [
+            "Task"
+          ]
+        },
+        "Task": {
+          "type": "leaf",
+          "fields": [
+            "name",
+            "due_date",
+            "description",
+            "check_items",
+            "priority"
+          ],
+          "children": []
+        }
+      }
+    },
+    "content": {
+      "root_fields": {
+        "title": "1-Year Grad School Application To-Do List",
+        "overview": "Monthly milestones and concrete tasks to prepare, apply, and follow up for graduate school applications over the next 12 months."
+      },
+      "root_attrs": {},
+      "children": [
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "1"
+          },
+          "fields": {
+            "name": "Month 1 - Self-assessment & timeline"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Clarify goals and programs",
+                "due_date": "Week 1",
+                "description": "Decide target fields (CS subareas), degree type (MS/PhD), and 6-10 target programs.",
+                "check_items": [
+                  "List research interests",
+                  "Identify preferred advisors",
+                  "Rank programs by fit and admission timeline"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Create application calendar",
+                "due_date": "Week 2",
+                "description": "Map deadlines, test dates, and internal milestones over 12 months.",
+                "check_items": [
+                  "Add deadlines to calendar",
+                  "Set reminders 8 and 4 weeks before each deadline"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "2"
+          },
+          "fields": {
+            "name": "Month 2 - Tests & prerequisites"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Assess standardized tests",
+                "due_date": "Week 1",
+                "description": "Decide if GRE/subject tests are needed and plan prep.",
+                "check_items": [
+                  "Check program requirements",
+                  "Register for test if required"
+                ],
+                "priority": "medium"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Identify coursework gaps",
+                "due_date": "Week 3",
+                "description": "Find prerequisite classes or skills to strengthen candidacy.",
+                "check_items": [
+                  "List missing courses",
+                  "Plan to take courses or online modules"
+                ],
+                "priority": "medium"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "3"
+          },
+          "fields": {
+            "name": "Month 3 - Research & projects"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Engage in research / summer project planning",
+                "due_date": "End of month",
+                "description": "Start or ramp up research/projects to strengthen statement and letters.",
+                "check_items": [
+                  "Contact faculty for RA positions",
+                  "Outline project goals and timeline"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Document results",
+                "due_date": "Ongoing",
+                "description": "Keep clear notes, code repo, and a short write-up for each project.",
+                "check_items": [
+                  "Push code to GitHub",
+                  "Prepare short README and results summary"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "4"
+          },
+          "fields": {
+            "name": "Month 4 - Networking & advisor outreach"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Build list of potential advisors",
+                "due_date": "Week 2",
+                "description": "Identify 10-20 faculty per program whose work aligns with yours.",
+                "check_items": [
+                  "Read recent papers",
+                  "Note specific projects to mention in emails"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Start polite outreach",
+                "due_date": "Week 4",
+                "description": "Email faculty with concise interest and relevant work; request advice.",
+                "check_items": [
+                  "Customize 2-sentence pitch",
+                  "Attach CV and 1-page summary"
+                ],
+                "priority": "medium"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "5"
+          },
+          "fields": {
+            "name": "Month 5 - Draft statements & CV"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Draft personal statement / SOP",
+                "due_date": "End of month",
+                "description": "Write an initial draft focusing on research experience, fit, and goals.",
+                "check_items": [
+                  "Outline story and paragraphs",
+                  "Write first full draft"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Update academic CV",
+                "due_date": "Week 3",
+                "description": "Create a concise CV highlighting research, publications, and relevant coursework.",
+                "check_items": [
+                  "Add projects and roles",
+                  "Include links to code/papers"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "6"
+          },
+          "fields": {
+            "name": "Month 6 - Letters of recommendation planning"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Identify recommenders",
+                "due_date": "Week 1",
+                "description": "Choose 3-4 people familiar with your research and academic potential.",
+                "check_items": [
+                  "Prefer research supervisors and senior instructors",
+                  "Prepare summary packet for each"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Request recommendations",
+                "due_date": "Week 3",
+                "description": "Ask recommenders early, provide deadlines and materials.",
+                "check_items": [
+                  "Send CV, statement draft, and key points",
+                  "Confirm willingness and expected submission date"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "7"
+          },
+          "fields": {
+            "name": "Month 7 - Test prep & practice"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Intensive test prep (if needed)",
+                "due_date": "Test date",
+                "description": "Follow a study plan for GRE/subject tests; take practice exams weekly.",
+                "check_items": [
+                  "Schedule practice tests",
+                  "Review weak topics"
+                ],
+                "priority": "medium"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Collect unofficial transcripts",
+                "due_date": "End of month",
+                "description": "Download transcripts to include with pre-applications or for recommenders.",
+                "check_items": [
+                  "Request official if required later"
+                ],
+                "priority": "low"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "8"
+          },
+          "fields": {
+            "name": "Month 8 - Refine application materials"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Revise SOP and CV based on feedback",
+                "due_date": "End of month",
+                "description": "Incorporate advisor and peer feedback; tailor versions for specific programs.",
+                "check_items": [
+                  "Get feedback from 2 advisors",
+                  "Create program-specific paragraphs"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Prepare writing/research samples",
+                "due_date": "Week 3",
+                "description": "Select/format papers or project reports to submit or share with recommenders.",
+                "check_items": [
+                  "Polish one-page summary for each sample",
+                  "Create PDF portfolio"
+                ],
+                "priority": "medium"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "9"
+          },
+          "fields": {
+            "name": "Month 9 - Application logistics"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Create accounts and pre-fill forms",
+                "due_date": "Week 2",
+                "description": "Open application portals, upload documents and ensure recommenders have links.",
+                "check_items": [
+                  "Enter basic info in each portal",
+                  "Upload CV and transcripts where allowed"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Draft short answers and program-specific statements",
+                "due_date": "Week 4",
+                "description": "Prepare concise responses for program prompts and questions.",
+                "check_items": [
+                  "Save templates for reuse",
+                  "Tailor to research groups"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "10"
+          },
+          "fields": {
+            "name": "Month 10 - Finalize and submit applications"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Complete final reviews",
+                "due_date": "Two weeks before earliest deadline",
+                "description": "Proofread, verify recommenders, double-check transcripts and fees.",
+                "check_items": [
+                  "Confirm recommenders submitted letters",
+                  "Verify PDFs open and are labeled correctly"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Submit applications",
+                "due_date": "By each program deadline",
+                "description": "Pay fees and submit; save confirmation emails and receipts.",
+                "check_items": [
+                  "Record submission dates",
+                  "Save confirmation IDs"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "11"
+          },
+          "fields": {
+            "name": "Month 11 - Interviews & follow-up"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Prepare for interviews",
+                "due_date": "As interview invites arrive",
+                "description": "Practice research talks, common questions, and technical anchors.",
+                "check_items": [
+                  "Prepare 10-15 minute research summary",
+                  "Mock interview with peers"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Send thank-you/follow-up notes",
+                "due_date": "Within 48 hours after contact",
+                "description": "Send concise emails to interviewers and faculty contacts.",
+                "check_items": [
+                  "Personalize each message",
+                  "Reiterate fit and next steps"
+                ],
+                "priority": "medium"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Month",
+          "attrs": {
+            "month_number": "12"
+          },
+          "fields": {
+            "name": "Month 12 - Decisions & contingencies"
+          },
+          "children": [
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Compare offers and funding",
+                "due_date": "Decision time",
+                "description": "Evaluate advisor fit, funding, location, and long-term goals.",
+                "check_items": [
+                  "List pros/cons for each offer",
+                  "Clarify funding and TA/RA expectations"
+                ],
+                "priority": "high"
+              },
+              "children": []
+            },
+            {
+              "tag": "Task",
+              "attrs": {},
+              "fields": {
+                "name": "Plan contingencies",
+                "due_date": "After decisions",
+                "description": "If no offers, plan reapplication or gap-year research options.",
+                "check_items": [
+                  "Identify positions or internships",
+                  "Set timeline for reapplication"
+                ],
+                "priority": "medium"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    "user_facing": {
+      "title": "1-Year Grad School Application Plan",
+      "overview": "A month-by-month checklist to organize preparation, applications, and follow-up so you stay on track from early planning to final decisions.",
+      "sections": [
+        {
+          "title": "Plan and prioritize (Months 1-2)",
+          "summary": "Clarify your goals, build a timeline, and decide on required tests and prerequisites.",
+          "bullets": [
+            "Choose target programs and advisors",
+            "Create a calendar with deadlines and reminders",
+            "Assess need for GRE/subject tests and course gaps"
+          ]
+        },
+        {
+          "title": "Build research profile (Months 3-5)",
+          "summary": "Engage in research or projects and begin drafting a strong CV and statement.",
+          "bullets": [
+            "Start or deepen research projects with clear documentation",
+            "Draft SOP and tailor your CV",
+            "Prepare writing/research samples"
+          ]
+        },
+        {
+          "title": "Secure recommenders (Month 6)",
+          "summary": "Select and request strong letters well ahead of deadlines, providing materials to referees.",
+          "bullets": [
+            "Choose recommenders who know your research",
+            "Provide CV, statement draft, and key accomplishments",
+            "Confirm submission timelines"
+          ]
+        },
+        {
+          "title": "Polish and submit (Months 7-10)",
+          "summary": "Finish test prep, refine materials with feedback, then finalize and submit each application.",
+          "bullets": [
+            "Follow a consistent revision process and tailor for programs",
+            "Pre-fill portals and verify uploads",
+            "Submit early when possible and save confirmations"
+          ]
+        },
+        {
+          "title": "Interview and follow-up (Month 11)",
+          "summary": "Prepare research talks and conduct mock interviews; send prompt thank-you notes after contacts.",
+          "bullets": [
+            "Practice concise research presentations",
+            "Prepare answers for technical and fit questions",
+            "Send personalized follow-ups to interviewers and faculty"
+          ]
+        },
+        {
+          "title": "Decide and plan next steps (Month 12)",
+          "summary": "Evaluate offers based on fit and funding, and prepare contingencies if outcomes are unfavorable.",
+          "bullets": [
+            "Compare advisor fit, funding, and career alignment",
+            "Negotiate or clarify funding when needed",
+            "Have a reapplication or gap-year research plan ready"
+          ]
+        }
+      ]
+    }
+  },
+  "user_facing": {
+    "title": "1-Year Grad School Application Plan",
+    "overview": "A month-by-month checklist to organize preparation, applications, and follow-up so you stay on track from early planning to final decisions.",
+    "sections": [
+      {
+        "title": "Plan and prioritize (Months 1-2)",
+        "summary": "Clarify your goals, build a timeline, and decide on required tests and prerequisites.",
+        "bullets": [
+          "Choose target programs and advisors",
+          "Create a calendar with deadlines and reminders",
+          "Assess need for GRE/subject tests and course gaps"
+        ]
+      },
+      {
+        "title": "Build research profile (Months 3-5)",
+        "summary": "Engage in research or projects and begin drafting a strong CV and statement.",
+        "bullets": [
+          "Start or deepen research projects with clear documentation",
+          "Draft SOP and tailor your CV",
+          "Prepare writing/research samples"
+        ]
+      },
+      {
+        "title": "Secure recommenders (Month 6)",
+        "summary": "Select and request strong letters well ahead of deadlines, providing materials to referees.",
+        "bullets": [
+          "Choose recommenders who know your research",
+          "Provide CV, statement draft, and key accomplishments",
+          "Confirm submission timelines"
+        ]
+      },
+      {
+        "title": "Polish and submit (Months 7-10)",
+        "summary": "Finish test prep, refine materials with feedback, then finalize and submit each application.",
+        "bullets": [
+          "Follow a consistent revision process and tailor for programs",
+          "Pre-fill portals and verify uploads",
+          "Submit early when possible and save confirmations"
+        ]
+      },
+      {
+        "title": "Interview and follow-up (Month 11)",
+        "summary": "Prepare research talks and conduct mock interviews; send prompt thank-you notes after contacts.",
+        "bullets": [
+          "Practice concise research presentations",
+          "Prepare answers for technical and fit questions",
+          "Send personalized follow-ups to interviewers and faculty"
+        ]
+      },
+      {
+        "title": "Decide and plan next steps (Month 12)",
+        "summary": "Evaluate offers based on fit and funding, and prepare contingencies if outcomes are unfavorable.",
+        "bullets": [
+          "Compare advisor fit, funding, and career alignment",
+          "Negotiate or clarify funding when needed",
+          "Have a reapplication or gap-year research plan ready"
+        ]
+      }
+    ]
+  },
+  "domain": {
+    "name": "education",
+    "description": "Planning and checklists for academic goals such as graduate school applications."
+  },
+  "task": {
+    "name": "one_year_grad_application_todo_list",
+    "title": "1-Year Graduate School Application To-Do List",
+    "description": "Monthly breakdown of tasks and milestones for preparing and submitting graduate school applications over one year.",
+    "domain": "education"
+  },
+  "task_schema": {
+    "name": "todo_list",
+    "description": "A year-long todo list organized by month with actionable tasks.",
+    "hierarchy": "TodoList (root)\n    `-- Month (container, indexed by @month_number)\n        `-- Task (leaf)",
+    "nodes": {
+      "TodoList": {
+        "type": "root",
+        "fields": [
+          "title",
+          "overview"
+        ],
+        "children": [
+          "Month"
+        ]
+      },
+      "Month": {
+        "type": "container",
+        "fields": [
+          "name"
+        ],
+        "children": [
+          "Task"
+        ],
+        "index_attr": "month_number"
+      },
+      "Task": {
+        "type": "leaf",
+        "fields": [
+          "name",
+          "due_date",
+          "description",
+          "check_items",
+          "priority"
+        ],
+        "children": []
+      }
+    },
+    "data_files": {
+      "one_year_grad_application_todo_list": "memory/education/one_year_grad_application_todo_list.xml"
+    },
+    "default_data": "one_year_grad_application_todo_list",
+    "examples_file": "prompts/query_generator/domains/xpath_examples_todo_list.txt",
+    "syntax_rules": "- Paths start with /TodoList\n- Node types: TodoList, Month, Task\n- Indices: Node[1], Node[-1], Node[1:3]\n- Logical: AND / OR / not() combine predicates WITHIN brackets"
+  },
+  "version_schema": {
+    "name": "todo_list_version",
+    "description": "Version wrapper for todo_list",
+    "versioning": {
+      "root": "Root",
+      "version_node": "TodoList_Version",
+      "version_index_attr": "number",
+      "content_container": "TodoList"
+    },
+    "nodes": {
+      "Root": {
+        "type": "root",
+        "fields": [],
+        "children": [
+          "TodoList_Version"
+        ]
+      },
+      "TodoList_Version": {
+        "type": "version",
+        "index_attr": "number",
+        "fields": [
+          "patch_info",
+          "conversation_history"
+        ],
+        "children": []
+      }
+    }
+  },
+  "domain_schema": {
+    "name": "education_domain",
+    "description": "Domain container for education tasks with versions",
+    "hierarchy": "Education_Root (root)\n  `-- Task (container, indexed by @name)\n      `-- TaskVersion (version, indexed by @number)",
+    "nodes": {
+      "Education_Root": {
+        "type": "root",
+        "fields": [],
+        "children": [
+          "Task"
+        ]
+      },
+      "Task": {
+        "type": "container",
+        "index_attr": "name",
+        "fields": [
+          "title",
+          "description",
+          "status"
+        ],
+        "children": [
+          "TaskVersion"
+        ]
+      },
+      "TaskVersion": {
+        "type": "version",
+        "index_attr": "number",
+        "fields": [
+          "patch_info",
+          "conversation_history",
+          "created_at"
+        ],
+        "children": []
+      }
+    }
+  },
+  "memory_xml": "<?xml version='1.0' encoding='utf-8'?>\n<Root><TodoList_Version number=\"1\"><patch_info>cold start initialization</patch_info><conversation_history>I'm a cs undergrad at uoft and plan for grad school application recently. give me a 1 year todo list</conversation_history><TodoList><title>1-Year Grad School Application To-Do List</title><overview>Monthly milestones and concrete tasks to prepare, apply, and follow up for graduate school applications over the next 12 months.</overview><Month month_number=\"1\"><name>Month 1 - Self-assessment &amp; timeline</name><Task><name>Clarify goals and programs</name><due_date>Week 1</due_date><description>Decide target fields (CS subareas), degree type (MS/PhD), and 6-10 target programs.</description><check_items><check_item>List research interests</check_item><check_item>Identify preferred advisors</check_item><check_item>Rank programs by fit and admission timeline</check_item></check_items><priority>high</priority></Task><Task><name>Create application calendar</name><due_date>Week 2</due_date><description>Map deadlines, test dates, and internal milestones over 12 months.</description><check_items><check_item>Add deadlines to calendar</check_item><check_item>Set reminders 8 and 4 weeks before each deadline</check_item></check_items><priority>high</priority></Task></Month><Month month_number=\"2\"><name>Month 2 - Tests &amp; prerequisites</name><Task><name>Assess standardized tests</name><due_date>Week 1</due_date><description>Decide if GRE/subject tests are needed and plan prep.</description><check_items><check_item>Check program requirements</check_item><check_item>Register for test if required</check_item></check_items><priority>medium</priority></Task><Task><name>Identify coursework gaps</name><due_date>Week 3</due_date><description>Find prerequisite classes or skills to strengthen candidacy.</description><check_items><check_item>List missing courses</check_item><check_item>Plan to take courses or online modules</check_item></check_items><priority>medium</priority></Task></Month><Month month_number=\"3\"><name>Month 3 - Research &amp; projects</name><Task><name>Engage in research / summer project planning</name><due_date>End of month</due_date><description>Start or ramp up research/projects to strengthen statement and letters.</description><check_items><check_item>Contact faculty for RA positions</check_item><check_item>Outline project goals and timeline</check_item></check_items><priority>high</priority></Task><Task><name>Document results</name><due_date>Ongoing</due_date><description>Keep clear notes, code repo, and a short write-up for each project.</description><check_items><check_item>Push code to GitHub</check_item><check_item>Prepare short README and results summary</check_item></check_items><priority>high</priority></Task></Month><Month month_number=\"4\"><name>Month 4 - Networking &amp; advisor outreach</name><Task><name>Build list of potential advisors</name><due_date>Week 2</due_date><description>Identify 10-20 faculty per program whose work aligns with yours.</description><check_items><check_item>Read recent papers</check_item><check_item>Note specific projects to mention in emails</check_item></check_items><priority>high</priority></Task><Task><name>Start polite outreach</name><due_date>Week 4</due_date><description>Email faculty with concise interest and relevant work; request advice.</description><check_items><check_item>Customize 2-sentence pitch</check_item><check_item>Attach CV and 1-page summary</check_item></check_items><priority>medium</priority></Task></Month><Month month_number=\"5\"><name>Month 5 - Draft statements &amp; CV</name><Task><name>Draft personal statement / SOP</name><due_date>End of month</due_date><description>Write an initial draft focusing on research experience, fit, and goals.</description><check_items><check_item>Outline story and paragraphs</check_item><check_item>Write first full draft</check_item></check_items><priority>high</priority></Task><Task><name>Update academic CV</name><due_date>Week 3</due_date><description>Create a concise CV highlighting research, publications, and relevant coursework.</description><check_items><check_item>Add projects and roles</check_item><check_item>Include links to code/papers</check_item></check_items><priority>high</priority></Task></Month><Month month_number=\"6\"><name>Month 6 - Letters of recommendation planning</name><Task><name>Identify recommenders</name><due_date>Week 1</due_date><description>Choose 3-4 people familiar with your research and academic potential.</description><check_items><check_item>Prefer research supervisors and senior instructors</check_item><check_item>Prepare summary packet for each</check_item></check_items><priority>high</priority></Task><Task><name>Request recommendations</name><due_date>Week 3</due_date><description>Ask recommenders early, provide deadlines and materials.</description><check_items><check_item>Send CV, statement draft, and key points</check_item><check_item>Confirm willingness and expected submission date</check_item></check_items><priority>high</priority></Task></Month><Month month_number=\"7\"><name>Month 7 - Test prep &amp; practice</name><Task><name>Intensive test prep (if needed)</name><due_date>Test date</due_date><description>Follow a study plan for GRE/subject tests; take practice exams weekly.</description><check_items><check_item>Schedule practice tests</check_item><check_item>Review weak topics</check_item></check_items><priority>medium</priority></Task><Task><name>Collect unofficial transcripts</name><due_date>End of month</due_date><description>Download transcripts to include with pre-applications or for recommenders.</description><check_items><check_item>Request official if required later</check_item></check_items><priority>low</priority></Task></Month><Month month_number=\"8\"><name>Month 8 - Refine application materials</name><Task><name>Revise SOP and CV based on feedback</name><due_date>End of month</due_date><description>Incorporate advisor and peer feedback; tailor versions for specific programs.</description><check_items><check_item>Get feedback from 2 advisors</check_item><check_item>Create program-specific paragraphs</check_item></check_items><priority>high</priority></Task><Task><name>Prepare writing/research samples</name><due_date>Week 3</due_date><description>Select/format papers or project reports to submit or share with recommenders.</description><check_items><check_item>Polish one-page summary for each sample</check_item><check_item>Create PDF portfolio</check_item></check_items><priority>medium</priority></Task></Month><Month month_number=\"9\"><name>Month 9 - Application logistics</name><Task><name>Create accounts and pre-fill forms</name><due_date>Week 2</due_date><description>Open application portals, upload documents and ensure recommenders have links.</description><check_items><check_item>Enter basic info in each portal</check_item><check_item>Upload CV and transcripts where allowed</check_item></check_items><priority>high</priority></Task><Task><name>Draft short answers and program-specific statements</name><due_date>Week 4</due_date><description>Prepare concise responses for program prompts and questions.</description><check_items><check_item>Save templates for reuse</check_item><check_item>Tailor to research groups</check_item></check_items><priority>high</priority></Task></Month><Month month_number=\"10\"><name>Month 10 - Finalize and submit applications</name><Task><name>Complete final reviews</name><due_date>Two weeks before earliest deadline</due_date><description>Proofread, verify recommenders, double-check transcripts and fees.</description><check_items><check_item>Confirm recommenders submitted letters</check_item><check_item>Verify PDFs open and are labeled correctly</check_item></check_items><priority>high</priority></Task><Task><name>Submit applications</name><due_date>By each program deadline</due_date><description>Pay fees and submit; save confirmation emails and receipts.</description><check_items><check_item>Record submission dates</check_item><check_item>Save confirmation IDs</check_item></check_items><priority>high</priority></Task></Month><Month month_number=\"11\"><name>Month 11 - Interviews &amp; follow-up</name><Task><name>Prepare for interviews</name><due_date>As interview invites arrive</due_date><description>Practice research talks, common questions, and technical anchors.</description><check_items><check_item>Prepare 10-15 minute research summary</check_item><check_item>Mock interview with peers</check_item></check_items><priority>high</priority></Task><Task><name>Send thank-you/follow-up notes</name><due_date>Within 48 hours after contact</due_date><description>Send concise emails to interviewers and faculty contacts.</description><check_items><check_item>Personalize each message</check_item><check_item>Reiterate fit and next steps</check_item></check_items><priority>medium</priority></Task></Month><Month month_number=\"12\"><name>Month 12 - Decisions &amp; contingencies</name><Task><name>Compare offers and funding</name><due_date>Decision time</due_date><description>Evaluate advisor fit, funding, location, and long-term goals.</description><check_items><check_item>List pros/cons for each offer</check_item><check_item>Clarify funding and TA/RA expectations</check_item></check_items><priority>high</priority></Task><Task><name>Plan contingencies</name><due_date>After decisions</due_date><description>If no offers, plan reapplication or gap-year research options.</description><check_items><check_item>Identify positions or internships</check_item><check_item>Set timeline for reapplication</check_item></check_items><priority>medium</priority></Task></Month></TodoList></TodoList_Version></Root>",
+  "paths": {
+    "task_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/todo_list/todo_list.yaml",
+    "version_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/todo_list/todo_list_version.yaml",
+    "domain_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/domains/education.yaml",
+    "memory_xml": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/education/one_year_grad_application_todo_list.xml",
+    "examples": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/prompts/query_generator/domains/xpath_examples_todo_list.txt"
+  },
+  "warnings": [],
+  "token_usage": {
+    "prompt_tokens": 821,
+    "completion_tokens": 4138,
+    "total_tokens": 4959
+  },
+  "display": {
+    "summary": "Cold Start Result\nDomain: education - Planning and checklists for academic goals such as graduate school applications.\nTask: one_year_grad_application_todo_list - 1-Year Graduate School Application To-Do List\nSchema: todo_list",
+    "paths": "Paths\nTask schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/todo_list/todo_list.yaml\nVersion schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/todo_list/todo_list_version.yaml\nDomain schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/domains/education.yaml\nExamples: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/prompts/query_generator/domains/xpath_examples_todo_list.txt\nMemory XML: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/education/one_year_grad_application_todo_list.xml",
+    "domain_schema": "name: education_domain\ndescription: Domain container for education tasks with versions\nhierarchy: \"Education_Root (root)\\n  `-- Task (container, indexed by @name)\\n    \\\n  \\  `-- TaskVersion (version, indexed by @number)\"\nnodes:\n  Education_Root:\n    type: root\n    fields: []\n    children:\n    - Task\n  Task:\n    type: container\n    index_attr: name\n    fields:\n    - title\n    - description\n    - status\n    children:\n    - TaskVersion\n  TaskVersion:\n    type: version\n    index_attr: number\n    fields:\n    - patch_info\n    - conversation_history\n    - created_at\n    children: []",
+    "task_schema": "name: todo_list\ndescription: A year-long todo list organized by month with actionable tasks.\nhierarchy: \"TodoList (root)\\n    `-- Month (container, indexed by @month_number)\\n\\\n  \\        `-- Task (leaf)\"\nnodes:\n  TodoList:\n    type: root\n    fields:\n    - title\n    - overview\n    children:\n    - Month\n  Month:\n    type: container\n    fields:\n    - name\n    children:\n    - Task\n    index_attr: month_number\n  Task:\n    type: leaf\n    fields:\n    - name\n    - due_date\n    - description\n    - check_items\n    - priority\n    children: []\ndata_files:\n  one_year_grad_application_todo_list: memory/education/one_year_grad_application_todo_list.xml\ndefault_data: one_year_grad_application_todo_list\nexamples_file: prompts/query_generator/domains/xpath_examples_todo_list.txt\nsyntax_rules: '- Paths start with /TodoList\n\n  - Node types: TodoList, Month, Task\n\n  - Indices: Node[1], Node[-1], Node[1:3]\n\n  - Logical: AND / OR / not() combine predicates WITHIN brackets'",
+    "memory_xml": "<?xml version=\"1.0\" ?>\n<Root>\n  <TodoList_Version number=\"1\">\n    <patch_info>cold start initialization</patch_info>\n    <conversation_history>I'm a cs undergrad at uoft and plan for grad school application recently. give me a 1 year todo list</conversation_history>\n    <TodoList>\n      <title>1-Year Grad School Application To-Do List</title>\n      <overview>Monthly milestones and concrete tasks to prepare, apply, and follow up for graduate school applications over the next 12 months.</overview>\n      <Month month_number=\"1\">\n        <name>Month 1 - Self-assessment &amp; timeline</name>\n        <Task>\n          <name>Clarify goals and programs</name>\n          <due_date>Week 1</due_date>\n          <description>Decide target fields (CS subareas), degree type (MS/PhD), and 6-10 target programs.</description>\n          <check_items>\n            <check_item>List research interests</check_item>\n            <check_item>Identify preferred advisors</check_item>\n            <check_item>Rank programs by fit and admission timeline</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Create application calendar</name>\n          <due_date>Week 2</due_date>\n          <description>Map deadlines, test dates, and internal milestones over 12 months.</description>\n          <check_items>\n            <check_item>Add deadlines to calendar</check_item>\n            <check_item>Set reminders 8 and 4 weeks before each deadline</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"2\">\n        <name>Month 2 - Tests &amp; prerequisites</name>\n        <Task>\n          <name>Assess standardized tests</name>\n          <due_date>Week 1</due_date>\n          <description>Decide if GRE/subject tests are needed and plan prep.</description>\n          <check_items>\n            <check_item>Check program requirements</check_item>\n            <check_item>Register for test if required</check_item>\n          </check_items>\n          <priority>medium</priority>\n        </Task>\n        <Task>\n          <name>Identify coursework gaps</name>\n          <due_date>Week 3</due_date>\n          <description>Find prerequisite classes or skills to strengthen candidacy.</description>\n          <check_items>\n            <check_item>List missing courses</check_item>\n            <check_item>Plan to take courses or online modules</check_item>\n          </check_items>\n          <priority>medium</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"3\">\n        <name>Month 3 - Research &amp; projects</name>\n        <Task>\n          <name>Engage in research / summer project planning</name>\n          <due_date>End of month</due_date>\n          <description>Start or ramp up research/projects to strengthen statement and letters.</description>\n          <check_items>\n            <check_item>Contact faculty for RA positions</check_item>\n            <check_item>Outline project goals and timeline</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Document results</name>\n          <due_date>Ongoing</due_date>\n          <description>Keep clear notes, code repo, and a short write-up for each project.</description>\n          <check_items>\n            <check_item>Push code to GitHub</check_item>\n            <check_item>Prepare short README and results summary</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"4\">\n        <name>Month 4 - Networking &amp; advisor outreach</name>\n        <Task>\n          <name>Build list of potential advisors</name>\n          <due_date>Week 2</due_date>\n          <description>Identify 10-20 faculty per program whose work aligns with yours.</description>\n          <check_items>\n            <check_item>Read recent papers</check_item>\n            <check_item>Note specific projects to mention in emails</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Start polite outreach</name>\n          <due_date>Week 4</due_date>\n          <description>Email faculty with concise interest and relevant work; request advice.</description>\n          <check_items>\n            <check_item>Customize 2-sentence pitch</check_item>\n            <check_item>Attach CV and 1-page summary</check_item>\n          </check_items>\n          <priority>medium</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"5\">\n        <name>Month 5 - Draft statements &amp; CV</name>\n        <Task>\n          <name>Draft personal statement / SOP</name>\n          <due_date>End of month</due_date>\n          <description>Write an initial draft focusing on research experience, fit, and goals.</description>\n          <check_items>\n            <check_item>Outline story and paragraphs</check_item>\n            <check_item>Write first full draft</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Update academic CV</name>\n          <due_date>Week 3</due_date>\n          <description>Create a concise CV highlighting research, publications, and relevant coursework.</description>\n          <check_items>\n            <check_item>Add projects and roles</check_item>\n            <check_item>Include links to code/papers</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"6\">\n        <name>Month 6 - Letters of recommendation planning</name>\n        <Task>\n          <name>Identify recommenders</name>\n          <due_date>Week 1</due_date>\n          <description>Choose 3-4 people familiar with your research and academic potential.</description>\n          <check_items>\n            <check_item>Prefer research supervisors and senior instructors</check_item>\n            <check_item>Prepare summary packet for each</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Request recommendations</name>\n          <due_date>Week 3</due_date>\n          <description>Ask recommenders early, provide deadlines and materials.</description>\n          <check_items>\n            <check_item>Send CV, statement draft, and key points</check_item>\n            <check_item>Confirm willingness and expected submission date</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"7\">\n        <name>Month 7 - Test prep &amp; practice</name>\n        <Task>\n          <name>Intensive test prep (if needed)</name>\n          <due_date>Test date</due_date>\n          <description>Follow a study plan for GRE/subject tests; take practice exams weekly.</description>\n          <check_items>\n            <check_item>Schedule practice tests</check_item>\n            <check_item>Review weak topics</check_item>\n          </check_items>\n          <priority>medium</priority>\n        </Task>\n        <Task>\n          <name>Collect unofficial transcripts</name>\n          <due_date>End of month</due_date>\n          <description>Download transcripts to include with pre-applications or for recommenders.</description>\n          <check_items>\n            <check_item>Request official if required later</check_item>\n          </check_items>\n          <priority>low</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"8\">\n        <name>Month 8 - Refine application materials</name>\n        <Task>\n          <name>Revise SOP and CV based on feedback</name>\n          <due_date>End of month</due_date>\n          <description>Incorporate advisor and peer feedback; tailor versions for specific programs.</description>\n          <check_items>\n            <check_item>Get feedback from 2 advisors</check_item>\n            <check_item>Create program-specific paragraphs</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Prepare writing/research samples</name>\n          <due_date>Week 3</due_date>\n          <description>Select/format papers or project reports to submit or share with recommenders.</description>\n          <check_items>\n            <check_item>Polish one-page summary for each sample</check_item>\n            <check_item>Create PDF portfolio</check_item>\n          </check_items>\n          <priority>medium</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"9\">\n        <name>Month 9 - Application logistics</name>\n        <Task>\n          <name>Create accounts and pre-fill forms</name>\n          <due_date>Week 2</due_date>\n          <description>Open application portals, upload documents and ensure recommenders have links.</description>\n          <check_items>\n            <check_item>Enter basic info in each portal</check_item>\n            <check_item>Upload CV and transcripts where allowed</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Draft short answers and program-specific statements</name>\n          <due_date>Week 4</due_date>\n          <description>Prepare concise responses for program prompts and questions.</description>\n          <check_items>\n            <check_item>Save templates for reuse</check_item>\n            <check_item>Tailor to research groups</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"10\">\n        <name>Month 10 - Finalize and submit applications</name>\n        <Task>\n          <name>Complete final reviews</name>\n          <due_date>Two weeks before earliest deadline</due_date>\n          <description>Proofread, verify recommenders, double-check transcripts and fees.</description>\n          <check_items>\n            <check_item>Confirm recommenders submitted letters</check_item>\n            <check_item>Verify PDFs open and are labeled correctly</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Submit applications</name>\n          <due_date>By each program deadline</due_date>\n          <description>Pay fees and submit; save confirmation emails and receipts.</description>\n          <check_items>\n            <check_item>Record submission dates</check_item>\n            <check_item>Save confirmation IDs</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"11\">\n        <name>Month 11 - Interviews &amp; follow-up</name>\n        <Task>\n          <name>Prepare for interviews</name>\n          <due_date>As interview invites arrive</due_date>\n          <description>Practice research talks, common questions, and technical anchors.</description>\n          <check_items>\n            <check_item>Prepare 10-15 minute research summary</check_item>\n            <check_item>Mock interview with peers</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Send thank-you/follow-up notes</name>\n          <due_date>Within 48 hours after contact</due_date>\n          <description>Send concise emails to interviewers and faculty contacts.</description>\n          <check_items>\n            <check_item>Personalize each message</check_item>\n            <check_item>Reiterate fit and next steps</check_item>\n          </check_items>\n          <priority>medium</priority>\n        </Task>\n      </Month>\n      <Month month_number=\"12\">\n        <name>Month 12 - Decisions &amp; contingencies</name>\n        <Task>\n          <name>Compare offers and funding</name>\n          <due_date>Decision time</due_date>\n          <description>Evaluate advisor fit, funding, location, and long-term goals.</description>\n          <check_items>\n            <check_item>List pros/cons for each offer</check_item>\n            <check_item>Clarify funding and TA/RA expectations</check_item>\n          </check_items>\n          <priority>high</priority>\n        </Task>\n        <Task>\n          <name>Plan contingencies</name>\n          <due_date>After decisions</due_date>\n          <description>If no offers, plan reapplication or gap-year research options.</description>\n          <check_items>\n            <check_item>Identify positions or internships</check_item>\n            <check_item>Set timeline for reapplication</check_item>\n          </check_items>\n          <priority>medium</priority>\n        </Task>\n      </Month>\n    </TodoList>\n  </TodoList_Version>\n</Root>"
+  }
+}

@@ -1,0 +1,23 @@
+2025-12-23 09:28:01 | INFO | Pipeline initialized. Session ID: 20251223_092801
+2025-12-23 09:28:01 | INFO | Classifier type: llm
+2025-12-23 09:28:01 | INFO | ==================================================
+2025-12-23 09:28:01 | INFO | Pipeline run started
+2025-12-23 09:28:01 | INFO | User request: restaurants in the second last day
+2025-12-23 09:28:02 | INFO | Generated XPath: /Itinerary/Day[-2]/Restaurant
+2025-12-23 09:28:02 | INFO | Executing query: /Itinerary/Day[-2]/Restaurant
+2025-12-23 09:28:02 | INFO | Found 3 matching nodes
+2025-12-23 09:28:02 | INFO |   - /Itinerary/Day[2]/Restaurant[1]: Pow Wow Cafe
+2025-12-23 09:28:02 | INFO |   - /Itinerary/Day[2]/Restaurant[2]: Annona Restaurant
+2025-12-23 09:28:02 | INFO |   - /Itinerary/Day[2]/Restaurant[3]: DaiLo
+2025-12-23 09:28:02 | DEBUG | TRACE: {"timestamp": "2025-12-23T09:28:02.364090", "user_request": "restaurants in the second last day", "xpath_query": "/Itinerary/Day[-2]/Restaurant", "result_count": 3, "results": [{"path": "/Itinerary/Day[2]/Restaurant[1]", "name": "Pow Wow Cafe", "type": "Restaurant"}, {"path": "/Itinerary/Day[2]/Restaurant[2]", "name": "Annona Restaurant", "type": "Restaurant"}, {"path": "/Itinerary/Day[2]/Restaurant[3]", "name": "DaiLo", "type": "Restaurant"}]}
+2025-12-23 09:28:02 | INFO | Pipeline run completed
+2025-12-23 09:28:02 | INFO | ==================================================
+2025-12-23 09:28:02 | INFO | ==================================================
+2025-12-23 09:28:02 | INFO | Pipeline run started
+2025-12-23 09:28:02 | INFO | User request: italian food on the final day
+2025-12-23 09:28:03 | INFO | Generated XPath: /Itinerary/Day[-1]/Restaurant[description =~ "italian"]
+2025-12-23 09:28:03 | INFO | Executing query: /Itinerary/Day[-1]/Restaurant[description =~ "italian"]
+2025-12-23 09:28:05 | INFO | Found 0 matching nodes
+2025-12-23 09:28:05 | DEBUG | TRACE: {"timestamp": "2025-12-23T09:28:05.753105", "user_request": "italian food on the final day", "xpath_query": "/Itinerary/Day[-1]/Restaurant[description =~ \"italian\"]", "result_count": 0, "results": []}
+2025-12-23 09:28:05 | INFO | Pipeline run completed
+2025-12-23 09:28:05 | INFO | ==================================================

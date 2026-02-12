@@ -1,0 +1,437 @@
+domain:
+  name: education
+  description: Planning and checklists for academic goals such as graduate school
+    applications.
+task:
+  name: one_year_grad_application_todo_list
+  title: 1-Year Graduate School Application To-Do List
+  description: Monthly breakdown of tasks and milestones for preparing and submitting
+    graduate school applications over one year.
+schema:
+  name: todo_list
+  description: A year-long todo list organized by month with actionable tasks.
+  root: TodoList
+  nodes:
+    TodoList:
+      type: root
+      fields:
+      - title
+      - overview
+      children:
+      - Month
+    Month:
+      type: container
+      index_attr: month_number
+      fields:
+      - name
+      children:
+      - Task
+    Task:
+      type: leaf
+      fields:
+      - name
+      - due_date
+      - description
+      - check_items
+      - priority
+      children: []
+content:
+  root_fields:
+    title: 1-Year Grad School Application To-Do List
+    overview: Monthly milestones and concrete tasks to prepare, apply, and follow
+      up for graduate school applications over the next 12 months.
+  root_attrs: {}
+  children:
+  - tag: Month
+    attrs:
+      month_number: '1'
+    fields:
+      name: Month 1 - Self-assessment & timeline
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Clarify goals and programs
+        due_date: Week 1
+        description: Decide target fields (CS subareas), degree type (MS/PhD), and
+          6-10 target programs.
+        check_items:
+        - List research interests
+        - Identify preferred advisors
+        - Rank programs by fit and admission timeline
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Create application calendar
+        due_date: Week 2
+        description: Map deadlines, test dates, and internal milestones over 12 months.
+        check_items:
+        - Add deadlines to calendar
+        - Set reminders 8 and 4 weeks before each deadline
+        priority: high
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '2'
+    fields:
+      name: Month 2 - Tests & prerequisites
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Assess standardized tests
+        due_date: Week 1
+        description: Decide if GRE/subject tests are needed and plan prep.
+        check_items:
+        - Check program requirements
+        - Register for test if required
+        priority: medium
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Identify coursework gaps
+        due_date: Week 3
+        description: Find prerequisite classes or skills to strengthen candidacy.
+        check_items:
+        - List missing courses
+        - Plan to take courses or online modules
+        priority: medium
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '3'
+    fields:
+      name: Month 3 - Research & projects
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Engage in research / summer project planning
+        due_date: End of month
+        description: Start or ramp up research/projects to strengthen statement and
+          letters.
+        check_items:
+        - Contact faculty for RA positions
+        - Outline project goals and timeline
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Document results
+        due_date: Ongoing
+        description: Keep clear notes, code repo, and a short write-up for each project.
+        check_items:
+        - Push code to GitHub
+        - Prepare short README and results summary
+        priority: high
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '4'
+    fields:
+      name: Month 4 - Networking & advisor outreach
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Build list of potential advisors
+        due_date: Week 2
+        description: Identify 10-20 faculty per program whose work aligns with yours.
+        check_items:
+        - Read recent papers
+        - Note specific projects to mention in emails
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Start polite outreach
+        due_date: Week 4
+        description: Email faculty with concise interest and relevant work; request
+          advice.
+        check_items:
+        - Customize 2-sentence pitch
+        - Attach CV and 1-page summary
+        priority: medium
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '5'
+    fields:
+      name: Month 5 - Draft statements & CV
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Draft personal statement / SOP
+        due_date: End of month
+        description: Write an initial draft focusing on research experience, fit,
+          and goals.
+        check_items:
+        - Outline story and paragraphs
+        - Write first full draft
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Update academic CV
+        due_date: Week 3
+        description: Create a concise CV highlighting research, publications, and
+          relevant coursework.
+        check_items:
+        - Add projects and roles
+        - Include links to code/papers
+        priority: high
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '6'
+    fields:
+      name: Month 6 - Letters of recommendation planning
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Identify recommenders
+        due_date: Week 1
+        description: Choose 3-4 people familiar with your research and academic potential.
+        check_items:
+        - Prefer research supervisors and senior instructors
+        - Prepare summary packet for each
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Request recommendations
+        due_date: Week 3
+        description: Ask recommenders early, provide deadlines and materials.
+        check_items:
+        - Send CV, statement draft, and key points
+        - Confirm willingness and expected submission date
+        priority: high
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '7'
+    fields:
+      name: Month 7 - Test prep & practice
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Intensive test prep (if needed)
+        due_date: Test date
+        description: Follow a study plan for GRE/subject tests; take practice exams
+          weekly.
+        check_items:
+        - Schedule practice tests
+        - Review weak topics
+        priority: medium
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Collect unofficial transcripts
+        due_date: End of month
+        description: Download transcripts to include with pre-applications or for
+          recommenders.
+        check_items:
+        - Request official if required later
+        priority: low
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '8'
+    fields:
+      name: Month 8 - Refine application materials
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Revise SOP and CV based on feedback
+        due_date: End of month
+        description: Incorporate advisor and peer feedback; tailor versions for specific
+          programs.
+        check_items:
+        - Get feedback from 2 advisors
+        - Create program-specific paragraphs
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Prepare writing/research samples
+        due_date: Week 3
+        description: Select/format papers or project reports to submit or share with
+          recommenders.
+        check_items:
+        - Polish one-page summary for each sample
+        - Create PDF portfolio
+        priority: medium
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '9'
+    fields:
+      name: Month 9 - Application logistics
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Create accounts and pre-fill forms
+        due_date: Week 2
+        description: Open application portals, upload documents and ensure recommenders
+          have links.
+        check_items:
+        - Enter basic info in each portal
+        - Upload CV and transcripts where allowed
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Draft short answers and program-specific statements
+        due_date: Week 4
+        description: Prepare concise responses for program prompts and questions.
+        check_items:
+        - Save templates for reuse
+        - Tailor to research groups
+        priority: high
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '10'
+    fields:
+      name: Month 10 - Finalize and submit applications
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Complete final reviews
+        due_date: Two weeks before earliest deadline
+        description: Proofread, verify recommenders, double-check transcripts and
+          fees.
+        check_items:
+        - Confirm recommenders submitted letters
+        - Verify PDFs open and are labeled correctly
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Submit applications
+        due_date: By each program deadline
+        description: Pay fees and submit; save confirmation emails and receipts.
+        check_items:
+        - Record submission dates
+        - Save confirmation IDs
+        priority: high
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '11'
+    fields:
+      name: Month 11 - Interviews & follow-up
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Prepare for interviews
+        due_date: As interview invites arrive
+        description: Practice research talks, common questions, and technical anchors.
+        check_items:
+        - Prepare 10-15 minute research summary
+        - Mock interview with peers
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Send thank-you/follow-up notes
+        due_date: Within 48 hours after contact
+        description: Send concise emails to interviewers and faculty contacts.
+        check_items:
+        - Personalize each message
+        - Reiterate fit and next steps
+        priority: medium
+      children: []
+  - tag: Month
+    attrs:
+      month_number: '12'
+    fields:
+      name: Month 12 - Decisions & contingencies
+    children:
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Compare offers and funding
+        due_date: Decision time
+        description: Evaluate advisor fit, funding, location, and long-term goals.
+        check_items:
+        - List pros/cons for each offer
+        - Clarify funding and TA/RA expectations
+        priority: high
+      children: []
+    - tag: Task
+      attrs: {}
+      fields:
+        name: Plan contingencies
+        due_date: After decisions
+        description: If no offers, plan reapplication or gap-year research options.
+        check_items:
+        - Identify positions or internships
+        - Set timeline for reapplication
+        priority: medium
+      children: []
+user_facing:
+  title: 1-Year Grad School Application Plan
+  overview: A month-by-month checklist to organize preparation, applications, and
+    follow-up so you stay on track from early planning to final decisions.
+  sections:
+  - title: Plan and prioritize (Months 1-2)
+    summary: Clarify your goals, build a timeline, and decide on required tests and
+      prerequisites.
+    bullets:
+    - Choose target programs and advisors
+    - Create a calendar with deadlines and reminders
+    - Assess need for GRE/subject tests and course gaps
+  - title: Build research profile (Months 3-5)
+    summary: Engage in research or projects and begin drafting a strong CV and statement.
+    bullets:
+    - Start or deepen research projects with clear documentation
+    - Draft SOP and tailor your CV
+    - Prepare writing/research samples
+  - title: Secure recommenders (Month 6)
+    summary: Select and request strong letters well ahead of deadlines, providing
+      materials to referees.
+    bullets:
+    - Choose recommenders who know your research
+    - Provide CV, statement draft, and key accomplishments
+    - Confirm submission timelines
+  - title: Polish and submit (Months 7-10)
+    summary: Finish test prep, refine materials with feedback, then finalize and submit
+      each application.
+    bullets:
+    - Follow a consistent revision process and tailor for programs
+    - Pre-fill portals and verify uploads
+    - Submit early when possible and save confirmations
+  - title: Interview and follow-up (Month 11)
+    summary: Prepare research talks and conduct mock interviews; send prompt thank-you
+      notes after contacts.
+    bullets:
+    - Practice concise research presentations
+    - Prepare answers for technical and fit questions
+    - Send personalized follow-ups to interviewers and faculty
+  - title: Decide and plan next steps (Month 12)
+    summary: Evaluate offers based on fit and funding, and prepare contingencies if
+      outcomes are unfavorable.
+    bullets:
+    - Compare advisor fit, funding, and career alignment
+    - Negotiate or clarify funding when needed
+    - Have a reapplication or gap-year research plan ready

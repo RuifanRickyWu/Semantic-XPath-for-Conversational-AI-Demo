@@ -1,0 +1,27 @@
+name: travel_domain
+description: Domain container for travel tasks with versions
+hierarchy: "Travel_Root (root)\n  `-- Task (container, indexed by @name)\n      `--\
+  \ TaskVersion (version, indexed by @number)"
+nodes:
+  Travel_Root:
+    type: root
+    fields: []
+    children:
+    - Task
+  Task:
+    type: container
+    index_attr: name
+    fields:
+    - title
+    - description
+    - status
+    children:
+    - TaskVersion
+  TaskVersion:
+    type: version
+    index_attr: number
+    fields:
+    - patch_info
+    - conversation_history
+    - created_at
+    children: []

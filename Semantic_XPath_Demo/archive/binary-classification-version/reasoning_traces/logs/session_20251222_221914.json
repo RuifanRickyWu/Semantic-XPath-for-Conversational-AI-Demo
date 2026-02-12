@@ -1,0 +1,21 @@
+{
+  "session_id": "20251222_221914",
+  "start_time": "2025-12-22T22:19:36.571408",
+  "end_time": "2025-12-22T22:19:41.505311",
+  "total_queries": 1,
+  "queries": [
+    {
+      "timestamp": "2025-12-22T22:19:36.571408",
+      "user_request": "find a relaxing day with a jazz resteraunt",
+      "xpath_query": "/Itinerary/Day[description =~ \"relaxing\"]/Restaurant[description =~ \"jazz\"]",
+      "result_count": 1,
+      "results": [
+        {
+          "path": "/Itinerary/Day[3]/Restaurant[4]",
+          "name": "Jazz Bistro",
+          "type": "Restaurant"
+        }
+      ]
+    }
+  ]
+}

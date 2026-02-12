@@ -1,0 +1,315 @@
+domain:
+  name: travel
+  description: Trip planning and itineraries for city travel.
+task:
+  name: toronto_7day_trip
+  title: 7-Day Toronto Trip Plan
+  description: A balanced 7-day itinerary for Toronto covering landmarks, neighborhoods,
+    food, and leisure.
+schema:
+  name: itinerary
+  description: City travel itinerary organized by days, with points of interest, restaurants,
+    accommodation, and transport items.
+  root: Itinerary
+  nodes:
+    Itinerary:
+      type: root
+      fields:
+      - title
+      - summary
+      children:
+      - Day
+    Day:
+      type: container
+      index_attr: index
+      fields:
+      - date
+      - theme
+      children:
+      - POI
+      - Restaurant
+      - Accommodation
+      - Transportation
+    POI:
+      type: leaf
+      fields:
+      - name
+      - time_block
+      - description
+      - highlights
+      children: []
+    Restaurant:
+      type: leaf
+      fields:
+      - name
+      - time_block
+      - description
+      - highlights
+      children: []
+    Accommodation:
+      type: leaf
+      fields:
+      - name
+      - checkin_time
+      - notes
+      - highlights
+      children: []
+    Transportation:
+      type: leaf
+      fields:
+      - mode
+      - time_block
+      - notes
+      - highlights
+      children: []
+content:
+  root_fields:
+    title: 7-Day Toronto Trip
+    summary: A 7-day plan mixing major attractions, neighborhood exploration, culinary
+      stops, and relaxed days to recharge.
+  root_attrs: {}
+  children:
+  - tag: Day
+    attrs:
+      index: '1'
+    fields:
+      date: Day 1
+      theme: Arrival & Waterfront
+    children:
+    - tag: Transportation
+      attrs: {}
+      fields:
+        mode: Airport to hotel (UP Express or taxi)
+        time_block: Afternoon
+        notes: Take UP Express from Pearson to Union Station for faster transit.
+        highlights:
+        - quick transfer
+        - light luggage
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Harbourfront / Queens Quay
+        time_block: Late afternoon
+        description: Gentle waterfront walk to stretch legs and get oriented.
+        highlights:
+        - water views
+        - public art
+        - easier pace
+      children: []
+    - tag: Restaurant
+      attrs: {}
+      fields:
+        name: Dinner on the Waterfront
+        time_block: Evening
+        description: Casual dinner with lake views to end the arrival day.
+        highlights:
+        - relaxed
+        - scenic
+      children: []
+  - tag: Day
+    attrs:
+      index: '2'
+    fields:
+      date: Day 2
+      theme: Downtown Icons
+    children:
+    - tag: POI
+      attrs: {}
+      fields:
+        name: CN Tower & Ripley's Aquarium
+        time_block: Morning
+        description: Visit the CN Tower observation level then the nearby aquarium.
+        highlights:
+        - city views
+        - interactive exhibits
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: St. Lawrence Market
+        time_block: Afternoon
+        description: Explore food stalls and local vendors; good lunch spot.
+        highlights:
+        - local food
+        - shopping
+      children: []
+  - tag: Day
+    attrs:
+      index: '3'
+    fields:
+      date: Day 3
+      theme: Cultural Museums & Gardens
+    children:
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Royal Ontario Museum (ROM)
+        time_block: Morning
+        description: Collections of natural history and world cultures.
+        highlights:
+        - galleries
+        - architecture
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Casa Loma or Allan Gardens
+        time_block: Afternoon
+        description: Choose a historic castle visit or a relaxing greenhouse garden
+          depending on energy.
+        highlights:
+        - scenic
+        - historic or botanical
+      children: []
+  - tag: Day
+    attrs:
+      index: '4'
+    fields:
+      date: Day 4
+      theme: Toronto Islands & Leisure
+    children:
+    - tag: Transportation
+      attrs: {}
+      fields:
+        mode: Ferry to Toronto Islands
+        time_block: Morning to afternoon
+        notes: Ferries leave from Jack Layton Ferry Terminal; check schedule.
+        highlights:
+        - island beaches
+        - bike rental
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Centre Island / Hanlan's Point
+        time_block: Afternoon
+        description: Relax, swim, or picnic; great skyline views from the islands.
+        highlights:
+        - picnic
+        - views
+      children: []
+  - tag: Day
+    attrs:
+      index: '5'
+    fields:
+      date: Day 5
+      theme: 'Neighborhoods: Kensington & Queen West'
+    children:
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Kensington Market
+        time_block: Morning
+        description: Eclectic market area with vintage shops and street art.
+        highlights:
+        - unique shops
+        - street food
+      children: []
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Queen Street West
+        time_block: Afternoon to evening
+        description: Trendy boutiques, galleries, and dinner options.
+        highlights:
+        - shopping
+        - dining
+      children: []
+  - tag: Day
+    attrs:
+      index: '6'
+    fields:
+      date: Day 6
+      theme: Day Trip Option or Museums
+    children:
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Day trip to Niagara or visit AGO (Art Gallery of Ontario)
+        time_block: All day
+        description: Choose a full-day excursion to Niagara Falls or deeper art exploration
+          in the city.
+        highlights:
+        - waterfalls or art
+        - photography
+      children: []
+  - tag: Day
+    attrs:
+      index: '7'
+    fields:
+      date: Day 7
+      theme: Flexible Departure Day
+    children:
+    - tag: POI
+      attrs: {}
+      fields:
+        name: Last-minute shopping or neighborhood stroll
+        time_block: Morning
+        description: Relaxed morning with optional final visits depending on departure
+          time.
+        highlights:
+        - souvenirs
+        - cafes
+      children: []
+    - tag: Transportation
+      attrs: {}
+      fields:
+        mode: Transfer to airport / train station
+        time_block: As scheduled
+        notes: Allow time for travel and check-in.
+        highlights:
+        - plan buffer
+        - confirm rides
+      children: []
+user_facing:
+  title: 7-Day Toronto Trip Plan
+  overview: A seven-day balanced plan mixing landmark highlights, neighborhood exploration,
+    optional day trips, and relaxed pacing so you can see Toronto without rushing.
+  sections:
+  - title: "Day 1 \u2014 Arrival & Waterfront"
+    summary: Settle in and take a gentle waterfront stroll to recover from travel.
+    bullets:
+    - Transfer from Pearson to downtown (UP Express recommended)
+    - Walk along Harbourfront to stretch your legs
+    - Dinner with lake views to end the day
+  - title: "Day 2 \u2014 Downtown Icons"
+    summary: See major downtown attractions like CN Tower and St. Lawrence Market.
+    bullets:
+    - Morning at CN Tower and Ripley's Aquarium
+    - Lunch and browsing at St. Lawrence Market
+    - Explore nearby historic streets
+  - title: "Day 3 \u2014 Museums & Gardens"
+    summary: Visit cultural highlights like the ROM and choose a quieter garden or
+      castle visit.
+    bullets:
+    - Royal Ontario Museum in the morning
+    - Afternoon at Casa Loma or Allan Gardens depending on energy
+    - Light evening near your neighborhood
+  - title: "Day 4 \u2014 Toronto Islands"
+    summary: Take a ferry to the islands for a relaxed day of beaches and skyline
+      views.
+    bullets:
+    - Morning ferry from Jack Layton Terminal
+    - Rent a bike or picnic on Centre Island
+    - Return for a calm dinner downtown
+  - title: "Day 5 \u2014 Kensington Market & Queen West"
+    summary: Explore eclectic neighborhoods for shopping, street art, and dining.
+    bullets:
+    - Wander Kensington Market in the morning
+    - Afternoon and evening on Queen Street West
+    - Try local cafes and vintage shops
+  - title: "Day 6 \u2014 Day Trip or More Museums"
+    summary: Choose between a full-day trip (e.g., Niagara Falls) or deeper museum
+      visits in Toronto.
+    bullets:
+    - Niagara Falls for nature and photos or AGO for art
+    - Plan transport ahead if going outside the city
+    - Reserve time for dinner back in Toronto
+  - title: "Day 7 \u2014 Flexible Departure"
+    summary: A flexible morning for last-minute shopping or a relaxed stroll before
+      you leave.
+    bullets:
+    - Light morning activity based on your departure time
+    - Confirm airport/train transfer and allow buffer
+    - Grab a final coffee or souvenir

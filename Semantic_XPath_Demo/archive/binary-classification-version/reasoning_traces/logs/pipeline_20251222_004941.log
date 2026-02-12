@@ -1,0 +1,13 @@
+2025-12-22 00:49:41 | INFO | Pipeline initialized. Session ID: 20251222_004941
+2025-12-22 00:49:41 | INFO | Classifier type: entailment
+2025-12-22 00:49:41 | INFO | ==================================================
+2025-12-22 00:49:41 | INFO | Pipeline run started
+2025-12-22 00:49:41 | INFO | User request: find me an artistic day with museums
+2025-12-22 00:49:42 | INFO | Generated XPath: /Itinerary/Day[description =~ "artistic"]/POI[description =~ "museum"]
+2025-12-22 00:49:42 | INFO | Executing query: /Itinerary/Day[description =~ "artistic"]/POI[description =~ "museum"]
+2025-12-22 00:50:00 | INFO | Found 2 matching nodes
+2025-12-22 00:50:00 | INFO |   - /Itinerary/Day[1]/POI[3]: Art Gallery of Ontario
+2025-12-22 00:50:00 | INFO |   - /Itinerary/Day[2]/POI[1]: Royal Ontario Museum
+2025-12-22 00:50:00 | DEBUG | TRACE: {"timestamp": "2025-12-22T00:50:00.143778", "user_request": "find me an artistic day with museums", "xpath_query": "/Itinerary/Day[description =~ \"artistic\"]/POI[description =~ \"museum\"]", "result_count": 2, "results": [{"path": "/Itinerary/Day[1]/POI[3]", "name": "Art Gallery of Ontario", "type": "POI"}, {"path": "/Itinerary/Day[2]/POI[1]", "name": "Royal Ontario Museum", "type": "POI"}]}
+2025-12-22 00:50:00 | INFO | Pipeline run completed
+2025-12-22 00:50:00 | INFO | ==================================================

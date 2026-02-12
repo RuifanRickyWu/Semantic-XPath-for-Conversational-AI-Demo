@@ -1,0 +1,12 @@
+2025-12-23 09:36:10 | INFO | Pipeline initialized. Session ID: 20251223_093610
+2025-12-23 09:36:10 | INFO | Classifier type: llm
+2025-12-23 09:36:10 | INFO | ==================================================
+2025-12-23 09:36:10 | INFO | Pipeline run started
+2025-12-23 09:36:10 | INFO | User request: second last lunch
+2025-12-23 09:36:12 | INFO | Generated XPath: /Itinerary/Day[-2]/Restaurant[description =~ "lunch"]
+2025-12-23 09:36:12 | INFO | Executing query: /Itinerary/Day[-2]/Restaurant[description =~ "lunch"]
+2025-12-23 09:36:14 | INFO | Found 1 matching nodes
+2025-12-23 09:36:14 | INFO |   - /Itinerary/Day[2]/Restaurant[2]: Annona Restaurant
+2025-12-23 09:36:14 | DEBUG | TRACE: {"timestamp": "2025-12-23T09:36:14.295446", "user_request": "second last lunch", "xpath_query": "/Itinerary/Day[-2]/Restaurant[description =~ \"lunch\"]", "result_count": 1, "results": [{"path": "/Itinerary/Day[2]/Restaurant[2]", "name": "Annona Restaurant", "type": "Restaurant"}]}
+2025-12-23 09:36:14 | INFO | Pipeline run completed
+2025-12-23 09:36:14 | INFO | ==================================================

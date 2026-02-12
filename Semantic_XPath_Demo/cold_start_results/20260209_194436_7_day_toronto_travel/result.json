@@ -1,0 +1,685 @@
+{
+  "success": true,
+  "llm_output": {
+    "domain": {
+      "name": "travel",
+      "description": "Trip planning and itineraries for city travel."
+    },
+    "task": {
+      "name": "toronto_7day_trip",
+      "title": "7-Day Toronto Trip Plan",
+      "description": "A balanced 7-day itinerary for Toronto covering landmarks, neighborhoods, food, and leisure."
+    },
+    "schema": {
+      "name": "itinerary",
+      "description": "City travel itinerary organized by days, with points of interest, restaurants, accommodation, and transport items.",
+      "root": "Itinerary",
+      "nodes": {
+        "Itinerary": {
+          "type": "root",
+          "fields": [
+            "title",
+            "summary"
+          ],
+          "children": [
+            "Day"
+          ]
+        },
+        "Day": {
+          "type": "container",
+          "index_attr": "index",
+          "fields": [
+            "date",
+            "theme"
+          ],
+          "children": [
+            "POI",
+            "Restaurant",
+            "Accommodation",
+            "Transportation"
+          ]
+        },
+        "POI": {
+          "type": "leaf",
+          "fields": [
+            "name",
+            "time_block",
+            "description",
+            "highlights"
+          ],
+          "children": []
+        },
+        "Restaurant": {
+          "type": "leaf",
+          "fields": [
+            "name",
+            "time_block",
+            "description",
+            "highlights"
+          ],
+          "children": []
+        },
+        "Accommodation": {
+          "type": "leaf",
+          "fields": [
+            "name",
+            "checkin_time",
+            "notes",
+            "highlights"
+          ],
+          "children": []
+        },
+        "Transportation": {
+          "type": "leaf",
+          "fields": [
+            "mode",
+            "time_block",
+            "notes",
+            "highlights"
+          ],
+          "children": []
+        }
+      }
+    },
+    "content": {
+      "root_fields": {
+        "title": "7-Day Toronto Trip",
+        "summary": "A 7-day plan mixing major attractions, neighborhood exploration, culinary stops, and relaxed days to recharge."
+      },
+      "root_attrs": {},
+      "children": [
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "1"
+          },
+          "fields": {
+            "date": "Day 1",
+            "theme": "Arrival & Waterfront"
+          },
+          "children": [
+            {
+              "tag": "Transportation",
+              "attrs": {},
+              "fields": {
+                "mode": "Airport to hotel (UP Express or taxi)",
+                "time_block": "Afternoon",
+                "notes": "Take UP Express from Pearson to Union Station for faster transit.",
+                "highlights": [
+                  "quick transfer",
+                  "light luggage"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "Harbourfront / Queens Quay",
+                "time_block": "Late afternoon",
+                "description": "Gentle waterfront walk to stretch legs and get oriented.",
+                "highlights": [
+                  "water views",
+                  "public art",
+                  "easier pace"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Restaurant",
+              "attrs": {},
+              "fields": {
+                "name": "Dinner on the Waterfront",
+                "time_block": "Evening",
+                "description": "Casual dinner with lake views to end the arrival day.",
+                "highlights": [
+                  "relaxed",
+                  "scenic"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "2"
+          },
+          "fields": {
+            "date": "Day 2",
+            "theme": "Downtown Icons"
+          },
+          "children": [
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "CN Tower & Ripley's Aquarium",
+                "time_block": "Morning",
+                "description": "Visit the CN Tower observation level then the nearby aquarium.",
+                "highlights": [
+                  "city views",
+                  "interactive exhibits"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "St. Lawrence Market",
+                "time_block": "Afternoon",
+                "description": "Explore food stalls and local vendors; good lunch spot.",
+                "highlights": [
+                  "local food",
+                  "shopping"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "3"
+          },
+          "fields": {
+            "date": "Day 3",
+            "theme": "Cultural Museums & Gardens"
+          },
+          "children": [
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "Royal Ontario Museum (ROM)",
+                "time_block": "Morning",
+                "description": "Collections of natural history and world cultures.",
+                "highlights": [
+                  "galleries",
+                  "architecture"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "Casa Loma or Allan Gardens",
+                "time_block": "Afternoon",
+                "description": "Choose a historic castle visit or a relaxing greenhouse garden depending on energy.",
+                "highlights": [
+                  "scenic",
+                  "historic or botanical"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "4"
+          },
+          "fields": {
+            "date": "Day 4",
+            "theme": "Toronto Islands & Leisure"
+          },
+          "children": [
+            {
+              "tag": "Transportation",
+              "attrs": {},
+              "fields": {
+                "mode": "Ferry to Toronto Islands",
+                "time_block": "Morning to afternoon",
+                "notes": "Ferries leave from Jack Layton Ferry Terminal; check schedule.",
+                "highlights": [
+                  "island beaches",
+                  "bike rental"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "Centre Island / Hanlan's Point",
+                "time_block": "Afternoon",
+                "description": "Relax, swim, or picnic; great skyline views from the islands.",
+                "highlights": [
+                  "picnic",
+                  "views"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "5"
+          },
+          "fields": {
+            "date": "Day 5",
+            "theme": "Neighborhoods: Kensington & Queen West"
+          },
+          "children": [
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "Kensington Market",
+                "time_block": "Morning",
+                "description": "Eclectic market area with vintage shops and street art.",
+                "highlights": [
+                  "unique shops",
+                  "street food"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "Queen Street West",
+                "time_block": "Afternoon to evening",
+                "description": "Trendy boutiques, galleries, and dinner options.",
+                "highlights": [
+                  "shopping",
+                  "dining"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "6"
+          },
+          "fields": {
+            "date": "Day 6",
+            "theme": "Day Trip Option or Museums"
+          },
+          "children": [
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "Day trip to Niagara or visit AGO (Art Gallery of Ontario)",
+                "time_block": "All day",
+                "description": "Choose a full-day excursion to Niagara Falls or deeper art exploration in the city.",
+                "highlights": [
+                  "waterfalls or art",
+                  "photography"
+                ]
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "Day",
+          "attrs": {
+            "index": "7"
+          },
+          "fields": {
+            "date": "Day 7",
+            "theme": "Flexible Departure Day"
+          },
+          "children": [
+            {
+              "tag": "POI",
+              "attrs": {},
+              "fields": {
+                "name": "Last-minute shopping or neighborhood stroll",
+                "time_block": "Morning",
+                "description": "Relaxed morning with optional final visits depending on departure time.",
+                "highlights": [
+                  "souvenirs",
+                  "cafes"
+                ]
+              },
+              "children": []
+            },
+            {
+              "tag": "Transportation",
+              "attrs": {},
+              "fields": {
+                "mode": "Transfer to airport / train station",
+                "time_block": "As scheduled",
+                "notes": "Allow time for travel and check-in.",
+                "highlights": [
+                  "plan buffer",
+                  "confirm rides"
+                ]
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    "user_facing": {
+      "title": "7-Day Toronto Trip Plan",
+      "overview": "A seven-day balanced plan mixing landmark highlights, neighborhood exploration, optional day trips, and relaxed pacing so you can see Toronto without rushing.",
+      "sections": [
+        {
+          "title": "Day 1 \u2014 Arrival & Waterfront",
+          "summary": "Settle in and take a gentle waterfront stroll to recover from travel.",
+          "bullets": [
+            "Transfer from Pearson to downtown (UP Express recommended)",
+            "Walk along Harbourfront to stretch your legs",
+            "Dinner with lake views to end the day"
+          ]
+        },
+        {
+          "title": "Day 2 \u2014 Downtown Icons",
+          "summary": "See major downtown attractions like CN Tower and St. Lawrence Market.",
+          "bullets": [
+            "Morning at CN Tower and Ripley's Aquarium",
+            "Lunch and browsing at St. Lawrence Market",
+            "Explore nearby historic streets"
+          ]
+        },
+        {
+          "title": "Day 3 \u2014 Museums & Gardens",
+          "summary": "Visit cultural highlights like the ROM and choose a quieter garden or castle visit.",
+          "bullets": [
+            "Royal Ontario Museum in the morning",
+            "Afternoon at Casa Loma or Allan Gardens depending on energy",
+            "Light evening near your neighborhood"
+          ]
+        },
+        {
+          "title": "Day 4 \u2014 Toronto Islands",
+          "summary": "Take a ferry to the islands for a relaxed day of beaches and skyline views.",
+          "bullets": [
+            "Morning ferry from Jack Layton Terminal",
+            "Rent a bike or picnic on Centre Island",
+            "Return for a calm dinner downtown"
+          ]
+        },
+        {
+          "title": "Day 5 \u2014 Kensington Market & Queen West",
+          "summary": "Explore eclectic neighborhoods for shopping, street art, and dining.",
+          "bullets": [
+            "Wander Kensington Market in the morning",
+            "Afternoon and evening on Queen Street West",
+            "Try local cafes and vintage shops"
+          ]
+        },
+        {
+          "title": "Day 6 \u2014 Day Trip or More Museums",
+          "summary": "Choose between a full-day trip (e.g., Niagara Falls) or deeper museum visits in Toronto.",
+          "bullets": [
+            "Niagara Falls for nature and photos or AGO for art",
+            "Plan transport ahead if going outside the city",
+            "Reserve time for dinner back in Toronto"
+          ]
+        },
+        {
+          "title": "Day 7 \u2014 Flexible Departure",
+          "summary": "A flexible morning for last-minute shopping or a relaxed stroll before you leave.",
+          "bullets": [
+            "Light morning activity based on your departure time",
+            "Confirm airport/train transfer and allow buffer",
+            "Grab a final coffee or souvenir"
+          ]
+        }
+      ]
+    }
+  },
+  "user_facing": {
+    "title": "7-Day Toronto Trip Plan",
+    "overview": "A seven-day balanced plan mixing landmark highlights, neighborhood exploration, optional day trips, and relaxed pacing so you can see Toronto without rushing.",
+    "sections": [
+      {
+        "title": "Day 1  Arrival & Waterfront",
+        "summary": "Settle in and take a gentle waterfront stroll to recover from travel.",
+        "bullets": [
+          "Transfer from Pearson to downtown (UP Express recommended)",
+          "Walk along Harbourfront to stretch your legs",
+          "Dinner with lake views to end the day"
+        ]
+      },
+      {
+        "title": "Day 2  Downtown Icons",
+        "summary": "See major downtown attractions like CN Tower and St. Lawrence Market.",
+        "bullets": [
+          "Morning at CN Tower and Ripley's Aquarium",
+          "Lunch and browsing at St. Lawrence Market",
+          "Explore nearby historic streets"
+        ]
+      },
+      {
+        "title": "Day 3  Museums & Gardens",
+        "summary": "Visit cultural highlights like the ROM and choose a quieter garden or castle visit.",
+        "bullets": [
+          "Royal Ontario Museum in the morning",
+          "Afternoon at Casa Loma or Allan Gardens depending on energy",
+          "Light evening near your neighborhood"
+        ]
+      },
+      {
+        "title": "Day 4  Toronto Islands",
+        "summary": "Take a ferry to the islands for a relaxed day of beaches and skyline views.",
+        "bullets": [
+          "Morning ferry from Jack Layton Terminal",
+          "Rent a bike or picnic on Centre Island",
+          "Return for a calm dinner downtown"
+        ]
+      },
+      {
+        "title": "Day 5  Kensington Market & Queen West",
+        "summary": "Explore eclectic neighborhoods for shopping, street art, and dining.",
+        "bullets": [
+          "Wander Kensington Market in the morning",
+          "Afternoon and evening on Queen Street West",
+          "Try local cafes and vintage shops"
+        ]
+      },
+      {
+        "title": "Day 6  Day Trip or More Museums",
+        "summary": "Choose between a full-day trip (e.g., Niagara Falls) or deeper museum visits in Toronto.",
+        "bullets": [
+          "Niagara Falls for nature and photos or AGO for art",
+          "Plan transport ahead if going outside the city",
+          "Reserve time for dinner back in Toronto"
+        ]
+      },
+      {
+        "title": "Day 7  Flexible Departure",
+        "summary": "A flexible morning for last-minute shopping or a relaxed stroll before you leave.",
+        "bullets": [
+          "Light morning activity based on your departure time",
+          "Confirm airport/train transfer and allow buffer",
+          "Grab a final coffee or souvenir"
+        ]
+      }
+    ]
+  },
+  "domain": {
+    "name": "travel",
+    "description": "Trip planning and itineraries for city travel."
+  },
+  "task": {
+    "name": "toronto_7day_trip",
+    "title": "7-Day Toronto Trip Plan",
+    "description": "A balanced 7-day itinerary for Toronto covering landmarks, neighborhoods, food, and leisure.",
+    "domain": "travel"
+  },
+  "task_schema": {
+    "name": "itinerary_cs3",
+    "description": "City travel itinerary organized by days, with points of interest, restaurants, accommodation, and transport items.",
+    "hierarchy": "Itinerary (root)\n    `-- Day (container, indexed by @index)\n        |-- POI (leaf)\n        |-- Restaurant (leaf)\n        |-- Accommodation (leaf)\n        `-- Transportation (leaf)",
+    "nodes": {
+      "Itinerary": {
+        "type": "root",
+        "fields": [
+          "title",
+          "summary"
+        ],
+        "children": [
+          "Day"
+        ]
+      },
+      "Day": {
+        "type": "container",
+        "fields": [
+          "date",
+          "theme"
+        ],
+        "children": [
+          "POI",
+          "Restaurant",
+          "Accommodation",
+          "Transportation"
+        ],
+        "index_attr": "index"
+      },
+      "POI": {
+        "type": "leaf",
+        "fields": [
+          "name",
+          "time_block",
+          "description",
+          "highlights"
+        ],
+        "children": []
+      },
+      "Restaurant": {
+        "type": "leaf",
+        "fields": [
+          "name",
+          "time_block",
+          "description",
+          "highlights"
+        ],
+        "children": []
+      },
+      "Accommodation": {
+        "type": "leaf",
+        "fields": [
+          "name",
+          "checkin_time",
+          "notes",
+          "highlights"
+        ],
+        "children": []
+      },
+      "Transportation": {
+        "type": "leaf",
+        "fields": [
+          "mode",
+          "time_block",
+          "notes",
+          "highlights"
+        ],
+        "children": []
+      }
+    },
+    "data_files": {
+      "toronto_7day_trip": "memory/travel/toronto_7day_trip.xml"
+    },
+    "default_data": "toronto_7day_trip",
+    "examples_file": "prompts/query_generator/domains/xpath_examples_itinerary_cs3.txt",
+    "syntax_rules": "- Paths start with /Itinerary\n- Node types: Itinerary, Day, POI, Restaurant, Accommodation, Transportation\n- Indices: Node[1], Node[-1], Node[1:3]\n- Logical: AND / OR / not() combine predicates WITHIN brackets"
+  },
+  "version_schema": {
+    "name": "itinerary_cs3_version",
+    "description": "Version wrapper for itinerary",
+    "versioning": {
+      "root": "Root",
+      "version_node": "Itinerary_Version",
+      "version_index_attr": "number",
+      "content_container": "Itinerary"
+    },
+    "nodes": {
+      "Root": {
+        "type": "root",
+        "fields": [],
+        "children": [
+          "Itinerary_Version"
+        ]
+      },
+      "Itinerary_Version": {
+        "type": "version",
+        "index_attr": "number",
+        "fields": [
+          "patch_info",
+          "conversation_history"
+        ],
+        "children": []
+      }
+    }
+  },
+  "domain_schema": {
+    "name": "travel_domain",
+    "description": "Domain container for travel tasks with versions",
+    "hierarchy": "Travel_Root (root)\n  `-- Task (container, indexed by @name)\n      `-- TaskVersion (version, indexed by @number)",
+    "nodes": {
+      "Travel_Root": {
+        "type": "root",
+        "fields": [],
+        "children": [
+          "Task"
+        ]
+      },
+      "Task": {
+        "type": "container",
+        "index_attr": "name",
+        "fields": [
+          "title",
+          "description",
+          "status"
+        ],
+        "children": [
+          "TaskVersion"
+        ]
+      },
+      "TaskVersion": {
+        "type": "version",
+        "index_attr": "number",
+        "fields": [
+          "patch_info",
+          "conversation_history",
+          "created_at"
+        ],
+        "children": []
+      }
+    }
+  },
+  "memory_xml": "<?xml version='1.0' encoding='utf-8'?>\n<Root><Itinerary_Version number=\"1\"><patch_info>cold start initialization</patch_info><conversation_history>7 day toronto travel</conversation_history><Itinerary><title>7-Day Toronto Trip</title><summary>A 7-day plan mixing major attractions, neighborhood exploration, culinary stops, and relaxed days to recharge.</summary><Day index=\"1\"><date>Day 1</date><theme>Arrival &amp; Waterfront</theme><Transportation><mode>Airport to hotel (UP Express or taxi)</mode><time_block>Afternoon</time_block><notes>Take UP Express from Pearson to Union Station for faster transit.</notes><highlights><highlight>quick transfer</highlight><highlight>light luggage</highlight></highlights></Transportation><POI><name>Harbourfront / Queens Quay</name><time_block>Late afternoon</time_block><description>Gentle waterfront walk to stretch legs and get oriented.</description><highlights><highlight>water views</highlight><highlight>public art</highlight><highlight>easier pace</highlight></highlights></POI><Restaurant><name>Dinner on the Waterfront</name><time_block>Evening</time_block><description>Casual dinner with lake views to end the arrival day.</description><highlights><highlight>relaxed</highlight><highlight>scenic</highlight></highlights></Restaurant></Day><Day index=\"2\"><date>Day 2</date><theme>Downtown Icons</theme><POI><name>CN Tower &amp; Ripley's Aquarium</name><time_block>Morning</time_block><description>Visit the CN Tower observation level then the nearby aquarium.</description><highlights><highlight>city views</highlight><highlight>interactive exhibits</highlight></highlights></POI><POI><name>St. Lawrence Market</name><time_block>Afternoon</time_block><description>Explore food stalls and local vendors; good lunch spot.</description><highlights><highlight>local food</highlight><highlight>shopping</highlight></highlights></POI></Day><Day index=\"3\"><date>Day 3</date><theme>Cultural Museums &amp; Gardens</theme><POI><name>Royal Ontario Museum (ROM)</name><time_block>Morning</time_block><description>Collections of natural history and world cultures.</description><highlights><highlight>galleries</highlight><highlight>architecture</highlight></highlights></POI><POI><name>Casa Loma or Allan Gardens</name><time_block>Afternoon</time_block><description>Choose a historic castle visit or a relaxing greenhouse garden depending on energy.</description><highlights><highlight>scenic</highlight><highlight>historic or botanical</highlight></highlights></POI></Day><Day index=\"4\"><date>Day 4</date><theme>Toronto Islands &amp; Leisure</theme><Transportation><mode>Ferry to Toronto Islands</mode><time_block>Morning to afternoon</time_block><notes>Ferries leave from Jack Layton Ferry Terminal; check schedule.</notes><highlights><highlight>island beaches</highlight><highlight>bike rental</highlight></highlights></Transportation><POI><name>Centre Island / Hanlan's Point</name><time_block>Afternoon</time_block><description>Relax, swim, or picnic; great skyline views from the islands.</description><highlights><highlight>picnic</highlight><highlight>views</highlight></highlights></POI></Day><Day index=\"5\"><date>Day 5</date><theme>Neighborhoods: Kensington &amp; Queen West</theme><POI><name>Kensington Market</name><time_block>Morning</time_block><description>Eclectic market area with vintage shops and street art.</description><highlights><highlight>unique shops</highlight><highlight>street food</highlight></highlights></POI><POI><name>Queen Street West</name><time_block>Afternoon to evening</time_block><description>Trendy boutiques, galleries, and dinner options.</description><highlights><highlight>shopping</highlight><highlight>dining</highlight></highlights></POI></Day><Day index=\"6\"><date>Day 6</date><theme>Day Trip Option or Museums</theme><POI><name>Day trip to Niagara or visit AGO (Art Gallery of Ontario)</name><time_block>All day</time_block><description>Choose a full-day excursion to Niagara Falls or deeper art exploration in the city.</description><highlights><highlight>waterfalls or art</highlight><highlight>photography</highlight></highlights></POI></Day><Day index=\"7\"><date>Day 7</date><theme>Flexible Departure Day</theme><POI><name>Last-minute shopping or neighborhood stroll</name><time_block>Morning</time_block><description>Relaxed morning with optional final visits depending on departure time.</description><highlights><highlight>souvenirs</highlight><highlight>cafes</highlight></highlights></POI><Transportation><mode>Transfer to airport / train station</mode><time_block>As scheduled</time_block><notes>Allow time for travel and check-in.</notes><highlights><highlight>plan buffer</highlight><highlight>confirm rides</highlight></highlights></Transportation></Day></Itinerary></Itinerary_Version></Root>",
+  "paths": {
+    "task_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/itinerary_cs3/itinerary_cs3.yaml",
+    "version_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/itinerary_cs3/itinerary_cs3_version.yaml",
+    "domain_schema": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/domains/travel.yaml",
+    "memory_xml": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/travel/toronto_7day_trip.xml",
+    "examples": "/Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/prompts/query_generator/domains/xpath_examples_itinerary_cs3.txt"
+  },
+  "warnings": [],
+  "token_usage": {
+    "prompt_tokens": 803,
+    "completion_tokens": 2872,
+    "total_tokens": 3675
+  },
+  "display": {
+    "summary": "Cold Start Result\nDomain: travel - Trip planning and itineraries for city travel.\nTask: toronto_7day_trip - 7-Day Toronto Trip Plan\nSchema: itinerary_cs3",
+    "paths": "Paths\nTask schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/itinerary_cs3/itinerary_cs3.yaml\nVersion schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/itinerary_cs3/itinerary_cs3_version.yaml\nDomain schema: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/schemas/domains/travel.yaml\nExamples: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/prompts/query_generator/domains/xpath_examples_itinerary_cs3.txt\nMemory XML: /Users/liuyifan/Desktop/Semantic_XPath_Demo/storage/memory/travel/toronto_7day_trip.xml",
+    "domain_schema": "name: travel_domain\ndescription: Domain container for travel tasks with versions\nhierarchy: \"Travel_Root (root)\\n  `-- Task (container, indexed by @name)\\n      `--\\\n  \\ TaskVersion (version, indexed by @number)\"\nnodes:\n  Travel_Root:\n    type: root\n    fields: []\n    children:\n    - Task\n  Task:\n    type: container\n    index_attr: name\n    fields:\n    - title\n    - description\n    - status\n    children:\n    - TaskVersion\n  TaskVersion:\n    type: version\n    index_attr: number\n    fields:\n    - patch_info\n    - conversation_history\n    - created_at\n    children: []",
+    "task_schema": "name: itinerary_cs3\ndescription: City travel itinerary organized by days, with points of interest, restaurants,\n  accommodation, and transport items.\nhierarchy: \"Itinerary (root)\\n    `-- Day (container, indexed by @index)\\n       \\\n  \\ |-- POI (leaf)\\n        |-- Restaurant (leaf)\\n        |-- Accommodation (leaf)\\n\\\n  \\        `-- Transportation (leaf)\"\nnodes:\n  Itinerary:\n    type: root\n    fields:\n    - title\n    - summary\n    children:\n    - Day\n  Day:\n    type: container\n    fields:\n    - date\n    - theme\n    children:\n    - POI\n    - Restaurant\n    - Accommodation\n    - Transportation\n    index_attr: index\n  POI:\n    type: leaf\n    fields:\n    - name\n    - time_block\n    - description\n    - highlights\n    children: []\n  Restaurant:\n    type: leaf\n    fields:\n    - name\n    - time_block\n    - description\n    - highlights\n    children: []\n  Accommodation:\n    type: leaf\n    fields:\n    - name\n    - checkin_time\n    - notes\n    - highlights\n    children: []\n  Transportation:\n    type: leaf\n    fields:\n    - mode\n    - time_block\n    - notes\n    - highlights\n    children: []\ndata_files:\n  toronto_7day_trip: memory/travel/toronto_7day_trip.xml\ndefault_data: toronto_7day_trip\nexamples_file: prompts/query_generator/domains/xpath_examples_itinerary_cs3.txt\nsyntax_rules: '- Paths start with /Itinerary\n\n  - Node types: Itinerary, Day, POI, Restaurant, Accommodation, Transportation\n\n  - Indices: Node[1], Node[-1], Node[1:3]\n\n  - Logical: AND / OR / not() combine predicates WITHIN brackets'",
+    "memory_xml": "<?xml version=\"1.0\" ?>\n<Root>\n  <Itinerary_Version number=\"1\">\n    <patch_info>cold start initialization</patch_info>\n    <conversation_history>7 day toronto travel</conversation_history>\n    <Itinerary>\n      <title>7-Day Toronto Trip</title>\n      <summary>A 7-day plan mixing major attractions, neighborhood exploration, culinary stops, and relaxed days to recharge.</summary>\n      <Day index=\"1\">\n        <date>Day 1</date>\n        <theme>Arrival &amp; Waterfront</theme>\n        <Transportation>\n          <mode>Airport to hotel (UP Express or taxi)</mode>\n          <time_block>Afternoon</time_block>\n          <notes>Take UP Express from Pearson to Union Station for faster transit.</notes>\n          <highlights>\n            <highlight>quick transfer</highlight>\n            <highlight>light luggage</highlight>\n          </highlights>\n        </Transportation>\n        <POI>\n          <name>Harbourfront / Queens Quay</name>\n          <time_block>Late afternoon</time_block>\n          <description>Gentle waterfront walk to stretch legs and get oriented.</description>\n          <highlights>\n            <highlight>water views</highlight>\n            <highlight>public art</highlight>\n            <highlight>easier pace</highlight>\n          </highlights>\n        </POI>\n        <Restaurant>\n          <name>Dinner on the Waterfront</name>\n          <time_block>Evening</time_block>\n          <description>Casual dinner with lake views to end the arrival day.</description>\n          <highlights>\n            <highlight>relaxed</highlight>\n            <highlight>scenic</highlight>\n          </highlights>\n        </Restaurant>\n      </Day>\n      <Day index=\"2\">\n        <date>Day 2</date>\n        <theme>Downtown Icons</theme>\n        <POI>\n          <name>CN Tower &amp; Ripley's Aquarium</name>\n          <time_block>Morning</time_block>\n          <description>Visit the CN Tower observation level then the nearby aquarium.</description>\n          <highlights>\n            <highlight>city views</highlight>\n            <highlight>interactive exhibits</highlight>\n          </highlights>\n        </POI>\n        <POI>\n          <name>St. Lawrence Market</name>\n          <time_block>Afternoon</time_block>\n          <description>Explore food stalls and local vendors; good lunch spot.</description>\n          <highlights>\n            <highlight>local food</highlight>\n            <highlight>shopping</highlight>\n          </highlights>\n        </POI>\n      </Day>\n      <Day index=\"3\">\n        <date>Day 3</date>\n        <theme>Cultural Museums &amp; Gardens</theme>\n        <POI>\n          <name>Royal Ontario Museum (ROM)</name>\n          <time_block>Morning</time_block>\n          <description>Collections of natural history and world cultures.</description>\n          <highlights>\n            <highlight>galleries</highlight>\n            <highlight>architecture</highlight>\n          </highlights>\n        </POI>\n        <POI>\n          <name>Casa Loma or Allan Gardens</name>\n          <time_block>Afternoon</time_block>\n          <description>Choose a historic castle visit or a relaxing greenhouse garden depending on energy.</description>\n          <highlights>\n            <highlight>scenic</highlight>\n            <highlight>historic or botanical</highlight>\n          </highlights>\n        </POI>\n      </Day>\n      <Day index=\"4\">\n        <date>Day 4</date>\n        <theme>Toronto Islands &amp; Leisure</theme>\n        <Transportation>\n          <mode>Ferry to Toronto Islands</mode>\n          <time_block>Morning to afternoon</time_block>\n          <notes>Ferries leave from Jack Layton Ferry Terminal; check schedule.</notes>\n          <highlights>\n            <highlight>island beaches</highlight>\n            <highlight>bike rental</highlight>\n          </highlights>\n        </Transportation>\n        <POI>\n          <name>Centre Island / Hanlan's Point</name>\n          <time_block>Afternoon</time_block>\n          <description>Relax, swim, or picnic; great skyline views from the islands.</description>\n          <highlights>\n            <highlight>picnic</highlight>\n            <highlight>views</highlight>\n          </highlights>\n        </POI>\n      </Day>\n      <Day index=\"5\">\n        <date>Day 5</date>\n        <theme>Neighborhoods: Kensington &amp; Queen West</theme>\n        <POI>\n          <name>Kensington Market</name>\n          <time_block>Morning</time_block>\n          <description>Eclectic market area with vintage shops and street art.</description>\n          <highlights>\n            <highlight>unique shops</highlight>\n            <highlight>street food</highlight>\n          </highlights>\n        </POI>\n        <POI>\n          <name>Queen Street West</name>\n          <time_block>Afternoon to evening</time_block>\n          <description>Trendy boutiques, galleries, and dinner options.</description>\n          <highlights>\n            <highlight>shopping</highlight>\n            <highlight>dining</highlight>\n          </highlights>\n        </POI>\n      </Day>\n      <Day index=\"6\">\n        <date>Day 6</date>\n        <theme>Day Trip Option or Museums</theme>\n        <POI>\n          <name>Day trip to Niagara or visit AGO (Art Gallery of Ontario)</name>\n          <time_block>All day</time_block>\n          <description>Choose a full-day excursion to Niagara Falls or deeper art exploration in the city.</description>\n          <highlights>\n            <highlight>waterfalls or art</highlight>\n            <highlight>photography</highlight>\n          </highlights>\n        </POI>\n      </Day>\n      <Day index=\"7\">\n        <date>Day 7</date>\n        <theme>Flexible Departure Day</theme>\n        <POI>\n          <name>Last-minute shopping or neighborhood stroll</name>\n          <time_block>Morning</time_block>\n          <description>Relaxed morning with optional final visits depending on departure time.</description>\n          <highlights>\n            <highlight>souvenirs</highlight>\n            <highlight>cafes</highlight>\n          </highlights>\n        </POI>\n        <Transportation>\n          <mode>Transfer to airport / train station</mode>\n          <time_block>As scheduled</time_block>\n          <notes>Allow time for travel and check-in.</notes>\n          <highlights>\n            <highlight>plan buffer</highlight>\n            <highlight>confirm rides</highlight>\n          </highlights>\n        </Transportation>\n      </Day>\n    </Itinerary>\n  </Itinerary_Version>\n</Root>"
+  }
+}

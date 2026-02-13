@@ -1,0 +1,413 @@
+/* ============================================================
+   MainPage — 1920×1080 split layout (left: chat, right: tree)
+   Font sizes from Figma: Inter font family
+   ============================================================ */
+
+.main-page {
+  display: flex;
+  height: 100vh;
+  padding-top: 60px; /* fixed header */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ===================== Left Panel ===================== */
+
+.main-left-panel {
+  width: 50%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  position: relative;
+  border-right: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
+/* Halo glow — same style as landing page, using halo-glow.svg */
+.left-panel-glow {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+  background: url("/assets/halo-glow.svg") center center / contain no-repeat;
+}
+
+/* Scrollable message area */
+.chat-messages-area {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px 0 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.chat-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  font-size: 15px;
+}
+
+/* ===================== Message Blocks ===================== */
+
+/* ---- User message block ---- */
+.msg-block-user {
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.msg-user-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 29px 14px;
+}
+
+.msg-user-avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50% 50% 8px 8px;
+  border: 1px solid #8561d6;
+  object-fit: cover;
+}
+
+/* Inter Semi Bold — reduced 2px from Figma 18→16 */
+.msg-user-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  line-height: 32px;
+  margin: 0;
+}
+
+/* ---- System message block ---- */
+.msg-block-system {
+  padding: 0;
+  margin-bottom: 0;
+}
+
+/* System title row: logo + title + plan icon */
+.msg-system-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 40px 10px 29px;
+}
+
+.msg-system-logo {
+  flex-shrink: 0;
+  width: 29px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Inter Semi Bold — reduced 2px from Figma 24→22 */
+.msg-system-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  line-height: 34px;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.msg-plan-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+}
+
+.msg-plan-icon:hover {
+  opacity: 1;
+}
+
+/* ---- System response body ---- */
+/* Body container — line-height reduced to match smaller text */
+.msg-system-body {
+  padding: 8px 0 20px 86px;
+  max-width: 886px; /* 86px left-pad + 800px content */
+  line-height: 30px;
+}
+
+/* ---- Day section inside body ---- */
+.body-day-section {
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+/* Inter Semi Bold — reduced 2px from Figma 20→18 */
+.body-day-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  line-height: 32px;
+  margin: 0;
+  text-align: center;
+}
+
+/* ---- Body text ---- */
+/* Inter Regular — reduced 2px from Figma 14→12 */
+.body-line {
+  font-size: 12px;
+  font-weight: 400;
+  color: #333;
+  line-height: 30px;
+  margin: 0;
+}
+
+/* Inter Semi Bold — reduced 2px from Figma 16→14 */
+.body-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Spacer between sections */
+.body-spacer {
+  height: 30px;
+}
+
+/* ===================== Dividers ===================== */
+
+.msg-divider {
+  height: 1px;
+  background: #e8e8e8;
+}
+
+/* Full-width divider: left 29px → right edge (Figma: left 29px, width 931px at 960px panel) */
+.msg-divider-full {
+  margin: 0 0 0 29px;
+}
+
+/* Content-width divider: left 86px → right edge (Figma: left 86px, width 874px) */
+.msg-divider-content {
+  margin: 0 0 0 86px;
+}
+
+/* ===================== Loading state ===================== */
+
+.system-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  background: #8561d6;
+  border-radius: 50%;
+  animation: dot-bounce 1.4s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dot-bounce {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.loading-text {
+  font-size: 14px;
+  color: #8561d6;
+  margin: 0;
+  animation: pulse-text 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ===================== Chat Input ===================== */
+
+.main-chat-input-area {
+  flex-shrink: 0;
+  padding: 12px 46px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.main-chat-input-container {
+  background: #fff;
+  border: 1px solid #8662d7;
+  border-radius: 20px;
+  padding: 16px 20px 12px;
+  box-shadow: 0 0 8px rgba(29, 0, 57, 0.05);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.main-chat-input-container:focus-within {
+  box-shadow: 0 0 12px rgba(133, 97, 214, 0.15);
+}
+
+.main-chat-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+  resize: none;
+  line-height: 22px;
+  background: transparent;
+  min-height: 22px;
+}
+
+.main-chat-input::placeholder {
+  color: #999;
+}
+
+.main-chat-input-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.main-chat-action-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: #f5f5f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.main-chat-action-btn:hover:not(:disabled) {
+  background: #eee;
+}
+
+.main-chat-action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.main-chat-input-spacer {
+  flex: 1;
+}
+
+.main-chat-submit-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #8561d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.main-chat-submit-btn:hover:not(:disabled) {
+  background: #734bce;
+}
+
+.main-chat-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.main-chat-submit-btn.loading {
+  background: #a78bfa;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===================== Right Panel ===================== */
+
+.main-right-panel {
+  width: 50%;
+  height: 100%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.right-panel-placeholder {
+  color: #bbb;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* ===================== Scrollbar ===================== */
+
+.chat-messages-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages-area::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 3px;
+}
+
+.chat-messages-area::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+}

@@ -74,18 +74,18 @@
 }
 
 .msg-user-avatar {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
   border-radius: 50% 50% 8px 8px;
   border: 1px solid #8561d6;
   object-fit: cover;
 }
 
-/* Inter Semi Bold — reduced 2px from Figma 18→16 */
+/* Inter Regular — user message should not be bold */
 .msg-user-text {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   color: #333;
   line-height: 32px;
   margin: 0;
@@ -107,16 +107,16 @@
 
 .msg-system-logo {
   flex-shrink: 0;
-  width: 29px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Inter Semi Bold — reduced 2px from Figma 24→22 */
+/* Inter Semi Bold — reduced from 22→20 */
 .msg-system-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   color: #333;
   line-height: 34px;

@@ -143,7 +143,7 @@ export default function MainPage() {
         <div key={index} className="msg-block msg-block-system">
           <div className="msg-system-title-row">
             <div className="msg-system-logo">
-              <img src="/assets/logo-icon.svg" alt="" width="29" height="30" />
+              <img src="/assets/logo-icon.svg" alt="" width="24" height="24" />
             </div>
             <div className="system-loading">
               <div className="loading-dots">
@@ -166,7 +166,7 @@ export default function MainPage() {
         {/* Title row: logo + title + plan icon */}
         <div className="msg-system-title-row">
           <div className="msg-system-logo">
-            <img src="/assets/logo-icon.svg" alt="" width="29" height="30" />
+            <img src="/assets/logo-icon.svg" alt="" width="24" height="24" />
           </div>
           <h2 className="msg-system-title">
             {msg.title || "Response"}

@@ -2,7 +2,7 @@
 Plan QA Service - Handles the PLAN_QA intent (stub).
 
 Will answer questions about plan content using the retriever
-to locate relevant nodes and the chatter to formulate the response.
+to locate relevant nodes and the chatting service to formulate the response.
 
 Dependencies (to be wired when implemented):
 - retriever service/client
@@ -20,7 +20,7 @@ class PlanQAService:
     intent: str = "PLAN_QA"
 
     def handle(self, ctx: IntentContext) -> HandlerResult:
-        # TODO: implement retriever -> chatter flow
+        # TODO: implement retriever -> chatting flow
         if ctx.routing.requires_clarification and ctx.routing.clarification_question:
             return HandlerResult(
                 stop=True,

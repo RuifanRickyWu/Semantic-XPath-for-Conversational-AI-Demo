@@ -11,16 +11,17 @@ from __future__ import annotations
 from typing import Optional
 
 from common.types import (
-    CommitRequest,
     HandlerResult,
+    ReplaceXmlNode,
     RegistryApplyRequest,
     RoutingDecision,
     SessionUpdate,
     TurnRequest,
 )
+from interfaces.state_store import TaskStateStore
+from interfaces.xml_manager import XmlStateManager
 from services.intent_handling.plan_builder_service import PlanBuilderService
 from stores.registry_store import RegistryStore
-from stores.state_store import StateStore
 
 
 class PlanCreateService:
@@ -31,12 +32,16 @@ class PlanCreateService:
     def __init__(
         self,
         registry: RegistryStore,
-        state_store: StateStore,
         plan_builder: PlanBuilderService,
+        state_store: TaskStateStore | None = None,
+        xml_state_manager: XmlStateManager | None = None,
         commit_mode: str = "CREATE_NEW_VERSION",
     ) -> None:
+        if state_store is None and xml_state_manager is None:
+            raise ValueError("PlanCreateService requires state_store or xml_state_manager")
         self.registry = registry
         self.state_store = state_store
+        self.xml_state_manager = xml_state_manager
         self.plan_builder = plan_builder
         self.commit_mode = commit_mode
 
@@ -72,21 +77,35 @@ class PlanCreateService:
         )
 
         # 3. Commit state
-        commit_result = self.state_store.commit(
-            CommitRequest(
+        task_xml = (new_state.metadata or {}).get("xml")
+        if isinstance(task_xml, str) and task_xml.strip() and self.xml_state_manager is not None:
+            commit_result = self.xml_state_manager.commit(
                 task_id=task_id,
-                commit_mode=self.commit_mode,
-                new_state=new_state,
+                base_version_id=version_id,
+                ops=[ReplaceXmlNode(xpath=".", xml_fragment=task_xml)],
                 commit_message="initial state",
             )
-        )
+        elif self.state_store is not None:
+            from common.types import CommitRequest
+            commit_result = self.state_store.commit(
+                CommitRequest(
+                    task_id=task_id,
+                    commit_mode=self.commit_mode,
+                    new_state=new_state,
+                    commit_message="initial state",
+                )
+            )
+        else:
+            return HandlerResult(
+                stop=True,
+                generation_hint="Plan creation failed: planner did not return valid XML.",
+            )
 
         # 4. Build result
         task_name = None
-        task_xml = None
+        task_xml = task_xml if isinstance(task_xml, str) else None
         if new_state.metadata:
             task_name = new_state.metadata.get("task_name")
-            task_xml = new_state.metadata.get("xml")
         if not task_name:
             task_name = req.user_utterance.strip() or "New plan"
 

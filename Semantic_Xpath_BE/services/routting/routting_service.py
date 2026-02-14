@@ -1,11 +1,11 @@
 """
-Router Service - GPT-based intent classifier for user utterances.
+Routting Service - GPT-based intent classifier for user utterances.
 
 Classifies each utterance into one of the supported intents
 (CHAT, PLAN_CREATE, PLAN_QA, PLAN_EDIT, REGISTRY_QA, REGISTRY_EDIT)
 and decides whether a registry operation is required.
 
-Migrated from clients/router_client.py.
+Migrated from clients/routting_client.py.
 """
 
 from __future__ import annotations
@@ -19,16 +19,16 @@ from common.utils import safe_json_dumps, strip_none
 from common.types import RouteInput, RouteResult, RoutingDecision
 
 
-_BASE_DIR = Path(__file__).resolve().parents[1]
-_PROMPT_PATH = _BASE_DIR / "storage" / "prompts" / "router" / "router.txt"
+_BASE_DIR = Path(__file__).resolve().parents[2]
+_PROMPT_PATH = _BASE_DIR / "storage" / "prompts" / "routting" / "routting.txt"
 
 _VALID_INTENTS = {
     "CHAT", "PLAN_QA", "PLAN_EDIT", "PLAN_CREATE", "REGISTRY_QA", "REGISTRY_EDIT",
 }
 
 
-class RouterService:
-    """GPT-based intent router."""
+class RouttingService:
+    """GPT-based intent routting classifier."""
 
     def __init__(
         self,

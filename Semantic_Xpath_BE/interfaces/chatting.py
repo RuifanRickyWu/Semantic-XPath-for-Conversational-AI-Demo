@@ -5,6 +5,6 @@ from typing import Protocol
 from common.types import RealizeRequest
 
 
-class Chatter(Protocol):
+class Chatting(Protocol):
     def realize(self, req: RealizeRequest) -> str:
         ...

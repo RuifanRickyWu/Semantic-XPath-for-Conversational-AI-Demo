@@ -13,8 +13,8 @@ from flask import Flask
 from flask_cors import CORS
 
 from clients.openai_client import OpenAIClient
-from services.router_service import RouterService
-from services.chatter.chatter_service import ChatterService
+from services.routting.routting_service import RouttingService
+from services.chatting.chatting_service import ChattingService
 from services.intent_handling.plan_builder_service import PlanBuilderService
 from stores.context_store import ContextStore
 from stores.session_store import SessionStore
@@ -22,7 +22,8 @@ from stores.registry_store import RegistryStore
 from stores.state_store import StateStore
 from services.orchestrator_service import OrchestratorService
 from services.intent_handling.plan_create_service import PlanCreateService
-from services.semantic_xpath_service import SemanticXpathService
+from services.intent_handling.semantic_xpath_service import SemanticXpathService
+from services.intent_handling.xml_manager_service import XmlManagerService
 from api.chat_resource import create_chat_blueprint
 
 
@@ -37,8 +38,8 @@ def create_app() -> Flask:
     # ------------------------------------------------------------------
     # 2. Services that wrap the OpenAI client
     # ------------------------------------------------------------------
-    router_service = RouterService(client=openai_client)
-    chatter_service = ChatterService(client=openai_client)
+    routting_service = RouttingService(client=openai_client)
+    chatting_service = ChattingService(client=openai_client)
     plan_builder_service = PlanBuilderService(client=openai_client)
 
     # ------------------------------------------------------------------
@@ -48,22 +49,24 @@ def create_app() -> Flask:
     context_store = ContextStore()
     registry_store = RegistryStore()
     state_store = StateStore()
+    xml_state_manager = XmlManagerService()
 
     # ------------------------------------------------------------------
     # 4. Composite services (depend on stores + clients)
     # ------------------------------------------------------------------
     plan_create_service = PlanCreateService(
         registry=registry_store,
-        state_store=state_store,
         plan_builder=plan_builder_service,
+        state_store=state_store,
+        xml_state_manager=xml_state_manager,
     )
 
     orchestrator = OrchestratorService(
-        router=router_service,
+        routting=routting_service,
         session_service=session_store,
         context_service=context_store,
         plan_create_service=plan_create_service,
-        chatter=chatter_service,
+        chatting=chatting_service,
     )
 
     # ------------------------------------------------------------------

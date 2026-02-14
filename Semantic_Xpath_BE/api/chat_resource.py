@@ -10,7 +10,7 @@ receives the service instance from the app factory (no internal creation).
 
 from flask import Blueprint, request, jsonify
 
-from services.semantic_xpath_service import SemanticXpathService
+from services.intent_handling.semantic_xpath_service import SemanticXpathService
 
 
 def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:

@@ -107,7 +107,39 @@ class XmlManagerService:
         if self.registry_path is None and base_version_id is None:
             return CommitResult(status="FAILED", errors=["base_version_id is required"])
 
-        base_state = self.load(task_id, base_version_id)
+        try:
+            base_state = self.load(task_id, base_version_id)
+        except FileNotFoundError:
+            # Bootstrap case: caller supplies a full XML snapshot as root replacement
+            # for the requested version path, before any base file exists.
+            if (
+                self.registry_path is None
+                and task_id is not None
+                and base_version_id is not None
+                and len(ops) == 1
+                and isinstance(ops[0], ReplaceXmlNode)
+                and self._normalize_xpath(ops[0].xpath) == "."
+            ):
+                xml_str = ops[0].xml_fragment
+                validation = self.validate(xml_str, schema=None)
+                if not validation.ok:
+                    return CommitResult(
+                        status="FAILED",
+                        errors=validation.errors or ["invalid xml"],
+                    )
+                out_path = self._state_path(task_id, base_version_id)
+                out_path.parent.mkdir(parents=True, exist_ok=True)
+                out_path.write_text(xml_str, encoding="utf-8")
+                return CommitResult(
+                    status="OK",
+                    new_version_id=base_version_id,
+                    diff=DiffSummary(summary="xml_bootstrap_commit"),
+                )
+            return CommitResult(
+                status="FAILED",
+                errors=[f"base xml not found for {task_id}/{base_version_id}"],
+            )
+
         edit_result = self.apply_ops(base_state.xml_str, ops)
         if not edit_result.ok or not edit_result.xml_str:
             return CommitResult(status="FAILED", errors=edit_result.errors or ["edit failed"])

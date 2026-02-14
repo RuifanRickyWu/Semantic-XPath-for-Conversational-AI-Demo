@@ -36,7 +36,7 @@ from stores.session_store import SessionStore
 # ---------------------------------------------------------------------------
 
 
-class StubRouter:
+class StubRoutting:
     """Returns a fixed RouteResult for any input."""
 
     def __init__(self, result: RouteResult) -> None:
@@ -60,7 +60,7 @@ class StubPlanCreateService:
         return self.result
 
 
-class RecordingChatter:
+class RecordingChatting:
     """Records all realize() calls and returns 'ok'."""
 
     def __init__(self) -> None:
@@ -96,20 +96,20 @@ def make_orchestrator(
     plan_create_result: HandlerResult | None = None,
     context_service: ContextStore | None = None,
 ):
-    router = StubRouter(route_result)
+    routting = StubRoutting(route_result)
     session_store = SessionStore()
     ctx_store = context_service or ContextStore(window_size=4, max_message_chars=600)
     plan_create = StubPlanCreateService(plan_create_result)
-    chatter = RecordingChatter()
+    chatting = RecordingChatting()
 
     orchestrator = OrchestratorService(
-        router=router,
+        routting=routting,
         session_service=session_store,
         context_service=ctx_store,
         plan_create_service=plan_create,
-        chatter=chatter,
+        chatting=chatting,
     )
-    return orchestrator, router, session_store, plan_create, chatter
+    return orchestrator, routting, session_store, plan_create, chatting
 
 
 def expected_registry_op(intent: str, initial: int, session_active: bool) -> int:
@@ -143,7 +143,7 @@ def expected_registry_op(intent: str, initial: int, session_active: bool) -> int
 def test_orchestrator_sanitize_registry_op(variant, intent, session_active, initial_registry_op):
     routing = mk_routing(intent, initial_registry_op)
     route_result = RouteResult(routing=routing, effective_utterance=f"u-{variant}")
-    orchestrator, router, session_store, plan_create, chatter = make_orchestrator(route_result)
+    orchestrator, routting, session_store, plan_create, chatting = make_orchestrator(route_result)
 
     # Set up session state if needed
     if session_active:
@@ -152,8 +152,8 @@ def test_orchestrator_sanitize_registry_op(variant, intent, session_active, init
         )
 
     orchestrator.orchestrate(f"u-{variant}", "s1")
-    chatter_req = chatter.requests[-1]
-    assert chatter_req.routing.registry_op == expected_registry_op(
+    chatting_req = chatting.requests[-1]
+    assert chatting_req.routing.registry_op == expected_registry_op(
         intent, initial_registry_op, session_active
     )
 
@@ -165,29 +165,29 @@ def test_orchestrator_reformulation_sets_original():
         effective_utterance="clear request",
         original_utterance="messy request",
     )
-    orchestrator, _, _, _, chatter = make_orchestrator(route_result)
+    orchestrator, _, _, _, chatting = make_orchestrator(route_result)
     orchestrator.orchestrate("messy request", "s1")
 
-    chatter_req = chatter.requests[-1]
-    assert chatter_req.utterance == "clear request"
-    assert chatter_req.original_utterance == "messy request"
+    chatting_req = chatting.requests[-1]
+    assert chatting_req.utterance == "clear request"
+    assert chatting_req.original_utterance == "messy request"
 
 
-def test_orchestrator_passes_context_to_chatter():
+def test_orchestrator_passes_context_to_chatting():
     routing = mk_routing("CHAT", 0)
     route_result = RouteResult(routing=routing, effective_utterance="hello")
     ctx_store = ContextStore(window_size=4, max_message_chars=600)
     # Pre-seed some context
     ctx_store.record_turn("s1", "hi", "hey there")
 
-    orchestrator, _, _, _, chatter = make_orchestrator(
+    orchestrator, _, _, _, chatting = make_orchestrator(
         route_result, context_service=ctx_store,
     )
     orchestrator.orchestrate("hello", "s1")
 
-    chatter_req = chatter.requests[-1]
-    assert chatter_req.context_messages is not None
-    assert chatter_req.conversation_context is not None
+    chatting_req = chatting.requests[-1]
+    assert chatting_req.context_messages is not None
+    assert chatting_req.conversation_context is not None
 
 
 def test_orchestrator_clarification_mapping():
@@ -199,24 +199,24 @@ def test_orchestrator_clarification_mapping():
     routing_pc = mk_routing("PLAN_CREATE", 0)
     route_result_pc = RouteResult(routing=routing_pc, effective_utterance="create")
     plan_result = HandlerResult(stop=True, generation_hint="Need clarification")
-    orchestrator, _, _, _, chatter = make_orchestrator(route_result_pc, plan_result)
+    orchestrator, _, _, _, chatting = make_orchestrator(route_result_pc, plan_result)
     orchestrator.orchestrate("create", "s1")
 
-    chatter_req = chatter.requests[-1]
-    assert chatter_req.state_context == {"clarification_question": "Need clarification"}
+    chatting_req = chatting.requests[-1]
+    assert chatting_req.state_context == {"clarification_question": "Need clarification"}
 
 
 def test_orchestrator_plan_create_passes_task_fields():
     routing = mk_routing("PLAN_CREATE", 0)
     route_result = RouteResult(routing=routing, effective_utterance="create")
     plan_result = HandlerResult(task_name="My Plan", task_xml="<Plan/>")
-    orchestrator, _, _, _, chatter = make_orchestrator(route_result, plan_result)
+    orchestrator, _, _, _, chatting = make_orchestrator(route_result, plan_result)
     orchestrator.orchestrate("create", "s1")
 
-    chatter_req = chatter.requests[-1]
-    assert chatter_req.state_context is not None
-    assert chatter_req.state_context.get("task_name") == "My Plan"
-    assert chatter_req.state_context.get("task_xml") == "<Plan/>"
+    chatting_req = chatting.requests[-1]
+    assert chatting_req.state_context is not None
+    assert chatting_req.state_context.get("task_name") == "My Plan"
+    assert chatting_req.state_context.get("task_xml") == "<Plan/>"
 
 
 def test_orchestrator_applies_session_updates():

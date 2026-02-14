@@ -1,0 +1,152 @@
+<Plan id="t1" version="v1">
+  <Meta>
+    <Title>5-Day Weight Loss Meal Plan (No Restrictions)</Title>
+    <Summary>A 5-day, high-protein, high-fiber meal plan designed to support gradual fat loss from 80 kg toward 65 kg. Each day targets roughly 1500-1700 kcal with 110-140 g protein, emphasizing minimally processed foods, vegetables, and steady meal timing. Adjust portions up or down based on hunger, activity, and progress.</Summary>
+  </Meta>
+  <Guidelines>
+    <CaloriesPerDay target_kcal="1500-1700" />
+    <ProteinPerDay target_g="110-140" />
+    <Hydration>Drink 2.0-3.0 L water daily. Add 1-2 extra glasses around workouts.</Hydration>
+    <CookingDefaults>
+      <Item>Use 1-2 tsp olive oil per meal unless otherwise specified.</Item>
+      <Item>Choose low-fat dairy where possible.</Item>
+      <Item>Prefer whole grains and legumes for carbs.</Item>
+      <Item>Use herbs, spices, vinegar, lemon, mustard, salsa for flavor.</Item>
+    </CookingDefaults>
+    <PortionAdjustment>
+      <Rule>If weight loss is less than about 0.25-0.75 kg/week over 2-3 weeks, reduce daily carbs/fats slightly (e.g., remove 1 snack or halve a starch portion).</Rule>
+      <Rule>If energy is too low or workouts suffer, add 150-250 kcal/day via fruit, yogurt, or extra lean protein.</Rule>
+    </PortionAdjustment>
+  </Guidelines>
+  <Day index="1">
+    <Breakfast>
+      <Meal>Greek yogurt bowl: 250 g plain nonfat Greek yogurt, 40 g oats, 150 g berries, 10 g chia seeds, cinnamon.</Meal>
+    </Breakfast>
+    <Lunch>
+      <Meal>Chicken quinoa salad: 160 g cooked chicken breast, 120 g cooked quinoa, mixed greens, cucumber, tomatoes, 30 g feta, lemon-olive oil dressing (2 tsp oil).</Meal>
+    </Lunch>
+    <Snack index="1">
+      <Meal>1 medium apple plus 20 g almonds.</Meal>
+    </Snack>
+    <Dinner>
+      <Meal>Salmon plate: 160 g salmon, 300 g roasted mixed vegetables (broccoli, zucchini, peppers), 200 g baked potato, side salad with vinegar.</Meal>
+    </Dinner>
+    <OptionalSnack>
+      <Meal>If hungry: 200 ml skim milk or 150 g cottage cheese.</Meal>
+    </OptionalSnack>
+  </Day>
+  <Day index="2">
+    <Breakfast>
+      <Meal>Veggie omelet: 2 whole eggs plus 200 g egg whites, spinach/mushrooms/onion, 1 slice whole-grain toast, 1 orange.</Meal>
+    </Breakfast>
+    <Lunch>
+      <Meal>Tuna wrap: 1 large whole-wheat tortilla, 1 can tuna in water (drained), 1 tbsp light mayo or Greek yogurt, celery/onion, lettuce, tomato. Add a side of carrot sticks.</Meal>
+    </Lunch>
+    <Snack index="1">
+      <Meal>Protein shake (25-30 g protein) blended with water and 1 banana.</Meal>
+    </Snack>
+    <Dinner>
+      <Meal>Turkey chili: 180 g lean ground turkey (cooked), beans (150 g cooked), tomatoes, peppers, spices. Serve with 120 g cooked brown rice and a large side salad.</Meal>
+    </Dinner>
+    <OptionalSnack>
+      <Meal>If hungry: 200 g berries or 1 kiwi.</Meal>
+    </OptionalSnack>
+  </Day>
+  <Day index="3">
+    <Breakfast>
+      <Meal>Overnight oats: 50 g oats, 250 ml skim milk, 25 g whey protein (or 200 g yogurt), 1 tbsp peanut butter (15 g), 1/2 sliced banana, cinnamon.</Meal>
+    </Breakfast>
+    <Lunch>
+      <Meal>Lean beef bowl: 160 g cooked lean beef, 250-300 g steamed vegetables, 150 g cooked sweet potato, salsa or low-sugar sauce.</Meal>
+    </Lunch>
+    <Snack index="1">
+      <Meal>200 g cottage cheese plus 150 g pineapple (or any fruit).</Meal>
+    </Snack>
+    <Dinner>
+      <Meal>Stir-fry: 180 g chicken or tofu, 400 g mixed stir-fry vegetables, 120 g cooked jasmine/basmati rice, soy sauce/ginger/garlic. Use 2 tsp oil for cooking.</Meal>
+    </Dinner>
+    <OptionalSnack>
+      <Meal>If hungry: herbal tea and 1 rice cake or 1 small piece of fruit.</Meal>
+    </OptionalSnack>
+  </Day>
+  <Day index="4">
+    <Breakfast>
+      <Meal>Smoothie: 300 ml low-fat milk, 30 g protein powder, 200 g frozen berries, 30 g oats, 10 g flaxseed.</Meal>
+    </Breakfast>
+    <Lunch>
+      <Meal>Mediterranean plate: 160 g grilled chicken, 120 g cooked couscous or bulgur, large Greek salad (tomato, cucumber, onion, olives), 2 tbsp hummus.</Meal>
+    </Lunch>
+    <Snack index="1">
+      <Meal>2 boiled eggs plus 1 pear.</Meal>
+    </Snack>
+    <Dinner>
+      <Meal>White fish tacos: 180 g cod/tilapia, cabbage slaw, salsa, 2-3 corn tortillas. Side: 200 g roasted vegetables or black beans (150 g cooked).</Meal>
+    </Dinner>
+    <OptionalSnack>
+      <Meal>If hungry: 150 g Greek yogurt with cinnamon.</Meal>
+    </OptionalSnack>
+  </Day>
+  <Day index="5">
+    <Breakfast>
+      <Meal>High-protein toast: 2 slices whole-grain toast, 150 g cottage cheese, sliced tomato, salt/pepper. Add 1 piece of fruit (apple or berries).</Meal>
+    </Breakfast>
+    <Lunch>
+      <Meal>Soup and salad: lentil soup (350-450 g) plus mixed salad with 120 g cooked chicken or 1 can tuna, vinegar dressing, and 1 small whole-grain roll.</Meal>
+    </Lunch>
+    <Snack index="1">
+      <Meal>Veg and dip: 250 g mixed raw vegetables (cucumber, carrots, peppers) plus 60 g hummus.</Meal>
+    </Snack>
+    <Dinner>
+      <Meal>Chicken pasta: 160-180 g cooked chicken breast, 75 g dry whole-wheat pasta (cooked), marinara sauce, spinach, mushrooms. Side salad.</Meal>
+    </Dinner>
+    <OptionalSnack>
+      <Meal>If hungry: 200 ml skim milk or 1 small yogurt.</Meal>
+    </OptionalSnack>
+  </Day>
+  <GroceryList>
+    <Category name="Proteins">
+      <Item>Chicken breast</Item>
+      <Item>Salmon</Item>
+      <Item>Lean ground turkey</Item>
+      <Item>Lean beef</Item>
+      <Item>White fish (cod/tilapia)</Item>
+      <Item>Tuna (canned)</Item>
+      <Item>Eggs and egg whites</Item>
+      <Item>Greek yogurt and/or cottage cheese</Item>
+      <Item>Protein powder (optional)</Item>
+      <Item>Beans and lentils</Item>
+      <Item>Hummus</Item>
+      <Item>Tofu (optional)</Item>
+    </Category>
+    <Category name="Carbs">
+      <Item>Oats</Item>
+      <Item>Quinoa</Item>
+      <Item>Brown rice or basmati/jasmine rice</Item>
+      <Item>Whole-grain bread</Item>
+      <Item>Whole-wheat tortillas</Item>
+      <Item>Corn tortillas</Item>
+      <Item>Whole-wheat pasta</Item>
+      <Item>Potatoes and sweet potatoes</Item>
+      <Item>Couscous or bulgur</Item>
+    </Category>
+    <Category name="FruitsAndVegetables">
+      <Item>Berries (fresh or frozen)</Item>
+      <Item>Bananas</Item>
+      <Item>Apples, pears, oranges, kiwi, pineapple (as preferred)</Item>
+      <Item>Leafy greens</Item>
+      <Item>Tomatoes, cucumbers, onions</Item>
+      <Item>Broccoli, zucchini, peppers, mushrooms, spinach</Item>
+      <Item>Cabbage or coleslaw mix</Item>
+      <Item>Carrots</Item>
+    </Category>
+    <Category name="FatsAndFlavor">
+      <Item>Olive oil</Item>
+      <Item>Almonds</Item>
+      <Item>Chia seeds and/or flaxseed</Item>
+      <Item>Peanut butter</Item>
+      <Item>Feta (optional)</Item>
+      <Item>Spices, garlic, ginger</Item>
+      <Item>Salsa, marinara, soy sauce, vinegar, lemons</Item>
+    </Category>
+  </GroceryList>
+</Plan>

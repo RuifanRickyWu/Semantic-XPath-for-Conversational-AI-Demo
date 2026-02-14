@@ -7,7 +7,7 @@ Coordinates the full pipeline for each user message:
   3. Route (intent classification)
   4. Sanitize routing
   5. Dispatch to intent handler
-  6. Realize response (chatter)
+  6. Realize response (chatting)
   7. Update session
   8. Record turn in context
 
@@ -31,7 +31,7 @@ from common.types import (
     TurnResponse,
     TurnTelemetry,
 )
-from interfaces import Chatter, Router
+from interfaces import Chatting, Routting
 from stores.context_store import ContextStore
 from services.intent_handling.plan_create_service import PlanCreateService
 from stores.session_store import SessionStore
@@ -42,18 +42,18 @@ class OrchestratorService:
 
     def __init__(
         self,
-        router: Router,
+        routting: Routting,
         session_service: SessionStore,
         context_service: ContextStore,
         plan_create_service: PlanCreateService,
-        chatter: Chatter,
+        chatting: Chatting,
         grounded_when_state: bool = True,
     ) -> None:
-        self.router = router
+        self.routting = routting
         self.session_service = session_service
         self.context_service = context_service
         self.plan_create_service = plan_create_service
-        self.chatter = chatter
+        self.chatting = chatting
         self.grounded_when_state = grounded_when_state
 
     def orchestrate(self, message: str, session_id: str) -> TurnResponse:
@@ -73,7 +73,7 @@ class OrchestratorService:
         memory = self.context_service.get_context(req.session_id)
 
         # 3) Route
-        route_result = self.router.route(
+        route_result = self.routting.route(
             RouteInput(req.user_utterance, session, context_messages=context_messages)
         )
         routing = self._sanitize_routing(route_result.routing, session, telemetry)
@@ -176,7 +176,7 @@ class OrchestratorService:
         if routing.intent in ("PLAN_QA", "PLAN_EDIT", "PLAN_CREATE"):
             constraints = {"grounded": self.grounded_when_state}
 
-        return self.chatter.realize(
+        return self.chatting.realize(
             RealizeRequest(
                 utterance=req.user_utterance,
                 routing=routing,

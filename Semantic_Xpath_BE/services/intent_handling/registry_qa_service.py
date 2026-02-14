@@ -2,7 +2,7 @@
 Registry QA Service - Handles the REGISTRY_QA intent (stub).
 
 Will list tasks/versions from the registry and format the results
-for the user via the chatter.
+for the user via the chatting service.
 
 Dependencies (to be wired when implemented):
 - expanded registry store (LIST_TASKS, LIST_VERSIONS)
@@ -20,7 +20,7 @@ class RegistryQAService:
     intent: str = "REGISTRY_QA"
 
     def handle(self, ctx: IntentContext) -> HandlerResult:
-        # TODO: implement registry query -> chatter flow
+        # TODO: implement registry query -> chatting flow
         if ctx.routing.requires_clarification and ctx.routing.clarification_question:
             return HandlerResult(
                 stop=True,

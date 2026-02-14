@@ -1,13 +1,13 @@
 """
-Chatter Service - GPT-based response realizer.
+Chatting Service - GPT-based response realizer.
 
-Dispatches to intent-specific chatters to generate user-facing responses:
+Dispatches to intent-specific chatting handlers to generate user-facing responses:
 - CHAT: conversational reply
 - PLAN_CREATE: plan summary + next-step question
 - Clarification: returns the clarification question directly
 - Default: placeholder for unimplemented intents
 
-Migrated from clients/chatter_client.py.
+Migrated from clients/chatting_client.py.
 """
 
 from __future__ import annotations
@@ -20,16 +20,16 @@ from common.types import RealizeRequest
 
 
 _BASE_DIR = Path(__file__).resolve().parents[2]
-_PROMPT_CHAT = _BASE_DIR / "storage" / "prompts" / "chatter" / "chatter_chat.txt"
-_PROMPT_PLAN_CREATE = _BASE_DIR / "storage" / "prompts" / "chatter" / "chatter_plan_create.txt"
-_PROMPT_DEFAULT = _BASE_DIR / "storage" / "prompts" / "chatter" / "chatter_default.txt"
+_PROMPT_CHAT = _BASE_DIR / "storage" / "prompts" / "chatting" / "chatting_chat.txt"
+_PROMPT_PLAN_CREATE = _BASE_DIR / "storage" / "prompts" / "chatting" / "chatting_plan_create.txt"
+_PROMPT_DEFAULT = _BASE_DIR / "storage" / "prompts" / "chatting" / "chatting_default.txt"
 
 
 # ---------------------------------------------------------------------------
-# Base prompt chatter
+# Base prompt chatting
 # ---------------------------------------------------------------------------
 
-class _BasePromptChatter:
+class _BasePromptChatting:
     def __init__(self, client, prompt_path: Optional[Path] = None, max_retries: int = 3) -> None:
         self._client = client
         self._prompt_path = prompt_path
@@ -77,10 +77,10 @@ class _BasePromptChatter:
 
 
 # ---------------------------------------------------------------------------
-# Intent-specific chatters
+# Intent-specific chatting handlers
 # ---------------------------------------------------------------------------
 
-class _ChatChatter(_BasePromptChatter):
+class _ChatChatting(_BasePromptChatting):
     def __init__(self, client, max_retries: int = 3) -> None:
         super().__init__(client=client, prompt_path=_PROMPT_CHAT, max_retries=max_retries)
 
@@ -92,7 +92,7 @@ class _ChatChatter(_BasePromptChatter):
         })
 
 
-class _PlanCreateChatter(_BasePromptChatter):
+class _PlanCreateChatting(_BasePromptChatting):
     def __init__(self, client, max_retries: int = 3) -> None:
         super().__init__(client=client, prompt_path=_PROMPT_PLAN_CREATE, max_retries=max_retries)
 
@@ -107,7 +107,7 @@ class _PlanCreateChatter(_BasePromptChatter):
         })
 
 
-class _ClarificationChatter:
+class _ClarificationChatting:
     def realize(self, req: RealizeRequest) -> str:
         for ctx in (req.registry_context, req.state_context):
             if isinstance(ctx, dict):
@@ -117,7 +117,7 @@ class _ClarificationChatter:
         return "One moment -- please try again."
 
 
-class _DefaultChatter(_BasePromptChatter):
+class _DefaultChatting(_BasePromptChatting):
     def __init__(self, client, max_retries: int = 1) -> None:
         super().__init__(client=client, prompt_path=_PROMPT_DEFAULT, max_retries=max_retries)
 
@@ -126,16 +126,16 @@ class _DefaultChatter(_BasePromptChatter):
 # Public entry point
 # ---------------------------------------------------------------------------
 
-class ChatterService:
-    """Dispatches to the appropriate intent-specific chatter for response generation."""
+class ChattingService:
+    """Dispatches to the appropriate intent-specific chatting handler for response generation."""
 
     def __init__(self, client, max_retries: int = 3) -> None:
         self._client = client
         self._max_retries = max(1, int(max_retries))
-        self._chat = _ChatChatter(client=self._client, max_retries=self._max_retries)
-        self._plan_create = _PlanCreateChatter(client=self._client, max_retries=self._max_retries)
-        self._clarify = _ClarificationChatter()
-        self._default = _DefaultChatter(client=self._client, max_retries=1)
+        self._chat = _ChatChatting(client=self._client, max_retries=self._max_retries)
+        self._plan_create = _PlanCreateChatting(client=self._client, max_retries=self._max_retries)
+        self._clarify = _ClarificationChatting()
+        self._default = _DefaultChatting(client=self._client, max_retries=1)
 
     def realize(self, req: RealizeRequest) -> str:
         if self._has_clarification(req):

@@ -343,6 +343,31 @@ def test_commit_and_load(tmp_path):
     assert "Museum visit" in state.xml_str
 
 
+def test_commit_bootstrap_with_root_replace_and_load(tmp_path):
+    m = mgr(tmp_path)
+    commit = m.commit(
+        task_id="t1",
+        base_version_id="v1",
+        ops=[ReplaceXmlNode(xpath=".", xml_fragment=sample_xml())],
+    )
+    assert commit.status == "OK"
+    assert commit.new_version_id == "v1"
+    state = m.load("t1", "v1")
+    assert "<Trip>" in state.xml_str
+
+
+def test_commit_bootstrap_invalid_xml_fails(tmp_path):
+    m = mgr(tmp_path)
+    commit = m.commit(
+        task_id="t1",
+        base_version_id="v1",
+        ops=[ReplaceXmlNode(xpath=".", xml_fragment="<Trip><Day></Trip>")],
+    )
+    assert commit.status == "FAILED"
+    out_path = tmp_path / "t1" / "v1" / "state.xml"
+    assert not out_path.exists()
+
+
 def test_commit_creates_new_version_folder(tmp_path):
     m = mgr(tmp_path)
     write_base(tmp_path, "t1", "v0", sample_xml())

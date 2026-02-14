@@ -5,6 +5,6 @@ from typing import Protocol
 from common.types import RouteInput, RouteResult
 
 
-class Router(Protocol):
+class Routting(Protocol):
     def route(self, input: RouteInput) -> RouteResult:
         ...

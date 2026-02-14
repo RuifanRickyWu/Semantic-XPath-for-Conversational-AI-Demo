@@ -1,5 +1,5 @@
 """
-Tests for XmlManagerService.
+Tests for TaskStateStore.
 
 Adapted from Semantic_XPath_Demo/refactor/tests/test_xml_manager.py.
 Uses pytest tmp_path for isolated test storage.
@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from services.intent_handling.xml_manager_service import XmlManagerService
+from stores.task_state_store import TaskStateStore
 from common.types import (
     AddXmlNode,
     DeleteXmlNode,
@@ -35,8 +35,8 @@ def sample_xml() -> str:
     )
 
 
-def mgr(tmp_path: Path) -> XmlManagerService:
-    return XmlManagerService(storage_root=tmp_path)
+def mgr(tmp_path: Path) -> TaskStateStore:
+    return TaskStateStore(storage_root=tmp_path)
 
 
 def write_base(root: Path, task_id: str, version_id: str, xml: str) -> Path:
@@ -393,8 +393,8 @@ def test_commit_missing_base_version(tmp_path):
 def test_commit_plan_missing_task_id(tmp_path):
     m = mgr(tmp_path)
     write_base(tmp_path, "t1", "v0", sample_xml())
-    with pytest.raises(ValueError):
-        m.commit(None, "v0", [])
+    commit = m.commit(None, "v0", [])
+    assert commit.status == "FAILED"
 
 
 def test_load_missing_file_raises(tmp_path):
@@ -443,42 +443,3 @@ def test_load_schema_missing_raises(tmp_path):
     m = mgr(tmp_path)
     with pytest.raises(FileNotFoundError):
         m.load_schema("missing")
-
-
-# ---------------------------------------------------------------------------
-# registry mode tests
-# ---------------------------------------------------------------------------
-
-def test_registry_mode_commit_and_load(tmp_path):
-    registry_path = tmp_path / "registry.xml"
-    registry_path.write_text("<Registry></Registry>", encoding="utf-8")
-    m = XmlManagerService(registry_path=registry_path)
-    ops = [AddXmlNode(parent_xpath=".", xml_fragment="<Task id='t1' />")]
-    commit = m.commit(task_id=None, base_version_id=None, ops=ops)
-    assert commit.status == "OK"
-    state = m.load()
-    assert "t1" in state.xml_str
-
-
-def test_registry_load_defaults_task_version(tmp_path):
-    registry_path = tmp_path / "registry.xml"
-    registry_path.write_text("<Registry></Registry>", encoding="utf-8")
-    m = XmlManagerService(registry_path=registry_path)
-    state = m.load()
-    assert state.task_id == "registry"
-    assert state.version_id == "current"
-
-
-def test_load_registry_missing_raises(tmp_path):
-    registry_path = tmp_path / "nonexistent" / "registry.xml"
-    m = XmlManagerService(registry_path=registry_path)
-    with pytest.raises(FileNotFoundError):
-        m.load()
-
-
-def test_commit_registry_ignores_task_version(tmp_path):
-    registry_path = tmp_path / "registry.xml"
-    registry_path.write_text("<Registry />", encoding="utf-8")
-    m = XmlManagerService(registry_path=registry_path)
-    commit = m.commit(task_id="anything", base_version_id="v0", ops=[])
-    assert commit.status == "OK"

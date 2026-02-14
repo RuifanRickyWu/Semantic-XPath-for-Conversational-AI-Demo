@@ -75,7 +75,7 @@ class PlanBuilderService:
             ok, err = self._is_valid_xml(xml_str)
             if ok:
                 root_node = self._xml_to_tree(xml_str)
-                task_name = self._extract_task_name(xml_str, utterance)
+                task_name = self._extract_task_name(xml_str)
                 return TaskState(
                     task_id=task_id,
                     version_id=version_id,
@@ -132,7 +132,7 @@ class PlanBuilderService:
         )
 
     @staticmethod
-    def _extract_task_name(xml_str: str, fallback: str) -> str:
+    def _extract_task_name(xml_str: str) -> Optional[str]:
         try:
             root = ET.fromstring(xml_str)
             title = root.find("./Meta/Title")
@@ -140,4 +140,4 @@ class PlanBuilderService:
                 return (title.text or "").strip()
         except Exception:
             pass
-        return fallback.strip() or "New plan"
+        return None

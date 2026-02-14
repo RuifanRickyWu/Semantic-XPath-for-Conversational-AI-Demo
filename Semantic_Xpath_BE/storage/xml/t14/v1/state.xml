@@ -1,0 +1,97 @@
+<Plan id="t14" version="v1">
+  <Meta>
+    <Title>Beijing 1-Day Classic Highlights (May)</Title>
+    <Summary>One full day covering Beijing signature sights with a strong classic-highlights focus: Great Wall (Mutianyu recommended) plus Tiananmen Square and the Forbidden City. Built for May daylight and crowds, with clear ticketing and backup options if closures or timing changes occur.</Summary>
+  </Meta>
+  <Day number="1" name="Great Wall + Imperial Beijing">
+    <Assumptions>
+      <Item>Day trip in May with long daylight and warm weather; start early to avoid crowds.</Item>
+      <Item>Base is central Beijing (Dongcheng/Xicheng/Chaoyang near subway access).</Item>
+      <Item>Forbidden City requires advance reservation and is typically closed on Mondays.</Item>
+    </Assumptions>
+    <Schedule>
+      <Block start="06:00" end="06:30" title="Depart central Beijing for the Great Wall (Mutianyu)">
+        <Notes>
+          <Item>Best classic wall section for a 1-day plan: scenic, well-preserved, less chaotic than Badaling.</Item>
+          <Item>Transport options: private car/ride-hail, group shuttle, or chartered driver.</Item>
+        </Notes>
+      </Block>
+      <Block start="06:30" end="08:00" title="Transit to Mutianyu Great Wall">
+        <Notes>
+          <Item>Bring water, light breakfast/snacks, sunscreen, and a light layer (mornings can be cool).</Item>
+        </Notes>
+      </Block>
+      <Block start="08:00" end="11:15" title="Mutianyu Great Wall visit (3 hours on the wall)">
+        <Notes>
+          <Item>Take the cable car up (or chairlift) to save time; walk a classic out-and-back on the ramparts.</Item>
+          <Item>Optional: toboggan down for fun and speed (weather permitting).</Item>
+          <Item>Photo priorities: early morning watchtowers and ridge-line views.</Item>
+        </Notes>
+      </Block>
+      <Block start="11:15" end="12:15" title="Quick lunch near Mutianyu or packed picnic">
+        <Notes>
+          <Item>Keep it efficient to protect afternoon palace time.</Item>
+        </Notes>
+      </Block>
+      <Block start="12:15" end="14:15" title="Return to central Beijing">
+        <Notes>
+          <Item>If traffic is heavy, shorten later stops and prioritize Forbidden City interior.</Item>
+        </Notes>
+      </Block>
+      <Block start="14:15" end="14:45" title="Security and entry for Tiananmen Square area">
+        <Notes>
+          <Item>Expect airport-style security and possible ID/passport checks.</Item>
+          <Item>Do not carry prohibited items; leave extra batteries, drones, and large tools behind.</Item>
+        </Notes>
+      </Block>
+      <Block start="14:45" end="15:15" title="Tiananmen Square quick orientation walk">
+        <Notes>
+          <Item>Keep this brief; the main goal is the Forbidden City.</Item>
+        </Notes>
+      </Block>
+      <Block start="15:15" end="18:00" title="Forbidden City (Palace Museum) highlights route">
+        <Notes>
+          <Item>Enter from the south (Meridian Gate) and follow the central axis: major halls and key courtyards.</Item>
+          <Item>Focus stops: Hall of Supreme Harmony area, Palace of Heavenly Purity zone, then exit north (Gate of Divine Might).</Item>
+          <Item>Last entry times can be early; verify on booking day and adjust the Great Wall duration if needed.</Item>
+        </Notes>
+      </Block>
+      <Block start="18:00" end="18:45" title="Jingshan Park sunset viewpoint (optional but recommended)">
+        <Notes>
+          <Item>Short uphill walk; classic panoramic view over the Forbidden City (great in clear May evenings).</Item>
+        </Notes>
+      </Block>
+      <Block start="19:15" end="21:00" title="Classic Beijing dinner (Peking duck or imperial-style cuisine)">
+        <Notes>
+          <Item>Book ahead if possible; ask for a smaller set if dining as two.</Item>
+          <Item>Post-dinner stroll option: nearby hutong lanes for atmosphere if you still have energy.</Item>
+        </Notes>
+      </Block>
+    </Schedule>
+    <BackupsAndVariants>
+      <Variant name="If Forbidden City is closed or sold out">
+        <Item>Swap afternoon to Temple of Heaven (Tiantan): focus on the Hall of Prayer for Good Harvests and surrounding park paths.</Item>
+        <Item>Pair with a hutong neighborhood walk in the early evening.</Item>
+      </Variant>
+      <Variant name="If you want more Temple of Heaven without dropping the Great Wall">
+        <Item>Start earlier (05:00 departure), shorten wall time to about 2 hours, and visit Temple of Heaven before dinner.</Item>
+      </Variant>
+      <Variant name="If you prefer the closest Great Wall logistics">
+        <Item>Choose Badaling for fastest transport options, but expect heavier crowds; go as early as possible.</Item>
+      </Variant>
+    </BackupsAndVariants>
+    <Practicalities>
+      <TicketsAndEntry>
+        <Item>Reserve Forbidden City in advance using your passport details; confirm open day and entry time window.</Item>
+        <Item>Great Wall entry and cable car/toboggan tickets can be purchased on-site or via your transport provider; bring cashless payment options.</Item>
+      </TicketsAndEntry>
+      <WhatToBring>
+        <Item>Passport (or official ID), comfortable walking shoes, sun protection, water, light snacks, and a portable charger.</Item>
+      </WhatToBring>
+      <PacingNotes>
+        <Item>This is a long walking day; use cable car options at the wall to save your legs for the palace.</Item>
+        <Item>Prioritize the Great Wall and Forbidden City as the two core classics; everything else is adjustable.</Item>
+      </PacingNotes>
+    </Practicalities>
+  </Day>
+</Plan>

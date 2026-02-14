@@ -23,6 +23,7 @@ from common.types import (
     HandlerResult,
     IntentMemory,
     RealizeRequest,
+    RegistryApplyRequest,
     RouteInput,
     RoutingDecision,
     SessionSnapshot,
@@ -31,9 +32,15 @@ from common.types import (
     TurnResponse,
     TurnTelemetry,
 )
-from interfaces import Chatting, Routting
+from interfaces import Chatting, Routting, TaskRegistry
+from services.intent_handling.base_chat_service import BaseChatService
+from services.intent_handling.intent_handling_service import IntentContext, IntentHandler
+from services.intent_handling.plan_edit_service import PlanEditService
 from stores.context_store import ContextStore
 from services.intent_handling.plan_create_service import PlanCreateService
+from services.intent_handling.plan_qa_service import PlanQAService
+from services.intent_handling.registry_edit_service import RegistryEditService
+from services.intent_handling.registry_qa_service import RegistryQAService
 from stores.session_store import SessionStore
 
 
@@ -47,14 +54,28 @@ class OrchestratorService:
         context_service: ContextStore,
         plan_create_service: PlanCreateService,
         chatting: Chatting,
+        registry: TaskRegistry | None = None,
+        chat_service: IntentHandler | None = None,
+        plan_qa_service: IntentHandler | None = None,
+        plan_edit_service: IntentHandler | None = None,
+        registry_qa_service: IntentHandler | None = None,
+        registry_edit_service: IntentHandler | None = None,
         grounded_when_state: bool = True,
     ) -> None:
         self.routting = routting
         self.session_service = session_service
         self.context_service = context_service
-        self.plan_create_service = plan_create_service
+        self.registry = registry
         self.chatting = chatting
         self.grounded_when_state = grounded_when_state
+        self.intent_handlers: dict[str, IntentHandler] = {
+            "CHAT": chat_service or BaseChatService(),
+            "PLAN_CREATE": plan_create_service,
+            "PLAN_QA": plan_qa_service or PlanQAService(),
+            "PLAN_EDIT": plan_edit_service or PlanEditService(),
+            "REGISTRY_QA": registry_qa_service or RegistryQAService(),
+            "REGISTRY_EDIT": registry_edit_service or RegistryEditService(),
+        }
 
     def orchestrate(self, message: str, session_id: str) -> TurnResponse:
         """Run the full turn pipeline and return a TurnResponse."""
@@ -67,6 +88,7 @@ class OrchestratorService:
 
         # 1) Load session
         session = self.session_service.get_session(req.session_id)
+        session = self._hydrate_session_from_registry(req.session_id, session)
 
         # 2) Load conversation context
         context_messages = self.context_service.get_messages(req.session_id)
@@ -89,7 +111,14 @@ class OrchestratorService:
             )
 
         # 4) Dispatch to intent handler
-        handler_result = self._dispatch(effective_req, routing, context_messages)
+        handler_result = self._dispatch(
+            effective_req,
+            session,
+            routing,
+            telemetry,
+            memory,
+            context_messages,
+        )
 
         # 5) Realize response
         assistant_message = self._realize_response(
@@ -120,23 +149,27 @@ class OrchestratorService:
     def _dispatch(
         self,
         req: TurnRequest,
+        session: SessionSnapshot,
         routing: RoutingDecision,
+        telemetry: TurnTelemetry,
+        memory,
         context_messages: Optional[list[dict[str, str]]],
     ) -> HandlerResult:
-        # Handle clarification for any intent
-        if routing.requires_clarification and routing.clarification_question:
+        handler = self.intent_handlers.get(routing.intent)
+        if handler is None:
             return HandlerResult(
-                stop=True,
-                generation_hint=routing.clarification_question,
+                session_updates=SessionUpdate(),
             )
 
-        if routing.intent == "PLAN_CREATE":
-            return self.plan_create_service.handle(
-                req, routing, context_messages=context_messages,
-            )
-
-        # CHAT and all other intents: no side effects (stubs for future)
-        return HandlerResult(session_updates=SessionUpdate())
+        ctx = IntentContext(
+            req=req,
+            session=session,
+            routing=routing,
+            telemetry=telemetry,
+            memory=memory,
+            context_messages=context_messages,
+        )
+        return handler.handle(ctx)
 
     # ------------------------------------------------------------------
     # Response realization
@@ -216,6 +249,27 @@ class OrchestratorService:
             routing.registry_op = 1
 
         return routing
+
+    def _hydrate_session_from_registry(
+        self, session_id: str, session: SessionSnapshot
+    ) -> SessionSnapshot:
+        if self.registry is None:
+            return session
+        if session.active_task_id and session.active_version_id:
+            return session
+        registry_result = self.registry.apply(RegistryApplyRequest(action="LIST_TASKS"))
+        active_task_id = registry_result.active_task_id
+        active_version_id = registry_result.active_version_id
+        if not active_task_id or not active_version_id:
+            return session
+        self.session_service.update_session(
+            session_id,
+            SessionUpdate(
+                active_task_id=active_task_id,
+                active_version_id=active_version_id,
+            ),
+        )
+        return self.session_service.get_session(session_id)
 
     # ------------------------------------------------------------------
     # Turn recording

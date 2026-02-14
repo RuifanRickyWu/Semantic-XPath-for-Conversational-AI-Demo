@@ -19,15 +19,20 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from clients.openai_client import OpenAIClient
 from services.chatting.chatting_service import ChattingService
+from services.intent_handling.base_chat_service import BaseChatService
+from services.intent_handling.plan_edit_service import PlanEditService
 from services.intent_handling.plan_builder_service import PlanBuilderService
 from services.intent_handling.plan_create_service import PlanCreateService
-from services.intent_handling.xml_manager_service import XmlManagerService
+from services.intent_handling.plan_qa_service import PlanQAService
+from services.intent_handling.registry_edit_service import RegistryEditService
+from services.intent_handling.registry_qa_service import RegistryQAService
 from services.orchestrator_service import OrchestratorService
 from services.routting.routting_service import RouttingService
 from stores.context_store import ContextStore
 from stores.registry_store import RegistryStore
 from stores.session_store import SessionStore
-from stores.state_store import StateStore
+from stores.task_state_store import TaskStateStore
+from stores.xml_manager import XmlManager
 
 
 def build_orchestrator() -> OrchestratorService:
@@ -40,16 +45,20 @@ def build_orchestrator() -> OrchestratorService:
 
     session_store = SessionStore()
     context_store = ContextStore()
-    registry_store = RegistryStore()
-    state_store = StateStore()
-    xml_state_manager = XmlManagerService()
+    xml_manager = XmlManager()
+    registry_store = RegistryStore(xml_manager=xml_manager)
+    state_store = TaskStateStore(xml_manager=xml_manager)
 
     plan_create_service = PlanCreateService(
         registry=registry_store,
         plan_builder=plan_builder_service,
         state_store=state_store,
-        xml_state_manager=xml_state_manager,
     )
+    chat_service = BaseChatService()
+    plan_qa_service = PlanQAService()
+    plan_edit_service = PlanEditService()
+    registry_qa_service = RegistryQAService()
+    registry_edit_service = RegistryEditService()
 
     return OrchestratorService(
         routting=routting_service,
@@ -57,6 +66,12 @@ def build_orchestrator() -> OrchestratorService:
         context_service=context_store,
         plan_create_service=plan_create_service,
         chatting=chatting_service,
+        registry=registry_store,
+        chat_service=chat_service,
+        plan_qa_service=plan_qa_service,
+        plan_edit_service=plan_edit_service,
+        registry_qa_service=registry_qa_service,
+        registry_edit_service=registry_edit_service,
     )
 
 

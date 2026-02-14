@@ -11,19 +11,14 @@ Dependencies (to be wired when implemented):
 from __future__ import annotations
 
 from common.types import HandlerResult, SessionUpdate
-from services.intent_handling.intent_context import IntentContext
+from services.intent_handling.intent_handling_service import IntentContext, BaseIntentHandler
 
 
-class RegistryEditService:
+class RegistryEditService(BaseIntentHandler):
     """Stub handler for REGISTRY_EDIT intent."""
 
     intent: str = "REGISTRY_EDIT"
 
-    def handle(self, ctx: IntentContext) -> HandlerResult:
+    def _handle_impl(self, ctx: IntentContext) -> HandlerResult:
         # TODO: implement registry mutation -> session update flow
-        if ctx.routing.requires_clarification and ctx.routing.clarification_question:
-            return HandlerResult(
-                stop=True,
-                generation_hint=ctx.routing.clarification_question,
-            )
         return HandlerResult(session_updates=SessionUpdate())

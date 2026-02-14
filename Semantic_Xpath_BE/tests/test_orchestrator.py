@@ -22,10 +22,12 @@ from common.types import (
     RouteInput,
     RouteResult,
     RoutingDecision,
+    RegistryApplyResult,
     SessionSnapshot,
     SessionUpdate,
     TurnRequest,
 )
+from services.intent_handling.intent_handling_service import IntentContext
 from services.orchestrator_service import OrchestratorService
 from stores.context_store import ContextStore
 from stores.session_store import SessionStore
@@ -55,8 +57,8 @@ class StubPlanCreateService:
         self.result = result or HandlerResult(session_updates=SessionUpdate())
         self.last_args: Optional[tuple] = None
 
-    def handle(self, req, routing, context_messages=None) -> HandlerResult:
-        self.last_args = (req, routing, context_messages)
+    def handle(self, ctx: IntentContext) -> HandlerResult:
+        self.last_args = (ctx.req, ctx.routing, ctx.context_messages)
         return self.result
 
 
@@ -69,6 +71,16 @@ class RecordingChatting:
     def realize(self, req: RealizeRequest) -> str:
         self.requests.append(req)
         return "ok"
+
+
+class StubRegistry:
+    def __init__(self, result: RegistryApplyResult) -> None:
+        self.result = result
+        self.last_action: str | None = None
+
+    def apply(self, req):
+        self.last_action = req.action
+        return self.result
 
 
 # ---------------------------------------------------------------------------
@@ -95,6 +107,7 @@ def make_orchestrator(
     route_result: RouteResult,
     plan_create_result: HandlerResult | None = None,
     context_service: ContextStore | None = None,
+    registry=None,
 ):
     routting = StubRoutting(route_result)
     session_store = SessionStore()
@@ -108,6 +121,7 @@ def make_orchestrator(
         context_service=ctx_store,
         plan_create_service=plan_create,
         chatting=chatting,
+        registry=registry,
     )
     return orchestrator, routting, session_store, plan_create, chatting
 
@@ -250,3 +264,21 @@ def test_orchestrator_records_intent_memory_with_reformulated_utterance():
     assert ctx.intent_memory is not None
     assert ctx.intent_memory.last_user_utterance == "clean"
     assert ctx.intent_memory.last_intent == "CHAT"
+
+
+def test_orchestrator_hydrates_session_from_registry_when_empty():
+    routing = mk_routing("CHAT", 0)
+    route_result = RouteResult(routing=routing, effective_utterance="hello")
+    registry = StubRegistry(
+        RegistryApplyResult(active_task_id="t99", active_version_id="v7")
+    )
+    orchestrator, _, session_store, _, _ = make_orchestrator(
+        route_result, registry=registry
+    )
+
+    orchestrator.orchestrate("hello", "s1")
+
+    session = session_store.get_session("s1")
+    assert session.active_task_id == "t99"
+    assert session.active_version_id == "v7"
+    assert registry.last_action == "LIST_TASKS"

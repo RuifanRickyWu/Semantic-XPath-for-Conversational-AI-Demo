@@ -1,0 +1,148 @@
+<Plan id="t13" version="v1">
+  <Meta>
+    <Title>Toronto in 1 Day (Late November) - Food-First Itinerary</Title>
+    <Summary>A compact, food-centric day in Toronto featuring markets, iconic food neighborhoods, and a mix of quick bites and a sit-down dinner. Optimized for late November (cold/rain possible) with indoor-heavy stops and easy transit via TTC/subway or short rideshares.</Summary>
+  </Meta>
+
+  <Day number="1" date_window="Late November" base_area_suggestion="Downtown / Queen West / Kensington for easy access">
+    <KeyNotes>
+      <Note>Weather: expect cold and possible rain. Wear warm layers and waterproof shoes; keep indoor backups (St. Lawrence Market, PATH, Eaton Centre).</Note>
+      <Note>Reservations: book dinner (and any tasting menu) 1-2 weeks ahead; weekends fill fast.</Note>
+      <Note>Transit: use PRESTO or contactless tap on TTC; most stops are subway + short walks.</Note>
+      <Note>Dietary: this route works well for omnivore; swap in vegetarian options easily in Kensington/Chinatown and Queen West.</Note>
+    </KeyNotes>
+
+    <Schedule>
+      <Block start="09:00" end="10:15">
+        <Title>Breakfast in Queen West / Trinity Bellwoods area</Title>
+        <Details>
+          <Item>Pick a high-quality cafe or brunch spot for coffee + pastry or a full breakfast.</Item>
+          <Item>Keep it light to save room for market grazing.</Item>
+        </Details>
+        <Options>
+          <Option>Classic cafe breakfast (espresso + baked goods)</Option>
+          <Option>Hearty brunch (eggs, pancakes) if you will skip a mid-morning snack</Option>
+        </Options>
+      </Block>
+
+      <Transit>
+        <From>Queen West area</From>
+        <To>St. Lawrence Market (Front St E)</To>
+        <Mode>TTC (streetcar/subway) or rideshare</Mode>
+        <TimeEstimate>20-35 minutes</TimeEstimate>
+      </Transit>
+
+      <Block start="10:45" end="12:30">
+        <Title>St. Lawrence Market crawl (core food stop)</Title>
+        <Details>
+          <Item>Do a grazing loop: pick 2-3 small bites instead of one large meal.</Item>
+          <Item>Sample Ontario cheeses, baked goods, peameal bacon sandwich, and/or prepared foods (soups, hot counters).</Item>
+          <Item>If open, add the St. Lawrence Market complex surroundings for quick photos and short walks.</Item>
+        </Details>
+        <PracticalTips>
+          <Tip>Arrive before peak lunch rush for shorter lines.</Tip>
+          <Tip>Bring a small tote; many vendors sell packaged treats for later.</Tip>
+        </PracticalTips>
+      </Block>
+
+      <Block start="12:30" end="13:15">
+        <Title>Quick downtown walk: Distillery District or Waterfront (optional)</Title>
+        <Details>
+          <Item>If weather is decent: take a short stroll for atmosphere.</Item>
+          <Item>If weather is bad: swap for an indoor break (coffee/tea nearby or PATH exploration).</Item>
+        </Details>
+        <WeatherBackup>Go indoors (PATH, coffee stop, or a short museum visit) to stay warm and dry.</WeatherBackup>
+      </Block>
+
+      <Transit>
+        <From>Downtown east (St. Lawrence area)</From>
+        <To>Kensington Market + Chinatown</To>
+        <Mode>TTC (streetcar/subway) or rideshare</Mode>
+        <TimeEstimate>20-30 minutes</TimeEstimate>
+      </Transit>
+
+      <Block start="13:45" end="16:15">
+        <Title>Kensington Market + Chinatown: snacks, groceries, and food neighborhoods</Title>
+        <Details>
+          <Item>Wander Kensington for international grocers, bakeries, taco counters, and casual bites.</Item>
+          <Item>Walk into Chinatown for dumplings/noodles, bubble tea, and bakeries.</Item>
+          <Item>Target 2 snack stops + 1 sweet stop (share portions if possible).</Item>
+        </Details>
+        <SuggestedBiteTypes>
+          <Type>Dumplings or hand-pulled noodles</Type>
+          <Type>Tacos or Latin American snack</Type>
+          <Type>Bakery item (Portuguese-style pastry, Chinese bakery bun, or specialty donut)</Type>
+          <Type>Warm drink (tea/coffee) to stay comfortable in cold weather</Type>
+        </SuggestedBiteTypes>
+        <PracticalTips>
+          <Tip>Many shops are cashless or card-only; keep a card handy.</Tip>
+          <Tip>Late November can be windy; plan short outdoor segments and warm-up stops.</Tip>
+        </PracticalTips>
+      </Block>
+
+      <Block start="16:15" end="17:15">
+        <Title>Rest / hotel reset / pre-dinner drink (near your dinner neighborhood)</Title>
+        <Details>
+          <Item>Return to hotel to drop bags and warm up, or choose a cozy bar/cafe.</Item>
+          <Item>If you want more food shopping: grab packaged treats (chocolate, coffee beans, spice blends) for souvenirs.</Item>
+        </Details>
+      </Block>
+
+      <Block start="18:00" end="20:00">
+        <Title>Dinner: pick one neighborhood anchor meal</Title>
+        <Details>
+          <Item>Choose based on what you did earlier (avoid repeating cuisines).</Item>
+          <Item>Good dinner zones: Queen West / Ossington, Little Italy, King West, or Dundas West.</Item>
+        </Details>
+        <DinnerStyles>
+          <Style>Comfort-focused (late-November friendly): ramen, Italian, modern Canadian, or bistro</Style>
+          <Style>Trendy small plates: shareable dishes, good for trying more items</Style>
+          <Style>High-end tasting: only if you are willing to reduce daytime grazing</Style>
+        </DinnerStyles>
+        <ReservationNote>Reserve if dining Fri-Sun or at popular spots.</ReservationNote>
+      </Block>
+
+      <Block start="20:15" end="22:00">
+        <Title>Dessert + evening stroll (short and flexible)</Title>
+        <Details>
+          <Item>Pick a dessert specialist (ice cream, baked goods, or chocolate) and a warm drink.</Item>
+          <Item>If weather allows: short walk along Queen West or Entertainment District lights.</Item>
+          <Item>If weather is poor: choose an indoor cocktail bar or late-night cafe.</Item>
+        </Details>
+      </Block>
+    </Schedule>
+
+    <FoodFocusAddOns optional="true">
+      <AddOn>
+        <Title>Extra market option (if you love food halls)</Title>
+        <Details>
+          <Item>Swap the afternoon block for an indoor food hall (good for cold/rainy days).</Item>
+        </Details>
+      </AddOn>
+      <AddOn>
+        <Title>Take-home list</Title>
+        <Details>
+          <Item>Local roasted coffee beans</Item>
+          <Item>Ontario maple products</Item>
+          <Item>Small-batch chocolate or baked goods</Item>
+          <Item>Spices or sauces from Chinatown/Kensington grocers</Item>
+        </Details>
+      </AddOn>
+    </FoodFocusAddOns>
+
+    <Logistics>
+      <BudgetBands>
+        <Band name="Value">Market grazing + casual dinner</Band>
+        <Band name="Mid">Market grazing + nicer sit-down dinner + drinks</Band>
+        <Band name="High">Tasting menu dinner + selective daytime bites</Band>
+      </BudgetBands>
+      <GettingAround>
+        <Item>Primary: TTC subway/streetcar</Item>
+        <Item>Secondary: rideshare for time savings in cold weather</Item>
+      </GettingAround>
+      <PacingRule>
+        <Rule>Max 3 major eating events: breakfast, market crawl, dinner. Keep the rest as small snacks.</Rule>
+      </PacingRule>
+    </Logistics>
+  </Day>
+</Plan>

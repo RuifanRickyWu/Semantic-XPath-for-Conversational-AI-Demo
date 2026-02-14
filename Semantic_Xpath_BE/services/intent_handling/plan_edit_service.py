@@ -15,19 +15,14 @@ Dependencies (to be wired when implemented):
 from __future__ import annotations
 
 from common.types import HandlerResult, SessionUpdate
-from services.intent_handling.intent_context import IntentContext
+from services.intent_handling.intent_handling_service import IntentContext, BaseIntentHandler
 
 
-class PlanEditService:
+class PlanEditService(BaseIntentHandler):
     """Stub handler for PLAN_EDIT intent."""
 
     intent: str = "PLAN_EDIT"
 
-    def handle(self, ctx: IntentContext) -> HandlerResult:
+    def _handle_impl(self, ctx: IntentContext) -> HandlerResult:
         # TODO: implement retriever -> edit_planner -> xml_manager -> validator flow
-        if ctx.routing.requires_clarification and ctx.routing.clarification_question:
-            return HandlerResult(
-                stop=True,
-                generation_hint=ctx.routing.clarification_question,
-            )
         return HandlerResult(session_updates=SessionUpdate())

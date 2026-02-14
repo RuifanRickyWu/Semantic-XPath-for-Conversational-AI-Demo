@@ -32,6 +32,8 @@ RegistryAction = Literal[
     "SWITCH_VERSION",
     "CREATE_TASK",
     "CREATE_VERSION",
+    "UPDATE_TASK_METADATA",
+    "UPDATE_VERSION_METADATA",
     "NONE",
 ]
 

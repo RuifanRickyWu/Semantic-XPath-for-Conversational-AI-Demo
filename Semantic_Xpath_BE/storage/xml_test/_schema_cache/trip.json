@@ -1,0 +1,39 @@
+{
+  "root": "Trip",
+  "node_types": [
+    "Block",
+    "Day",
+    "Item",
+    "Trip"
+  ],
+  "attributes": {
+    "Trip": [],
+    "Day": [
+      "id"
+    ],
+    "Block": [
+      "id"
+    ],
+    "Item": [
+      "id"
+    ]
+  },
+  "children": {
+    "Trip": [
+      "Day"
+    ],
+    "Day": [
+      "Block"
+    ],
+    "Block": [
+      "Item"
+    ],
+    "Item": []
+  },
+  "paths": [
+    "/Trip",
+    "/Trip/Day",
+    "/Trip/Day/Block",
+    "/Trip/Day/Block/Item"
+  ]
+}

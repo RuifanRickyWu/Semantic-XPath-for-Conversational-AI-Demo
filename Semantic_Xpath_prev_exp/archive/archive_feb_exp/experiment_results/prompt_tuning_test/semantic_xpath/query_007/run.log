@@ -1,4 +1,0 @@
-2026-02-03 23:33:30,119 - INFO - Query: List all expensive restaurants that are not serving Italian cuisine.
-2026-02-03 23:33:30,119 - INFO - Running query 7: List all expensive restaurants that are not serving Italian cuisine.
-2026-02-03 23:33:56,911 - INFO -   Operation: READ, Success: True, Time: 26793.6ms
-2026-02-03 23:33:56,911 - INFO - Result: READ, Success: True

@@ -1,15 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { postColdStart } from "../../api/coldStartApi";
-import type { ColdStartResponse } from "../../types/coldStart";
+import { postChat } from "../../api/chatApi";
+import type { ChatResponseType } from "../../types/chat";
 import "./MainPage.css";
 
 interface ChatMessage {
   role: "user" | "system";
   content: string;
+  /** Response type from backend — drives rendering behavior */
+  type?: ChatResponseType;
   title?: string;
   isLoading?: boolean;
-  result?: ColdStartResponse;
 }
 
 interface LocationState {
@@ -29,6 +30,9 @@ export default function MainPage() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const initialQueryHandled = useRef(false);
+
+  // Generate a stable session ID for this page instance
+  const sessionIdRef = useRef<string>(crypto.randomUUID());
 
   // Handle initial query from LandingPage
   useEffect(() => {
@@ -62,14 +66,16 @@ export default function MainPage() {
     setIsLoading(true);
 
     try {
-      const result: ColdStartResponse = await postColdStart(query);
+      const result = await postChat(query, sessionIdRef.current);
 
       if (result.success) {
         const systemMessage: ChatMessage = {
           role: "system",
-          content: result.user_facing || "Plan generated successfully.",
-          title: extractTitle(result.user_facing),
-          result,
+          content: result.message || "Done.",
+          type: result.type,
+          title: result.type === "PLAN_CREATE"
+            ? extractTitle(result.message)
+            : undefined,
         };
         setMessages((prev) => [...prev.slice(0, -1), systemMessage]);
       } else {
@@ -136,7 +142,7 @@ export default function MainPage() {
     );
   }
 
-  /** Render a single system message block */
+  /** Render a single system message block — dispatches by response type */
   function renderSystemMessage(msg: ChatMessage, index: number) {
     if (msg.isLoading) {
       return (
@@ -158,6 +164,40 @@ export default function MainPage() {
       );
     }
 
+    // Dispatch rendering based on response type
+    switch (msg.type) {
+      case "CHAT":
+        return renderChatMessage(msg, index);
+      case "PLAN_CREATE":
+        return renderPlanCreateMessage(msg, index);
+      // Future intent types — placeholder rendering for now
+      case "PLAN_QA":
+      case "PLAN_EDIT":
+      case "REGISTRY_QA":
+      case "REGISTRY_EDIT":
+        return renderDefaultMessage(msg, index);
+      default:
+        return renderDefaultMessage(msg, index);
+    }
+  }
+
+  /** CHAT type: simple conversational reply — inline text next to logo, no title */
+  function renderChatMessage(msg: ChatMessage, index: number) {
+    return (
+      <div key={index} className="msg-block msg-block-system">
+        <div className="msg-chat-row">
+          <div className="msg-system-logo">
+            <img src="/assets/logo-icon.svg" alt="" width="24" height="24" />
+          </div>
+          <p className="msg-chat-text">{msg.content}</p>
+        </div>
+        <div className="msg-divider msg-divider-full" />
+      </div>
+    );
+  }
+
+  /** PLAN_CREATE type: title + plan icon + formatted plan content */
+  function renderPlanCreateMessage(msg: ChatMessage, index: number) {
     const lines = msg.content.split("\n");
     const bodyLines = lines.slice(msg.title ? 1 : 0);
 
@@ -226,6 +266,22 @@ export default function MainPage() {
             );
           })}
         </div>
+        <div className="msg-divider msg-divider-full" />
+      </div>
+    );
+  }
+
+  /** Default rendering for unimplemented or unknown types */
+  function renderDefaultMessage(msg: ChatMessage, index: number) {
+    return (
+      <div key={index} className="msg-block msg-block-system">
+        <div className="msg-chat-row">
+          <div className="msg-system-logo">
+            <img src="/assets/logo-icon.svg" alt="" width="24" height="24" />
+          </div>
+          <p className="msg-chat-text">{msg.content}</p>
+        </div>
+        <div className="msg-divider msg-divider-full" />
       </div>
     );
   }

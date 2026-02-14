@@ -1,7 +1,0 @@
-2025-12-21 21:03:35 | INFO | Pipeline initialized. Session ID: 20251221_210335
-2025-12-21 21:03:35 | INFO | CLI session started
-2025-12-21 21:03:50 | INFO | User request: Find all place in day 1
-2025-12-21 21:03:52 | INFO | Generated XPath: /Itinerary/Day[1]/POI
-2025-12-21 21:03:52 | DEBUG | TRACE: {"timestamp": "2025-12-21T21:03:52.430447", "user_request": "Find all place in day 1", "xpath_query": "/Itinerary/Day[1]/POI"}
-2025-12-21 21:06:34 | INFO | Session saved to: /Users/rwu/dev/LLM-VM/reasoning_traces/logs/session_20251221_210335.json
-2025-12-21 21:06:34 | INFO | CLI session ended by user

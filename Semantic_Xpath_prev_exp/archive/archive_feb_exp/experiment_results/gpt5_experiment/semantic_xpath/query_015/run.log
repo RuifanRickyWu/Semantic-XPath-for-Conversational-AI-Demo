@@ -1,4 +1,0 @@
-2026-02-04 00:17:07,463 - INFO - Query: I'd like to end the first day with some live music. Add Pj O'Brien's to the end of Day 1.
-2026-02-04 00:17:07,463 - INFO - Running query 15: I'd like to end the first day with some live music. Add Pj O'Brien's to the end of Day 1.
-2026-02-04 00:17:24,068 - INFO -   Operation: CREATE, Success: True, Time: 16605.0ms
-2026-02-04 00:17:24,068 - INFO - Result: CREATE, Success: True

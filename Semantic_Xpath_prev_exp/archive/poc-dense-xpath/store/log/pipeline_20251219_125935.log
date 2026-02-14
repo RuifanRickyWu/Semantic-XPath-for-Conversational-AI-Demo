@@ -1,7 +1,0 @@
-2025-12-19 12:59:35 | INFO | CLI session started
-2025-12-19 13:01:01 | INFO | User request: find jazz related resterant in all days
-2025-12-19 13:01:01 | INFO | Generated query: /Itinerary/Day/Restaurant/[description =~ "jazz"]
-2025-12-19 13:01:01 | INFO | Executing query: /Itinerary/Day/Restaurant/[description =~ "jazz"]
-2025-12-19 13:01:11 | INFO | Found 1 matching nodes
-2025-12-19 13:01:11 | INFO |   - Restaurant: The Rex Hotel Jazz & Blues Bar
-2025-12-19 13:02:01 | INFO | CLI session interrupted

@@ -1,4 +1,0 @@
-2026-02-04 00:13:47,987 - INFO - Query: On the day we go to the ROM, cancel the breakfast. 
-2026-02-04 00:13:47,987 - INFO - Running query 10: On the day we go to the ROM, cancel the breakfast. 
-2026-02-04 00:14:34,436 - INFO -   Operation: DELETE, Success: False, Time: 46448.1ms
-2026-02-04 00:14:34,436 - INFO - Result: DELETE, Success: False

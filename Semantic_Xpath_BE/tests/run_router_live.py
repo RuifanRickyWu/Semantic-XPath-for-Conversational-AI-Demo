@@ -18,11 +18,11 @@ BE_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BE_ROOT))
 
 from clients.openai_client import OpenAIClient
-from clients.router_client import RouterClient
+from services.router_service import RouterService
 from common.types import RouteInput, SessionSnapshot
 
 
-def run_case(router: RouterClient, utterance: str, session: SessionSnapshot) -> None:
+def run_case(router: RouterService, utterance: str, session: SessionSnapshot) -> None:
     result = router.route(RouteInput(utterance, session))
     print("-")
     print("utterance:", utterance)
@@ -39,7 +39,7 @@ def main() -> None:
         print("OPENAI_API_KEY is not set. Live router calls will fail.")
 
     client = OpenAIClient()
-    router = RouterClient(client=client)
+    router = RouterService(client=client)
 
     cases = [
         ("Hello", SessionSnapshot()),

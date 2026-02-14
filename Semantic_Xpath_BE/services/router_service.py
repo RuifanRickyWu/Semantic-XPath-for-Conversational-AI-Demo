@@ -1,11 +1,11 @@
 """
-Router Client - GPT-based intent classifier for user utterances.
+Router Service - GPT-based intent classifier for user utterances.
 
 Classifies each utterance into one of the supported intents
 (CHAT, PLAN_CREATE, PLAN_QA, PLAN_EDIT, REGISTRY_QA, REGISTRY_EDIT)
 and decides whether a registry operation is required.
 
-Migrated from Semantic_XPath_Demo/refactor/components/router/gpt_router.py.
+Migrated from clients/router_client.py.
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ _VALID_INTENTS = {
 }
 
 
-class RouterClient:
+class RouterService:
     """GPT-based intent router."""
 
     def __init__(

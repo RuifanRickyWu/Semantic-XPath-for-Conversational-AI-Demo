@@ -1,10 +1,10 @@
 """
-Plan Builder Client - GPT-based initial plan XML generator.
+Plan Builder Service - GPT-based initial plan XML generator.
 
 Takes a user utterance and produces a complete XML plan document
 with Meta (Title, Summary) and structural content.
 
-Migrated from Semantic_XPath_Demo/refactor/components/plan_builder/gpt_plan_builder.py.
+Migrated from clients/plan_builder_client.py.
 """
 
 from __future__ import annotations
@@ -18,11 +18,11 @@ from common.utils import safe_json_dumps, strip_none
 from common.types import TaskState, TreeNode
 
 
-_BASE_DIR = Path(__file__).resolve().parents[1]
+_BASE_DIR = Path(__file__).resolve().parents[2]
 _PROMPT_PATH = _BASE_DIR / "storage" / "prompts" / "planner" / "plan_builder.txt"
 
 
-class PlanBuilderClient:
+class PlanBuilderService:
     """Generates initial plan XML from a user utterance via GPT."""
 
     def __init__(

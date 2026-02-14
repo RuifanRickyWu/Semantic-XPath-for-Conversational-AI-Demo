@@ -18,7 +18,7 @@ from common.types import (
     SessionUpdate,
     TurnRequest,
 )
-from clients.plan_builder_client import PlanBuilderClient
+from services.intent_handling.plan_builder_service import PlanBuilderService
 from stores.registry_store import RegistryStore
 from stores.state_store import StateStore
 
@@ -32,7 +32,7 @@ class PlanCreateService:
         self,
         registry: RegistryStore,
         state_store: StateStore,
-        plan_builder: PlanBuilderClient,
+        plan_builder: PlanBuilderService,
         commit_mode: str = "CREATE_NEW_VERSION",
     ) -> None:
         self.registry = registry

@@ -1,5 +1,5 @@
 """
-Chatter Client - GPT-based response realizer.
+Chatter Service - GPT-based response realizer.
 
 Dispatches to intent-specific chatters to generate user-facing responses:
 - CHAT: conversational reply
@@ -7,7 +7,7 @@ Dispatches to intent-specific chatters to generate user-facing responses:
 - Clarification: returns the clarification question directly
 - Default: placeholder for unimplemented intents
 
-Migrated from Semantic_XPath_Demo/refactor/components/chatter/gpt_chatter.py.
+Migrated from clients/chatter_client.py.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ from common.utils import safe_json_dumps, strip_none
 from common.types import RealizeRequest
 
 
-_BASE_DIR = Path(__file__).resolve().parents[1]
+_BASE_DIR = Path(__file__).resolve().parents[2]
 _PROMPT_CHAT = _BASE_DIR / "storage" / "prompts" / "chatter" / "chatter_chat.txt"
 _PROMPT_PLAN_CREATE = _BASE_DIR / "storage" / "prompts" / "chatter" / "chatter_plan_create.txt"
 _PROMPT_DEFAULT = _BASE_DIR / "storage" / "prompts" / "chatter" / "chatter_default.txt"
@@ -126,7 +126,7 @@ class _DefaultChatter(_BasePromptChatter):
 # Public entry point
 # ---------------------------------------------------------------------------
 
-class ChatterClient:
+class ChatterService:
     """Dispatches to the appropriate intent-specific chatter for response generation."""
 
     def __init__(self, client, max_retries: int = 3) -> None:

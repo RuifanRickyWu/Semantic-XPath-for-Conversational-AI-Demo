@@ -13,9 +13,9 @@ from flask import Flask
 from flask_cors import CORS
 
 from clients.openai_client import OpenAIClient
-from clients.router_client import RouterClient
-from clients.chatter_client import ChatterClient
-from clients.plan_builder_client import PlanBuilderClient
+from services.router_service import RouterService
+from services.chatter.chatter_service import ChatterService
+from services.intent_handling.plan_builder_service import PlanBuilderService
 from stores.context_store import ContextStore
 from stores.session_store import SessionStore
 from stores.registry_store import RegistryStore
@@ -35,11 +35,11 @@ def create_app() -> Flask:
     openai_client = OpenAIClient()
 
     # ------------------------------------------------------------------
-    # 2. Low-level clients (depend on openai_client)
+    # 2. Services that wrap the OpenAI client
     # ------------------------------------------------------------------
-    router_client = RouterClient(client=openai_client)
-    chatter_client = ChatterClient(client=openai_client)
-    plan_builder_client = PlanBuilderClient(client=openai_client)
+    router_service = RouterService(client=openai_client)
+    chatter_service = ChatterService(client=openai_client)
+    plan_builder_service = PlanBuilderService(client=openai_client)
 
     # ------------------------------------------------------------------
     # 3. Stateful stores (no external dependencies)
@@ -55,15 +55,15 @@ def create_app() -> Flask:
     plan_create_service = PlanCreateService(
         registry=registry_store,
         state_store=state_store,
-        plan_builder=plan_builder_client,
+        plan_builder=plan_builder_service,
     )
 
     orchestrator = OrchestratorService(
-        router=router_client,
+        router=router_service,
         session_service=session_store,
         context_service=context_store,
         plan_create_service=plan_create_service,
-        chatter=chatter_client,
+        chatter=chatter_service,
     )
 
     # ------------------------------------------------------------------

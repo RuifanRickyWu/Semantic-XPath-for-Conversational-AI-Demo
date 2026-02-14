@@ -1,9 +1,8 @@
 """
-Clients module - External dependency adapters.
+Clients module - Pure API wrappers for external models and services.
 
 Import individual clients directly from their modules:
   from clients.openai_client import OpenAIClient
-  from clients.router_client import RouterClient
-  from clients.chatter_client import ChatterClient
-  from clients.plan_builder_client import PlanBuilderClient
+  from clients.bart_client import BartNLIClient
+  from clients.tas_b_client import TASBClient
 """

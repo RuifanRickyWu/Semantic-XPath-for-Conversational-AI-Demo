@@ -1,24 +1,211 @@
 """
-Registry Edit Service - Handles the REGISTRY_EDIT intent (stub).
+Registry Edit Service - Handles the REGISTRY_EDIT intent.
 
-Will perform registry mutations: activate task, switch version,
-create new version, etc.
-
-Dependencies (to be wired when implemented):
-- expanded registry store (ACTIVATE_TASK, SWITCH_VERSION, CREATE_VERSION)
+Performs registry mutations: activate task, switch version.
+- Task intent (TARGET: tasks): activate task, use task's active_version_id
+- Version intent (TARGET: versions): switch to specified version, task_id from parent
+Registry store persists changes to XML on apply().
 """
 
 from __future__ import annotations
 
-from common.types import HandlerResult, SessionUpdate
+from typing import Any, Dict, List, Optional, Tuple
+
+from common.types import (
+    HandlerResult,
+    IntentResult,
+    RegistryApplyRequest,
+    RegistryApplyResult,
+    SessionUpdate,
+)
+from interfaces import TaskRegistry
 from services.intent_handling.intent_handling_service import IntentContext, BaseIntentHandler
+from services.query_generation.models import QueryGenerationRequest, QueryGenerationResult
+
+
+def _get_registry_schema(registry: Any) -> Optional[dict]:
+    """Get registry schema if the registry supports it."""
+    getter = getattr(registry, "get_registry_schema", None)
+    return getter() if callable(getter) else None
+
+
+def _get_registry_xml(registry: Any) -> Optional[str]:
+    """Get registry XML if the registry supports it."""
+    getter = getattr(registry, "get_registry_xml", None)
+    return getter() if callable(getter) else None
+
+
+def _extract_ids_from_result(
+    per_node: List[Dict[str, Any]],
+    target: str,
+) -> Tuple[Optional[str], Optional[str]]:
+    """
+    Brute-force extract task_id and version_id from retrieval result.
+    Returns (task_id, version_id).
+    """
+    if not per_node:
+        return None, None
+    entry = per_node[0]
+    node = entry.get("node") or {}
+    node_type = node.get("type", "")
+    attrs = node.get("attributes") or {}
+    tree_path = entry.get("tree_path_display") or entry.get("tree_path") or []
+
+    if target == "tasks":
+        task_id = attrs.get("task_id")
+        version_id = attrs.get("active_version_id")
+        return task_id, version_id
+
+    if target == "versions":
+        version_id = attrs.get("version_id")
+        task_id = None
+        for seg in tree_path:
+            s = seg if isinstance(seg, dict) else {}
+            if s.get("type") == "Task":
+                task_id = (s.get("attributes") or {}).get("task_id")
+                break
+        return task_id, version_id
+
+    return None, None
 
 
 class RegistryEditService(BaseIntentHandler):
-    """Stub handler for REGISTRY_EDIT intent."""
+    """Handler for REGISTRY_EDIT intent; activates task or switches version."""
 
     intent: str = "REGISTRY_EDIT"
 
+    def __init__(
+        self,
+        registry: Optional[TaskRegistry] = None,
+        registry_query_service: Optional[Any] = None,
+        executor: Optional[Any] = None,
+        result_verifier: Optional[Any] = None,
+    ) -> None:
+        self._registry = registry
+        self._registry_query_service = registry_query_service
+        self._executor = executor
+        self._result_verifier = result_verifier
+
     def _handle_impl(self, ctx: IntentContext) -> HandlerResult:
-        # TODO: implement registry mutation -> session update flow
-        return HandlerResult(session_updates=SessionUpdate())
+        registry = self._registry
+        query_service = self._registry_query_service
+        executor = self._executor
+
+        if registry is None:
+            return _result("Registry is not available.")
+
+        if query_service is None:
+            return _result("Registry query service is not configured.")
+
+        if executor is None:
+            return _result("Semantic XPath executor is not configured.")
+
+        schema = _get_registry_schema(registry)
+        if not schema:
+            return _result("Registry schema is not available.")
+
+        registry_xml = _get_registry_xml(registry)
+        if not registry_xml:
+            return _result("Registry XML is not available.")
+
+        request = ctx.routing.get_request(0, ctx.req.user_utterance) or ""
+        active_task_id = ctx.session.active_task_id
+
+        gen_req = QueryGenerationRequest(
+            utterance=request,
+            loaded_schema=schema,
+            intent="REGISTRY_EDIT",
+            context_messages=ctx.context_messages,
+            active_task_id=active_task_id,
+        )
+        gen_result: QueryGenerationResult = query_service.generate(gen_req)
+
+        if not gen_result.parsed_ok or not gen_result.xpath_query:
+            return _result(
+                "I couldn't understand that registry request. "
+                "Try 'open my Paris trip' or 'switch to version 2'."
+            )
+        try:
+            exec_result = executor.execute(
+                query=gen_result.xpath_query,
+                xml_input=registry_xml,
+                schema=schema,
+            )
+        except Exception:
+            return _result("Something went wrong while querying the registry.")
+
+        per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        if not per_node:
+            return _result("No matching task or version found.")
+
+        if self._result_verifier:
+            v_res = self._result_verifier.verify(
+                exec_result,
+                request=request,
+                intent="REGISTRY_EDIT",
+                context={"active_task_id": active_task_id},
+            )
+            per_node = v_res.verified_nodes
+        if not per_node:
+            return _result("No matching task or version found.")
+
+        target = gen_result.registry_target or "tasks"
+        task_id, version_id = _extract_ids_from_result(per_node, target)
+
+        if not task_id:
+            return _result("Could not determine which task to activate.")
+
+        if target == "tasks":
+            apply_res = registry.apply(
+                RegistryApplyRequest(action="ACTIVATE_TASK", task_id=task_id)
+            )
+        else:
+            if not version_id:
+                return _result("Could not determine which version to switch to.")
+            apply_res = registry.apply(
+                RegistryApplyRequest(
+                    action="SWITCH_VERSION",
+                    task_id=task_id,
+                    version_id=version_id,
+                )
+            )
+
+        session_updates = SessionUpdate(
+            active_task_id=apply_res.active_task_id,
+            active_version_id=apply_res.active_version_id,
+        )
+
+        hint = _build_generation_hint(target, apply_res, task_id, version_id)
+        return HandlerResult(
+            session_updates=session_updates,
+            generation_hint=hint,
+            intent_result=IntentResult(
+                intent="REGISTRY_EDIT",
+                generation_hint=hint,
+            ),
+        )
+
+
+def _build_generation_hint(
+    target: str,
+    apply_res: RegistryApplyResult,
+    task_id: Optional[str],
+    version_id: Optional[str],
+) -> str:
+    """Build a short hint for the chatter."""
+    t = apply_res.active_task_id
+    v = apply_res.active_version_id
+    if target == "tasks":
+        return f"Switched to task {t} (version {v})."
+    return f"Switched to version {v} of task {t}."
+
+
+def _result(hint: str) -> HandlerResult:
+    return HandlerResult(
+        session_updates=SessionUpdate(),
+        generation_hint=hint,
+        intent_result=IntentResult(
+            intent="REGISTRY_EDIT",
+            generation_hint=hint,
+        ),
+    )

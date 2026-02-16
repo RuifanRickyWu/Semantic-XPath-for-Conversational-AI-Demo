@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 import xml.etree.ElementTree as ET
 from typing import Any, Dict, Optional, Set
 
+from stores.xml_utils import find_by_path_segments
 from domain.models import (
     CoreAddXmlNode,
     CoreDeleteXmlNode,
@@ -103,9 +104,15 @@ class XmlManager:
             return
 
         if isinstance(op, CoreDeleteXmlNode):
-            node = self._find_node(root, op.xpath)
+            node = (
+                find_by_path_segments(root, op.path_segments)
+                if op.path_segments
+                else self._find_node(root, op.xpath)
+            )
             if node is None:
-                raise ValueError(f"node not found for xpath: {op.xpath}")
+                raise ValueError(
+                    f"node not found for path_segments={op.path_segments!r} or xpath={op.xpath!r}"
+                )
             parent = parent_map.get(node)
             if parent is None:
                 raise ValueError("cannot delete root node")
@@ -113,12 +120,25 @@ class XmlManager:
             return
 
         if isinstance(op, CoreReplaceXmlNode):
-            node = self._find_node(root, op.xpath)
+            if op.path_segments is not None:
+                node = find_by_path_segments(root, op.path_segments)
+            else:
+                node = self._find_node(root, op.xpath or ".")
             if node is None:
-                raise ValueError(f"node not found for xpath: {op.xpath}")
+                raise ValueError(
+                    f"node not found for path_segments={op.path_segments!r} or xpath={op.xpath!r}"
+                )
             parent = parent_map.get(node)
             if parent is None:
-                raise ValueError("cannot replace root node")
+                new_root_elem = ET.fromstring(op.xml_fragment)
+                root.clear()
+                root.tag = new_root_elem.tag
+                root.attrib = dict(new_root_elem.attrib)
+                for child in new_root_elem:
+                    root.append(child)
+                root.text = new_root_elem.text
+                root.tail = new_root_elem.tail
+                return
             new_node = ET.fromstring(op.xml_fragment)
             idx = list(parent).index(node)
             parent.remove(node)

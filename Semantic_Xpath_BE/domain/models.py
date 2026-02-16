@@ -56,13 +56,15 @@ class CoreAddXmlNode:
 
 @dataclass
 class CoreDeleteXmlNode:
-    xpath: str
+    xpath: str = ""
+    path_segments: Optional[list] = None  # [(tag, index), ...] for tree walk
 
 
 @dataclass
 class CoreReplaceXmlNode:
-    xpath: str
-    xml_fragment: str
+    xpath: str = ""
+    xml_fragment: str = ""
+    path_segments: Optional[list] = None  # [(tag, index), ...] for tree walk
 
 
 @dataclass

@@ -1,77 +1,19 @@
-<Registry>
-  <Tasks active_task_id="t14">
-    <Task task_id="t1" active_version_id="v4" task_name="Paris trip" created_at="2026-02-14T09:07:16.018102+00:00" updated_at="2026-02-14T09:11:07.448803+00:00">
-      <Versions>
-        <Version version_id="v1" summary="LLM generated summary" created_at="2026-02-14T09:07:16.018102+00:00" />
-        <Version version_id="v2" summary="Active version summary" created_at="2026-02-14T09:11:07.443512+00:00" />
-        <Version version_id="v3" summary="Add museums" created_at="2026-02-14T09:11:07.445214+00:00" />
-        <Version version_id="v4" summary="Version v4" created_at="2026-02-14T09:11:07.448799+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t10" active_version_id="v1" task_name="B" created_at="2026-02-14T09:11:07.449103+00:00" updated_at="2026-02-14T09:11:07.449103+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.449103+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t11" active_version_id="v1" task_name="One" created_at="2026-02-14T09:11:07.454227+00:00" updated_at="2026-02-14T09:11:07.454227+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.454227+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t12" active_version_id="v1" task_name="Two" created_at="2026-02-14T09:11:07.454600+00:00" updated_at="2026-02-14T09:11:07.454600+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.454600+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t13" active_version_id="v1" task_name="Toronto in 1 Day (Late November) - Food-First Itinerary" created_at="2026-02-14T09:19:03.378820+00:00" updated_at="2026-02-14T09:19:33.927934+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:19:03.378820+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t14" active_version_id="v1" task_name="Beijing 1-Day Classic Highlights (May)" created_at="2026-02-14T09:25:28.699389+00:00" updated_at="2026-02-14T09:25:56.601939+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:25:28.699389+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t2" active_version_id="v1" task_name="Two" created_at="2026-02-14T09:07:16.018225+00:00" updated_at="2026-02-14T09:07:16.018225+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:07:16.018225+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t3" active_version_id="v1" task_name="" created_at="2026-02-14T09:11:07.424429+00:00" updated_at="2026-02-14T09:11:07.424429+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.424429+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t4" active_version_id="v1" task_name="Paris trip" created_at="2026-02-14T09:11:07.437893+00:00" updated_at="2026-02-14T09:11:07.437893+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Planner draft" created_at="2026-02-14T09:11:07.437893+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t5" active_version_id="v1" task_name="" created_at="2026-02-14T09:11:07.440826+00:00" updated_at="2026-02-14T09:11:07.440826+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.440826+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t6" active_version_id="v1" task_name="" created_at="2026-02-14T09:11:07.442028+00:00" updated_at="2026-02-14T09:11:07.442028+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.442028+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t7" active_version_id="v1" task_name="" created_at="2026-02-14T09:11:07.443274+00:00" updated_at="2026-02-14T09:11:07.443274+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.443274+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t8" active_version_id="v1" task_name="" created_at="2026-02-14T09:11:07.444917+00:00" updated_at="2026-02-14T09:11:07.444917+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.444917+00:00" />
-      </Versions>
-    </Task>
-    <Task task_id="t9" active_version_id="v1" task_name="A" created_at="2026-02-14T09:11:07.448467+00:00" updated_at="2026-02-14T09:11:07.448467+00:00">
-      <Versions>
-        <Version version_id="v1" summary="Initial version" created_at="2026-02-14T09:11:07.448467+00:00" />
-      </Versions>
-    </Task>
-  </Tasks>
+<Registry active_task_id="t3">
+  <Task task_id="t1" active_version_id="v5" task_name="Kyoto Cultural Trip" created_at="2026-02-16T06:40:28.479282+00:00" updated_at="2026-02-16T07:03:54.189089+00:00">
+    <Version version_id="v1" summary="Initial version" created_at="2026-02-16T06:40:28.479282+00:00" />
+    <Version version_id="v2" summary="Add a morning temple visit at Kinkaku-ji and an afternoon tea ceremony to Day 1." created_at="2026-02-16T06:51:49.140752+00:00" />
+    <Version version_id="v3" summary="Add a ramen restaurant to Day 1 evening, scheduled between the afternoon tea ceremony and dinner." created_at="2026-02-16T06:55:28.796174+00:00" />
+    <Version version_id="v4" summary="In the current plan, change the existing temple visit activity to a friend visit instead." created_at="2026-02-16T06:55:57.195480+00:00" />
+    <Version version_id="v5" summary="Add Day 2 with a morning bamboo forest and Fushimi Inari visit, and an evening geisha district walk." created_at="2026-02-16T07:03:54.189062+00:00" />
+  </Task>
+  <Task task_id="t2" active_version_id="v1" task_name="Beijing 1-Day Travel Plan" created_at="2026-02-16T07:04:52.431063+00:00" updated_at="2026-02-16T07:05:08.020780+00:00">
+    <Version version_id="v1" summary="Initial version" created_at="2026-02-16T07:04:52.431063+00:00" />
+  </Task>
+  <Task task_id="t3" active_version_id="v5" task_name="5-Day GRE Prep Plan (Quant AM, Verbal PM, Mixed Review Evenings)" created_at="2026-02-16T07:34:44.662051+00:00" updated_at="2026-02-16T07:41:11.251133+00:00">
+    <Version version_id="v1" summary="Initial version" created_at="2026-02-16T07:34:44.662051+00:00" />
+    <Version version_id="v2" summary="Add a 30-minute vocabulary flashcards session to Day 3 evening, right after the reading comprehension block." created_at="2026-02-16T07:38:22.700104+00:00" />
+    <Version version_id="v3" summary="Remove the short break scheduled between the morning quant block and the afternoon verbal block on Day 1 of the active plan." created_at="2026-02-16T07:40:14.165282+00:00" />
+    <Version version_id="v4" summary="Add a 30-minute vocabulary review session to Day 2 morning of the active plan." created_at="2026-02-16T07:41:00.818222+00:00" />
+    <Version version_id="v5" summary="Add a practice test to Day 4 afternoon of the active plan." created_at="2026-02-16T07:41:11.251096+00:00" />
+  </Task>
 </Registry>

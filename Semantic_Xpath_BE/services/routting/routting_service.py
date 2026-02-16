@@ -2,7 +2,7 @@
 Routting Service - GPT-based intent classifier for user utterances.
 
 Classifies each utterance into one of the supported intents
-(CHAT, PLAN_CREATE, PLAN_QA, PLAN_EDIT, REGISTRY_QA, REGISTRY_EDIT)
+(CHAT, PLAN_CREATE, PLAN_QA, PLAN_ADD, PLAN_UPDATE, PLAN_DELETE, REGISTRY_QA, REGISTRY_EDIT, REGISTRY_DELETE)
 and decides whether a registry operation is required.
 
 Migrated from clients/routting_client.py.
@@ -16,14 +16,14 @@ from pathlib import Path
 from typing import Optional
 
 from common.utils import safe_json_dumps, strip_none
-from common.types import RouteInput, RouteResult, RoutingDecision
+from common.types import IntentRequest, RouteInput, RouteResult, RoutingDecision
 
 
 _BASE_DIR = Path(__file__).resolve().parents[2]
-_PROMPT_PATH = _BASE_DIR / "storage" / "prompts" / "routting" / "routting.txt"
+_PROMPT_PATH = _BASE_DIR / "prompts" / "routting" / "routting.txt"
 
 _VALID_INTENTS = {
-    "CHAT", "PLAN_QA", "PLAN_EDIT", "PLAN_CREATE", "REGISTRY_QA", "REGISTRY_EDIT",
+    "CHAT", "PLAN_QA", "PLAN_ADD", "PLAN_UPDATE", "PLAN_DELETE", "PLAN_CREATE", "REGISTRY_QA", "REGISTRY_EDIT", "REGISTRY_DELETE",
 }
 
 
@@ -54,8 +54,7 @@ class RouttingService:
 
         if not utterance:
             routing = RoutingDecision(
-                intent="CHAT",
-                registry_op=0,
+                intent_requests=[IntentRequest(intent="CHAT", request=utterance)],
                 intent_label="EMPTY",
                 confidence=0.0,
                 requires_clarification=True,
@@ -80,14 +79,13 @@ class RouttingService:
             raw = (self._client.chat(messages=messages) or "").strip()
             try:
                 parsed = json.loads(raw)
-                routing = self._from_parsed(parsed)
+                routing = self._from_parsed(parsed, utterance=utterance)
                 return self._wrap_result(utterance, routing)
             except (ValueError, json.JSONDecodeError):
                 continue
 
         routing = RoutingDecision(
-            intent="CHAT",
-            registry_op=0,
+            intent_requests=[IntentRequest(intent="CHAT", request=utterance)],
             intent_label="RETRY_EXHAUSTED",
             confidence=0.0,
             requires_clarification=True,
@@ -99,9 +97,24 @@ class RouttingService:
     # Parsing helpers
     # ------------------------------------------------------------------
 
-    def _from_parsed(self, parsed: dict) -> RoutingDecision:
-        intent = self._parse_intent(parsed.get("intent"))
-        registry_op = self._coerce_bit(parsed.get("registry_op"))
+    def _from_parsed(self, parsed: dict, utterance: str = "") -> RoutingDecision:
+        raw_ir = parsed.get("intent_requests")
+        if not isinstance(raw_ir, list) or not raw_ir:
+            raise ValueError("intent_requests is required and must be a non-empty array")
+
+        intent_requests = []
+        for item in raw_ir:
+            if not isinstance(item, dict):
+                continue
+            intent = self._parse_intent(item.get("intent"))
+            req = item.get("request")
+            req = req.strip() if isinstance(req, str) else ""
+            if not req:
+                req = utterance
+            intent_requests.append(IntentRequest(intent=intent, request=req))
+
+        if not intent_requests:
+            raise ValueError("intent_requests must contain at least one item")
 
         confidence = parsed.get("confidence")
         try:
@@ -116,41 +129,25 @@ class RouttingService:
         if rc and not clarification_question:
             clarification_question = "Could you clarify what you want to do?"
 
-        reformulated = parsed.get("reformulated_utterance")
-        if isinstance(reformulated, str):
-            reformulated = reformulated.strip() or None
-        else:
-            reformulated = None
-
         return RoutingDecision(
-            intent=intent,
-            registry_op=registry_op,
-            intent_label=parsed.get("intent_label") or intent,
+            intent_requests=intent_requests,
+            intent_label=parsed.get("intent_label") or intent_requests[0].intent,
             confidence=confidence,
             requires_clarification=rc,
             clarification_question=clarification_question,
-            reformulated_utterance=reformulated,
         )
 
     @staticmethod
     def _wrap_result(utterance: str, routing: RoutingDecision) -> RouteResult:
-        reformulated = routing.reformulated_utterance or ""
-        if reformulated and reformulated.strip() and reformulated.strip() != utterance:
-            return RouteResult(
-                routing=routing,
-                effective_utterance=reformulated.strip(),
-                original_utterance=utterance,
-            )
+        if routing.intent_requests and len(routing.intent_requests) == 1:
+            r = routing.intent_requests[0].request.strip()
+            if r != utterance:
+                return RouteResult(
+                    routing=routing,
+                    effective_utterance=r,
+                    original_utterance=utterance,
+                )
         return RouteResult(routing=routing, effective_utterance=utterance)
-
-    @staticmethod
-    def _coerce_bit(value) -> int:
-        if isinstance(value, bool):
-            return 1 if value else 0
-        try:
-            return 1 if int(value) == 1 else 0
-        except (TypeError, ValueError):
-            return 0
 
     @staticmethod
     def _parse_intent(value) -> str:

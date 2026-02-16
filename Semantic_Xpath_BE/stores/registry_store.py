@@ -31,7 +31,7 @@ class RegistryStore:
         self._task_counter = 0
         self._active_task_id: Optional[str] = None
         self._xml_manager = xml_manager or XmlManager()
-        self._registry_xml_cache = "<Registry><Tasks /></Registry>"
+        self._registry_xml_cache = "<Registry />"
         if registry_xml_path is None:
             registry_xml_path = _BASE_DIR / "storage" / "xml" / "registry.xml"
         self._registry_xml_path = Path(registry_xml_path)
@@ -67,6 +67,10 @@ class RegistryStore:
             result = self.activate_task(req.task_id)
         elif req.action == "SWITCH_VERSION":
             result = self.switch_version(req.task_id, req.version_id)
+        elif req.action == "DELETE_TASK":
+            result = self.delete_task(req.task_id)
+        elif req.action == "DELETE_VERSION":
+            result = self.delete_version(req.task_id, req.version_id)
         else:
             result = CoreRegistryResult()
 
@@ -259,6 +263,78 @@ class RegistryStore:
             active_version_id=task["active_version_id"],
         )
 
+    def clear_all(self) -> None:
+        """Clear all tasks and versions from the registry and persist empty state."""
+        self._tasks = {}
+        self._task_counter = 0
+        self._active_task_id = None
+        self._refresh_registry_xml_cache()
+
+    def delete_task(self, task_id: Optional[str]) -> CoreRegistryResult:
+        """Delete a task and all its versions. If it was active, switch to the latest remaining task."""
+        if not task_id or task_id not in self._tasks:
+            return CoreRegistryResult(
+                active_task_id=self._active_task_id,
+                active_version_id=self._active_version_for(self._active_task_id),
+            )
+        was_active = self._active_task_id == task_id
+        del self._tasks[task_id]
+        if was_active:
+            remaining = sorted(
+                self._tasks.keys(),
+                key=lambda k: self._task_counter_from_task_id(k) or 0,
+            )
+            self._active_task_id = remaining[-1] if remaining else None
+        else:
+            self._active_task_id = self._active_task_id
+        new_active_version = self._active_version_for(self._active_task_id)
+        self._refresh_registry_xml_cache()
+        return CoreRegistryResult(
+            active_task_id=self._active_task_id,
+            active_version_id=new_active_version,
+        )
+
+    def delete_version(
+        self, task_id: Optional[str], version_id: Optional[str]
+    ) -> CoreRegistryResult:
+        """Delete a version from a task. If it was active, switch to the latest remaining version.
+        Raises ValueError if trying to delete the last version of a task."""
+        resolved_task_id = task_id or self._active_task_id
+        if not resolved_task_id or not version_id:
+            return CoreRegistryResult(
+                active_task_id=self._active_task_id,
+                active_version_id=self._active_version_for(self._active_task_id),
+            )
+        task = self._tasks.get(resolved_task_id)
+        if not task:
+            return CoreRegistryResult(
+                active_task_id=self._active_task_id,
+                active_version_id=self._active_version_for(self._active_task_id),
+            )
+        versions = task["versions"]
+        if len(versions) <= 1:
+            raise ValueError("Cannot delete the last version of a task.")
+        version_idx = next((i for i, v in enumerate(versions) if v["version_id"] == version_id), None)
+        if version_idx is None:
+            return CoreRegistryResult(
+                active_task_id=self._active_task_id,
+                active_version_id=task["active_version_id"],
+            )
+        was_active = (
+            self._active_task_id == resolved_task_id
+            and task["active_version_id"] == version_id
+        )
+        versions.pop(version_idx)
+        if was_active:
+            task["active_version_id"] = versions[-1]["version_id"]
+        task["metadata"]["updated_at"] = self._now()
+        self._active_task_id = resolved_task_id
+        self._refresh_registry_xml_cache()
+        return CoreRegistryResult(
+            active_task_id=self._active_task_id,
+            active_version_id=task["active_version_id"],
+        )
+
     def _list_tasks(self) -> list[dict[str, Any]]:
         out: list[dict[str, Any]] = []
         for task_id, task in sorted(self._tasks.items(), key=lambda kv: kv[0]):
@@ -318,16 +394,28 @@ class RegistryStore:
     def get_registry_xml(self) -> str:
         return self._registry_xml_cache
 
+    def get_registry_schema(self) -> Dict[str, Any]:
+        """Infer schema from current registry XML, in nodes format for query generation."""
+        raw = self._xml_manager.sync_schema(self._registry_xml_cache, "registry")
+        nodes: Dict[str, Dict[str, Any]] = {}
+        attrs = raw.get("attributes", {})
+        children_map = raw.get("children", {})
+        for tag in raw.get("node_types", []):
+            nodes[tag] = {
+                "fields": list(attrs.get(tag, [])),
+                "children": list(children_map.get(tag, [])),
+            }
+        return {"nodes": nodes, "root": raw.get("root", "Registry")}
+
     def _refresh_registry_xml_cache(self) -> None:
         root = ET.Element("Registry")
-        tasks_node = ET.SubElement(root, "Tasks")
         if self._active_task_id:
-            tasks_node.set("active_task_id", self._active_task_id)
+            root.set("active_task_id", self._active_task_id)
 
         for task_id, task in sorted(self._tasks.items(), key=lambda kv: kv[0]):
             task_meta = task["metadata"]
             task_node = ET.SubElement(
-                tasks_node,
+                root,
                 "Task",
                 {
                     "task_id": task_id,
@@ -337,11 +425,10 @@ class RegistryStore:
                     "updated_at": str(task_meta.get("updated_at") or ""),
                 },
             )
-            versions_node = ET.SubElement(task_node, "Versions")
             for version in task["versions"]:
                 version_meta = version["metadata"]
                 ET.SubElement(
-                    versions_node,
+                    task_node,
                     "Version",
                     {
                         "version_id": str(version["version_id"]),
@@ -387,14 +474,17 @@ class RegistryStore:
         except Exception:
             return
 
-        tasks_node = root.find("./Tasks")
-        if tasks_node is None:
-            return
+        # Support new format (Registry > Task > Version) and legacy (Registry > Tasks > Task > Versions > Version)
+        task_nodes = root.findall("./Task")
+        if not task_nodes:
+            tasks_node = root.find("./Tasks")
+            if tasks_node is not None:
+                task_nodes = tasks_node.findall("./Task")
 
         loaded_tasks: Dict[str, Dict[str, object]] = {}
         max_task_counter = 0
 
-        for task_node in tasks_node.findall("./Task"):
+        for task_node in task_nodes:
             task_id = (task_node.get("task_id") or "").strip()
             if not task_id:
                 continue
@@ -412,9 +502,12 @@ class RegistryStore:
             }
 
             versions: list[dict[str, object]] = []
-            versions_node = task_node.find("./Versions")
-            if versions_node is not None:
-                for version_node in versions_node.findall("./Version"):
+            version_nodes = task_node.findall("./Version")
+            if not version_nodes:
+                versions_node = task_node.find("./Versions")
+                if versions_node is not None:
+                    version_nodes = versions_node.findall("./Version")
+            for version_node in version_nodes:
                     version_id = (version_node.get("version_id") or "").strip()
                     if not version_id:
                         continue
@@ -445,7 +538,11 @@ class RegistryStore:
         self._tasks = loaded_tasks
         self._task_counter = max_task_counter
 
-        active_task_id = (tasks_node.get("active_task_id") or "").strip()
+        active_task_id = (root.get("active_task_id") or "").strip()
+        if not active_task_id:
+            tasks_node = root.find("./Tasks")
+            if tasks_node is not None:
+                active_task_id = (tasks_node.get("active_task_id") or "").strip()
         if active_task_id and active_task_id in self._tasks:
             self._active_task_id = active_task_id
         elif self._tasks:

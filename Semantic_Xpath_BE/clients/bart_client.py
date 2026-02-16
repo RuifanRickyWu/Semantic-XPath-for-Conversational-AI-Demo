@@ -183,32 +183,4 @@ def get_bart_client(force_new: bool = False) -> BartNLIClient:
     return _client_instance
 
 
-if __name__ == "__main__":
-    # Quick test
-    client = get_bart_client()
-    
-    # Test single entailment
-    node_info = "Restaurant: Jazz Bistro - A cozy spot with live jazz music every Friday night. Serves Italian-American fusion cuisine."
-    predicate = "features jazz music"
-    
-    score = client.get_entailment_score(node_info, predicate)
-    print(f"Entailment score for '{predicate}': {score:.4f}")
-    
-    # Test detailed scores
-    detailed = client.get_detailed_scores(node_info, predicate)
-    print(f"Detailed scores: {detailed}")
-    
-    # Test with different predicate
-    predicate2 = "serves Chinese food"
-    score2 = client.get_entailment_score(node_info, predicate2)
-    print(f"Entailment score for '{predicate2}': {score2:.4f}")
-    
-    # Test batch
-    nodes = [
-        "A Thai restaurant with spicy food",
-        "A jazz club with live music",
-        "A quiet library"
-    ]
-    scores = client.batch_entailment_scores(nodes, "has live music")
-    print(f"Batch scores for 'has live music': {scores}")
 

@@ -9,7 +9,6 @@ not on concrete classes, enabling easy substitution and testing.
 from .chatting import Chatting
 from .context_manager import ConversationContextStore
 from .registry import TaskRegistry
-from .retriever import Retriever
 from .routting import Routting
 from .session_manager import SessionManager
 from .state_builder import StateBuilder
@@ -23,5 +22,4 @@ __all__ = [
     "StateBuilder",
     "TaskRegistry",
     "TaskStateStore",
-    "Retriever",
 ]

@@ -1,0 +1,52 @@
+====================
+Grammar Definition
+====================
+Query := Step | Step / Query | Step // Query
+Step := NodeType [Index] [Predicate] [RelativeIndex]
+Axis := / | //
+NodeType := Identifier | *
+Index := [i] | [-i] | [i:j] | [i:]
+RelativeIndex := [@+k] | [@-k]
+Predicate := SemanticMatch | IdEq | Func | Invert | EvidenceAgg
+SemanticMatch := field =~ "value"   # e.g. node =~ "museum", content =~ "Paris"
+IdEq := @field = "value"   # exact match on attribute (no semantic scoring)
+Func := min(Predicate, Predicate, ...) | max(Predicate, Predicate, ...) | avg(Predicate, Predicate, ...)
+Invert := 1-Predicate
+EvidenceStep := Axis NodeType [Predicate]
+EvidenceAgg := agg_min(EvidenceStep) | agg_max(EvidenceStep) | agg_avg(EvidenceStep)
+====================
+Operator Semantics
+====================
+Axis operator:
+- `/`: navigate to the children of the current node (default).
+- `//`: navigate to all descendants of the current node.
+Node type operator:
+- `*`: wildcard node type; all nodes in the navigation scope are valid.
+- `NodeType`: restricts candidates to nodes of the specified type.
+Index operator:
+- `[i]`: select the node at 1-based index `i` in tree order.
+- `[-i]`: select the node at negative index `-i` from the end.
+- `[i:j]`: select a contiguous range of nodes.
+- `[i:]`: select from index `i` to the end.
+Relative index (requires a predicate on the same step):
+- `[@+k]`: select the k-th following sibling of the predicate-matched node.
+- `[@-k]`: select the k-th preceding sibling of the predicate-matched node.
+- Example: `/Day/POI[node =~ "lunch"][@-1]` selects the POI immediately before lunch.
+Semantic match predicate:
+- `node =~ "value"` or `content =~ "value"` scores semantic match on the current node content.
+- No wrapper keyword; use `field =~ "value"` directly.
+IdEq predicate (exact ID match, for registry):
+- `@task_id = "t1"` matches Task with task_id attribute "t1".
+- `@version_id = "v1"` matches Version with version_id attribute "v1".
+- No semantic scoring; use for known IDs (active_task_id, active_version_id, etc.).
+Conjunction / disjunction / negation:
+- Predicate-level conjunction uses `min(p1, p2, ...)`.
+- The same conjunction logic applies to node-test level fusion, e.g. `min(NodeType[predicate], ...)`.
+- Predicate-level disjunction uses `max(p1, p2, ...)`.
+- The same disjunction logic applies to node-test level fusion, e.g. `max(NodeType[predicate], ...)`.
+- Negation uses `1-p`.
+Evidence-based aggregation (agg_min, agg_max, agg_avg):
+- `agg_max(EvidenceStep)` where score is max over evidence node scores (existence-style: at least one matches)
+- `agg_avg(EvidenceStep)` where score is mean over evidence node scores (average-style)
+- `agg_min(EvidenceStep)` where score is min over evidence node scores (universal: all must match; use for "every", "each", "all of")
+- EvidenceStep syntax: Axis NodeType [Predicate], e.g. /*[node =~ "jazz"] or //POI[content =~ "museum"]

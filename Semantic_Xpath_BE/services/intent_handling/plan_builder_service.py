@@ -19,7 +19,7 @@ from common.types import TaskState, TreeNode
 
 
 _BASE_DIR = Path(__file__).resolve().parents[2]
-_PROMPT_PATH = _BASE_DIR / "storage" / "prompts" / "planner" / "plan_builder.txt"
+_PROMPT_PATH = _BASE_DIR / "prompts" / "planner" / "plan_builder.txt"
 
 
 class PlanBuilderService:

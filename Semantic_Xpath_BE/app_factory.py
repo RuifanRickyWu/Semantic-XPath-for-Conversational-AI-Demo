@@ -17,8 +17,11 @@ from services.routting.routting_service import RouttingService
 from services.chatting.chatting_service import ChattingService
 from services.intent_handling.base_chat_service import BaseChatService
 from services.intent_handling.plan_edit_service import PlanEditService
+from services.intent_handling.plan_update_interpreter_service import PlanUpdateInterpreterService
+from services.intent_handling.plan_add_interpreter_service import PlanAddInterpreterService
 from services.intent_handling.plan_builder_service import PlanBuilderService
 from services.intent_handling.plan_qa_service import PlanQAService
+from services.intent_handling.registry_delete_service import RegistryDeleteService
 from services.intent_handling.registry_edit_service import RegistryEditService
 from services.intent_handling.registry_qa_service import RegistryQAService
 from stores.context_store import ContextStore
@@ -29,6 +32,13 @@ from stores.xml_manager import XmlManager
 from services.orchestrator_service import OrchestratorService
 from services.intent_handling.plan_create_service import PlanCreateService
 from services.intent_handling.semantic_xpath_service import SemanticXpathService
+from services.query_generation import (
+    PlanContentQueryGenerationService,
+    RegistryQueryGenerationService,
+)
+from services.result_verification import SemanticXPathResultVerifier
+from services.predicate_scorer import get_scorer as get_predicate_scorer
+from domain.semantic_xpath.execution import SemanticXPathExecutor
 from api.chat_resource import create_chat_blueprint
 
 
@@ -46,6 +56,15 @@ def create_app() -> Flask:
     routting_service = RouttingService(client=openai_client)
     chatting_service = ChattingService(client=openai_client)
     plan_builder_service = PlanBuilderService(client=openai_client)
+    registry_query_service = RegistryQueryGenerationService(client=openai_client)
+    plan_query_service = PlanContentQueryGenerationService(client=openai_client)
+    registry_scorer = get_predicate_scorer()
+    registry_executor = SemanticXPathExecutor(
+        scorer=registry_scorer,
+        top_k=20,
+        score_threshold=0.5,
+    )
+    result_verifier = SemanticXPathResultVerifier(client=openai_client)
 
     # ------------------------------------------------------------------
     # 3. Stateful stores (no external dependencies)
@@ -54,7 +73,7 @@ def create_app() -> Flask:
     context_store = ContextStore()
     xml_manager = XmlManager()
     registry_store = RegistryStore(xml_manager=xml_manager)
-    state_store = TaskStateStore(xml_manager=xml_manager)
+    state_store = TaskStateStore(xml_manager=xml_manager, registry_store=registry_store)
 
     # ------------------------------------------------------------------
     # 4. Composite services (depend on stores + clients)
@@ -65,10 +84,40 @@ def create_app() -> Flask:
         state_store=state_store,
     )
     chat_service = BaseChatService()
-    plan_qa_service = PlanQAService()
-    plan_edit_service = PlanEditService()
-    registry_qa_service = RegistryQAService()
-    registry_edit_service = RegistryEditService()
+    plan_qa_service = PlanQAService(
+        state_store=state_store,
+        plan_query_service=plan_query_service,
+        executor=registry_executor,
+        result_verifier=result_verifier,
+    )
+    plan_update_interpreter = PlanUpdateInterpreterService(client=openai_client)
+    plan_add_interpreter = PlanAddInterpreterService(client=openai_client)
+    plan_edit_service = PlanEditService(
+        state_store=state_store,
+        plan_query_service=plan_query_service,
+        executor=registry_executor,
+        result_verifier=result_verifier,
+        plan_update_interpreter=plan_update_interpreter,
+        plan_add_interpreter=plan_add_interpreter,
+    )
+    registry_qa_service = RegistryQAService(
+        registry=registry_store,
+        registry_query_service=registry_query_service,
+        executor=registry_executor,
+        result_verifier=result_verifier,
+    )
+    registry_edit_service = RegistryEditService(
+        registry=registry_store,
+        registry_query_service=registry_query_service,
+        executor=registry_executor,
+        result_verifier=result_verifier,
+    )
+    registry_delete_service = RegistryDeleteService(
+        registry=registry_store,
+        registry_query_service=registry_query_service,
+        executor=registry_executor,
+        result_verifier=result_verifier,
+    )
 
     orchestrator = OrchestratorService(
         routting=routting_service,
@@ -82,6 +131,7 @@ def create_app() -> Flask:
         plan_edit_service=plan_edit_service,
         registry_qa_service=registry_qa_service,
         registry_edit_service=registry_edit_service,
+        registry_delete_service=registry_delete_service,
     )
 
     # ------------------------------------------------------------------

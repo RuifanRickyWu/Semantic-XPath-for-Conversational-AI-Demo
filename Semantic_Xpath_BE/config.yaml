@@ -1,5 +1,11 @@
 # Semantic XPath BE configuration
 
+xpath_executor:
+  scoring_method: "entailment"  # one of: llm, entailment, cosine
+
+entailment:
+  hypothesis_template: "This is related to {predicate}."
+
 openai:
   api_key: "${OPENAI_API_KEY}"
   model: "gpt-5.2"
@@ -10,5 +16,5 @@ context:
   memory_level: "medium"
   window_sizes:
     low: 2
-    medium: 4
-    high: 6
+    medium: 5
+    high: 10

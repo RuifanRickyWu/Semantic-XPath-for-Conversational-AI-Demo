@@ -3,17 +3,26 @@ Task State Store - filesystem-backed XML state persistence + XML edit utilities.
 
 Stores plan XML snapshots in:
 `storage/xml/<task_id>/<version_id>/state.xml`
+
+When registry_store is provided, new versions from plan edits are created via the
+registry (CREATE_VERSION) so registry.xml stays in sync.
 """
 
 from __future__ import annotations
 
+import shutil
+import time
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
-import time
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from stores.registry_store import RegistryStore
 
 from common.types import (
     CommitResult,
+    RegistryApplyRequest,
     ValidationResult,
     XmlEditResult,
     XmlOp,
@@ -47,6 +56,7 @@ class TaskStateStore:
     storage_root: Optional[str | Path] = None
     schema_version: str = "v1"
     xml_manager: Optional[XmlManager] = None
+    registry_store: Optional["RegistryStore"] = None
 
     def __post_init__(self) -> None:
         if self.storage_root is None:
@@ -98,7 +108,6 @@ class TaskStateStore:
         ops: list[CoreXmlOp],
         commit_message: str | None = None,
     ) -> CoreCommitResult:
-        del commit_message
         if not task_id or not base_version_id:
             return CoreCommitResult(
                 ok=False,
@@ -120,9 +129,10 @@ class TaskStateStore:
                         ok=False,
                         errors=validation.errors or ["invalid xml"],
                     )
+                xml_to_write = self._set_plan_version(xml_str, base_version_id)
                 out_path = self._state_path(task_id, base_version_id)
                 out_path.parent.mkdir(parents=True, exist_ok=True)
-                out_path.write_text(xml_str, encoding="utf-8")
+                out_path.write_text(xml_to_write, encoding="utf-8")
                 return CoreCommitResult(
                     ok=True,
                     new_version_id=base_version_id,
@@ -144,10 +154,11 @@ class TaskStateStore:
         if not validation.ok:
             return CoreCommitResult(ok=False, errors=validation.errors)
 
-        new_version_id = self._generate_version_id()
+        new_version_id = self._create_new_version_in_registry(task_id, commit_message)
+        xml_to_write = self._set_plan_version(edit_result.xml_str, new_version_id)
         out_path = self._state_path(task_id, new_version_id)
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(edit_result.xml_str, encoding="utf-8")
+        out_path.write_text(xml_to_write, encoding="utf-8")
 
         return CoreCommitResult(
             ok=True,
@@ -182,6 +193,44 @@ class TaskStateStore:
 
     def _state_path(self, task_id: str, version_id: str) -> Path:
         return self.storage_root / task_id / version_id / "state.xml"
+
+    def clear_all_task_data(self) -> None:
+        """Delete all task directories (and their state.xml files) under storage_root."""
+        if not self.storage_root.exists():
+            return
+        for item in self.storage_root.iterdir():
+            if item.is_dir() and not item.name.startswith("."):
+                shutil.rmtree(item, ignore_errors=True)
+
+    def _set_plan_version(self, xml_str: str, version_id: str) -> str:
+        """Set the root Plan element's version attribute to version_id."""
+        try:
+            root = ET.fromstring(xml_str)
+            root.set("version", version_id)
+            return ET.tostring(root, encoding="unicode")
+        except Exception:
+            return xml_str
+
+    def _create_new_version_in_registry(
+        self, task_id: str, commit_message: Optional[str] = None
+    ) -> str:
+        """Create a new version in the registry and return its ID. Falls back to timestamp if no registry."""
+        registry = self.registry_store
+        if registry is not None:
+            try:
+                result = registry.apply(
+                    RegistryApplyRequest(
+                        action="CREATE_VERSION",
+                        task_id=task_id,
+                        metadata={"summary": commit_message or "plan edit"},
+                    )
+                )
+                created = getattr(result, "created_version_id", None)
+                if created:
+                    return created
+            except Exception:
+                pass
+        return self._generate_version_id()
 
     def _generate_version_id(self) -> str:
         return f"v{int(time.time() * 1000)}"

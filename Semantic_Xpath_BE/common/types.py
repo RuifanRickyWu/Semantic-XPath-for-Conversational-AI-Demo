@@ -19,10 +19,13 @@ Bit = Literal[0, 1]
 RoutingIntent = Literal[
     "CHAT",
     "PLAN_QA",
-    "PLAN_EDIT",
+    "PLAN_ADD",
+    "PLAN_UPDATE",
+    "PLAN_DELETE",
     "PLAN_CREATE",
     "REGISTRY_QA",
     "REGISTRY_EDIT",
+    "REGISTRY_DELETE",
 ]
 
 RegistryAction = Literal[
@@ -34,6 +37,8 @@ RegistryAction = Literal[
     "CREATE_VERSION",
     "UPDATE_TASK_METADATA",
     "UPDATE_VERSION_METADATA",
+    "DELETE_TASK",
+    "DELETE_VERSION",
     "NONE",
 ]
 
@@ -122,14 +127,35 @@ class SessionUpdate:
 
 
 @dataclass
-class RoutingDecision:
+class IntentRequest:
+    """One intent with its self-contained natural language request (reformulation is mandatory)."""
     intent: RoutingIntent
-    registry_op: Bit
+    request: str
+
+
+@dataclass
+class RoutingDecision:
+    intent_requests: List[IntentRequest]
     intent_label: Optional[str] = None
     confidence: Optional[float] = None
     requires_clarification: Optional[bool] = None
     clarification_question: Optional[str] = None
-    reformulated_utterance: Optional[str] = None
+
+    @property
+    def intents(self) -> List[RoutingIntent]:
+        return [ir.intent for ir in self.intent_requests]
+
+    @property
+    def intent(self) -> RoutingIntent:
+        """First intent (backward compatibility)."""
+        return self.intents[0] if self.intents else "CHAT"
+
+    def get_request(self, idx: int, default: str) -> str:
+        """Get request for intent at idx, or default."""
+        if idx < len(self.intent_requests):
+            r = self.intent_requests[idx].request.strip()
+            return r if r else default
+        return default
 
 
 @dataclass
@@ -147,12 +173,23 @@ class TurnResponse:
 
 
 @dataclass
+class IntentResult:
+    """Result from a single intent handler, for chatter to organize."""
+    intent: str
+    generation_hint: Optional[str] = None
+    task_name: Optional[str] = None
+    task_xml: Optional[str] = None
+
+
+@dataclass
 class HandlerResult:
     session_updates: SessionUpdate = field(default_factory=SessionUpdate)
     stop: bool = False
     generation_hint: Optional[str] = None
     task_name: Optional[str] = None
     task_xml: Optional[str] = None
+    intent_result: Optional[IntentResult] = None
+    intent_results: Optional[List[Dict[str, Any]]] = None
 
 
 # ---------------------------------------------------------------------------
@@ -262,6 +299,7 @@ class RealizeRequest:
     registry_context: Optional[Any] = None
     state_context: Optional[Dict[str, Any]] = None
     constraints: Optional[Dict[str, Any]] = None
+    intent_results: Optional[List[Dict[str, Any]]] = None
 
 
 # ---------------------------------------------------------------------------
@@ -294,13 +332,15 @@ class AddXmlNode:
 
 @dataclass
 class DeleteXmlNode:
-    xpath: str
+    xpath: str = ""
+    path_segments: Optional[List[tuple]] = None  # [(tag, index), ...] for tree walk
 
 
 @dataclass
 class ReplaceXmlNode:
-    xpath: str
-    xml_fragment: str
+    xpath: str = ""
+    xml_fragment: str = ""
+    path_segments: Optional[List[tuple]] = None  # [(tag, index), ...] for tree walk
 
 
 @dataclass

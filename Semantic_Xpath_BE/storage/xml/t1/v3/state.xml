@@ -1,0 +1,89 @@
+<Plan id="t1" version="v3">
+  <Meta>
+    <Title>Kyoto Cultural Trip</Title>
+    <Summary>One-day cultural itinerary in Kyoto with a balanced mix of temples, traditional neighborhoods, and local food, structured by time blocks and tasks.</Summary>
+  </Meta>
+  <Day index="1">
+    <Label>Kyoto</Label>
+    <TimeBlock start="07:30" end="08:30">
+      <Title>Breakfast and transit</Title>
+      <Tasks>
+        <Task id="d1-t1">Eat breakfast near hotel or Kyoto Station</Task>
+        <Task id="d1-t2">Load transit card and check bus/train routes</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="08:30" end="10:00">
+      <Title>Kinkaku-ji (Golden Pavilion) morning temple visit</Title>
+      <Tasks>
+        <Task id="d1-t19">Arrive early; buy tickets and enter near opening time</Task>
+        <Task id="d1-t20">Walk the main loop path and view the Golden Pavilion from key photo spots</Task>
+        <Task id="d1-t21">Allow time for the gardens and a brief rest/refreshment before transit</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="08:30" end="11:00">
+      <Title>Fushimi Inari Taisha</Title>
+      <Tasks>
+        <Task id="d1-t3">Arrive early to avoid crowds</Task>
+        <Task id="d1-t4">Walk through the torii gates to a mid-point viewpoint</Task>
+        <Task id="d1-t5">Take photos and short breaks; carry water</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="11:30" end="13:00">
+      <Title>Lunch in Higashiyama area</Title>
+      <Tasks>
+        <Task id="d1-t6">Choose a local lunch spot (udon, soba, or set meal)</Task>
+        <Task id="d1-t7">Confirm afternoon temple entry hours and any reservations</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="13:00" end="15:00">
+      <Title>Kiyomizu-dera and Sannenzaka/Ninenzaka</Title>
+      <Tasks>
+        <Task id="d1-t8">Visit Kiyomizu-dera and main terrace</Task>
+        <Task id="d1-t9">Stroll Sannenzaka and Ninenzaka traditional streets</Task>
+        <Task id="d1-t10">Shop for small souvenirs (optional)</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="15:15" end="16:30">
+      <Title>Gion and Yasaka Shrine</Title>
+      <Tasks>
+        <Task id="d1-t11">Walk through Gion; keep an eye out for traditional architecture</Task>
+        <Task id="d1-t12">Stop at Yasaka Shrine and nearby lantern areas</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="16:30" end="17:00">
+      <Title>Afternoon tea ceremony</Title>
+      <Tasks>
+        <Task id="d1-t22">Arrive a few minutes early and follow host instructions/etiquette (quiet phones)</Task>
+        <Task id="d1-t23">Participate in the tea service; ask questions if permitted</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="17:00" end="18:30">
+      <Title>Philosopher's Path or alternative garden stop</Title>
+      <Tasks>
+        <Task id="d1-t13">Choose one: Philosopher's Path stroll or a nearby garden/temple</Task>
+        <Task id="d1-t14">Plan transit to dinner neighborhood</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="18:30" end="19:00">
+      <Title>Ramen restaurant (early evening)</Title>
+      <Tasks>
+        <Task id="d1-t24">Pick a ramen shop convenient to Pontocho/Kawaramachi (or along your transit route)</Task>
+        <Task id="d1-t25">Order quickly; allow extra time if there is a line</Task>
+        <Task id="d1-t26">Head to dinner area afterward (or treat this as a light pre-dinner meal if dinner reservations are later)</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="19:00" end="20:30">
+      <Title>Dinner in Pontocho or Kawaramachi</Title>
+      <Tasks>
+        <Task id="d1-t15">Have dinner (kaiseki-style, yakitori, or izakaya)</Task>
+        <Task id="d1-t16">Try one Kyoto specialty (yudofu, yuba, matcha dessert)</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="20:30" end="21:30">
+      <Title>Evening walk and wrap-up</Title>
+      <Tasks>
+        <Task id="d1-t17">Short walk along the Kamo River (optional)</Task>
+        <Task id="d1-t18">Return to lodging; charge devices and review photos</Task>
+      </Tasks>
+    </TimeBlock>
+  </Day></Plan>

@@ -43,9 +43,11 @@ def to_core_xml_op(op: XmlOp) -> CoreXmlOp:
             position=op.position,
         )
     if isinstance(op, DeleteXmlNode):
-        return CoreDeleteXmlNode(xpath=op.xpath)
+        return CoreDeleteXmlNode(xpath=op.xpath, path_segments=op.path_segments)
     if isinstance(op, ReplaceXmlNode):
-        return CoreReplaceXmlNode(xpath=op.xpath, xml_fragment=op.xml_fragment)
+        return CoreReplaceXmlNode(
+            xpath=op.xpath, xml_fragment=op.xml_fragment, path_segments=op.path_segments
+        )
     if isinstance(op, MoveXmlNode):
         return CoreMoveXmlNode(
             xpath=op.xpath,

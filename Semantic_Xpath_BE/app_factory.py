@@ -137,7 +137,12 @@ def create_app() -> Flask:
     # ------------------------------------------------------------------
     # 5. Top-level service
     # ------------------------------------------------------------------
-    semantic_xpath_service = SemanticXpathService(orchestrator=orchestrator)
+    semantic_xpath_service = SemanticXpathService(
+        orchestrator=orchestrator,
+        registry_store=registry_store,
+        state_store=state_store,
+        session_store=session_store,
+    )
 
     # ------------------------------------------------------------------
     # 6. Flask app + blueprint (resource layer)

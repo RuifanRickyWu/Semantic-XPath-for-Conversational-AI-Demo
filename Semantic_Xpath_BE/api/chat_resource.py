@@ -2,7 +2,10 @@
 Chat Resource - Flask Blueprint factory for API routes.
 
 Routes:
-  POST /api/chat       - Process a user message (chat, plan creation, etc.)
+  POST /api/chat                      - Process a user message
+  GET  /api/tasks                     - List all tasks (tab bar)
+  GET  /api/tasks/<task_id>/plan      - Get plan XML for a task
+  PUT  /api/tasks/<task_id>/activate  - Activate a task (tab click)
 
 The blueprint is created via create_chat_blueprint() which
 receives the service instance from the app factory (no internal creation).
@@ -59,6 +62,42 @@ def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 500
 
+        return jsonify(result), 200
+
+    # ------------------------------------------------------------------
+    # Task REST endpoints
+    # ------------------------------------------------------------------
+
+    @bp.route("/tasks", methods=["GET"])
+    def list_tasks():
+        """GET /api/tasks — lightweight task list for tab bar."""
+        try:
+            result = service.list_tasks()
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+        return jsonify(result), 200
+
+    @bp.route("/tasks/<task_id>/plan", methods=["GET"])
+    def get_task_plan(task_id: str):
+        """GET /api/tasks/<task_id>/plan — plan XML for a task version."""
+        version_id = request.args.get("version")
+        try:
+            result = service.get_task_plan(task_id, version_id=version_id)
+        except FileNotFoundError as e:
+            return jsonify({"error": str(e)}), 404
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+        return jsonify(result), 200
+
+    @bp.route("/tasks/<task_id>/activate", methods=["PUT"])
+    def activate_task(task_id: str):
+        """PUT /api/tasks/<task_id>/activate — switch active task (tab click)."""
+        data = request.get_json() or {}
+        session_id = (data.get("session_id") or "default").strip()
+        try:
+            result = service.activate_task(task_id, session_id)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
         return jsonify(result), 200
 
     return bp

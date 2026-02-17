@@ -1,0 +1,73 @@
+<Plan id="t2" version="v1">
+  <Meta>
+    <Title>Beijing 1-Day Travel Plan</Title>
+    <Summary>A compact 1-day itinerary covering Beijings core highlights: the Forbidden City area, classic hutongs, and an evening food and nightlife stop. Timed to balance crowds, walking, and transit.</Summary>
+  </Meta>
+  <Day number="1" title="Imperial Beijing and Hutongs">
+    <Morning>
+      <Item>
+        <Time>08:00</Time>
+        <Activity>Arrive at Tiananmen Square (outer viewing) and walk toward the Forbidden City entrance area.</Activity>
+        <Notes>Bring passport/ID. Security checks are common. Consider pre-booking tickets if required.</Notes>
+      </Item>
+      <Item>
+        <Time>08:30</Time>
+        <Activity>Forbidden City (Palace Museum) visit.</Activity>
+        <Notes>Enter early to avoid peak crowds. Focus on main axis halls, then exit via the north gate.</Notes>
+      </Item>
+      <Item>
+        <Time>11:30</Time>
+        <Activity>Jingshan Park for the central overlook of the Forbidden City.</Activity>
+        <Notes>Short uphill walk; best panoramic photo spot.</Notes>
+      </Item>
+    </Morning>
+    <Afternoon>
+      <Item>
+        <Time>12:30</Time>
+        <Activity>Lunch near Shichahai/Houhai or in a hutong courtyard restaurant.</Activity>
+        <Notes>Try Beijing zhajiangmian, jianbing, or roast duck if you want a heavier meal.</Notes>
+      </Item>
+      <Item>
+        <Time>14:00</Time>
+        <Activity>Hutong walk: Shichahai, Yandai Xiejie, and nearby lanes (optional rickshaw ride).</Activity>
+        <Notes>Mix of lakeside views and traditional alleys. Allocate time for tea shops or small museums.</Notes>
+      </Item>
+      <Item>
+        <Time>16:00</Time>
+        <Activity>Temple of Heaven (Tiantan) visit and park stroll.</Activity>
+        <Notes>Enter from the east gate if convenient. See the Hall of Prayer for Good Harvests and surrounding grounds.</Notes>
+      </Item>
+    </Afternoon>
+    <Evening>
+      <Item>
+        <Time>18:30</Time>
+        <Activity>Dinner: Peking duck or local northern cuisine.</Activity>
+        <Notes>Reserve ahead for popular duck restaurants. Split portions if short on time.</Notes>
+      </Item>
+      <Item>
+        <Time>20:00</Time>
+        <Activity>Evening walk and snacks at Wangfujing area or return to Houhai for lakeside lights.</Activity>
+        <Notes>Choose Wangfujing for shopping/street food; choose Houhai for a relaxed night stroll.</Notes>
+      </Item>
+      <Item>
+        <Time>21:30</Time>
+        <Activity>Return to hotel and prep for next day.</Activity>
+        <Notes>Build buffer for subway closing times and taxi availability.</Notes>
+      </Item>
+    </Evening>
+    <Logistics>
+      <Item>
+        <Topic>Transit</Topic>
+        <Details>Use the subway for speed. Tiananmen/Forbidden City area has controlled access; follow signed pedestrian routes.</Details>
+      </Item>
+      <Item>
+        <Topic>Tickets</Topic>
+        <Details>Check current ticketing rules for the Palace Museum and Temple of Heaven; reservations may be required.</Details>
+      </Item>
+      <Item>
+        <Topic>Alternative (if you prefer Great Wall)</Topic>
+        <Details>Swap the afternoon for a half-day Great Wall visit (Mutianyu recommended) and keep the hutongs for evening.</Details>
+      </Item>
+    </Logistics>
+  </Day>
+</Plan>

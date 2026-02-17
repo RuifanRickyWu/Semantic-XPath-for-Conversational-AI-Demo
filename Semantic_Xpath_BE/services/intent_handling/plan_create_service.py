@@ -8,22 +8,19 @@ Migrated from Semantic_XPath_Demo/refactor/controller_core/intent_handlers.py (P
 
 from __future__ import annotations
 
-from typing import Optional
-
 from common.types import (
-    CommitRequest,
     HandlerResult,
+    ReplaceXmlNode,
     RegistryApplyRequest,
-    RoutingDecision,
     SessionUpdate,
-    TurnRequest,
 )
+from interfaces.state_store import TaskStateStore
+from services.intent_handling.intent_handling_service import IntentContext, BaseIntentHandler
 from services.intent_handling.plan_builder_service import PlanBuilderService
 from stores.registry_store import RegistryStore
-from stores.state_store import StateStore
 
 
-class PlanCreateService:
+class PlanCreateService(BaseIntentHandler):
     """Creates a new plan from a user utterance."""
 
     intent: str = "PLAN_CREATE"
@@ -31,30 +28,25 @@ class PlanCreateService:
     def __init__(
         self,
         registry: RegistryStore,
-        state_store: StateStore,
         plan_builder: PlanBuilderService,
-        commit_mode: str = "CREATE_NEW_VERSION",
+        state_store: TaskStateStore,
     ) -> None:
         self.registry = registry
         self.state_store = state_store
         self.plan_builder = plan_builder
-        self.commit_mode = commit_mode
 
-    def handle(
-        self,
-        req: TurnRequest,
-        routing: RoutingDecision,
-        context_messages: Optional[list[dict[str, str]]] = None,
-    ) -> HandlerResult:
-        # Check for clarification
-        if routing.requires_clarification and routing.clarification_question:
-            return HandlerResult(
-                stop=True,
-                generation_hint=routing.clarification_question,
-            )
-
+    def _handle_impl(self, ctx: IntentContext) -> HandlerResult:
+        req = ctx.req
+        context_messages = ctx.context_messages
         # 1. Create task in registry
-        apply_res = self.registry.apply(RegistryApplyRequest(action="CREATE_TASK"))
+        apply_res = self.registry.apply(
+            RegistryApplyRequest(
+                action="CREATE_TASK",
+                metadata={
+                    "version_summary": "Initial version",
+                },
+            )
+        )
         task_id = apply_res.active_task_id or apply_res.created_task_id
         version_id = apply_res.active_version_id or apply_res.created_version_id
         if not task_id or not version_id:
@@ -72,29 +64,44 @@ class PlanCreateService:
         )
 
         # 3. Commit state
-        commit_result = self.state_store.commit(
-            CommitRequest(
-                task_id=task_id,
-                commit_mode=self.commit_mode,
-                new_state=new_state,
-                commit_message="initial state",
+        task_xml = (new_state.metadata or {}).get("xml")
+        if not isinstance(task_xml, str) or not task_xml.strip():
+            return HandlerResult(
+                stop=True,
+                generation_hint="Plan creation failed: planner did not return valid XML.",
             )
+        commit_result = self.state_store.commit(
+            task_id=task_id,
+            base_version_id=version_id,
+            ops=[ReplaceXmlNode(xpath=".", xml_fragment=task_xml)],
+            commit_message="initial state",
         )
 
         # 4. Build result
         task_name = None
-        task_xml = None
+        task_xml = task_xml if isinstance(task_xml, str) else None
         if new_state.metadata:
             task_name = new_state.metadata.get("task_name")
-            task_xml = new_state.metadata.get("xml")
-        if not task_name:
-            task_name = req.user_utterance.strip() or "New plan"
+        if isinstance(task_name, str):
+            task_name = task_name.strip() or None
+        else:
+            task_name = None
 
-        generation_hint = f'We created the plan named "{task_name}".'
+        generation_hint = "We created the plan."
+        if task_name:
+            generation_hint = f'We created the plan named "{task_name}".'
         session_updates = SessionUpdate()
 
         if commit_result.status == "OK":
             new_version_id = commit_result.new_version_id or version_id
+            if task_name:
+                self.registry.apply(
+                    RegistryApplyRequest(
+                        action="UPDATE_TASK_METADATA",
+                        task_id=task_id,
+                        metadata={"task_name": task_name},
+                    )
+                )
             if new_version_id != version_id:
                 self.registry.apply(
                     RegistryApplyRequest(

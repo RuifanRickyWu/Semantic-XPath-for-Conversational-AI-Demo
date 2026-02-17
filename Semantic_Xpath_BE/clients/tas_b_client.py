@@ -165,29 +165,4 @@ def get_tas_b_client(force_new: bool = False) -> TASBClient:
     return _client_instance
 
 
-if __name__ == "__main__":
-    # Quick test
-    client = get_tas_b_client()
-    
-    # Test single embedding
-    text = "A cozy restaurant with live jazz music"
-    embedding = client.get_embedding(text)
-    print(f"Embedding shape: {embedding.shape}")
-    print(f"Embedding (first 10 dims): {embedding[:10]}")
-    
-    # Test batch embeddings
-    texts = [
-        "Italian restaurant with pasta",
-        "Jazz club with live music",
-        "Quiet library for reading"
-    ]
-    embeddings = client.get_embeddings(texts)
-    print(f"\nBatch embeddings shape: {embeddings.shape}")
-    
-    # Test similarity
-    sim = client.similarity(
-        "A restaurant with jazz music",
-        "A place with live musical performances"
-    )
-    print(f"\nSimilarity score: {sim:.4f}")
 

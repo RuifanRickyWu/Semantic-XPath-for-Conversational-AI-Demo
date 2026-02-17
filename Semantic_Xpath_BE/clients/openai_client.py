@@ -43,8 +43,6 @@ def load_config() -> dict:
             
         if api_key:
             config["openai"]["api_key"] = api_key
-        else:
-            print("Warning: OPENAI_API_KEY not found in environment or .env file")
             
     return config
 
@@ -237,16 +235,4 @@ def get_client() -> OpenAIClient:
     return OpenAIClient()
 
 
-if __name__ == "__main__":
-    # Quick test
-    client = get_client()
-    print(f"Model: {client.model}")
-    print(f"Reasoning model: {client._is_reasoning_model(client.model)}")
-    if client.reasoning_effort:
-        print(f"Reasoning effort: {client.reasoning_effort}")
-    if client.temperature is not None:
-        print(f"Temperature: {client.temperature}")
-    
-    response = client.complete("Say hello in one word.")
-    print(f"Response: {response}")
 

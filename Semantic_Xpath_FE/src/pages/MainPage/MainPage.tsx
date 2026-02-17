@@ -1,7 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { postChat } from "../../api/chatApi";
+import { getTasks, getTaskPlan, activateTask } from "../../api/tasksApi";
 import type { ChatResponseType } from "../../types/chat";
+import type { TaskSummary } from "../../types/task";
+import PlanTreeView from "../../components/PlanTreeView/PlanTreeView";
 import "./MainPage.css";
 
 interface ChatMessage {
@@ -33,6 +36,36 @@ export default function MainPage() {
 
   // Generate a stable session ID for this page instance
   const sessionIdRef = useRef<string>(crypto.randomUUID());
+
+  // Task tab bar state
+  const [tasks, setTasks] = useState<TaskSummary[]>([]);
+  const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
+  const [activePlanXml, setActivePlanXml] = useState<string | null>(null);
+
+  /** Refresh the task list from the backend and optionally load a plan. */
+  const refreshTasks = useCallback(async (loadPlanForTaskId?: string) => {
+    try {
+      const res = await getTasks();
+      setTasks(res.tasks);
+      setActiveTaskId(res.active_task_id);
+      const taskToLoad = loadPlanForTaskId || res.active_task_id;
+      if (taskToLoad) {
+        try {
+          const planRes = await getTaskPlan(taskToLoad);
+          setActivePlanXml(planRes.plan_xml);
+        } catch {
+          setActivePlanXml(null);
+        }
+      }
+    } catch {
+      // Backend may not be running yet; keep empty state
+    }
+  }, []);
+
+  // Load task list on mount
+  useEffect(() => {
+    refreshTasks();
+  }, [refreshTasks]);
 
   // Handle initial query from LandingPage
   useEffect(() => {
@@ -78,6 +111,10 @@ export default function MainPage() {
             : undefined,
         };
         setMessages((prev) => [...prev.slice(0, -1), systemMessage]);
+
+        // Refresh task tab bar when backend state may have changed
+        const newTaskId = result.session_updates?.active_task_id;
+        refreshTasks(newTaskId || undefined);
       } else {
         const errorMessage: ChatMessage = {
           role: "system",
@@ -122,6 +159,20 @@ export default function MainPage() {
     }
     return undefined;
   }
+
+  /* ── Task tab bar handler ────────────────────────── */
+
+  const handleTabClick = async (taskId: string) => {
+    if (taskId === activeTaskId) return;
+    try {
+      const res = await activateTask(taskId, sessionIdRef.current);
+      setActiveTaskId(res.active_task_id);
+      const planRes = await getTaskPlan(res.active_task_id);
+      setActivePlanXml(planRes.plan_xml);
+    } catch {
+      // Activation failed; keep current state
+    }
+  };
 
   /* ── Render helpers ─────────────────────────────── */
 
@@ -363,10 +414,32 @@ export default function MainPage() {
         </div>
       </div>
 
-      {/* Right Panel — Tree Visualization (placeholder) */}
+      {/* Right Panel — Task Tab Bar + Tree Visualization */}
       <div className="main-right-panel">
-        <div className="right-panel-placeholder">
-          <p>Tree Visualization</p>
+        {/* Task Tab Bar */}
+        {tasks.length > 0 && (
+          <div className="task-tab-bar">
+            {tasks.map((t) => (
+              <button
+                key={t.task_id}
+                className={`task-tab ${t.task_id === activeTaskId ? "active" : ""}`}
+                onClick={() => handleTabClick(t.task_id)}
+              >
+                {t.task_name || t.task_id}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Tree View Area */}
+        <div className="tree-view-area">
+          {activePlanXml ? (
+            <PlanTreeView planXml={activePlanXml} />
+          ) : (
+            <div className="right-panel-placeholder">
+              <p>Tree Visualization</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

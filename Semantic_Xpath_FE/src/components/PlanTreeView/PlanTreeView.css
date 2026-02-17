@@ -1,0 +1,215 @@
+/* ============================================================
+   PlanTreeView — React Flow tree for plan XML
+   ============================================================ */
+
+.plan-tree-container {
+  width: 100%;
+  height: 100%;
+}
+
+.plan-tree-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Force pointer events on nodes — React Flow disables them when
+   nodesDraggable + nodesConnectable + elementsSelectable are all false */
+.react-flow__node {
+  pointer-events: all !important;
+  cursor: default;
+}
+
+/* ── Custom node ──────────────────────────────────── */
+
+.plan-node-wrapper {
+  position: relative;
+  padding-top: 14px; /* space for the pill above the card */
+}
+
+.plan-node-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px 14px;
+  background: #8b5cf6;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  border-radius: 50px;
+  border: 1px solid #ddd6fe;
+  line-height: 20px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.plan-node-card {
+  position: relative;
+  width: 260px;
+  height: 56px;
+  background: #f9fafb;
+  border: 1px solid #8b5cf6;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  gap: 8px;
+}
+
+.plan-node-label {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  color: #8b5cf6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.plan-node-menu {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.plan-node-menu:hover {
+  opacity: 1;
+}
+
+/* ── Handles ──────────────────────────────────────── */
+
+.plan-node-handle {
+  width: 14px !important;
+  height: 14px !important;
+  background: #fff !important;
+  border: 2px solid #8b5cf6 !important;
+  border-radius: 50% !important;
+}
+
+.plan-node-handle[data-handlepos="top"] {
+  top: 8px !important;
+}
+
+.plan-node-handle[data-handlepos="bottom"] {
+  bottom: -7px !important;
+}
+
+/* ── Edges ────────────────────────────────────────── */
+
+.react-flow__edge-path {
+  stroke: #8b5cf6 !important;
+  stroke-width: 2 !important;
+}
+
+/* ── Controls ─────────────────────────────────────── */
+
+.react-flow__controls {
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.08);
+  border-radius: 8px;
+  border: 1px solid #f3f4f6;
+}
+
+.react-flow__controls-button {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* ── MiniMap ──────────────────────────────────────── */
+
+.react-flow__minimap {
+  border-radius: 8px;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.08);
+}
+
+/* ── Node hover ───────────────────────────────────── */
+
+/* Raise the entire React Flow node container above siblings so the tooltip is never hidden */
+.react-flow__node:has(.plan-node-card:hover) {
+  z-index: 1000 !important;
+}
+
+.plan-node-card:hover {
+  border-color: #7c3aed;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.2);
+}
+
+/* ── Tooltip ──────────────────────────────────────── */
+
+.plan-node-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 320px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 15, 57, 0.12);
+  padding: 10px 14px;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
+}
+
+/* Show tooltip when the card is hovered */
+.plan-node-card:hover .plan-node-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.plan-node-tooltip-row {
+  display: flex;
+  gap: 8px;
+  padding: 3px 0;
+  align-items: baseline;
+}
+
+.plan-node-tooltip-row + .plan-node-tooltip-row {
+  border-top: 1px solid #f3f4f6;
+}
+
+.plan-node-tooltip-label {
+  flex-shrink: 0;
+  width: 60px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.plan-node-tooltip-value {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  color: #333;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+.plan-node-tooltip-path {
+  font-size: 11px;
+  color: #8b5cf6;
+  font-weight: 500;
+}

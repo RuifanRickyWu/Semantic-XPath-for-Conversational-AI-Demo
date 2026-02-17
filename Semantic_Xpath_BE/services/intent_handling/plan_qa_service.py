@@ -128,12 +128,20 @@ class PlanQAService(BaseIntentHandler):
         formatted = _format_plan_nodes(per_node)
         hint = formatted
 
+        affected_paths = [
+            item.get("tree_path") or []
+            for item in per_node
+        ]
+
         return HandlerResult(
             session_updates=SessionUpdate(),
             generation_hint=hint,
             intent_result=IntentResult(
                 intent="PLAN_QA",
                 generation_hint=hint,
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                affected_node_paths=affected_paths,
             ),
         )
 

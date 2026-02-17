@@ -49,7 +49,9 @@ class SemanticXpathService:
         """
         resp = self._orchestrator.orchestrate(message, session_id)
 
-        return {
+        intent_meta = self._extract_intent_meta(resp)
+
+        result: Dict[str, Any] = {
             "success": True,
             "type": resp.routing.intent,
             "message": resp.assistant_message,
@@ -59,6 +61,31 @@ class SemanticXpathService:
                 "active_version_id": resp.session_updates.active_version_id,
             }),
         }
+
+        if intent_meta.get("xpath_query"):
+            result["xpath_query"] = intent_meta["xpath_query"]
+        if intent_meta.get("original_query"):
+            result["original_query"] = intent_meta["original_query"]
+        if intent_meta.get("affected_node_paths"):
+            result["affected_node_paths"] = intent_meta["affected_node_paths"]
+
+        return result
+
+    @staticmethod
+    def _extract_intent_meta(resp: Any) -> Dict[str, Any]:
+        """Extract CRUD metadata (xpath, original query, affected paths) from TurnResponse."""
+        meta: Dict[str, Any] = {}
+        intent_results = getattr(resp, "intent_results", None) or []
+        for ir in intent_results:
+            if not isinstance(ir, dict):
+                continue
+            if ir.get("xpath_query") and not meta.get("xpath_query"):
+                meta["xpath_query"] = ir["xpath_query"]
+            if ir.get("original_query") and not meta.get("original_query"):
+                meta["original_query"] = ir["original_query"]
+            if ir.get("affected_node_paths") and not meta.get("affected_node_paths"):
+                meta["affected_node_paths"] = ir["affected_node_paths"]
+        return meta
 
     # ------------------------------------------------------------------
     # Task REST endpoints

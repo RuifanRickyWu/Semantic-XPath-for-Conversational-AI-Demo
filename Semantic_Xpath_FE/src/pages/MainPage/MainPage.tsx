@@ -2,7 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { postChat } from "../../api/chatApi";
 import { getTasks, getTaskPlan, activateTask } from "../../api/tasksApi";
-import type { ChatResponseType } from "../../types/chat";
+import type { ChatResponseType, CrudAction } from "../../types/chat";
+import { typeToCrudAction, CRUD_CONFIG } from "../../types/chat";
 import type { TaskSummary } from "../../types/task";
 import PlanTreeView from "../../components/PlanTreeView/PlanTreeView";
 import "./MainPage.css";
@@ -14,6 +15,10 @@ interface ChatMessage {
   type?: ChatResponseType;
   title?: string;
   isLoading?: boolean;
+  crudAction?: CrudAction | null;
+  xpathQuery?: string;
+  originalQuery?: string;
+  affectedNodePaths?: any[][];
 }
 
 interface LocationState {
@@ -41,6 +46,14 @@ export default function MainPage() {
   const [tasks, setTasks] = useState<TaskSummary[]>([]);
   const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
   const [activePlanXml, setActivePlanXml] = useState<string | null>(null);
+
+  // Tree highlight state — driven by the latest CRUD operation
+  const [highlightMode, setHighlightMode] = useState<CrudAction | null>(null);
+  const [highlightedPaths, setHighlightedPaths] = useState<any[][] | null>(null);
+
+  // Latest query display (shown on both left chat and right panel)
+  const [latestXpathQuery, setLatestXpathQuery] = useState<string | null>(null);
+  const [latestOriginalQuery, setLatestOriginalQuery] = useState<string | null>(null);
 
   /** Refresh the task list from the backend and optionally load a plan. */
   const refreshTasks = useCallback(async (loadPlanForTaskId?: string) => {
@@ -102,6 +115,7 @@ export default function MainPage() {
       const result = await postChat(query, sessionIdRef.current);
 
       if (result.success) {
+        const crud = typeToCrudAction(result.type);
         const systemMessage: ChatMessage = {
           role: "system",
           content: result.message || "Done.",
@@ -109,8 +123,23 @@ export default function MainPage() {
           title: result.type === "PLAN_CREATE"
             ? extractTitle(result.message)
             : undefined,
+          crudAction: crud,
+          xpathQuery: result.xpath_query,
+          originalQuery: result.original_query,
+          affectedNodePaths: result.affected_node_paths,
         };
         setMessages((prev) => [...prev.slice(0, -1), systemMessage]);
+
+        // Update tree highlight state and query bars
+        if (crud && result.affected_node_paths?.length) {
+          setHighlightMode(crud);
+          setHighlightedPaths(result.affected_node_paths);
+        } else {
+          setHighlightMode(null);
+          setHighlightedPaths(null);
+        }
+        setLatestXpathQuery(result.xpath_query || null);
+        setLatestOriginalQuery(result.original_query || null);
 
         // Refresh task tab bar when backend state may have changed
         const newTaskId = result.session_updates?.active_task_id;
@@ -221,12 +250,14 @@ export default function MainPage() {
         return renderChatMessage(msg, index);
       case "PLAN_CREATE":
         return renderPlanCreateMessage(msg, index);
-      // Future intent types — placeholder rendering for now
       case "PLAN_QA":
-      case "PLAN_EDIT":
+      case "PLAN_ADD":
+      case "PLAN_UPDATE":
+      case "PLAN_DELETE":
       case "REGISTRY_QA":
       case "REGISTRY_EDIT":
-        return renderDefaultMessage(msg, index);
+      case "REGISTRY_DELETE":
+        return renderCrudMessage(msg, index);
       default:
         return renderDefaultMessage(msg, index);
     }
@@ -262,9 +293,13 @@ export default function MainPage() {
           <h2 className="msg-system-title">
             {msg.title || "Response"}
           </h2>
-          <button className="msg-plan-icon" aria-label="View plan details">
-            <img src="/assets/view-list.svg" alt="" width="24" height="24" />
-          </button>
+          <div
+            className="crud-badge"
+            style={{ backgroundColor: "#ffffff", borderColor: "#e5e7eb" }}
+          >
+            <img src="/assets/itin_icon.svg" alt="" width="20" height="20" />
+            <span className="crud-badge-label">Itinerary</span>
+          </div>
         </div>
 
         {/* Divider below title */}
@@ -317,6 +352,62 @@ export default function MainPage() {
             );
           })}
         </div>
+        <div className="msg-divider msg-divider-full" />
+      </div>
+    );
+  }
+
+  /** Render CRUD badge pill */
+  function renderCrudBadge(action: CrudAction) {
+    const config = CRUD_CONFIG[action];
+    return (
+      <div
+        className="crud-badge"
+        style={{
+          backgroundColor: config.bgColor,
+          borderColor: config.borderColor,
+        }}
+      >
+        <img src={config.icon} alt="" width="20" height="20" />
+        <span className="crud-badge-label">{config.label}</span>
+      </div>
+    );
+  }
+
+  /** Render XPath + Original Query display bars */
+  function renderQueryBars(xpathQuery?: string, originalQuery?: string) {
+    if (!xpathQuery && !originalQuery) return null;
+    return (
+      <div className="query-bars">
+        {xpathQuery && (
+          <div className="xpath-query-bar">
+            <span className="query-bar-label">XPath :</span>
+            <span className="query-bar-value">{xpathQuery}</span>
+          </div>
+        )}
+        {originalQuery && (
+          <div className="xpath-query-bar">
+            <span className="query-bar-label">Original :</span>
+            <span className="query-bar-value">{originalQuery}</span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  /** CRUD intent types: logo + text + CRUD badge + query bars */
+  function renderCrudMessage(msg: ChatMessage, index: number) {
+    const crud = msg.crudAction;
+    return (
+      <div key={index} className="msg-block msg-block-system">
+        <div className="msg-system-title-row">
+          <div className="msg-system-logo">
+            <img src="/assets/logo-icon.svg" alt="" width="24" height="24" />
+          </div>
+          <p className="msg-chat-text msg-chat-text-flex">{msg.content}</p>
+          {crud && renderCrudBadge(crud)}
+        </div>
+        {renderQueryBars(msg.xpathQuery, msg.originalQuery)}
         <div className="msg-divider msg-divider-full" />
       </div>
     );
@@ -431,10 +522,32 @@ export default function MainPage() {
           </div>
         )}
 
+        {/* Right-side Query Bars */}
+        {(latestXpathQuery || latestOriginalQuery) && (
+          <div className="right-query-bars">
+            {latestXpathQuery && (
+              <div className="xpath-query-bar right-query-bar">
+                <span className="query-bar-label">XPath :</span>
+                <span className="query-bar-value">{latestXpathQuery}</span>
+              </div>
+            )}
+            {latestOriginalQuery && (
+              <div className="xpath-query-bar right-query-bar">
+                <span className="query-bar-label">Original :</span>
+                <span className="query-bar-value">{latestOriginalQuery}</span>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Tree View Area */}
         <div className="tree-view-area">
           {activePlanXml ? (
-            <PlanTreeView planXml={activePlanXml} />
+            <PlanTreeView
+              planXml={activePlanXml}
+              highlightMode={highlightMode}
+              highlightedPaths={highlightedPaths}
+            />
           ) : (
             <div className="right-panel-placeholder">
               <p>Tree Visualization</p>

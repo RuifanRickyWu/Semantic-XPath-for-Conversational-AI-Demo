@@ -3,8 +3,32 @@ import { Handle, Position, type NodeProps } from "@xyflow/react";
 import type { PlanNodeData } from "../../utils/xmlToTree";
 
 function PlanNodeComponent({ data }: NodeProps) {
-  const { label, tagName, fullText, attributes, childCount, xpath } =
-    data as PlanNodeData;
+  const {
+    label,
+    tagName,
+    fullText,
+    attributes,
+    childCount,
+    xpath,
+    highlightMode,
+    isHighlightTarget,
+  } = data as PlanNodeData;
+
+  // Build CSS class list for the card based on highlight state
+  const cardClasses = ["plan-node-card"];
+  if (highlightMode) {
+    if (isHighlightTarget) {
+      cardClasses.push(`plan-node-highlight-${highlightMode}`);
+    } else {
+      cardClasses.push(`plan-node-highlight-${highlightMode}-path`);
+    }
+  }
+
+  // Build CSS class list for the pill
+  const pillClasses = ["plan-node-pill"];
+  if (highlightMode) {
+    pillClasses.push(`plan-node-pill-${highlightMode}`);
+  }
 
   return (
     <div className="plan-node-wrapper">
@@ -16,10 +40,10 @@ function PlanNodeComponent({ data }: NodeProps) {
       />
 
       {/* Pill tag above the card */}
-      <div className="plan-node-pill">{tagName}</div>
+      <div className={pillClasses.join(" ")}>{tagName}</div>
 
       {/* Card body — hover zone for the tooltip */}
-      <div className="plan-node-card">
+      <div className={cardClasses.join(" ")}>
         <span className="plan-node-label">{label}</span>
         <button className="plan-node-menu" aria-label="Options" tabIndex={-1}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">

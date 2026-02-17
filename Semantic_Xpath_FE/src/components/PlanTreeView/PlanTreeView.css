@@ -118,6 +118,28 @@
   stroke-width: 2 !important;
 }
 
+/* ── Highlighted edges (CRUD) ────────────────────── */
+
+.edge-highlight-read .react-flow__edge-path {
+  stroke: #7c3aed !important;
+  stroke-width: 3 !important;
+}
+
+.edge-highlight-create .react-flow__edge-path {
+  stroke: #22c55e !important;
+  stroke-width: 3 !important;
+}
+
+.edge-highlight-update .react-flow__edge-path {
+  stroke: #f59e0b !important;
+  stroke-width: 3 !important;
+}
+
+.edge-highlight-delete .react-flow__edge-path {
+  stroke: #ef4444 !important;
+  stroke-width: 3 !important;
+}
+
 /* ── Controls ─────────────────────────────────────── */
 
 .react-flow__controls {
@@ -212,4 +234,101 @@
   font-size: 11px;
   color: #8b5cf6;
   font-weight: 500;
+}
+
+/* ============================================================
+   CRUD Highlight Variants
+   ============================================================ */
+
+/* ── READ: deep purple ──────────────────────────────── */
+
+.plan-node-highlight-read {
+  background: #f5f3ff !important;
+  border: 2px solid #7c3aed !important;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.1) !important;
+}
+
+.plan-node-highlight-read-path {
+  background: #faf5ff !important;
+  border: 2px solid #a78bfa !important;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.06) !important;
+}
+
+.plan-node-pill-read {
+  background: #7c3aed !important;
+  border-color: #6d28d9 !important;
+}
+
+/* ── CREATE: green ──────────────────────────────────── */
+
+.plan-node-highlight-create {
+  background: #ecfdf5 !important;
+  border: 2px solid #4ade80 !important;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.1) !important;
+}
+
+.plan-node-highlight-create-path {
+  background: #f0fdf4 !important;
+  border: 2px solid #86efac !important;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.06) !important;
+}
+
+.plan-node-highlight-create .plan-node-label {
+  color: #16a34a !important;
+}
+
+.plan-node-pill-create {
+  background: #22c55e !important;
+  border-color: #16a34a !important;
+}
+
+/* ── UPDATE: amber / orange ─────────────────────────── */
+
+.plan-node-highlight-update {
+  background: #fff7ed !important;
+  border: 2px solid #f59e0b !important;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.1) !important;
+}
+
+.plan-node-highlight-update-path {
+  background: #fffbeb !important;
+  border: 2px solid #fbbf24 !important;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.06) !important;
+}
+
+.plan-node-highlight-update .plan-node-label {
+  color: #d97706 !important;
+}
+
+.plan-node-pill-update {
+  background: #f59e0b !important;
+  border-color: #d97706 !important;
+}
+
+/* ── DELETE: red path + gray target ─────────────────── */
+
+.plan-node-highlight-delete {
+  background: #d4d4d8 !important;
+  border: 1px solid #f3f4f6 !important;
+  box-shadow: none !important;
+  opacity: 0.7;
+}
+
+.plan-node-highlight-delete .plan-node-label {
+  color: #9ca3af !important;
+}
+
+.plan-node-highlight-delete-path {
+  background: #fef2f2 !important;
+  border: 2px solid #f87171 !important;
+  box-shadow: 0 0 8px rgba(0, 15, 57, 0.06) !important;
+}
+
+.plan-node-highlight-delete-path .plan-node-label {
+  color: #ef4444 !important;
+}
+
+.plan-node-pill-delete {
+  background: #ef4444 !important;
+  border-color: #dc2626 !important;
 }

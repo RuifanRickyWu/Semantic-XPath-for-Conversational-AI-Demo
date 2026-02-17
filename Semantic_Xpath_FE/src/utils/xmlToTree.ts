@@ -16,6 +16,15 @@ export interface PlanNodeData {
   childCount: number;
   /** Human-readable path from root, e.g. "Plan > Day 2 > Morning > Item" */
   xpath: string;
+  /**
+   * Structural path using tag[siblingIndex] notation, matching the backend
+   * tree_path format. e.g. "Plan/Day[2]/Morning[1]/Item[1]"
+   */
+  structuralPath: string;
+  /** CRUD highlight mode applied via PlanTreeView */
+  highlightMode?: "read" | "create" | "update" | "delete" | null;
+  /** Whether this node is a direct target (true) or an ancestor along the path (false) */
+  isHighlightTarget?: boolean;
   [key: string]: unknown;
 }
 
@@ -84,19 +93,41 @@ function tagForElement(el: Element): string {
   }
 }
 
+/**
+ * Compute the 1-based sibling index among same-tag siblings.
+ */
+function siblingIndex(el: Element): number {
+  const parent = el.parentElement;
+  if (!parent) return 1;
+  const sameTag = Array.from(parent.children).filter(
+    (c) => c.tagName === el.tagName
+  );
+  return sameTag.indexOf(el) + 1;
+}
+
 /* ── Recursive tree walk ───────────────────────────── */
 
 function walkElement(
   el: Element,
   parentId: string | null,
-  parentPath: string,
+  parentDisplayPath: string,
+  parentStructuralPath: string,
   nodes: Node<PlanNodeData>[],
   edges: Edge[],
   idCounter: { value: number }
 ): void {
   const id = `node-${idCounter.value++}`;
   const label = labelForElement(el);
-  const xpath = parentPath ? `${parentPath} > ${label}` : label;
+  const xpath = parentDisplayPath
+    ? `${parentDisplayPath} > ${label}`
+    : label;
+
+  // Build structural path: "Plan/Day[2]/Morning[1]/Item[1]"
+  const idx = siblingIndex(el);
+  const segment = `${el.tagName}[${idx}]`;
+  const structuralPath = parentStructuralPath
+    ? `${parentStructuralPath}/${segment}`
+    : segment;
 
   const directText = Array.from(el.childNodes)
     .filter((n) => n.nodeType === Node.TEXT_NODE)
@@ -121,6 +152,7 @@ function walkElement(
     attributes: Object.keys(attrs).length > 0 ? attrs : undefined,
     childCount: children.length,
     xpath,
+    structuralPath,
   };
 
   nodes.push({
@@ -141,7 +173,7 @@ function walkElement(
 
   // Recurse into child elements
   for (const child of children) {
-    walkElement(child, id, xpath, nodes, edges, idCounter);
+    walkElement(child, id, xpath, structuralPath, nodes, edges, idCounter);
   }
 }
 
@@ -201,7 +233,7 @@ export function parseXmlToTree(xmlString: string): {
   const edges: Edge[] = [];
   const idCounter = { value: 0 };
 
-  walkElement(root, null, "", nodes, edges, idCounter);
+  walkElement(root, null, "", "", nodes, edges, idCounter);
   applyDagreLayout(nodes, edges);
 
   return { nodes, edges };

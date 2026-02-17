@@ -170,6 +170,7 @@ class TurnResponse:
     routing: RoutingDecision
     session_updates: SessionUpdate
     telemetry: Optional[TurnTelemetry] = None
+    intent_results: Optional[List[Dict[str, Any]]] = None
 
 
 @dataclass
@@ -179,6 +180,9 @@ class IntentResult:
     generation_hint: Optional[str] = None
     task_name: Optional[str] = None
     task_xml: Optional[str] = None
+    xpath_query: Optional[str] = None
+    original_query: Optional[str] = None
+    affected_node_paths: Optional[List[List[Dict[str, Any]]]] = None
 
 
 @dataclass

@@ -154,6 +154,7 @@ class PlanEditService(BaseIntentHandler):
             return _result("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
             return _result("No matching content found to remove.")
 
@@ -197,6 +198,11 @@ class PlanEditService(BaseIntentHandler):
         new_version_id = commit_result.new_version_id or version_id
         hint = _format_deleted_summary(per_node)
 
+        affected_paths = [
+            item.get("tree_path") or []
+            for item in per_node
+        ]
+
         session_updates = SessionUpdate(active_version_id=new_version_id)
 
         return HandlerResult(
@@ -205,6 +211,11 @@ class PlanEditService(BaseIntentHandler):
             intent_result=IntentResult(
                 intent="PLAN_DELETE",
                 generation_hint=hint,
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                affected_node_paths=affected_paths,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
             ),
         )
 
@@ -272,6 +283,7 @@ class PlanEditService(BaseIntentHandler):
             return _result_update("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
             return _result_update("No matching content found to update.")
 
@@ -307,6 +319,9 @@ class PlanEditService(BaseIntentHandler):
         except Exception:
             return _result_update("Failed to apply the requested changes.")
 
+        # Diff old vs new fragment to find precisely which child nodes changed
+        affected_paths = _diff_xml_changed_paths(xml_fragment, updated_xml, path_segments)
+
         replace_op = ReplaceXmlNode(path_segments=path_segments, xml_fragment=updated_xml)
 
         try:
@@ -334,6 +349,11 @@ class PlanEditService(BaseIntentHandler):
             intent_result=IntentResult(
                 intent="PLAN_UPDATE",
                 generation_hint=hint,
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                affected_node_paths=affected_paths,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
             ),
         )
 
@@ -401,6 +421,7 @@ class PlanEditService(BaseIntentHandler):
             return _result_add("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
             return _result_add("No matching container found to add to.")
 
@@ -436,6 +457,9 @@ class PlanEditService(BaseIntentHandler):
         except Exception:
             return _result_add("Failed to add the requested content.")
 
+        # Diff old vs new fragment to find precisely which child nodes were added
+        affected_paths = _diff_xml_changed_paths(xml_fragment, updated_xml, path_segments)
+
         replace_op = ReplaceXmlNode(path_segments=path_segments, xml_fragment=updated_xml)
 
         try:
@@ -463,6 +487,11 @@ class PlanEditService(BaseIntentHandler):
             intent_result=IntentResult(
                 intent="PLAN_ADD",
                 generation_hint=hint,
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                affected_node_paths=affected_paths,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
             ),
         )
 
@@ -498,6 +527,90 @@ def _extract_xml_fragment_by_path_segments(
         return ET.tostring(node, encoding="unicode")
     except Exception:
         return None
+
+
+def _diff_xml_changed_paths(
+    old_xml_str: str, new_xml_str: str, base_path: List[tuple]
+) -> List[List[tuple]]:
+    """Compare old/new XML fragments and return tree_paths of actually changed nodes.
+
+    Walks both trees in parallel. Only paths that exist in the *new* tree are
+    returned so the frontend can highlight them on the current plan.
+    Falls back to ``[base_path]`` on parse errors or when no diff is detected.
+    """
+    try:
+        old_root = ET.fromstring(old_xml_str)
+        new_root = ET.fromstring(new_xml_str)
+    except ET.ParseError:
+        return [list(base_path)]
+
+    changed: List[List[tuple]] = []
+    _diff_walk(old_root, new_root, list(base_path), changed)
+    return changed if changed else [list(base_path)]
+
+
+def _diff_walk(
+    old_el: ET.Element,
+    new_el: ET.Element,
+    path: List[tuple],
+    changed: List[List[tuple]],
+) -> None:
+    """Recursively compare two XML elements, collecting paths of changed nodes."""
+    old_children = list(old_el)
+    new_children = list(new_el)
+
+    # Leaf node: compare text and attributes
+    if not old_children and not new_children:
+        old_text = (old_el.text or "").strip()
+        new_text = (new_el.text or "").strip()
+        if old_text != new_text or old_el.attrib != new_el.attrib:
+            changed.append(list(path))
+        return
+
+    # Group children by tag name
+    def _group_by_tag(children: list) -> Dict[str, list]:
+        groups: Dict[str, list] = {}
+        for c in children:
+            groups.setdefault(c.tag, []).append(c)
+        return groups
+
+    old_groups = _group_by_tag(old_children)
+    new_groups = _group_by_tag(new_children)
+    all_tags = sorted(set(list(old_groups.keys()) + list(new_groups.keys())))
+
+    for tag in all_tags:
+        old_list = old_groups.get(tag, [])
+        new_list = new_groups.get(tag, [])
+
+        for i in range(len(new_list)):
+            child_path = path + [(tag, i + 1)]
+            if i < len(old_list):
+                _diff_walk(old_list[i], new_list[i], child_path, changed)
+            else:
+                # Newly added node — mark all its leaves as changed
+                _collect_leaves(new_list[i], child_path, changed)
+
+    # Check direct text / attribute changes on this (non-leaf) node
+    old_text = (old_el.text or "").strip()
+    new_text = (new_el.text or "").strip()
+    if old_text != new_text or old_el.attrib != new_el.attrib:
+        changed.append(list(path))
+
+
+def _collect_leaves(
+    el: ET.Element, path: List[tuple], result: List[List[tuple]]
+) -> None:
+    """Collect paths for all leaf nodes in a subtree (for newly added nodes)."""
+    children = list(el)
+    if not children:
+        result.append(list(path))
+        return
+    groups: Dict[str, list] = {}
+    for c in children:
+        groups.setdefault(c.tag, []).append(c)
+    for tag, group in groups.items():
+        for i, child in enumerate(group):
+            _collect_leaves(child, path + [(tag, i + 1)], result)
 
 
 def _format_updated_summary(per_node_item: Dict[str, Any], request: str) -> str:

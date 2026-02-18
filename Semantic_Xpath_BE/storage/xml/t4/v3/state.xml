@@ -1,0 +1,55 @@
+<Plan id="t4" version="v3">
+  <Meta>
+    <Title>3-day travel plan for Toronto</Title>
+    <Summary>A compact 3-day itinerary covering downtown highlights, neighborhoods, museums, and a day trip option, with flexible meal and transit suggestions.</Summary>
+  </Meta>
+  <Day number="1" title="Downtown core and waterfront">
+    <Morning>
+      <Item>Breakfast near Yonge-Dundas Square, then walk through the Eaton Centre area.</Item>
+      <Item>Visit St. Lawrence Market (browse vendors, snacks, quick lunch planning).</Item>
+    </Morning>
+    <Afternoon>
+      <Item>Explore the Distillery Historic District for architecture, shops, and galleries.</Item>
+      <Item>Walk or transit to the Toronto waterfront; stroll Harbourfront Centre.</Item>
+    </Afternoon>
+    <Evening>
+      <Item>CN Tower at sunset (consider EdgeWalk if desired); dinner nearby.</Item>
+      <Item>Optional: Ripley's Aquarium of Canada if you prefer an indoor evening activity.</Item>
+    </Evening>
+    <Notes>
+      <Item>Use TTC subway/streetcars for quick hops; consider a day pass if doing many short rides.</Item>
+    </Notes>
+  </Day>
+  <Day number="2" title="Museums and classic neighborhoods">
+    <Morning>
+      <Item>Italian lunch at an Italian restaurant (same time slot as the museum visit).</Item><Item>Walk through Yorkville for cafes and window-shopping.</Item>
+    </Morning>
+    <Afternoon>
+      <Item>Casa Loma (tour and gardens); continue to nearby midtown streets for a relaxed walk.</Item>
+      <Item>Alternative: Chinese food / Chinese restaurant meal instead of the museum option.</Item>
+    </Afternoon>
+    <Evening>
+      <Item>Dinner and exploring in Kensington Market and Chinatown (casual, varied options).</Item>
+      <Item>Optional: Live show in the Entertainment District (theater, comedy, or music).</Item>
+    </Evening>
+    <Notes>
+      <Item>Most sights are reachable by subway + short walks; book timed tickets where available.</Item>
+    </Notes>
+  </Day><Day number="3" title="Parks, neighborhoods, and a day trip option">
+    <Morning>
+      <Item>Walk the Martin Goodman Trail or visit High Park (especially nice in spring/summer).</Item>
+      <Item>Brunch in Queen West or Ossington area.</Item>
+    </Morning>
+    <Afternoon>
+      <Item>Option A (in-city): Toronto Islands ferry for skyline views, biking, and beaches.</Item>
+      <Item>Option B (day trip): Niagara Falls (GO Transit + local transit/tour) for a full afternoon.</Item>
+    </Afternoon>
+    <Evening>
+      <Item>Return for a final dinner in King West, Queen West, or the waterfront.</Item>
+      <Item>Optional: Night views from Riverdale Park East or Polson Pier (weather permitting).</Item>
+    </Evening>
+    <Notes>
+      <Item>If choosing Niagara Falls, start early and expect a longer day; otherwise prioritize the Islands.</Item>
+    </Notes>
+  </Day>
+</Plan>

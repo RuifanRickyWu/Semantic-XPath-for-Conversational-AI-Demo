@@ -116,6 +116,8 @@ class PlanQAService(BaseIntentHandler):
             return _result("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
+
         if self._result_verifier and per_node:
             v_res = self._result_verifier.verify(
                 exec_result,
@@ -128,12 +130,22 @@ class PlanQAService(BaseIntentHandler):
         formatted = _format_plan_nodes(per_node)
         hint = formatted
 
+        affected_paths = [
+            item.get("tree_path") or []
+            for item in per_node
+        ]
+
         return HandlerResult(
             session_updates=SessionUpdate(),
             generation_hint=hint,
             intent_result=IntentResult(
                 intent="PLAN_QA",
                 generation_hint=hint,
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                affected_node_paths=affected_paths,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
             ),
         )
 

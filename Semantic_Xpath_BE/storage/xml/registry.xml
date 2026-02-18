@@ -16,7 +16,9 @@
     <Version version_id="v4" summary="Add a 30-minute vocabulary review session to Day 2 morning of the active plan." created_at="2026-02-16T07:41:00.818222+00:00" />
     <Version version_id="v5" summary="Add a practice test to Day 4 afternoon of the active plan." created_at="2026-02-16T07:41:11.251096+00:00" />
   </Task>
-  <Task task_id="t4" active_version_id="v1" task_name="3-day travel plan for Toronto" created_at="2026-02-17T17:00:00.425417+00:00" updated_at="2026-02-17T17:00:14.519005+00:00">
+  <Task task_id="t4" active_version_id="v3" task_name="3-day travel plan for Toronto" created_at="2026-02-17T17:00:00.425417+00:00" updated_at="2026-02-18T17:57:28.744816+00:00">
     <Version version_id="v1" summary="Initial version" created_at="2026-02-17T17:00:00.425417+00:00" />
+    <Version version_id="v2" summary="In the active plan, replace every museum item with a Chinese food / Chinese restaurant meal in the same day/time slot." created_at="2026-02-18T17:38:22.433464+00:00" />
+    <Version version_id="v3" summary="Update all Chinese food/Chinese restaurant meal options in my current plan to Italian food/Italian restaurant meal options." created_at="2026-02-18T17:57:28.744782+00:00" />
   </Task>
 </Registry>

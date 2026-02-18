@@ -149,6 +149,7 @@ class OrchestratorService:
             routing=routing,
             session_updates=combined.session_updates,
             telemetry=telemetry,
+            intent_results=combined.intent_results,
         )
 
     # ------------------------------------------------------------------

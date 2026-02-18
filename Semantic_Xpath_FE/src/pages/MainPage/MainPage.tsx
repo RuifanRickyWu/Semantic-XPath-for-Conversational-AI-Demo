@@ -1,46 +1,53 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { postChat } from "../../api/chatApi";
 import { getTasks, getTaskPlan, activateTask } from "../../api/tasksApi";
-import type { ChatResponseType } from "../../types/chat";
-import type { TaskSummary } from "../../types/task";
+import type { CrudAction } from "../../types/chat";
+import { typeToCrudAction, CRUD_CONFIG } from "../../types/chat";
+import { useAppState, type ChatMessage } from "../../context/AppStateContext";
 import PlanTreeView from "../../components/PlanTreeView/PlanTreeView";
 import "./MainPage.css";
-
-interface ChatMessage {
-  role: "user" | "system";
-  content: string;
-  /** Response type from backend — drives rendering behavior */
-  type?: ChatResponseType;
-  title?: string;
-  isLoading?: boolean;
-}
 
 interface LocationState {
   query?: string;
 }
 
-/* Icons are loaded from /assets/ SVG files */
-
 /* ── Main Component ───────────────────────────────── */
 
 export default function MainPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const state = location.state as LocationState | null;
 
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const {
+    messages,
+    setMessages,
+    tasks,
+    setTasks,
+    activeTaskId,
+    setActiveTaskId,
+    activePlanXml,
+    setActivePlanXml,
+    highlightMode,
+    setHighlightMode,
+    highlightedPaths,
+    setHighlightedPaths,
+    latestXpathQuery,
+    setLatestXpathQuery,
+    latestOriginalQuery,
+    setLatestOriginalQuery,
+    selectedMessageIndex,
+    setSelectedMessageIndex,
+    currentTaskIdRef,
+    currentVersionIdRef,
+    sessionId,
+    isLoading,
+    setIsLoading,
+  } = useAppState();
+
   const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const initialQueryHandled = useRef(false);
-
-  // Generate a stable session ID for this page instance
-  const sessionIdRef = useRef<string>(crypto.randomUUID());
-
-  // Task tab bar state
-  const [tasks, setTasks] = useState<TaskSummary[]>([]);
-  const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
-  const [activePlanXml, setActivePlanXml] = useState<string | null>(null);
 
   /** Refresh the task list from the backend and optionally load a plan. */
   const refreshTasks = useCallback(async (loadPlanForTaskId?: string) => {
@@ -48,11 +55,17 @@ export default function MainPage() {
       const res = await getTasks();
       setTasks(res.tasks);
       setActiveTaskId(res.active_task_id);
+      if (res.active_task_id) {
+        currentTaskIdRef.current = res.active_task_id;
+      }
       const taskToLoad = loadPlanForTaskId || res.active_task_id;
       if (taskToLoad) {
         try {
           const planRes = await getTaskPlan(taskToLoad);
           setActivePlanXml(planRes.plan_xml);
+          if (planRes.version_id) {
+            currentVersionIdRef.current = planRes.version_id;
+          }
         } catch {
           setActivePlanXml(null);
         }
@@ -60,12 +73,14 @@ export default function MainPage() {
     } catch {
       // Backend may not be running yet; keep empty state
     }
-  }, []);
+  }, [setTasks, setActiveTaskId, setActivePlanXml]);
 
-  // Load task list on mount
+  // Load task list on mount (only if empty)
   useEffect(() => {
-    refreshTasks();
-  }, [refreshTasks]);
+    if (tasks.length === 0) {
+      refreshTasks();
+    }
+  }, [refreshTasks, tasks.length]);
 
   // Handle initial query from LandingPage
   useEffect(() => {
@@ -99,18 +114,52 @@ export default function MainPage() {
     setIsLoading(true);
 
     try {
-      const result = await postChat(query, sessionIdRef.current);
+      const result = await postChat(query, sessionId);
 
       if (result.success) {
+        const crud = typeToCrudAction(result.type);
+
+        const returnedTaskId = result.session_updates?.active_task_id;
+        if (returnedTaskId) {
+          currentTaskIdRef.current = returnedTaskId;
+        }
+        const returnedVersionId = result.session_updates?.active_version_id;
+        if (returnedVersionId) {
+          currentVersionIdRef.current = returnedVersionId;
+        }
+
         const systemMessage: ChatMessage = {
           role: "system",
           content: result.message || "Done.",
           type: result.type,
-          title: result.type === "PLAN_CREATE"
-            ? extractTitle(result.message)
-            : undefined,
+          title: undefined,
+          crudAction: crud,
+          xpathQuery: result.xpath_query,
+          originalQuery: result.original_query,
+          affectedNodePaths: result.affected_node_paths,
+          scoringTrace: result.scoring_trace,
+          perNodeDetail: result.per_node_detail,
+          snapshotTaskId: currentTaskIdRef.current ?? undefined,
+          snapshotVersionId: currentVersionIdRef.current ?? undefined,
         };
-        setMessages((prev) => [...prev.slice(0, -1), systemMessage]);
+        setMessages((prev) => {
+          const updated = [...prev.slice(0, -1), systemMessage];
+          if (crud) {
+            setSelectedMessageIndex(updated.length - 1);
+          }
+          return updated;
+        });
+
+        // Update tree highlight state and query bars
+        if (crud && result.affected_node_paths?.length) {
+          setHighlightMode(crud);
+          setHighlightedPaths(result.affected_node_paths);
+        } else {
+          setHighlightMode(null);
+          setHighlightedPaths(null);
+        }
+        setLatestXpathQuery(result.xpath_query || null);
+        setLatestOriginalQuery(result.original_query || null);
 
         // Refresh task tab bar when backend state may have changed
         const newTaskId = result.session_updates?.active_task_id;
@@ -151,21 +200,12 @@ export default function MainPage() {
     }
   };
 
-  function extractTitle(text?: string): string | undefined {
-    if (!text) return undefined;
-    const lines = text.split("\n").filter((l) => l.trim());
-    if (lines.length > 0) {
-      return lines[0].replace(/^#+\s*/, "").trim();
-    }
-    return undefined;
-  }
-
   /* ── Task tab bar handler ────────────────────────── */
 
   const handleTabClick = async (taskId: string) => {
     if (taskId === activeTaskId) return;
     try {
-      const res = await activateTask(taskId, sessionIdRef.current);
+      const res = await activateTask(taskId, sessionId);
       setActiveTaskId(res.active_task_id);
       const planRes = await getTaskPlan(res.active_task_id);
       setActivePlanXml(planRes.plan_xml);
@@ -221,12 +261,14 @@ export default function MainPage() {
         return renderChatMessage(msg, index);
       case "PLAN_CREATE":
         return renderPlanCreateMessage(msg, index);
-      // Future intent types — placeholder rendering for now
       case "PLAN_QA":
-      case "PLAN_EDIT":
+      case "PLAN_ADD":
+      case "PLAN_UPDATE":
+      case "PLAN_DELETE":
       case "REGISTRY_QA":
       case "REGISTRY_EDIT":
-        return renderDefaultMessage(msg, index);
+      case "REGISTRY_DELETE":
+        return renderCrudMessage(msg, index);
       default:
         return renderDefaultMessage(msg, index);
     }
@@ -247,76 +289,130 @@ export default function MainPage() {
     );
   }
 
-  /** PLAN_CREATE type: title + plan icon + formatted plan content */
+  /** PLAN_CREATE type: inline text + Itinerary badge (same layout as CRUD messages) */
   function renderPlanCreateMessage(msg: ChatMessage, index: number) {
-    const lines = msg.content.split("\n");
-    const bodyLines = lines.slice(msg.title ? 1 : 0);
-
     return (
       <div key={index} className="msg-block msg-block-system">
-        {/* Title row: logo + title + plan icon */}
         <div className="msg-system-title-row">
           <div className="msg-system-logo">
             <img src="/assets/logo-icon.svg" alt="" width="24" height="24" />
           </div>
-          <h2 className="msg-system-title">
-            {msg.title || "Response"}
-          </h2>
-          <button className="msg-plan-icon" aria-label="View plan details">
-            <img src="/assets/view-list.svg" alt="" width="24" height="24" />
-          </button>
+          <p className="msg-chat-text msg-chat-text-flex">{msg.content}</p>
+          <div
+            className="crud-badge"
+            style={{ backgroundColor: "#ffffff", borderColor: "#e5e7eb" }}
+          >
+            <img src="/assets/view-list.svg" alt="" width="20" height="20" />
+            <span className="crud-badge-label">Itinerary</span>
+          </div>
         </div>
+        <div className="msg-divider msg-divider-full" />
+      </div>
+    );
+  }
 
-        {/* Divider below title */}
-        <div className="msg-divider msg-divider-content" />
+  /** Render CRUD badge pill — clickable, with default/selected states */
+  function renderCrudBadge(
+    action: CrudAction,
+    isSelected: boolean,
+    onClick?: (e: React.MouseEvent) => void,
+  ) {
+    const config = CRUD_CONFIG[action];
+    const clickable = !!onClick;
+    return (
+      <div
+        className={`crud-badge${clickable ? " crud-badge-clickable" : ""}${isSelected ? " crud-badge-selected" : ""}`}
+        style={{
+          backgroundColor: isSelected ? config.selectedBgColor : config.bgColor,
+          borderColor: isSelected ? config.selectedBorderColor : config.borderColor,
+        }}
+        onClick={onClick}
+      >
+        <img src={config.icon} alt="" width="20" height="20" />
+        <span className="crud-badge-label">{config.label}</span>
+      </div>
+    );
+  }
 
-        {/* Content body */}
-        <div className="msg-system-body">
-          {bodyLines.map((line, i) => {
-            const trimmed = line.trim();
-            if (!trimmed) return <div key={i} className="body-spacer" />;
+  /** Render Expanded Query + XPath display bars */
+  function renderQueryBars(xpathQuery?: string, originalQuery?: string) {
+    if (!xpathQuery && !originalQuery) return null;
+    return (
+      <div className="query-bars">
+        {originalQuery && (
+          <div className="xpath-query-bar">
+            <span className="query-bar-label">Expanded Query :</span>
+            <span className="query-bar-value">{originalQuery}</span>
+          </div>
+        )}
+        {xpathQuery && (
+          <div className="xpath-query-bar">
+            <span className="query-bar-label">XPath :</span>
+            <span className="query-bar-value">{xpathQuery}</span>
+          </div>
+        )}
+      </div>
+    );
+  }
 
-            // Day / section headers
-            if (
-              /^(#{1,3}\s+)?Day\s*\d/i.test(trimmed) ||
-              /^#{1,3}\s+/.test(trimmed)
-            ) {
-              return (
-                <div key={i} className="body-day-section">
-                  <div className="msg-divider msg-divider-content" />
-                  <h3 className="body-day-title">
-                    {trimmed.replace(/^#+\s*/, "")}
-                  </h3>
-                </div>
-              );
-            }
+  /** CRUD intent types: logo + text + CRUD badge + query bars */
+  function renderCrudMessage(msg: ChatMessage, index: number) {
+    const crud = msg.crudAction;
+    const isSelected = selectedMessageIndex === index;
+    const hasSnapshot = !!(msg.snapshotTaskId && msg.snapshotVersionId);
 
-            // Bold labels (Morning:, Afternoon:, Evening:, etc.)
-            if (/^(\*\*)?[A-Z][\w\s]*:(\*\*)?/.test(trimmed)) {
-              const colonIdx = trimmed.indexOf(":");
-              const label = trimmed
-                .substring(0, colonIdx + 1)
-                .replace(/\*\*/g, "");
-              const rest = trimmed
-                .substring(colonIdx + 1)
-                .replace(/\*\*/g, "")
-                .trim();
-              return (
-                <p key={i} className="body-line">
-                  <strong className="body-label">{label}</strong>
-                  {rest ? ` ${rest}` : ""}
-                </p>
-              );
-            }
+    const handleBadgeClick = hasSnapshot
+      ? async (e: React.MouseEvent) => {
+          e.stopPropagation();
+          setSelectedMessageIndex(index);
 
-            // Regular lines
-            return (
-              <p key={i} className="body-line">
-                {trimmed.replace(/\*\*/g, "")}
-              </p>
-            );
-          })}
+          try {
+            const planRes = await getTaskPlan(msg.snapshotTaskId!, msg.snapshotVersionId!);
+            setActivePlanXml(planRes.plan_xml);
+          } catch {
+            // Version may no longer exist; keep current tree
+          }
+
+          if (crud && msg.affectedNodePaths?.length) {
+            setHighlightMode(crud);
+            setHighlightedPaths(msg.affectedNodePaths);
+          } else {
+            setHighlightMode(null);
+            setHighlightedPaths(null);
+          }
+          setLatestXpathQuery(msg.xpathQuery || null);
+          setLatestOriginalQuery(msg.originalQuery || null);
+        }
+      : undefined;
+
+    return (
+      <div key={index} className="msg-block msg-block-system">
+        {renderQueryBars(msg.xpathQuery, msg.originalQuery)}
+        <div className="msg-system-title-row">
+          <div className="msg-system-logo">
+            <img src="/assets/logo-icon.svg" alt="" width="24" height="24" />
+          </div>
+          <p className="msg-chat-text msg-chat-text-flex">{msg.content}</p>
+          {crud && renderCrudBadge(crud, isSelected, handleBadgeClick)}
         </div>
+        {msg.scoringTrace && msg.scoringTrace.length > 0 && (
+          <div
+            className="scoring-link"
+            onClick={() =>
+              navigate("/scoring", {
+                state: {
+                  xpathQuery: msg.xpathQuery,
+                  originalQuery: msg.originalQuery,
+                  scoringTrace: msg.scoringTrace,
+                  perNodeDetail: msg.perNodeDetail,
+                  planXml: activePlanXml,
+                },
+              })
+            }
+          >
+            click for detailed scoring
+          </div>
+        )}
         <div className="msg-divider msg-divider-full" />
       </div>
     );
@@ -431,10 +527,32 @@ export default function MainPage() {
           </div>
         )}
 
+        {/* Right-side Query Bars */}
+        {(latestXpathQuery || latestOriginalQuery) && (
+          <div className="right-query-bars">
+            {latestOriginalQuery && (
+              <div className="xpath-query-bar right-query-bar">
+                <span className="query-bar-label">Expanded Query :</span>
+                <span className="query-bar-value">{latestOriginalQuery}</span>
+              </div>
+            )}
+            {latestXpathQuery && (
+              <div className="xpath-query-bar right-query-bar">
+                <span className="query-bar-label">XPath :</span>
+                <span className="query-bar-value">{latestXpathQuery}</span>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Tree View Area */}
         <div className="tree-view-area">
           {activePlanXml ? (
-            <PlanTreeView planXml={activePlanXml} />
+            <PlanTreeView
+              planXml={activePlanXml}
+              highlightMode={highlightMode}
+              highlightedPaths={highlightedPaths}
+            />
           ) : (
             <div className="right-panel-placeholder">
               <p>Tree Visualization</p>

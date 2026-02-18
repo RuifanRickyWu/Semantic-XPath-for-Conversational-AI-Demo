@@ -511,6 +511,20 @@ class SemanticXPathExecutor:
             for item in items
         ]
     
+    def _is_matchable_node(self, node: ET.Element) -> bool:
+        """Check if a node can be matched by a wildcard selector.
+
+        A node is matchable if it is structurally complex (has heterogeneous
+        children) OR if its tag is a known node type defined in the schema.
+        This allows schema-defined leaf nodes (e.g. ``<Item>text</Item>``)
+        and simple-list containers (e.g. ``<Morning>`` with only ``<Item>``
+        children) to participate in wildcard queries.
+        """
+        if NodeUtils._is_structured_node(node):
+            return True
+        schema_nodes = self._schema.get("nodes", {})
+        return node.tag in schema_nodes
+
     def _is_root_step(self, step: Step, root_type: str) -> bool:
         if not isinstance(step.test, NodeTestLeaf):
             return False
@@ -686,12 +700,12 @@ class SemanticXPathExecutor:
             if axis_val == "desc":
                 matches = [
                     n for n in context_item.node.iter()
-                    if n is not context_item.node and NodeUtils._is_structured_node(n)
+                    if n is not context_item.node and self._is_matchable_node(n)
                 ]
             else:
                 matches = [
                     child for child in context_item.node
-                    if NodeUtils._is_structured_node(child)
+                    if self._is_matchable_node(child)
                 ]
         else:
             if axis_val == "desc":

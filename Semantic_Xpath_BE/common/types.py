@@ -183,6 +183,8 @@ class IntentResult:
     xpath_query: Optional[str] = None
     original_query: Optional[str] = None
     affected_node_paths: Optional[List[List[Dict[str, Any]]]] = None
+    scoring_trace: Optional[List[Dict[str, Any]]] = None
+    per_node_detail: Optional[List[Dict[str, Any]]] = None
 
 
 @dataclass

@@ -121,7 +121,7 @@
 /* ── Highlighted edges (CRUD) ────────────────────── */
 
 .edge-highlight-read .react-flow__edge-path {
-  stroke: #7c3aed !important;
+  stroke: #2563eb !important;
   stroke-width: 3 !important;
 }
 
@@ -240,23 +240,31 @@
    CRUD Highlight Variants
    ============================================================ */
 
-/* ── READ: deep purple ──────────────────────────────── */
+/* ── READ: blue ─────────────────────────────────────── */
 
 .plan-node-highlight-read {
-  background: #f5f3ff !important;
-  border: 2px solid #7c3aed !important;
+  background: #eff6ff !important;
+  border: 2px solid #2563eb !important;
   box-shadow: 0 0 8px rgba(0, 15, 57, 0.1) !important;
 }
 
+.plan-node-highlight-read .plan-node-label {
+  color: #1d4ed8 !important;
+}
+
 .plan-node-highlight-read-path {
-  background: #faf5ff !important;
-  border: 2px solid #a78bfa !important;
+  background: #dbeafe !important;
+  border: 2px solid #60a5fa !important;
   box-shadow: 0 0 8px rgba(0, 15, 57, 0.06) !important;
 }
 
+.plan-node-highlight-read-path .plan-node-label {
+  color: #2563eb !important;
+}
+
 .plan-node-pill-read {
-  background: #7c3aed !important;
-  border-color: #6d28d9 !important;
+  background: #2563eb !important;
+  border-color: #1d4ed8 !important;
 }
 
 /* ── CREATE: green ──────────────────────────────────── */

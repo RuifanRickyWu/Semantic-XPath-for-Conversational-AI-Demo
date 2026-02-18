@@ -21,6 +21,8 @@ export interface PlanNodeData {
    * tree_path format. e.g. "Plan/Day[2]/Morning[1]/Item[1]"
    */
   structuralPath: string;
+  /** Backend-style display path used in scoring trace matching. */
+  backendPath?: string;
   /** CRUD highlight mode applied via PlanTreeView */
   highlightMode?: "read" | "create" | "update" | "delete" | null;
   /** Whether this node is a direct target (true) or an ancestor along the path (false) */
@@ -76,6 +78,25 @@ function labelForElement(el: Element): string {
 }
 
 /**
+ * Mirror backend NodeUtils.get_name() behavior for stable path matching.
+ */
+function backendNameForElement(el: Element): string {
+  const index = el.getAttribute("index") ?? el.getAttribute("number");
+  if (index !== null) return `${el.tagName} ${index}`;
+
+  const nameAttr = el.getAttribute("name");
+  if (nameAttr) return nameAttr;
+
+  for (const field of ["name", "title", "label"]) {
+    const child = el.querySelector(`:scope > ${field}`);
+    const text = child?.textContent?.trim();
+    if (text) return text;
+  }
+
+  return el.tagName;
+}
+
+/**
  * Derive the pill / tag text shown above the card.
  */
 function tagForElement(el: Element): string {
@@ -111,6 +132,7 @@ function walkElement(
   el: Element,
   parentId: string | null,
   parentDisplayPath: string,
+  parentBackendPath: string,
   parentStructuralPath: string,
   nodes: Node<PlanNodeData>[],
   edges: Edge[],
@@ -121,6 +143,10 @@ function walkElement(
   const xpath = parentDisplayPath
     ? `${parentDisplayPath} > ${label}`
     : label;
+  const backendName = backendNameForElement(el);
+  const backendPath = parentBackendPath
+    ? `${parentBackendPath} > ${backendName}`
+    : backendName;
 
   // Build structural path: "Plan/Day[2]/Morning[1]/Item[1]"
   const idx = siblingIndex(el);
@@ -152,6 +178,7 @@ function walkElement(
     attributes: Object.keys(attrs).length > 0 ? attrs : undefined,
     childCount: children.length,
     xpath,
+    backendPath,
     structuralPath,
   };
 
@@ -173,7 +200,16 @@ function walkElement(
 
   // Recurse into child elements
   for (const child of children) {
-    walkElement(child, id, xpath, structuralPath, nodes, edges, idCounter);
+    walkElement(
+      child,
+      id,
+      xpath,
+      backendPath,
+      structuralPath,
+      nodes,
+      edges,
+      idCounter
+    );
   }
 }
 
@@ -233,7 +269,7 @@ export function parseXmlToTree(xmlString: string): {
   const edges: Edge[] = [];
   const idCounter = { value: 0 };
 
-  walkElement(root, null, "", "", nodes, edges, idCounter);
+  walkElement(root, null, "", "", "", nodes, edges, idCounter);
   applyDagreLayout(nodes, edges);
 
   return { nodes, edges };

@@ -68,12 +68,16 @@ class SemanticXpathService:
             result["original_query"] = intent_meta["original_query"]
         if intent_meta.get("affected_node_paths"):
             result["affected_node_paths"] = intent_meta["affected_node_paths"]
+        if intent_meta.get("scoring_trace"):
+            result["scoring_trace"] = intent_meta["scoring_trace"]
+        if intent_meta.get("per_node_detail"):
+            result["per_node_detail"] = intent_meta["per_node_detail"]
 
         return result
 
     @staticmethod
     def _extract_intent_meta(resp: Any) -> Dict[str, Any]:
-        """Extract CRUD metadata (xpath, original query, affected paths) from TurnResponse."""
+        """Extract CRUD metadata (xpath, original query, affected paths, scoring) from TurnResponse."""
         meta: Dict[str, Any] = {}
         intent_results = getattr(resp, "intent_results", None) or []
         for ir in intent_results:
@@ -85,6 +89,10 @@ class SemanticXpathService:
                 meta["original_query"] = ir["original_query"]
             if ir.get("affected_node_paths") and not meta.get("affected_node_paths"):
                 meta["affected_node_paths"] = ir["affected_node_paths"]
+            if ir.get("scoring_trace") and not meta.get("scoring_trace"):
+                meta["scoring_trace"] = ir["scoring_trace"]
+            if ir.get("per_node_detail") and not meta.get("per_node_detail"):
+                meta["per_node_detail"] = ir["per_node_detail"]
         return meta
 
     # ------------------------------------------------------------------

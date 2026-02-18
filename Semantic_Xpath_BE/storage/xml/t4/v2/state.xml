@@ -22,11 +22,12 @@
   </Day>
   <Day number="2" title="Museums and classic neighborhoods">
     <Morning>
-      <Item>Chinese food stop (dim sum or noodles) for a broad, easy half-day.</Item><Item>Walk through Yorkville for cafes and window-shopping.</Item>
+      <Item>Chinese lunch at a Chinese restaurant (same time slot as the museum visit).</Item>
+      <Item>Walk through Yorkville for cafes and window-shopping.</Item>
     </Morning>
     <Afternoon>
       <Item>Casa Loma (tour and gardens); continue to nearby midtown streets for a relaxed walk.</Item>
-      <Item>Alternative if you prefer art: Art Gallery of Ontario (AGO) instead of Casa Loma.</Item>
+      <Item>Alternative: Chinese food / Chinese restaurant meal instead of the museum option.</Item>
     </Afternoon>
     <Evening>
       <Item>Dinner and exploring in Kensington Market and Chinatown (casual, varied options).</Item>
@@ -35,8 +36,7 @@
     <Notes>
       <Item>Most sights are reachable by subway + short walks; book timed tickets where available.</Item>
     </Notes>
-  </Day>
-  <Day number="3" title="Parks, neighborhoods, and a day trip option">
+  </Day><Day number="3" title="Parks, neighborhoods, and a day trip option">
     <Morning>
       <Item>Walk the Martin Goodman Trail or visit High Park (especially nice in spring/summer).</Item>
       <Item>Brunch in Queen West or Ossington area.</Item>

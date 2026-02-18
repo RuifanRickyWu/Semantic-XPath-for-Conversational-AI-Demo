@@ -16,11 +16,9 @@
     <Version version_id="v4" summary="Add a 30-minute vocabulary review session to Day 2 morning of the active plan." created_at="2026-02-16T07:41:00.818222+00:00" />
     <Version version_id="v5" summary="Add a practice test to Day 4 afternoon of the active plan." created_at="2026-02-16T07:41:11.251096+00:00" />
   </Task>
-  <Task task_id="t4" active_version_id="v5" task_name="3-day travel plan for Toronto" created_at="2026-02-17T17:00:00.425417+00:00" updated_at="2026-02-17T21:18:19.457454+00:00">
+  <Task task_id="t4" active_version_id="v3" task_name="3-day travel plan for Toronto" created_at="2026-02-17T17:00:00.425417+00:00" updated_at="2026-02-18T17:57:28.744816+00:00">
     <Version version_id="v1" summary="Initial version" created_at="2026-02-17T17:00:00.425417+00:00" />
-    <Version version_id="v2" summary="Replace every museum in the current plan with a Chinese food stop, keeping the same day and time slots." created_at="2026-02-17T21:04:06.170619+00:00" />
-    <Version version_id="v3" summary="Delete all museum stops from the current plan (active task t4, version v2)." created_at="2026-02-17T21:13:27.290085+00:00" />
-    <Version version_id="v4" summary="Add a new Day 4 after Day 3 in the current trip plan (task t4, version v3) and make it a music-themed day." created_at="2026-02-17T21:16:59.994690+00:00" />
-    <Version version_id="v5" summary="Add a new Day 5 after the current last day (after Day 4) in the trip plan." created_at="2026-02-17T21:18:19.457436+00:00" />
+    <Version version_id="v2" summary="In the active plan, replace every museum item with a Chinese food / Chinese restaurant meal in the same day/time slot." created_at="2026-02-18T17:38:22.433464+00:00" />
+    <Version version_id="v3" summary="Update all Chinese food/Chinese restaurant meal options in my current plan to Italian food/Italian restaurant meal options." created_at="2026-02-18T17:57:28.744782+00:00" />
   </Task>
 </Registry>

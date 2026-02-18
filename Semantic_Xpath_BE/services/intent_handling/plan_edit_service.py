@@ -154,6 +154,7 @@ class PlanEditService(BaseIntentHandler):
             return _result("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
             return _result("No matching content found to remove.")
 
@@ -213,6 +214,8 @@ class PlanEditService(BaseIntentHandler):
                 xpath_query=gen_result.xpath_query,
                 original_query=request,
                 affected_node_paths=affected_paths,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
             ),
         )
 
@@ -280,6 +283,7 @@ class PlanEditService(BaseIntentHandler):
             return _result_update("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
             return _result_update("No matching content found to update.")
 
@@ -348,6 +352,8 @@ class PlanEditService(BaseIntentHandler):
                 xpath_query=gen_result.xpath_query,
                 original_query=request,
                 affected_node_paths=affected_paths,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
             ),
         )
 
@@ -415,6 +421,7 @@ class PlanEditService(BaseIntentHandler):
             return _result_add("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
             return _result_add("No matching container found to add to.")
 
@@ -483,6 +490,8 @@ class PlanEditService(BaseIntentHandler):
                 xpath_query=gen_result.xpath_query,
                 original_query=request,
                 affected_node_paths=affected_paths,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
             ),
         )
 

@@ -213,8 +213,4 @@ def create_app() -> Flask:
             interval_seconds=sweeper_interval,
         )
 
-    @app.route("/api/health")
-    def health():
-        return {"status": "ok"}
-
     return app

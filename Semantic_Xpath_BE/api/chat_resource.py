@@ -2,6 +2,7 @@
 Chat Resource - Flask Blueprint factory for API routes.
 
 Routes:
+  GET  /api/health                    - Health check endpoint
   POST /api/chat                      - Process a user message
   GET  /api/tasks                     - List all tasks (tab bar)
   GET  /api/tasks/<task_id>/plan      - Get plan XML for a task
@@ -19,6 +20,11 @@ from services.intent_handling.semantic_xpath_service import SemanticXpathService
 def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:
     """Create and return the chat blueprint with an injected service."""
     bp = Blueprint("chat", __name__)
+
+    @bp.route("/health", methods=["GET"])
+    def health():
+        """GET /api/health — lightweight backend liveness probe."""
+        return jsonify({"success": True, "status": "ok"}), 200
 
     @bp.route("/chat", methods=["POST"])
     def chat():

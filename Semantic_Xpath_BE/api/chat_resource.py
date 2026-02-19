@@ -26,6 +26,27 @@ def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:
         """GET /api/health — lightweight backend liveness probe."""
         return jsonify({"success": True, "status": "ok"}), 200
 
+    @bp.route("/debug/openai", methods=["GET"])
+    def debug_openai():
+        """GET /api/debug/openai — diagnose OpenAI connectivity."""
+        import os, traceback
+        info = {
+            "has_openai_key_env": bool(os.getenv("OPENAI_API_KEY")),
+            "key_prefix": (os.getenv("OPENAI_API_KEY") or "")[:8] + "...",
+        }
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+            models = client.models.list()
+            info["openai_reachable"] = True
+            info["model_count"] = len(models.data)
+        except Exception as e:
+            info["openai_reachable"] = False
+            info["error_type"] = type(e).__name__
+            info["error"] = str(e)
+            info["traceback"] = traceback.format_exc()
+        return jsonify(info), 200
+
     @bp.route("/chat", methods=["POST"])
     def chat():
         """
@@ -66,7 +87,13 @@ def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:
         try:
             result = service.chat(message=message, session_id=session_id)
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+            import traceback
+            return jsonify({
+                "success": False,
+                "error": str(e),
+                "error_type": type(e).__name__,
+                "traceback": traceback.format_exc(),
+            }), 500
 
         return jsonify(result), 200
 

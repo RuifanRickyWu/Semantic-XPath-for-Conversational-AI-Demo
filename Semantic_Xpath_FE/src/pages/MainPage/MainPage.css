@@ -432,6 +432,10 @@
   box-sizing: border-box;
 }
 
+.task-tab-bar-sparse {
+  overflow-x: hidden;
+}
+
 .task-tab-bar::-webkit-scrollbar {
   height: 0;
 }
@@ -449,6 +453,14 @@
   white-space: nowrap;
   transition: all 0.15s;
   font-family: inherit;
+}
+
+.task-tab-stretch {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task-tab:hover {

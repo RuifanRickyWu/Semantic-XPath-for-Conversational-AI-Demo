@@ -11,7 +11,7 @@ The blueprint is created via create_chat_blueprint() which
 receives the service instance from the app factory (no internal creation).
 """
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 
 from services.intent_handling.semantic_xpath_service import SemanticXpathService
 
@@ -71,8 +71,9 @@ def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:
     @bp.route("/tasks", methods=["GET"])
     def list_tasks():
         """GET /api/tasks — lightweight task list for tab bar."""
+        session_id = (request.args.get("session_id") or "default").strip()
         try:
-            result = service.list_tasks()
+            result = service.list_tasks(session_id=session_id)
         except Exception as e:
             return jsonify({"error": str(e)}), 500
         return jsonify(result), 200
@@ -81,8 +82,9 @@ def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:
     def get_task_plan(task_id: str):
         """GET /api/tasks/<task_id>/plan — plan XML for a task version."""
         version_id = request.args.get("version")
+        session_id = (request.args.get("session_id") or "default").strip()
         try:
-            result = service.get_task_plan(task_id, version_id=version_id)
+            result = service.get_task_plan(task_id, session_id=session_id, version_id=version_id)
         except FileNotFoundError as e:
             return jsonify({"error": str(e)}), 404
         except Exception as e:
@@ -99,5 +101,49 @@ def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:
         except Exception as e:
             return jsonify({"error": str(e)}), 500
         return jsonify(result), 200
+
+    @bp.route("/session/seed", methods=["POST"])
+    def seed_session():
+        """POST /api/session/seed — add one prebuilt example plan to this session."""
+        data = request.get_json() or {}
+        session_id = (data.get("session_id") or "default").strip()
+        template_key = (data.get("template_key") or "").strip()
+        if not template_key:
+            return jsonify({"error": "Missing 'template_key' in request body"}), 400
+        try:
+            result = service.seed_example_plan(session_id=session_id, template_key=template_key)
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+        return jsonify({"success": True, **result}), 200
+
+    @bp.route("/session/<session_id>", methods=["DELETE"])
+    def clear_session(session_id: str):
+        """DELETE /api/session/<session_id> — clear one user session workspace."""
+        session_id = (session_id or "default").strip()
+        try:
+            service.clear_session(session_id=session_id)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+        return jsonify({"success": True}), 200
+
+    @bp.route("/admin/session-metrics", methods=["GET"])
+    def session_metrics():
+        """GET /api/admin/session-metrics — session observability metrics."""
+        try:
+            metrics = service.get_session_metrics()
+            sweeper_interval = int(
+                current_app.config.get("SESSION_SWEEPER_INTERVAL_SECONDS", 30 * 60)
+            )
+            return jsonify(
+                {
+                    "success": True,
+                    **metrics,
+                    "sweeper_interval_seconds": sweeper_interval,
+                }
+            ), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     return bp

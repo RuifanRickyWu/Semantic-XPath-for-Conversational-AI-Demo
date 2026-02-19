@@ -1,0 +1,56 @@
+<Plan version="v1">
+  <Meta>
+    <Title>3 Day Trip in Toronto</Title>
+    <Summary>A prebuilt 3-day Toronto sample itinerary for demo seeding.</Summary>
+  </Meta>
+  <Day index="1">
+    <Label>Downtown + Waterfront</Label>
+    <TimeBlock start="09:00" end="12:00">
+      <Title>Harbourfront and CN Tower</Title>
+      <Tasks>
+        <Task id="d1-t1">Walk around Harbourfront</Task>
+        <Task id="d1-t2">Visit CN Tower observation deck</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="13:00" end="17:00">
+      <Title>Ripley's Aquarium + Distillery District</Title>
+      <Tasks>
+        <Task id="d1-t3">Explore Ripley's Aquarium</Task>
+        <Task id="d1-t4">Visit Distillery District shops and cafes</Task>
+      </Tasks>
+    </TimeBlock>
+  </Day>
+  <Day index="2">
+    <Label>Museums + Midtown</Label>
+    <TimeBlock start="10:00" end="13:00">
+      <Title>Royal Ontario Museum</Title>
+      <Tasks>
+        <Task id="d2-t1">Museum highlights walk</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="14:00" end="18:00">
+      <Title>Yorkville and Casa Loma</Title>
+      <Tasks>
+        <Task id="d2-t2">Coffee break in Yorkville</Task>
+        <Task id="d2-t3">Tour Casa Loma</Task>
+      </Tasks>
+    </TimeBlock>
+  </Day>
+  <Day index="3">
+    <Label>Nature + Neighborhoods</Label>
+    <TimeBlock start="09:00" end="12:00">
+      <Title>Toronto Islands</Title>
+      <Tasks>
+        <Task id="d3-t1">Take ferry to Centre Island</Task>
+        <Task id="d3-t2">Bike and skyline photos</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="13:30" end="17:00">
+      <Title>Kensington Market + Chinatown</Title>
+      <Tasks>
+        <Task id="d3-t3">Street food and local shops</Task>
+        <Task id="d3-t4">Wrap-up dinner planning</Task>
+      </Tasks>
+    </TimeBlock>
+  </Day>
+</Plan>

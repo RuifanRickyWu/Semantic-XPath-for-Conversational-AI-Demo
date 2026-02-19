@@ -10,6 +10,8 @@ No component should create its own dependencies internally.
 from __future__ import annotations
 
 import os
+import threading
+import time
 
 from flask import Flask
 from flask_cors import CORS
@@ -28,7 +30,8 @@ from services.intent_handling.registry_edit_service import RegistryEditService
 from services.intent_handling.registry_qa_service import RegistryQAService
 from stores.context_store import ContextStore
 from stores.session_store import SessionStore
-from stores.registry_store import RegistryStore
+from stores.session_activity_store import SessionActivityStore
+from stores.session_scoped_registry_store import SessionScopedRegistryStore
 from stores.task_state_store import TaskStateStore
 from stores.xml_manager import XmlManager
 from services.orchestrator_service import OrchestratorService
@@ -42,6 +45,31 @@ from services.result_verification import SemanticXPathResultVerifier
 from services.predicate_scorer import get_scorer as get_predicate_scorer
 from domain.semantic_xpath.execution import SemanticXPathExecutor
 from api.chat_resource import create_chat_blueprint
+
+
+def _start_session_idle_sweeper(
+    app: Flask,
+    service: SemanticXpathService,
+    interval_seconds: int,
+) -> None:
+    interval = max(1, int(interval_seconds))
+
+    def _loop() -> None:
+        while True:
+            time.sleep(interval)
+            try:
+                cleared = service.clear_expired_sessions()
+                if cleared > 0:
+                    app.logger.info("session sweeper cleared %d expired sessions", cleared)
+            except Exception:
+                app.logger.exception("session sweeper failed")
+
+    thread = threading.Thread(
+        target=_loop,
+        name="session-idle-sweeper",
+        daemon=True,
+    )
+    thread.start()
 
 
 def create_app() -> Flask:
@@ -82,9 +110,10 @@ def create_app() -> Flask:
     # 3. Stateful stores (no external dependencies)
     # ------------------------------------------------------------------
     session_store = SessionStore()
+    session_activity_store = SessionActivityStore()
     context_store = ContextStore()
     xml_manager = XmlManager()
-    registry_store = RegistryStore(xml_manager=xml_manager)
+    registry_store = SessionScopedRegistryStore(xml_manager=xml_manager)
     state_store = TaskStateStore(xml_manager=xml_manager, registry_store=registry_store)
 
     # ------------------------------------------------------------------
@@ -154,6 +183,9 @@ def create_app() -> Flask:
         registry_store=registry_store,
         state_store=state_store,
         session_store=session_store,
+        context_store=context_store,
+        session_activity_store=session_activity_store,
+        session_idle_ttl_seconds=int(os.getenv("SESSION_IDLE_TTL_SECONDS", str(5 * 60 * 60))),
     )
 
     # ------------------------------------------------------------------
@@ -171,6 +203,15 @@ def create_app() -> Flask:
 
     chat_bp = create_chat_blueprint(semantic_xpath_service)
     app.register_blueprint(chat_bp, url_prefix="/api")
+
+    sweeper_interval = int(os.getenv("SESSION_SWEEPER_INTERVAL_SECONDS", str(30 * 60)))
+    app.config["SESSION_SWEEPER_INTERVAL_SECONDS"] = sweeper_interval
+    if os.getenv("FLASK_DEBUG", "0") != "1" or os.getenv("WERKZEUG_RUN_MAIN") == "true":
+        _start_session_idle_sweeper(
+            app=app,
+            service=semantic_xpath_service,
+            interval_seconds=sweeper_interval,
+        )
 
     @app.route("/api/health")
     def health():

@@ -52,7 +52,7 @@ export default function MainPage() {
   /** Refresh the task list from the backend and optionally load a plan. */
   const refreshTasks = useCallback(async (loadPlanForTaskId?: string) => {
     try {
-      const res = await getTasks();
+      const res = await getTasks(sessionId);
       setTasks(res.tasks);
       setActiveTaskId(res.active_task_id);
       if (res.active_task_id) {
@@ -61,7 +61,7 @@ export default function MainPage() {
       const taskToLoad = loadPlanForTaskId || res.active_task_id;
       if (taskToLoad) {
         try {
-          const planRes = await getTaskPlan(taskToLoad);
+          const planRes = await getTaskPlan(taskToLoad, sessionId);
           setActivePlanXml(planRes.plan_xml);
           if (planRes.version_id) {
             currentVersionIdRef.current = planRes.version_id;
@@ -73,7 +73,7 @@ export default function MainPage() {
     } catch {
       // Backend may not be running yet; keep empty state
     }
-  }, [setTasks, setActiveTaskId, setActivePlanXml]);
+  }, [sessionId, setTasks, setActiveTaskId, setActivePlanXml]);
 
   // Load task list on mount (only if empty)
   useEffect(() => {
@@ -207,7 +207,7 @@ export default function MainPage() {
     try {
       const res = await activateTask(taskId, sessionId);
       setActiveTaskId(res.active_task_id);
-      const planRes = await getTaskPlan(res.active_task_id);
+      const planRes = await getTaskPlan(res.active_task_id, sessionId);
       setActivePlanXml(planRes.plan_xml);
     } catch {
       // Activation failed; keep current state
@@ -367,7 +367,7 @@ export default function MainPage() {
           setSelectedMessageIndex(index);
 
           try {
-            const planRes = await getTaskPlan(msg.snapshotTaskId!, msg.snapshotVersionId!);
+            const planRes = await getTaskPlan(msg.snapshotTaskId!, sessionId, msg.snapshotVersionId!);
             setActivePlanXml(planRes.plan_xml);
           } catch {
             // Version may no longer exist; keep current tree
@@ -516,11 +516,13 @@ export default function MainPage() {
       <div className="main-right-panel">
         {/* Task Tab Bar */}
         {tasks.length > 0 && (
-          <div className="task-tab-bar">
+          <div
+            className={`task-tab-bar ${tasks.length <= 2 ? "task-tab-bar-sparse" : ""}`}
+          >
             {tasks.map((t) => (
               <button
                 key={t.task_id}
-                className={`task-tab ${t.task_id === activeTaskId ? "active" : ""}`}
+                className={`task-tab ${t.task_id === activeTaskId ? "active" : ""} ${tasks.length <= 2 ? "task-tab-stretch" : ""}`}
                 onClick={() => handleTabClick(t.task_id)}
               >
                 {t.task_name || t.task_id}

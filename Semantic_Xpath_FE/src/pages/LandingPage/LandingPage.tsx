@@ -1,14 +1,43 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChatInput from "../../components/ChatInput/ChatInput";
-import QuickActions from "../../components/QuickActions/QuickActions";
+import {
+  clearSession,
+  seedSessionWithExample,
+  type ExampleTemplateKey,
+} from "../../api/sessionApi";
+import { useAppState } from "../../context/AppStateContext";
 import "./LandingPage.css";
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { sessionId, startNewSession } = useAppState();
+  const [isSeeding, setIsSeeding] = useState(false);
+
+  useEffect(() => {
+    const oldSession = startNewSession();
+    void clearSession(oldSession).catch(() => {});
+  // Intentionally run once on landing mount to always start fresh.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = (query: string) => {
     // Navigate to main page with the query — API call happens there
     navigate("/main", { state: { query } });
+  };
+
+  const handleSeedExample = async (templateKey: ExampleTemplateKey) => {
+    if (isSeeding) return;
+    setIsSeeding(true);
+    try {
+      const res = await seedSessionWithExample(sessionId, templateKey);
+      if (!res.success) {
+        throw new Error("Failed to seed example session.");
+      }
+      navigate("/main");
+    } catch {
+      setIsSeeding(false);
+    }
   };
 
   return (
@@ -42,8 +71,33 @@ export default function LandingPage() {
 
       {/* Input section */}
       <div className="home-input-section">
+        <div className="home-example-buttons">
+          <button
+            className="home-example-btn"
+            onClick={() => handleSeedExample("toronto_trip_3d")}
+            disabled={isSeeding}
+          >
+            <span>Show me an 3 Day Trip In Toronto</span>
+            <span className="home-example-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8" stroke="#7C3AED" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </button>
+          <button
+            className="home-example-btn"
+            onClick={() => handleSeedExample("phd_todo_sample")}
+            disabled={isSeeding}
+          >
+            <span>Show me a sample Todo list from a PHD student</span>
+            <span className="home-example-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8" stroke="#7C3AED" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </button>
+        </div>
         <ChatInput onSubmit={handleSubmit} />
-        <QuickActions onSelect={handleSubmit} />
       </div>
     </div>
   );

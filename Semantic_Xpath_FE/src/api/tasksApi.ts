@@ -17,8 +17,8 @@ import { API_BASE } from "./apiBase";
 /**
  * Fetch lightweight metadata for all tasks (for tab bar rendering).
  */
-export async function getTasks(): Promise<TaskListResponse> {
-  const response = await fetch(`${API_BASE}/tasks`);
+export async function getTasks(sessionId: string): Promise<TaskListResponse> {
+  const response = await fetch(`${API_BASE}/tasks?session_id=${encodeURIComponent(sessionId)}`);
   const data: TaskListResponse = await response.json();
   return data;
 }
@@ -31,11 +31,11 @@ export async function getTasks(): Promise<TaskListResponse> {
  */
 export async function getTaskPlan(
   taskId: string,
+  sessionId: string,
   version?: string
 ): Promise<TaskPlanResponse> {
-  const url = version
-    ? `${API_BASE}/tasks/${taskId}/plan?version=${version}`
-    : `${API_BASE}/tasks/${taskId}/plan`;
+  const base = `${API_BASE}/tasks/${taskId}/plan?session_id=${encodeURIComponent(sessionId)}`;
+  const url = version ? `${base}&version=${encodeURIComponent(version)}` : base;
   const response = await fetch(url);
   const data: TaskPlanResponse = await response.json();
   return data;

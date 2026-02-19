@@ -7,12 +7,14 @@ import {
   useContext,
   useState,
   useRef,
+  useEffect,
   type ReactNode,
   type SetStateAction,
   type Dispatch,
 } from "react";
 import type { ChatResponseType, CrudAction } from "../types/chat";
 import type { TaskSummary } from "../types/task";
+import { clearSession } from "../api/sessionApi";
 
 /* ── Chat message shape (shared between pages) ── */
 
@@ -69,6 +71,7 @@ interface AppState {
 
   /* Session */
   sessionId: string;
+  startNewSession: () => string;
 
   /* Loading */
   isLoading: boolean;
@@ -94,9 +97,35 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const [headerSlot, setHeaderSlot] = useState<ReactNode>(null);
 
-  const sessionIdRef = useRef<string>(crypto.randomUUID());
+  const [sessionId, setSessionId] = useState<string>(crypto.randomUUID());
   const currentTaskIdRef = useRef<string | null>(null);
   const currentVersionIdRef = useRef<string | null>(null);
+
+  const startNewSession = (): string => {
+    const previous = sessionId;
+    setSessionId(crypto.randomUUID());
+    setMessages([]);
+    setTasks([]);
+    setActiveTaskId(null);
+    setActivePlanXml(null);
+    setHighlightMode(null);
+    setHighlightedPaths(null);
+    setLatestXpathQuery(null);
+    setLatestOriginalQuery(null);
+    setSelectedMessageIndex(null);
+    setIsLoading(false);
+    currentTaskIdRef.current = null;
+    currentVersionIdRef.current = null;
+    return previous;
+  };
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      void clearSession(sessionId, { keepalive: true }).catch(() => {});
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [sessionId]);
 
   const value: AppState = {
     messages,
@@ -119,7 +148,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     setSelectedMessageIndex,
     currentTaskIdRef,
     currentVersionIdRef,
-    sessionId: sessionIdRef.current,
+    sessionId,
+    startNewSession,
     isLoading,
     setIsLoading,
     headerSlot,

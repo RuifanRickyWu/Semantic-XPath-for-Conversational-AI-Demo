@@ -44,6 +44,7 @@ from mappers.dto_mapper import (
     to_xml_state,
 )
 from stores.xml_manager import XmlManager
+from stores.session_scope import get_current_session_id, to_safe_session_folder
 
 
 _BASE_DIR = Path(__file__).resolve().parents[1]
@@ -192,7 +193,8 @@ class TaskStateStore:
         return self.xml_manager.normalize_xpath(xpath)
 
     def _state_path(self, task_id: str, version_id: str) -> Path:
-        return self.storage_root / task_id / version_id / "state.xml"
+        session_dir = to_safe_session_folder(get_current_session_id())
+        return self.storage_root / "sessions" / session_dir / task_id / version_id / "state.xml"
 
     def clear_all_task_data(self) -> None:
         """Delete all task directories (and their state.xml files) under storage_root."""
@@ -201,6 +203,12 @@ class TaskStateStore:
         for item in self.storage_root.iterdir():
             if item.is_dir() and not item.name.startswith("."):
                 shutil.rmtree(item, ignore_errors=True)
+
+    def clear_session_data(self, session_id: str) -> None:
+        """Delete task XML data for one session."""
+        session_dir = self.storage_root / "sessions" / to_safe_session_folder(session_id)
+        if session_dir.exists():
+            shutil.rmtree(session_dir, ignore_errors=True)
 
     def _set_plan_version(self, xml_str: str, version_id: str) -> str:
         """Set the root Plan element's version attribute to version_id."""

@@ -393,26 +393,28 @@ export default function MainPage() {
             <img src="/assets/logo-icon.svg" alt="" width="24" height="24" />
           </div>
           <p className="msg-chat-text msg-chat-text-flex">{msg.content}</p>
-          {crud && renderCrudBadge(crud, isSelected, handleBadgeClick)}
-        </div>
-        {msg.scoringTrace && msg.scoringTrace.length > 0 && (
-          <div
-            className="scoring-link"
-            onClick={() =>
-              navigate("/scoring", {
-                state: {
-                  xpathQuery: msg.xpathQuery,
-                  originalQuery: msg.originalQuery,
-                  scoringTrace: msg.scoringTrace,
-                  perNodeDetail: msg.perNodeDetail,
-                  planXml: activePlanXml,
-                },
-              })
-            }
-          >
-            click for detailed scoring
+          <div className="msg-badges-column">
+            {crud && renderCrudBadge(crud, isSelected, handleBadgeClick)}
+            {msg.scoringTrace && msg.scoringTrace.length > 0 && (
+              <div
+                className="crud-badge crud-badge-clickable scoring-badge"
+                onClick={() =>
+                  navigate("/scoring", {
+                    state: {
+                      xpathQuery: msg.xpathQuery,
+                      originalQuery: msg.originalQuery,
+                      scoringTrace: msg.scoringTrace,
+                      perNodeDetail: msg.perNodeDetail,
+                      planXml: activePlanXml,
+                    },
+                  })
+                }
+              >
+                <span className="crud-badge-label">Detailed Scoring</span>
+              </div>
+            )}
           </div>
-        )}
+        </div>
         <div className="msg-divider msg-divider-full" />
       </div>
     );

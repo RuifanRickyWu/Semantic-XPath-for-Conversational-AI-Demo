@@ -579,7 +579,7 @@
   flex-direction: column;
   gap: 4px;
   padding: 6px 0 2px 0;
-  margin-left: 40px;
+  margin-left: 86px;
   margin-right: 8px;
 }
 
@@ -629,23 +629,22 @@
   filter: brightness(0) invert(1);
 }
 
-/* ===================== Scoring Link ===================== */
+/* ===================== Badges Column ===================== */
 
-.scoring-link {
-  display: inline-block;
-  margin: 4px 0 2px 86px;
-  padding: 3px 12px;
-  font-size: 11px;
-  font-weight: 500;
-  color: #8b5cf6;
-  border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-  font-family: "Inter", sans-serif;
+.msg-badges-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
-.scoring-link:hover {
-  background: #f5f3ff;
-  border-color: #8b5cf6;
+.msg-badges-column .crud-badge {
+  margin-left: 0;
+}
+
+.scoring-badge {
+  background-color: #ffffff;
+  border-color: #e5e7eb;
 }

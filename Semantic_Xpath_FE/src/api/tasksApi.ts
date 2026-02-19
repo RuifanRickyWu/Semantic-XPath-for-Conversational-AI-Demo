@@ -12,7 +12,7 @@ import type {
   ActivateTaskResponse,
 } from "../types/task";
 
-const API_BASE = "http://localhost:5001/api";
+import { API_BASE } from "./apiBase";
 
 /**
  * Fetch lightweight metadata for all tasks (for tab bar rendering).

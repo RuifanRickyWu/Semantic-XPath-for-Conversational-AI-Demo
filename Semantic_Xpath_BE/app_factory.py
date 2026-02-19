@@ -9,6 +9,8 @@ No component should create its own dependencies internally.
 
 from __future__ import annotations
 
+import os
+
 from flask import Flask
 from flask_cors import CORS
 
@@ -44,6 +46,16 @@ from api.chat_resource import create_chat_blueprint
 
 def create_app() -> Flask:
     """Create and configure the Flask application with all dependencies."""
+
+    def _cors_origins() -> list[str]:
+        raw = os.getenv("CORS_ORIGINS", "").strip()
+        if raw:
+            return [o.strip() for o in raw.split(",") if o.strip()]
+        return [
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "http://127.0.0.1:5173",
+        ]
 
     # ------------------------------------------------------------------
     # 1. Infrastructure / external clients
@@ -151,11 +163,7 @@ def create_app() -> Flask:
 
     CORS(app, resources={
         r"/api/*": {
-            "origins": [
-                "http://localhost:5173",
-                "http://localhost:3000",
-                "http://127.0.0.1:5173",
-            ],
+            "origins": _cors_origins(),
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"],
         }

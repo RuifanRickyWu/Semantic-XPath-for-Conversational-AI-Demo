@@ -4,7 +4,7 @@
 
 import type { ColdStartResponse } from "../types/coldStart";
 
-const API_BASE = "http://localhost:5001/api";
+import { API_BASE } from "./apiBase";
 
 /**
  * Send a cold start request to generate schemas and memory from a user query.

@@ -8,7 +8,7 @@
 
 import type { ChatResponse } from "../types/chat";
 
-const API_BASE = "http://localhost:5001/api";
+import { API_BASE } from "./apiBase";
 
 /**
  * Send a chat message to the backend.

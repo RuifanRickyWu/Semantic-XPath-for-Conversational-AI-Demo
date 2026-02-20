@@ -6,7 +6,7 @@ import {
   seedSessionWithExample,
   type ExampleTemplateKey,
 } from "../../api/sessionApi";
-import { useAppState } from "../../context/AppStateContext";
+import { useAppState } from "../../context/useAppState";
 import "./LandingPage.css";
 
 export default function LandingPage() {

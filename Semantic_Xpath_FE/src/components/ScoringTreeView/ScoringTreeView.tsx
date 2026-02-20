@@ -12,6 +12,7 @@ import "./ScoringTreeView.css";
 
 import ScoringTreeNode from "./ScoringTreeNode";
 import { parseXmlToTree, type PlanNodeData } from "../../utils/xmlToTree";
+import type { ScoredNode, ScoringTraceStep } from "../../types/scoring";
 
 const nodeTypes: NodeTypes = {
   planNode: ScoringTreeNode,
@@ -19,7 +20,7 @@ const nodeTypes: NodeTypes = {
 
 interface ScoringTreeViewProps {
   planXml: string;
-  scoringTrace: any[];
+  scoringTrace: ScoringTraceStep[];
   activeStepIndex: number | null;
   onNodeClick: (nodeId: string | null) => void;
   selectedNodeId: string | null;
@@ -31,7 +32,7 @@ interface ScoringTreeViewProps {
  * so we match on the node label from the tree_path.
  */
 function buildScoreMap(
-  scoringTrace: any[],
+  scoringTrace: ScoringTraceStep[],
   activeStepIndex: number | null
 ): Map<string, { score: number; isActive: boolean; treePath: string }> {
   const map = new Map<
@@ -43,7 +44,7 @@ function buildScoreMap(
   // Collect all nodes from steps up to and including activeStepIndex
   for (let i = 0; i <= activeStepIndex; i++) {
     const step = scoringTrace[i];
-    const nodes: any[] = step.nodes || [];
+    const nodes: ScoredNode[] = step.nodes || [];
     const isCurrent = i === activeStepIndex;
     for (const n of nodes) {
       const treePath: string = n.tree_path || "";
@@ -94,8 +95,8 @@ function findScoreForNode(
 }
 
 function scoreColorClass(score: number): string {
-  if (score >= 0.7) return "score-high";
-  if (score >= 0.4) return "score-medium";
+  if (score >= 0.8) return "score-high";
+  if (score >= 0.5) return "score-medium";
   return "score-low";
 }
 
@@ -118,7 +119,6 @@ export default function ScoringTreeView({
 
   const { nodes, edges } = useMemo(() => {
     const activePaths = new Set<string>();
-    const activeNodeIds = new Set<string>();
 
     const annotatedNodes = rawNodes.map((node) => {
       const data = node.data as PlanNodeData;
@@ -126,7 +126,6 @@ export default function ScoringTreeView({
 
       if (scoreInfo) {
         activePaths.add(data.structuralPath);
-        activeNodeIds.add(node.id);
 
         // Also add ancestor paths
         const parts = data.structuralPath.split("/");
@@ -164,7 +163,6 @@ export default function ScoringTreeView({
     const finalNodes = annotatedNodes.map((node) => {
       const data = node.data as PlanNodeData;
       if (!data.scoreValue && activePaths.has(data.structuralPath)) {
-        activeNodeIds.add(node.id);
         return {
           ...node,
           data: { ...data, isAncestorPath: true },
@@ -173,13 +171,27 @@ export default function ScoringTreeView({
       return node;
     });
 
-    // Highlight edges along the active path
+    const nodeStructuralPath = new Map<string, string>();
+    for (const node of finalNodes) {
+      const data = node.data as PlanNodeData;
+      nodeStructuralPath.set(node.id, data.structuralPath);
+    }
+
+    // Highlight edges along active structural paths
     const annotatedEdges = rawEdges.map((edge) => {
-      if (activeNodeIds.has(edge.source) && activeNodeIds.has(edge.target)) {
+      const sourcePath = nodeStructuralPath.get(edge.source);
+      const targetPath = nodeStructuralPath.get(edge.target);
+      if (
+        sourcePath &&
+        targetPath &&
+        activePaths.has(sourcePath) &&
+        activePaths.has(targetPath)
+      ) {
         return {
           ...edge,
           className: "scoring-edge-active",
           animated: true,
+          zIndex: 2000,
         };
       }
       return {
@@ -193,7 +205,7 @@ export default function ScoringTreeView({
 
   const handleNodeClick = useCallback(
     (_: React.MouseEvent, node: Node) => {
-      const data = node.data as any;
+      const data = node.data as PlanNodeData & { treePath?: string };
       if (data.treePath) {
         onNodeClick(
           data.treePath === selectedNodeId ? null : data.treePath
@@ -256,10 +268,6 @@ export default function ScoringTreeView({
             <span className="scoring-legend-item">
               <span className="scoring-legend-dot dot-low" />
               Low
-            </span>
-            <span className="scoring-legend-item">
-              <span className="scoring-legend-dot dot-selected" />
-              Selected
             </span>
             <span className="scoring-legend-item">
               <span className="scoring-legend-dot dot-filtered" />

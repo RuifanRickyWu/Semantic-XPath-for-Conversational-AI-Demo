@@ -13,7 +13,7 @@ import "./PlanTreeView.css";
 
 import PlanNode from "./PlanNode";
 import { parseXmlToTree, type PlanNodeData } from "../../utils/xmlToTree";
-import type { CrudAction } from "../../types/chat";
+import type { AffectedNodePath, CrudAction } from "../../types/chat";
 
 /* ── Custom node type registry (must be stable reference) ── */
 
@@ -32,7 +32,7 @@ const nodeTypes: NodeTypes = {
  *
  * We prepend "Plan[1]" (root) and join segments.
  */
-function treePathToStructural(segments: any[]): string {
+function treePathToStructural(segments: AffectedNodePath): string {
   if (!Array.isArray(segments) || segments.length === 0) return "";
 
   // If segments are tuples/arrays like [tag, index]
@@ -40,7 +40,12 @@ function treePathToStructural(segments: any[]): string {
     if (Array.isArray(seg) && seg.length >= 2) {
       return `${seg[0]}[${seg[1]}]`;
     }
-    if (typeof seg === "object" && seg !== null && seg.tag && seg.index) {
+    if (
+      typeof seg === "object" &&
+      seg !== null &&
+      "tag" in seg &&
+      "index" in seg
+    ) {
       return `${seg.tag}[${seg.index}]`;
     }
     return String(seg);
@@ -54,7 +59,7 @@ function treePathToStructural(segments: any[]): string {
  * all ancestor structural paths along the way (for path highlighting from root).
  */
 function buildHighlightSets(
-  affectedPaths: any[][] | null | undefined
+  affectedPaths: AffectedNodePath[] | null | undefined
 ): { targetPaths: Set<string>; ancestorPaths: Set<string> } {
   const targetPaths = new Set<string>();
   const ancestorPaths = new Set<string>();
@@ -83,7 +88,7 @@ function buildHighlightSets(
 function applyHighlights(
   nodes: Node<PlanNodeData>[],
   mode: CrudAction | null | undefined,
-  affectedPaths: any[][] | null | undefined
+  affectedPaths: AffectedNodePath[] | null | undefined
 ): { nodes: Node<PlanNodeData>[]; highlightedNodeIds: Set<string> } {
   if (!mode || !affectedPaths?.length) {
     return { nodes, highlightedNodeIds: new Set() };
@@ -144,7 +149,7 @@ function applyEdgeHighlights(
 interface PlanTreeViewProps {
   planXml: string;
   highlightMode?: CrudAction | null;
-  highlightedPaths?: any[][] | null;
+  highlightedPaths?: AffectedNodePath[] | null;
 }
 
 export default function PlanTreeView({

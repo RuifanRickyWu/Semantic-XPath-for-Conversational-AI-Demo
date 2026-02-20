@@ -319,11 +319,17 @@
   background: #d4d4d8 !important;
   border: 1px solid #f3f4f6 !important;
   box-shadow: none !important;
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .plan-node-highlight-delete .plan-node-label {
   color: #9ca3af !important;
+}
+
+/* Keep deleted-node dim effect without fading tooltip/layering */
+.plan-node-highlight-delete .plan-node-label,
+.plan-node-highlight-delete .plan-node-menu {
+  opacity: 0.7;
 }
 
 .plan-node-highlight-delete-path {

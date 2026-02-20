@@ -1,10 +1,10 @@
+/* eslint-disable react-refresh/only-export-components */
 /**
  * AppStateContext — shared state across pages.
  */
 
 import {
   createContext,
-  useContext,
   useState,
   useRef,
   useEffect,
@@ -12,7 +12,12 @@ import {
   type SetStateAction,
   type Dispatch,
 } from "react";
-import type { ChatResponseType, CrudAction } from "../types/chat";
+import type {
+  AffectedNodePath,
+  ChatResponseType,
+  CrudAction,
+} from "../types/chat";
+import type { PerNodeDetail, ScoringTraceStep } from "../types/scoring";
 import type { TaskSummary } from "../types/task";
 import { clearSession } from "../api/sessionApi";
 
@@ -27,16 +32,16 @@ export interface ChatMessage {
   crudAction?: CrudAction | null;
   xpathQuery?: string;
   originalQuery?: string;
-  affectedNodePaths?: any[][];
-  scoringTrace?: any[];
-  perNodeDetail?: any[];
+  affectedNodePaths?: AffectedNodePath[];
+  scoringTrace?: ScoringTraceStep[];
+  perNodeDetail?: PerNodeDetail[];
   snapshotTaskId?: string;
   snapshotVersionId?: string;
 }
 
 /* ── Context value ── */
 
-interface AppState {
+export interface AppState {
   /* Chat */
   messages: ChatMessage[];
   setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
@@ -52,8 +57,10 @@ interface AppState {
   /* Highlight */
   highlightMode: CrudAction | null;
   setHighlightMode: React.Dispatch<React.SetStateAction<CrudAction | null>>;
-  highlightedPaths: any[][] | null;
-  setHighlightedPaths: React.Dispatch<React.SetStateAction<any[][] | null>>;
+  highlightedPaths: AffectedNodePath[] | null;
+  setHighlightedPaths: React.Dispatch<
+    React.SetStateAction<AffectedNodePath[] | null>
+  >;
 
   /* Query display */
   latestXpathQuery: string | null;
@@ -82,7 +89,7 @@ interface AppState {
   setHeaderSlot: Dispatch<SetStateAction<ReactNode>>;
 }
 
-const AppStateContext = createContext<AppState | null>(null);
+export const AppStateContext = createContext<AppState | null>(null);
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -90,7 +97,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
   const [activePlanXml, setActivePlanXml] = useState<string | null>(null);
   const [highlightMode, setHighlightMode] = useState<CrudAction | null>(null);
-  const [highlightedPaths, setHighlightedPaths] = useState<any[][] | null>(null);
+  const [highlightedPaths, setHighlightedPaths] = useState<
+    AffectedNodePath[] | null
+  >(null);
   const [latestXpathQuery, setLatestXpathQuery] = useState<string | null>(null);
   const [latestOriginalQuery, setLatestOriginalQuery] = useState<string | null>(null);
   const [selectedMessageIndex, setSelectedMessageIndex] = useState<number | null>(null);
@@ -161,12 +170,4 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       {children}
     </AppStateContext.Provider>
   );
-}
-
-export function useAppState(): AppState {
-  const ctx = useContext(AppStateContext);
-  if (!ctx) {
-    throw new Error("useAppState must be used within <AppStateProvider>");
-  }
-  return ctx;
 }

@@ -4,7 +4,8 @@ import { postChat } from "../../api/chatApi";
 import { getTasks, getTaskPlan, activateTask } from "../../api/tasksApi";
 import type { CrudAction } from "../../types/chat";
 import { typeToCrudAction, CRUD_CONFIG } from "../../types/chat";
-import { useAppState, type ChatMessage } from "../../context/AppStateContext";
+import type { ChatMessage } from "../../context/AppStateContext";
+import { useAppState } from "../../context/useAppState";
 import PlanTreeView from "../../components/PlanTreeView/PlanTreeView";
 import "./MainPage.css";
 

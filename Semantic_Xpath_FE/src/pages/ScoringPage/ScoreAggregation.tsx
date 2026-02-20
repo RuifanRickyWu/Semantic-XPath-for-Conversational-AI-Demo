@@ -1,26 +1,33 @@
 import type { ReactNode } from "react";
+import type {
+  PredicateResult,
+  ScoredNode,
+  ScoredNodeMeta,
+  ScoringSubStep,
+} from "../../types/scoring";
 
 interface ScoreAggregationProps {
-  nodeData: any;
+  nodeData: ScoredNode;
   onClose: () => void;
 }
 
 function scoreColor(score: number): string {
-  if (score >= 0.7) return "#22c55e";
-  if (score >= 0.4) return "#f59e0b";
+  if (score >= 0.8) return "#22c55e";
+  if (score >= 0.5) return "#f59e0b";
   return "#ef4444";
 }
 
-function getNodeLabel(node: any): string {
+function getNodeLabel(node: ScoredNodeMeta | undefined): string {
   if (!node) return "?";
   const attrs = node.attributes || {};
   const type = node.type || "Node";
-  if (attrs.name) return attrs.name;
-  if (attrs.number) return `${type} ${attrs.number}`;
+  if (attrs.name) return String(attrs.name);
+  if (attrs.number) return `${type} ${String(attrs.number)}`;
+  if (attrs.index) return `${type} ${String(attrs.index)}`;
   return type;
 }
 
-function formatPredicateType(predResult: any): string {
+function formatPredicateType(predResult: PredicateResult): string {
   if (predResult?.has_aggregation) return "AGGREGATION";
   const ast = predResult.predicate_ast;
   if (!ast) return predResult.predicate || "predicate";
@@ -42,7 +49,7 @@ function toFixedScore(score: number | undefined): string {
   return (score ?? 0).toFixed(3);
 }
 
-function collectAggregationLabels(pred: any): string[] {
+function collectAggregationLabels(pred: PredicateResult): string[] {
   if (Array.isArray(pred?.aggregation_labels) && pred.aggregation_labels.length > 0) {
     return pred.aggregation_labels;
   }
@@ -55,9 +62,28 @@ function collectAggregationLabels(pred: any): string[] {
   return [];
 }
 
-function flattenStepLabel(step: any): string {
+function normalizeNestedSteps(step: ScoringSubStep): ScoringSubStep[] {
+  const normalized: ScoringSubStep[] = [];
+  if (Array.isArray(step.inner_trace)) normalized.push(...step.inner_trace);
+  if (Array.isArray(step.children)) normalized.push(...step.children);
+  if (Array.isArray(step.inner_traces)) {
+    for (const traceOrStep of step.inner_traces) {
+      if (Array.isArray(traceOrStep)) normalized.push(...traceOrStep);
+      else normalized.push(traceOrStep);
+    }
+  }
+  return normalized;
+}
+
+function flattenStepLabel(step: ScoringSubStep, nodeLabel: string): string {
   const t = step?.type;
-  if (t === "atom") return step?.condition ? JSON.stringify(step.condition) : "atom";
+  if (t === "atom") {
+    const cond = step.condition;
+    if (cond?.field && cond.value) {
+      return `${String(cond.field)} =~ "${String(cond.value)}" on ${nodeLabel}`;
+    }
+    return step.note || `ATOM on ${nodeLabel}`;
+  }
   if (t === "id_eq") return `@${step.field} = "${step.value}"`;
   if (t === "or" || t === "and" || t === "avg") {
     const formula = step.formula || t.toUpperCase();
@@ -68,33 +94,39 @@ function flattenStepLabel(step: any): string {
   if (t === "evidence_agg") {
     const agg = String(step.agg_type || "agg").toUpperCase();
     const cnt = step.evidence_count ?? 0;
-    return `AGG_${agg} (${cnt} evidence nodes)`;
+    const selector = step.selector ? ` on ${step.selector}` : "";
+    return `AGG_${agg}${selector} (${cnt} evidence nodes)`;
   }
-  return t || "step";
+  return step.formula || step.note || t || "step";
 }
 
-function renderScoringSteps(steps: any[], depth = 0): ReactNode[] {
+function renderScoringSteps(
+  steps: ScoringSubStep[],
+  nodeLabel: string,
+  depth = 0
+): ReactNode[] {
   if (!steps || steps.length === 0) return [];
-  return steps.map((step: any, i: number) => {
+  return steps.map((step, i: number) => {
     const indent = depth * 14;
     const score = step.result ?? step.score;
-    const nested =
-      step.inner_trace ||
-      step.inner_traces ||
-      (Array.isArray(step.children) ? step.children : null);
+    const nested = normalizeNestedSteps(step);
     const hasNested = Array.isArray(nested) && nested.length > 0;
 
     return (
       <div key={`${depth}-${i}`} className="agg-scoring-step" style={{ marginLeft: indent }}>
         <div className="agg-step-main">
-          <span className="agg-step-label">{flattenStepLabel(step)}</span>
+          <span className="agg-step-label">{flattenStepLabel(step, nodeLabel)}</span>
           {(score !== undefined || step.inner_score !== undefined) && (
             <span className="agg-step-score" style={{ color: scoreColor(score ?? step.inner_score ?? 0) }}>
               {toFixedScore(score ?? step.inner_score)}
             </span>
           )}
         </div>
-        {hasNested && <div className="agg-step-nested">{renderScoringSteps(nested, depth + 1)}</div>}
+        {hasNested && (
+          <div className="agg-step-nested">
+            {renderScoringSteps(nested, nodeLabel, depth + 1)}
+          </div>
+        )}
       </div>
     );
   });
@@ -104,7 +136,7 @@ export default function ScoreAggregation({
   nodeData,
   onClose,
 }: ScoreAggregationProps) {
-  const predicateResults: any[] = nodeData.predicate_results || [];
+  const predicateResults: PredicateResult[] = nodeData.predicate_results || [];
   const nodeLabel = getNodeLabel(nodeData.node);
   const nodeScore = nodeData.accumulated_score ?? nodeData.final_step_score ?? nodeData.step_score ?? 0;
   const aggregationTags = Array.from(
@@ -168,7 +200,7 @@ export default function ScoreAggregation({
             No semantic predicate was applied on this node in the current step.
           </div>
         )}
-        {predicateResults.map((pred: any, idx: number) => {
+        {predicateResults.map((pred, idx: number) => {
           const predType = formatPredicateType(pred);
           const predScore = pred.predicate_score ?? 0;
           const predAggTags = collectAggregationLabels(pred);
@@ -203,7 +235,7 @@ export default function ScoreAggregation({
 
               {pred.scoring_steps && pred.scoring_steps.length > 0 && (
                 <div className="agg-scoring-steps">
-                  {renderScoringSteps(pred.scoring_steps)}
+                  {renderScoringSteps(pred.scoring_steps, nodeLabel)}
                 </div>
               )}
             </div>

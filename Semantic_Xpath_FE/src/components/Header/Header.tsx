@@ -1,4 +1,4 @@
-import { useAppState } from "../../context/AppStateContext";
+import { useAppState } from "../../context/useAppState";
 import "./Header.css";
 
 export default function Header() {

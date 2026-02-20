@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAppState } from "../../context/AppStateContext";
+import { useAppState } from "../../context/useAppState";
 import QueryStepsPanel from "./QueryStepsPanel";
 import ScoringTreeView from "../../components/ScoringTreeView/ScoringTreeView";
 import ScoreAggregation from "./ScoreAggregation";
+import type { PerNodeDetail, ScoredNode, ScoringTraceStep } from "../../types/scoring";
 import "./ScoringPage.css";
 
 interface ScoringLocationState {
   xpathQuery?: string;
   originalQuery?: string;
-  scoringTrace?: any[];
-  perNodeDetail?: any[];
+  scoringTrace?: ScoringTraceStep[];
+  perNodeDetail?: PerNodeDetail[];
   planXml?: string;
 }
 
@@ -36,9 +37,9 @@ export default function ScoringPage() {
 
   const selectedNodeData = (() => {
     if (!selectedNodeId || !activeStep) return null;
-    const nodes: any[] = activeStep.nodes ?? [];
+    const nodes: ScoredNode[] = activeStep.nodes ?? [];
     return nodes.find(
-      (n: any) =>
+      (n) =>
         n.tree_path === selectedNodeId ||
         n.node?.attributes?.name === selectedNodeId
     ) ?? null;

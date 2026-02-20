@@ -1,28 +1,37 @@
+import type {
+  NodeTestExpr,
+  PerNodeDetail,
+  ScoredNode,
+  ScoredNodeMeta,
+  ScoringTraceStep,
+} from "../../types/scoring";
+
 interface QueryStepsPanelProps {
-  scoringTrace: any[];
-  perNodeDetail: any[];
+  scoringTrace: ScoringTraceStep[];
+  perNodeDetail: PerNodeDetail[];
   activeStepIndex: number | null;
   onStepClick: (index: number) => void;
 }
 
-function getNodeLabel(node: any): string {
+function getNodeLabel(node: ScoredNodeMeta | undefined): string {
   if (!node) return "?";
   const attrs = node.attributes || {};
   const type = node.type || "Node";
-  if (attrs.name) return `${type}: ${attrs.name}`;
-  if (attrs.number) return `${type} ${attrs.number}`;
-  if (attrs.task_id) return `${type}[${attrs.task_id}]`;
-  if (attrs.version_id) return `${type}[${attrs.version_id}]`;
+  if (attrs.name) return `${type}: ${String(attrs.name)}`;
+  if (attrs.number) return `${type} ${String(attrs.number)}`;
+  if (attrs.index) return `${type} ${String(attrs.index)}`;
+  if (attrs.task_id) return `${type}[${String(attrs.task_id)}]`;
+  if (attrs.version_id) return `${type}[${String(attrs.version_id)}]`;
   return type;
 }
 
 function scoreColor(score: number): string {
-  if (score >= 0.7) return "#22c55e";
-  if (score >= 0.4) return "#f59e0b";
+  if (score >= 0.8) return "#22c55e";
+  if (score >= 0.5) return "#f59e0b";
   return "#ef4444";
 }
 
-function formatNodeTestExpr(expr: any): string {
+function formatNodeTestExpr(expr: NodeTestExpr | undefined): string {
   if (!expr || typeof expr !== "object") return "*";
   const type = expr.type;
   if (type === "leaf") {
@@ -47,7 +56,7 @@ function formatNodeTestExpr(expr: any): string {
     }
 
     if (test.relative_index) {
-      const offset = test.relative_index.offset;
+      const offset = test.relative_index.offset ?? 0;
       const sign = offset >= 0 ? "+" : "";
       result += `[@${sign}${offset}]`;
     }
@@ -64,17 +73,17 @@ function formatNodeTestExpr(expr: any): string {
   return "*";
 }
 
-function formatStepQuery(step: any): string {
+function formatStepQuery(step: ScoringTraceStep): string {
   const axis = step.axis === "desc" ? "//" : "";
   const testExpr = formatNodeTestExpr(step.node_test_expr);
   return `${axis}${testExpr}`;
 }
 
-function getStepTypeLabel(step: any): string {
+function getStepTypeLabel(step: ScoringTraceStep): string {
   const query = step.step_query || "";
   if (step.step_index === 0 && /root/i.test(query)) return "Root";
   const hasPredicates = (step.nodes || []).some(
-    (n: any) => n.predicate_results && n.predicate_results.length > 0
+    (n) => n.predicate_results && n.predicate_results.length > 0
   );
   if (hasPredicates) return "node_test_expr";
   return "node_test_expr";
@@ -104,7 +113,7 @@ export default function QueryStepsPanel({
       <div className="qsp-steps-list">
         {scoringTrace.map((step, idx) => {
           const isActive = activeStepIndex === idx;
-          const nodes: any[] = step.nodes || [];
+          const nodes: ScoredNode[] = step.nodes || [];
 
           return (
             <div
@@ -128,7 +137,7 @@ export default function QueryStepsPanel({
               {isActive && nodes.length > 0 && (
                 <div className="qsp-step-results">
                   <div className="qsp-results-header">RESULT NODES</div>
-                  {nodes.map((n: any, nIdx: number) => (
+                  {nodes.map((n, nIdx: number) => (
                     <div key={nIdx} className="qsp-result-row">
                       <span className="qsp-result-label">
                         {getNodeLabel(n.node)}
@@ -168,7 +177,7 @@ export default function QueryStepsPanel({
               : 0}{" "}
             &rarr; {perNodeDetail.length}
           </div>
-          {perNodeDetail.map((detail: any, i: number) => (
+          {perNodeDetail.map((detail, i: number) => (
             <div key={i} className="qsp-final-row">
               <span className="qsp-final-rank">#{i + 1}</span>
               <span className="qsp-final-label">

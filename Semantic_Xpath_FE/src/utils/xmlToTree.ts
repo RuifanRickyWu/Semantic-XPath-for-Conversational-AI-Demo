@@ -51,6 +51,8 @@ function truncate(text: string, max: number): string {
  */
 function labelForElement(el: Element): string {
   const tag = el.tagName;
+  const nameAttr = el.getAttribute("name");
+  const indexAttr = el.getAttribute("index") ?? el.getAttribute("number");
 
   switch (tag) {
     case "Plan":
@@ -61,7 +63,7 @@ function labelForElement(el: Element): string {
     case "Summary":
       return truncate(el.textContent ?? tag, 35);
     case "Day": {
-      const num = el.getAttribute("number") ?? "?";
+      const num = indexAttr ?? "?";
       return `Day ${num}`;
     }
     case "Morning":
@@ -73,6 +75,7 @@ function labelForElement(el: Element): string {
     case "Item":
       return truncate(el.textContent ?? "Item", 35);
     default:
+      if (nameAttr) return truncate(nameAttr, 35);
       return tag;
   }
 }

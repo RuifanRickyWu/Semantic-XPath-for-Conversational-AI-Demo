@@ -4,6 +4,8 @@
  * The `type` field is the key discriminator for FE rendering behavior.
  */
 
+import type { PerNodeDetail, ScoringTraceStep } from "./scoring";
+
 export type ChatResponseType =
   | "CHAT"
   | "PLAN_CREATE"
@@ -22,6 +24,14 @@ export interface ChatSessionUpdates {
   active_version_id?: string;
 }
 
+export interface TreePathSegmentObject {
+  tag: string;
+  index: number;
+}
+
+export type TreePathSegment = [string, number] | TreePathSegmentObject | string;
+export type AffectedNodePath = TreePathSegment[];
+
 export interface ChatResponse {
   success: boolean;
   type: ChatResponseType;
@@ -30,9 +40,9 @@ export interface ChatResponse {
   session_updates: ChatSessionUpdates;
   xpath_query?: string;
   original_query?: string;
-  affected_node_paths?: any[][];
-  scoring_trace?: any[];
-  per_node_detail?: any[];
+  affected_node_paths?: AffectedNodePath[];
+  scoring_trace?: ScoringTraceStep[];
+  per_node_detail?: PerNodeDetail[];
   error?: string;
 }
 

@@ -28,8 +28,8 @@ if TYPE_CHECKING:
 _BASE_DIR = Path(__file__).resolve().parents[2]
 _EXAMPLE_TEMPLATES = {
     "toronto_trip_3d": {
-        "task_name": "3 Day Trip in Toronto",
-        "version_summary": "Seeded example: Toronto itinerary",
+        "task_name": "3 Day Trip in San Diego",
+        "version_summary": "Seeded example: San Diego itinerary",
         "path": _BASE_DIR / "storage" / "templates" / "toronto_trip_3d.xml",
     },
     "phd_todo_sample": {

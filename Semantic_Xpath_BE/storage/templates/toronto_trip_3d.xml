@@ -1,55 +1,110 @@
 <Plan version="v1">
   <Meta>
-    <Title>3 Day Trip in Toronto</Title>
-    <Summary>A prebuilt 3-day Toronto sample itinerary for demo seeding.</Summary>
+    <Title>3 Day Business Trip in San Diego</Title>
+    <Summary>A prebuilt 3-day San Diego sample itinerary for demo seeding.</Summary>
   </Meta>
   <Day index="1">
-    <Label>Downtown + Waterfront</Label>
-    <TimeBlock start="09:00" end="12:00">
-      <Title>Harbourfront and CN Tower</Title>
+    <Label>Arrival, Work, and Evening Downtown</Label>
+    <TimeBlock start="09:00" end="10:00">
+      <Title>SAN Airport Arrival</Title>
       <Tasks>
-        <Task id="d1-t1">Walk around Harbourfront</Task>
-        <Task id="d1-t2">Visit CN Tower observation deck</Task>
+        <Task id="d1-t1">Flight lands at San Diego International Airport. Morning arrival to get the business trip started.</Task>
+        <Task id="d1-t2">Travel method: Flight. Expected cost: Included.</Task>
+        <Task id="d1-t3">Highlights: Morning arrival, Baggage claim.</Task>
       </Tasks>
     </TimeBlock>
-    <TimeBlock start="13:00" end="17:00">
-      <Title>Ripley's Aquarium + Distillery District</Title>
+    <TimeBlock start="13:00" end="16:00">
+      <Title>Client Work Meeting</Title>
       <Tasks>
-        <Task id="d1-t3">Explore Ripley's Aquarium</Task>
-        <Task id="d1-t4">Visit Distillery District shops and cafes</Task>
+        <Task id="d1-t4">Afternoon strategy and project alignment meeting at the downtown office.</Task>
+        <Task id="d1-t5">Travel method: Taxi. Expected cost: Work.</Task>
+        <Task id="d1-t6">Highlights: Business presentation, Downtown San Diego.</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="18:00" end="19:30">
+      <Title>Lou &amp; Mickey&apos;s</Title>
+      <Tasks>
+        <Task id="d1-t7">Upscale steak and seafood dinner in the Gaslamp Quarter. Great atmosphere to unwind after travel and meetings.</Task>
+        <Task id="d1-t8">Travel method: Walk. Expected cost: USD 80-120.</Task>
+        <Task id="d1-t9">Highlights: Gaslamp Quarter dining, Steakhouse.</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="20:00" end="22:30">
+      <Title>Reading Cinemas Gaslamp</Title>
+      <Tasks>
+        <Task id="d1-t10">Catch a late movie to relax for the evening in the downtown area.</Task>
+        <Task id="d1-t11">Travel method: Walk. Expected cost: USD 20.</Task>
+        <Task id="d1-t12">Highlights: Evening entertainment, Movie theater.</Task>
       </Tasks>
     </TimeBlock>
   </Day>
   <Day index="2">
-    <Label>Museums + Midtown</Label>
-    <TimeBlock start="10:00" end="13:00">
-      <Title>Royal Ontario Museum</Title>
+    <Label>Food, Shopping, and Waterfront Relaxation</Label>
+    <TimeBlock start="08:30" end="09:30">
+      <Title>Breakfast Republic</Title>
       <Tasks>
-        <Task id="d2-t1">Museum highlights walk</Task>
+        <Task id="d2-t1">Popular local breakfast spot known for creative pancakes and morning classics. Casual and energetic.</Task>
+        <Task id="d2-t2">Travel method: Walk. Expected cost: USD 25-35.</Task>
+        <Task id="d2-t3">Highlights: Local favorite, Hearty breakfast.</Task>
       </Tasks>
     </TimeBlock>
-    <TimeBlock start="14:00" end="18:00">
-      <Title>Yorkville and Casa Loma</Title>
+    <TimeBlock start="10:30" end="12:30">
+      <Title>Suit Shopping at Fashion Valley</Title>
       <Tasks>
-        <Task id="d2-t2">Coffee break in Yorkville</Task>
-        <Task id="d2-t3">Tour Casa Loma</Task>
+        <Task id="d2-t4">Trip to the Fashion Valley outdoor mall to get fitted for and purchase a new professional suit.</Task>
+        <Task id="d2-t5">Travel method: Taxi. Expected cost: Variable.</Task>
+        <Task id="d2-t6">Highlights: Outdoor mall, Apparel shopping.</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="14:00" end="16:00">
+      <Title>Tavern+Bowl East Village</Title>
+      <Tasks>
+        <Task id="d2-t7">Afternoon downtime with a few games at an upbeat downtown bowling alley.</Task>
+        <Task id="d2-t8">Travel method: Walk. Expected cost: USD 40.</Task>
+        <Task id="d2-t9">Highlights: Casual recreation, Bowling.</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="17:00" end="18:30">
+      <Title>Embarcadero Harborfront Walk</Title>
+      <Tasks>
+        <Task id="d2-t10">Relaxing stroll along the San Diego Bay waterfront with views of the USS Midway and Coronado Bridge.</Task>
+        <Task id="d2-t11">Travel method: Walk. Expected cost: Free.</Task>
+        <Task id="d2-t12">Highlights: Ocean breeze, Bay views, Relaxing atmosphere.</Task>
       </Tasks>
     </TimeBlock>
   </Day>
   <Day index="3">
-    <Label>Nature + Neighborhoods</Label>
-    <TimeBlock start="09:00" end="12:00">
-      <Title>Toronto Islands</Title>
+    <Label>Final Meeting and Departure</Label>
+    <TimeBlock start="08:00" end="09:00">
+      <Title>Copa Vida</Title>
       <Tasks>
-        <Task id="d3-t1">Take ferry to Centre Island</Task>
-        <Task id="d3-t2">Bike and skyline photos</Task>
+        <Task id="d3-t1">Quick artisanal coffee and breakfast sandwich before the final meeting.</Task>
+        <Task id="d3-t2">Travel method: Walk. Expected cost: USD 15.</Task>
+        <Task id="d3-t3">Highlights: Quick service, Artisanal coffee.</Task>
       </Tasks>
     </TimeBlock>
-    <TimeBlock start="13:30" end="17:00">
-      <Title>Kensington Market + Chinatown</Title>
+    <TimeBlock start="09:30" end="11:30">
+      <Title>Wrap-up Meeting</Title>
       <Tasks>
-        <Task id="d3-t3">Street food and local shops</Task>
-        <Task id="d3-t4">Wrap-up dinner planning</Task>
+        <Task id="d3-t4">Final morning meeting to secure next steps and project deliverables before flying out.</Task>
+        <Task id="d3-t5">Travel method: Walk. Expected cost: Work.</Task>
+        <Task id="d3-t6">Highlights: Business closing, Work meeting.</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="12:00" end="13:00">
+      <Title>Puesto at the Headquarters</Title>
+      <Tasks>
+        <Task id="d3-t7">Award-winning artisanal tacos for a fast but memorable San Diego lunch before heading to the airport.</Task>
+        <Task id="d3-t8">Travel method: Walk. Expected cost: USD 30-45.</Task>
+        <Task id="d3-t9">Highlights: Authentic tacos, Quick lunch.</Task>
+      </Tasks>
+    </TimeBlock>
+    <TimeBlock start="22:00" end="23:00">
+      <Title>SAN Departure</Title>
+      <Tasks>
+        <Task id="d3-t10">Flight departure from San Diego International Airport. End of trip.</Task>
+        <Task id="d3-t11">Travel method: Flight. Expected cost: Included.</Task>
+        <Task id="d3-t12">Highlights: Departure flight, End of trip.</Task>
       </Tasks>
     </TimeBlock>
   </Day>

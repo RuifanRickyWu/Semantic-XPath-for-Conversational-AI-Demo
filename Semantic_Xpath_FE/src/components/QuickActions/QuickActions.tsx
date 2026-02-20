@@ -14,7 +14,7 @@ const actions: QuickAction[] = [
   {
     label: "Itinerary",
     icon: "/assets/itin_icon.svg",
-    query: "5 days travel plan in Toronto",
+    query: "3 days business trip plan in San Diego",
   },
   {
     label: "Todo List",

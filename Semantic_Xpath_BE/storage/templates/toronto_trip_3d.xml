@@ -10,10 +10,7 @@
       <description>Flight lands at San Diego International Airport. Morning arrival to get the business trip started.</description>
       <travel_method>Flight</travel_method>
       <expected_cost>Included</expected_cost>
-      <highlights>
-        <highlight>Morning arrival</highlight>
-        <highlight>Baggage claim</highlight>
-      </highlights>
+      <highlights>Morning arrival; Baggage claim</highlights>
     </POI>
     <POI>
       <name>Client Work Meeting</name>
@@ -21,10 +18,7 @@
       <description>Afternoon strategy and project alignment meeting at the downtown office.</description>
       <travel_method>Taxi</travel_method>
       <expected_cost>Work</expected_cost>
-      <highlights>
-        <highlight>Business presentation</highlight>
-        <highlight>Downtown San Diego</highlight>
-      </highlights>
+      <highlights>Business presentation; Downtown San Diego</highlights>
     </POI>
     <Restaurant>
       <name>Lou &amp; Mickey's</name>
@@ -32,10 +26,7 @@
       <description>Upscale steak and seafood dinner in the Gaslamp Quarter. Great atmosphere to unwind after a day of travel and meetings.</description>
       <travel_method>Walk</travel_method>
       <expected_cost>USD 80-120</expected_cost>
-      <highlights>
-        <highlight>Gaslamp Quarter dining</highlight>
-        <highlight>Steakhouse</highlight>
-      </highlights>
+      <highlights>Gaslamp Quarter dining; Steakhouse</highlights>
     </Restaurant>
     <POI>
       <name>Reading Cinemas Gaslamp</name>
@@ -43,10 +34,7 @@
       <description>Catching a late movie to relax for the rest of the evening. Located conveniently in the downtown area.</description>
       <travel_method>Walk</travel_method>
       <expected_cost>USD 20</expected_cost>
-      <highlights>
-        <highlight>Evening entertainment</highlight>
-        <highlight>Movie theater</highlight>
-      </highlights>
+      <highlights>Evening entertainment; Movie theater</highlights>
     </POI>
   </Day>
   <Day index="2">
@@ -56,10 +44,7 @@
       <description>Popular local breakfast spot known for creative pancakes and morning classics. Casual and energetic.</description>
       <travel_method>Walk</travel_method>
       <expected_cost>USD 25-35</expected_cost>
-      <highlights>
-        <highlight>Local favorite</highlight>
-        <highlight>Hearty breakfast</highlight>
-      </highlights>
+      <highlights>Local favorite; Hearty breakfast</highlights>
     </Restaurant>
     <POI>
       <name>Suit Shopping at Fashion Valley</name>
@@ -67,10 +52,7 @@
       <description>Trip to the Fashion Valley outdoor mall to get fitted for and purchase a new professional suit.</description>
       <travel_method>Taxi</travel_method>
       <expected_cost>Variable</expected_cost>
-      <highlights>
-        <highlight>Outdoor mall</highlight>
-        <highlight>Apparel shopping</highlight>
-      </highlights>
+      <highlights>Outdoor mall; Apparel shopping</highlights>
     </POI>
     <POI>
       <name>Tavern+Bowl East Village</name>
@@ -78,10 +60,7 @@
       <description>Afternoon downtime rolling a few games at an upbeat downtown bowling alley.</description>
       <travel_method>Walk</travel_method>
       <expected_cost>USD 40</expected_cost>
-      <highlights>
-        <highlight>Casual recreation</highlight>
-        <highlight>Bowling</highlight>
-      </highlights>
+      <highlights>Casual recreation; Bowling</highlights>
     </POI>
     <POI>
       <name>Embarcadero Harborfront Walk</name>
@@ -89,11 +68,7 @@
       <description>Relaxing stroll along the San Diego Bay waterfront. Views of the USS Midway and Coronado Bridge.</description>
       <travel_method>Walk</travel_method>
       <expected_cost>Free</expected_cost>
-      <highlights>
-        <highlight>Ocean breeze</highlight>
-        <highlight>Bay views</highlight>
-        <highlight>Relaxing atmosphere</highlight>
-      </highlights>
+      <highlights>Ocean breeze; Bay views; Relaxing atmosphere</highlights>
     </POI>
   </Day>
   <Day index="3">
@@ -103,10 +78,7 @@
       <description>Quick artisanal coffee and breakfast sandwich before heading into the final meeting.</description>
       <travel_method>Walk</travel_method>
       <expected_cost>USD 15</expected_cost>
-      <highlights>
-        <highlight>Quick service</highlight>
-        <highlight>Artisanal coffee</highlight>
-      </highlights>
+      <highlights>Quick service; Artisanal coffee</highlights>
     </Restaurant>
     <POI>
       <name>Wrap-up Meeting</name>
@@ -114,10 +86,7 @@
       <description>Final morning meeting to secure next steps and project deliverables before flying out.</description>
       <travel_method>Walk</travel_method>
       <expected_cost>Work</expected_cost>
-      <highlights>
-        <highlight>Business closing</highlight>
-        <highlight>Work meeting</highlight>
-      </highlights>
+      <highlights>Business closing; Work meeting</highlights>
     </POI>
     <Restaurant>
       <name>Puesto at the Headquarters</name>
@@ -125,10 +94,7 @@
       <description>Award-winning artisanal tacos for a fast but memorable San Diego lunch before heading to the airport.</description>
       <travel_method>Walk</travel_method>
       <expected_cost>USD 30-45</expected_cost>
-      <highlights>
-        <highlight>Authentic tacos</highlight>
-        <highlight>Quick lunch</highlight>
-      </highlights>
+      <highlights>Authentic tacos; Quick lunch</highlights>
     </Restaurant>
     <POI>
       <name>SAN Departure</name>
@@ -136,10 +102,7 @@
       <description>Flight departure from San Diego International Airport. End of trip.</description>
       <travel_method>Flight</travel_method>
       <expected_cost>Included</expected_cost>
-      <highlights>
-        <highlight>Departure flight</highlight>
-        <highlight>End of trip</highlight>
-      </highlights>
+      <highlights>Departure flight; End of trip</highlights>
     </POI>
   </Day>
 </Plan>

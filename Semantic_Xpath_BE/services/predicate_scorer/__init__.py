@@ -16,8 +16,13 @@ def load_config() -> dict:
         return yaml.safe_load(f)
 
 
-def get_scorer(method: str = None, config: dict = None, traces_path: Path = None) -> PredicateScorer:
-    """Create the scorer selected by config or explicit method."""
+def get_scorer(method: str = None, config: dict = None, traces_path: Path = None, client=None) -> PredicateScorer:
+    """Create the scorer selected by config or explicit method.
+
+    Args:
+        client: Pre-loaded scoring client (e.g. BartNLIClient). When provided
+                the scorer skips its own lazy-loading and reuses this instance.
+    """
     if config is None:
         config = load_config()
 
@@ -35,6 +40,7 @@ def get_scorer(method: str = None, config: dict = None, traces_path: Path = None
         return EntailmentPredicateScorer(
             hypothesis_template=hypothesis_template,
             traces_path=traces_path,
+            client=client,
         )
     if method == "cosine":
         cosine_config = config.get("cosine", {})

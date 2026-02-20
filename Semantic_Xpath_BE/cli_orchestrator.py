@@ -34,6 +34,7 @@ from services.query_generation import (
     RegistryQueryGenerationService,
 )
 from services.result_verification import SemanticXPathResultVerifier
+from clients.bart_client import get_bart_client
 from services.predicate_scorer import get_scorer as get_predicate_scorer
 from domain.semantic_xpath.execution import SemanticXPathExecutor
 from services.orchestrator_service import OrchestratorService
@@ -48,13 +49,14 @@ from stores.xml_manager import XmlManager
 def build_orchestrator() -> OrchestratorService:
     """Create a fully wired OrchestratorService for CLI usage."""
     openai_client = OpenAIClient()
+    bart_client = get_bart_client()
 
     routting_service = RouttingService(client=openai_client)
     chatting_service = ChattingService(client=openai_client)
     plan_builder_service = PlanBuilderService(client=openai_client)
     registry_query_service = RegistryQueryGenerationService(client=openai_client)
     plan_query_service = PlanContentQueryGenerationService(client=openai_client)
-    registry_scorer = get_predicate_scorer()
+    registry_scorer = get_predicate_scorer(client=bart_client)
     registry_executor = SemanticXPathExecutor(
         scorer=registry_scorer,
         top_k=20,

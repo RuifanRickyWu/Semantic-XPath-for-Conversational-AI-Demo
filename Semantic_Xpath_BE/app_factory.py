@@ -42,6 +42,7 @@ from services.query_generation import (
     RegistryQueryGenerationService,
 )
 from services.result_verification import SemanticXPathResultVerifier
+from clients.bart_client import get_bart_client
 from services.predicate_scorer import get_scorer as get_predicate_scorer
 from domain.semantic_xpath.execution import SemanticXPathExecutor
 from api.chat_resource import create_chat_blueprint
@@ -89,6 +90,7 @@ def create_app() -> Flask:
     # 1. Infrastructure / external clients
     # ------------------------------------------------------------------
     openai_client = OpenAIClient()
+    bart_client = get_bart_client()
 
     # ------------------------------------------------------------------
     # 2. Services that wrap the OpenAI client
@@ -98,7 +100,7 @@ def create_app() -> Flask:
     plan_builder_service = PlanBuilderService(client=openai_client)
     registry_query_service = RegistryQueryGenerationService(client=openai_client)
     plan_query_service = PlanContentQueryGenerationService(client=openai_client)
-    registry_scorer = get_predicate_scorer()
+    registry_scorer = get_predicate_scorer(client=bart_client)
     registry_executor = SemanticXPathExecutor(
         scorer=registry_scorer,
         top_k=20,

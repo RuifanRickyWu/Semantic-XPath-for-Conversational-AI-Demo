@@ -1,6 +1,11 @@
+import logging
+import threading
+
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from typing import Union
+
+logger = logging.getLogger(__name__)
 
 
 class BartNLIClient:
@@ -30,11 +35,12 @@ class BartNLIClient:
         else:
             self.device = device
         
-        # Load model and tokenizer
+        logger.info("Loading BART NLI model %s on %s …", model_name, self.device)
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
         self.model.to(self.device)
         self.model.eval()
+        logger.info("BART NLI model loaded successfully.")
     
     def get_entailment_score(
         self, 
@@ -164,22 +170,18 @@ class BartNLIClient:
         return entailment_scores
 
 
-# Singleton instance for convenience
 _client_instance: BartNLIClient = None
+_client_lock = threading.Lock()
 
 
 def get_bart_client(force_new: bool = False) -> BartNLIClient:
-    """Get a BART NLI client instance (singleton).
-    
-    Args:
-        force_new: If True, create a new instance instead of using cached one.
-    
-    Returns:
-        BartNLIClient instance.
-    """
+    """Get or create the process-wide BART NLI client (thread-safe singleton)."""
     global _client_instance
-    if _client_instance is None or force_new:
-        _client_instance = BartNLIClient()
+    if _client_instance is not None and not force_new:
+        return _client_instance
+    with _client_lock:
+        if _client_instance is None or force_new:
+            _client_instance = BartNLIClient()
     return _client_instance
 
 

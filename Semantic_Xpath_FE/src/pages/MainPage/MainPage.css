@@ -321,34 +321,8 @@
 .main-chat-input-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-end;
   margin-top: 10px;
-}
-
-.main-chat-action-btn {
-  width: 30px;
-  height: 30px;
-  border: none;
-  background: #f5f5f5;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.main-chat-action-btn:hover:not(:disabled) {
-  background: #eee;
-}
-
-.main-chat-action-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.main-chat-input-spacer {
-  flex: 1;
 }
 
 .main-chat-submit-btn {

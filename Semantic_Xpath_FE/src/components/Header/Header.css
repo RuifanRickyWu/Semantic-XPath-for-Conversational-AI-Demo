@@ -48,24 +48,7 @@
 .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.header-icon-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1px solid #f1f5f9;
-  background: #fafafa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.header-icon-btn:hover {
-  background: #f0f0f0;
+  gap: 10px;
 }
 
 .header-avatar {
@@ -84,9 +67,4 @@
   font-size: 14px;
   color: #333;
   font-weight: 500;
-}
-
-.header-chevron {
-  margin-left: -4px;
-  opacity: 0.6;
 }

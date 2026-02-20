@@ -1,0 +1,57 @@
+<Plan id="t2" version="v1">
+  <Meta>
+    <Title>3-Day Trip Plan: Toronto</Title>
+    <Summary>A balanced 3-day Toronto itinerary covering waterfront sights, core neighborhoods, museums, and flexible evening options with time for transit and meals.</Summary>
+  </Meta>
+  <Day number="1" name="Downtown and Waterfront">
+    <Morning>
+      <Item>Start at St. Lawrence Market for breakfast and a walk through the historic district.</Item>
+      <Item>Walk to the Distillery Historic District for shops, architecture, and coffee.</Item>
+    </Morning>
+    <Afternoon>
+      <Item>Head to the waterfront: Harbourfront Centre and a lakeside stroll.</Item>
+      <Item>Optional: Toronto Islands ferry for skyline views and a relaxed walk or bike ride.</Item>
+    </Afternoon>
+    <Evening>
+      <Item>Dinner near King West or Queen West.</Item>
+      <Item>Optional: Sunset views from the CN Tower (book timed entry) or a waterfront patio in warm months.</Item>
+    </Evening>
+    <Notes>
+      <Item>Use TTC or walking; keep CN Tower/Islands as weather-dependent options.</Item>
+    </Notes>
+  </Day>
+  <Day number="2" name="Museums and Midtown">
+    <Morning>
+      <Item>Royal Ontario Museum (ROM) highlights and special exhibits.</Item>
+      <Item>Stroll through Yorkville for cafes and boutiques.</Item>
+    </Morning>
+    <Afternoon>
+      <Item>Casa Loma visit for city views and gardens.</Item>
+      <Item>Walk part of the nearby ravine trails (weather permitting) for a nature break.</Item>
+    </Afternoon>
+    <Evening>
+      <Item>Dinner along Bloor-Yorkville or in the Annex.</Item>
+      <Item>Optional: Catch a show (Mirvish) or live music depending on schedules.</Item>
+    </Evening>
+    <Notes>
+      <Item>Prebook museum tickets on weekends; plan 30-45 minutes for TTC transfers.</Item>
+    </Notes>
+  </Day>
+  <Day number="3" name="Neighborhoods and Culture">
+    <Morning>
+      <Item>Kensington Market and Chinatown for brunch and street art.</Item>
+      <Item>Browse local shops and pick up snacks for later.</Item>
+    </Morning>
+    <Afternoon>
+      <Item>Art Gallery of Ontario (AGO) or alternative: Graffiti Alley and Queen Street West shopping.</Item>
+      <Item>Relax in Trinity Bellwoods Park if weather is nice.</Item>
+    </Afternoon>
+    <Evening>
+      <Item>Final dinner in Little Italy, Greektown (Danforth), or Ossington for a neighborhood send-off.</Item>
+      <Item>Optional: Night view from Polson Pier or a short waterfront walk to close the trip.</Item>
+    </Evening>
+    <Notes>
+      <Item>Swap AGO with more neighborhood time if you prefer a lighter final day.</Item>
+    </Notes>
+  </Day>
+</Plan>

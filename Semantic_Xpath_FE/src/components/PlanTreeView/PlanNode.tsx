@@ -32,10 +32,10 @@ function PlanNodeComponent({ data }: NodeProps) {
 
   return (
     <div className="plan-node-wrapper">
-      {/* Target handle (top) */}
+      {/* Target handle (left) */}
       <Handle
         type="target"
-        position={Position.Top}
+        position={Position.Left}
         className="plan-node-handle"
       />
 
@@ -91,10 +91,10 @@ function PlanNodeComponent({ data }: NodeProps) {
         </div>
       </div>
 
-      {/* Source handle (bottom) */}
+      {/* Source handle (right) */}
       <Handle
         type="source"
-        position={Position.Bottom}
+        position={Position.Right}
         className="plan-node-handle"
       />
     </div>

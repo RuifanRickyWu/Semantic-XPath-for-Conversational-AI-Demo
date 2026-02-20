@@ -1,0 +1,24 @@
+<Plan version="v1">
+  <Meta>
+    <Title>3 Day Business Trip in San Diego</Title>
+    <Summary>Sample itinerary with Meta, Day, and POI nodes only.</Summary>
+  </Meta>
+  <Day index="1">
+    <POI name="SAN Airport Arrival" time_block="9:00 AM - 10:00 AM" description="Flight lands at San Diego International Airport. Morning arrival to get the business trip started." travel_method="Flight" expected_cost="Included" highlights="Morning arrival; Baggage claim" />
+    <POI name="Client Work Meeting" time_block="1:00 PM - 4:00 PM" description="Afternoon strategy and project alignment meeting at the downtown office." travel_method="Taxi" expected_cost="Work" highlights="Business presentation; Downtown San Diego" />
+    <Restaurant name="Lou &amp; Mickey's" time_block="6:00 PM - 7:30 PM" description="Upscale steak and seafood dinner in the Gaslamp Quarter. Great atmosphere to unwind after a day of travel and meetings." travel_method="Walk" expected_cost="USD 80-120" highlights="Gaslamp Quarter dining; Steakhouse" />
+    <POI name="Reading Cinemas Gaslamp" time_block="8:00 PM - 10:30 PM" description="Catching a late movie to relax for the rest of the evening. Located conveniently in the downtown area." travel_method="Walk" expected_cost="USD 20" highlights="Evening entertainment; Movie theater" />
+  </Day>
+  <Day index="2">
+    <Restaurant name="Breakfast Republic" time_block="8:30 AM - 9:30 AM" description="Popular local breakfast spot known for creative pancakes and morning classics. Casual and energetic." travel_method="Walk" expected_cost="USD 25-35" highlights="Local favorite; Hearty breakfast" />
+    <POI name="Suit Shopping at Fashion Valley" time_block="10:30 AM - 12:30 PM" description="Trip to the Fashion Valley outdoor mall to get fitted for and purchase a new professional suit." travel_method="Taxi" expected_cost="Variable" highlights="Outdoor mall; Apparel shopping" />
+    <POI name="Tavern+Bowl East Village" time_block="2:00 PM - 4:00 PM" description="Afternoon downtime rolling a few games at an upbeat downtown bowling alley." travel_method="Walk" expected_cost="USD 40" highlights="Casual recreation; Bowling" />
+    <POI name="Embarcadero Harborfront Walk" time_block="5:00 PM - 6:30 PM" description="Relaxing stroll along the San Diego Bay waterfront. Views of the USS Midway and Coronado Bridge." travel_method="Walk" expected_cost="Free" highlights="Ocean breeze; Bay views; Relaxing atmosphere" />
+  </Day>
+  <Day index="3">
+    <Restaurant name="Copa Vida" time_block="8:00 AM - 9:00 AM" description="Quick artisanal coffee and breakfast sandwich before heading into the final meeting." travel_method="Walk" expected_cost="USD 15" highlights="Quick service; Artisanal coffee" />
+    <POI name="Wrap-up Meeting" time_block="9:30 AM - 11:30 AM" description="Final morning meeting to secure next steps and project deliverables before flying out." travel_method="Walk" expected_cost="Work" highlights="Business closing; Work meeting" />
+    <Restaurant name="Puesto at the Headquarters" time_block="12:00 PM - 1:00 PM" description="Award-winning artisanal tacos for a fast but memorable San Diego lunch before heading to the airport." travel_method="Walk" expected_cost="USD 30-45" highlights="Authentic tacos; Quick lunch" />
+    <POI name="SAN Departure" time_block="10:00 PM" description="Flight departure from San Diego International Airport. End of trip." travel_method="Flight" expected_cost="Included" highlights="Departure flight; End of trip" />
+  </Day>
+</Plan>

@@ -223,7 +223,7 @@ export default function MainPage() {
         <div className="msg-user-row">
           <img
             className="msg-user-avatar"
-            src="/assets/user-avatar.jpg"
+            src="/assets/actual-user.png"
             alt="User"
           />
           <p className="msg-user-text">{msg.content}</p>
@@ -471,28 +471,6 @@ export default function MainPage() {
               disabled={isLoading}
             />
             <div className="main-chat-input-actions">
-              <button
-                className="main-chat-action-btn"
-                aria-label="Add"
-                disabled={isLoading}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <line x1="8" y1="2" x2="8" y2="14" stroke="#666" strokeWidth="2" strokeLinecap="round" />
-                  <line x1="2" y1="8" x2="14" y2="8" stroke="#666" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </button>
-              <button
-                className="main-chat-action-btn"
-                aria-label="Voice"
-                disabled={isLoading}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <rect x="5.5" y="1" width="5" height="9" rx="2.5" stroke="#666" strokeWidth="1.5" />
-                  <path d="M3 7.5a5 5 0 0 0 10 0" stroke="#666" strokeWidth="1.5" strokeLinecap="round" />
-                  <line x1="8" y1="12.5" x2="8" y2="15" stroke="#666" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-              </button>
-              <div className="main-chat-input-spacer" />
               <button
                 className={`main-chat-submit-btn ${isLoading ? "loading" : ""}`}
                 onClick={handleInputSubmit}

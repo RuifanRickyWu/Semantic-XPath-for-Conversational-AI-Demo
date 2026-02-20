@@ -221,7 +221,7 @@ function applyDagreLayout(
 ): void {
   const g = new dagre.graphlib.Graph();
   g.setGraph({
-    rankdir: "TB",
+    rankdir: "LR",
     ranksep: RANK_SEP,
     nodesep: NODE_SEP,
     marginx: 20,

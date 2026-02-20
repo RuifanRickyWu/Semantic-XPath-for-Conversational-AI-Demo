@@ -1,0 +1,5 @@
+<Registry active_task_id="t1">
+  <Task task_id="t1" active_version_id="v1" task_name="3 Day Trip in San Diego" created_at="2026-02-20T21:59:05.503195+00:00" updated_at="2026-02-20T21:59:05.503195+00:00">
+    <Version version_id="v1" summary="Seeded example: San Diego itinerary" created_at="2026-02-20T21:59:05.503195+00:00" />
+  </Task>
+</Registry>

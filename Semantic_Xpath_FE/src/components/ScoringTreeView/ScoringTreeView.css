@@ -87,6 +87,13 @@
 }
 
 .scoring-node-dim {
+  opacity: 1;
+}
+
+/* Keep dimmed visual state without affecting tooltip layering/opacity */
+.scoring-node-dim .scoring-node-label,
+.scoring-node-dim .scoring-node-score,
+.scoring-node-dim .scoring-node-scorebar {
   opacity: 0.4;
 }
 

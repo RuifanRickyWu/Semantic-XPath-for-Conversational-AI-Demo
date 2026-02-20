@@ -465,6 +465,8 @@ class SemanticXPathExecutor:
         for trace in scoring_traces:
             predicate = trace.get("predicate")
             predicate_ast = trace.get("predicate_ast")
+            aggregation_labels = self._collect_aggregation_labels(predicate_ast)
+            has_aggregation = len(aggregation_labels) > 0
             for node_trace in trace.get("node_scores", []):
                 node_id = node_trace.get("node_id")
                 if node_id is None:
@@ -475,9 +477,68 @@ class SemanticXPathExecutor:
                         "predicate_ast": predicate_ast,
                         "predicate_score": node_trace.get("final_score"),
                         "scoring_steps": node_trace.get("scoring_steps", []),
+                        "has_aggregation": has_aggregation,
+                        "aggregation_labels": aggregation_labels,
                     }
                 )
         return by_node
+
+    def _collect_aggregation_labels(self, predicate_ast: Any) -> List[str]:
+        """Collect aggregation operators appearing anywhere in a predicate AST."""
+        labels: List[str] = []
+        if not isinstance(predicate_ast, dict):
+            return labels
+
+        def _selector_to_text(selector: Any) -> str:
+            if not isinstance(selector, dict):
+                return ""
+            axis = selector.get("axis", "child")
+            axis_prefix = "//" if axis == "desc" else "/"
+            test = selector.get("test", {})
+            if not isinstance(test, dict):
+                return axis_prefix + "*"
+            test_type = test.get("type")
+            if test_type == "leaf":
+                leaf_test = test.get("test", {})
+                if isinstance(leaf_test, dict):
+                    kind = leaf_test.get("kind")
+                    if kind == "type":
+                        return axis_prefix + str(leaf_test.get("name") or "*")
+                return axis_prefix + "*"
+            return axis_prefix + "*"
+
+        def _visit(node: Any) -> None:
+            if not isinstance(node, dict):
+                return
+
+            node_type = str(node.get("type") or "")
+            operator = str(node.get("operator") or "")
+            op_lower = operator.lower()
+            is_agg = (
+                node_type == "evidence_agg"
+                or operator in ("AGG_PREV", "AGG_EXISTS")
+                or op_lower in ("agg_min", "agg_max", "agg_avg")
+            )
+            if is_agg:
+                op_label = operator if operator else node_type.upper()
+                selector_text = _selector_to_text(node.get("selector"))
+                label = f"{op_label}({selector_text})" if selector_text else op_label
+                if label not in labels:
+                    labels.append(label)
+
+            for key in ("conditions",):
+                children = node.get(key)
+                if isinstance(children, list):
+                    for child in children:
+                        _visit(child)
+
+            for key in ("condition", "inner_predicate", "child_predicate"):
+                child_node = node.get(key)
+                if isinstance(child_node, dict):
+                    _visit(child_node)
+
+        _visit(predicate_ast)
+        return labels
 
     def _extract_relative_index_info(
         self, scoring_traces: List[Dict[str, Any]]

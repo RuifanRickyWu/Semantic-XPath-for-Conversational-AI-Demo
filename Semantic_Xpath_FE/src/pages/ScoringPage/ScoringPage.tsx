@@ -105,15 +105,14 @@ export default function ScoringPage() {
             />
           </div>
 
-          {selectedNodeData &&
-            selectedNodeData.predicate_results?.length > 0 && (
-              <div className="scoring-aggregation-area">
-                <ScoreAggregation
-                  nodeData={selectedNodeData}
-                  onClose={() => setSelectedNodeId(null)}
-                />
-              </div>
-            )}
+          {selectedNodeData && (
+            <div className="scoring-aggregation-float">
+              <ScoreAggregation
+                nodeData={selectedNodeData}
+                onClose={() => setSelectedNodeId(null)}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

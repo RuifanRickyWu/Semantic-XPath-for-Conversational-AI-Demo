@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 interface ScoreAggregationProps {
   nodeData: any;
   onClose: () => void;
@@ -19,6 +21,7 @@ function getNodeLabel(node: any): string {
 }
 
 function formatPredicateType(predResult: any): string {
+  if (predResult?.has_aggregation) return "AGGREGATION";
   const ast = predResult.predicate_ast;
   if (!ast) return predResult.predicate || "predicate";
   const type = ast.type || ast.operator || "";
@@ -35,102 +38,63 @@ function formatPredicateType(predResult: any): string {
   return type.toUpperCase() || "PREDICATE";
 }
 
-function renderScoringSteps(steps: any[], depth = 0) {
+function toFixedScore(score: number | undefined): string {
+  return (score ?? 0).toFixed(3);
+}
+
+function collectAggregationLabels(pred: any): string[] {
+  if (Array.isArray(pred?.aggregation_labels) && pred.aggregation_labels.length > 0) {
+    return pred.aggregation_labels;
+  }
+  const ast = pred?.predicate_ast;
+  if (!ast || typeof ast !== "object") return [];
+  const op = String(ast.operator || "");
+  if (ast.type === "evidence_agg" || op.startsWith("agg_") || op.startsWith("AGG_")) {
+    return [op || "AGG"];
+  }
+  return [];
+}
+
+function flattenStepLabel(step: any): string {
+  const t = step?.type;
+  if (t === "atom") return step?.condition ? JSON.stringify(step.condition) : "atom";
+  if (t === "id_eq") return `@${step.field} = "${step.value}"`;
+  if (t === "or" || t === "and" || t === "avg") {
+    const formula = step.formula || t.toUpperCase();
+    const size = Array.isArray(step.child_scores) ? step.child_scores.length : 0;
+    return `${formula} (${size} children)`;
+  }
+  if (t === "not") return step.formula || "1 - Score(u, ψ)";
+  if (t === "evidence_agg") {
+    const agg = String(step.agg_type || "agg").toUpperCase();
+    const cnt = step.evidence_count ?? 0;
+    return `AGG_${agg} (${cnt} evidence nodes)`;
+  }
+  return t || "step";
+}
+
+function renderScoringSteps(steps: any[], depth = 0): ReactNode[] {
   if (!steps || steps.length === 0) return [];
-
   return steps.map((step: any, i: number) => {
-    const indent = depth * 16;
+    const indent = depth * 14;
+    const score = step.result ?? step.score;
+    const nested =
+      step.inner_trace ||
+      step.inner_traces ||
+      (Array.isArray(step.children) ? step.children : null);
+    const hasNested = Array.isArray(nested) && nested.length > 0;
 
-    if (step.type === "leaf_score" || step.type === "atom_score") {
-      return (
-        <div
-          key={i}
-          className="agg-scoring-step"
-          style={{ marginLeft: indent }}
-        >
-          <span className="agg-step-label">
-            {step.field || "content"} =~ "{step.value || ""}"
-          </span>
-          <span
-            className="agg-step-score"
-            style={{ color: scoreColor(step.score ?? 0) }}
-          >
-            {(step.score ?? 0).toFixed(3)}
-          </span>
-        </div>
-      );
-    }
-
-    if (step.type === "evidence_node") {
-      return (
-        <div
-          key={i}
-          className="agg-evidence-node"
-          style={{ marginLeft: indent }}
-        >
-          <span className="agg-evidence-label">
-            {getNodeLabel(step.node)}
-          </span>
-          <span
-            className="agg-evidence-score"
-            style={{ color: scoreColor(step.score ?? 0) }}
-          >
-            {(step.score ?? 0).toFixed(3)}
-          </span>
-          {step.children &&
-            renderScoringSteps(step.children, depth + 1)}
-        </div>
-      );
-    }
-
-    if (step.type === "aggregation") {
-      return (
-        <div key={i} className="agg-step-group" style={{ marginLeft: indent }}>
-          <div className="agg-step-header">
-            {step.operator || "agg"}({step.count ?? "?"} children)
-          </div>
-          {step.child_scores &&
-            step.child_scores.map((cs: any, j: number) => (
-              <div key={j} className="agg-child-score-row">
-                <span className="agg-child-label">
-                  {getNodeLabel(cs.node)}
-                </span>
-                <span
-                  className="agg-child-score"
-                  style={{ color: scoreColor(cs.score ?? 0) }}
-                >
-                  {(cs.score ?? 0).toFixed(3)}
-                </span>
-              </div>
-            ))}
-          <div className="agg-step-result">
-            <span className="agg-result-formula">
-              {step.operator || "agg"}({step.count ?? "?"} children)
-            </span>
-            <span className="agg-result-equals">=</span>
-            <span
-              className="agg-result-score"
-              style={{ color: scoreColor(step.result ?? 0) }}
-            >
-              {(step.result ?? 0).toFixed(3)}
-            </span>
-          </div>
-        </div>
-      );
-    }
-
-    // Generic fallback
     return (
-      <div key={i} className="agg-scoring-step" style={{ marginLeft: indent }}>
-        <span className="agg-step-label">{step.description || JSON.stringify(step).slice(0, 60)}</span>
-        {step.score !== undefined && (
-          <span
-            className="agg-step-score"
-            style={{ color: scoreColor(step.score ?? 0) }}
-          >
-            {(step.score ?? 0).toFixed(3)}
-          </span>
-        )}
+      <div key={`${depth}-${i}`} className="agg-scoring-step" style={{ marginLeft: indent }}>
+        <div className="agg-step-main">
+          <span className="agg-step-label">{flattenStepLabel(step)}</span>
+          {(score !== undefined || step.inner_score !== undefined) && (
+            <span className="agg-step-score" style={{ color: scoreColor(score ?? step.inner_score ?? 0) }}>
+              {toFixedScore(score ?? step.inner_score)}
+            </span>
+          )}
+        </div>
+        {hasNested && <div className="agg-step-nested">{renderScoringSteps(nested, depth + 1)}</div>}
       </div>
     );
   });
@@ -142,7 +106,10 @@ export default function ScoreAggregation({
 }: ScoreAggregationProps) {
   const predicateResults: any[] = nodeData.predicate_results || [];
   const nodeLabel = getNodeLabel(nodeData.node);
-  const children: any[] = nodeData.children || [];
+  const nodeScore = nodeData.accumulated_score ?? nodeData.final_step_score ?? nodeData.step_score ?? 0;
+  const aggregationTags = Array.from(
+    new Set(predicateResults.flatMap((pred) => collectAggregationLabels(pred)))
+  );
 
   return (
     <div className="score-aggregation">
@@ -175,20 +142,41 @@ export default function ScoreAggregation({
       </div>
 
       <div className="agg-subtitle">
-        click node to display score aggregation/propagation
+        Selected node score source and predicate-level breakdown
       </div>
 
+      <div className="agg-selected-node">
+        <span className="agg-selected-label">{nodeLabel}</span>
+        <span className="agg-selected-score" style={{ color: scoreColor(nodeScore) }}>
+          {toFixedScore(nodeScore)}
+        </span>
+      </div>
+
+      {aggregationTags.length > 0 && (
+        <div className="agg-tags-row">
+          {aggregationTags.map((tag, idx) => (
+            <span key={idx} className="agg-tag">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+
       <div className="agg-body">
+        {predicateResults.length === 0 && (
+          <div className="agg-empty">
+            No semantic predicate was applied on this node in the current step.
+          </div>
+        )}
         {predicateResults.map((pred: any, idx: number) => {
           const predType = formatPredicateType(pred);
           const predScore = pred.predicate_score ?? 0;
+          const predAggTags = collectAggregationLabels(pred);
 
           return (
             <div key={idx} className="agg-predicate-section">
               <div className="agg-predicate-header">
-                <span className="agg-predicate-chevron">&or;</span>
                 <span className="agg-predicate-type">{predType}</span>
-                <span className="agg-predicate-node">{nodeLabel}</span>
                 <span
                   className="agg-predicate-score"
                   style={{ color: scoreColor(predScore) }}
@@ -197,9 +185,19 @@ export default function ScoreAggregation({
                 </span>
               </div>
 
+              {predAggTags.length > 0 && (
+                <div className="agg-tags-row">
+                  {predAggTags.map((tag, tagIdx) => (
+                    <span key={tagIdx} className="agg-tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
               {pred.predicate && (
                 <div className="agg-formula">
-                  * {pred.predicate}
+                  {pred.predicate}
                 </div>
               )}
 
@@ -208,33 +206,6 @@ export default function ScoreAggregation({
                   {renderScoringSteps(pred.scoring_steps)}
                 </div>
               )}
-
-              {/* Render child evidence nodes if this is an aggregation predicate */}
-              {children.length > 0 &&
-                (predType.includes("AGG") || predType.includes("agg")) && (
-                  <div className="agg-children-section">
-                    {children.slice(0, 10).map((child: any, cIdx: number) => (
-                      <div key={cIdx} className="agg-child-row">
-                        <span className="agg-child-label">
-                          {getNodeLabel(child)}
-                        </span>
-                        <span
-                          className="agg-child-score"
-                          style={{
-                            color: scoreColor(child.score ?? child.accumulated_score ?? 0),
-                          }}
-                        >
-                          {(child.score ?? child.accumulated_score ?? 0).toFixed(3)}
-                        </span>
-                      </div>
-                    ))}
-                    {children.length > 10 && (
-                      <div className="agg-child-more">
-                        +{children.length - 10} more
-                      </div>
-                    )}
-                  </div>
-                )}
             </div>
           );
         })}

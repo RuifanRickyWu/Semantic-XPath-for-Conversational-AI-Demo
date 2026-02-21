@@ -85,6 +85,11 @@ export default function QueryStepsPanel({
   activeStepIndex,
   onStepClick,
 }: QueryStepsPanelProps) {
+  const finalStepNodes: ScoredNode[] =
+    scoringTrace.length > 0
+      ? (scoringTrace[scoringTrace.length - 1].nodes || [])
+      : [];
+
   return (
     <div className="query-steps-panel">
       <div className="qsp-title">
@@ -144,7 +149,7 @@ export default function QueryStepsPanel({
         })}
       </div>
 
-      {perNodeDetail.length > 0 && (
+      {scoringTrace.length > 0 && (
         <div className="qsp-final-result">
           <div className="qsp-final-header">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -159,25 +164,42 @@ export default function QueryStepsPanel({
             <span className="qsp-final-topk">Top-k</span>
           </div>
           <div className="qsp-final-count">
-            {scoringTrace.length > 0
-              ? (scoringTrace[scoringTrace.length - 1].nodes || []).length
-              : 0}{" "}
-            &rarr; {perNodeDetail.length}
+            {finalStepNodes.length} &rarr; {perNodeDetail.length}
           </div>
-          {perNodeDetail.map((detail, i: number) => (
-            <div key={i} className="qsp-final-row">
-              <span className="qsp-final-rank">#{i + 1}</span>
-              <span className="qsp-final-label">
-                {getNodeLabel(detail.node)}
-              </span>
-              <span
-                className="qsp-final-score"
-                style={{ color: scoreColor(detail.score ?? 0) }}
-              >
-                {(detail.score ?? 0).toFixed(3)}
-              </span>
-            </div>
-          ))}
+          {perNodeDetail.length > 0 ? (
+            perNodeDetail.map((detail, i: number) => (
+              <div key={i} className="qsp-final-row">
+                <span className="qsp-final-rank">#{i + 1}</span>
+                <span className="qsp-final-label">
+                  {getNodeLabel(detail.node)}
+                </span>
+                <span
+                  className="qsp-final-score"
+                  style={{ color: scoreColor(detail.score ?? 0) }}
+                >
+                  {(detail.score ?? 0).toFixed(3)}
+                </span>
+              </div>
+            ))
+          ) : (
+            <>
+              <div className="qsp-final-empty">
+                No final match passed threshold. Showing candidate scores.
+              </div>
+              {finalStepNodes.slice(0, 5).map((n, i: number) => (
+                <div key={i} className="qsp-final-row">
+                  <span className="qsp-final-rank">#{i + 1}</span>
+                  <span className="qsp-final-label">{getNodeLabel(n.node)}</span>
+                  <span
+                    className="qsp-final-score"
+                    style={{ color: scoreColor(n.accumulated_score ?? 0) }}
+                  >
+                    {(n.accumulated_score ?? 0).toFixed(3)}
+                  </span>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       )}
     </div>

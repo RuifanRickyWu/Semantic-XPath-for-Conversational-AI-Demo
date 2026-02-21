@@ -300,10 +300,57 @@ class SemanticXPathExecutor:
             current_items = next_items
 
         if not current_items:
+            fallback_trace: List[Dict[str, Any]] = []
+            if step_records:
+                fallback_entries = sorted(
+                    step_records[-1]["entries"],
+                    key=lambda entry: entry.get("accumulated_score", 0.0),
+                    reverse=True,
+                )[:self.top_k]
+                fallback_targets = [entry["node"] for entry in fallback_entries]
+
+                if fallback_targets:
+                    for record in step_records:
+                        relevant_entries = [
+                            entry
+                            for entry in record["entries"]
+                            if any(
+                                self._is_ancestor_or_self(entry["node"], target, parent_map)
+                                for target in fallback_targets
+                            )
+                        ]
+                        if not relevant_entries:
+                            continue
+
+                        nodes_list = []
+                        for entry in relevant_entries:
+                            nodes_list.append(
+                                {
+                                    "tree_path": entry["tree_path"],
+                                    "previous_score": entry["previous_score"],
+                                    "step_score": entry["step_score"],
+                                    "final_step_score": entry["final_step_score"],
+                                    "accumulated_score": entry["accumulated_score"],
+                                    "predicate_results": entry["predicate_results"],
+                                    "node": self._node_utils_ready.node_to_dict_schema_aware(entry["node"]),
+                                    "children": self._node_utils_ready.get_full_subtree(entry["node"]),
+                                }
+                            )
+
+                        fallback_trace.append(
+                            {
+                                "step_index": record["step_index"],
+                                "step_query": record["step_query"],
+                                "axis": record["axis"],
+                                "node_test_expr": record["node_test_expr"],
+                                "nodes": nodes_list,
+                            }
+                        )
+
             empty_result = ExecutionResult(
                 query=query,
                 retrieved_nodes=[],
-                retrieval_detail=RetrievalDetail(per_node=[], step_scoring_trace=[]),
+                retrieval_detail=RetrievalDetail(per_node=[], step_scoring_trace=fallback_trace),
             )
             return empty_result
 
@@ -315,6 +362,10 @@ class SemanticXPathExecutor:
                 item.score = self._get_ancestor_accumulated_score(
                     item.node, parent_map, accumulated_by_node_id
                 )
+
+        # Keep a pre-threshold snapshot so we can still surface scoring traces
+        # when all semantic matches are filtered out.
+        pre_filter_items = list(current_items)
 
         if has_semantic_predicate_query:
             current_items = [item for item in current_items if item.score >= self.score_threshold]
@@ -330,12 +381,16 @@ class SemanticXPathExecutor:
 
         final_items = current_items
         final_nodes = [item.node for item in final_items]
+        trace_target_nodes = final_nodes
+        if not trace_target_nodes and has_semantic_predicate_query and pre_filter_items:
+            fallback_items = sorted(pre_filter_items, key=lambda item: item.score or 0.0, reverse=True)
+            trace_target_nodes = [item.node for item in fallback_items[:self.top_k]]
         parent_map = self._node_utils_ready.build_parent_map(self._root_ready)
 
         def _is_relevant_entry(entry: Dict[str, Any]) -> bool:
             return any(
                 self._is_ancestor_or_self(entry["node"], target, parent_map)
-                for target in final_nodes
+                for target in trace_target_nodes
             )
 
         # Step-level trace, excluding nodes dropped from final lineage.

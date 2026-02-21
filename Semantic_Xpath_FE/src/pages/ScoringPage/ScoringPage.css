@@ -319,6 +319,14 @@
   margin-bottom: 10px;
 }
 
+.qsp-final-empty {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  font-family: "Inter", sans-serif;
+  margin-bottom: 8px;
+}
+
 .qsp-final-row {
   display: flex;
   align-items: center;

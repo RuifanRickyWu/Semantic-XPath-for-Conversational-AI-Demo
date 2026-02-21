@@ -79,16 +79,6 @@ function formatStepQuery(step: ScoringTraceStep): string {
   return `${axis}${testExpr}`;
 }
 
-function getStepTypeLabel(step: ScoringTraceStep): string {
-  const query = step.step_query || "";
-  if (step.step_index === 0 && /root/i.test(query)) return "Root";
-  const hasPredicates = (step.nodes || []).some(
-    (n) => n.predicate_results && n.predicate_results.length > 0
-  );
-  if (hasPredicates) return "node_test_expr";
-  return "node_test_expr";
-}
-
 export default function QueryStepsPanel({
   scoringTrace,
   perNodeDetail,
@@ -123,9 +113,6 @@ export default function QueryStepsPanel({
             >
               <div className="qsp-step-header">
                 <div className="qsp-step-name">
-                  <span className="qsp-step-type-label">
-                    {getStepTypeLabel(step)}
-                  </span>
                   <span className="qsp-step-badge">
                     Step {String(idx + 1).padStart(2, "0")}
                   </span>

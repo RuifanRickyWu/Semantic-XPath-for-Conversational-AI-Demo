@@ -1,0 +1,11 @@
+<Registry active_task_id="t3">
+  <Task task_id="t1" active_version_id="v1" task_name="3 Day Trip in San Diego" created_at="2026-02-21T02:14:20.437114+00:00" updated_at="2026-02-21T02:14:20.437114+00:00">
+    <Version version_id="v1" summary="Seeded example: San Diego itinerary" created_at="2026-02-21T02:14:20.437114+00:00" />
+  </Task>
+  <Task task_id="t2" active_version_id="v1" task_name="ACL 2026 Conference Trip" created_at="2026-02-21T02:14:20.446337+00:00" updated_at="2026-02-21T02:14:20.446337+00:00">
+    <Version version_id="v1" summary="Seeded example: ACL 2026 conference itinerary" created_at="2026-02-21T02:14:20.446337+00:00" />
+  </Task>
+  <Task task_id="t3" active_version_id="v1" task_name="PhD Student Todo List" created_at="2026-02-21T02:14:20.451357+00:00" updated_at="2026-02-21T02:14:20.451357+00:00">
+    <Version version_id="v1" summary="Seeded example: PhD todo list" created_at="2026-02-21T02:14:20.451357+00:00" />
+  </Task>
+</Registry>

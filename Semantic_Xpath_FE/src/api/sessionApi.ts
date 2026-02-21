@@ -1,6 +1,9 @@
 import { API_BASE } from "./apiBase";
 
-export type ExampleTemplateKey = "toronto_trip_3d" | "phd_todo_sample";
+export type ExampleTemplateKey =
+  | "toronto_trip_3d"
+  | "acl_2026_conference"
+  | "phd_todo_sample";
 
 interface SeedSessionResponse {
   success: boolean;

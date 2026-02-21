@@ -157,6 +157,7 @@ export default function PlanTreeView({
   highlightMode,
   highlightedPaths,
 }: PlanTreeViewProps) {
+  const flowInstanceKey = useMemo(() => `flow-${planXml}`, [planXml]);
   const { nodes: rawNodes, edges: rawEdges } = useMemo(
     () => parseXmlToTree(planXml),
     [planXml]
@@ -187,6 +188,7 @@ export default function PlanTreeView({
   return (
     <div className="plan-tree-container">
       <ReactFlow
+        key={flowInstanceKey}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}

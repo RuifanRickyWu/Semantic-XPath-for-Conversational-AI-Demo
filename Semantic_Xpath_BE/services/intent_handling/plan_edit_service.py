@@ -8,6 +8,7 @@ PLAN_ADD: retrieve container -> verify -> LLM interpret (add) -> ReplaceXmlNode 
 
 from __future__ import annotations
 
+from collections import Counter
 import xml.etree.ElementTree as ET
 from typing import Any, Dict, List, Optional
 
@@ -198,10 +199,24 @@ class PlanEditService(BaseIntentHandler):
         new_version_id = commit_result.new_version_id or version_id
         hint = _format_deleted_summary(per_node)
 
-        affected_paths = [
-            item.get("tree_path") or []
-            for item in per_node
-        ]
+        # For delete, highlight parent containers only. Deleted node paths no
+        # longer exist after commit and can reindex-match to wrong siblings.
+        parent_paths: List[List[tuple]] = []
+        seen_parent_keys = set()
+        for item in per_node:
+            ps = item.get("tree_path") or []
+            if not ps:
+                continue
+            parent = list(ps[:-1]) if len(ps) > 0 else []
+            if not parent:
+                continue
+            key = tuple(parent)
+            if key in seen_parent_keys:
+                continue
+            seen_parent_keys.add(key)
+            parent_paths.append(parent)
+
+        affected_paths = parent_paths
 
         session_updates = SessionUpdate(active_version_id=new_version_id)
 
@@ -457,8 +472,8 @@ class PlanEditService(BaseIntentHandler):
         except Exception:
             return _result_add("Failed to add the requested content.")
 
-        # Diff old vs new fragment to find precisely which child nodes were added
-        affected_paths = _diff_xml_changed_paths(xml_fragment, updated_xml, path_segments)
+        # For create, only highlight truly newly-added content (ignore sibling reindex shifts).
+        affected_paths = _diff_xml_added_paths(xml_fragment, updated_xml, path_segments)
 
         replace_op = ReplaceXmlNode(path_segments=path_segments, xml_fragment=updated_xml)
 
@@ -547,6 +562,71 @@ def _diff_xml_changed_paths(
     changed: List[List[tuple]] = []
     _diff_walk(old_root, new_root, list(base_path), changed)
     return changed if changed else [list(base_path)]
+
+
+def _diff_xml_added_paths(
+    old_xml_str: str, new_xml_str: str, base_path: List[tuple]
+) -> List[List[tuple]]:
+    """Return paths of leaf nodes that are newly added in the new fragment.
+
+    This matcher is order-insensitive: it compares old/new leaf signatures as a
+    multiset, so inserting siblings at the front does not make existing nodes
+    look "changed". It is intended for PLAN_ADD highlighting.
+    """
+    try:
+        old_root = ET.fromstring(old_xml_str)
+        new_root = ET.fromstring(new_xml_str)
+    except ET.ParseError:
+        return [list(base_path)]
+
+    old_signatures: Counter[str] = Counter()
+    _collect_leaf_signatures(old_root, old_signatures)
+
+    added_paths: List[List[tuple]] = []
+    _collect_added_leaf_paths(new_root, list(base_path), old_signatures, added_paths)
+    return added_paths if added_paths else [list(base_path)]
+
+
+def _leaf_signature(el: ET.Element) -> str:
+    """Build a stable content signature for a leaf node."""
+    attrs = "|".join(f"{k}={v}" for k, v in sorted(el.attrib.items()))
+    text = (el.text or "").strip()
+    return f"{el.tag}||{attrs}||{text}"
+
+
+def _collect_leaf_signatures(el: ET.Element, bag: Counter[str]) -> None:
+    """Collect leaf signatures from a subtree into a multiset."""
+    children = list(el)
+    if not children:
+        bag[_leaf_signature(el)] += 1
+        return
+    for child in children:
+        _collect_leaf_signatures(child, bag)
+
+
+def _collect_added_leaf_paths(
+    el: ET.Element,
+    path: List[tuple],
+    old_bag: Counter[str],
+    result: List[List[tuple]],
+) -> None:
+    """Traverse new subtree and keep only leaves not consumed by old_bag."""
+    children = list(el)
+    if not children:
+        sig = _leaf_signature(el)
+        if old_bag[sig] > 0:
+            old_bag[sig] -= 1
+        else:
+            result.append(list(path))
+        return
+
+    groups: Dict[str, list] = {}
+    for c in children:
+        groups.setdefault(c.tag, []).append(c)
+
+    for tag, group in groups.items():
+        for i, child in enumerate(group):
+            _collect_added_leaf_paths(child, path + [(tag, i + 1)], old_bag, result)
 
 
 def _diff_walk(

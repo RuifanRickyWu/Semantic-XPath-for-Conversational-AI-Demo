@@ -196,7 +196,11 @@ export default function PlanTreeView({
           animated: false,
         }}
         fitView
-        fitViewOptions={{ padding: 0.2 }}
+        fitViewOptions={{
+          padding: 0.2,
+          // Keep initial zoom readable for large plans; users can still zoom out manually.
+          minZoom: 0.32,
+        }}
         minZoom={0.1}
         maxZoom={2}
         nodesDraggable={false}

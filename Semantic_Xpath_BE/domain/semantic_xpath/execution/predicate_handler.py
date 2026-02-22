@@ -1,5 +1,6 @@
 """Predicate scoring for supported semantic operators (field=~value/min/max/avg/1-p)."""
 
+import json
 import time
 import xml.etree.ElementTree as ET
 from typing import List, Dict, Any, Tuple, Optional
@@ -420,9 +421,9 @@ class PredicateHandler:
         node_type = node.tag
         node_config = self._node_configs.get(node_type, {})
         schema_fields = node_config.get("fields", [])
-        
-        parts = []
-        
+
+        parts: List[str] = []
+
         if schema_fields:
             # Use schema-defined fields (child elements or attributes)
             for field_name in schema_fields:
@@ -453,7 +454,29 @@ class PredicateHandler:
             if not parts and node.text and node.text.strip():
                 parts.append(node.text.strip())
 
-        return " | ".join(parts) if parts else self._node_utils.get_description(node)
+        # Always include full textual evidence from the entire node subtree.
+        # This avoids schema-field-only blind spots (e.g. Task nodes with only @id field).
+        text_pairs: List[str] = []
+        for el in node.iter():
+            txt = (el.text or "").strip()
+            if txt:
+                text_pairs.append(f"{el.tag}: {txt}")
+        if text_pairs:
+            parts.append("all_text: " + " | ".join(text_pairs))
+
+        # Also include the full node payload so scorer always sees complete node context.
+        full_node = {
+            "type": node.tag,
+            "attributes": dict(node.attrib),
+            "xml": ET.tostring(node, encoding="unicode"),
+        }
+        parts.append("full_node: " + json.dumps(full_node, ensure_ascii=False))
+
+        if parts:
+            # De-duplicate while preserving order.
+            deduped_parts = list(dict.fromkeys(parts))
+            return " | ".join(deduped_parts)
+        return self._node_utils.get_description(node)
     
     # =========================================================================
     # Phase 2: Batch Score Semantics

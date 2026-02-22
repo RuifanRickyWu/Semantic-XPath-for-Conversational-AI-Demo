@@ -3,7 +3,6 @@ import {
   ReactFlow,
   Background,
   Controls,
-  MiniMap,
   type Node,
   type Edge,
   type NodeTypes,
@@ -207,12 +206,6 @@ export default function PlanTreeView({
       >
         <Background gap={16} size={1} color="#e5e7eb" />
         <Controls showInteractive={false} />
-        <MiniMap
-          nodeColor="#8b5cf6"
-          maskColor="rgba(139, 92, 246, 0.08)"
-          pannable
-          zoomable
-        />
       </ReactFlow>
     </div>
   );

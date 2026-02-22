@@ -311,19 +311,16 @@ class SemanticXPathExecutor:
 
                 if fallback_targets:
                     for record in step_records:
-                        relevant_entries = [
-                            entry
-                            for entry in record["entries"]
-                            if any(
-                                self._is_ancestor_or_self(entry["node"], target, parent_map)
-                                for target in fallback_targets
-                            )
-                        ]
-                        if not relevant_entries:
+                        entries = record["entries"]
+                        if not entries:
                             continue
 
                         nodes_list = []
-                        for entry in relevant_entries:
+                        for entry in entries:
+                            is_relevant = any(
+                                self._is_ancestor_or_self(entry["node"], target, parent_map)
+                                for target in fallback_targets
+                            )
                             nodes_list.append(
                                 {
                                     "tree_path": entry["tree_path"],
@@ -332,6 +329,8 @@ class SemanticXPathExecutor:
                                     "final_step_score": entry["final_step_score"],
                                     "accumulated_score": entry["accumulated_score"],
                                     "predicate_results": entry["predicate_results"],
+                                    "is_selected": is_relevant,
+                                    "is_filtered_out": not is_relevant,
                                     "node": self._node_utils_ready.node_to_dict_schema_aware(entry["node"]),
                                     "children": self._node_utils_ready.get_full_subtree(entry["node"]),
                                 }
@@ -393,14 +392,16 @@ class SemanticXPathExecutor:
                 for target in trace_target_nodes
             )
 
-        # Step-level trace, excluding nodes dropped from final lineage.
+        # Step-level trace with all participating nodes. Nodes that are not in the
+        # final lineage are still included and flagged as filtered.
         step_scoring_trace: List[Dict[str, Any]] = []
         for record in step_records:
-            relevant_entries = [entry for entry in record["entries"] if _is_relevant_entry(entry)]
-            if not relevant_entries:
+            entries = record["entries"]
+            if not entries:
                 continue
             nodes_list = []
-            for entry in relevant_entries:
+            for entry in entries:
+                is_relevant = _is_relevant_entry(entry)
                 node_dict: Dict[str, Any] = {
                     "tree_path": entry["tree_path"],
                     "previous_score": entry["previous_score"],
@@ -408,6 +409,8 @@ class SemanticXPathExecutor:
                     "final_step_score": entry["final_step_score"],
                     "accumulated_score": entry["accumulated_score"],
                     "predicate_results": entry["predicate_results"],
+                    "is_selected": is_relevant,
+                    "is_filtered_out": not is_relevant,
                     "node": self._node_utils_ready.node_to_dict_schema_aware(entry["node"]),
                     "children": self._node_utils_ready.get_full_subtree(entry["node"]),
                 }

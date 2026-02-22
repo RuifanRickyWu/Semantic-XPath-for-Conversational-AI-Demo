@@ -79,6 +79,8 @@ export interface ScoredNode {
   accumulated_score?: number;
   final_step_score?: number;
   step_score?: number;
+  is_selected?: boolean;
+  is_filtered_out?: boolean;
   node?: ScoredNodeMeta;
   predicate_results?: PredicateResult[];
   [key: string]: unknown;

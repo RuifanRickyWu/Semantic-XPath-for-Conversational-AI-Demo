@@ -31,6 +31,11 @@ function scoreColor(score: number): string {
   return "#ef4444";
 }
 
+function nodeScoreColor(node: ScoredNode): string {
+  if (node.is_filtered_out) return "#9ca3af";
+  return scoreColor(node.accumulated_score ?? 0);
+}
+
 function formatNodeTestExpr(expr: NodeTestExpr | undefined): string {
   if (!expr || typeof expr !== "object") return "*";
   const type = expr.type;
@@ -136,7 +141,7 @@ export default function QueryStepsPanel({
                       </span>
                       <span
                         className="qsp-result-score"
-                        style={{ color: scoreColor(n.accumulated_score ?? 0) }}
+                        style={{ color: nodeScoreColor(n) }}
                       >
                         {(n.accumulated_score ?? 0).toFixed(3)}
                       </span>

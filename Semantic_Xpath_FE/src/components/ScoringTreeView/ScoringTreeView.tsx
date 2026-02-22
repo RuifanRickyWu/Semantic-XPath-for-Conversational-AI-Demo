@@ -3,7 +3,6 @@ import {
   ReactFlow,
   Background,
   Controls,
-  MiniMap,
   type Node,
   type NodeTypes,
 } from "@xyflow/react";
@@ -34,10 +33,25 @@ interface ScoringTreeViewProps {
 function buildScoreMap(
   scoringTrace: ScoringTraceStep[],
   activeStepIndex: number | null
-): Map<string, { score: number; isActive: boolean; treePath: string }> {
+): Map<
+  string,
+  {
+    score: number;
+    isActive: boolean;
+    isSelected: boolean;
+    isFilteredOut: boolean;
+    treePath: string;
+  }
+> {
   const map = new Map<
     string,
-    { score: number; isActive: boolean; treePath: string }
+    {
+      score: number;
+      isActive: boolean;
+      isSelected: boolean;
+      isFilteredOut: boolean;
+      treePath: string;
+    }
   >();
   if (activeStepIndex === null || !scoringTrace[activeStepIndex]) return map;
 
@@ -51,6 +65,8 @@ function buildScoreMap(
       map.set(treePath, {
         score: n.accumulated_score ?? 1.0,
         isActive: isCurrent,
+        isSelected: n.is_selected ?? true,
+        isFilteredOut: n.is_filtered_out ?? false,
         treePath,
       });
     }
@@ -67,8 +83,25 @@ function buildScoreMap(
  */
 function findScoreForNode(
   nodeData: PlanNodeData,
-  scoreMap: Map<string, { score: number; isActive: boolean; treePath: string }>
-): { score: number; isActive: boolean; treePath: string } | null {
+  scoreMap: Map<
+    string,
+    {
+      score: number;
+      isActive: boolean;
+      isSelected: boolean;
+      isFilteredOut: boolean;
+      treePath: string;
+    }
+  >
+):
+  | {
+      score: number;
+      isActive: boolean;
+      isSelected: boolean;
+      isFilteredOut: boolean;
+      treePath: string;
+    }
+  | null {
   // Match using backend-compatible path first.
   if (nodeData.backendPath && scoreMap.has(nodeData.backendPath)) {
     return scoreMap.get(nodeData.backendPath)!;
@@ -125,12 +158,14 @@ export default function ScoringTreeView({
       const scoreInfo = findScoreForNode(data, scoreMap);
 
       if (scoreInfo) {
-        activePaths.add(data.structuralPath);
+        if (scoreInfo.isSelected && !scoreInfo.isFilteredOut) {
+          activePaths.add(data.structuralPath);
 
-        // Also add ancestor paths
-        const parts = data.structuralPath.split("/");
-        for (let i = 1; i < parts.length; i++) {
-          activePaths.add(parts.slice(0, i).join("/"));
+          // Also add ancestor paths
+          const parts = data.structuralPath.split("/");
+          for (let i = 1; i < parts.length; i++) {
+            activePaths.add(parts.slice(0, i).join("/"));
+          }
         }
 
         return {
@@ -138,8 +173,11 @@ export default function ScoringTreeView({
           data: {
             ...data,
             scoreValue: scoreInfo.score,
-            scoreColorClass: scoreColorClass(scoreInfo.score),
+            scoreColorClass: scoreInfo.isFilteredOut
+              ? "score-filtered"
+              : scoreColorClass(scoreInfo.score),
             isScoreActive: scoreInfo.isActive,
+            isFilteredOut: scoreInfo.isFilteredOut,
             isSelected: scoreInfo.treePath === selectedNodeId,
             treePath: scoreInfo.treePath,
           },
@@ -244,12 +282,6 @@ export default function ScoringTreeView({
       >
         <Background gap={16} size={1} color="#e5e7eb" />
         <Controls showInteractive={false} />
-        <MiniMap
-          nodeColor="#8b5cf6"
-          maskColor="rgba(139, 92, 246, 0.08)"
-          pannable
-          zoomable
-        />
       </ReactFlow>
 
       {/* Score Legend */}

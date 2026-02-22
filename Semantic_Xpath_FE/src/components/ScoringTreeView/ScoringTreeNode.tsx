@@ -6,6 +6,7 @@ interface ScoringNodeData extends PlanNodeData {
   scoreValue?: number;
   scoreColorClass?: string;
   isScoreActive?: boolean;
+  isFilteredOut?: boolean;
   isSelected?: boolean;
   isAncestorPath?: boolean;
   treePath?: string;
@@ -18,6 +19,7 @@ function ScoringTreeNodeComponent({ data }: NodeProps) {
     scoreValue,
     scoreColorClass,
     isScoreActive,
+    isFilteredOut,
     isSelected,
     isAncestorPath,
     childCount,
@@ -29,12 +31,14 @@ function ScoringTreeNodeComponent({ data }: NodeProps) {
   const cardClasses = ["scoring-node-card"];
   if (isScoreActive) cardClasses.push("scoring-node-active");
   if (isSelected) cardClasses.push("scoring-node-selected");
+  if (isFilteredOut) cardClasses.push("scoring-node-filtered");
   if (isAncestorPath && !isScoreActive) cardClasses.push("scoring-node-ancestor");
-  if (!isScoreActive && !isAncestorPath) cardClasses.push("scoring-node-dim");
+  if (scoreValue === undefined && !isAncestorPath) cardClasses.push("scoring-node-dim");
 
   const pillClasses = ["scoring-node-pill"];
   if (isScoreActive) pillClasses.push("scoring-node-pill-active");
   if (isAncestorPath && !isScoreActive) pillClasses.push("scoring-node-pill-ancestor");
+  if (isFilteredOut) pillClasses.push("scoring-node-pill-filtered");
 
   return (
     <div className="scoring-node-wrapper">
@@ -55,7 +59,7 @@ function ScoringTreeNodeComponent({ data }: NodeProps) {
           </div>
         )}
 
-        {isScoreActive && scoreValue !== undefined && (
+        {isScoreActive && scoreValue !== undefined && !isFilteredOut && (
           <div className="scoring-node-scorebar">
             <div className="scoring-node-scorebar-label">
               {xpath.split(" > ").pop()}

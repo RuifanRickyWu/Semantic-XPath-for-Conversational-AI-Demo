@@ -96,18 +96,6 @@ export default function LandingPage() {
               </svg>
             </span>
           </button>
-          <button
-            className="home-example-btn"
-            onClick={() => handleSeedExample("phd_todo_sample")}
-            disabled={isSeeding}
-          >
-            <span>Show me a sample Todo list from a PHD student</span>
-            <span className="home-example-arrow" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8" stroke="#7C3AED" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </button>
         </div>
         <ChatInput onSubmit={handleSubmit} />
       </div>

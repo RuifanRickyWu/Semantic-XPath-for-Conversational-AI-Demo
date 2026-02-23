@@ -118,7 +118,8 @@ export default function MainPage() {
       const result = await postChat(query, sessionId);
 
       if (result.success) {
-        const crud = typeToCrudAction(result.type);
+        const isClarification = result.requires_clarification === true;
+        const crud = isClarification ? null : typeToCrudAction(result.type);
 
         const returnedTaskId = result.session_updates?.active_task_id;
         if (returnedTaskId) {

@@ -112,18 +112,6 @@ function findScoreForNode(
     return scoreMap.get(nodeData.xpath)!;
   }
 
-  // Try matching just the label at the end of tree paths
-  for (const [treePath, data] of scoreMap) {
-    const parts = treePath.split(" > ");
-    const nodeParts = nodeData.xpath.split(" > ");
-    if (
-      parts.length === nodeParts.length &&
-      parts[parts.length - 1] === nodeParts[nodeParts.length - 1]
-    ) {
-      return data;
-    }
-  }
-
   return null;
 }
 

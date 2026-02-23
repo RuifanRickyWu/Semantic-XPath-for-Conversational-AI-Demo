@@ -37,6 +37,8 @@ export interface ChatResponse {
   type: ChatResponseType;
   message: string;
   session_id: string;
+  requires_clarification?: boolean;
+  clarification_question?: string;
   session_updates: ChatSessionUpdates;
   xpath_query?: string;
   original_query?: string;

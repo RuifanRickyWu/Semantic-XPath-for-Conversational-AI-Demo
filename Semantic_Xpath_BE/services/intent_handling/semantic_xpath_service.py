@@ -88,6 +88,12 @@ class SemanticXpathService:
             "type": resp.routing.intent,
             "message": resp.assistant_message,
             "session_id": session_id,
+            "requires_clarification": bool(resp.routing.requires_clarification),
+            "clarification_question": (
+                resp.routing.clarification_question
+                if resp.routing.requires_clarification
+                else None
+            ),
             "session_updates": strip_none({
                 "active_task_id": resp.session_updates.active_task_id,
                 "active_version_id": resp.session_updates.active_version_id,

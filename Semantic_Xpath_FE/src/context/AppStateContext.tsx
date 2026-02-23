@@ -19,7 +19,6 @@ import type {
 } from "../types/chat";
 import type { PerNodeDetail, ScoringTraceStep } from "../types/scoring";
 import type { TaskSummary } from "../types/task";
-import { clearSession } from "../api/sessionApi";
 
 /* ── Chat message shape (shared between pages) ── */
 
@@ -91,28 +90,113 @@ export interface AppState {
 
 export const AppStateContext = createContext<AppState | null>(null);
 
+const SESSION_ID_STORAGE_KEY = "semantic_xpath.current_session_id";
+const SESSION_STATE_STORAGE_PREFIX = "semantic_xpath.state.";
+
+interface PersistedSessionState {
+  messages: ChatMessage[];
+  tasks: TaskSummary[];
+  activeTaskId: string | null;
+  activePlanXml: string | null;
+  highlightMode: CrudAction | null;
+  highlightedPaths: AffectedNodePath[] | null;
+  latestXpathQuery: string | null;
+  latestOriginalQuery: string | null;
+  selectedMessageIndex: number | null;
+  currentTaskId: string | null;
+  currentVersionId: string | null;
+}
+
+function getSessionStateStorageKey(sessionId: string): string {
+  return `${SESSION_STATE_STORAGE_PREFIX}${sessionId}`;
+}
+
+function storageAvailable(): boolean {
+  return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+}
+
+function readStoredSessionId(): string {
+  if (!storageAvailable()) return crypto.randomUUID();
+  const storedSessionId = localStorage.getItem(SESSION_ID_STORAGE_KEY);
+  if (storedSessionId) return storedSessionId;
+  const newSessionId = crypto.randomUUID();
+  localStorage.setItem(SESSION_ID_STORAGE_KEY, newSessionId);
+  return newSessionId;
+}
+
+function readPersistedSessionState(sessionId: string): PersistedSessionState | null {
+  if (!storageAvailable()) return null;
+  const raw = localStorage.getItem(getSessionStateStorageKey(sessionId));
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as PersistedSessionState;
+  } catch {
+    return null;
+  }
+}
+
+function writePersistedSessionState(sessionId: string, state: PersistedSessionState): void {
+  if (!storageAvailable()) return;
+  localStorage.setItem(getSessionStateStorageKey(sessionId), JSON.stringify(state));
+}
+
+function clearPersistedSessionState(sessionId: string): void {
+  if (!storageAvailable()) return;
+  localStorage.removeItem(getSessionStateStorageKey(sessionId));
+}
+
 export function AppStateProvider({ children }: { children: ReactNode }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [tasks, setTasks] = useState<TaskSummary[]>([]);
-  const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
-  const [activePlanXml, setActivePlanXml] = useState<string | null>(null);
-  const [highlightMode, setHighlightMode] = useState<CrudAction | null>(null);
-  const [highlightedPaths, setHighlightedPaths] = useState<
-    AffectedNodePath[] | null
-  >(null);
-  const [latestXpathQuery, setLatestXpathQuery] = useState<string | null>(null);
-  const [latestOriginalQuery, setLatestOriginalQuery] = useState<string | null>(null);
-  const [selectedMessageIndex, setSelectedMessageIndex] = useState<number | null>(null);
+  const [sessionId, setSessionId] = useState<string>(() => readStoredSessionId());
+  const persistedStateRef = useRef<PersistedSessionState | null>(
+    readPersistedSessionState(sessionId)
+  );
+
+  const [messages, setMessages] = useState<ChatMessage[]>(
+    () => persistedStateRef.current?.messages ?? []
+  );
+  const [tasks, setTasks] = useState<TaskSummary[]>(
+    () => persistedStateRef.current?.tasks ?? []
+  );
+  const [activeTaskId, setActiveTaskId] = useState<string | null>(
+    () => persistedStateRef.current?.activeTaskId ?? null
+  );
+  const [activePlanXml, setActivePlanXml] = useState<string | null>(
+    () => persistedStateRef.current?.activePlanXml ?? null
+  );
+  const [highlightMode, setHighlightMode] = useState<CrudAction | null>(
+    () => persistedStateRef.current?.highlightMode ?? null
+  );
+  const [highlightedPaths, setHighlightedPaths] = useState<AffectedNodePath[] | null>(
+    () => persistedStateRef.current?.highlightedPaths ?? null
+  );
+  const [latestXpathQuery, setLatestXpathQuery] = useState<string | null>(
+    () => persistedStateRef.current?.latestXpathQuery ?? null
+  );
+  const [latestOriginalQuery, setLatestOriginalQuery] = useState<string | null>(
+    () => persistedStateRef.current?.latestOriginalQuery ?? null
+  );
+  const [selectedMessageIndex, setSelectedMessageIndex] = useState<number | null>(
+    () => persistedStateRef.current?.selectedMessageIndex ?? null
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [headerSlot, setHeaderSlot] = useState<ReactNode>(null);
-
-  const [sessionId, setSessionId] = useState<string>(crypto.randomUUID());
-  const currentTaskIdRef = useRef<string | null>(null);
-  const currentVersionIdRef = useRef<string | null>(null);
+  const currentTaskIdRef = useRef<string | null>(
+    persistedStateRef.current?.currentTaskId ?? null
+  );
+  const currentVersionIdRef = useRef<string | null>(
+    persistedStateRef.current?.currentVersionId ?? null
+  );
 
   const startNewSession = (): string => {
     const previous = sessionId;
-    setSessionId(crypto.randomUUID());
+    clearPersistedSessionState(previous);
+
+    const nextSessionId = crypto.randomUUID();
+    setSessionId(nextSessionId);
+    if (storageAvailable()) {
+      localStorage.setItem(SESSION_ID_STORAGE_KEY, nextSessionId);
+    }
+
     setMessages([]);
     setTasks([]);
     setActiveTaskId(null);
@@ -125,16 +209,42 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
     currentTaskIdRef.current = null;
     currentVersionIdRef.current = null;
+    clearPersistedSessionState(nextSessionId);
     return previous;
   };
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      void clearSession(sessionId, { keepalive: true }).catch(() => {});
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    if (storageAvailable()) {
+      localStorage.setItem(SESSION_ID_STORAGE_KEY, sessionId);
+    }
   }, [sessionId]);
+
+  useEffect(() => {
+    writePersistedSessionState(sessionId, {
+      messages,
+      tasks,
+      activeTaskId,
+      activePlanXml,
+      highlightMode,
+      highlightedPaths,
+      latestXpathQuery,
+      latestOriginalQuery,
+      selectedMessageIndex,
+      currentTaskId: currentTaskIdRef.current,
+      currentVersionId: currentVersionIdRef.current,
+    });
+  }, [
+    sessionId,
+    messages,
+    tasks,
+    activeTaskId,
+    activePlanXml,
+    highlightMode,
+    highlightedPaths,
+    latestXpathQuery,
+    latestOriginalQuery,
+    selectedMessageIndex,
+  ]);
 
   const value: AppState = {
     messages,

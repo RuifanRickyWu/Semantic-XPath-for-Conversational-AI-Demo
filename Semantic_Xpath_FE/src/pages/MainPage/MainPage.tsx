@@ -444,6 +444,10 @@ export default function MainPage() {
         {/* Background glow */}
         <div className="left-panel-glow" />
 
+        <div className="panel-view-header">
+          <div className="panel-view-badge">Conversation View</div>
+        </div>
+
         <div className="chat-messages-area">
           {messages.length === 0 && (
             <div className="chat-empty">
@@ -493,6 +497,10 @@ export default function MainPage() {
 
       {/* Right Panel — Task Tab Bar + Tree Visualization */}
       <div className="main-right-panel">
+        <div className="panel-view-header panel-view-header-right">
+          <div className="panel-view-badge">Memory View</div>
+        </div>
+
         {/* Task Tab Bar */}
         {tasks.length > 0 && (
           <div

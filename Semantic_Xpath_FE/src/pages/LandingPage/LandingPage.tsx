@@ -61,7 +61,7 @@ export default function LandingPage() {
 
       {/* Hero section */}
       <div className="home-hero">
-        <h1 className="home-title">Semantic XPath for Conversational AI</h1>
+        <h1 className="home-title">SemanticXpath Chat</h1>
         <p className="home-subtitle">Navigate to only what matters.</p>
         <p className="home-description">
           Query, navigate, and update structured conversational memory with

@@ -20,7 +20,7 @@
     <Restaurant name="FRANK Restaurant at AGO" time_block="2:00 PM - 3:00 PM" description="Modern Canadian cuisine inside the Art Gallery. Artistic setting with creative seasonal menu." travel_method="Walk" expected_cost="CAD 35-50" highlights="Museum dining; Artistic atmosphere" />
     <Restaurant name="Pai Northern Thai" time_block="7:00 PM - 8:30 PM" description="Popular Thai restaurant known for authentic northern Thai cuisine. Lively atmosphere with bold flavors. Asian food option." travel_method="Public Transit" expected_cost="CAD 30-45" highlights="Thai Asian cuisine; Vibrant atmosphere" />
   </Day>
-  <Day index="4">
+  <Day index="4"> 
     <Restaurant name="Quick Grab Coffee" time_block="7:00 AM - 7:30 AM" description="Fast coffee and pastry from Tim Hortons. Rushed morning before intense work day." travel_method="Walk" expected_cost="CAD 8" highlights="Quick breakfast; Grab and go" />
     <POI name="Full-Day Workshop" time_block="9:00 AM - 4:00 PM" description="Intensive all-day work workshop with the entire team. Exhausting but productive session covering project roadmap and deliverables." travel_method="Walk" expected_cost="Work" highlights="Work meeting; Full day session; Team workshop" />
     <POI name="Bloor Street Shopping" time_block="5:00 PM - 6:30 PM" description="Optional shopping trip along Bloor-Yorkville luxury district. High-end boutiques and designer stores." travel_method="Walk" expected_cost="Variable" highlights="Luxury shopping; Optional activity" />

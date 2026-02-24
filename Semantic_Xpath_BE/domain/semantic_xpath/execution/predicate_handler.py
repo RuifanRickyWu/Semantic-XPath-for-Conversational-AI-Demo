@@ -84,6 +84,9 @@ class PredicateHandler:
         # Cache for scores: (node_id, semantic_value) -> score
         self._score_cache: Dict[Tuple[int, str], float] = {}
         
+        # Track which (node_id, field, value) were resolved via exact match
+        self._exact_match_set: set = set()
+        
         # Track node descriptions
         self._node_descriptions: Dict[int, List[str]] = {}
     
@@ -252,6 +255,7 @@ class PredicateHandler:
         """
         # Clear caches
         self._score_cache.clear()
+        self._exact_match_set.clear()
         self._node_descriptions.clear()
         
         # Build trace structure
@@ -338,6 +342,12 @@ class PredicateHandler:
         Traverses supported predicate structure to find all Atom(u, φ) evaluations.
         """
         if isinstance(predicate, AtomPredicate):
+            exact = self._try_exact_match(node, predicate)
+            if exact is not None:
+                # Exact match resolved — cache score and skip entailment
+                self._score_cache[(id(node), predicate.value)] = exact
+                self._exact_match_set.add((id(node), predicate.field, predicate.value))
+                return
             self._add_node_content_to_tasks(node, predicate.value, tasks)
         
         elif isinstance(predicate, (AndPredicate, OrPredicate, AvgPredicate)):
@@ -364,6 +374,35 @@ class PredicateHandler:
                 "Unsupported predicate in task collection: aggregation is disabled."
             )
     
+    def _try_exact_match(
+        self,
+        node: ET.Element,
+        predicate: AtomPredicate,
+    ) -> Optional[float]:
+        """Check for exact attribute/field match, returning 1.0 or 0.0.
+
+        Returns None if the field doesn't exist on the node (fall through to entailment).
+        """
+        field = predicate.field
+        if not field or field == "content":
+            return None  # Generic content match -> use entailment
+
+        # Check XML attribute
+        val = node.attrib.get(field)
+        if val is None:
+            # Check child element text
+            child_elem = node.find(field)
+            if child_elem is not None and child_elem.text:
+                val = child_elem.text.strip()
+
+        if val is None:
+            return None  # Field not present -> fall through to entailment
+
+        # Case-insensitive exact match
+        if val.strip().lower() == predicate.value.strip().lower():
+            return 1.0
+        return 0.0
+
     def _add_node_content_to_tasks(
         self,
         node: ET.Element,
@@ -617,11 +656,14 @@ class PredicateHandler:
         cache_key = (node_id, predicate.value)
         score = self._score_cache.get(cache_key, 0)
         
+        # Detect if this was resolved via exact match
+        was_exact = (node_id, predicate.field, predicate.value) in self._exact_match_set
+        
         trace_steps.append({
             "type": "atom",
             "condition": predicate.to_dict(),
             "score": score,
-            "note": "Atom(u, φ) - local node content from attr(u)"
+            "note": "Exact field match" if was_exact else "Atom(u, φ) - entailment",
         })
         
         return score

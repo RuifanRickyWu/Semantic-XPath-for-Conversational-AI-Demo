@@ -213,10 +213,21 @@ class ModalBartNLIClient:
                 self.function_name,
                 **kwargs,
             )
+            logger.info(
+                "Modal BART handle ready via from_name(app=%s, function=%s, environment=%s)",
+                self.app_name,
+                self.function_name,
+                self.environment_name or "default",
+            )
             return
 
         # Backward compatibility with older SDKs.
         self._function = modal.Function.lookup(self.app_name, self.function_name)
+        logger.info(
+            "Modal BART handle ready via lookup(app=%s, function=%s)",
+            self.app_name,
+            self.function_name,
+        )
 
     def get_entailment_score(
         self,
@@ -238,11 +249,20 @@ class ModalBartNLIClient:
         hypothesis_template: str = "This node {predicate}.",
     ) -> dict:
         hypothesis = hypothesis_template.format(predicate=predicate)
-        payload = self._function.remote(
-            [node_info],
-            [hypothesis],
-            include_neutral=True,
+        logger.info(
+            "Calling Modal BART detailed scoring (app=%s, function=%s)",
+            self.app_name,
+            self.function_name,
         )
+        try:
+            payload = self._function.remote(
+                [node_info],
+                [hypothesis],
+                include_neutral=True,
+            )
+        except Exception:
+            logger.exception("Modal BART detailed scoring failed")
+            raise
         if not payload:
             return {"contradiction": 0.0, "neutral": 0.0, "entailment": 0.0}
         return payload[0]
@@ -257,11 +277,22 @@ class ModalBartNLIClient:
             return []
         hypothesis = hypothesis_template.format(predicate=predicate)
         hypotheses = [hypothesis] * len(node_infos)
-        payload = self._function.remote(
-            node_infos,
-            hypotheses,
-            include_neutral=False,
+        logger.info(
+            "Calling Modal BART batch scoring (count=%d, app=%s, function=%s)",
+            len(node_infos),
+            self.app_name,
+            self.function_name,
         )
+        try:
+            payload = self._function.remote(
+                node_infos,
+                hypotheses,
+                include_neutral=False,
+            )
+        except Exception:
+            logger.exception("Modal BART batch scoring failed")
+            raise
+        logger.info("Modal BART batch scoring returned %d rows", len(payload))
         return [float(x.get("entailment", 0.5)) for x in payload]
 
 
@@ -302,6 +333,7 @@ def get_bart_client(force_new: bool = False) -> Union[BartNLIClient, ModalBartNL
             config = load_config()
             entailment_cfg = config.get("entailment", {})
             backend = str(entailment_cfg.get("backend", "modal")).strip().lower()
+            logger.info("Initializing BART client backend=%s", backend)
             if backend == "local":
                 _client_instance = _build_local_client(entailment_cfg)
             else:

@@ -2,6 +2,7 @@
 
 xpath_executor:
   scoring_method: "entailment"  # one of: llm, entailment, cosine
+  score_threshold: 0.1
 
 entailment:
   backend: "modal"  # one of: modal, local
@@ -12,7 +13,7 @@ entailment:
   modal:
     app_name: "semantic-xpath-bart"
     function_name: "score_entailment_batch"
-    environment_name: null  # null = use MODAL_ENVIRONMENT_NAME env var when set
+    environment_name: main  # null = use MODAL_ENVIRONMENT_NAME env var when set
 
 openai:
   api_key: "${OPENAI_API_KEY}"

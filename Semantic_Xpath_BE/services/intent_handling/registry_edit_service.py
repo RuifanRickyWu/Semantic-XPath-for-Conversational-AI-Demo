@@ -135,6 +135,7 @@ class RegistryEditService(BaseIntentHandler):
             return _result("Something went wrong while querying the registry.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
             return _result("No matching task or version found.")
 
@@ -182,6 +183,10 @@ class RegistryEditService(BaseIntentHandler):
             intent_result=IntentResult(
                 intent="REGISTRY_EDIT",
                 generation_hint=hint,
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
             ),
         )
 

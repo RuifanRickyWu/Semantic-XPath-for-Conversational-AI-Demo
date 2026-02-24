@@ -131,7 +131,12 @@ class _PlanQAChatting(_BasePromptChatting):
         return strip_none({
             "utterance": req.utterance,
             "original_utterance": req.original_utterance,
-            "state_context": {"generation_hint": state_ctx.get("generation_hint")},
+            "state_context": {
+                "generation_hint": state_ctx.get("generation_hint"),
+                "per_node_detail": state_ctx.get("per_node_detail"),
+                "scoring_trace": state_ctx.get("scoring_trace"),
+                "xpath_query": state_ctx.get("xpath_query"),
+            },
             "session": req.session,
             "conversation_context": req.conversation_context,
             "constraints": req.constraints,
@@ -147,7 +152,12 @@ class _PlanDeleteChatting(_BasePromptChatting):
         return strip_none({
             "utterance": req.utterance,
             "original_utterance": req.original_utterance,
-            "state_context": {"generation_hint": state_ctx.get("generation_hint")},
+            "state_context": {
+                "generation_hint": state_ctx.get("generation_hint"),
+                "per_node_detail": state_ctx.get("per_node_detail"),
+                "scoring_trace": state_ctx.get("scoring_trace"),
+                "xpath_query": state_ctx.get("xpath_query"),
+            },
             "session": req.session,
             "conversation_context": req.conversation_context,
             "constraints": req.constraints,
@@ -163,7 +173,12 @@ class _PlanUpdateChatting(_BasePromptChatting):
         return strip_none({
             "utterance": req.utterance,
             "original_utterance": req.original_utterance,
-            "state_context": {"generation_hint": state_ctx.get("generation_hint")},
+            "state_context": {
+                "generation_hint": state_ctx.get("generation_hint"),
+                "per_node_detail": state_ctx.get("per_node_detail"),
+                "scoring_trace": state_ctx.get("scoring_trace"),
+                "xpath_query": state_ctx.get("xpath_query"),
+            },
             "session": req.session,
             "conversation_context": req.conversation_context,
             "constraints": req.constraints,
@@ -179,7 +194,12 @@ class _PlanAddChatting(_BasePromptChatting):
         return strip_none({
             "utterance": req.utterance,
             "original_utterance": req.original_utterance,
-            "state_context": {"generation_hint": state_ctx.get("generation_hint")},
+            "state_context": {
+                "generation_hint": state_ctx.get("generation_hint"),
+                "per_node_detail": state_ctx.get("per_node_detail"),
+                "scoring_trace": state_ctx.get("scoring_trace"),
+                "xpath_query": state_ctx.get("xpath_query"),
+            },
             "session": req.session,
             "conversation_context": req.conversation_context,
             "constraints": req.constraints,
@@ -191,10 +211,16 @@ class _RegistryQAChatting(_BasePromptChatting):
         super().__init__(client=client, prompt_path=_PROMPT_REGISTRY_QA, max_retries=max_retries)
 
     def _build_payload(self, req: RealizeRequest) -> Dict[str, Any]:
+        registry_ctx = req.registry_context or {}
         return strip_none({
             "utterance": req.utterance,
             "original_utterance": req.original_utterance,
-            "registry_context": req.registry_context,
+            "registry_context": {
+                "generation_hint": registry_ctx.get("generation_hint"),
+                "per_node_detail": registry_ctx.get("per_node_detail"),
+                "scoring_trace": registry_ctx.get("scoring_trace"),
+                "xpath_query": registry_ctx.get("xpath_query"),
+            },
             "session": req.session,
             "conversation_context": req.conversation_context,
         })
@@ -205,10 +231,16 @@ class _RegistryEditChatting(_BasePromptChatting):
         super().__init__(client=client, prompt_path=_PROMPT_REGISTRY_EDIT, max_retries=max_retries)
 
     def _build_payload(self, req: RealizeRequest) -> Dict[str, Any]:
+        registry_ctx = req.registry_context or {}
         return strip_none({
             "utterance": req.utterance,
             "original_utterance": req.original_utterance,
-            "registry_context": req.registry_context,
+            "registry_context": {
+                "generation_hint": registry_ctx.get("generation_hint"),
+                "per_node_detail": registry_ctx.get("per_node_detail"),
+                "scoring_trace": registry_ctx.get("scoring_trace"),
+                "xpath_query": registry_ctx.get("xpath_query"),
+            },
             "session": req.session,
             "conversation_context": req.conversation_context,
         })
@@ -219,10 +251,16 @@ class _RegistryDeleteChatting(_BasePromptChatting):
         super().__init__(client=client, prompt_path=_PROMPT_REGISTRY_DELETE, max_retries=max_retries)
 
     def _build_payload(self, req: RealizeRequest) -> Dict[str, Any]:
+        registry_ctx = req.registry_context or {}
         return strip_none({
             "utterance": req.utterance,
             "original_utterance": req.original_utterance,
-            "registry_context": req.registry_context,
+            "registry_context": {
+                "generation_hint": registry_ctx.get("generation_hint"),
+                "per_node_detail": registry_ctx.get("per_node_detail"),
+                "scoring_trace": registry_ctx.get("scoring_trace"),
+                "xpath_query": registry_ctx.get("xpath_query"),
+            },
             "session": req.session,
             "conversation_context": req.conversation_context,
         })

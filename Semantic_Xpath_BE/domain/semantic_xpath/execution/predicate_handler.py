@@ -58,7 +58,7 @@ class PredicateHandler:
         self,
         scorer: PredicateScorer,
         top_k: int = 5,
-        score_threshold: float = 0.5,
+        score_threshold: float = 0.1,
         schema: Optional[Dict[str, Any]] = None
     ):
         """

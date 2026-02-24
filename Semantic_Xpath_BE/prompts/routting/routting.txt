@@ -58,11 +58,29 @@ REGISTRY_QA vs REGISTRY_EDIT: INTENT CARDINALITY
   2) Version update intent: targets the version within that task (e.g., switch to version v1).
 - When the user says "change v1 of t3", "switch to v1 of t3", or similar, emit TWO REGISTRY_EDIT intents—one for the task, one for the version—so the system can perform two retrievals and extract task_id and version_id separately.
 
+REGISTRY vs PLAN DISAMBIGUATION (CRITICAL)
+The word "task" is overloaded. Distinguish carefully:
+- REGISTRY "task" = a saved plan/document in the session (e.g. "PhD Todo List", "Toronto Trip"). These are top-level entries in the task registry.
+- PLAN content = the structured data INSIDE a plan. This can include XML nodes named Task, Project, Category, Day, Restaurant, POI, etc.
+
+When the user asks about plan CONTENT (e.g. "which projects have blocked tasks", "show me high priority tasks", "what's in the Work category"), this is PLAN_QA — they are querying nodes inside the active plan.
+When the user asks about the SESSION (e.g. "list my saved plans", "what trips do I have", "show my tasks" with no content-level qualifier), this is REGISTRY_QA — they are querying the registry of saved documents.
+
+Key signals for PLAN_QA (not REGISTRY_QA):
+- References to plan-internal structure: categories, projects, statuses (blocked, done, todo), priorities, due dates, days, restaurants, museums, etc.
+- Filtering/querying language: "which X have Y", "show me X with status Z", "what's scheduled for..."
+- Domain-specific node types: Task, Project, Category, Day, POI, Restaurant, etc.
+
+Key signals for REGISTRY_QA:
+- Meta-level queries: "list my saved plans", "what trips/plans do I have", "show all my documents"
+- Version queries: "show versions", "what versions exist"
+- No content-level filtering or structural references
+
 RULES
-- If the user is listing tasks/versions, emit REGISTRY_QA.
+- If the user is listing saved plans/documents or versions at the session level, emit REGISTRY_QA.
 - If the user is switching/activating/creating versions, emit REGISTRY_EDIT.
 - If the user wants to delete a task or version from the registry, emit REGISTRY_DELETE.
-- If the user asks about plan content, emit PLAN_QA.
+- If the user asks about content inside the active plan (nodes, attributes, structure), emit PLAN_QA.
 - If the user wants to add something to the plan, emit PLAN_ADD.
 - If the user wants to modify or move existing plan content within the same container, emit PLAN_UPDATE. If the user moves content across containers (e.g. from day 1 to day 2), emit PLAN_DELETE then PLAN_ADD.
 - If the user wants to remove or delete plan content, emit PLAN_DELETE.
@@ -201,3 +219,24 @@ intent_requests=[{"intent":"PLAN_DELETE","request":"Remove the museum from Day 1
 
 36) "move brunch from day 1 to day 3"
 intent_requests=[{"intent":"PLAN_DELETE","request":"Remove brunch from Day 1."},{"intent":"PLAN_ADD","request":"Add brunch to Day 3."}], requires_clarification=false
+
+37) "Which projects have a blocked task?" (plan content query, NOT registry)
+intent_requests=[{"intent":"PLAN_QA","request":"Which projects have a task with blocked status?"}], requires_clarification=false
+
+38) "Show me all high priority tasks in the Work category"
+intent_requests=[{"intent":"PLAN_QA","request":"Show me all high priority tasks in the Work category."}], requires_clarification=false
+
+39) "What tasks are due this week?"
+intent_requests=[{"intent":"PLAN_QA","request":"What tasks are due this week?"}], requires_clarification=false
+
+40) "Mark the grant proposal task as done"
+intent_requests=[{"intent":"PLAN_UPDATE","request":"Update the grant proposal task status to done."}], requires_clarification=false
+
+41) "Add a new task to the Thesis project"
+intent_requests=[{"intent":"PLAN_ADD","request":"Add a new task to the Thesis project."}], requires_clarification=true, clarification_question="What task would you like to add to the Thesis project?"
+
+42) "Delete the groceries project"
+intent_requests=[{"intent":"PLAN_DELETE","request":"Delete the groceries project."}], requires_clarification=false
+
+43) "What categories do I have?"
+intent_requests=[{"intent":"PLAN_QA","request":"What categories are in the plan?"}], requires_clarification=false

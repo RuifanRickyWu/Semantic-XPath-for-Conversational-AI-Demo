@@ -1,4 +1,8 @@
 <Root>
+  <Meta>
+    <Title>PhD Student To-do List.</Title>
+    <Summary>Cateogries include Work, Personal, Household, Health, Learning</Summary>
+  </Meta>
     <Category name="Work" description="Research, courses, teaching assistantship, and grant applications.">
       <Project name="NSERC CGS-M Grant Application" status="Active" priority="High">
         <Task name="Draft research proposal (max 1 page)" status="In Progress" priority="High" due_date="2026-11-15" />

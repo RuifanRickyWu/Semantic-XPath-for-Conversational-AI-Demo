@@ -12,6 +12,7 @@ openai:
   max_tokens: 50000
   reasoning_effort: "low"
 
+
 context:
   memory_level: "medium"
   window_sizes:

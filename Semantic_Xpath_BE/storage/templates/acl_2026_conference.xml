@@ -9,9 +9,9 @@
     <POI name="Welcome Reception" time_block="5:00 PM - 6:30 PM" description="Networking reception with conference attendees." travel_method="Walk" expected_cost="Included" highlights="Networking; Community meetup" />
   </Day>
   <Day index="2">
-    <POI name="Keynote Address" time_block="8:00 AM - 9:30 AM" description="Opening keynote featuring major conference themes." travel_method="Walk" expected_cost="Included" highlights="Keynote talk; Conference opening" />
-    <POI name="Poster Session" time_block="12:00 PM - 1:30 PM" description="Browse posters and discuss research contributions." travel_method="Walk" expected_cost="Included" highlights="Research posters; Q&amp;A" />
-    <POI name="Industry Panel" time_block="3:00 PM - 4:30 PM" description="Panel discussion on industry applications of NLP." travel_method="Walk" expected_cost="Included" highlights="Industry insights; Panel discussion" />
+    <POI name="Keynote Address" time_block="8:00 AM - 9:30 AM" description="Opening keynote featuring major conference themes for ACL 2026." travel_method="Walk" expected_cost="Included" highlights="Keynote talk; Conference opening" />
+    <POI name="Poster Session" time_block="12:00 PM - 1:30 PM" description="Browse posters and discuss research contributions in the conference." travel_method="Walk" expected_cost="Included" highlights="Research posters; Q&amp;A" />
+    <POI name="Industry Panel" time_block="3:00 PM - 4:30 PM" description="Panel discussion on industry applications of NLP for ACL 2026 conference." travel_method="Walk" expected_cost="Included" highlights="Industry insights; Panel discussion" />
   </Day>
   <Day index="3">
     <POI name="Hands-on Workshop" time_block="9:00 AM - 12:00 PM" description="Workshop participation with practical exercises." travel_method="Walk" expected_cost="Included" highlights="Hands-on practice; Workshop" />

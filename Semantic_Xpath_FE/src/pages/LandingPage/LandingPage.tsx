@@ -74,6 +74,18 @@ export default function LandingPage() {
         <div className="home-example-buttons">
           <button
             className="home-example-btn"
+            onClick={() => handleSeedExample("10day_toronto_trip")}
+            disabled={isSeeding}
+          >
+            <span>Show me a 10 Day Trip in Toronto</span>
+            <span className="home-example-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8" stroke="#7C3AED" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </button>
+          <button
+            className="home-example-btn"
             onClick={() => handleSeedExample("toronto_trip_3d")}
             disabled={isSeeding}
           >

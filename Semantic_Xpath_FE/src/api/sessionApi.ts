@@ -2,6 +2,7 @@ import { API_BASE } from "./apiBase";
 
 export type ExampleTemplateKey =
   | "toronto_trip_3d"
+  | "10day_toronto_trip"
   | "acl_2026_conference";
 
 interface SeedSessionResponse {

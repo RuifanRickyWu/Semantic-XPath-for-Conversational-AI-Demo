@@ -32,6 +32,11 @@ _EXAMPLE_TEMPLATES = {
         "version_summary": "Seeded example: San Diego itinerary",
         "path": _BASE_DIR / "storage" / "templates" / "toronto_trip_3d.xml",
     },
+    "10day_toronto_trip": {
+        "task_name": "10 Day Trip in Toronto",
+        "version_summary": "Seeded example: 10-day Toronto itinerary",
+        "path": _BASE_DIR / "storage" / "templates" / "10day_toronto_trip.xml",
+    },
     "acl_2026_conference": {
         "task_name": "ACL 2026 Conference Trip",
         "version_summary": "Seeded example: ACL 2026 conference itinerary",

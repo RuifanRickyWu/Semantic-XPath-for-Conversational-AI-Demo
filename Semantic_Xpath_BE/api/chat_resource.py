@@ -124,6 +124,15 @@ def create_chat_blueprint(service: SemanticXpathService) -> Blueprint:
             return jsonify({"error": str(e)}), 500
         return jsonify({"success": True, **result}), 200
 
+    @bp.route("/session/examples", methods=["GET"])
+    def list_session_examples():
+        """GET /api/session/examples — list all seedable example templates."""
+        try:
+            result = service.list_example_templates()
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+        return jsonify({"success": True, **result}), 200
+
     @bp.route("/session/<session_id>", methods=["DELETE"])
     def clear_session(session_id: str):
         """DELETE /api/session/<session_id> — clear one user session workspace."""

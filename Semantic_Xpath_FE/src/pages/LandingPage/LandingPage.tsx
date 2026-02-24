@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import ChatInput from "../../components/ChatInput/ChatInput";
 import {
   clearSession,
+  listExampleTemplates,
   seedSessionWithExample,
+  type ExampleTemplate,
   type ExampleTemplateKey,
 } from "../../api/sessionApi";
 import { useAppState } from "../../context/useAppState";
@@ -13,12 +15,31 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const { sessionId, startNewSession } = useAppState();
   const [isSeeding, setIsSeeding] = useState(false);
+  const [examples, setExamples] = useState<ExampleTemplate[]>([]);
 
   useEffect(() => {
     const oldSession = startNewSession();
     void clearSession(oldSession).catch(() => {});
     // Intentionally run once on landing mount to always start fresh.
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void listExampleTemplates()
+      .then((templates) => {
+        if (!cancelled) {
+          setExamples(templates);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setExamples([]);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const handleSubmit = (query: string) => {
@@ -72,78 +93,27 @@ export default function LandingPage() {
       {/* Input section */}
       <div className="home-input-section">
         <div className="home-example-buttons">
-          <button
-            className="home-example-btn"
-            onClick={() => handleSeedExample("10day_toronto_trip")}
-            disabled={isSeeding}
-          >
-            <span>Show me a 10 Day Trip in Toronto</span>
-            <span className="home-example-arrow" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path
-                  d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
-                  stroke="#7C3AED"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </button>
-          <button
-            className="home-example-btn"
-            onClick={() => handleSeedExample("sandiego_trip_3d")}
-            disabled={isSeeding}
-          >
-            <span>Show me a 3 Day Trip in San Diego</span>
-            <span className="home-example-arrow" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path
-                  d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
-                  stroke="#7C3AED"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </button>
-          <button
-            className="home-example-btn"
-            onClick={() => handleSeedExample("acl_2026_conference")}
-            disabled={isSeeding}
-          >
-            <span>Show me the ACL 2026 Conference case</span>
-            <span className="home-example-arrow" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path
-                  d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
-                  stroke="#7C3AED"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </button>
-          <button
-            className="home-example-btn"
-            onClick={() => handleSeedExample("todolist")}
-            disabled={isSeeding}
-          >
-            <span>PhD Student Todo List</span>
-            <span className="home-example-arrow" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path
-                  d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
-                  stroke="#7C3AED"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </button>
+          {examples.map((example) => (
+            <button
+              key={example.template_key}
+              className="home-example-btn"
+              onClick={() => handleSeedExample(example.template_key)}
+              disabled={isSeeding}
+            >
+              <span>{example.label}</span>
+              <span className="home-example-arrow" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                  <path
+                    d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
+                    stroke="#7C3AED"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </button>
+          ))}
         </div>
         <ChatInput onSubmit={handleSubmit} />
       </div>

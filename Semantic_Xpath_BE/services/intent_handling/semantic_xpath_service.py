@@ -28,21 +28,25 @@ if TYPE_CHECKING:
 _BASE_DIR = Path(__file__).resolve().parents[2]
 _EXAMPLE_TEMPLATES = {
     "sandiego_trip_3d": {
+        "label": "Show me a 3 Day Trip in San Diego",
         "task_name": "3 Day Trip in San Diego",
         "version_summary": "Seeded example: San Diego itinerary",
         "path": _BASE_DIR / "storage" / "templates" / "sandiego_trip_3d.xml",
     },
     "10day_toronto_trip": {
+        "label": "Show me a 10 Day Trip in Toronto",
         "task_name": "10 Day Trip in Toronto",
         "version_summary": "Seeded example: 10-day Toronto itinerary",
         "path": _BASE_DIR / "storage" / "templates" / "10day_toronto_trip.xml",
     },
     "acl_2026_conference": {
+        "label": "Show me the ACL 2026 Conference case",
         "task_name": "ACL 2026 Conference Trip",
         "version_summary": "Seeded example: ACL 2026 conference itinerary",
         "path": _BASE_DIR / "storage" / "templates" / "acl_2026_conference.xml",
     },
     "todolist": {
+        "label": "PhD Student Todo List",
         "task_name": "PhD Student Todo List",
         "version_summary": "Seeded example: PhD student todo list",
         "path": _BASE_DIR / "storage" / "templates" / "todolist.xml",
@@ -208,6 +212,18 @@ class SemanticXpathService:
             }
         self._touch_session(session_id)
         return response
+
+    def list_example_templates(self) -> Dict[str, Any]:
+        """Return all available example templates from backend registry."""
+        templates = [
+            {
+                "template_key": template_key,
+                "label": str(meta["label"]),
+                "task_name": str(meta["task_name"]),
+            }
+            for template_key, meta in _EXAMPLE_TEMPLATES.items()
+        ]
+        return {"templates": templates}
 
     def seed_example_plan(self, session_id: str, template_key: str) -> Dict[str, Any]:
         """Create one pre-built example plan inside the current empty session."""

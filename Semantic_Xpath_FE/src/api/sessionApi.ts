@@ -6,6 +6,12 @@ export type ExampleTemplateKey =
   | "acl_2026_conference"
   | "todolist";
 
+export interface ExampleTemplate {
+  template_key: ExampleTemplateKey;
+  label: string;
+  task_name: string;
+}
+
 interface SeedSessionResponse {
   success: boolean;
   active_task_id: string;
@@ -28,6 +34,20 @@ export async function seedSessionWithExample(
     }),
   });
   return response.json();
+}
+
+interface ListExamplesResponse {
+  success: boolean;
+  templates?: ExampleTemplate[];
+}
+
+export async function listExampleTemplates(): Promise<ExampleTemplate[]> {
+  const response = await fetch(`${API_BASE}/session/examples`);
+  const payload = (await response.json()) as ListExamplesResponse;
+  if (!response.ok || !payload.success) {
+    throw new Error("Failed to load example templates.");
+  }
+  return payload.templates ?? [];
 }
 
 export async function clearSession(

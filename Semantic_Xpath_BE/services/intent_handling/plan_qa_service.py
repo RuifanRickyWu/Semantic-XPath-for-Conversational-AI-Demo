@@ -7,6 +7,7 @@ Answers questions about plan content using:
 
 from __future__ import annotations
 
+import logging
 from typing import Any, Dict, List, Optional
 
 from common.types import (
@@ -16,6 +17,8 @@ from common.types import (
 )
 from services.intent_handling.intent_handling_service import IntentContext, BaseIntentHandler
 from services.query_generation.models import QueryGenerationRequest, QueryGenerationResult
+
+logger = logging.getLogger(__name__)
 
 
 def _plan_schema_from_xml(xml_manager: Any, plan_xml: str) -> dict:
@@ -113,6 +116,12 @@ class PlanQAService(BaseIntentHandler):
                 schema=schema,
             )
         except Exception:
+            logger.exception(
+                "PLAN_QA execute failed (task_id=%s, version_id=%s, xpath=%s)",
+                task_id,
+                version_id,
+                gen_result.xpath_query,
+            )
             return _result("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []

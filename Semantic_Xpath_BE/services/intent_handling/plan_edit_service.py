@@ -9,6 +9,7 @@ PLAN_ADD: retrieve container -> verify -> LLM interpret (add) -> ReplaceXmlNode 
 from __future__ import annotations
 
 from collections import Counter
+import logging
 import xml.etree.ElementTree as ET
 from typing import Any, Dict, List, Optional
 
@@ -22,6 +23,8 @@ from common.types import (
 from stores.xml_utils import find_by_path_segments
 from services.intent_handling.intent_handling_service import IntentContext, BaseIntentHandler
 from services.query_generation.models import QueryGenerationRequest, QueryGenerationResult
+
+logger = logging.getLogger(__name__)
 
 
 def _plan_schema_from_xml(xml_manager: Any, plan_xml: str) -> dict:
@@ -152,6 +155,12 @@ class PlanEditService(BaseIntentHandler):
                 schema=schema,
             )
         except Exception:
+            logger.exception(
+                "PLAN_DELETE execute failed (task_id=%s, version_id=%s, xpath=%s)",
+                task_id,
+                version_id,
+                gen_result.xpath_query,
+            )
             return _result("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
@@ -295,6 +304,12 @@ class PlanEditService(BaseIntentHandler):
                 schema=schema,
             )
         except Exception:
+            logger.exception(
+                "PLAN_UPDATE execute failed (task_id=%s, version_id=%s, xpath=%s)",
+                task_id,
+                version_id,
+                gen_result.xpath_query,
+            )
             return _result_update("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
@@ -433,6 +448,12 @@ class PlanEditService(BaseIntentHandler):
                 schema=schema,
             )
         except Exception:
+            logger.exception(
+                "PLAN_ADD execute failed (task_id=%s, version_id=%s, xpath=%s)",
+                task_id,
+                version_id,
+                gen_result.xpath_query,
+            )
             return _result_add("Something went wrong while querying the plan.")
 
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []

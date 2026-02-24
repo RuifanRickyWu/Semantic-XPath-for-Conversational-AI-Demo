@@ -99,6 +99,10 @@ CLARIFICATION POLICY
 4) If memory shows awaiting_clarification=true and the user provides the clarification, combine with last_user_utterance, restore intent_requests. Do not ask again.
 5) If you already asked for clarification on the same request, avoid asking further questions; proceed with the current information.
 6) For PLAN_CREATE, ask clarification when the request is underspecified (for example, missing duration, dates, budget, or preferred granularity). Ask one concise question and proceed after the user answers.
+7) Execution-first policy:
+   Prefer execution over clarification whenever the request contains enough information to derive an actionable target from context, schema, or prior turns.
+8) Inferable-target rule:
+   If the target can be inferred from relative/comparative/descriptor language (e.g., "the most relevant one", "the latest", "the highest priority", "the matching item"), set requires_clarification=false and provide a self-contained request in intent_requests.
 
 INTENT_REQUESTS RULE (REFORMULATION MANDATORY)
 - Every intent_requests item must have both intent and request. request is REQUIRED, never null.

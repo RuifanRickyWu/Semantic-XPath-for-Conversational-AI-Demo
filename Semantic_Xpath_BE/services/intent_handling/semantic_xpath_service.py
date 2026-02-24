@@ -42,6 +42,11 @@ _EXAMPLE_TEMPLATES = {
         "version_summary": "Seeded example: ACL 2026 conference itinerary",
         "path": _BASE_DIR / "storage" / "templates" / "acl_2026_conference.xml",
     },
+    "todolist": {
+        "task_name": "PhD Student Todo List",
+        "version_summary": "Seeded example: PhD student todo list",
+        "path": _BASE_DIR / "storage" / "templates" / "todolist.xml",
+    },
 }
 
 

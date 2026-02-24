@@ -17,8 +17,8 @@ export default function LandingPage() {
   useEffect(() => {
     const oldSession = startNewSession();
     void clearSession(oldSession).catch(() => {});
-  // Intentionally run once on landing mount to always start fresh.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Intentionally run once on landing mount to always start fresh.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (query: string) => {
@@ -80,19 +80,31 @@ export default function LandingPage() {
             <span>Show me a 10 Day Trip in Toronto</span>
             <span className="home-example-arrow" aria-hidden="true">
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8" stroke="#7C3AED" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
+                  stroke="#7C3AED"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </span>
           </button>
           <button
             className="home-example-btn"
-            onClick={() => handleSeedExample("toronto_trip_3d")}
+            onClick={() => handleSeedExample("sandiego_trip_3d")}
             disabled={isSeeding}
           >
             <span>Show me a 3 Day Trip in San Diego</span>
             <span className="home-example-arrow" aria-hidden="true">
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8" stroke="#7C3AED" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
+                  stroke="#7C3AED"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </span>
           </button>
@@ -104,7 +116,13 @@ export default function LandingPage() {
             <span>Show me the ACL 2026 Conference case</span>
             <span className="home-example-arrow" aria-hidden="true">
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8" stroke="#7C3AED" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
+                  stroke="#7C3AED"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </span>
           </button>

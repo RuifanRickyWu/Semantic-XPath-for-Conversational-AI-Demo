@@ -1,7 +1,7 @@
 import { API_BASE } from "./apiBase";
 
 export type ExampleTemplateKey =
-  | "toronto_trip_3d"
+  | "sandiego_trip_3d"
   | "10day_toronto_trip"
   | "acl_2026_conference";
 
@@ -14,7 +14,7 @@ interface SeedSessionResponse {
 
 export async function seedSessionWithExample(
   sessionId: string,
-  templateKey: ExampleTemplateKey
+  templateKey: ExampleTemplateKey,
 ): Promise<SeedSessionResponse> {
   const response = await fetch(`${API_BASE}/session/seed`, {
     method: "POST",
@@ -31,7 +31,7 @@ export async function seedSessionWithExample(
 
 export async function clearSession(
   sessionId: string,
-  opts?: { keepalive?: boolean }
+  opts?: { keepalive?: boolean },
 ): Promise<void> {
   await fetch(`${API_BASE}/session/${encodeURIComponent(sessionId)}`, {
     method: "DELETE",

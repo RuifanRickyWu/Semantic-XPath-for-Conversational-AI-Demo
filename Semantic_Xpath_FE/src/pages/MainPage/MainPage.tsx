@@ -48,8 +48,10 @@ export default function MainPage() {
     currentTaskIdRef,
     currentVersionIdRef,
     sessionId,
+    startNewSession,
     isLoading,
     setIsLoading,
+    setHeaderSlot,
   } = useAppState();
 
   const [inputValue, setInputValue] = useState("");
@@ -100,6 +102,24 @@ export default function MainPage() {
       handleSend(state.query);
     }
   }, [state]);
+
+  useEffect(() => {
+    setHeaderSlot(
+      <>
+        <div className="main-header-spacer" />
+        <button
+          className="main-new-session-btn"
+          onClick={() => {
+            startNewSession();
+            navigate("/");
+          }}
+        >
+          New Session
+        </button>
+      </>
+    );
+    return () => setHeaderSlot(null);
+  }, [navigate, setHeaderSlot]);
 
   const scrollToBottom = () => {
     const container = messagesEndRef.current?.parentElement;

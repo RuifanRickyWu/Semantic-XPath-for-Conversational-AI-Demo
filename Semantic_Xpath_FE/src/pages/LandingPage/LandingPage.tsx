@@ -8,12 +8,28 @@ import {
   type ExampleTemplate,
   type ExampleTemplateKey,
 } from "../../api/sessionApi";
+import type { ChatMessage } from "../../context/AppStateContext";
+import { typeToCrudAction } from "../../types/chat";
 import { useAppState } from "../../context/useAppState";
 import "./LandingPage.css";
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const { sessionId, startNewSession } = useAppState();
+  const {
+    sessionId,
+    startNewSession,
+    setMessages,
+    setTasks,
+    setActiveTaskId,
+    setActivePlanXml,
+    setHighlightMode,
+    setHighlightedPaths,
+    setLatestXpathQuery,
+    setLatestOriginalQuery,
+    setSelectedMessageIndex,
+    currentTaskIdRef,
+    currentVersionIdRef,
+  } = useAppState();
   const [isSeeding, setIsSeeding] = useState(false);
   const [examples, setExamples] = useState<ExampleTemplate[]>([]);
 
@@ -55,6 +71,45 @@ export default function LandingPage() {
       if (!res.success) {
         throw new Error("Failed to seed example session.");
       }
+
+      const seededMessages = ((res.seeded_messages ?? []) as ChatMessage[]).map(
+        (msg) => {
+          if (msg.role !== "system") return msg;
+          return {
+            ...msg,
+            crudAction: typeToCrudAction(msg.type),
+            snapshotTaskId: msg.snapshotTaskId ?? res.active_task_id,
+            snapshotVersionId: msg.snapshotVersionId ?? res.active_version_id,
+          };
+        }
+      );
+      setMessages(seededMessages);
+      setTasks([]);
+      setActivePlanXml(null);
+      setActiveTaskId(res.active_task_id);
+      currentTaskIdRef.current = res.active_task_id;
+      currentVersionIdRef.current = res.active_version_id;
+
+      let selectedCrudIndex: number | null = null;
+      for (let i = seededMessages.length - 1; i >= 0; i--) {
+        const msg = seededMessages[i];
+        if (msg.role !== "system") continue;
+        const crud = typeToCrudAction(msg.type);
+        if (!crud) continue;
+        selectedCrudIndex = i;
+        setHighlightMode(crud);
+        setHighlightedPaths(msg.affectedNodePaths ?? null);
+        setLatestXpathQuery(msg.xpathQuery ?? null);
+        setLatestOriginalQuery(msg.originalQuery ?? null);
+        break;
+      }
+      if (selectedCrudIndex === null) {
+        setHighlightMode(null);
+        setHighlightedPaths(null);
+        setLatestXpathQuery(null);
+        setLatestOriginalQuery(null);
+      }
+      setSelectedMessageIndex(selectedCrudIndex);
       navigate("/main");
     } catch {
       setIsSeeding(false);

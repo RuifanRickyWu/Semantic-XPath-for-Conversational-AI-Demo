@@ -1,0 +1,706 @@
+{
+  "user_message": {
+    "role": "user",
+    "content": "Add a coffee break on the day that is packed with conference sessions"
+  },
+  "system_message": {
+    "role": "system",
+    "type": "PLAN_ADD",
+    "snapshotVersionId": "__EVOLVED_VERSION_ID__",
+    "content": "Added a coffee break to Plan > Day 2 (the day packed with conference sessions). Want to specify where it should go in the schedule (e.g., between the keynote and oral sessions)?",
+    "originalQuery": "Add a coffee break on the day that is packed with conference sessions.",
+    "xpathQuery": "/Plan/Day[agg_avg(/POI[node =~ \"conference sessions\"])]",
+    "affectedNodePaths": [
+      [
+        [
+          "Day",
+          2
+        ],
+        [
+          "POI",
+          3
+        ]
+      ]
+    ],
+    "scoringTrace": [
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "span": {
+            "end": 5,
+            "start": 1
+          },
+          "test": {
+            "kind": "type",
+            "name": "Plan",
+            "span": {
+              "end": 5,
+              "start": 1
+            },
+            "type": "node_test"
+          },
+          "type": "leaf"
+        },
+        "nodes": [
+          {
+            "accumulated_score": 1.0,
+            "children": [
+              {
+                "Summary": "3-day conference itinerary focused on the main ACL activities.",
+                "Title": "ACL 2026 Conference Trip in San Diego",
+                "attributes": {},
+                "type": "Meta"
+              },
+              {
+                "attributes": {
+                  "index": "1"
+                },
+                "index": "1",
+                "type": "Day"
+              },
+              {
+                "attributes": {
+                  "index": "2"
+                },
+                "index": "2",
+                "type": "Day"
+              },
+              {
+                "attributes": {
+                  "index": "3"
+                },
+                "index": "3",
+                "type": "Day"
+              }
+            ],
+            "final_step_score": 1.0,
+            "is_filtered_out": false,
+            "is_selected": true,
+            "node": {
+              "attributes": {
+                "version": "v1"
+              },
+              "type": "Plan",
+              "version": "v1"
+            },
+            "predicate_results": [],
+            "previous_score": 1.0,
+            "step_score": 1.0,
+            "tree_path": "Plan"
+          }
+        ],
+        "step_index": 0,
+        "step_query": "Plan"
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "span": {
+            "end": 55,
+            "start": 6
+          },
+          "test": {
+            "kind": "type",
+            "name": "Day",
+            "predicate": {
+              "inner_predicate": {
+                "field": "node",
+                "operator": "=~",
+                "span": {
+                  "end": 52,
+                  "start": 23
+                },
+                "type": "atom",
+                "value": "conference sessions"
+              },
+              "operator": "agg_avg",
+              "selector": {
+                "axis": "child",
+                "test": {
+                  "test": {
+                    "kind": "type",
+                    "name": "POI",
+                    "type": "node_test"
+                  },
+                  "type": "leaf"
+                }
+              },
+              "span": {
+                "end": 54,
+                "start": 10
+              },
+              "type": "evidence_agg"
+            },
+            "predicate_str": "agg_avg(/POI[node =~ \"conference sessions\"])",
+            "span": {
+              "end": 55,
+              "start": 6
+            },
+            "type": "node_test"
+          },
+          "type": "leaf"
+        },
+        "nodes": [
+          {
+            "accumulated_score": 0.03965704655274749,
+            "children": [],
+            "final_step_score": 0.03965704655274749,
+            "is_filtered_out": true,
+            "is_selected": false,
+            "node": {
+              "attributes": {
+                "index": "1"
+              },
+              "index": "1",
+              "type": "Day"
+            },
+            "predicate_results": [
+              {
+                "aggregation_labels": [
+                  "agg_avg(/POI)"
+                ],
+                "has_aggregation": true,
+                "predicate": "agg_avg(/POI[node =~ \"conference sessions\"])",
+                "predicate_ast": {
+                  "inner_predicate": {
+                    "field": "node",
+                    "operator": "=~",
+                    "span": {
+                      "end": 52,
+                      "start": 23
+                    },
+                    "type": "atom",
+                    "value": "conference sessions"
+                  },
+                  "operator": "agg_avg",
+                  "selector": {
+                    "axis": "child",
+                    "test": {
+                      "test": {
+                        "kind": "type",
+                        "name": "POI",
+                        "type": "node_test"
+                      },
+                      "type": "leaf"
+                    }
+                  },
+                  "span": {
+                    "end": 54,
+                    "start": 10
+                  },
+                  "type": "evidence_agg"
+                },
+                "predicate_score": 0.03965704655274749,
+                "scoring_steps": [
+                  {
+                    "agg_type": "avg",
+                    "evidence_count": 3,
+                    "inner_traces": [
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "Arrival Flight",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.007087085861712694,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "Tutorial Session",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.04719754680991173,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "Welcome Reception",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.06468650698661804,
+                          "type": "atom"
+                        }
+                      ]
+                    ],
+                    "result": 0.03965704655274749,
+                    "scores": [
+                      0.007087085861712694,
+                      0.04719754680991173,
+                      0.06468650698661804
+                    ],
+                    "selector": "/POI",
+                    "type": "evidence_agg"
+                  }
+                ]
+              }
+            ],
+            "previous_score": 1.0,
+            "step_score": 0.03965704655274749,
+            "tree_path": "Plan > Day 1"
+          },
+          {
+            "accumulated_score": 0.5647010207176208,
+            "children": [],
+            "final_step_score": 0.5647010207176208,
+            "is_filtered_out": false,
+            "is_selected": true,
+            "node": {
+              "attributes": {
+                "index": "2"
+              },
+              "index": "2",
+              "type": "Day"
+            },
+            "predicate_results": [
+              {
+                "aggregation_labels": [
+                  "agg_avg(/POI)"
+                ],
+                "has_aggregation": true,
+                "predicate": "agg_avg(/POI[node =~ \"conference sessions\"])",
+                "predicate_ast": {
+                  "inner_predicate": {
+                    "field": "node",
+                    "operator": "=~",
+                    "span": {
+                      "end": 52,
+                      "start": 23
+                    },
+                    "type": "atom",
+                    "value": "conference sessions"
+                  },
+                  "operator": "agg_avg",
+                  "selector": {
+                    "axis": "child",
+                    "test": {
+                      "test": {
+                        "kind": "type",
+                        "name": "POI",
+                        "type": "node_test"
+                      },
+                      "type": "leaf"
+                    }
+                  },
+                  "span": {
+                    "end": 54,
+                    "start": 10
+                  },
+                  "type": "evidence_agg"
+                },
+                "predicate_score": 0.5647010207176208,
+                "scoring_steps": [
+                  {
+                    "agg_type": "avg",
+                    "evidence_count": 3,
+                    "inner_traces": [
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "Keynote Session 1",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.6034011244773865,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "In Person Oral",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.4823506474494934,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "In Person Poster",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.6083512902259827,
+                          "type": "atom"
+                        }
+                      ]
+                    ],
+                    "result": 0.5647010207176208,
+                    "scores": [
+                      0.6034011244773865,
+                      0.4823506474494934,
+                      0.6083512902259827
+                    ],
+                    "selector": "/POI",
+                    "type": "evidence_agg"
+                  }
+                ]
+              }
+            ],
+            "previous_score": 1.0,
+            "step_score": 0.5647010207176208,
+            "tree_path": "Plan > Day 2"
+          },
+          {
+            "accumulated_score": 0.040293703166147075,
+            "children": [],
+            "final_step_score": 0.040293703166147075,
+            "is_filtered_out": true,
+            "is_selected": false,
+            "node": {
+              "attributes": {
+                "index": "3"
+              },
+              "index": "3",
+              "type": "Day"
+            },
+            "predicate_results": [
+              {
+                "aggregation_labels": [
+                  "agg_avg(/POI)"
+                ],
+                "has_aggregation": true,
+                "predicate": "agg_avg(/POI[node =~ \"conference sessions\"])",
+                "predicate_ast": {
+                  "inner_predicate": {
+                    "field": "node",
+                    "operator": "=~",
+                    "span": {
+                      "end": 52,
+                      "start": 23
+                    },
+                    "type": "atom",
+                    "value": "conference sessions"
+                  },
+                  "operator": "agg_avg",
+                  "selector": {
+                    "axis": "child",
+                    "test": {
+                      "test": {
+                        "kind": "type",
+                        "name": "POI",
+                        "type": "node_test"
+                      },
+                      "type": "leaf"
+                    }
+                  },
+                  "span": {
+                    "end": 54,
+                    "start": 10
+                  },
+                  "type": "evidence_agg"
+                },
+                "predicate_score": 0.040293703166147075,
+                "scoring_steps": [
+                  {
+                    "agg_type": "avg",
+                    "evidence_count": 3,
+                    "inner_traces": [
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "Hands-on Workshop",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.018305819481611252,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "San Diego City Tour",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.09137237817049026,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "Dinner at Mitch's Seafood",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.011202911846339703,
+                          "type": "atom"
+                        }
+                      ]
+                    ],
+                    "result": 0.040293703166147075,
+                    "scores": [
+                      0.018305819481611252,
+                      0.09137237817049026,
+                      0.011202911846339703
+                    ],
+                    "selector": "/POI",
+                    "type": "evidence_agg"
+                  }
+                ]
+              }
+            ],
+            "previous_score": 1.0,
+            "step_score": 0.040293703166147075,
+            "tree_path": "Plan > Day 3"
+          }
+        ],
+        "step_index": 1,
+        "step_query": "Day[agg_avg(/POI[node =~ \"conference sessions\"])]"
+      }
+    ],
+    "perNodeDetail": [
+      {
+        "children": [],
+        "evidence": [
+          {
+            "accumulated_score": 0.5647010207176208,
+            "children": [],
+            "final_step_score": 0.5647010207176208,
+            "node": {
+              "attributes": {
+                "index": "2"
+              },
+              "index": "2",
+              "type": "Day"
+            },
+            "predicate_results": [
+              {
+                "aggregation_labels": [
+                  "agg_avg(/POI)"
+                ],
+                "has_aggregation": true,
+                "predicate": "agg_avg(/POI[node =~ \"conference sessions\"])",
+                "predicate_ast": {
+                  "inner_predicate": {
+                    "field": "node",
+                    "operator": "=~",
+                    "span": {
+                      "end": 52,
+                      "start": 23
+                    },
+                    "type": "atom",
+                    "value": "conference sessions"
+                  },
+                  "operator": "agg_avg",
+                  "selector": {
+                    "axis": "child",
+                    "test": {
+                      "test": {
+                        "kind": "type",
+                        "name": "POI",
+                        "type": "node_test"
+                      },
+                      "type": "leaf"
+                    }
+                  },
+                  "span": {
+                    "end": 54,
+                    "start": 10
+                  },
+                  "type": "evidence_agg"
+                },
+                "predicate_score": 0.5647010207176208,
+                "scoring_steps": [
+                  {
+                    "agg_type": "avg",
+                    "evidence_count": 3,
+                    "inner_traces": [
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "Keynote Session 1",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.6034011244773865,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "In Person Oral",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.4823506474494934,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 52,
+                              "start": 23
+                            },
+                            "type": "atom",
+                            "value": "conference sessions"
+                          },
+                          "node_name": "In Person Poster",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.6083512902259827,
+                          "type": "atom"
+                        }
+                      ]
+                    ],
+                    "result": 0.5647010207176208,
+                    "scores": [
+                      0.6034011244773865,
+                      0.4823506474494934,
+                      0.6083512902259827
+                    ],
+                    "selector": "/POI",
+                    "type": "evidence_agg"
+                  }
+                ]
+              }
+            ],
+            "previous_score": 1.0,
+            "step_index": 1,
+            "step_query": "Day[agg_avg(/POI[node =~ \"conference sessions\"])]",
+            "step_score": 0.5647010207176208,
+            "tree_path": "Plan > Day 2"
+          },
+          {
+            "segments": [
+              {
+                "attributes": {
+                  "version": "v1"
+                },
+                "type": "Plan"
+              },
+              {
+                "attributes": {
+                  "index": "2"
+                },
+                "type": "Day"
+              }
+            ],
+            "type": "path_display"
+          }
+        ],
+        "node": {
+          "attributes": {
+            "index": "2"
+          },
+          "index": "2",
+          "type": "Day"
+        },
+        "score": 0.5647010207176208,
+        "tree_path": [
+          [
+            "Day",
+            2
+          ]
+        ],
+        "tree_path_display": [
+          {
+            "attributes": {
+              "version": "v1"
+            },
+            "type": "Plan"
+          },
+          {
+            "attributes": {
+              "index": "2"
+            },
+            "type": "Day"
+          }
+        ]
+      }
+    ]
+  }
+}

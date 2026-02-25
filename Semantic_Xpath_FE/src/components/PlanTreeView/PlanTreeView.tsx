@@ -158,7 +158,7 @@ export default function PlanTreeView({
 }: PlanTreeViewProps) {
   const flowInstanceKey = useMemo(() => `flow-${planXml}`, [planXml]);
   const { nodes: rawNodes, edges: rawEdges } = useMemo(
-    () => parseXmlToTree(planXml, { direction: "TB" }),
+    () => parseXmlToTree(planXml, { direction: "LR" }),
     [planXml]
   );
 

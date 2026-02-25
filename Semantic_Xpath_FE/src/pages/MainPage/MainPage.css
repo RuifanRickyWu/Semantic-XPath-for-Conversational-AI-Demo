@@ -63,6 +63,34 @@
   background: #fafafe;
 }
 
+.main-header-spacer {
+  flex: 1;
+  min-width: 0;
+}
+
+.main-new-session-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  background: #fff;
+  color: #8b5cf6;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.main-new-session-btn:hover {
+  background: #f5f3ff;
+  border-color: #8b5cf6;
+}
+
 /* Scrollable message area */
 .chat-messages-area {
   flex: 1 1 0;

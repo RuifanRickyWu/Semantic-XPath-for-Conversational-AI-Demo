@@ -278,7 +278,7 @@ export function parseXmlToTree(
   const idCounter = { value: 0 };
 
   walkElement(root, null, "", "", "", nodes, edges, idCounter);
-  applyDagreLayout(nodes, edges, options?.direction ?? "LR");
+  applyDagreLayout(nodes, edges, options?.direction ?? "TB");
 
   return { nodes, edges };
 }

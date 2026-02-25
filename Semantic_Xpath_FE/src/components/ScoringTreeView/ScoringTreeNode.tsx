@@ -44,7 +44,7 @@ function ScoringTreeNodeComponent({ data }: NodeProps) {
     <div className="scoring-node-wrapper">
       <Handle
         type="target"
-        position={Position.Top}
+        position={Position.Left}
         className="scoring-node-handle"
       />
 
@@ -99,7 +99,7 @@ function ScoringTreeNodeComponent({ data }: NodeProps) {
 
       <Handle
         type="source"
-        position={Position.Bottom}
+        position={Position.Right}
         className="scoring-node-handle"
       />
     </div>

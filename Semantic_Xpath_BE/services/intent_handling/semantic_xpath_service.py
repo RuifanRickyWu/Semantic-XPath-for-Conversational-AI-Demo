@@ -10,6 +10,7 @@ All dependencies are injected via the constructor (created by app_factory).
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any, Dict, Optional, TYPE_CHECKING
 
@@ -26,6 +27,10 @@ if TYPE_CHECKING:
     from stores.task_state_store import TaskStateStore
 
 _BASE_DIR = Path(__file__).resolve().parents[2]
+_TEMPLATE_ROOT = _BASE_DIR / "storage" / "templates"
+_TEMPLATE_XML_DIR = _TEMPLATE_ROOT / "xml"
+_TEMPLATE_DEMO_DIR = _TEMPLATE_ROOT / "demo"
+_TEMPLATE_RESULTS_DIR = _TEMPLATE_ROOT / "results"
 _EXAMPLE_TEMPLATES = {
     "sandiego_trip_3d": {
         "label": "Show me a 3 Day Trip in San Diego",
@@ -43,7 +48,10 @@ _EXAMPLE_TEMPLATES = {
         "label": "Show me the ACL 2026 Conference case",
         "task_name": "ACL 2026 Conference Trip",
         "version_summary": "Seeded example: ACL 2026 conference itinerary",
-        "path": _BASE_DIR / "storage" / "templates" / "acl_2026_conference.xml",
+        "path": _TEMPLATE_XML_DIR / "acl_2026_conference.xml",
+        "evolved_path": _TEMPLATE_XML_DIR / "acl_2026_conference_with_coffee.xml",
+        "evolved_version_summary": "Added a coffee break on the most conference-session-heavy day",
+        "demo_path": _TEMPLATE_DEMO_DIR / "acl_2026_conference.demo.json",
     },
     "todolist": {
         "label": "PhD Student Todo List",
@@ -262,20 +270,189 @@ class SemanticXpathService:
                     + ", ".join(commit_result.errors or ["unknown error"])
                 )
 
+            initial_version_id = version_id
+            evolved_version_id: Optional[str] = None
+
+            evolved_path_raw = template.get("evolved_path")
+            if evolved_path_raw:
+                evolved_xml_path = Path(evolved_path_raw)
+                if evolved_xml_path.exists():
+                    evolved_xml_str = evolved_xml_path.read_text(encoding="utf-8")
+                    evolved_commit = self._state_store.commit(
+                        task_id=task_id,
+                        base_version_id=initial_version_id,
+                        ops=[ReplaceXmlNode(xpath=".", xml_fragment=evolved_xml_str)],
+                        commit_message=str(
+                            template.get("evolved_version_summary")
+                            or "Seeded evolved example version"
+                        ),
+                    )
+                    if evolved_commit.status != "OK":
+                        raise RuntimeError(
+                            "Failed to seed evolved example XML: "
+                            + ", ".join(evolved_commit.errors or ["unknown error"])
+                        )
+                    evolved_version_id = evolved_commit.new_version_id
+
+            active_version_id = evolved_version_id or initial_version_id
             self._session_store.update_session(
                 session_id,
                 SessionUpdate(
                     active_task_id=task_id,
-                    active_version_id=version_id,
+                    active_version_id=active_version_id,
                 ),
             )
             response = {
                 "active_task_id": task_id,
-                "active_version_id": version_id,
+                "active_version_id": active_version_id,
                 "task_name": template["task_name"],
+                "initial_version_id": initial_version_id,
+                "evolved_version_id": evolved_version_id,
             }
+            seeded_messages = self._load_seeded_messages(
+                template=template,
+                task_id=task_id,
+                active_version_id=active_version_id,
+                initial_version_id=initial_version_id,
+                evolved_version_id=evolved_version_id,
+            )
+            if seeded_messages:
+                response["seeded_messages"] = seeded_messages
         self._touch_session(session_id)
         return response
+
+    def _load_seeded_messages(
+        self,
+        template: Dict[str, Any],
+        task_id: str,
+        active_version_id: str,
+        initial_version_id: str,
+        evolved_version_id: Optional[str],
+    ) -> list[Dict[str, Any]]:
+        """Load pre-authored demo messages for example replay UI."""
+        demo_path_raw = template.get("demo_path")
+        if not demo_path_raw:
+            return []
+
+        demo_path = Path(demo_path_raw)
+        if not demo_path.exists():
+            return []
+
+        try:
+            payload = json.loads(demo_path.read_text(encoding="utf-8"))
+        except Exception:
+            return []
+
+        messages: list[Dict[str, Any]] = []
+        bootstrap_messages = payload.get("bootstrap_messages") or []
+        if isinstance(bootstrap_messages, list):
+            for msg in bootstrap_messages:
+                normalized = self._normalize_seed_message(msg)
+                if normalized:
+                    self._apply_seed_snapshot_defaults(
+                        normalized,
+                        task_id=task_id,
+                        active_version_id=active_version_id,
+                        initial_version_id=initial_version_id,
+                        evolved_version_id=evolved_version_id,
+                    )
+                    messages.append(normalized)
+
+        result_file = payload.get("result_file")
+        if isinstance(result_file, str) and result_file.strip():
+            result_path = _TEMPLATE_RESULTS_DIR / result_file.strip()
+            if result_path.exists():
+                try:
+                    result_payload = json.loads(result_path.read_text(encoding="utf-8"))
+                except Exception:
+                    result_payload = {}
+
+                user_message = self._normalize_seed_message(result_payload.get("user_message"))
+                system_message = self._normalize_seed_message(result_payload.get("system_message"))
+                if user_message:
+                    self._apply_seed_snapshot_defaults(
+                        user_message,
+                        task_id=task_id,
+                        active_version_id=active_version_id,
+                        initial_version_id=initial_version_id,
+                        evolved_version_id=evolved_version_id,
+                    )
+                    messages.append(user_message)
+                if system_message:
+                    self._apply_seed_snapshot_defaults(
+                        system_message,
+                        task_id=task_id,
+                        active_version_id=active_version_id,
+                        initial_version_id=initial_version_id,
+                        evolved_version_id=evolved_version_id,
+                    )
+                    messages.append(system_message)
+
+        replay_messages = payload.get("replay_messages") or []
+        if isinstance(replay_messages, list):
+            for msg in replay_messages:
+                normalized = self._normalize_seed_message(msg)
+                if normalized:
+                    self._apply_seed_snapshot_defaults(
+                        normalized,
+                        task_id=task_id,
+                        active_version_id=active_version_id,
+                        initial_version_id=initial_version_id,
+                        evolved_version_id=evolved_version_id,
+                    )
+                    messages.append(normalized)
+
+        return messages
+
+    @staticmethod
+    def _normalize_seed_message(raw: Any) -> Optional[Dict[str, Any]]:
+        if not isinstance(raw, dict):
+            return None
+
+        role = raw.get("role")
+        content = raw.get("content")
+        if role not in ("user", "system") or not isinstance(content, str):
+            return None
+
+        msg: Dict[str, Any] = {
+            "role": role,
+            "content": content,
+        }
+        optional_keys = (
+            "type",
+            "xpathQuery",
+            "originalQuery",
+            "affectedNodePaths",
+            "scoringTrace",
+            "perNodeDetail",
+            "snapshotTaskId",
+            "snapshotVersionId",
+        )
+        for key in optional_keys:
+            if key in raw:
+                msg[key] = raw[key]
+        return msg
+
+    @staticmethod
+    def _apply_seed_snapshot_defaults(
+        msg: Dict[str, Any],
+        task_id: str,
+        active_version_id: str,
+        initial_version_id: str,
+        evolved_version_id: Optional[str],
+    ) -> None:
+        if msg.get("role") != "system":
+            return
+
+        raw_snapshot_version = msg.get("snapshotVersionId")
+        if isinstance(raw_snapshot_version, str):
+            if raw_snapshot_version == "__INITIAL_VERSION_ID__":
+                msg["snapshotVersionId"] = initial_version_id
+            elif raw_snapshot_version == "__EVOLVED_VERSION_ID__":
+                msg["snapshotVersionId"] = evolved_version_id or active_version_id
+
+        msg["snapshotTaskId"] = msg.get("snapshotTaskId") or task_id
+        msg["snapshotVersionId"] = msg.get("snapshotVersionId") or active_version_id
 
     def clear_session(self, session_id: str) -> None:
         """Clear all in-memory and persisted data for one session."""

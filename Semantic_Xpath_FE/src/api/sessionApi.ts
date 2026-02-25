@@ -1,4 +1,5 @@
 import { API_BASE } from "./apiBase";
+import type { AffectedNodePath, ChatResponseType } from "../types/chat";
 
 export type ExampleTemplateKey =
   | "sandiego_trip_3d"
@@ -17,6 +18,18 @@ interface SeedSessionResponse {
   active_task_id: string;
   active_version_id: string;
   task_name: string;
+  seeded_messages?: SeededChatMessage[];
+}
+
+export interface SeededChatMessage {
+  role: "user" | "system";
+  content: string;
+  type?: ChatResponseType;
+  xpathQuery?: string;
+  originalQuery?: string;
+  affectedNodePaths?: AffectedNodePath[];
+  snapshotTaskId?: string;
+  snapshotVersionId?: string;
 }
 
 export async function seedSessionWithExample(

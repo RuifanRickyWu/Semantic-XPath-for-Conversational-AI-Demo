@@ -1,0 +1,15 @@
+{
+  "bootstrap_messages": [
+    {
+      "role": "user",
+      "content": "Show me the ACL 2026 Conference case"
+    },
+    {
+      "role": "system",
+      "type": "PLAN_CREATE",
+      "content": "ACL 2026 conference plan in San Diego across 3 days: day 1 focuses on tutorial and welcome networking, day 2 centers on keynote/oral/poster conference sessions, and day 3 closes with workshop participation plus evening city activities.",
+      "snapshotVersionId": "__INITIAL_VERSION_ID__"
+    }
+  ],
+  "result_file": "acl_2026_conference_add_coffee_break.result.json"
+}

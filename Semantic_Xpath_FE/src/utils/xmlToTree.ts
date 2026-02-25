@@ -256,10 +256,6 @@ function applyDagreLayout(
 
 /* ── Public API ────────────────────────────────────── */
 
-export function parseXmlToTree(xmlString: string): {
-  nodes: Node<PlanNodeData>[];
-  edges: Edge[];
-}
 export function parseXmlToTree(
   xmlString: string,
   options?: { direction?: LayoutDirection }

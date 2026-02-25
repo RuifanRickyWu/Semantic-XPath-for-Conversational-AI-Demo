@@ -20,6 +20,7 @@ RULES
 - Use words from the original user request directly. Do NOT expand, enrich, or paraphrase.
 - Each predicate should be a self-contained semantic unit from the user's utterance. One concept = one predicate when possible.
 - Only use max(pred1, pred2, ...) when the user explicitly mentions multiple distinct alternatives (e.g. "parks or lakes" → max(node =~ "park", node =~ "lake")).
+- NEVER include @version, @version_id, @task_id, or any registry-level metadata predicates in the XPath. The correct plan version is already loaded before execution — the XML you are querying contains only plan content (days, activities, tasks, etc.), not version or task metadata. Ignore version/task references in the user utterance or context; they are handled externally.
 
 EXAMPLES
 All examples assume root element `Itinerary` with children `Day`. Adapt path to match schema_summary (e.g. Plan, Trip).

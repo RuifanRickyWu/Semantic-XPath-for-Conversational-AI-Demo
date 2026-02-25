@@ -13,6 +13,12 @@ interface LocationState {
   query?: string;
 }
 
+function toUiXpath(xpath: string): string {
+  return xpath.replace(/\bagg_(min|max|avg)\b/gi, (_, op: string) =>
+    String(op).toLowerCase()
+  );
+}
+
 /* ── Main Component ───────────────────────────────── */
 
 export default function MainPage() {
@@ -339,6 +345,7 @@ export default function MainPage() {
   /** Render Expanded Query + XPath display bars */
   function renderQueryBars(xpathQuery?: string, originalQuery?: string) {
     if (!xpathQuery && !originalQuery) return null;
+    const displayXpath = xpathQuery ? toUiXpath(xpathQuery) : "";
     return (
       <div className="query-bars">
         {originalQuery && (
@@ -350,7 +357,7 @@ export default function MainPage() {
         {xpathQuery && (
           <div className="xpath-query-bar">
             <span className="query-bar-label">XPath :</span>
-            <span className="query-bar-value">{xpathQuery}</span>
+            <span className="query-bar-value">{displayXpath}</span>
           </div>
         )}
       </div>
@@ -531,7 +538,7 @@ export default function MainPage() {
             {latestXpathQuery && (
               <div className="xpath-query-bar right-query-bar">
                 <span className="query-bar-label">XPath :</span>
-                <span className="query-bar-value">{latestXpathQuery}</span>
+                <span className="query-bar-value">{toUiXpath(latestXpathQuery)}</span>
               </div>
             )}
           </div>

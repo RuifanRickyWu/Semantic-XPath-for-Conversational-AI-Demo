@@ -37,7 +37,7 @@
   padding: 2px 14px;
   background: #8b5cf6;
   color: #fff;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   font-family: "Inter", sans-serif;
   border-radius: 50px;
@@ -67,7 +67,7 @@
 .plan-node-label {
   flex: 1;
   min-width: 0;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   font-family: "Inter", sans-serif;
   color: #8b5cf6;

@@ -662,6 +662,7 @@ class PredicateHandler:
         trace_steps.append({
             "type": "atom",
             "condition": predicate.to_dict(),
+            "node_name": self._node_utils.get_name(node),
             "score": score,
             "note": "Exact field match" if was_exact else "Atom(u, φ) - entailment",
         })

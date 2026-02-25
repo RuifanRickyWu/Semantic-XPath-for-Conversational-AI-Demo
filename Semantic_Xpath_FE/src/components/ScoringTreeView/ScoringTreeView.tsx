@@ -131,7 +131,7 @@ export default function ScoringTreeView({
   const { nodes: rawNodes, edges: rawEdges } = useMemo(
     () =>
       planXml
-        ? parseXmlToTree(planXml, { direction: "LR" })
+        ? parseXmlToTree(planXml, { direction: "TB" })
         : { nodes: [], edges: [] },
     [planXml]
   );

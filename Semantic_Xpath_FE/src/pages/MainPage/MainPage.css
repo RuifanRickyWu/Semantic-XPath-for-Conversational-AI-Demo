@@ -14,7 +14,6 @@
 /* ===================== Left Panel ===================== */
 
 .main-left-panel {
-  width: 50%;
   height: 100%;
   min-height: 0;
   display: flex;
@@ -334,9 +333,11 @@
   font-size: 14px;
   color: #333;
   resize: none;
+  overflow-y: hidden;
   line-height: 22px;
   background: transparent;
   min-height: 22px;
+  max-height: 160px;
 }
 
 .main-chat-input::placeholder {
@@ -394,13 +395,44 @@
 /* ===================== Right Panel ===================== */
 
 .main-right-panel {
-  width: 50%;
   height: 100%;
   background: #f5f5f5;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+}
+
+.main-panel-splitter {
+  width: 8px;
+  height: 100%;
+  cursor: col-resize;
+  position: relative;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.main-panel-splitter::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: #e5e7eb;
+  transition: background-color 0.15s ease, width 0.15s ease;
+}
+
+.main-panel-splitter:hover::before,
+.main-panel-splitter.active::before {
+  width: 2px;
+  background: #8b5cf6;
+}
+
+body.is-resizing-panels {
+  cursor: col-resize;
+  user-select: none;
 }
 
 .right-panel-placeholder {
@@ -595,7 +627,11 @@
 }
 
 .query-bars .xpath-query-bar {
-  height: 30px;
+  height: auto;
+  min-height: 30px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  align-items: flex-start;
   font-size: 11px;
 }
 
@@ -605,6 +641,11 @@
 
 .query-bars .query-bar-value {
   font-size: 11px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  word-break: break-word;
+  line-height: 1.35;
 }
 
 /* ── Right-side query bars (below task tab bar) ── */
@@ -618,7 +659,19 @@
 }
 
 .right-query-bar {
-  height: 32px;
+  height: auto;
+  min-height: 32px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  align-items: flex-start;
+}
+
+.right-query-bars .query-bar-value {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  word-break: break-word;
+  line-height: 1.35;
 }
 
 /* ===================== Clickable CRUD Badge ===================== */

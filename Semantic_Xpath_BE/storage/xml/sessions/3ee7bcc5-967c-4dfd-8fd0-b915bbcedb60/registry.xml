@@ -1,0 +1,6 @@
+<Registry active_task_id="t1">
+  <Task task_id="t1" active_version_id="v2" task_name="ACL 2026 Conference Trip" created_at="2026-02-25T20:18:31.486099+00:00" updated_at="2026-02-25T20:19:53.218436+00:00">
+    <Version version_id="v1" summary="Seeded example: ACL 2026 conference itinerary" created_at="2026-02-25T20:18:31.486099+00:00" />
+    <Version version_id="v2" summary="Add a coffee break on the day that is packed with conference sessions." created_at="2026-02-25T20:19:53.218402+00:00" />
+  </Task>
+</Registry>

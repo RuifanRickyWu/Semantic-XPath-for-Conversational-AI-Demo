@@ -167,3 +167,7 @@ Reason: Container retrieval. Split turns one node into multiple; retrieve Lunch 
 User: change the dinner time to 8pm on day 1
 Output: /Itinerary/Day[1]/POI[node =~ "dinner"]
 Reason: No side effects. Single-node attribute/edit; retrieve the specific node.
+
+User: Add a coffee break on the day that is packed with conference sessions
+Output: /Plan/Day[avg(/POI[node =~ "conference sessions"])]
+Reason: No explicit day mentioned. Requires aggregation-based selection; identify the day with the highest density of conference sessions, then retrieve that node.

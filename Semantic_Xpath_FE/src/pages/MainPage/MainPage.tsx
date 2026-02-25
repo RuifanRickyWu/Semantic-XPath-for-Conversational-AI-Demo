@@ -53,8 +53,12 @@ export default function MainPage() {
   } = useAppState();
 
   const [inputValue, setInputValue] = useState("");
+  const [leftPanelWidth, setLeftPanelWidth] = useState(50);
+  const [isResizing, setIsResizing] = useState(false);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const initialQueryHandled = useRef(false);
+  const mainPageRef = useRef<HTMLDivElement>(null);
 
   /** Refresh the task list from the backend and optionally load a plan. */
   const refreshTasks = useCallback(async (loadPlanForTaskId?: string) => {
@@ -107,6 +111,45 @@ export default function MainPage() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    const textarea = inputRef.current;
+    if (!textarea) return;
+
+    const maxHeight = 160;
+    textarea.style.height = "auto";
+    const nextHeight = Math.min(textarea.scrollHeight, maxHeight);
+    textarea.style.height = `${nextHeight}px`;
+    textarea.style.overflowY = textarea.scrollHeight > maxHeight ? "auto" : "hidden";
+  }, [inputValue]);
+
+  useEffect(() => {
+    if (!isResizing) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const container = mainPageRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const rawPercent = ((e.clientX - rect.left) / rect.width) * 100;
+      const clampedPercent = Math.min(75, Math.max(25, rawPercent));
+      setLeftPanelWidth(clampedPercent);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    document.body.classList.add("is-resizing-panels");
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.body.classList.remove("is-resizing-panels");
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isResizing]);
 
   const handleSend = async (query: string) => {
     const userMessage: ChatMessage = { role: "user", content: query };
@@ -199,6 +242,15 @@ export default function MainPage() {
       setInputValue("");
       handleSend(trimmed);
     }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleResizeStart = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsResizing(true);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -446,9 +498,9 @@ export default function MainPage() {
 
   /* ── JSX ────────────────────────────────────────── */
   return (
-    <div className="main-page">
+    <div className="main-page" ref={mainPageRef}>
       {/* Left Panel — Chat */}
-      <div className="main-left-panel">
+      <div className="main-left-panel" style={{ width: `${leftPanelWidth}%` }}>
         {/* Background glow */}
         <div className="left-panel-glow" />
 
@@ -475,10 +527,11 @@ export default function MainPage() {
         <div className="main-chat-input-area">
           <div className="main-chat-input-container">
             <textarea
+              ref={inputRef}
               className="main-chat-input"
               placeholder="Ask anything..."
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               rows={1}
               disabled={isLoading}
@@ -503,8 +556,16 @@ export default function MainPage() {
         </div>
       </div>
 
+      <div
+        className={`main-panel-splitter ${isResizing ? "active" : ""}`}
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize conversation and memory panels"
+        onMouseDown={handleResizeStart}
+      />
+
       {/* Right Panel — Task Tab Bar + Tree Visualization */}
-      <div className="main-right-panel">
+      <div className="main-right-panel" style={{ width: `${100 - leftPanelWidth}%` }}>
         <div className="panel-view-header panel-view-header-right">
           <div className="panel-view-badge">Memory View</div>
         </div>

@@ -105,12 +105,12 @@
   border-radius: 50% !important;
 }
 
-.plan-node-handle[data-handlepos="left"] {
-  left: -7px !important;
+.plan-node-handle[data-handlepos="top"] {
+  top: -7px !important;
 }
 
-.plan-node-handle[data-handlepos="right"] {
-  right: -7px !important;
+.plan-node-handle[data-handlepos="bottom"] {
+  bottom: -7px !important;
 }
 
 /* ── Edges ────────────────────────────────────────── */

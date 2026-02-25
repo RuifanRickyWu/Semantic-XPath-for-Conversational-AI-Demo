@@ -125,6 +125,7 @@ class RegistryQAService(BaseIntentHandler):
 
         target = gen_result.registry_target or "tasks"
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
+        step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if self._result_verifier and per_node:
             v_res = self._result_verifier.verify(
                 exec_result,
@@ -142,15 +143,31 @@ class RegistryQAService(BaseIntentHandler):
         )
         hint = "Retrieved nodes (the answer set):\n" + formatted
 
-        return _result(hint)
+        return _result(
+            hint,
+            xpath_query=gen_result.xpath_query,
+            original_query=request,
+            scoring_trace=step_scoring_trace,
+            per_node_detail=per_node,
+        )
 
 
-def _result(hint: str) -> HandlerResult:
+def _result(
+    hint: str,
+    xpath_query: Optional[str] = None,
+    original_query: Optional[str] = None,
+    scoring_trace: Optional[List[Dict[str, Any]]] = None,
+    per_node_detail: Optional[List[Dict[str, Any]]] = None,
+) -> HandlerResult:
     return HandlerResult(
         session_updates=SessionUpdate(),
         generation_hint=hint,
         intent_result=IntentResult(
             intent="REGISTRY_QA",
             generation_hint=hint,
+            xpath_query=xpath_query,
+            original_query=original_query,
+            scoring_trace=scoring_trace,
+            per_node_detail=per_node_detail,
         ),
     )

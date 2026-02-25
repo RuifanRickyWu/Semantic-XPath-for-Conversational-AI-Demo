@@ -292,9 +292,39 @@ class OrchestratorService:
             plan_intents = ("PLAN_QA", "PLAN_ADD", "PLAN_UPDATE", "PLAN_DELETE", "PLAN_CREATE")
             if intent in registry_intents and handler_result.generation_hint:
                 registry_context = {"generation_hint": handler_result.generation_hint}
+            if intent in registry_intents and intent_results:
+                for ir in intent_results:
+                    ir = ir or {}
+                    if ir.get("intent") != intent:
+                        continue
+                    if ir.get("per_node_detail") is not None:
+                        registry_context = registry_context or {}
+                        registry_context["per_node_detail"] = ir.get("per_node_detail")
+                    if ir.get("scoring_trace") is not None:
+                        registry_context = registry_context or {}
+                        registry_context["scoring_trace"] = ir.get("scoring_trace")
+                    if ir.get("xpath_query"):
+                        registry_context = registry_context or {}
+                        registry_context["xpath_query"] = ir.get("xpath_query")
+                    break
             if intent in plan_intents:
                 if handler_result.generation_hint:
                     state_context = {"generation_hint": handler_result.generation_hint}
+                if intent_results:
+                    for ir in intent_results:
+                        ir = ir or {}
+                        if ir.get("intent") != intent:
+                            continue
+                        if ir.get("per_node_detail") is not None:
+                            state_context = state_context or {}
+                            state_context["per_node_detail"] = ir.get("per_node_detail")
+                        if ir.get("scoring_trace") is not None:
+                            state_context = state_context or {}
+                            state_context["scoring_trace"] = ir.get("scoring_trace")
+                        if ir.get("xpath_query"):
+                            state_context = state_context or {}
+                            state_context["xpath_query"] = ir.get("xpath_query")
+                        break
                 if intent == "PLAN_CREATE":
                     state_context = state_context or {}
                     if handler_result.task_name:
@@ -308,9 +338,25 @@ class OrchestratorService:
                     hint = ir.get("generation_hint")
                     if hint and i in registry_intents and registry_context is None:
                         registry_context = {"generation_hint": hint}
+                    if i in registry_intents:
+                        registry_context = registry_context or {}
+                        if hint and "generation_hint" not in registry_context:
+                            registry_context["generation_hint"] = hint
+                        if ir.get("per_node_detail") is not None and "per_node_detail" not in registry_context:
+                            registry_context["per_node_detail"] = ir.get("per_node_detail")
+                        if ir.get("scoring_trace") is not None and "scoring_trace" not in registry_context:
+                            registry_context["scoring_trace"] = ir.get("scoring_trace")
+                        if ir.get("xpath_query") and "xpath_query" not in registry_context:
+                            registry_context["xpath_query"] = ir.get("xpath_query")
                     if hint and i in plan_intents:
                         state_context = state_context or {}
                         state_context["generation_hint"] = state_context.get("generation_hint") or hint
+                        if ir.get("per_node_detail") is not None and "per_node_detail" not in state_context:
+                            state_context["per_node_detail"] = ir.get("per_node_detail")
+                        if ir.get("scoring_trace") is not None and "scoring_trace" not in state_context:
+                            state_context["scoring_trace"] = ir.get("scoring_trace")
+                        if ir.get("xpath_query") and "xpath_query" not in state_context:
+                            state_context["xpath_query"] = ir.get("xpath_query")
                         if ir.get("task_name"):
                             state_context["task_name"] = ir["task_name"]
                         if ir.get("task_xml"):

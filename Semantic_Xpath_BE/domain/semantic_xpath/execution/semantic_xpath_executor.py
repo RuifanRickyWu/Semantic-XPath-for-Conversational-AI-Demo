@@ -55,7 +55,7 @@ class SemanticXPathExecutor:
         self,
         scorer: PredicateScorer,
         top_k: int = 5,
-        score_threshold: float = 0.5,
+        score_threshold: float = 0.1,
     ):
         """
         Initialize the executor.

@@ -166,7 +166,13 @@ class PlanEditService(BaseIntentHandler):
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
         step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
-            return _result("No matching content found to remove.")
+            return _result(
+                "No matching content found to remove.",
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
+            )
 
         if self._result_verifier and per_node:
             v_res = self._result_verifier.verify(
@@ -177,7 +183,13 @@ class PlanEditService(BaseIntentHandler):
             )
             per_node = v_res.verified_nodes
         if not per_node:
-            return _result("No matching content found to remove.")
+            return _result(
+                "No matching content found to remove.",
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
+            )
 
         path_segments_list = []
         for item in per_node:
@@ -315,7 +327,13 @@ class PlanEditService(BaseIntentHandler):
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
         step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
-            return _result_update("No matching content found to update.")
+            return _result_update(
+                "No matching content found to update.",
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
+            )
 
         if self._result_verifier and per_node:
             v_res = self._result_verifier.verify(
@@ -326,7 +344,13 @@ class PlanEditService(BaseIntentHandler):
             )
             per_node = v_res.verified_nodes
         if not per_node:
-            return _result_update("No matching content found to update.")
+            return _result_update(
+                "No matching content found to update.",
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
+            )
 
         item = per_node[0]
         path_segments = item.get("tree_path")
@@ -459,7 +483,13 @@ class PlanEditService(BaseIntentHandler):
         per_node = getattr(exec_result.retrieval_detail, "per_node", []) or []
         step_scoring_trace = getattr(exec_result.retrieval_detail, "step_scoring_trace", []) or []
         if not per_node:
-            return _result_add("No matching container found to add to.")
+            return _result_add(
+                "No matching container found to add to.",
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
+            )
 
         if self._result_verifier and per_node:
             v_res = self._result_verifier.verify(
@@ -470,7 +500,13 @@ class PlanEditService(BaseIntentHandler):
             )
             per_node = v_res.verified_nodes
         if not per_node:
-            return _result_add("No matching container found to add to.")
+            return _result_add(
+                "No matching container found to add to.",
+                xpath_query=gen_result.xpath_query,
+                original_query=request,
+                scoring_trace=step_scoring_trace,
+                per_node_detail=per_node,
+            )
 
         item = per_node[0]
         path_segments = item.get("tree_path")
@@ -540,13 +576,23 @@ def _format_added_summary(per_node_item: Dict[str, Any], request: str) -> str:
     return f"Added to {context}: {request}"
 
 
-def _result_add(hint: str) -> HandlerResult:
+def _result_add(
+    hint: str,
+    xpath_query: Optional[str] = None,
+    original_query: Optional[str] = None,
+    scoring_trace: Optional[List[Dict[str, Any]]] = None,
+    per_node_detail: Optional[List[Dict[str, Any]]] = None,
+) -> HandlerResult:
     return HandlerResult(
         session_updates=SessionUpdate(),
         generation_hint=hint,
         intent_result=IntentResult(
             intent="PLAN_ADD",
             generation_hint=hint,
+            xpath_query=xpath_query,
+            original_query=original_query,
+            scoring_trace=scoring_trace,
+            per_node_detail=per_node_detail,
         ),
     )
 
@@ -722,23 +768,43 @@ def _format_updated_summary(per_node_item: Dict[str, Any], request: str) -> str:
     return f"Updated {context}: {request}"
 
 
-def _result_update(hint: str) -> HandlerResult:
+def _result_update(
+    hint: str,
+    xpath_query: Optional[str] = None,
+    original_query: Optional[str] = None,
+    scoring_trace: Optional[List[Dict[str, Any]]] = None,
+    per_node_detail: Optional[List[Dict[str, Any]]] = None,
+) -> HandlerResult:
     return HandlerResult(
         session_updates=SessionUpdate(),
         generation_hint=hint,
         intent_result=IntentResult(
             intent="PLAN_UPDATE",
             generation_hint=hint,
+            xpath_query=xpath_query,
+            original_query=original_query,
+            scoring_trace=scoring_trace,
+            per_node_detail=per_node_detail,
         ),
     )
 
 
-def _result(hint: str) -> HandlerResult:
+def _result(
+    hint: str,
+    xpath_query: Optional[str] = None,
+    original_query: Optional[str] = None,
+    scoring_trace: Optional[List[Dict[str, Any]]] = None,
+    per_node_detail: Optional[List[Dict[str, Any]]] = None,
+) -> HandlerResult:
     return HandlerResult(
         session_updates=SessionUpdate(),
         generation_hint=hint,
         intent_result=IntentResult(
             intent="PLAN_DELETE",
             generation_hint=hint,
+            xpath_query=xpath_query,
+            original_query=original_query,
+            scoring_trace=scoring_trace,
+            per_node_detail=per_node_detail,
         ),
     )

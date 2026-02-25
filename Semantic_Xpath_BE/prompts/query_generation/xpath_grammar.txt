@@ -46,7 +46,7 @@ Conjunction / disjunction / negation:
 - The same disjunction logic applies to node-test level fusion, e.g. `max(NodeType[predicate], ...)`.
 - Negation uses `1-p`.
 Evidence-based aggregation (agg_min, agg_max, agg_avg):
-- `agg_max(EvidenceStep)` where score is max over evidence node scores (existence-style: at least one matches)
-- `agg_avg(EvidenceStep)` where score is mean over evidence node scores (average-style)
+- `agg_max(EvidenceStep)`: compute the score as the maximum over evidence node scores. Use this when the intent is existence-style matching (i.e., at least one strong evidence node is sufficient, such as specific entity matching).
+- `agg_avg(EvidenceStep)`: compute the score as the mean over evidence node scores. Use this when the intent is distributional matching (i.e., overall semantic consistency across evidence nodes).
 - `agg_min(EvidenceStep)` where score is min over evidence node scores (universal: all must match; use for "every", "each", "all of")
 - EvidenceStep syntax: Axis NodeType [Predicate], e.g. /*[node =~ "jazz"] or //POI[content =~ "museum"]

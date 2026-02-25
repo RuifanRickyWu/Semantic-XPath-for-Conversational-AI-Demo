@@ -38,6 +38,7 @@ const NODE_HEIGHT = 80;
 
 const RANK_SEP = 100;
 const NODE_SEP = 50;
+type LayoutDirection = "LR" | "TB";
 
 /* ── Label helpers ─────────────────────────────────── */
 
@@ -220,11 +221,12 @@ function walkElement(
 
 function applyDagreLayout(
   nodes: Node<PlanNodeData>[],
-  edges: Edge[]
+  edges: Edge[],
+  direction: LayoutDirection
 ): void {
   const g = new dagre.graphlib.Graph();
   g.setGraph({
-    rankdir: "LR",
+    rankdir: direction,
     ranksep: RANK_SEP,
     nodesep: NODE_SEP,
     marginx: 20,
@@ -254,7 +256,10 @@ function applyDagreLayout(
 
 /* ── Public API ────────────────────────────────────── */
 
-export function parseXmlToTree(xmlString: string): {
+export function parseXmlToTree(
+  xmlString: string,
+  options?: { direction?: LayoutDirection }
+): {
   nodes: Node<PlanNodeData>[];
   edges: Edge[];
 } {
@@ -273,7 +278,7 @@ export function parseXmlToTree(xmlString: string): {
   const idCounter = { value: 0 };
 
   walkElement(root, null, "", "", "", nodes, edges, idCounter);
-  applyDagreLayout(nodes, edges);
+  applyDagreLayout(nodes, edges, options?.direction ?? "LR");
 
   return { nodes, edges };
 }

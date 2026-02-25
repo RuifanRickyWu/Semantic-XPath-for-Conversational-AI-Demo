@@ -13,7 +13,7 @@ interface ScoreAggregationProps {
 
 function scoreColor(score: number): string {
   if (score >= 0.8) return "#22c55e";
-  if (score >= 0.5) return "#f59e0b";
+  if (score >= 0.35) return "#f59e0b";
   return "#ef4444";
 }
 
@@ -27,16 +27,22 @@ function getNodeLabel(node: ScoredNodeMeta | undefined): string {
   return type;
 }
 
+function toUiAggToken(raw: string): string {
+  return raw.replace(/\bagg_(min|max|avg)\b/gi, (_, op: string) =>
+    String(op).toLowerCase()
+  );
+}
+
 function formatPredicateType(predResult: PredicateResult): string {
   if (predResult?.has_aggregation) return "AGGREGATION";
   const ast = predResult.predicate_ast;
   if (!ast) return predResult.predicate || "predicate";
   const type = ast.type || ast.operator || "";
-  if (type === "AGG_PREV") return "AGG_PREV";
-  if (type === "AGG_EXISTS") return "AGG_EXISTS";
+  if (type === "AGG_PREV") return "prev";
+  if (type === "AGG_EXISTS") return "exists";
   if (type === "evidence_agg") {
     const op = ast.operator || "agg_max";
-    return op.toUpperCase();
+    return toUiAggToken(String(op));
   }
   if (type === "atom") return "ATOM";
   if (type === "AND") return "AND";
@@ -51,13 +57,13 @@ function toFixedScore(score: number | undefined): string {
 
 function collectAggregationLabels(pred: PredicateResult): string[] {
   if (Array.isArray(pred?.aggregation_labels) && pred.aggregation_labels.length > 0) {
-    return pred.aggregation_labels;
+    return pred.aggregation_labels.map((label) => toUiAggToken(String(label)));
   }
   const ast = pred?.predicate_ast;
   if (!ast || typeof ast !== "object") return [];
   const op = String(ast.operator || "");
   if (ast.type === "evidence_agg" || op.startsWith("agg_") || op.startsWith("AGG_")) {
-    return [op || "AGG"];
+    return [toUiAggToken(op || "agg")];
   }
   return [];
 }
@@ -75,9 +81,16 @@ function normalizeNestedSteps(step: ScoringSubStep): ScoringSubStep[] {
   return normalized;
 }
 
-function flattenStepLabel(step: ScoringSubStep, nodeLabel: string): string {
+function flattenStepLabel(
+  step: ScoringSubStep,
+  nodeLabel: string,
+  inEvidenceContext: boolean
+): string {
   const t = step?.type;
   if (t === "atom") {
+    if (inEvidenceContext && step.node_name) {
+      return String(step.node_name);
+    }
     const cond = step.condition;
     if (cond?.field && cond.value) {
       return `${String(cond.field)} =~ "${String(cond.value)}" on ${nodeLabel}`;
@@ -92,10 +105,10 @@ function flattenStepLabel(step: ScoringSubStep, nodeLabel: string): string {
   }
   if (t === "not") return step.formula || "1 - Score(u, ψ)";
   if (t === "evidence_agg") {
-    const agg = String(step.agg_type || "agg").toUpperCase();
+    const agg = toUiAggToken(String(step.agg_type || "agg"));
     const cnt = step.evidence_count ?? 0;
     const selector = step.selector ? ` on ${step.selector}` : "";
-    return `AGG_${agg}${selector} (${cnt} evidence nodes)`;
+    return `${agg}${selector} (${cnt} evidence nodes)`;
   }
   return step.formula || step.note || t || "step";
 }
@@ -103,7 +116,8 @@ function flattenStepLabel(step: ScoringSubStep, nodeLabel: string): string {
 function renderScoringSteps(
   steps: ScoringSubStep[],
   nodeLabel: string,
-  depth = 0
+  depth = 0,
+  inEvidenceContext = false
 ): ReactNode[] {
   if (!steps || steps.length === 0) return [];
   return steps.map((step, i: number) => {
@@ -111,11 +125,12 @@ function renderScoringSteps(
     const score = step.result ?? step.score;
     const nested = normalizeNestedSteps(step);
     const hasNested = Array.isArray(nested) && nested.length > 0;
+    const nextInEvidenceContext = inEvidenceContext || step.type === "evidence_agg";
 
     return (
       <div key={`${depth}-${i}`} className="agg-scoring-step" style={{ marginLeft: indent }}>
         <div className="agg-step-main">
-          <span className="agg-step-label">{flattenStepLabel(step, nodeLabel)}</span>
+          <span className="agg-step-label">{flattenStepLabel(step, nodeLabel, inEvidenceContext)}</span>
           {(score !== undefined || step.inner_score !== undefined) && (
             <span className="agg-step-score" style={{ color: scoreColor(score ?? step.inner_score ?? 0) }}>
               {toFixedScore(score ?? step.inner_score)}
@@ -124,7 +139,7 @@ function renderScoringSteps(
         </div>
         {hasNested && (
           <div className="agg-step-nested">
-            {renderScoringSteps(nested, nodeLabel, depth + 1)}
+            {renderScoringSteps(nested, nodeLabel, depth + 1, nextInEvidenceContext)}
           </div>
         )}
       </div>
@@ -229,7 +244,7 @@ export default function ScoreAggregation({
 
               {pred.predicate && (
                 <div className="agg-formula">
-                  {pred.predicate}
+                  {toUiAggToken(pred.predicate)}
                 </div>
               )}
 

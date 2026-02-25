@@ -43,7 +43,10 @@ from services.query_generation import (
 )
 from services.result_verification import SemanticXPathResultVerifier
 from clients.bart_client import get_bart_client
-from services.predicate_scorer import get_scorer as get_predicate_scorer
+from services.predicate_scorer import (
+    get_scorer as get_predicate_scorer,
+    load_config as load_predicate_config,
+)
 from domain.semantic_xpath.execution import SemanticXPathExecutor
 from api.chat_resource import create_chat_blueprint
 
@@ -100,11 +103,15 @@ def create_app() -> Flask:
     plan_builder_service = PlanBuilderService(client=openai_client)
     registry_query_service = RegistryQueryGenerationService(client=openai_client)
     plan_query_service = PlanContentQueryGenerationService(client=openai_client)
-    registry_scorer = get_predicate_scorer(client=bart_client)
+    predicate_config = load_predicate_config()
+    xpath_executor_config = predicate_config.get("xpath_executor", {})
+    score_threshold = float(xpath_executor_config.get("score_threshold", 0.1))
+
+    registry_scorer = get_predicate_scorer(config=predicate_config, client=bart_client)
     registry_executor = SemanticXPathExecutor(
         scorer=registry_scorer,
         top_k=20,
-        score_threshold=0.5,
+        score_threshold=score_threshold,
     )
     result_verifier = SemanticXPathResultVerifier(client=openai_client)
 

@@ -117,7 +117,7 @@ function findScoreForNode(
 
 function scoreColorClass(score: number): string {
   if (score >= 0.8) return "score-high";
-  if (score >= 0.5) return "score-medium";
+  if (score >= 0.35) return "score-medium";
   return "score-low";
 }
 
@@ -129,7 +129,10 @@ export default function ScoringTreeView({
   selectedNodeId,
 }: ScoringTreeViewProps) {
   const { nodes: rawNodes, edges: rawEdges } = useMemo(
-    () => (planXml ? parseXmlToTree(planXml) : { nodes: [], edges: [] }),
+    () =>
+      planXml
+        ? parseXmlToTree(planXml, { direction: "LR" })
+        : { nodes: [], edges: [] },
     [planXml]
   );
 

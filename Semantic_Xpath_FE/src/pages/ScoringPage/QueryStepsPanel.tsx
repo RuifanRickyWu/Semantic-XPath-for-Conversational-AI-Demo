@@ -27,13 +27,19 @@ function getNodeLabel(node: ScoredNodeMeta | undefined): string {
 
 function scoreColor(score: number): string {
   if (score >= 0.8) return "#22c55e";
-  if (score >= 0.5) return "#f59e0b";
+  if (score >= 0.35) return "#f59e0b";
   return "#ef4444";
 }
 
 function nodeScoreColor(node: ScoredNode): string {
   if (node.is_filtered_out) return "#9ca3af";
   return scoreColor(node.accumulated_score ?? 0);
+}
+
+function toUiAggToken(raw: string): string {
+  return raw.replace(/\bagg_(min|max|avg)\b/gi, (_, op: string) =>
+    String(op).toLowerCase()
+  );
 }
 
 function formatNodeTestExpr(expr: NodeTestExpr | undefined): string {
@@ -55,7 +61,7 @@ function formatNodeTestExpr(expr: NodeTestExpr | undefined): string {
     if (test.predicate) {
       const predicateText =
         typeof test.predicate_str === "string" && test.predicate_str.length > 0
-          ? test.predicate_str
+          ? toUiAggToken(test.predicate_str)
           : "predicate";
       result += `[${predicateText}]`;
     }

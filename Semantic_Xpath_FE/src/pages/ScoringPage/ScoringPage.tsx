@@ -15,6 +15,12 @@ interface ScoringLocationState {
   planXml?: string;
 }
 
+function toUiXpath(xpath: string): string {
+  return xpath.replace(/\bagg_(min|max|avg)\b/gi, (_, op: string) =>
+    String(op).toLowerCase()
+  );
+}
+
 export default function ScoringPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -58,7 +64,7 @@ export default function ScoringPage() {
           {xpathQuery && (
             <div className="scoring-query-bar">
               <span className="scoring-query-label">XPath</span>
-              <span className="scoring-query-value">{xpathQuery}</span>
+              <span className="scoring-query-value">{toUiXpath(xpathQuery)}</span>
             </div>
           )}
         </div>
@@ -105,15 +111,18 @@ export default function ScoringPage() {
               selectedNodeId={selectedNodeId}
             />
           </div>
-
-          {selectedNodeData && (
-            <div className="scoring-aggregation-float">
+          <div className="scoring-aggregation-side">
+            {selectedNodeData ? (
               <ScoreAggregation
                 nodeData={selectedNodeData}
                 onClose={() => setSelectedNodeId(null)}
               />
-            </div>
-          )}
+            ) : (
+              <div className="scoring-aggregation-empty">
+                Click a node in the tree to view score breakdown.
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

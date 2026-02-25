@@ -32,6 +32,7 @@ export interface NodeTestExpr {
 
 export interface ScoringSubStep {
   type?: string;
+  node_name?: string;
   condition?: {
     type?: string;
     field?: string;

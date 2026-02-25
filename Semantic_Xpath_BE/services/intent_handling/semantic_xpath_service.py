@@ -109,15 +109,15 @@ class SemanticXpathService:
             }),
         }
 
-        if intent_meta.get("xpath_query"):
+        if "xpath_query" in intent_meta:
             result["xpath_query"] = intent_meta["xpath_query"]
-        if intent_meta.get("original_query"):
+        if "original_query" in intent_meta:
             result["original_query"] = intent_meta["original_query"]
-        if intent_meta.get("affected_node_paths"):
+        if "affected_node_paths" in intent_meta:
             result["affected_node_paths"] = intent_meta["affected_node_paths"]
-        if intent_meta.get("scoring_trace"):
+        if "scoring_trace" in intent_meta:
             result["scoring_trace"] = intent_meta["scoring_trace"]
-        if intent_meta.get("per_node_detail"):
+        if "per_node_detail" in intent_meta:
             result["per_node_detail"] = intent_meta["per_node_detail"]
 
         return result
@@ -130,15 +130,15 @@ class SemanticXpathService:
         for ir in intent_results:
             if not isinstance(ir, dict):
                 continue
-            if ir.get("xpath_query") and not meta.get("xpath_query"):
+            if "xpath_query" in ir and ir.get("xpath_query") is not None and "xpath_query" not in meta:
                 meta["xpath_query"] = ir["xpath_query"]
-            if ir.get("original_query") and not meta.get("original_query"):
+            if "original_query" in ir and ir.get("original_query") is not None and "original_query" not in meta:
                 meta["original_query"] = ir["original_query"]
-            if ir.get("affected_node_paths") and not meta.get("affected_node_paths"):
+            if "affected_node_paths" in ir and ir.get("affected_node_paths") is not None and "affected_node_paths" not in meta:
                 meta["affected_node_paths"] = ir["affected_node_paths"]
-            if ir.get("scoring_trace") and not meta.get("scoring_trace"):
+            if "scoring_trace" in ir and ir.get("scoring_trace") is not None and "scoring_trace" not in meta:
                 meta["scoring_trace"] = ir["scoring_trace"]
-            if ir.get("per_node_detail") and not meta.get("per_node_detail"):
+            if "per_node_detail" in ir and ir.get("per_node_detail") is not None and "per_node_detail" not in meta:
                 meta["per_node_detail"] = ir["per_node_detail"]
         return meta
 

@@ -58,7 +58,7 @@ class PredicateHandler:
         self,
         scorer: PredicateScorer,
         top_k: int = 5,
-        score_threshold: float = 0.5,
+        score_threshold: float = 0.1,
         schema: Optional[Dict[str, Any]] = None
     ):
         """
@@ -662,6 +662,7 @@ class PredicateHandler:
         trace_steps.append({
             "type": "atom",
             "condition": predicate.to_dict(),
+            "node_name": self._node_utils.get_name(node),
             "score": score,
             "note": "Exact field match" if was_exact else "Atom(u, φ) - entailment",
         })

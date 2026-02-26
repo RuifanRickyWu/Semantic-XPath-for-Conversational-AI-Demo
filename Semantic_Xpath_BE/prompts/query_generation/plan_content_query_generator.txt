@@ -21,6 +21,10 @@ RULES
 - Each predicate should be a self-contained semantic unit from the user's utterance. One concept = one predicate when possible.
 - Only use max(pred1, pred2, ...) when the user explicitly mentions multiple distinct alternatives (e.g. "parks or lakes" → max(node =~ "park", node =~ "lake")).
 - NEVER include @version, @version_id, @task_id, or any registry-level metadata predicates in the XPath. The correct plan version is already loaded before execution — the XML you are querying contains only plan content (days, activities, tasks, etc.), not version or task metadata. Ignore version/task references in the user utterance or context; they are handled externally.
+- Schema-agnostic generation: do NOT hardcode node names from examples (e.g., Itinerary, Day, POI). Always adapt path steps to node names present in schema_summary.
+- Specificity-first (anti-lazy fallback): unless the user explicitly asks for exhaustive retrieval (e.g., "all", "everything", "every", "全部", "所有"), DO NOT return a purely structural path as final output. A purely structural path means a query with only node steps / wildcard / index selectors and no semantic predicate (e.g., /Root/Section or /Root/Section/*).
+- Semantic anchor coverage: when the utterance contains non-structural content anchors (topics/entities/descriptors such as "interesting", "museum", "conference sessions"), the XPath MUST include corresponding semantic predicate constraints (e.g., node =~ "interesting"). Do not drop these anchors.
+- Structural-only queries are allowed only when the user request itself is purely structural (index/range/order/navigation) or explicitly exhaustive ("all"/"全部"/"所有").
 
 EXAMPLES
 All examples assume root element `Itinerary` with children `Day`. Adapt path to match schema_summary (e.g. Plan, Trip).

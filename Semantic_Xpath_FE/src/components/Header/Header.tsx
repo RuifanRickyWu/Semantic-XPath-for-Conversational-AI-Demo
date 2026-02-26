@@ -1,20 +1,14 @@
 import { useAppState } from "../../context/useAppState";
-import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
 export default function Header() {
   const { headerSlot } = useAppState();
-  const navigate = useNavigate();
-
-  const handleHomeClick = () => {
-    navigate("/");
-  };
 
   return (
     <div className="header-wrapper">
       <header className="header">
         <div className="header-left">
-          <button type="button" className="header-home-btn" onClick={handleHomeClick}>
+          <div className="header-home-btn" aria-label="SemanticXpath Chat">
             <div className="header-logo">
               <svg
                 width="27"
@@ -30,7 +24,7 @@ export default function Header() {
               </svg>
             </div>
             <span className="header-title">SemanticXpath Chat</span>
-          </button>
+          </div>
         </div>
         {headerSlot && <div className="header-center">{headerSlot}</div>}
         <div className="header-right">

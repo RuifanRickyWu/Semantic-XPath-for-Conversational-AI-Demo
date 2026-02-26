@@ -119,7 +119,7 @@ export default function ScoringPage() {
               />
             ) : (
               <div className="scoring-aggregation-empty">
-                Click a node in the tree to view score breakdown.
+                Select a query step, then click a node in the tree to view the score breakdown.
               </div>
             )}
           </div>

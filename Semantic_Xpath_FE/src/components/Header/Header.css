@@ -31,7 +31,7 @@
   padding: 0;
   border: none;
   background: transparent;
-  cursor: pointer;
+  cursor: default;
 }
 
 .header-center {

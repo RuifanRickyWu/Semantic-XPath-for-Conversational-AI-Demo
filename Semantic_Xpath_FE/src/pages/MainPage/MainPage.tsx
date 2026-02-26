@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { postChat } from "../../api/chatApi";
 import { getTasks, getTaskPlan, activateTask } from "../../api/tasksApi";
-import type { CrudAction } from "../../types/chat";
+import type { CrudAction, IntentResultStep } from "../../types/chat";
 import { typeToCrudAction, CRUD_CONFIG } from "../../types/chat";
 import type { ChatMessage } from "../../context/AppStateContext";
 import { useAppState } from "../../context/useAppState";
@@ -198,39 +198,110 @@ export default function MainPage() {
         if (returnedVersionId) {
           currentVersionIdRef.current = returnedVersionId;
         }
+        const intentSteps: IntentResultStep[] = isClarification
+          ? []
+          : (result.intent_results ?? []);
 
-        const systemMessage: ChatMessage = {
-          role: "system",
-          content: result.message || "Done.",
-          type: result.type,
-          title: undefined,
-          crudAction: crud,
-          xpathQuery: result.xpath_query,
-          originalQuery: result.original_query,
-          affectedNodePaths: result.affected_node_paths,
-          scoringTrace: result.scoring_trace,
-          perNodeDetail: result.per_node_detail,
-          snapshotTaskId: currentTaskIdRef.current ?? undefined,
-          snapshotVersionId: currentVersionIdRef.current ?? undefined,
-        };
-        setMessages((prev) => {
-          const updated = [...prev.slice(0, -1), systemMessage];
-          if (crud) {
-            setSelectedMessageIndex(updated.length - 1);
+        if (intentSteps.length > 1) {
+          let replayTaskId = currentTaskIdRef.current;
+          let replayVersionId = currentVersionIdRef.current;
+
+          const stepMessages: ChatMessage[] = intentSteps.map((step) => {
+            const stepCrud = typeToCrudAction(step.intent);
+            const stepUpdates = step.session_updates;
+
+            if (stepUpdates?.active_task_id) {
+              replayTaskId = stepUpdates.active_task_id;
+            }
+            if (stepUpdates?.active_version_id) {
+              replayVersionId = stepUpdates.active_version_id;
+            }
+
+            return {
+              role: "system",
+              content: step.message || `${step.intent} completed.`,
+              type: step.intent,
+              title: undefined,
+              crudAction: stepCrud,
+              xpathQuery: step.xpath_query,
+              originalQuery: step.original_query,
+              affectedNodePaths: step.affected_node_paths,
+              scoringTrace: step.scoring_trace,
+              perNodeDetail: step.per_node_detail,
+              snapshotTaskId: replayTaskId ?? undefined,
+              snapshotVersionId: replayVersionId ?? undefined,
+            };
+          });
+
+          setMessages((prev) => {
+            const updated = [...prev.slice(0, -1), ...stepMessages];
+            for (let i = updated.length - 1; i >= 0; i--) {
+              const msg = updated[i];
+              if (msg.role === "system" && msg.crudAction) {
+                setSelectedMessageIndex(i);
+                return updated;
+              }
+            }
+            setSelectedMessageIndex(null);
+            return updated;
+          });
+
+          let latestCrudStep: IntentResultStep | null = null;
+          for (let i = intentSteps.length - 1; i >= 0; i--) {
+            const step = intentSteps[i];
+            if (typeToCrudAction(step.intent)) {
+              latestCrudStep = step;
+              break;
+            }
           }
-          return updated;
-        });
 
-        // Update tree highlight state and query bars
-        if (crud && result.affected_node_paths?.length) {
-          setHighlightMode(crud);
-          setHighlightedPaths(result.affected_node_paths);
+          if (
+            latestCrudStep &&
+            typeToCrudAction(latestCrudStep.intent) &&
+            latestCrudStep.affected_node_paths?.length
+          ) {
+            setHighlightMode(typeToCrudAction(latestCrudStep.intent));
+            setHighlightedPaths(latestCrudStep.affected_node_paths);
+          } else {
+            setHighlightMode(null);
+            setHighlightedPaths(null);
+          }
+          setLatestXpathQuery(latestCrudStep?.xpath_query || null);
+          setLatestOriginalQuery(latestCrudStep?.original_query || null);
         } else {
-          setHighlightMode(null);
-          setHighlightedPaths(null);
+          const systemMessage: ChatMessage = {
+            role: "system",
+            content: result.message || "Done.",
+            type: result.type,
+            title: undefined,
+            crudAction: crud,
+            xpathQuery: result.xpath_query,
+            originalQuery: result.original_query,
+            affectedNodePaths: result.affected_node_paths,
+            scoringTrace: result.scoring_trace,
+            perNodeDetail: result.per_node_detail,
+            snapshotTaskId: currentTaskIdRef.current ?? undefined,
+            snapshotVersionId: currentVersionIdRef.current ?? undefined,
+          };
+          setMessages((prev) => {
+            const updated = [...prev.slice(0, -1), systemMessage];
+            if (crud) {
+              setSelectedMessageIndex(updated.length - 1);
+            }
+            return updated;
+          });
+
+          // Update tree highlight state and query bars
+          if (crud && result.affected_node_paths?.length) {
+            setHighlightMode(crud);
+            setHighlightedPaths(result.affected_node_paths);
+          } else {
+            setHighlightMode(null);
+            setHighlightedPaths(null);
+          }
+          setLatestXpathQuery(result.xpath_query || null);
+          setLatestOriginalQuery(result.original_query || null);
         }
-        setLatestXpathQuery(result.xpath_query || null);
-        setLatestOriginalQuery(result.original_query || null);
 
         // Refresh task tab bar when backend state may have changed
         const newTaskId = result.session_updates?.active_task_id;

@@ -250,7 +250,11 @@ class OrchestratorService:
                 task_name=hr.task_name,
                 task_xml=hr.task_xml,
             )
-            intent_results.append(asdict(ir))
+            ir_dict = asdict(ir)
+            # Preserve per-intent session deltas so clients can replay multi-intent
+            # turns step-by-step in the same execution order.
+            ir_dict["session_updates"] = asdict(hr.session_updates)
+            intent_results.append(ir_dict)
 
         stop = any(hr.stop for _, hr in results)
         generation_hint = results[-1][1].generation_hint if results else None

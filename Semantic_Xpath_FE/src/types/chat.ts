@@ -32,6 +32,17 @@ export interface TreePathSegmentObject {
 export type TreePathSegment = [string, number] | TreePathSegmentObject | string;
 export type AffectedNodePath = TreePathSegment[];
 
+export interface IntentResultStep {
+  intent: ChatResponseType;
+  message?: string;
+  xpath_query?: string;
+  original_query?: string;
+  affected_node_paths?: AffectedNodePath[];
+  scoring_trace?: ScoringTraceStep[];
+  per_node_detail?: PerNodeDetail[];
+  session_updates?: ChatSessionUpdates;
+}
+
 export interface ChatResponse {
   success: boolean;
   type: ChatResponseType;
@@ -45,6 +56,7 @@ export interface ChatResponse {
   affected_node_paths?: AffectedNodePath[];
   scoring_trace?: ScoringTraceStep[];
   per_node_detail?: PerNodeDetail[];
+  intent_results?: IntentResultStep[];
   error?: string;
 }
 

@@ -127,6 +127,9 @@ class SemanticXpathService:
             result["scoring_trace"] = intent_meta["scoring_trace"]
         if "per_node_detail" in intent_meta:
             result["per_node_detail"] = intent_meta["per_node_detail"]
+        intent_results = self._extract_intent_results(resp)
+        if intent_results:
+            result["intent_results"] = intent_results
 
         return result
 
@@ -149,6 +152,32 @@ class SemanticXpathService:
             if "per_node_detail" in ir and ir.get("per_node_detail") is not None and "per_node_detail" not in meta:
                 meta["per_node_detail"] = ir["per_node_detail"]
         return meta
+
+    @staticmethod
+    def _extract_intent_results(resp: Any) -> list[Dict[str, Any]]:
+        """
+        Extract ordered per-intent results for multi-intent frontend replay.
+
+        Keeps only fields needed by the UI and removes nulls to keep payloads compact.
+        """
+        extracted: list[Dict[str, Any]] = []
+        for ir in (getattr(resp, "intent_results", None) or []):
+            if not isinstance(ir, dict):
+                continue
+
+            normalized = strip_none({
+                "intent": ir.get("intent"),
+                "message": ir.get("generation_hint"),
+                "xpath_query": ir.get("xpath_query"),
+                "original_query": ir.get("original_query"),
+                "affected_node_paths": ir.get("affected_node_paths"),
+                "scoring_trace": ir.get("scoring_trace"),
+                "per_node_detail": ir.get("per_node_detail"),
+                "session_updates": ir.get("session_updates"),
+            })
+            if normalized.get("intent"):
+                extracted.append(normalized)
+        return extracted
 
     # ------------------------------------------------------------------
     # Task REST endpoints

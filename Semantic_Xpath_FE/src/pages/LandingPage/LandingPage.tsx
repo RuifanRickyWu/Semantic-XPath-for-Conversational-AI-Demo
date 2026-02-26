@@ -32,6 +32,7 @@ export default function LandingPage() {
   } = useAppState();
   const [isSeeding, setIsSeeding] = useState(false);
   const [examples, setExamples] = useState<ExampleTemplate[]>([]);
+  const ACL_TEMPLATE_KEY: ExampleTemplateKey = "acl_2026_conference";
 
   useEffect(() => {
     const oldSession = startNewSession();
@@ -116,6 +117,12 @@ export default function LandingPage() {
     }
   };
 
+  const prioritizedExamples = [...examples].sort((a, b) => {
+    if (a.template_key === ACL_TEMPLATE_KEY) return -1;
+    if (b.template_key === ACL_TEMPLATE_KEY) return 1;
+    return 0;
+  });
+
   return (
     <div className="home-page">
       {/* Dot grid pattern overlay */}
@@ -148,10 +155,14 @@ export default function LandingPage() {
       {/* Input section */}
       <div className="home-input-section">
         <div className="home-example-buttons">
-          {examples.map((example) => (
+          {prioritizedExamples.map((example) => (
             <button
               key={example.template_key}
-              className="home-example-btn"
+              className={`home-example-btn ${
+                example.template_key === ACL_TEMPLATE_KEY
+                  ? "home-example-btn--recommended"
+                  : ""
+              }`}
               onClick={() => handleSeedExample(example.template_key)}
               disabled={isSeeding}
             >
@@ -160,7 +171,7 @@ export default function LandingPage() {
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                   <path
                     d="M2 10.5L10.5 2M10.5 2H4.5M10.5 2V8"
-                    stroke="#7C3AED"
+                    stroke="currentColor"
                     strokeWidth="1.6"
                     strokeLinecap="round"
                     strokeLinejoin="round"

@@ -154,6 +154,10 @@ export default function ScoreAggregation({
   const predicateResults: PredicateResult[] = nodeData.predicate_results || [];
   const nodeLabel = getNodeLabel(nodeData.node);
   const nodeScore = nodeData.accumulated_score ?? nodeData.final_step_score ?? nodeData.step_score ?? 0;
+  const stepScore = nodeData.step_score ?? nodeData.final_step_score ?? nodeScore;
+  const derivedPreviousScore = stepScore > 0 ? nodeScore / stepScore : nodeScore;
+  const previousScore = nodeData.previous_score ?? derivedPreviousScore;
+  const accumulatedScore = nodeData.accumulated_score ?? nodeData.final_step_score ?? nodeScore;
   const aggregationTags = Array.from(
     new Set(predicateResults.flatMap((pred) => collectAggregationLabels(pred)))
   );
@@ -196,6 +200,12 @@ export default function ScoreAggregation({
         <span className="agg-selected-label">{nodeLabel}</span>
         <span className="agg-selected-score" style={{ color: scoreColor(nodeScore) }}>
           {toFixedScore(nodeScore)}
+        </span>
+      </div>
+      <div className="agg-score-equation">
+        <span className="agg-score-equation-label">Score flow</span>
+        <span className="agg-score-equation-value">
+          {toFixedScore(previousScore)} × {toFixedScore(stepScore)} = {toFixedScore(accumulatedScore)}
         </span>
       </div>
 

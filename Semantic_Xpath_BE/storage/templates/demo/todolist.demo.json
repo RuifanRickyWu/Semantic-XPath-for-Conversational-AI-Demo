@@ -1,0 +1,15 @@
+{
+  "bootstrap_messages": [
+    {
+      "role": "user",
+      "content": "Show me a PHD student Todo list"
+    },
+    {
+      "role": "system",
+      "type": "PLAN_CREATE",
+      "content": "PhD student todo plan across Work, Personal, Household, Health, and Learning categories, with projects and task-level priorities/statuses.",
+      "snapshotVersionId": "__INITIAL_VERSION_ID__"
+    }
+  ],
+  "result_file": "todolist_repetitive_tasks_automate_or_templatize.result.json"
+}

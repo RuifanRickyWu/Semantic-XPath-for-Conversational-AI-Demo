@@ -1,8 +1,0 @@
-<Registry active_task_id="t1">
-  <Task task_id="t1" active_version_id="v4" task_name="ACL 2026 Conference Trip" created_at="2026-02-26T17:55:34.949418+00:00" updated_at="2026-02-26T17:56:49.725164+00:00">
-    <Version version_id="v1" summary="Seeded example: ACL 2026 conference itinerary" created_at="2026-02-26T17:55:34.949418+00:00" />
-    <Version version_id="v2" summary="Added a coffee break on the most conference-session-heavy day" created_at="2026-02-26T17:55:34.952129+00:00" />
-    <Version version_id="v3" summary="Remove the coffee break from its current day/time in the plan." created_at="2026-02-26T17:56:43.603843+00:00" />
-    <Version version_id="v4" summary="Add the coffee break to Day 3." created_at="2026-02-26T17:56:49.725138+00:00" />
-  </Task>
-</Registry>

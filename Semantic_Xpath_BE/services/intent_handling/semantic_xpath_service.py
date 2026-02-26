@@ -36,13 +36,17 @@ _EXAMPLE_TEMPLATES = {
         "label": "Show me a 3 Day Trip in San Diego",
         "task_name": "3 Day Trip in San Diego",
         "version_summary": "Seeded example: San Diego itinerary",
-        "path": _BASE_DIR / "storage" / "templates" / "sandiego_trip_3d.xml",
+        "path": _TEMPLATE_XML_DIR / "sandiego_trip_3d.xml",
+        "evolved_path": _TEMPLATE_XML_DIR / "sandiego_trip_3d_with_last_day_sightseeing.xml",
+        "evolved_version_summary": "Replaced last-day work-related schedule with relaxing sightseeing",
+        "demo_path": _TEMPLATE_DEMO_DIR / "sandiego_trip_3d.demo.json",
     },
     "10day_toronto_trip": {
         "label": "Show me a 10 Day Trip in Toronto",
         "task_name": "10 Day Trip in Toronto",
         "version_summary": "Seeded example: 10-day Toronto itinerary",
-        "path": _BASE_DIR / "storage" / "templates" / "10day_toronto_trip.xml",
+        "path": _TEMPLATE_XML_DIR / "10day_toronto_trip.xml",
+        "demo_path": _TEMPLATE_DEMO_DIR / "10day_toronto_trip.demo.json",
     },
     "acl_2026_conference": {
         "label": "Show me the ACL 2026 Conference case",
@@ -54,10 +58,11 @@ _EXAMPLE_TEMPLATES = {
         "demo_path": _TEMPLATE_DEMO_DIR / "acl_2026_conference.demo.json",
     },
     "todolist": {
-        "label": "PhD Student Todo List",
+        "label": "Show me a PHD student Todo list",
         "task_name": "PhD Student Todo List",
         "version_summary": "Seeded example: PhD student todo list",
-        "path": _BASE_DIR / "storage" / "templates" / "todolist.xml",
+        "path": _TEMPLATE_XML_DIR / "todolist.xml",
+        "demo_path": _TEMPLATE_DEMO_DIR / "todolist.demo.json",
     },
 }
 

@@ -10,6 +10,7 @@
   box-sizing: border-box;
   overflow: hidden;
   background: #fafafa;
+  position: relative;
 }
 
 /* ===================== Header Slot (queries inside global header) ===================== */
@@ -195,6 +196,21 @@
 .qsp-step-active {
   border-color: #8b5cf6;
   box-shadow: 0 0 0 1px #8b5cf6, 0 2px 8px rgba(139, 92, 246, 0.1);
+}
+
+.qsp-step-guide-target {
+  animation: qspGuidePulse 1.2s ease-in-out infinite;
+  border-color: #7c3aed;
+}
+
+@keyframes qspGuidePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(124, 58, 237, 0);
+  }
 }
 
 .qsp-step-header {
@@ -464,6 +480,31 @@
   font-family: "Inter", sans-serif;
 }
 
+.agg-score-equation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.agg-score-equation-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  font-family: "Inter", sans-serif;
+}
+
+.agg-score-equation-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  font-family: "Inter", sans-serif;
+}
+
 .agg-tags-row {
   display: flex;
   gap: 6px;
@@ -587,4 +628,43 @@
   font-size: 12px;
   font-weight: 700;
   font-family: "Inter", sans-serif;
+}
+
+/* ===================== ACL first-time guide ===================== */
+
+.scoring-guide-bubble {
+  position: fixed;
+  z-index: 2147483647;
+  max-width: 300px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #ddd6fe;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(76, 29, 149, 0.16);
+  pointer-events: auto;
+}
+
+.scoring-guide-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6d28d9;
+  margin-bottom: 4px;
+}
+
+.scoring-guide-text {
+  font-size: 12px;
+  color: #3f3f46;
+  line-height: 1.4;
+}
+
+.scoring-guide-skip {
+  margin-top: 8px;
+  padding: 4px 8px;
+  border: 1px solid #ddd6fe;
+  border-radius: 999px;
+  background: #f5f3ff;
+  color: #6d28d9;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
 }

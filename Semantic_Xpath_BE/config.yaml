@@ -2,7 +2,7 @@
 
 xpath_executor:
   scoring_method: "entailment"  # one of: llm, entailment, cosine
-  score_threshold: 0.1
+  score_threshold: 0.001
 
 entailment:
   backend: "modal"  # one of: modal, local

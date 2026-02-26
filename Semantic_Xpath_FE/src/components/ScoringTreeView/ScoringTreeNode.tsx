@@ -10,6 +10,7 @@ interface ScoringNodeData extends PlanNodeData {
   isSelected?: boolean;
   isAncestorPath?: boolean;
   treePath?: string;
+  isGuideTarget?: boolean;
 }
 
 function ScoringTreeNodeComponent({ data }: NodeProps) {
@@ -22,6 +23,7 @@ function ScoringTreeNodeComponent({ data }: NodeProps) {
     isFilteredOut,
     isSelected,
     isAncestorPath,
+    isGuideTarget,
     childCount,
     xpath,
     fullText,
@@ -34,6 +36,7 @@ function ScoringTreeNodeComponent({ data }: NodeProps) {
   if (isFilteredOut) cardClasses.push("scoring-node-filtered");
   if (isAncestorPath && !isScoreActive) cardClasses.push("scoring-node-ancestor");
   if (scoreValue === undefined && !isAncestorPath) cardClasses.push("scoring-node-dim");
+  if (isGuideTarget) cardClasses.push("scoring-node-guide-target");
 
   const pillClasses = ["scoring-node-pill"];
   if (isScoreActive) pillClasses.push("scoring-node-pill-active");

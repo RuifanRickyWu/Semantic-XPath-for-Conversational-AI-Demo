@@ -91,6 +91,25 @@
   box-shadow: 0 0 0 2px #ef4444, 0 2px 8px rgba(239, 68, 68, 0.15);
 }
 
+.scoring-node-guide-target {
+  animation: scoringNodeGuidePulse 1.25s ease-in-out infinite;
+  border-color: #7c3aed;
+}
+
+@keyframes scoringNodeGuidePulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(124, 58, 237, 0.3),
+      0 0 0 1px #7c3aed;
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(124, 58, 237, 0),
+      0 0 0 1px #7c3aed;
+  }
+}
+
 .scoring-node-ancestor {
   border-color: #d4c4f7;
   opacity: 0.85;

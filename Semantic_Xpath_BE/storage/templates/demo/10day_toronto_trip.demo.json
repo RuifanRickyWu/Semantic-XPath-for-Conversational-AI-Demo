@@ -1,0 +1,14 @@
+{
+  "bootstrap_messages": [
+    {
+      "role": "user",
+      "content": "Show me a 10 Day Trip in Toronto"
+    },
+    {
+      "role": "system",
+      "type": "PLAN_CREATE",
+      "content": "10-day Toronto itinerary blending business meetings and leisure activities, including museums, shopping, nature day trips, and varied dining options."
+    }
+  ],
+  "result_file": "10day_toronto_trip_museum_dinner.result.json"
+}

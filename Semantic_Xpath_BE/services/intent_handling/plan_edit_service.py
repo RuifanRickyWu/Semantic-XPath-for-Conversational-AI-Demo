@@ -67,6 +67,17 @@ def _format_deleted_summary(per_node: List[Dict[str, Any]]) -> str:
     return f"Removed {count} items from {context}."
 
 
+def _delete_path_sort_key(path_segments: List[tuple]) -> tuple:
+    """Sort deletes to avoid sibling reindex drift during batch removal."""
+    depth = len(path_segments)
+    if not path_segments:
+        return (0, (), "", 0)
+
+    parent_path = tuple(path_segments[:-1])
+    leaf_tag, leaf_index = path_segments[-1]
+    return (-depth, parent_path, str(leaf_tag), -int(leaf_index))
+
+
 class PlanEditService(BaseIntentHandler):
     """Handler for PLAN_ADD, PLAN_UPDATE, PLAN_DELETE intents."""
 
@@ -200,8 +211,20 @@ class PlanEditService(BaseIntentHandler):
         if not path_segments_list:
             return _result("Could not determine which nodes to remove.")
 
-        delete_ops = [DeleteXmlNode(path_segments=ps) for ps in path_segments_list]
-        delete_ops.sort(key=lambda op: len(op.path_segments or []), reverse=True)
+        # De-duplicate retrieval output, then delete from deepest to shallowest.
+        # Within the same parent/tag, delete higher sibling indices first so that
+        # earlier deletes do not shift later targets (e.g., Restaurant[2] then [1]).
+        unique_paths: List[List[tuple]] = []
+        seen_paths = set()
+        for ps in path_segments_list:
+            key = tuple(ps)
+            if key in seen_paths:
+                continue
+            seen_paths.add(key)
+            unique_paths.append(ps)
+
+        unique_paths.sort(key=_delete_path_sort_key)
+        delete_ops = [DeleteXmlNode(path_segments=ps) for ps in unique_paths]
 
         try:
             commit_result = state_store.commit(

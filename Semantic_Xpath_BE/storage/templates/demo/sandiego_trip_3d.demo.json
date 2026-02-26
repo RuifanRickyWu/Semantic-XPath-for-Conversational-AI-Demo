@@ -1,0 +1,15 @@
+{
+  "bootstrap_messages": [
+    {
+      "role": "user",
+      "content": "Show me a 3 Day Trip in San Diego"
+    },
+    {
+      "role": "system",
+      "type": "PLAN_CREATE",
+      "content": "3-day San Diego business trip itinerary with meetings, dining, and light leisure activities across all three days.",
+      "snapshotVersionId": "__INITIAL_VERSION_ID__"
+    }
+  ],
+  "result_file": "sandiego_trip_3d_last_day_work_to_sightseeing.result.json"
+}

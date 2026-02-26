@@ -1,0 +1,101 @@
+<Plan>
+  <Meta>
+    <Title>PhD Student To-do List.</Title>
+    <Summary>Cateogries include Work, Personal, Household, Health, Learning</Summary>
+  </Meta>
+    <Category name="Work" description="Research, courses, teaching assistantship, and grant applications.">
+      <Project name="NSERC CGS-M Grant Application" status="Active" priority="High">
+        <Task name="Draft research proposal (max 1 page)" status="In Progress" priority="High" due_date="2026-11-15" />
+        <Task name="Request reference letters" status="Done" priority="High" due_date="2025-10-30" />
+        <Task name="Finalize CCV (Canadian Common CV) updates" status="Todo" priority="Medium" due_date="2026-11-20" />
+      </Project>
+      <Project name="Thesis: Solve AI" status="Active" priority="High">
+        <Task name="Run benchmarks on cluster" status="Blocked" priority="High" due_date="2026-02-12" note="Waiting for compute allocation" />
+        <Task name="Literature review on Flow Matching" status="Done" priority="Medium" due_date="2026-01-15" />
+        <Task name="Weekly meeting prep: Slides on experiments" status="Todo" priority="High" due_date="2026-02-10" />
+      </Project>
+      <Project name="TA: Intro to ML (CS480)" status="Active" priority="Medium">
+        <Task name="Grade midterm exams (Batch 1 of 3)" status="Todo" priority="Medium" due_date="2026-02-14" />
+        <Task name="Hold office hours" status="Done" priority="Low" due_date="2026-02-08" />
+      </Project>
+      <Project name="Probabilistic Graphical Models Assignment" status="Active" priority="High">
+        <Task name="Implement Gibbs Sampling" status="Done" priority="Medium" due_date="2026-02-17" />
+        <Task name="Tune hyperparameters" status="Todo" priority="Medium" due_date="2026-02-20" />
+      </Project>
+    </Category>
+
+    <Category name="Personal" description="Errands, social, and admin.">
+      <Project name="Conference Travel: Vancouver" status="On Hold" priority="Medium">
+        <Task name="Book flight with university travel agent" status="Todo" priority="Medium" due_date="2026-03-01" />
+        <Task name="Book hotel in downtown Vancouver" status="Done" priority="High" due_date="2026-03-01" />
+      </Project>
+      <Project name="Friend's Birthday Surprise" status="Active" priority="High">
+        <Task name="Coordinate with group on dinner location" status="Done" priority="High" due_date="2026-02-15" />
+        <Task name="Purchase group gift and card" status="In Progress" priority="Medium" due_date="2026-02-22" />
+        <Task name="Confirm final headcount for reservation" status="Todo" priority="High" due_date="2026-02-24" />
+      </Project>
+      <Project name="Vehicle Maintenance" status="Active" priority="Medium">
+        <Task name="Schedule oil change and tire rotation" status="Todo" priority="Medium" due_date="2026-03-05" />
+        <Task name="Renew vehicle registration online" status="Todo" priority="High" due_date="2026-03-10" />
+        <Task name="Clean interior and vacuum floor mats" status="Todo" priority="Low" due_date="2026-03-01" />
+      </Project>
+    </Category>
+
+    <Category name="Household" description="Maintenance and groceries.">
+      <Project name="Fix Garage Door" status="Active" priority="High">
+        <Task name="Diagnose sensor alignment issue" status="Done" priority="High" due_date="2026-02-01" />
+        <Task name="Buy replacement torsion spring" status="Todo" priority="High" due_date="2026-02-12" />
+        <Task name="Schedule repair technician" status="Todo" priority="Medium" due_date="2026-02-15" />
+      </Project>
+      <Project name="Weekly Groceries" status="Active" priority="Medium">
+        <Task name="Buy Milk (Oat)" status="Todo" priority="Medium" due_date="2026-02-10" />
+        <Task name="Buy Coffee Beans" status="Todo" priority="High" due_date="2026-02-10" />
+        <Task name="Buy Ramen (Emergency deadline food)" status="Todo" priority="Low" due_date="2026-02-10" />
+      </Project>
+      <Project name="Kitchen Deep Clean" status="Active" priority="Medium">
+        <Task name="Clean oven and stovetop" status="Todo" priority="Medium" due_date="2026-02-21" />
+        <Task name="Defrost freezer and organize contents" status="Todo" priority="Low" due_date="2026-02-22" />
+        <Task name="Wipe down all cabinet exteriors" status="Todo" priority="Low" due_date="2026-02-22" />
+      </Project>
+      <Project name="Seasonal Wardrobe Swap" status="Active" priority="Low">
+        <Task name="Wash and store winter heavy coats" status="Todo" priority="Medium" due_date="2026-03-15" />
+        <Task name="Inventory spring/summer clothing" status="Todo" priority="Low" due_date="2026-03-15" />
+        <Task name="Donate unused items to local shelter" status="Todo" priority="Medium" due_date="2026-03-20" />
+      </Project>
+    </Category>
+
+    <Category name="Health" description="Physical and mental care.">
+      <Project name="Marathon Training Block" status="Active" priority="High">
+        <Task name="Long Run: 15km zone 2" status="Done" priority="High" due_date="2026-02-09" />
+        <Task name="Physio appointment for knee" status="Todo" priority="High" due_date="2026-02-14" />
+      </Project>
+      <Project name="Sleep Hygiene Optimization" status="Active" priority="Medium">
+        <Task name="Set 'No Screens' rule 1 hour before bed" status="Todo" priority="High" due_date="Daily" />
+        <Task name="Purchase blackout curtains for bedroom" status="Done" priority="Medium" due_date="2026-02-10" />
+        <Task name="Track sleep quality for 14 days" status="In Progress" priority="Low" due_date="2026-03-01" />
+      </Project>
+      <Project name="Annual Health Checkups" status="Active" priority="High">
+        <Task name="Book annual dental cleaning" status="Todo" priority="Medium" due_date="2026-03-15" />
+        <Task name="Schedule eye exam for new prescription" status="Todo" priority="Low" due_date="2026-04-10" />
+        <Task name="Update provincial health card (OHIP)" status="Done" priority="High" due_date="2026-01-20" />
+      </Project>
+    </Category>
+
+    <Category name="Learning" description="Skills, hobbies, and social leisure.">
+      <Project name="Culinary: Sushi Mastery" status="Active" priority="Low">
+        <Task name="Practice sushi rice seasoning (vinegar/sugar ratio)" status="Todo" priority="Medium" due_date="2026-02-21" />
+        <Task name="Source sushi-grade fish in Toronto (St. Lawrence Market)" status="Todo" priority="Low" due_date="2026-02-20" />
+        <Task name="Watch tutorial on Nigiri shaping techniques" status="Done" priority="Low" due_date="2026-02-15" />
+      </Project>
+      <Project name="Astrophotography Basics" status="Active" priority="Medium">
+        <Task name="Research best local spots for low light pollution" status="Todo" priority="Medium" due_date="2026-03-05" />
+        <Task name="Watch tutorial on 'Long Exposure' settings for night sky" status="In Progress" priority="Low" due_date="2026-02-25" />
+        <Task name="Purchase a sturdy entry-level tripod" status="Todo" priority="High" due_date="2026-03-01" />
+      </Project>
+      <Project name="DIY Indoor Herb Garden" status="Active" priority="Low">
+        <Task name="Buy seeds for Basil, Mint, and Rosemary" status="Todo" priority="Medium" due_date="2026-02-28" />
+        <Task name="Assemble self-watering planter boxes" status="In Progress" priority="Medium" due_date="2026-03-05" />
+        <Task name="Identify window with the best south-facing sunlight" status="Done" priority="High" due_date="2026-02-12" />
+      </Project>
+    </Category>
+</Plan>

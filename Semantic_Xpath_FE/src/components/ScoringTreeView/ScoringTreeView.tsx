@@ -23,6 +23,7 @@ interface ScoringTreeViewProps {
   activeStepIndex: number | null;
   onNodeClick: (nodeId: string | null) => void;
   selectedNodeId: string | null;
+  guideTargetNodeId?: string | null;
 }
 
 /**
@@ -127,6 +128,7 @@ export default function ScoringTreeView({
   activeStepIndex,
   onNodeClick,
   selectedNodeId,
+  guideTargetNodeId = null,
 }: ScoringTreeViewProps) {
   const { nodes: rawNodes, edges: rawEdges } = useMemo(
     () =>
@@ -171,6 +173,8 @@ export default function ScoringTreeView({
             isFilteredOut: scoreInfo.isFilteredOut,
             isSelected: scoreInfo.treePath === selectedNodeId,
             treePath: scoreInfo.treePath,
+            isGuideTarget:
+              !!guideTargetNodeId && scoreInfo.treePath === guideTargetNodeId,
           },
         };
       }
@@ -230,7 +234,7 @@ export default function ScoringTreeView({
     });
 
     return { nodes: finalNodes, edges: annotatedEdges };
-  }, [rawNodes, rawEdges, scoreMap, selectedNodeId]);
+  }, [rawNodes, rawEdges, scoreMap, selectedNodeId, guideTargetNodeId]);
 
   const handleNodeClick = useCallback(
     (_: React.MouseEvent, node: Node) => {

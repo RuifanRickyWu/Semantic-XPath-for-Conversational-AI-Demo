@@ -11,6 +11,7 @@ interface QueryStepsPanelProps {
   perNodeDetail: PerNodeDetail[];
   activeStepIndex: number | null;
   onStepClick: (index: number) => void;
+  guideStepIndex?: number | null;
 }
 
 function getNodeLabel(node: ScoredNodeMeta | undefined): string {
@@ -95,6 +96,7 @@ export default function QueryStepsPanel({
   perNodeDetail,
   activeStepIndex,
   onStepClick,
+  guideStepIndex = null,
 }: QueryStepsPanelProps) {
   const finalStepNodes: ScoredNode[] =
     scoringTrace.length > 0
@@ -120,11 +122,15 @@ export default function QueryStepsPanel({
         {scoringTrace.map((step, idx) => {
           const isActive = activeStepIndex === idx;
           const nodes: ScoredNode[] = step.nodes || [];
+          const isGuideTarget = guideStepIndex === idx;
 
           return (
             <div
               key={idx}
-              className={`qsp-step-card ${isActive ? "qsp-step-active" : ""}`}
+              data-step-index={idx}
+              className={`qsp-step-card ${isActive ? "qsp-step-active" : ""} ${
+                isGuideTarget ? "qsp-step-guide-target" : ""
+              }`}
               onClick={() => onStepClick(idx)}
             >
               <div className="qsp-step-header">

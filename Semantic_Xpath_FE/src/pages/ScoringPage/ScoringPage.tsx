@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppState } from "../../context/useAppState";
 import QueryStepsPanel from "./QueryStepsPanel";
@@ -15,16 +15,44 @@ interface ScoringLocationState {
   planXml?: string;
 }
 
+type AclGuideStage = "off" | "step2" | "day2";
+const ACL_SCORING_GUIDE_SEEN_PREFIX = "semantic_xpath.acl_scoring_guide_seen";
+const GUIDE_BUBBLE_WIDTH = 300;
+const GUIDE_BUBBLE_GAP = 14;
+
 function toUiXpath(xpath: string): string {
   return xpath.replace(/\bagg_(min|max|avg)\b/gi, (_, op: string) =>
     String(op).toLowerCase()
   );
 }
 
+function getAclScoringGuideSeenKey(sessionId: string): string {
+  return `${ACL_SCORING_GUIDE_SEEN_PREFIX}.${sessionId}`;
+}
+
+function hasSeenAclScoringGuide(sessionId: string): boolean {
+  if (typeof window === "undefined") return true;
+  return localStorage.getItem(getAclScoringGuideSeenKey(sessionId)) === "1";
+}
+
+function markAclScoringGuideSeen(sessionId: string): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(getAclScoringGuideSeenKey(sessionId), "1");
+}
+
+function getBubblePositionFromTarget(target: Element): { top: number; left: number } {
+  const rect = target.getBoundingClientRect();
+  const rawLeft = rect.right + GUIDE_BUBBLE_GAP;
+  const maxLeft = Math.max(12, window.innerWidth - GUIDE_BUBBLE_WIDTH - 12);
+  const left = Math.min(rawLeft, maxLeft);
+  const top = Math.max(12, Math.min(rect.top, window.innerHeight - 130));
+  return { top, left };
+}
+
 export default function ScoringPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setHeaderSlot } = useAppState();
+  const { setHeaderSlot, sessionId } = useAppState();
   const state = location.state as ScoringLocationState | null;
 
   const xpathQuery = state?.xpathQuery ?? "";
@@ -37,6 +65,23 @@ export default function ScoringPage() {
     scoringTrace.length > 0 ? 0 : null
   );
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [aclGuideStage, setAclGuideStage] = useState<AclGuideStage>("off");
+  const [guideBubblePos, setGuideBubblePos] = useState<{ top: number; left: number } | null>(
+    null
+  );
+
+  const isAclCase = useMemo(() => {
+    const source = `${planXml} ${originalQuery} ${xpathQuery}`;
+    return /ACL\s*2026\s*Conference/i.test(source) || /ACL/i.test(source);
+  }, [planXml, originalQuery, xpathQuery]);
+
+  const guidedDay2NodeId = useMemo(() => {
+    const step2Nodes: ScoredNode[] = scoringTrace[1]?.nodes ?? [];
+    const day2Node = step2Nodes.find((node) =>
+      /Day\s*2/i.test(String(node.tree_path ?? ""))
+    );
+    return day2Node?.tree_path ?? null;
+  }, [scoringTrace]);
 
   const activeStep =
     activeStepIndex !== null ? scoringTrace[activeStepIndex] : null;
@@ -50,6 +95,81 @@ export default function ScoringPage() {
         n.node?.attributes?.name === selectedNodeId
     ) ?? null;
   })();
+
+  useEffect(() => {
+    if (!isAclCase || hasSeenAclScoringGuide(sessionId)) {
+      setAclGuideStage("off");
+      return;
+    }
+    setAclGuideStage("step2");
+  }, [isAclCase, sessionId]);
+
+  useEffect(() => {
+    if (aclGuideStage === "step2" && activeStepIndex === 1) {
+      setAclGuideStage("day2");
+    }
+  }, [aclGuideStage, activeStepIndex]);
+
+  useEffect(() => {
+    if (aclGuideStage !== "day2") return;
+    if (guidedDay2NodeId) return;
+    setAclGuideStage("off");
+  }, [aclGuideStage, guidedDay2NodeId]);
+
+  useEffect(() => {
+    if (aclGuideStage !== "day2") return;
+    if (!selectedNodeId) return;
+    if (!/Day\s*2/i.test(selectedNodeId)) return;
+    markAclScoringGuideSeen(sessionId);
+    setAclGuideStage("off");
+  }, [aclGuideStage, selectedNodeId, sessionId]);
+
+  useEffect(() => {
+    if (aclGuideStage === "off") {
+      setGuideBubblePos(null);
+      return;
+    }
+
+    let rafId: number | null = null;
+    let retries = 0;
+    const maxRetries = 14;
+    const selector =
+      aclGuideStage === "step2"
+        ? '.qsp-step-card[data-step-index="1"]'
+        : ".scoring-node-guide-target";
+
+    const updatePosition = () => {
+      const target = document.querySelector(selector);
+      if (!target) {
+        if (retries < maxRetries) {
+          retries += 1;
+          rafId = window.requestAnimationFrame(updatePosition);
+          return;
+        }
+        return;
+      }
+      setGuideBubblePos(getBubblePositionFromTarget(target));
+    };
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [aclGuideStage, activeStepIndex, guidedDay2NodeId]);
+
+  const handleStepClick = (index: number) => {
+    setActiveStepIndex(index);
+  };
+
+  const dismissAclGuide = () => {
+    markAclScoringGuideSeen(sessionId);
+    setAclGuideStage("off");
+  };
 
   useEffect(() => {
     setHeaderSlot(
@@ -97,7 +217,8 @@ export default function ScoringPage() {
             scoringTrace={scoringTrace}
             perNodeDetail={perNodeDetail}
             activeStepIndex={activeStepIndex}
-            onStepClick={setActiveStepIndex}
+            onStepClick={handleStepClick}
+            guideStepIndex={aclGuideStage === "step2" ? 1 : null}
           />
         </div>
 
@@ -109,6 +230,7 @@ export default function ScoringPage() {
               activeStepIndex={activeStepIndex}
               onNodeClick={setSelectedNodeId}
               selectedNodeId={selectedNodeId}
+              guideTargetNodeId={aclGuideStage === "day2" ? guidedDay2NodeId : null}
             />
           </div>
           <div className="scoring-aggregation-side">
@@ -119,12 +241,40 @@ export default function ScoringPage() {
               />
             ) : (
               <div className="scoring-aggregation-empty">
-                Select a query step, then click a node in the tree to view the score breakdown.
+                Select a query step, then click a tree node to see the score breakdown.
               </div>
             )}
           </div>
         </div>
       </div>
+      {aclGuideStage === "step2" && guideBubblePos && (
+        <div
+          className="scoring-guide-bubble"
+          style={{ top: guideBubblePos.top, left: guideBubblePos.left }}
+        >
+          <div className="scoring-guide-title">Quick walkthrough</div>
+          <div className="scoring-guide-text">
+            Click <strong>Step 02</strong> first to inspect the ACL main-conference step.
+          </div>
+          <button className="scoring-guide-skip" onClick={dismissAclGuide}>
+            Skip
+          </button>
+        </div>
+      )}
+      {aclGuideStage === "day2" && guideBubblePos && (
+        <div
+          className="scoring-guide-bubble"
+          style={{ top: guideBubblePos.top, left: guideBubblePos.left }}
+        >
+          <div className="scoring-guide-title">Nice!</div>
+          <div className="scoring-guide-text">
+            Now click <strong>Day 2</strong> in the tree to open its score breakdown.
+          </div>
+          <button className="scoring-guide-skip" onClick={dismissAclGuide}>
+            Skip
+          </button>
+        </div>
+      )}
     </div>
   );
 }

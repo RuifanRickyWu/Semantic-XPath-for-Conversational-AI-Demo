@@ -1,0 +1,510 @@
+{
+  "user_message": {
+    "role": "user",
+    "content": "Change the last day's work related scheduales to sightseeing, I can use some rest"
+  },
+  "system_message": {
+    "role": "system",
+    "type": "PLAN_UPDATE",
+    "snapshotVersionId": "__EVOLVED_VERSION_ID__",
+    "content": "Updated Plan > Day 3: I replaced all work-related schedule items on the last day with relaxing sightseeing activities so the day is more restful.\n\nIf you tell me what kind of sightseeing you prefer (easy walks, beaches, museums, scenic drives), I can tailor the Day 3 activities to match.",
+    "originalQuery": "Replace all work-related schedule items on the last day with relaxing sightseeing activities so the day is more restful.",
+    "xpathQuery": "/Plan/Day[-1][agg_max(/*[node =~ \"work-related\"])]",
+    "affectedNodePaths": [
+      [
+        [
+          "Day",
+          3
+        ],
+        [
+          "POI",
+          1
+        ]
+      ],
+      [
+        [
+          "Day",
+          3
+        ],
+        [
+          "Restaurant",
+          1
+        ]
+      ]
+    ],
+    "scoringTrace": [
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "span": {
+            "end": 5,
+            "start": 1
+          },
+          "test": {
+            "kind": "type",
+            "name": "Plan",
+            "span": {
+              "end": 5,
+              "start": 1
+            },
+            "type": "node_test"
+          },
+          "type": "leaf"
+        },
+        "nodes": [
+          {
+            "accumulated_score": 1.0,
+            "children": [
+              {
+                "Summary": "Sample itinerary with Meta, Day, and POI nodes only.",
+                "Title": "3 Day Business Trip in San Diego",
+                "attributes": {},
+                "type": "Meta"
+              },
+              {
+                "attributes": {
+                  "index": "1"
+                },
+                "index": "1",
+                "type": "Day"
+              },
+              {
+                "attributes": {
+                  "index": "2"
+                },
+                "index": "2",
+                "type": "Day"
+              },
+              {
+                "attributes": {
+                  "index": "3"
+                },
+                "index": "3",
+                "type": "Day"
+              }
+            ],
+            "final_step_score": 1.0,
+            "is_filtered_out": false,
+            "is_selected": true,
+            "node": {
+              "attributes": {
+                "version": "v1"
+              },
+              "type": "Plan",
+              "version": "v1"
+            },
+            "predicate_results": [],
+            "previous_score": 1.0,
+            "step_score": 1.0,
+            "tree_path": "Plan"
+          }
+        ],
+        "step_index": 0,
+        "step_query": "Plan"
+      },
+      {
+        "axis": "none",
+        "node_test_expr": {
+          "span": {
+            "end": 50,
+            "start": 6
+          },
+          "test": {
+            "index": {
+              "span": {
+                "end": 13,
+                "start": 9
+              },
+              "start": -1,
+              "type": "single"
+            },
+            "kind": "type",
+            "name": "Day",
+            "predicate": {
+              "inner_predicate": {
+                "field": "node",
+                "operator": "=~",
+                "span": {
+                  "end": 47,
+                  "start": 25
+                },
+                "type": "atom",
+                "value": "work-related"
+              },
+              "operator": "agg_max",
+              "selector": {
+                "axis": "child",
+                "test": {
+                  "test": {
+                    "kind": "wildcard",
+                    "name": null,
+                    "type": "node_test"
+                  },
+                  "type": "leaf"
+                }
+              },
+              "span": {
+                "end": 49,
+                "start": 14
+              },
+              "type": "evidence_agg"
+            },
+            "predicate_str": "agg_max(/*[node =~ \"work-related\"])",
+            "span": {
+              "end": 50,
+              "start": 6
+            },
+            "type": "node_test"
+          },
+          "type": "leaf"
+        },
+        "nodes": [
+          {
+            "accumulated_score": 0.9574518203735352,
+            "children": [],
+            "final_step_score": 0.9574518203735352,
+            "is_filtered_out": false,
+            "is_selected": true,
+            "node": {
+              "attributes": {
+                "index": "3"
+              },
+              "index": "3",
+              "type": "Day"
+            },
+            "predicate_results": [
+              {
+                "aggregation_labels": [
+                  "agg_max(/*)"
+                ],
+                "has_aggregation": true,
+                "predicate": "agg_max(/*[node =~ \"work-related\"])",
+                "predicate_ast": {
+                  "inner_predicate": {
+                    "field": "node",
+                    "operator": "=~",
+                    "span": {
+                      "end": 47,
+                      "start": 25
+                    },
+                    "type": "atom",
+                    "value": "work-related"
+                  },
+                  "operator": "agg_max",
+                  "selector": {
+                    "axis": "child",
+                    "test": {
+                      "test": {
+                        "kind": "wildcard",
+                        "name": null,
+                        "type": "node_test"
+                      },
+                      "type": "leaf"
+                    }
+                  },
+                  "span": {
+                    "end": 49,
+                    "start": 14
+                  },
+                  "type": "evidence_agg"
+                },
+                "predicate_score": 0.9574518203735352,
+                "scoring_steps": [
+                  {
+                    "agg_type": "max",
+                    "evidence_count": 4,
+                    "inner_traces": [
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 47,
+                              "start": 25
+                            },
+                            "type": "atom",
+                            "value": "work-related"
+                          },
+                          "node_name": "Copa Vida",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.20162424445152283,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 47,
+                              "start": 25
+                            },
+                            "type": "atom",
+                            "value": "work-related"
+                          },
+                          "node_name": "Wrap-up Meeting",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.9574518203735352,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 47,
+                              "start": 25
+                            },
+                            "type": "atom",
+                            "value": "work-related"
+                          },
+                          "node_name": "Puesto at the Headquarters",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.18466109037399292,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 47,
+                              "start": 25
+                            },
+                            "type": "atom",
+                            "value": "work-related"
+                          },
+                          "node_name": "SAN Departure",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.06928206980228424,
+                          "type": "atom"
+                        }
+                      ]
+                    ],
+                    "result": 0.9574518203735352,
+                    "scores": [
+                      0.20162424445152283,
+                      0.9574518203735352,
+                      0.18466109037399292,
+                      0.06928206980228424
+                    ],
+                    "selector": "/*",
+                    "type": "evidence_agg"
+                  }
+                ]
+              }
+            ],
+            "previous_score": 1.0,
+            "step_score": 0.9574518203735352,
+            "tree_path": "Plan > Day 3"
+          }
+        ],
+        "step_index": 1,
+        "step_query": "Day[-1][agg_max(/*[node =~ \"work-related\"])]"
+      }
+    ],
+    "perNodeDetail": [
+      {
+        "children": [],
+        "evidence": [
+          {
+            "accumulated_score": 0.9574518203735352,
+            "children": [],
+            "final_step_score": 0.9574518203735352,
+            "node": {
+              "attributes": {
+                "index": "3"
+              },
+              "index": "3",
+              "type": "Day"
+            },
+            "predicate_results": [
+              {
+                "aggregation_labels": [
+                  "agg_max(/*)"
+                ],
+                "has_aggregation": true,
+                "predicate": "agg_max(/*[node =~ \"work-related\"])",
+                "predicate_ast": {
+                  "inner_predicate": {
+                    "field": "node",
+                    "operator": "=~",
+                    "span": {
+                      "end": 47,
+                      "start": 25
+                    },
+                    "type": "atom",
+                    "value": "work-related"
+                  },
+                  "operator": "agg_max",
+                  "selector": {
+                    "axis": "child",
+                    "test": {
+                      "test": {
+                        "kind": "wildcard",
+                        "name": null,
+                        "type": "node_test"
+                      },
+                      "type": "leaf"
+                    }
+                  },
+                  "span": {
+                    "end": 49,
+                    "start": 14
+                  },
+                  "type": "evidence_agg"
+                },
+                "predicate_score": 0.9574518203735352,
+                "scoring_steps": [
+                  {
+                    "agg_type": "max",
+                    "evidence_count": 4,
+                    "inner_traces": [
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 47,
+                              "start": 25
+                            },
+                            "type": "atom",
+                            "value": "work-related"
+                          },
+                          "node_name": "Copa Vida",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.20162424445152283,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 47,
+                              "start": 25
+                            },
+                            "type": "atom",
+                            "value": "work-related"
+                          },
+                          "node_name": "Wrap-up Meeting",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.9574518203735352,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 47,
+                              "start": 25
+                            },
+                            "type": "atom",
+                            "value": "work-related"
+                          },
+                          "node_name": "Puesto at the Headquarters",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.18466109037399292,
+                          "type": "atom"
+                        }
+                      ],
+                      [
+                        {
+                          "condition": {
+                            "field": "node",
+                            "operator": "=~",
+                            "span": {
+                              "end": 47,
+                              "start": 25
+                            },
+                            "type": "atom",
+                            "value": "work-related"
+                          },
+                          "node_name": "SAN Departure",
+                          "note": "Atom(u, φ) - entailment",
+                          "score": 0.06928206980228424,
+                          "type": "atom"
+                        }
+                      ]
+                    ],
+                    "result": 0.9574518203735352,
+                    "scores": [
+                      0.20162424445152283,
+                      0.9574518203735352,
+                      0.18466109037399292,
+                      0.06928206980228424
+                    ],
+                    "selector": "/*",
+                    "type": "evidence_agg"
+                  }
+                ]
+              }
+            ],
+            "previous_score": 1.0,
+            "step_index": 1,
+            "step_query": "Day[-1][agg_max(/*[node =~ \"work-related\"])]",
+            "step_score": 0.9574518203735352,
+            "tree_path": "Plan > Day 3"
+          },
+          {
+            "segments": [
+              {
+                "attributes": {
+                  "version": "v1"
+                },
+                "type": "Plan"
+              },
+              {
+                "attributes": {
+                  "index": "3"
+                },
+                "type": "Day"
+              }
+            ],
+            "type": "path_display"
+          }
+        ],
+        "node": {
+          "attributes": {
+            "index": "3"
+          },
+          "index": "3",
+          "type": "Day"
+        },
+        "score": 0.9574518203735352,
+        "tree_path": [
+          [
+            "Day",
+            3
+          ]
+        ],
+        "tree_path_display": [
+          {
+            "attributes": {
+              "version": "v1"
+            },
+            "type": "Plan"
+          },
+          {
+            "attributes": {
+              "index": "3"
+            },
+            "type": "Day"
+          }
+        ]
+      }
+    ]
+  }
+}

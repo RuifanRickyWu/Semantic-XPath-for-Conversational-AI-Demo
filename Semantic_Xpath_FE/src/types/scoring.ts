@@ -77,6 +77,7 @@ export interface PredicateResult {
 
 export interface ScoredNode {
   tree_path?: string;
+  previous_score?: number;
   accumulated_score?: number;
   final_step_score?: number;
   step_score?: number;

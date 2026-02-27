@@ -5,7 +5,7 @@ xpath_executor:
   score_threshold: 0.001
 
 entailment:
-  backend: "modal"  # one of: modal, local
+  backend: "local"  # one of: modal, local
   hypothesis_template: "This is related to {predicate}."
   local:
     model_name: "facebook/bart-large-mnli"

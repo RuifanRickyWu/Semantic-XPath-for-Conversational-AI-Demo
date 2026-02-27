@@ -1,5 +1,4 @@
-## Semantic XPath Chat: Structured Agentic Memory Demo
-
+## Semantic XPath Chat
 **Semantic XPath Chat** is an end-to-end conversational AI demo that showcases **SEMANTIC XPath**, a structure-aware retrieval and editing method for long-term, task-oriented interactions over hierarchical memories.
 
 The demo implements the full pipeline described in the paper: user requests are translated into SEMANTIC XPath queries, evaluated over a tree-structured task memory, and the retrieved substructures are used to generate grounded model responses while visualizing memory and query execution.
